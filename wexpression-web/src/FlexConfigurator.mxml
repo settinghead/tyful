@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				backgroundGradientColors="[#FFFFFF, #FFFFFF]"
+				creationComplete="onCreationComplete()" applicationComplete="onApplicationComplete()" horizontalAlign="left" paddingBottom="0"
+				paddingLeft="0" paddingTop="0" verticalAlign="top">
+
+	<mx:Script>
+	<![CDATA[
+		import at.leichtgewicht.cloud.ObjectCloud;
+		import at.leichtgewicht.cloud.StarSet;
+		import at.leichtgewicht.cloud.algorithm.CirclePositionAlgorithm;
+		import at.leichtgewicht.cloud.algorithm.IPositionAlgorithm;
+		import at.leichtgewicht.cloud.algorithm.SwitchAngleAlgorithm;
+		import at.leichtgewicht.cloud.text.DefaultTextRenderer;
+		import at.leichtgewicht.cloud.text.TextAnalyzer;
+		import at.leichtgewicht.cloud.ui.ProgressDisplay;
+		
+		import com.lorentz.SVG.display.SVGDocument;
+		import com.lorentz.processing.ProcessExecutor;
+		import mx.core.SpriteAsset;
+
+		
+		import de.polygonal.math.PM_PRNG;
+		
+		[Embed(source="Vera.ttf", fontFamily="vera")]
+		public static const fontClass: Class;
+
+		[Embed(source="test.svg")]		
+		[Bindable]
+		public var territoryCls:Class;
+		
+		public static const font: Font = new fontClass();
+	
+		private var _cloud: ObjectCloud;
+		private var _circleAlgorithm: CirclePositionAlgorithm;
+		private var _switchAlgorithm: SwitchAngleAlgorithm;
+		private var _loaded: Boolean = false;
+		private var _textRenderer: DefaultTextRenderer = new DefaultTextRenderer();
+		private var _progressDisplay: ProgressDisplay;
+		private var _territory:SpriteAsset;
+		
+		private function onApplicationComplete(): void{
+			//ProcessExecutor.instance.initialize(this.stage);
+			_territory = new territoryCls();
+			//trace(territoryDocStr);
+			//_territory.parse(territoryDocStr);
+			_loaded = true;
+			_circleAlgorithm = new CirclePositionAlgorithm(_territory);
+			_switchAlgorithm = new SwitchAngleAlgorithm(_territory);
+			_textRenderer.fontName = font.fontName;
+			_textRenderer.embeddedFont = true;
+			_cloud = new ObjectCloud();
+
+			_progressDisplay = new ProgressDisplay( _cloud );
+			_progressDisplay.x = 270;
+			_progressDisplay.y = 20;
+			rawChildren.addChild( _progressDisplay );
+			
+			
+			update();
+		}
+		
+		private function onCreationComplete(): void
+		{
+			
+			
+		}
+		
+		private function update(): void
+		{
+			if( _loaded )
+			{
+				_circleAlgorithm.radiusStep = circleRadiusStep.value;
+				_circleAlgorithm.triesPerRadius = circleTriesPerRadius.value;
+				_circleAlgorithm.minTries = circleMinTries.value;
+				_circleAlgorithm.sizeWeight = circleSizeWeight.value;
+				_circleAlgorithm.reuseFormerPosition = circleReuseFormerPosition.selected;
+				_circleAlgorithm.relativeAngle = circleRelativeAngle.selected;
+				
+				_switchAlgorithm.reuseFormerPosition = switchReuseFormerPosition.selected;
+				_switchAlgorithm.relativeAngle = switchRelativeAngle.selected;
+				
+				if( 1 == objectRotation.selectedValue )
+				{
+					_textRenderer.rotationMode = DefaultTextRenderer.ROTATION_VERTICAL_ONLY;
+				}
+				else
+				if( 2 == objectRotation.selectedValue )
+				{
+					_textRenderer.rotationMode = DefaultTextRenderer.ROTATION_HORIZONTAL_ONLY;
+				}
+				else
+				if( 3 == objectRotation.selectedValue )
+				{
+					_textRenderer.rotationMode = DefaultTextRenderer.ROTATION_HORIZONTAL_VERTICAL;
+				}
+				else
+				{
+					_textRenderer.rotationMode = DefaultTextRenderer.ROTATION_FREE;
+				}
+				_textRenderer.minSize = objectMinSize.value;
+				_textRenderer.maxSize = objectMaxSize.value;
+				_textRenderer.safetyBorder = objectSafetyBorder.value;
+				_textRenderer.clear();
+				
+				var algo: IPositionAlgorithm;
+				if( algorithm.selectedValue == "circle" )
+				{
+					algo = _circleAlgorithm;
+				}
+				else
+				{
+					algo = _switchAlgorithm;
+				}
+				_cloud.algorithm = algo;
+				if( drawText.selected )
+				{
+					_cloud.objects = TextAnalyzer.extractWords( text.text, _textRenderer, shuffle.selected );
+				}
+				else
+				{
+					var arr: Array = [];
+					var prng: PM_PRNG = new PM_PRNG();
+					for( var i: int = 0; i < starAmount.value; i++ )
+					{
+						var size: Number = prng.nextDoubleRange( objectMinSize.value, objectMaxSize.value);
+						var shape: StarSet = new StarSet( size, 
+							size+size/100 *spikeSize.value, 
+							prng.nextIntRange( 0x000000, 0xFFFFFF ),
+							starCorners.value, prng.nextDoubleRange(0,Math.PI/2), 
+							objectSafetyBorder.value );
+						arr.push( shape );
+					}
+					_cloud.objects = arr;
+				}
+				//_cloud.addChild(_territory);
+
+			}
+		}
+	]]>
+	</mx:Script>
+	<mx:TabNavigator creationPolicy="all">
+		
+		<mx:VBox width="250" height="300" label="Source" paddingLeft="20">
+			<mx:RadioButtonGroup id="source" change="update()"/>
+			<mx:RadioButton id="drawText" width="120" label="Text" groupName="source" selected="true"
+							value="text"/>
+			<mx:VBox visible="{drawText.selected}" includeInLayout="{drawText.selected}"
+					 paddingLeft="15">
+				<mx:TextArea id="text" width="190" height="200" change="update()"
+							 text="Lorem ipsum dolor sit amet, consectetuer sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctusest Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."/>
+				<mx:CheckBox id="shuffle" label="Shuffle Texts" change="update()"/>
+			</mx:VBox>
+			<mx:RadioButton id="drawStars" width="120" label="Stars" groupName="source" value="stars"/>
+			<mx:VBox visible="{drawStars.selected}" includeInLayout="{drawStars.selected}"
+					 paddingLeft="15">
+				<mx:Text text="Corners"/>
+				<mx:HSlider id="starCorners" change="update()" maximum="50" minimum="5" value="8"/>
+				<mx:Text text="Spike Size (percent)"/>
+				<mx:HSlider id="spikeSize" change="update()" maximum="500" minimum="0.00001"
+							value="80"/>
+				<mx:Text text="Amount"/>
+				<mx:HSlider id="starAmount" change="update()" maximum="120" minimum="5" value="80"/>
+			</mx:VBox>
+		</mx:VBox>
+		
+		<mx:VBox width="250" height="300" label="Algorithm" paddingLeft="20">
+		
+			<mx:RadioButtonGroup id="algorithm" change="update()"/>
+			<mx:RadioButton id="circleAlgorithm" width="150" label="Circle" groupName="algorithm"
+							selected="true" value="circle"/>
+			<mx:VBox visible="{circleAlgorithm.selected}"
+					 includeInLayout="{circleAlgorithm.selected}" paddingLeft="15">
+				<mx:Text text="Minimum Tries per Radius"/>
+				<mx:HSlider id="circleMinTries" change="update()" maximum="40" minimum="1" value="1"/>
+				<mx:Text text="Size based Tries per Radius"/>
+				<mx:HSlider id="circleTriesPerRadius" change="update()" maximum="40" minimum="1"
+							value="6"/>
+				<mx:Text text="Radius Step size"/>
+				<mx:HSlider id="circleRadiusStep" change="update()" maximum="40" minimum="1"
+							value="15"/>
+				<mx:Text text="Weight-in of the size factor"/>
+				<mx:HSlider id="circleSizeWeight" change="update()" maximum="1" minimum="0"
+							value="0.3"/>
+				<mx:CheckBox id="circleReuseFormerPosition" label="Reuse position" change="update()"/>
+				<mx:CheckBox id="circleRelativeAngle" label="Start with relative angle"
+							 change="update()"/>
+			</mx:VBox>
+			<mx:RadioButton id="switchAlgorithm" width="150" label="Switching Angle"
+							groupName="algorithm" value="switch"/>
+			<mx:VBox visible="{switchAlgorithm.selected}"
+					 includeInLayout="{switchAlgorithm.selected}" paddingLeft="15">
+				<mx:CheckBox id="switchReuseFormerPosition" label="Reuse position" change="update()"/>
+				<mx:CheckBox id="switchRelativeAngle" label="Start with relative angle"
+							 change="update()"/>
+			</mx:VBox>
+		</mx:VBox>		
+		<mx:VBox width="250" height="300" label="Objects" paddingLeft="20">
+			<mx:Text text="Rotation"/>
+			<mx:RadioButtonGroup id="objectRotation" change="update()"/>
+			<mx:RadioButton id="rotationVerticalOnly" width="150" label="Vertical Only"
+							groupName="objectRotation" value="1"/>
+			<mx:RadioButton id="rotationHorizontalOnly" width="150" label="Horizontal Only"
+							groupName="objectRotation" value="2"/>
+			<mx:RadioButton id="rotationHorizontalVertical" width="150" label="Vertical/Horizontal"
+							groupName="objectRotation" value="3"/>
+			<mx:RadioButton id="rotationFree" width="150" label="Free Angle"
+							groupName="objectRotation" selected="true" value="4"/>
+			<mx:Text text="Minimum Size"/>
+			<mx:HSlider id="objectMinSize" change="update()" maximum="50" minimum="5" value="8"/>
+			<mx:Text text="Maximum Size"/>
+			<mx:HSlider id="objectMaxSize" change="update()" maximum="500"
+						minimum="{objectMinSize.value+1}" value="80"/>
+			<mx:Text text="Safety Border"/>
+			<mx:HSlider id="objectSafetyBorder" change="update()" maximum="40" minimum="0" value="4"/>
+		</mx:VBox>
+	
+	</mx:TabNavigator>
+</mx:Application>
