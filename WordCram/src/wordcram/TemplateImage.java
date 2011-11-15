@@ -3,9 +3,7 @@
  */
 package wordcram;
 
-import java.applet.Applet;
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;

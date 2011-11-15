@@ -19,9 +19,13 @@ public class ShapeConfinedAngler implements WordAngler {
 	public float angleFor(EngineWord eWord) {
 		if (eWord.getCurrentLocation() == null)
 			return otherwise.angleFor(eWord);
-		float angle = img.getHue(
+		// float angle = (img.getHue(
+		// (int) eWord.getCurrentLocation().getpVector().x, (int) eWord
+		// .getCurrentLocation().getpVector().y) + BBPolarTree.PI)
+		// % BBPolarTree.TWO_PI;
+		float angle = (img.getHue(
 				(int) eWord.getCurrentLocation().getpVector().x, (int) eWord
-						.getCurrentLocation().getpVector().y);
+						.getCurrentLocation().getpVector().y));
 		if (angle == 0)
 			return otherwise.angleFor(eWord);
 		else

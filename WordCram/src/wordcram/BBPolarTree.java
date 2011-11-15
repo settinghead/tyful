@@ -31,21 +31,33 @@ abstract class BBPolarTree {
 	static final float PI = (float) Math.PI;
 	static final float ONE_AND_HALF_PI = (float) (Math.PI + HALF_PI);
 
+	protected long rStamp;
+
+	protected float _x = Integer.MIN_VALUE, _y = Integer.MIN_VALUE,
+			_right = Integer.MIN_VALUE, _bottom = Integer.MIN_VALUE;
+
 	public static class BBPolarRootTree extends BBPolarTree {
 		private int rootX;
 		private int rootY;
 		private float _rotation = 0;
+		protected long rootStamp;
+		private final ImageShape shape;
+		final int _minBoxSize;
 
-		public BBPolarRootTree(int centerX, int centerY, float d) {
-			super(0, TWO_PI, 0, d);
+		public BBPolarRootTree(ImageShape shape, int centerX, int centerY,
+				float d, int minBoxSize) {
+			super(0, TWO_PI, 0, d, minBoxSize);
 			this.rootX = centerX;
 			this.rootY = centerY;
+			this.shape = shape;
+			this._minBoxSize = minBoxSize;
+			this.rootStamp = System.currentTimeMillis();
 		}
 
-		@Override
 		void setLocation(int centerX, int centerY) {
 			this.rootX = centerX;
 			this.rootY = centerY;
+			this.rootStamp = System.currentTimeMillis();
 		}
 
 		@Override
@@ -59,29 +71,28 @@ abstract class BBPolarTree {
 		}
 
 		@Override
-		protected float getX() {
+		protected float computeX(boolean rotate) {
 			return (float) -super.d2;
 		}
 
 		@Override
-		protected float getY() {
+		protected float computeY(boolean rotate) {
 			return (float) -super.d2;
 		}
 
 		@Override
-		protected float getRight() {
+		protected float computeRight(boolean rotate) {
 			return (float) super.d2;
 		}
 
 		@Override
-		protected float getBottom() {
+		protected float computeBottom(boolean rotate) {
 			return (float) super.d2;
 		}
 
-		@Override
 		public void setRotation(float rotation) {
 			this._rotation = rotation;
-			this.resetComputedRs();
+			this.rootStamp = System.currentTimeMillis();
 		}
 
 		@Override
@@ -90,9 +101,23 @@ abstract class BBPolarTree {
 		}
 
 		@Override
-		protected void resetComputedRs() {
-			for (BBPolarTree kid : this.kids)
-				kid.resetComputedRs();
+		long getCurrentStamp() {
+			return this.rootStamp;
+		}
+
+		@Override
+		BBPolarRootTree getRoot() {
+			return this;
+		}
+
+		@Override
+		int getMinBoxSize() {
+			return this._minBoxSize;
+		}
+
+		@Override
+		ImageShape getShape() {
+			return this.shape;
 		}
 
 	}
@@ -101,18 +126,10 @@ abstract class BBPolarTree {
 
 		BBPolarRootTree root;
 
-		private float _x = Integer.MIN_VALUE, _y = Integer.MIN_VALUE,
-				_right = Integer.MIN_VALUE, _bottom = Integer.MIN_VALUE;
-
 		BBPolarChildTree(float r1, float r2, float d1, float d2,
-				BBPolarRootTree root) {
-			super(r1, r2, d1, d2);
+				BBPolarRootTree root, int minBoxSize) {
+			super(r1, r2, d1, d2, minBoxSize);
 			this.root = root;
-		}
-
-		@Override
-		void setLocation(int centerX, int centerY) {
-			root.setLocation(centerX, centerY);
 		}
 
 		@Override
@@ -126,213 +143,201 @@ abstract class BBPolarTree {
 		}
 
 		@Override
-		protected float getX() {
-			if (_x == Integer.MIN_VALUE) {
-				if (getR1() < HALF_PI) {
-					if (getR2() < getR1()) {
-						_x = (float) (d2 * Math.cos(PI));
-					} else if (getR2() < HALF_PI) {
-						_x = (float) (d1 * Math.cos(getR2()));
-					} else if (getR2() < PI) {
-						_x = (float) (d2 * Math.cos(getR2()));
-					} else {
-						// circle
-						_x = (float) (d2 * Math.cos(PI));
-					}
-				} else if (getR1() < PI) {
-					if (getR2() < HALF_PI) {
-						_x = (float) (d2 * Math.cos(PI));
-					} else if (getR2() < PI) {
-						_x = (float) (d2 * Math.cos(getR2()));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						_x = (float) (d2 * Math.cos(PI));
-					} else {
-						_x = (float) (d2 * Math.cos(PI));
-					}
-				} else if (getR1() < ONE_AND_HALF_PI) {
-					if (getR2() < HALF_PI) {
-						_x = (float) (d2 * Math.cos(getR1()));
-					} else if (getR2() < getR1()) {
-						float x1 = (float) (d2 * Math.cos(getR1()));
-						float x2 = (float) (d2 * Math.cos(getR2()));
-						_x = x1 < x2 ? x1 : x2;
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						_x = (float) (d2 * Math.cos(getR1()));
-					} else {
-						_x = (float) (d2 * Math.cos(getR1()));
-					}
+		float computeX(boolean rotate) {
+			float x;
+			if (getR1(rotate) < HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					x = (float) (d2 * Math.cos(PI));
+				} else if (getR2(rotate) < HALF_PI) {
+					x = (float) (d1 * Math.cos(getR2(rotate)));
+				} else if (getR2(rotate) < PI) {
+					x = (float) (d2 * Math.cos(getR2(rotate)));
 				} else {
-					if (getR2() < HALF_PI) {
-						float x1 = (float) (d1 * Math.cos(getR1()));
-						float x2 = (float) (d1 * Math.cos(getR2()));
-						_x = x1 < x2 ? x1 : x2;
-					} else if (getR2() < PI) {
-						_x = (float) (d2 * Math.cos(getR2()));
-					} else if (getR2() < getR1()) {
-						_x = (float) (d2 * Math.cos(PI));
-					} else
-						_x = (float) (d1 * Math.cos(getR1()));
+					// circle
+					x = (float) (d2 * Math.cos(PI));
 				}
+			} else if (getR1(rotate) < PI) {
+				if (getR2(rotate) < HALF_PI) {
+					x = (float) (d2 * Math.cos(PI));
+				} else if (getR2(rotate) < PI) {
+					x = (float) (d2 * Math.cos(getR2(rotate)));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					x = (float) (d2 * Math.cos(PI));
+				} else {
+					x = (float) (d2 * Math.cos(PI));
+				}
+			} else if (getR1(rotate) < ONE_AND_HALF_PI) {
+				if (getR2(rotate) < HALF_PI) {
+					x = (float) (d2 * Math.cos(getR1(rotate)));
+				} else if (getR2(rotate) < getR1(rotate)) {
+					float x1 = (float) (d2 * Math.cos(getR1(rotate)));
+					float x2 = (float) (d2 * Math.cos(getR2(rotate)));
+					x = x1 < x2 ? x1 : x2;
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					x = (float) (d2 * Math.cos(getR1(rotate)));
+				} else {
+					x = (float) (d2 * Math.cos(getR1(rotate)));
+				}
+			} else {
+				if (getR2(rotate) < HALF_PI) {
+					float x1 = (float) (d1 * Math.cos(getR1(rotate)));
+					float x2 = (float) (d1 * Math.cos(getR2(rotate)));
+					x = x1 < x2 ? x1 : x2;
+				} else if (getR2(rotate) < PI) {
+					x = (float) (d2 * Math.cos(getR2(rotate)));
+				} else if (getR2(rotate) < getR1(rotate)) {
+					x = (float) (d2 * Math.cos(PI));
+				} else
+					x = (float) (d1 * Math.cos(getR1(rotate)));
 			}
-			return _x;
+			return x;
 		}
 
 		@Override
-		protected float getY() {
-			if (_y == Integer.MIN_VALUE) {
-				if (getR1() < HALF_PI) {
-					if (getR2() < getR1()) {
-						_y = (float) (d1 * Math.sin(HALF_PI));
-					} else if (getR2() < HALF_PI) {
-						_y = (float) (d2 * Math.sin(getR2()));
-					} else if (getR2() < PI) {
-						_y = (float) (d2 * Math.sin(HALF_PI));
-					} else {
-						// circle
-						_y = (float) (d2 * Math.sin(HALF_PI));
-					}
-				} else if (getR1() < PI) {
-					if (getR2() < HALF_PI) {
-						float y1 = (float) (d2 * Math.sin(getR1()));
-						float y2 = (float) (d2 * Math.sin(getR2()));
-						_y = y1 > y2 ? y1 : y2;
-					} else if (getR1() < getR2())
-						_y = (float) (d2 * Math.sin(HALF_PI));
-					else
-						_y = (float) (d2 * Math.sin(getR1()));
-				} else if (getR1() < ONE_AND_HALF_PI) {
-					if (getR2() < PI) {
-						_y = (float) (d2 * Math.sin(HALF_PI));
-					} else if (getR2() < getR1()) {
-						_y = (float) (d1 * Math.sin(getR2()));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						_y = (float) (d1 * Math.sin(getR1()));
-					} else {
-						float val1 = (float) (d1 * Math.sin(getR2()));
-						float val2 = (float) (d1 * Math.sin(getR1()));
-						_y = val1 > val2 ? val1 : val2;
-					}
-
+		float computeY(boolean rotate) {
+			float y;
+			if (getR1(rotate) < HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					y = (float) (d1 * Math.sin(HALF_PI));
+				} else if (getR2(rotate) < HALF_PI) {
+					y = (float) (d2 * Math.sin(getR2(rotate)));
+				} else if (getR2(rotate) < PI) {
+					y = (float) (d2 * Math.sin(HALF_PI));
 				} else {
-					if (getR2() < HALF_PI) {
-						_y = (float) (d2 * Math.sin(getR2()));
-					} else if (getR2() < getR1()) {
-						_y = (float) (d2 * Math.sin(HALF_PI));
-					} else
-						_y = (float) (d1 * Math.sin(getR2()));
+					// circle
+					y = (float) (d2 * Math.sin(HALF_PI));
 				}
-				_y = -_y;
+			} else if (getR1(rotate) < PI) {
+				if (getR2(rotate) < HALF_PI) {
+					float y1 = (float) (d2 * Math.sin(getR1(rotate)));
+					float y2 = (float) (d2 * Math.sin(getR2(rotate)));
+					y = y1 > y2 ? y1 : y2;
+				} else if (getR2(rotate) < getR1(rotate))
+					y = (float) (d2 * Math.sin(HALF_PI));
+				else
+					y = (float) (d2 * Math.sin(getR1(rotate)));
+			} else if (getR1(rotate) < ONE_AND_HALF_PI) {
+				if (getR2(rotate) < PI) {
+					y = (float) (d2 * Math.sin(HALF_PI));
+				} else if (getR2(rotate) < getR1(rotate)) {
+					y = (float) (d1 * Math.sin(getR2(rotate)));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					y = (float) (d1 * Math.sin(getR1(rotate)));
+				} else {
+					float val1 = (float) (d1 * Math.sin(getR2(rotate)));
+					float val2 = (float) (d1 * Math.sin(getR1(rotate)));
+					y = val1 > val2 ? val1 : val2;
+				}
 
+			} else {
+				if (getR2(rotate) < HALF_PI) {
+					y = (float) (d2 * Math.sin(getR2(rotate)));
+				} else if (getR2(rotate) < getR1(rotate)) {
+					y = (float) (d2 * Math.sin(HALF_PI));
+				} else
+					y = (float) (d1 * Math.sin(getR2(rotate)));
 			}
-			return _y;
+			y = -y;
+			return y;
 		}
 
 		@Override
-		protected float getRight() {
-			if (_right == Integer.MIN_VALUE) {
-
-				if (getR1() < HALF_PI) {
-					if (getR2() < getR1()) {
-						_right = (float) (d2 * Math.cos(0));
-					} else if (getR2() < HALF_PI) {
-						_right = (float) (d2 * Math.cos(getR1()));
-					} else if (getR2() < PI) {
-						_right = (float) (d2 * Math.cos(getR1()));
-					} else {
-						// circle
-						_right = (float) (d2 * Math.cos(0));
-					}
-				} else if (getR1() < PI) {
-					if (getR2() < getR1()) {
-						_right = (float) (d2 * Math.cos(0));
-					} else if (getR2() < PI) {
-						_right = (float) (d1 * Math.cos(getR1()));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						float val1 = (float) (d1 * Math.cos(getR1()));
-						;
-						float val2 = (float) (d1 * Math.cos(getR2()));
-						;
-						_right = val1 > val2 ? val1 : val2;
-					} else {
-						_right = (float) (d2 * Math.cos(getR2()));
-					}
-				} else if (getR1() < ONE_AND_HALF_PI) {
-					if (getR2() < getR1()) {
-						_right = (float) (d2 * Math.cos(0));
-					}
-					if (getR2() < ONE_AND_HALF_PI) {
-						_right = (float) (d1 * Math.cos(getR2()));
-					} else {
-						_right = (float) (d2 * Math.cos(getR2()));
-					}
-
+		float computeRight(boolean rotate) {
+			float right;
+			if (getR1(rotate) < HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					right = (float) (d2 * Math.cos(0));
+				} else if (getR2(rotate) < HALF_PI) {
+					right = (float) (d2 * Math.cos(getR1(rotate)));
+				} else if (getR2(rotate) < PI) {
+					right = (float) (d2 * Math.cos(getR1(rotate)));
 				} else {
-					if (getR2() < getR1()) {
-						_right = (float) (d2 * Math.cos(0));
-					} else
-						_right = (float) (d2 * Math.cos(getR2()));
+					// circle
+					right = (float) (d2 * Math.cos(0));
 				}
+			} else if (getR1(rotate) < PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					right = (float) (d2 * Math.cos(0));
+				} else if (getR2(rotate) < PI) {
+					right = (float) (d1 * Math.cos(getR1(rotate)));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					float val1 = (float) (d1 * Math.cos(getR1(rotate)));
+					;
+					float val2 = (float) (d1 * Math.cos(getR2(rotate)));
+					;
+					right = val1 > val2 ? val1 : val2;
+				} else {
+					right = (float) (d2 * Math.cos(getR2(rotate)));
+				}
+			} else if (getR1(rotate) < ONE_AND_HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					right = (float) (d2 * Math.cos(0));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					right = (float) (d1 * Math.cos(getR2(rotate)));
+				} else {
+					right = (float) (d2 * Math.cos(getR2(rotate)));
+				}
+
+			} else {
+				if (getR2(rotate) < getR1(rotate)) {
+					right = (float) (d2 * Math.cos(0));
+				} else
+					right = (float) (d2 * Math.cos(getR2(rotate)));
 			}
-			return _right;
+
+			return right;
+
 		}
 
 		@Override
-		protected float getBottom() {
-			if (_bottom == Integer.MIN_VALUE) {
-				if (getR1() < HALF_PI) {
-					if (getR2() < getR1()) {
-						_bottom = (float) (d1 * Math.sin(ONE_AND_HALF_PI));
-					} else if (getR2() < HALF_PI) {
-						_bottom = (float) (d1 * Math.sin(getR1()));
-					} else if (getR2() < PI) {
-						float val1 = (float) (d1 * Math.sin(getR1()));
-						float val2 = (float) (d1 * Math.sin(getR2()));
-						_bottom = val1 < val2 ? val1 : val2;
-					} else {
-						// circle
-						_bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
-					}
-				} else if (getR1() < PI) {
-					if (getR2() < getR1()) {
-						_bottom = (float) (d1 * Math.sin(ONE_AND_HALF_PI));
-					}
-					if (getR2() < PI) {
-						_bottom = (float) (d1 * Math.sin(getR2()));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						_bottom = (float) (d2 * Math.sin(getR2()));
-					} else {
-						_bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
-					}
-				} else if (getR1() < ONE_AND_HALF_PI) {
-					if (getR2() < getR1()) {
-						_bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						_bottom = (float) (d2 * Math.sin(getR2()));
-					} else {
-						_bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
-					}
-
+		float computeBottom(boolean rotate) {
+			float bottom;
+			if (getR1(rotate) < HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					bottom = (float) (d1 * Math.sin(ONE_AND_HALF_PI));
+				} else if (getR2(rotate) < HALF_PI) {
+					bottom = (float) (d1 * Math.sin(getR1(rotate)));
+				} else if (getR2(rotate) < PI) {
+					float val1 = (float) (d1 * Math.sin(getR1(rotate)));
+					float val2 = (float) (d1 * Math.sin(getR2(rotate)));
+					bottom = val1 < val2 ? val1 : val2;
 				} else {
-					if (getR2() < PI) {
-						_bottom = (float) (d2 * Math.sin(getR1()));
-					} else if (getR2() < ONE_AND_HALF_PI) {
-						float b1 = (float) (d2 * Math.sin(getR1()));
-						float b2 = (float) (d2 * Math.sin(getR2()));
-						_bottom = b1 < b2 ? b1 : b2;
-					} else if (getR2() < getR1()) {
-						_bottom = (float) Math.cos(ONE_AND_HALF_PI);
-					} else
-						_bottom = (float) (d2 * Math.sin(getR1()));
+					// circle
+					bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
 				}
-				_bottom = -_bottom;
+			} else if (getR1(rotate) < PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					bottom = (float) (d1 * Math.sin(ONE_AND_HALF_PI));
+				} else if (getR2(rotate) < PI) {
+					bottom = (float) (d1 * Math.sin(getR2(rotate)));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					bottom = (float) (d2 * Math.sin(getR2(rotate)));
+				} else {
+					bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
+				}
+			} else if (getR1(rotate) < ONE_AND_HALF_PI) {
+				if (getR2(rotate) < getR1(rotate)) {
+					bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					bottom = (float) (d2 * Math.sin(getR2(rotate)));
+				} else {
+					bottom = (float) (d2 * Math.sin(ONE_AND_HALF_PI));
+				}
 
+			} else {
+				if (getR2(rotate) < PI) {
+					bottom = (float) (d2 * Math.sin(getR1(rotate)));
+				} else if (getR2(rotate) < ONE_AND_HALF_PI) {
+					float b1 = (float) (d2 * Math.sin(getR1(rotate)));
+					float b2 = (float) (d2 * Math.sin(getR2(rotate)));
+					bottom = b1 < b2 ? b1 : b2;
+				} else if (getR2(rotate) < getR1(rotate)) {
+					bottom = (float) Math.cos(ONE_AND_HALF_PI);
+				} else
+					bottom = (float) (d2 * Math.sin(getR1(rotate)));
 			}
-			return _bottom;
-		}
-
-		@Override
-		public void setRotation(float rotation) {
-			this.root.setRotation(rotation);
+			bottom = -bottom;
+			return bottom;
 		}
 
 		@Override
@@ -341,40 +346,54 @@ abstract class BBPolarTree {
 		}
 
 		@Override
-		protected void resetComputedRs() {
+		long getCurrentStamp() {
+			return root.getCurrentStamp();
+		}
 
-			this._computedR2 = this._computedR1 = Float.NaN;
-			this._x = this._y = this._bottom = this._right = Integer.MIN_VALUE;
-			if (kids != null)
-				for (BBPolarTree child : kids)
-					child.resetComputedRs();
+		@Override
+		BBPolarRootTree getRoot() {
+			return root;
+		}
 
+		@Override
+		int getMinBoxSize() {
+			return root.getMinBoxSize();
+		}
+
+		@Override
+		ImageShape getShape() {
+			return root.getShape();
 		}
 	}
 
 	protected float _r1, d1, _r2, d2, r;
-	protected BBPolarTree[] kids;
+	protected BBPolarTree[] _kids;
 	private float[] _points;
 	protected float _computedR1 = Float.NaN, _computedR2 = Float.NaN;
+	private long pointsStamp;
 
-	BBPolarTree(float r1, float r2, float d1, float d2) {
+	BBPolarTree(float r1, float r2, float d1, float d2, int minBoxSize) {
 		this._r1 = r1;
 		this._r2 = r2;
 		this.d1 = d1;
 		this.d2 = d2;
+		float r = r2 - r1;
+		float d = 2 * BBPolarTree.PI * d2 * r / BBPolarTree.TWO_PI;
+
+		boolean tooSmallToContinue = d <= minBoxSize || d2 - d1 < minBoxSize;
+		if (tooSmallToContinue)
+			this.setLeaf(true);
 	}
 
-	void addKids(BBPolarTree... _kids) {
+	void addKids(BBPolarTree... kids) {
 		ArrayList<BBPolarTree> kidList = new ArrayList<BBPolarTree>();
-		for (BBPolarTree kid : _kids) {
+		for (BBPolarTree kid : kids) {
 			if (kid != null) {
 				kidList.add(kid);
 			}
 		}
-		kids = kidList.toArray(new BBPolarTree[0]);
+		_kids = kidList.toArray(new BBPolarTree[0]);
 	}
-
-	abstract void setLocation(int x, int y);
 
 	abstract int getRootX();
 
@@ -386,13 +405,13 @@ abstract class BBPolarTree {
 			if (this.isLeaf() && otherTree.isLeaf()) {
 				return true;
 			} else if (this.isLeaf()) { // Then otherTree isn't a leaf.
-				for (BBPolarTree otherKid : otherTree.kids) {
+				for (BBPolarTree otherKid : otherTree.getKids()) {
 					if (this.overlaps(otherKid)) {
 						return true;
 					}
 				}
 			} else {
-				for (BBPolarTree myKid : this.kids) {
+				for (BBPolarTree myKid : this.getKids()) {
 					if (otherTree.overlaps(myKid)) {
 						return true;
 					}
@@ -402,13 +421,26 @@ abstract class BBPolarTree {
 		return false;
 	}
 
+	private BBPolarTree[] getKids() {
+		if ((!this.isLeaf()) && this._kids == null)
+			BBPolarTreeBuilder.makeChildren(this, getShape(), getMinBoxSize(),
+					getRoot());
+		return this._kids;
+	}
+
+	abstract BBPolarRootTree getRoot();
+
+	abstract int getMinBoxSize();
+
+	abstract ImageShape getShape();
+
 	boolean overlaps(float x, float y, float right, float bottom) {
 
 		if (this.rectCollide(x, y, right, bottom)) {
 			if (this.isLeaf()) {
 				return true;
 			} else {
-				for (BBPolarTree myKid : this.kids) {
+				for (BBPolarTree myKid : this.getKids()) {
 					if (myKid.overlaps(x, y, right, bottom)) {
 						return true;
 					}
@@ -424,7 +456,7 @@ abstract class BBPolarTree {
 			if (this.isLeaf())
 				return true;
 			else {
-				for (BBPolarTree myKid : this.kids) {
+				for (BBPolarTree myKid : this.getKids()) {
 					if (myKid.contains(x, y, right, bottom)) {
 						return true;
 					}
@@ -435,38 +467,60 @@ abstract class BBPolarTree {
 			return false;
 	}
 
-	protected abstract float getX();
+	abstract float computeX(boolean rotate);
 
-	protected abstract float getY();
+	abstract float computeY(boolean rotate);
 
-	protected abstract float getRight();
+	abstract float computeRight(boolean rotate);
 
-	protected abstract float getBottom();
+	abstract float computeBottom(boolean rotate);
 
-	public float getR1() {
-		if (Float.isNaN(this._computedR1)) {
-			_computedR1 = this._r1 + getRotation();
-			if (_computedR1 > TWO_PI)
-				this._computedR1 = (_computedR1) % TWO_PI;
-		}
-		return this._computedR1;
+	public float getR1(boolean rotate) {
+		if (rotate) {
+			checkRecompute();
+			return this._computedR1;
+		} else
+			return this._r1;
 	}
 
-	public float getR2() {
-		if (Float.isNaN(this._computedR2)) {
-			this._computedR2 = this._r2 + getRotation();
-			if (this._computedR2 > TWO_PI)
-				this._computedR2 = (_computedR2) % TWO_PI;
+	public float getR2(boolean rotate) {
+		if (rotate) {
+			checkRecompute();
+			return this._computedR2;
+		} else
+			return this._r2;
+	}
+
+	void checkRecompute() {
+		if (this.rStamp != this.getCurrentStamp()) {
+			computeR1();
+			computeR2();
+			this.rStamp = this.getCurrentStamp();
 		}
-		return this._computedR2;
+	}
+
+	private void computeR1() {
+		_computedR1 = this._r1 + getRotation();
+		if (_computedR1 > TWO_PI)
+			this._computedR1 = (_computedR1) % TWO_PI;
+
+	}
+
+	private void computeR2() {
+		this._computedR2 = this._r2 + getRotation();
+		if (this._computedR2 > TWO_PI)
+			this._computedR2 = (_computedR2) % TWO_PI;
+
 	}
 
 	private float[] getPoints() {
-		// if (this._points == null)
-		this._points = new float[] { getRootX() - swelling + getX(),
-				getRootY() - swelling + getY(),
-				getRootX() + swelling + getRight(),
-				getRootY() + swelling + getBottom() };
+		if (this.pointsStamp != this.getCurrentStamp()) {
+			this._points = new float[] { getRootX() - swelling + getX(true),
+					getRootY() - swelling + getY(true),
+					getRootX() + swelling + getRight(true),
+					getRootY() + swelling + getBottom(true) };
+			this.pointsStamp = this.getCurrentStamp();
+		}
 		return this._points;
 	}
 
@@ -493,16 +547,20 @@ abstract class BBPolarTree {
 	}
 
 	boolean isLeaf() {
-		return kids == null;
+		return _leaf;
 	}
 
 	int swelling = 0;
+	private long xStamp, yStamp, rightStamp, bottomStamp;
+	private boolean _leaf = false;
+	private float _relativeX = Float.NaN, _relativeY = Float.NaN,
+			_relativeRight = Float.NaN, _relativeBottom = Float.NaN;
 
 	void swell(int extra) {
 		swelling += extra;
 		if (!isLeaf()) {
-			for (int i = 0; i < kids.length; i++) {
-				kids[i].swell(extra);
+			for (int i = 0; i < getKids().length; i++) {
+				getKids()[i].swell(extra);
 			}
 		}
 	}
@@ -519,15 +577,14 @@ abstract class BBPolarTree {
 
 	void draw(Graphics g) {
 		drawLeaves(g);
-
 	}
 
 	private void drawLeaves(Graphics g) {
 		if (this.isLeaf()) {
-			drawBounds(g, getPoints());
+			drawBounds(g);
 		} else {
-			for (int i = 0; i < kids.length; i++) {
-				kids[i].drawLeaves(g);
+			for (int i = 0; i < getKids().length; i++) {
+				getKids()[i].drawLeaves(g);
 			}
 		}
 	}
@@ -536,8 +593,8 @@ abstract class BBPolarTree {
 		if (this.isLeaf()) {
 			drawBounds(g, getPoints());
 		} else {
-			for (int i = 0; i < kids.length; i++) {
-				kids[i].drawLeaves(g);
+			for (int i = 0; i < getKids().length; i++) {
+				getKids()[i].drawLeaves(g);
 			}
 		}
 	}
@@ -548,64 +605,142 @@ abstract class BBPolarTree {
 
 	static int drawCount = 0;
 
-	private void drawBounds(Graphics g, float[] rect) {
+	private void drawBounds(Graphics g) {
 		int x1, x2, x3, x4, y1, y2, y3, y4;
-		x1 = (int) (this.getRootX() + this.d1 * Math.cos(getR1()));
-		y1 = (int) (this.getRootY() - this.d1 * Math.sin(getR1()));
-		x2 = (int) (this.getRootX() + this.d1 * Math.cos(getR2()));
-		y2 = (int) (this.getRootY() - this.d1 * Math.sin(getR2()));
-		x3 = (int) (this.getRootX() + this.d2 * Math.cos(getR1()));
-		y3 = (int) (this.getRootY() - this.d2 * Math.sin(getR1()));
-		x4 = (int) (this.getRootX() + this.d2 * Math.cos(getR2()));
-		y4 = (int) (this.getRootY() - this.d2 * Math.sin(getR2()));
+		x1 = (int) (this.getRootX() + this.d1 * Math.cos(getR1(true)));
+		y1 = (int) (this.getRootY() - this.d1 * Math.sin(getR1(true)));
+		x2 = (int) (this.getRootX() + this.d1 * Math.cos(getR2(true)));
+		y2 = (int) (this.getRootY() - this.d1 * Math.sin(getR2(true)));
+		x3 = (int) (this.getRootX() + this.d2 * Math.cos(getR1(true)));
+		y3 = (int) (this.getRootY() - this.d2 * Math.sin(getR1(true)));
+		x4 = (int) (this.getRootX() + this.d2 * Math.cos(getR2(true)));
+		y4 = (int) (this.getRootY() - this.d2 * Math.sin(getR2(true)));
 
-		float r = this.getR2() - this.getR1();
+		float r = this.getR2(true) - this.getR1(true);
+		if (r < 0)
+			r = TWO_PI + r;
 		assert (r < PI);
-		// Polygon p = new Polygon(new int[] { x1, x2, x3, x4 }, new int[] { y1,
-		// y2, y3, y4 }, 4);
 
-		// g.drawPolygon(p);
 		g.drawArc((int) (this.getRootX() - this.d2),
 				(int) (this.getRootY() - this.d2), (int) (this.d2 * 2),
-				(int) (this.d2 * 2), (int) Math.toDegrees(this.getR1()),
+				(int) (this.d2 * 2), (int) Math.toDegrees(this.getR1(true)),
 				(int) Math.toDegrees(r) + 1);
 		g.drawArc((int) (this.getRootX() - this.d1),
 				(int) (this.getRootY() - this.d1), (int) (this.d1 * 2),
-				(int) (this.d1 * 2), (int) Math.toDegrees(this.getR1()),
+				(int) (this.d1 * 2), (int) Math.toDegrees(this.getR1(true)),
 				(int) Math.toDegrees(r));
 		g.drawLine(x1, y1, x3, y3);
 		g.drawLine(x2, y2, x4, y4);
-		// System.err.println(this.getWidth() + ", " + this.getHeight());
-		// g.drawRect((int) (this.getRootX() + this.getX()),
-		// (int) (this.getRootY() + this.getY()),
-		// // (int) (this.getRight() - this.getX()),
-		// // (int) (this.getBottom() - this.getY()));
-		// drawCount++;
-		// System.err.println(drawCount);
+
 	}
 
-	public float getWidth() {
-		return this.getRight() - this.getX();
+	public float getWidth(boolean rotate) {
+		return this.getRight(rotate) - this.getX(rotate);
 	}
 
-	public float getHeight() {
-		return this.getBottom() - this.getY();
-	}
-
-	public void resetMetrics() {
-		this._points = null;
+	public float getHeight(boolean rotate) {
+		return this.getBottom(rotate) - this.getY(rotate);
 	}
 
 	/**
 	 * @param rotation
 	 *            the rotation to set
 	 */
-	public abstract void setRotation(float rotation);
+
+	private void checkComputeX() {
+		if (this.xStamp != this.getCurrentStamp()) {
+			this._x = computeX(true);
+			this.xStamp = this.getCurrentStamp();
+		}
+	}
+
+	private void checkComputeY() {
+		if (this.yStamp != this.getCurrentStamp()) {
+			this._y = computeY(true);
+			this.yStamp = this.getCurrentStamp();
+		}
+
+	}
+
+	private void checkComputeRight() {
+		if (this.rightStamp != this.getCurrentStamp()) {
+			this._right = computeRight(true);
+			this.rightStamp = this.getCurrentStamp();
+		}
+	}
+
+	private void checkComputeBottom() {
+		if (this.bottomStamp != this.getCurrentStamp()) {
+			this._bottom = computeBottom(true);
+			this.bottomStamp = this.getCurrentStamp();
+		}
+	}
+
+	private float getRelativeX() {
+		if (Float.isNaN(this._relativeX))
+			this._relativeX = computeX(false);
+		return this._relativeX;
+	}
+
+	private float getRelativeY() {
+		if (Float.isNaN(this._relativeY))
+			this._relativeY = computeY(false);
+		return this._relativeY;
+	}
+
+	private float getRelativeRight() {
+		if (Float.isNaN(this._relativeRight))
+			this._relativeRight = computeRight(false);
+		return this._relativeRight;
+	}
+
+	private float getRelativeBottom() {
+		if (Float.isNaN(this._relativeBottom))
+			this._relativeBottom = computeBottom(false);
+		return this._relativeBottom;
+	}
+
+	protected float getX(boolean rotate) {
+		if (rotate) {
+			checkComputeX();
+			return _x;
+		} else
+			return getRelativeX();
+	}
+
+	protected float getY(boolean rotate) {
+		if (rotate) {
+			checkComputeY();
+			return _y;
+		} else
+			return getRelativeY();
+	}
+
+	protected float getRight(boolean rotate) {
+		if (rotate) {
+			checkComputeRight();
+			return _right;
+		} else
+			return getRelativeRight();
+	}
+
+	protected float getBottom(boolean rotate) {
+		if (rotate) {
+			checkComputeBottom();
+			return _bottom;
+		}
+		return getRelativeBottom();
+	}
 
 	/**
 	 * @return the rotation
 	 */
 	public abstract float getRotation();
 
-	protected abstract void resetComputedRs();
+	abstract long getCurrentStamp();
+
+	public void setLeaf(boolean b) {
+		this._leaf = b;
+	}
+
 }

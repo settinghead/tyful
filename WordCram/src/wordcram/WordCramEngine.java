@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.List;
 
 import processing.core.*;
 import wordcram.WordPlacer.PlaceInfo;
@@ -42,7 +43,7 @@ public class WordCramEngine {
 	private WordPlacer placer;
 	private WordNudger nudger;
 
-	private Word[] words; // just a safe copy
+	private List<Word> words; // just a safe copy
 	private EngineWord[] eWords;
 	private int eWordIndex = -1;
 
@@ -50,21 +51,22 @@ public class WordCramEngine {
 
 	private final TemplateImage img;
 
-	 Applet applet = new Applet();
-	 Frame frame = new Frame("Roseindia.net");
+//	 Applet applet = new Applet();
+//	 Frame frame = new Frame("Roseindia.net");
 
-	WordCramEngine(PGraphics destination, Word[] words, WordFonter fonter,
-			WordSizer sizer, WordColorer colorer, WordAngler angler,
-			WordPlacer placer, WordNudger nudger,
+	WordCramEngine(PGraphics destination, List<Word> words,
+			WordFonter fonter, WordSizer sizer, WordColorer colorer,
+			WordAngler angler, WordPlacer placer, WordNudger nudger,
 			BBPolarTreeBuilder bbTreeBuilder, RenderOptions renderOptions) {
 		this(destination, words, null, fonter, sizer, colorer, angler, placer,
 				nudger, bbTreeBuilder, renderOptions);
 	}
 
-	WordCramEngine(PGraphics destination, Word[] words, TemplateImage img,
-			WordFonter fonter, WordSizer sizer, WordColorer colorer,
-			WordAngler angler, WordPlacer placer, WordNudger nudger,
-			BBPolarTreeBuilder bbTreeBuilder, RenderOptions renderOptions) {
+	WordCramEngine(PGraphics destination, List<Word> words,
+			TemplateImage img, WordFonter fonter, WordSizer sizer,
+			WordColorer colorer, WordAngler angler, WordPlacer placer,
+			WordNudger nudger, BBPolarTreeBuilder bbTreeBuilder,
+			RenderOptions renderOptions) {
 
 		// if
 		// (destination.getClass().equals(processing.core.PGraphicsJava2D.class))
@@ -85,26 +87,26 @@ public class WordCramEngine {
 		this.renderOptions = renderOptions;
 		this.words = words;
 		this.eWords = wordsIntoEngineWords(words, bbTreeBuilder);
-
-		 frame.setSize(1400, 1400);
-		 frame.add(applet);
-		 frame.setVisible(true);
+		//
+//		 frame.setSize(1400, 1400);
+//		 frame.add(applet);
+//		 frame.setVisible(true);
 	}
 
-	private EngineWord[] wordsIntoEngineWords(Word[] words,
+	private EngineWord[] wordsIntoEngineWords(List<Word> words,
 			BBPolarTreeBuilder bbTreeBuilder) {
 		ArrayList<EngineWord> engineWords = new ArrayList<EngineWord>();
 
 		int maxNumberOfWords = renderOptions.maxNumberOfWordsToDraw >= 0 ? renderOptions.maxNumberOfWordsToDraw
-				: words.length;
+				: words.size();
 		for (int i = 0; i < maxNumberOfWords; i++) {
 
-			Word word = words[i];
-			EngineWord eWord = new EngineWord(word, i, words.length,
+			Word word = words.get(i);
+			EngineWord eWord = new EngineWord(word, i, words.size(),
 					bbTreeBuilder);
 
 			PFont wordFont = word.getFont(fonter);
-			float wordSize = word.getSize(sizer, i, words.length);
+			float wordSize = word.getSize(sizer, i, words.size());
 			float wordAngle = eWord.getAngle(angler);
 
 			Shape shape = WordShaper.getShapeFor(eWord.word.word, wordFont,
@@ -117,8 +119,8 @@ public class WordCramEngine {
 			}
 		}
 
-		for (int i = maxNumberOfWords; i < words.length; i++) {
-			skipWord(words[i], WordCram.WAS_OVER_MAX_NUMBER_OF_WORDS);
+		for (int i = maxNumberOfWords; i < words.size(); i++) {
+			skipWord(words.get(i), WordCram.WAS_OVER_MAX_NUMBER_OF_WORDS);
 		}
 
 		return engineWords.toArray(new EngineWord[0]);
@@ -197,8 +199,11 @@ public class WordCramEngine {
 			}
 
 			boolean foundOverlap = false;
+			
 			for (int i = 0; !foundOverlap && i < eWordIndex; i++) {
 				EngineWord otherWord = eWords[i];
+				if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
+
 				if (eWord.overlaps(otherWord)) {
 					foundOverlap = true;
 
@@ -208,10 +213,10 @@ public class WordCramEngine {
 			}
 
 			if (!foundOverlap) {
-				eWord.getTree().draw(applet.getGraphics());
-//				eWord.setShape(WordShaper.rotate(eWord.getShape(), eWord
-//						.getTree().getRotation(), (float) eWord.getTree()
-//						.getRootX(), (float) eWord.getTree().getRootY()), 0);
+				 //eWord.getTree().draw(applet.getGraphics());
+				// eWord.setShape(WordShaper.rotate(eWord.getShape(), eWord
+				// .getTree().getRotation(), (float) eWord.getTree()
+				// .getRootX(), (float) eWord.getTree().getRootY()), 0);
 				placer.success(info.getReturnedObj());
 				eWord.finalizeLocation();
 				return true;
@@ -253,9 +258,9 @@ public class WordCramEngine {
 
 	Word[] getSkippedWords() {
 		ArrayList<Word> skippedWords = new ArrayList<Word>();
-		for (int i = 0; i < words.length; i++) {
-			if (words[i].wasSkipped()) {
-				skippedWords.add(words[i]);
+		for (int i = 0; i < words.size(); i++) {
+			if (words.get(i).wasSkipped()) {
+				skippedWords.add(words.get(i));
 			}
 		}
 		return skippedWords.toArray(new Word[0]);

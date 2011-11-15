@@ -23,6 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import processing.core.PVector;
+import wordcram.BBPolarTree.BBPolarRootTree;
 import wordcram.WordPlacer.PlaceInfo;
 import wordcram.density.DensityPatchIndex;
 
@@ -32,7 +33,7 @@ class EngineWord {
 
 	private Shape shape;
 	private BBPolarTreeBuilder bbTreeBuilder;
-	private BBPolarTree bbTree;
+	private BBPolarRootTree bbTree;
 	private Float presetAngle;
 	Float renderedAngle;
 
@@ -129,7 +130,7 @@ class EngineWord {
 				(float) bounds.getHeight());
 	}
 
-	public BBPolarTree getTree() {
+	public BBPolarRootTree getTree() {
 		return this.bbTree;
 	}
 
@@ -159,43 +160,8 @@ class EngineWord {
 	public float getRenderedAngle() {
 		return renderedAngle;
 	}
-	// private boolean trespassed_old(TemplateImage img) {
-	// if (shape != null && currentLocation != null) {
-	// Rectangle2D bounds = shape.getBounds2D();
-	// if (currentLocation.getpVector().x < 0
-	// || currentLocation.getpVector().y < 0
-	// || currentLocation.getpVector().x + bounds.getWidth() > img
-	// .getWidth()
-	// || currentLocation.getpVector().y + bounds.getHeight() > img
-	// .getHeight())
-	// return true;
-	//
-	// // sampling approach
-	// int numSamples = (int) (bounds.getWidth() * bounds.getHeight() /
-	// SAMPLE_DISTANCE);
-	// // TODO: devise better lower bound
-	// if (numSamples < 4)
-	// numSamples = 4;
-	// int missed = 0;
-	// int thresholdMissedCount = (int) (numSamples *
-	// MISS_PERCENTAGE_THRESHOLD);
-	// int i = 0;
-	// int total = 0;
-	// int numSamplesTimesThree = numSamples * 3;
-	// while (i < numSamples) {
-	// int relativeX = (int) (Math.random() * bounds.getWidth());
-	// int relativeY = (int) (Math.random() * bounds.getHeight());
-	// int x = (int) (relativeX + currentLocation.getpVector().x);
-	// int y = (int) (relativeY + currentLocation.getpVector().y);
-	// if (shape.contains(relativeX, relativeY)) {
-	// i++;
-	// if (img.getBrightness(x, y) < 0.01f
-	// && ++missed >= thresholdMissedCount)
-	// return true;
-	// }
-	//
-	// }
-	// }
-	// return false;
-	// }
+
+	boolean wasSkipped() {
+		return word.wasSkipped();
+	}
 }

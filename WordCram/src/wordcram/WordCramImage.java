@@ -17,6 +17,11 @@ package wordcram;
  */
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 import processing.core.*;
 import wordcram.text.*;
@@ -199,7 +204,7 @@ public class WordCramImage {
 	 */
 	public static final int NO_SPACE = 303;
 
-	private Word[] words;
+	private List<Word> words = null;
 	private TextSource textSource;
 	private String extraStopWords = "";
 	private boolean excludeNumbers = true;
@@ -226,6 +231,10 @@ public class WordCramImage {
 
 	private TemplateImage img;
 
+	public WordCramImage() {
+		this(800, 600);
+	}
+
 	/**
 	 * Make a new WordCram.
 	 * <p>
@@ -237,6 +246,7 @@ public class WordCramImage {
 	public WordCramImage(int width, int height) {
 		parent.init();
 		destination = parent.createGraphics(width, height, PApplet.JAVA2D);
+
 	}
 
 	/**
@@ -433,7 +443,7 @@ public class WordCramImage {
 	 * @return The WordCram, for further setup or drawing.
 	 */
 	public WordCramImage fromWords(Word[] words) {
-		this.words = words;
+		this.words.addAll(Arrays.asList(words));
 		return this;
 	}
 
@@ -765,6 +775,8 @@ public class WordCramImage {
 
 	public WordCramImage withConfinementImage(TemplateImage img) {
 		this.img = img;
+		this.destination = parent.createGraphics(img.getWidth(),
+				img.getHeight(), PApplet.JAVA2D);
 		return this;
 	}
 
@@ -796,8 +808,9 @@ public class WordCramImage {
 						: textCase == TextCase.Upper ? text.toUpperCase()
 								: text;
 
-				words = new WordCounter().withExtraStopWords(extraStopWords)
-						.shouldExcludeNumbers(excludeNumbers).count(text);
+				words = Arrays.asList(new WordCounter()
+						.withExtraStopWords(extraStopWords)
+						.shouldExcludeNumbers(excludeNumbers).count(text));
 			}
 			words = new WordSorterAndScaler().sortAndScale(words);
 
@@ -860,9 +873,8 @@ public class WordCramImage {
 	 * colored, fonted, sized, angled, or placed, or why they were skipped.
 	 */
 	public Word[] getWords() {
-		Word[] wordsCopy = new Word[words.length];
-		System.arraycopy(words, 0, wordsCopy, 0, words.length);
-		return wordsCopy;
+		Word[] dummy = new Word[0];
+		return words.toArray(dummy);
 	}
 
 	/**
@@ -920,6 +932,16 @@ public class WordCramImage {
 		wordCramEngine = null;
 		words = null;
 		textSource = null;
+	}
+
+
+
+	public void addWord(Word w) {
+		if (words != null){
+			words.add(w);
+			//TODO: temporary fix
+			Collections.sort(words);
+		}
 	}
 
 }

@@ -17,11 +17,14 @@ package wordcram;
  */
 
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+import java.util.Locale;
 
 import processing.core.PFont;
 
@@ -44,14 +47,35 @@ abstract class WordShaper {
 	private static Shape makeShape(String word, PFont pFont, float fontSize) {
 		Font font = pFont.getFont().deriveFont(fontSize);
 
-		char[] chars = word.toCharArray();
+		word = StringUtils.wordWrap(word, 13, Locale.ENGLISH);
+		// TODO: directly return a string array
+		String[] lines = word.split("\\n");
+		Area area = new Area();
 
-		// TODO hmm: this doesn't render newlines. Hrm. If you're word text is
-		// "foo\nbar", you get "foobar".
-		GlyphVector gv = font.layoutGlyphVector(frc, chars, 0, chars.length,
-				Font.LAYOUT_LEFT_TO_RIGHT);
+		int currentHeight = 0;
+		double maxWidth = 0;
 
-		return gv.getOutline();
+		for (String line : lines) {
+			char[] chars = line.toCharArray();
+
+			// TODO hmm: this doesn't render newlines. Hrm. If you're word text
+			// is
+			// "foo\nbar", you get "foobar".
+			GlyphVector gv = font.layoutGlyphVector(frc, chars, 0,
+					chars.length, Font.LAYOUT_LEFT_TO_RIGHT);
+			Shape shape = gv.getOutline();
+			Rectangle bounds = shape.getBounds();
+			if (bounds.getWidth() > maxWidth)
+				maxWidth = bounds.getWidth();
+
+			shape = AffineTransform.getTranslateInstance(
+					(maxWidth - bounds.getWidth()) / 2, currentHeight)
+					.createTransformedShape(shape);
+			area.add(new Area(shape));
+			currentHeight += bounds.getHeight();
+
+		}
+		return area;
 	}
 
 	private static boolean isTooSmall(Shape shape, int minShapeSize) {
