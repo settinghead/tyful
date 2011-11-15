@@ -23,6 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import processing.core.PVector;
+import wordcram.BBPolarTree.BBPolarRootTree;
 import wordcram.WordPlacer.PlaceInfo;
 import wordcram.density.DensityPatchIndex;
 
@@ -32,7 +33,7 @@ class EngineWord {
 
 	private Shape shape;
 	private BBPolarTreeBuilder bbTreeBuilder;
-	private BBPolarTree bbTree;
+	private BBPolarRootTree bbTree;
 	private Float presetAngle;
 	Float renderedAngle;
 
@@ -129,7 +130,7 @@ class EngineWord {
 				(float) bounds.getHeight());
 	}
 
-	public BBPolarTree getTree() {
+	public BBPolarRootTree getTree() {
 		return this.bbTree;
 	}
 

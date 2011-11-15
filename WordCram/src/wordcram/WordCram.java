@@ -16,6 +16,9 @@ package wordcram;
  limitations under the License.
  */
 
+import java.util.Arrays;
+import java.util.List;
+
 import cue.lang.stop.StopWords;
 import processing.core.*;
 import wordcram.text.*;
@@ -194,7 +197,7 @@ public class WordCram {
 	 */
 	public static final int NO_SPACE = 303;
 
-	private Word[] words;
+	private List<Word> words;
 	private TextSource textSource;
 	private String extraStopWords = "";
 	private boolean excludeNumbers = true;
@@ -409,6 +412,17 @@ public class WordCram {
 	 */
 	public WordCram fromText(TextSource textSource) {
 		this.textSource = textSource;
+		if (words == null && textSource != null) {
+			String text = textSource.getText();
+
+			text = textCase == TextCase.Lower ? text.toLowerCase()
+					: textCase == TextCase.Upper ? text.toUpperCase() : text;
+
+			words = Arrays.asList(new WordCounter()
+					.withExtraStopWords(extraStopWords)
+					.shouldExcludeNumbers(excludeNumbers).count(text));
+		}
+		words = new WordSorterAndScaler().sortAndScale(words);
 		return this;
 	}
 
@@ -425,7 +439,7 @@ public class WordCram {
 	 * @return The WordCram, for further setup or drawing.
 	 */
 	public WordCram fromWords(Word[] words) {
-		this.words = words;
+		this.words = Arrays.asList(words);
 		return this;
 	}
 
@@ -776,18 +790,6 @@ public class WordCram {
 	private WordCramEngine getWordCramEngine() {
 		if (wordCramEngine == null) {
 
-			if (words == null && textSource != null) {
-				String text = textSource.getText();
-
-				text = textCase == TextCase.Lower ? text.toLowerCase()
-						: textCase == TextCase.Upper ? text.toUpperCase()
-								: text;
-
-				words = new WordCounter().withExtraStopWords(extraStopWords)
-						.shouldExcludeNumbers(excludeNumbers).count(text);
-			}
-			words = new WordSorterAndScaler().sortAndScale(words);
-
 			if (fonter == null)
 				fonter = Fonters.alwaysUse(parent.createFont("sans", 1));
 			if (sizer == null)
@@ -847,8 +849,8 @@ public class WordCram {
 	 * colored, fonted, sized, angled, or placed, or why they were skipped.
 	 */
 	public Word[] getWords() {
-		Word[] wordsCopy = new Word[words.length];
-		System.arraycopy(words, 0, wordsCopy, 0, words.length);
+		Word[] wordsCopy = new Word[words.size()];
+		System.arraycopy(words, 0, wordsCopy, 0, words.size());
 		return wordsCopy;
 	}
 

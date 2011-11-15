@@ -17,29 +17,33 @@ package wordcram;
  */
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 class WordSorterAndScaler {
 
-	public Word[] sortAndScale(Word[] rawWords) {
-		
-		Word[] words = copy(rawWords);
-		Arrays.sort(words);
-		float maxWeight = words[0].weight;
-		
+	public List<Word> sortAndScale(List<Word> rawWords) {
+
+		List<Word> words = copy(rawWords);
+		Collections.sort(words);
+		float maxWeight = words.get(0).weight;
+
 		for (Word word : words) {
 			word.weight = word.weight / maxWeight;
 		}
-		
+
 		return words;
 	}
-	
-	private Word[] copy(Word[] rawWords) {
-		
-		// was Arrays.copyOf(rawWords, rawWords.length); - removed for Java 1.5 compatibility.
-		
-		Word[] copy = new Word[rawWords.length];
-		for(int i = 0; i < copy.length; i++) {
-			copy[i] = rawWords[i];
+
+	private List<Word> copy(List<Word> rawWords) {
+
+		// was Arrays.copyOf(rawWords, rawWords.length); - removed for Java 1.5
+		// compatibility.
+
+		List<Word> copy = new Vector<Word>();
+		for (int i = 0; i < rawWords.size(); i++) {
+			copy.add(rawWords.get(i));
 		}
 		return copy;
 	}

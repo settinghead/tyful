@@ -40,7 +40,8 @@ public class ExportPNG {
 		else
 			fileName = args[0];
 
-		TemplateImage img = new TemplateImage(ImageIO.read(new File("heart.png")));
+		TemplateImage img = new TemplateImage(
+				ImageIO.read(new File("heart.png")));
 		// BufferedImage img = ImageIO.read(new File("half.jpg"));
 
 		WordCramImage wordCram = new WordCramImage(img.getWidth(),
@@ -79,11 +80,10 @@ public class ExportPNG {
 		wordCram.withFonts(randomFont(wordCram.getApplet()));
 
 		wordCram.drawAll();
-		String path = UUID.randomUUID().toString() + ".png";
+		String path = "out/" + UUID.randomUUID().toString() + ".png";
 		wordCram.saveToFile(path);
 
 		// wordCram.saveToFile(fileName);
-
 	}
 
 	private static PFont randomFont(PApplet applet) {
