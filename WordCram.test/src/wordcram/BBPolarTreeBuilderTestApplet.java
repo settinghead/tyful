@@ -22,6 +22,7 @@ public class BBPolarTreeBuilderTestApplet {
 
 		Word word = new Word("The quick brown polar fox jumps over the lazy polar wolf.", 15);
 
+
 		PApplet pApplet = new PApplet();
 		PFont wordFont = word.getFont(Fonters.alwaysUse(randomFont(pApplet)));
 		float wordAngle = 0;
@@ -34,6 +35,7 @@ public class BBPolarTreeBuilderTestApplet {
 				new ShapeImageShape(textShape), 0);
 		// treeText.setRotation((float) (new Random().nextFloat() * Math.PI *
 		// 2));
+
 		treeText.setLocation(600, 200);
 
 		Applet applet = new Applet();

@@ -167,6 +167,7 @@ public class HomeController {
 
 		wordCram.reset();
 		TemplateImage img = new TemplateImage(ImageIO.read(pickTemplate()));
+
 		// wordCram.withConfinementImage(img);
 		wordCram
 
