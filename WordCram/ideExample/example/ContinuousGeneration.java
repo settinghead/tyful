@@ -42,7 +42,7 @@ public class ContinuousGeneration {
 			fileName = args[0];
 
 		TemplateImage img = new TemplateImage(
-				ImageIO.read(new File("wheel.png")));
+				ImageIO.read(new File("templates/wheel_h.png")));
 		// BufferedImage img = ImageIO.read(new File("half.jpg"));
 		while (true) {
 			WordCramImage wordCram = new WordCramImage(img.getWidth(),

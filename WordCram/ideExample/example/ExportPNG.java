@@ -41,7 +41,7 @@ public class ExportPNG {
 			fileName = args[0];
 
 		TemplateImage img = new TemplateImage(
-				ImageIO.read(new File("heart.png")));
+				ImageIO.read(new File("templates/heart.png")));
 		// BufferedImage img = ImageIO.read(new File("half.jpg"));
 
 		WordCramImage wordCram = new WordCramImage(img.getWidth(),

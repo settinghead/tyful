@@ -65,6 +65,8 @@ package at.leichtgewicht.cloud.text
 			bmp.y = bounds.y;
 			_shape.addChild( bmp );
 			_object.filters = [];
+			MonsterDebugger.trace(this,bmp):
+
 		}
 		
 		private function createTextField( fontName: String, embeddedFont: Boolean, text: String, size: Number ): TextField
@@ -81,6 +83,7 @@ package at.leichtgewicht.cloud.text
 			textField.x = -textField.width/2;
 			textField.y = -textField.height/2;
 			textField.cacheAsBitmap = true;
+			MonsterDebugger.trace(this,textField):
 			return textField;
 		}
 		

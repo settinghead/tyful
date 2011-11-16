@@ -18,6 +18,8 @@ package wordcram;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cue.lang.Counter;
 import cue.lang.WordIterator;
@@ -28,20 +30,21 @@ class WordCounter {
 	private StopWords cueStopWords;
 	private Set<String> extraStopWords = new HashSet<String>();
 	private boolean excludeNumbers;
-	
+
 	public WordCounter() {
 		this(null);
 	}
+
 	public WordCounter(StopWords cueStopWords) {
 		this.cueStopWords = cueStopWords;
 	}
-	
+
 	public WordCounter withExtraStopWords(String extraStopWordsString) {
 		String[] stopWordsArray = extraStopWordsString.toLowerCase().split(" ");
 		extraStopWords = new HashSet<String>(Arrays.asList(stopWordsArray));
 		return this;
 	}
-	
+
 	public WordCounter shouldExcludeNumbers(boolean shouldExcludeNumbers) {
 		excludeNumbers = shouldExcludeNumbers;
 		return this;
@@ -56,39 +59,57 @@ class WordCounter {
 
 	private Word[] countWords(String text) {
 		Counter<String> counter = new Counter<String>();
-		
+
 		for (String word : new WordIterator(text)) {
 			if (shouldCountWord(word)) {
 				counter.note(word);
 			}
 		}
-		
+
 		List<Word> words = new ArrayList<Word>();
-		
+
 		for (Entry<String, Integer> entry : counter.entrySet()) {
-			words.add(new Word(entry.getKey(), (int)entry.getValue()));
+			words.add(new Word(entry.getKey(), (int) entry.getValue()));
 		}
-		
+
 		return words.toArray(new Word[0]);
 	}
 
+	static Pattern p = Pattern.compile(".*[\\W+\\s].*");
+
+	private boolean isUrl(String word) {
+		if (word.startsWith("http://") || word.startsWith("https://"))
+			return true;
+		else
+			return false;
+	}
+
+	private boolean isAlphaNumeric(String word) {
+		Matcher m = p.matcher(word);
+		if (m.find())
+			return false;
+		else
+			return true;
+
+	}
+
 	private boolean shouldCountWord(String word) {
-		return !isStopWord(word) && !(excludeNumbers && isNumeric(word));
+		return !isStopWord(word) && !(excludeNumbers && isNumeric(word))
+				 && !isUrl(word);
 	}
 
 	private boolean isNumeric(String word) {
 		try {
 			Double.parseDouble(word);
 			return true;
-		}
-		catch (NumberFormatException x) {
+		} catch (NumberFormatException x) {
 			return false;
 		}
 	}
 
 	private boolean isStopWord(String word) {
-		return cueStopWords.isStopWord(word) || 
-				extraStopWords.contains(word.toLowerCase());
+		return cueStopWords.isStopWord(word)
+				|| extraStopWords.contains(word.toLowerCase());
 	}
 
 }

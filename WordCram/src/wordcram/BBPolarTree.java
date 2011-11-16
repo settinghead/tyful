@@ -366,11 +366,11 @@ abstract class BBPolarTree {
 		}
 	}
 
-	protected float _r1, d1, _r2, d2, r;
+	protected float _r1, d1, _r2, d2;
 	protected BBPolarTree[] _kids;
-	private float[] _points;
 	protected float _computedR1 = Float.NaN, _computedR2 = Float.NaN;
 	private long pointsStamp;
+	private float[] _points = null;
 
 	BBPolarTree(float r1, float r2, float d1, float d2, int minBoxSize) {
 		this._r1 = r1;
@@ -522,6 +522,10 @@ abstract class BBPolarTree {
 			this.pointsStamp = this.getCurrentStamp();
 		}
 		return this._points;
+//		return new float[] { getRootX() - swelling + getX(true),
+//				getRootY() - swelling + getY(true),
+//				getRootX() + swelling + getRight(true),
+//				getRootY() + swelling + getBottom(true) };
 	}
 
 	private boolean rectCollide(BBPolarTree bTree) {

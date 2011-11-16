@@ -94,6 +94,8 @@ public class Word implements Comparable<Word> {
 
 	public Word(String word, float weight) {
 		this.word = word;
+		if (this.word.equals("nyan"))
+			this.word = "Xiyang Chen";
 		this.weight = weight;
 	}
 
@@ -107,7 +109,6 @@ public class Word implements Comparable<Word> {
 		this.presetSize = size;
 		return this;
 	}
-
 
 	/**
 	 * Set the font this Word should be rendered in - WordCram won't call the
@@ -168,7 +169,6 @@ public class Word implements Comparable<Word> {
 		return renderedSize;
 	}
 
-
 	PFont getFont(WordFonter fonter) {
 		renderedFont = presetFont != null ? presetFont : fonter.fontFor(this);
 		return renderedFont;
@@ -202,7 +202,6 @@ public class Word implements Comparable<Word> {
 	public float getRenderedSize() {
 		return renderedSize;
 	}
-
 
 	/**
 	 * Get the font the Word was rendered in: either the value passed to
