@@ -35,22 +35,22 @@ package com.settinghead.wexpression.client
 		}
 		
 		
-		override protected function computeX(rotate:Boolean):Number {
+		override function computeX(rotate:Boolean):Number {
 			return -super.d2;
 		}
 		
 		
-		override protected function computeY(rotate:Boolean):Number {
+		override  function computeY(rotate:Boolean):Number {
 			return -super.d2;
 		}
 		
 		
-		override protected function computeRight(rotate:Boolean):Number {
+		override function computeRight(rotate:Boolean):Number {
 			return (super.d2);
 		}
 		
 		
-		override protected function computeBottom(rotate:Boolean):Number {
+		override function computeBottom(rotate:Boolean):Number {
 			return (super.d2);
 		}
 		

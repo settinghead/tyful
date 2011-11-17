@@ -16,29 +16,30 @@ package com.settinghead.wexpression.client
 	
 	public class WordCramRenderArea extends UIComponent
 	{
-		[Embed(source="Vera.ttf", fontFamily="vera")]
-		public static const fontClass: Class;
-		
 		public function WordCramRenderArea()
 		{
 			super();
 			
 			addEventListener(FlexEvent.CREATION_COMPLETE, function(event:FlexEvent):void {
-				
 				renderStuff();
 			});
 			
 		}
 		
 		public function renderStuff():void{
-			var testSet: TextSet = new TextSet(true,"Foxy!",0, 100,0,"vera");
-			this.addChild(testSet.shape);
+			var testSet: TextShape = new TextShape(true,"FREEDOMIZE",0, Number(100),0);
 
-			graphics.beginFill(0x000000, 0.5);
-			this.graphics.drawRect(0,0,200,200);
+			var tree:BBPolarRootTree = BBPolarTreeBuilder.makeTree(testSet,0);
+			this.graphics.beginFill(0x000000);
+//			this.addChild(testSet.shape);
+			this.graphics.lineStyle(0.5);
+			tree.draw(this.graphics);
+//			this.graphics.drawRect(20,20,300,300);
+//			this.graphics.moveTo(10,10);
+//			this.graphics.lineTo(200,200);
 			this.graphics.endFill();
-			
-			MonsterDebugger.trace(this, testSet.shape);
+			MonsterDebugger.trace(this, this.graphics);
+//			MonsterDebugger.trace(this,tree);
 			
 		}
 	}

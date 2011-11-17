@@ -2,10 +2,10 @@ package com.settinghead.wexpression.client
 {
 	internal final class SplitType
 	{
-		public final static const _3RAYS:int = 0;
-		public final static const _2RAYS1CUT = 1; 
-		public final static const _1RAY1CUT = 2;
-		public final static const _1RAY2CUTS = 3;
-		public final static const _3CUTS = 4;
+		public static const _3RAYS:int = 0;
+		public static const _2RAYS1CUT:int = 1; 
+		public static const _1RAY1CUT:int = 2;
+		public static const _1RAY2CUTS:int = 3;
+		public static const _3CUTS:int = 4;
 	}
 }

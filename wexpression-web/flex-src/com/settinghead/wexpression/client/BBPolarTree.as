@@ -25,7 +25,7 @@ package com.settinghead.wexpression.client {
 	
 	import org.as3commons.lang.Assert;
 	
-	internal class BBPolarTree {
+	public class BBPolarTree {
 		
 		public static const HALF_PI:Number= ((Math.PI / 2));
 		public static const TWO_PI:Number= ((Math.PI * 2));
@@ -36,9 +36,9 @@ package com.settinghead.wexpression.client {
 		
 		protected var _x:int, _y :int, _right:int, _bottom:int;
 		
-		public var _r1:Number, d1, _r2, d2;
+		public var _r1:Number, d1:Number, _r2:Number, d2:Number;
 		protected var _kids:Vector.<BBPolarChildTree>;
-		protected var _computedR1:Number= Number.NaN, _computedR2 = Number.NaN;
+		protected var _computedR1:Number= Number.NaN, _computedR2:Number = Number.NaN;
 		private var pointsStamp:Number;
 		private var _points:Array= null;
 	
@@ -48,7 +48,7 @@ package com.settinghead.wexpression.client {
 			this.d1 = d1;
 			this.d2 = d2;
 			var r:Number= r2 - r1;
-			var d:Number= 2* BBPolarTree.PI * d2 * r / BBPolarTree.TWO_PI;
+			var d:Number=  BBPolarTree.PI * (d1+d2) * r / BBPolarTree.TWO_PI;
 	
 			var tooSmallToContinue:Boolean= d <= minBoxSize || d2 - d1 < minBoxSize;
 			if (tooSmallToContinue)
@@ -73,13 +73,13 @@ package com.settinghead.wexpression.client {
 				if (this.isLeaf() && otherTree.isLeaf()) {
 					return true;
 				} else if (this.isLeaf()) { // Then otherTree isn't a leaf.
-					for (var otherKid:BBPolarTree in otherTree.getKids()) {
+					for each (var otherKid:BBPolarTree in otherTree.getKids()) {
 						if (this.overlaps(otherKid)) {
 							return true;
 						}
 					}
 				} else {
-					for (var myKid:BBPolarTree  in this.getKids()) {
+					for each (var myKid:BBPolarTree  in this.getKids()) {
 						if (otherTree.overlaps(myKid)) {
 							return true;
 						}
@@ -108,14 +108,14 @@ package com.settinghead.wexpression.client {
 			 throw new NotImplementedError();
 		 }
 	
-		function overlaps(x:Number, y:Number, right:Number, bottom:Number):Boolean {
+		function overlapsCoord(x:Number, y:Number, right:Number, bottom:Number):Boolean {
 	
-			if (this.rectCollide(x, y, right, bottom)) {
+			if (this.rectCollideCoord(x, y, right, bottom)) {
 				if (this.isLeaf()) {
 					return true;
 				} else {
-					for (var myKid:BBPolarTree in this.getKids()) {
-						if (myKid.overlaps(x, y, right, bottom)) {
+					for each (var myKid:BBPolarChildTree in this.getKids()) {
+						if (myKid.overlapsCoord(x, y, right, bottom)) {
 							return true;
 						}
 					}
@@ -130,7 +130,7 @@ package com.settinghead.wexpression.client {
 				if (this.isLeaf())
 					return true;
 				else {
-					for (var myKid:BBPolarTree in this.getKids()) {
+					for each (var myKid:BBPolarTree in this.getKids()) {
 						if (myKid.contains(x, y, right, bottom)) {
 							return true;
 						}
@@ -173,14 +173,14 @@ package com.settinghead.wexpression.client {
 		private function computeR1():void {
 			_computedR1 = this._r1 + getRotation();
 			if (_computedR1 > TWO_PI)
-				this._computedR1 = _computedR1()% TWO_PI;
+				this._computedR1 = this._computedR1 % TWO_PI;
 	
 		}
 	
 		private function computeR2():void {
 			this._computedR2 = this._r2 + getRotation();
 			if (this._computedR2 > TWO_PI)
-				this._computedR2 = _computedR2()% TWO_PI;
+				this._computedR2 = this._computedR2 % TWO_PI;
 	
 		}
 	
@@ -198,7 +198,7 @@ package com.settinghead.wexpression.client {
 		private function rectCollide(bTree:BBPolarTree):Boolean {
 			var b:Array= bTree.getPoints();
 	
-			return rectCollide(b[0], b[1], b[2], b[3]);
+			return rectCollideCoord(b[0], b[1], b[2], b[3]);
 		}
 	
 		private function rectContain(x:Number, y:Number, right:Number, bottom:Number):Boolean {
@@ -206,7 +206,7 @@ package com.settinghead.wexpression.client {
 			return a[0] <= x && a[1] <= y && a[2] >= right && a[3] >= bottom;
 		}
 	
-		private function rectCollide(x:Number, y:Number, right:Number, bottom:Number):Boolean {
+		private function rectCollideCoord(x:Number, y:Number, right:Number, bottom:Number):Boolean {
 			var a:Array= this.getPoints();
 	
 			Assert.isTrue(a[0] < a[2]);
@@ -222,10 +222,10 @@ package com.settinghead.wexpression.client {
 		}
 	
 		var swelling:int= 0;
-		private var xStamp:Number, yStamp, rightStamp, bottomStamp;
+		private var xStamp:Number, yStamp:Number, rightStamp:Number, bottomStamp:Number;
 		private var _leaf:Boolean= false;
-		private var _relativeX:Number= Number.NaN, _relativeY = Number.NaN,
-				_relativeRight = Number.NaN, _relativeBottom = Number.NaN;
+		private var _relativeX:Number= Number.NaN, _relativeY:Number = Number.NaN,
+				_relativeRight:Number = Number.NaN, _relativeBottom:Number = Number.NaN;
 	
 		function swell(extra:int):void {
 			swelling += extra;
@@ -243,6 +243,7 @@ package com.settinghead.wexpression.client {
 		}
 	
 		private function drawLeaves(g:Graphics):void {
+			this.getKids();
 			if (this.isLeaf()) {
 				drawBounds(g);
 			} else {
@@ -254,7 +255,7 @@ package com.settinghead.wexpression.client {
 	
 	
 		private function drawBounds(g:Graphics):void {
-			var x1:int, x2, x3, x4, y1, y2, y3, y4;
+			var x1:int, x2:int, x3:int, x4:int, y1:int, y2:int, y3:int, y4:int;
 			x1 = int((this.getRootX() + this.d1 * Math.cos(getR1(true))));
 			y1 = int((this.getRootY() - this.d1 * Math.sin(getR1(true))));
 			x2 = int((this.getRootX() + this.d1 * Math.cos(getR2(true))));
@@ -269,30 +270,30 @@ package com.settinghead.wexpression.client {
 				r = TWO_PI + r;
 			Assert.isTrue(r < PI);
 	
-			drawArc(g, (this.getRootX() - this.d2),
-					this.getRootY() - this.d2, this.d2 * 2,
-					this.d2 * 2, this.getR1(true), r);
-			drawArc(this.getRootX() - this.d1,
-					this.getRootY() - this.d1, this.d1 * 2,
-					this.d1 * 2, this.getR1(true),r);
+			drawArc(g, this.getRootX(),
+					this.getRootY(), this.d2,
+					 this.getR1(true), this.getR2(true), 1);
+			drawArc(g, this.getRootX(),
+					this.getRootY(), this.d1,
+					 this.getR1(true), this.getR2(true), 1);
 			g.moveTo(x1,y1);
 			g.lineTo(x3,y3);
 			g.moveTo(x2,y2);
 			g.lineTo(x4,y4);
 		}
-		private static const var deg_to_rad=0.0174532925;
 
 		public function drawArc(g:Graphics,center_x:Number,center_y:Number,
-								 radius:Number,angle_from:Number,angle_to:Number,precision:Number) {
-			var angle_diff=angle_to-angle_from;
-			var steps=Math.round(angle_diff*precision);
-			var angle=angle_from;
-			var px=center_x+radius*Math.cos(angle);
-			var py=center_y+radius*Math.sin(angle);
+								 radius:Number,angle_from:Number,angle_to:Number,precision:Number):void {
+			var angle_diff:Number=angle_to-angle_from;
+			var steps:Number=Math.round(angle_diff*precision);
+			if(steps==0) steps = 1;
+			var angle:Number=angle_from;
+			var px:Number=center_x+radius*Math.cos(angle);
+			var py:Number=center_y-radius*Math.sin(angle);
 			g.moveTo(px,py);
 			for (var i:int=1; i<=steps; i++) {
 				angle=angle_from+angle_diff/steps*i;
-				g.lineTo(center_x+radius*Math.cos(angle),center_y+radius*Math.sin(angle));
+				g.lineTo(center_x+radius*Math.cos(angle),center_y-radius*Math.sin(angle));
 			}
 		}
 	

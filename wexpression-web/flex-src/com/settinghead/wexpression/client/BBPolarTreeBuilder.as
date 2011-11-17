@@ -47,129 +47,132 @@ internal class BBPolarTreeBuilder {
 		return tree;
 	}
 
-	protected static function makeChildren(tree:BBPolarTree, shape:ImageShape,
+	public static function makeChildren(tree:BBPolarTree, shape:ImageShape,
 			minBoxSize:int, root:BBPolarRootTree):void {
-		var type:SplitType= determineType(tree);
+		var type:int= determineType(tree);
 
 		var children:Vector.<BBPolarChildTree>= splitTree(tree, shape, minBoxSize, root, type);
-
-		tree.addKids(children);
+		 if(children.length==0) 
+			 tree.setLeaf(true);
+		 else tree.addKids(children);
 	}
 
 	static function splitTree(tree:BBPolarTree, shape:ImageShape,
-		 minBoxSize:int, root:BBPolarRootTree, type:SplitType):Vector.<BBPolarChildTree> {
+		 minBoxSize:int, root:BBPolarRootTree, type:int):Vector.<BBPolarChildTree> {
 		var result:Vector.<BBPolarChildTree>= new Vector.<BBPolarChildTree>();
-		var r:BBPolarChildTree;
-
+		var re:BBPolarChildTree;
+		var r:Number, r1:Number, r2:Number, r3:Number, r4:Number, r5:Number;
+		var d:Number, d1:Number, d2:Number, d3:Number, d4:Number, d5:Number;
+		
 		switch (type) {
 		case SplitType._3RAYS: {
-			var r:Number= (tree.getR2(false) - tree.getR1(false)) / 4;
-			var r1:Number= tree.getR1(false);
-			var r2:Number= r1 + r;
-			var r3:Number= r2 + r;
-			var r4:Number= r3 + r;
-			var r5:Number= tree.getR2(false);
+			r = (tree.getR2(false) - tree.getR1(false)) / 4;
+			r1 = tree.getR1(false);
+			r2 = r1 + r;
+			r3 = r2 + r;
+			r4 = r3 + r;
+			r5 = tree.getR2(false);
 			Assert.isTrue(r1 < r2 && r2 < r3 && r3 < r4 && r4 < r5);
-			r = makeTree(shape, minBoxSize, r1, r2, tree.d1, tree.d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r2, r3, tree.d1, tree.d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r3, r4, tree.d1, tree.d2,root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r4, r5, tree.d1, tree.d2,root);
-			if(r!=null) result.push(r);
+			re = makeChildTree(shape, minBoxSize, r1, r2, tree.d1, tree.d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r2, r3, tree.d1, tree.d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r3, r4, tree.d1, tree.d2,root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r4, r5, tree.d1, tree.d2,root);
+			if(re!=null) result.push(re);
 		}
 			break;
 
 		case SplitType._2RAYS1CUT: {
-			var r:Number= (tree.getR2(false) - tree.getR1(false)) / 3;
-			var r1:Number= tree.getR1(false);
-			var r2:Number= r1 + r;
-			var r3:Number= r2 + r;
-			var r4:Number= tree.getR2(false);
-			var d1:Number= tree.d1;
-			var d2:Number= tree.d1 + (tree.d2 - tree.d1) / 2;
-			var d3:Number= tree.d2;
+			r = (tree.getR2(false) - tree.getR1(false)) / 3;
+			r1 = tree.getR1(false);
+			r2 = r1 + r;
+			r3 = r2 + r;
+			r4 = tree.getR2(false);
+			d1 = tree.d1;
+			d2 = tree.d1 + (tree.d2 - tree.d1) / 2;
+			d3 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3 && r3 < r4);
-			r = makeTree(shape, minBoxSize, r1, r4, d1, d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d2, d3, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r2, r3, d2, d3, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r3, r4, d2, d3, root);
-			if(r!=null) result.push(r);
+			re = makeChildTree(shape, minBoxSize, r1, r4, d1, d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r2, r3, d2, d3, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r3, r4, d2, d3, root);
+			if(re!=null) result.push(re);
 		}
 			break;
 		case SplitType._1RAY1CUT: {
-			var r:Number= (tree.getR2(false) - tree.getR1(false)) / 2;
-			var r1:Number= tree.getR1(false);
-			var r2:Number= r1 + r;
-			var r3:Number= tree.getR2(false);
-			var d:Number= (tree.d2 - tree.d1) / 2;
-			var d1:Number= tree.d1;
-			var d2:Number= d1 + d;
-			var d3:Number= tree.d2;
+			r = (tree.getR2(false) - tree.getR1(false)) / 2;
+			r1 = tree.getR1(false);
+			r2 = r1 + r;
+			r3 = tree.getR2(false);
+			d= (tree.d2 - tree.d1) / 2;
+			d1 = tree.d1;
+			d2 = d1 + d;
+			d3 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3);
 
-			r = makeTree(shape, minBoxSize, r1, r2, d1, d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r2, r3, d1, d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d2, d3, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r2, r3, d2, d3, root);
-			if(r!=null) result.push(r);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r2, r3, d1, d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r2, r3, d2, d3, root);
+			if(re!=null) result.push(re);
 		}
 			break;
 		case SplitType._1RAY2CUTS: {
-			var r:Number= (tree.getR2(false) - tree.getR1(false)) / 2;
-			var r1:Number= tree.getR1(false);
-			var r2:Number= r1 + r;
-			var r3:Number= tree.getR2(false);
-			var d:Number= (tree.d2 - tree.d1) / 3;
-			var d1:Number= tree.d1;
-			var d2:Number= d1 + d;
-			var d3:Number= d2 + d;
-			var d4:Number= tree.d2;
+			r = (tree.getR2(false) - tree.getR1(false)) / 2;
+			r1 = tree.getR1(false);
+			r2 = r1 + r;
+			r3 = tree.getR2(false);
+			d= (tree.d2 - tree.d1) / 3;
+			d1 = tree.d1;
+			d2 = d1 + d;
+			d3 = d2 + d;
+			d4 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3);
 
-			r = makeTree(shape, minBoxSize, r1, r3, d1, d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r3, d2, d3, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d3, d4, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r2, r3, d3, d4, root);
-			if(r!=null) result.push(r);
+			re = makeChildTree(shape, minBoxSize, r1, r3, d1, d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r3, d2, d3, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d3, d4, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r2, r3, d3, d4, root);
+			if(re!=null) result.push(re);
 		}
 			break;
 		case SplitType._3CUTS: {
-			var r1:Number= tree.getR1(false);
-			var r2:Number= tree.getR2(false);
-			var d:Number= (tree.d2 - tree.d1) / 4;
-			var d1:Number= tree.d1;
-			var d2:Number= d1 + d;
-			var d3:Number= d2 + d;
-			var d4:Number= d3 + d;
-			var d5:Number= tree.d2;
+			r1 = tree.getR1(false);
+			r2 = tree.getR2(false);
+			d= (tree.d2 - tree.d1) / 4;
+			d1 = tree.d1;
+			d2 = d1 + d;
+			d3 = d2 + d;
+			d4 = d3 + d;
+			d5 = tree.d2;
 			Assert.isTrue(r1 < r2);
 
-			r = makeTree(shape, minBoxSize, r1, r2, d1, d2, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d2, d3, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d3, d4, root);
-			if(r!=null) result.push(r);
-			r = makeTree(shape, minBoxSize, r1, r2, d4, d5, root);
-			if(r!=null) result.push(r);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d3, d4, root);
+			if(re!=null) result.push(re);
+			re = makeChildTree(shape, minBoxSize, r1, r2, d4, d5, root);
+			if(re!=null) result.push(re);
 		}
 			break;
 		}
 		return result;
 	}
 
-	private static function determineType(tree:BBPolarTree):SplitType {
+	private static function determineType(tree:BBPolarTree):int {
 		var d:Number= (tree.d2 - tree.d1);
 		var midLength:Number= ((tree.d2 + tree.d1)
 				* (tree.getR2(false) - tree.getR1(false)) / 2);
@@ -184,16 +187,18 @@ internal class BBPolarTreeBuilder {
 			return SplitType._1RAY1CUT;
 	}
 
-	private static function makeTree(shape:ImageShape, minBoxSize:int,
-			r1:Number, r2:Number, d1:Number, d2:Number, root:BBPolarRootTree):BBPolarTree {
+	private static function makeChildTree(shape:ImageShape, minBoxSize:int,
+			r1:Number, r2:Number, d1:Number, d2:Number, root:BBPolarRootTree):BBPolarChildTree {
 
-		var tree:BBPolarTree= new BBPolarChildTree(r1, r2, d1, d2,
+		var tree:BBPolarChildTree= new BBPolarChildTree(r1, r2, d1, d2,
 				root, minBoxSize);
 		var r:Rectangle = shape.getBounds2D();
 		var x:Number= tree.getX(false) + r.width / 2;
 		var y:Number= tree.getY(false) + r.height / 2;
 		var width:Number= tree.getRight(false) - tree.getX(false);
+		if(width<1) return null;
 		var height:Number= tree.getBottom(false) - tree.getY(false);
+		if(height<1) return null;
 		Assert.isTrue(width > 0);
 		Assert.isTrue(height > 0);
 		if (shape == null || shape.contains(x, y, width, height)) {

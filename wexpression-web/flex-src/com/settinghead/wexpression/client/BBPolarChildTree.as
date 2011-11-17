@@ -1,7 +1,7 @@
 package com.settinghead.wexpression.client
 {
 	
-		internal class BBPolarChildTree extends BBPolarTree {
+		public class BBPolarChildTree extends BBPolarTree {
 			
 			var root:BBPolarRootTree;
 			

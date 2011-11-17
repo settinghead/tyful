@@ -7,13 +7,13 @@ package com.settinghead.wexpression.client
 	
 	internal class WordShaper {
 		
-		private static function makeShape(text:String, fontSize:Number, fontName: String = "Arial"):TextSet {
+		private static function makeShape(text:String, fontSize:Number, fontName: String = "Arial"):TextShape {
 			
-			var result:TextSet = new TextSet(true,text,0,fontSize,0,fontName);
+			var result:TextShape = new TextShape(true,text,0,fontSize,0,fontName);
 			return result;
 		}
 		
-		private static function isTooSmall(shape:TextSet, minShapeSize:int):Boolean {
+		private static function isTooSmall(shape:TextShape, minShapeSize:int):Boolean {
 			var r:Rectangle = shape.shape.getBounds();
 			
 			// Most words will be wider than tall, so this basically boils down to
@@ -22,8 +22,8 @@ package com.settinghead.wexpression.client
 			return r.height < minShapeSize || r.width < minShapeSize;
 		}
 		
-		public static function rotate(shape:TextSet, rotation:Number, centerX:Number,
-									  centerY:Number):TextSet {
+		public static function rotate(shape:TextShape, rotation:Number, centerX:Number,
+									  centerY:Number):TextShape {
 			if (rotation == 0) {
 				return shape;
 			}
@@ -44,7 +44,7 @@ package com.settinghead.wexpression.client
 			
 		}
 		
-		public static function moveToOrigin(shape:TextSet):TextSet {
+		public static function moveToOrigin(shape:TextShape):TextShape {
 			var rect:Rectangle= shape.shape.getBounds();
 			
 			if (rect.x == 0&& rect.y == 0) {
