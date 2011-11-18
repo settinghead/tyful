@@ -125,7 +125,7 @@ public class WordCramEngine {
 		return eWordIndex < eWords.length - 1;
 	}
 
-	function drawAll():void {
+	public function drawAll():void {
 		while (hasMore()) {
 			drawNext();
 		}
@@ -233,8 +233,9 @@ public class WordCramEngine {
 	}
 
 	private function drawWordImage(word:EngineWord):void {
+		word.getShape().changeTextColor(colorer.colorFor(word.word));
 		destination.addChild(word.getShape().shape);
-		//word.bbTree.draw(destination.graphics);
+//		word.bbTree.draw(destination.graphics);
 		trace(word.word.word,"tree",word.bbTree.getRootX(),word.bbTree.getRootY(),
 			word.bbTree.getRotation(),"shape","x",word.getShape().shape.x,"width",word.getShape().shape.width,
 			"y",word.getShape().shape.y,"height",word.getShape().shape.height);

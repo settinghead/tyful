@@ -41,10 +41,7 @@ package com.settinghead.wexpression.client
 			
 			return shape;
 		}
-		
-		function rotateAroundCenter (ob:*, angleDegrees) {
-			
-		}
+	
 		
 		public static function moveToOrigin(shape:TextShape):TextShape {
 			var rect:Rectangle= shape.shape.getBounds(shape.shape.parent);

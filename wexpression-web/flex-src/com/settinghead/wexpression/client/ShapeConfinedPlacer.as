@@ -2,6 +2,8 @@ package com.settinghead.wexpression.client {
 	import com.settinghead.wexpression.client.density.DensityPatchIndex;
 	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
+	
+	import flash.geom.Point;
 
 
 public class ShapeConfinedPlacer implements WordPlacer {
@@ -21,8 +23,8 @@ public class ShapeConfinedPlacer implements WordPlacer {
 				wordImageHeight));
 		if (patch == null)
 			return null;
-		return new PlaceInfo(patch.getX() + patch.getWidth() / 2, patch.getY()
-				+ patch.getHeight() / 2, patch);
+		return new PlaceInfo(new Point(patch.getX() + patch.getWidth() / 2, patch.getY()
+				+ patch.getHeight() / 2), patch);
 	}
 
 	private function setImg(img:TemplateImage):void {
@@ -42,12 +44,12 @@ public class ShapeConfinedPlacer implements WordPlacer {
 	}
 
 	
-override public function fail(returnedObj:Object):void {
+ 	public function fail(returnedObj:Object):void {
 		index.unmark(Patch(returnedObj));
 	}
 
 	
-override public function success(returnedObj:Object):void {
+	 public function success(returnedObj:Object):void {
 		// index.add((Patch) returnedObj);
 	}
 

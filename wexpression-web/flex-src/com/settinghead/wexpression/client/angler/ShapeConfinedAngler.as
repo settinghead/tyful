@@ -4,6 +4,8 @@
 package com.settinghead.wexpression.client.angler {
 	import com.settinghead.wexpression.client.EngineWord;
 	import com.settinghead.wexpression.client.TemplateImage;
+	
+	import org.as3commons.lang.Assert;
 
 /**
  * @author settinghead
@@ -28,7 +30,7 @@ public class ShapeConfinedAngler implements WordAngler {
 		var angle:Number= (img.getHue(
 				int(eWord.getCurrentLocation().getpVector().x), int(eWord
 						.getCurrentLocation().getpVector().y)));
-		if (angle == 0)
+		if (isNaN(angle) || angle == 0)
 			return otherwise.angleFor(eWord);
 		else
 			return angle;

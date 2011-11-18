@@ -8,12 +8,15 @@ package com.settinghead.wexpression.client {
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
 	import mx.utils.HSBColor;
 	
+	import org.as3commons.bytecode.util.Assertions;
+	import org.as3commons.lang.Assert;
 	import org.peaceoutside.utils.ColorMath;
 	
 	/**
@@ -30,23 +33,44 @@ package com.settinghead.wexpression.client {
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
 	
-		public function TemplateImage(path:String) {
+		public function TemplateImage(path:String, renderer:WordCramRenderer) {
 			var my_loader:Loader = new Loader();
+			this.renderer = renderer;
+			my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			my_loader.load(new URLRequest(path));
-			this.img = new Bitmap();
-			this.img.bitmapData.draw(my_loader.content);
+
+		}
+		
+		private var done:Function;
+		private var renderer:WordCramRenderer;
+		
+		private function onLoadComplete (event:Event):void
+		{
+			this.img = new Bitmap(event.target.content.bitmapData);
+			this.renderer.withConfinementImage(this);
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
+//			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
+//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
+//			return colour.brightness;
 			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
-			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			return colour.brightness;
+			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
+			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
+			//			Assert.isTrue(!isNaN(colour.hue));
+			var b:Number= (colour & 0xFF);
+			b/=255;
+			return b;
 		}
 	
 		public function getHue(x:int, y:int):Number {
-			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
-			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			return colour.hue;
+			var rgbPixel : int = img.bitmapData.getPixel( x, y );
+//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
+			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
+//			Assert.isTrue(!isNaN(colour.hue));
+			var h:Number= ( (colour & 0x00FF0000) >> 16);
+			h/=255;
+			return h;
 		}
 	
 		public function getHeight():int {
@@ -97,9 +121,10 @@ package com.settinghead.wexpression.client {
 				while (i < numSamples) {
 					var relativeX:int= int((Math.random() * width));
 					var relativeY:int= int((Math.random() * height));
-					var sampleX:int= int((relativeX + x));
-					var sampleY:int= int((relativeY + y));
-					if (getBrightness(int((sampleX)), int((sampleY))) < 0.01&& ++darkCount >= threshold)
+					var sampleX:int= relativeX + x;
+					var sampleY:int= relativeY + y;
+					var brightness:Number = getBrightness(sampleX, sampleY);
+					if (brightness < 0.01&& ++darkCount >= threshold)
 						return false;
 					i++;
 				}

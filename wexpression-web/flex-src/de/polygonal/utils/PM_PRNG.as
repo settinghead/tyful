@@ -36,7 +36,7 @@
  * 
  * @author Michael Baczynski, www.polygonal.de
  */
-package de.polygonal.math
+package de.polygonal.utils
 {
 	public class PM_PRNG
 	{

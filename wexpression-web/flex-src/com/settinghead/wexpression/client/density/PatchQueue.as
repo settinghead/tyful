@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.density
 {
 	import org.as3commons.collections.SortedList;
+	import org.as3commons.collections.framework.IIterator;
 
 	public class PatchQueue {
 		/**
@@ -44,8 +45,8 @@ package com.settinghead.wexpression.client.density
 			this._queue.remove(patch);
 		}
 		
-		public function tryAddAll(Collection<Patch> patches):void {
-			for (var p:Patch in patches)
+		public function tryAddAll(patches:Vector.<Patch>):void {
+			for each (var p:Patch in patches)
 				tryAdd(p);
 		}
 		
@@ -56,8 +57,10 @@ package com.settinghead.wexpression.client.density
 		
 		
 		public function descend(queueLevel:int):PatchQueue {
-			var queue:PatchQueue= new PatchQueue(queueLevel);
-			for (var patch:Patch in this._queue) {
+			var queue:PatchQueue= new PatchQueue(queueLevel, this._map);
+			var it:IIterator = this._queue.iterator();
+			while(it.hasNext()){
+				 var patch:Patch = it.next();
 				queue.tryAddAll(patch.divideIntoNineOrMore());
 			}
 			return queue;

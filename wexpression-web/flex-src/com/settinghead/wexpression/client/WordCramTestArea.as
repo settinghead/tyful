@@ -40,8 +40,8 @@ package com.settinghead.wexpression.client
 			tShape.translate(x-tShape.shape.width/2,y-tShape.shape.height/2);
 
 			
-			WordShaper.rotate(tShape, 0);
-			tree.setRotation(0);
+			WordShaper.rotate(tShape, 0.4);
+			tree.setRotation(0.4);
 			trace("x",x,"y",y,"width",tShape.shape.width,"height",tShape.shape.height);
 			tree.setLocation(x,y);
 			trace("tree","x",tree.getX(true)+tree.getRootX(),"y",tree.getY(true)+tree.getRootY(),"width",tree.getWidth(true),"height",tree.getHeight(true));

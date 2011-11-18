@@ -30,7 +30,7 @@ internal class BBPolarTreeBuilder {
 
 	public static function makeTree(shape:ImageShape, swelling:int):BBPolarRootTree {
 		var bounds:Rectangle= shape.getBounds2D();
-		var minBoxSize:int= 2;
+		var minBoxSize:int= 1;
 		// center
 		var x:int= int((bounds.x + bounds.width / 2));
 		var y:int= int((bounds.y + bounds.height / 2));
@@ -43,7 +43,7 @@ internal class BBPolarTreeBuilder {
 		var tree:BBPolarRootTree= new BBPolarRootTree(shape, x, y, d,
 				minBoxSize);
 		// makeChildren(tree, shape, minBoxSize, tree);
-		// tree.swell(swelling);
+		tree.swell(swelling);
 		return tree;
 	}
 
@@ -180,9 +180,9 @@ internal class BBPolarTreeBuilder {
 		var factor:Number= d / midLength;
 		// System.out.println("d=" + d + ", midLength=" + midLength + ",factor="
 		// + factor);
-		if (factor < 0.8)
+		if (factor < 0.7)
 			return SplitType._3RAYS;
-		else if (factor > 1.2)
+		else if (factor > 1.3)
 			return SplitType._3CUTS;
 		else
 			return SplitType._1RAY1CUT;
@@ -198,10 +198,10 @@ internal class BBPolarTreeBuilder {
 		var y:Number= tree.getY(false) + shape.object.height / 2;
 		if(y>shape.object.height) return null;
 		var width:Number= tree.getRight(false) - tree.getX(false);
-		if(width<1) return null;
+//		if(width<1) return null;
 		if(x+width<0) return null;
 		var height:Number= tree.getBottom(false) - tree.getY(false);
-		if(height<1) return null;
+//		if(height<1) return null;
 		if(y+height<0) return null;
 		Assert.isTrue(width > 0);
 		Assert.isTrue(height > 0);

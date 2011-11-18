@@ -8,13 +8,13 @@ package com.settinghead.wexpression.client.density
 		private var _map:LeveledPatchMap;
 		
 		public static const NUMBER_OF_DIVISIONS:int= 3;
-		public final static const QUEUE_ALPHA_THRESHOLD:Number= 0.01;
+		public static const QUEUE_ALPHA_THRESHOLD:Number= 0.01;
 		public static var MARK_FILL_FACTOR:Number= 0.6;
 		
 		
 		public function DensityPatchIndex(img:TemplateImage) {
 			this.img = img;
-			_map = new LeveledPatchMap();
+			_map = new LeveledPatchMap(this);
 		}
 		
 		public function findPatchFor(width:int, height:int):Patch {

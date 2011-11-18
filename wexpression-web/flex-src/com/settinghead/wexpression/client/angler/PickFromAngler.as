@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client.angler
 {
 	import com.settinghead.wexpression.client.EngineWord;
 	
-	import de.polygonal.math.PM_PRNG;
+	import de.polygonal.utils.PM_PRNG;
 	
 	public class PickFromAngler implements WordAngler
 	{

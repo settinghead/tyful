@@ -21,7 +21,7 @@ package com.settinghead.wexpression.client.density
 			var p1:Patch = item1;
 			var p2:Patch = item2;
 			
-			var r:int= -_numComparator(p1.getAverageAlpha(),
+			var r:int= -_numComparator.compare(p1.getAverageAlpha(),
 				p2.getAverageAlpha());
 			if (r == 0)
 				return p1.getRank() - p2.getRank();

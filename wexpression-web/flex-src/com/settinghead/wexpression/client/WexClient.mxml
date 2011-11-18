@@ -9,6 +9,7 @@
 			protected function btnRender_clickHandler(event:MouseEvent):void
 			{
 				this.wordCramRenderer.reset();
+				this.wordCramRenderer.loadWords();
 				this.wordCramRenderer.renderWords();
 				
 			}

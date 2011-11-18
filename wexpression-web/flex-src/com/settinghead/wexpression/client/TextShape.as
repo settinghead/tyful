@@ -82,7 +82,7 @@ package com.settinghead.wexpression.client
 			_bmp.x = 0;
 			_bmp.y = 0;
 			_shape.addChild( _bmp );
-			_object.filters = [];
+//			_object.filters = [];
 			MonsterDebugger.trace(this,_bmp);
 			MonsterDebugger.trace(this,_shape);
 			MonsterDebugger.trace(this,_object);
@@ -123,6 +123,11 @@ package com.settinghead.wexpression.client
 			textField.cacheAsBitmap = true;
 //			MonsterDebugger.trace(this, textField);
 
+			if(text.length>10){ //TODO: this is a temporary fix
+				var w:Number = textField.width;
+				textField.wordWrap = true;
+				textField.width = w/(text.length/10)*1.1 ;
+			}
 			return textField;
 		}
 		
@@ -220,6 +225,17 @@ package com.settinghead.wexpression.client
 		
 		public function getShape():DisplayObject{
 			return _shape;
+		}
+		
+		public function changeTextColor(c:uint):void{
+			_textField.textColor = c;
+			_textField.antiAliasType = AntiAliasType.NORMAL;
+			_bmp.bitmapData = new BitmapData(_bmp.width,_bmp.height,true,0);
+			_object.filters = [ 
+				//new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
+				new DropShadowFilter(1,45,0,1.0,1,1) ];
+			_bmp.bitmapData.draw(_object,null,null,null, null,true);
+			
 		}
 	}
 }

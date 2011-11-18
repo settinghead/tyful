@@ -16,9 +16,12 @@
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
+			import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
 			import com.settinghead.wexpression.client.angler.WordAngler;
 			import com.settinghead.wexpression.client.colorer.AlwaysUseColorer;
+			import com.settinghead.wexpression.client.colorer.TwoHuesRandomSatsColorer;
 			import com.settinghead.wexpression.client.colorer.WordColorer;
+			import com.settinghead.wexpression.client.density.DensityPatchIndex;
 			import com.settinghead.wexpression.client.fonter.AlwaysUseFonter;
 			import com.settinghead.wexpression.client.fonter.WordFonter;
 			import com.settinghead.wexpression.client.nudger.SpiralWordNudger;
@@ -36,6 +39,7 @@
 			import flash.events.Event;
 			import flash.events.MouseEvent;
 			import flash.net.FileReference;
+			import flash.sampler.NewObjectSample;
 			import flash.utils.ByteArray;
 			
 			import mx.core.UIComponent;
@@ -115,97 +119,34 @@
 			
 			
 			public function onCreationComplete(evt:FlexEvent):void{
-				renderWords();
+				//renderWords();
+				loadWords();
+				this.getWordCramEngine();
 			}
-			public function renderWords():void{
+			
+			public function loadWords():void{
 				
 				this.wordLoadingComplete = false;
-				
-				this.addWord(new Word("Freedomize", Math.random()*5+0.5));
-				this.addWord(new Word("CaRR", Math.random()*5+0.5));
-				this.addWord(new Word("eclipse", Math.random()*5+0.5));
-				this.addWord(new Word("carz", Math.random()*5+0.5));
-				this.addWord(new Word("sand", Math.random()*5+0.5));
-				this.addWord(new Word("beach", Math.random()*5+0.5));
-				this.addWord(new Word("stephen", Math.random()*5+0.5));
-				this.addWord(new Word("Bloom", Math.random()*5+0.5));
-				this.addWord(new Word("Cafe", Math.random()*5+0.5));
-				this.addWord(new Word("LongWord", Math.random()*5+0.5));
-				this.addWord(new Word("UBERIRONTOWEL", Math.random()*5+0.5));
-				this.addWord(new Word("CompLeTelYIRRELevanT", Math.random()*5+0.5));
-				this.addWord(new Word("SCREEN", Math.random()*5+0.5));
-							this.addWord(new Word("CPU", Math.random()*5+0.5));
-							this.addWord(new Word("CHOCOLATE", Math.random()*5+0.5));
-							this.addWord(new Word("small", Math.random()*5+0.5));
-							this.addWord(new Word("FREEDOMIZE", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("eclipse", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("SAND", Math.random()*5+0.5));
-							this.addWord(new Word("BEACH", Math.random()*5+0.5));
-							this.addWord(new Word("STEPHEN", Math.random()*5+0.5));
-							this.addWord(new Word("BLOOM", Math.random()*5+0.5));
-							this.addWord(new Word("CAFE", Math.random()*5+0.5));
-							this.addWord(new Word("LONGERWORD", Math.random()*5+0.5));
-							this.addWord(new Word("UBERIRONTOWEL", Math.random()*5+0.5));
-							this.addWord(new Word("COMPLETELYIRRELEVANT", Math.random()*5+0.5));
-							this.addWord(new Word("SCREEN", Math.random()*5+0.5));
-							this.addWord(new Word("CPU", Math.random()*5+0.5));
-							this.addWord(new Word("CHOCOLATE", Math.random()*5+0.5));
-							this.addWord(new Word("small", Math.random()*5+0.5));
-							this.addWord(new Word("FREEDOMIZE", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("eclipse", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("SAND", Math.random()*5+0.5));
-							this.addWord(new Word("BEACH", Math.random()*5+0.5));
-							this.addWord(new Word("STEPHEN", Math.random()*5+0.5));
-							this.addWord(new Word("BLOOM", Math.random()*5+0.5));
-							this.addWord(new Word("CAFE", Math.random()*5+0.5));
-							this.addWord(new Word("LONGERWORD", Math.random()*5+0.5));
-							this.addWord(new Word("UBERIRONTOWEL", Math.random()*5+0.5));
-							this.addWord(new Word("COMPLETELYIRRELEVANT", Math.random()*5+0.5));
-							this.addWord(new Word("SCREEN", Math.random()*5+0.5));
-							this.addWord(new Word("CPU", Math.random()*5+0.5));
-							this.addWord(new Word("CHOCOLATE", Math.random()*5+0.5));
-							this.addWord(new Word("small", Math.random()*5+0.5));
-							this.addWord(new Word("FREEDOMIZE", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("eclipse", Math.random()*5+0.5));
-							this.addWord(new Word("CAR", Math.random()*5+0.5));
-							this.addWord(new Word("SAND", Math.random()*5+0.5));
-							this.addWord(new Word("BEACH", Math.random()*5+0.5));
-							this.addWord(new Word("STEPHEN", Math.random()*5+0.5));
-				//			this.addWord(new Word("BLOOM", Math.random()*5+0.5));
-				//			this.addWord(new Word("CAFE", Math.random()*5+0.5));
-				//			this.addWord(new Word("LONGERWORD", Math.random()*5+0.5));
-				//			this.addWord(new Word("UBERIRONTOWEL", Math.random()*5+0.5));
-				//			this.addWord(new Word("UTTERLY", Math.random()*5+0.5));
-				//			this.addWord(new Word("SCREEN", Math.random()*5+0.5));
-				//			this.addWord(new Word("CPU", Math.random()*5+0.5));
-				//			this.addWord(new Word("CHOCOLATE", Math.random()*5+0.5));
-				//			this.addWord(new Word("small", Math.random()*5+0.5));
-				//			this.addWord(new Word("LIBERATE", Math.random()*5+0.5));
-				//			this.addWord(new Word("CAR", Math.random()*5+0.5));
-				//			this.addWord(new Word("eclipse", Math.random()*5+0.5));
-				//			this.addWord(new Word("CAR", Math.random()*5+0.5));
-				//			this.addWord(new Word("SAND", Math.random()*5+0.5));
-				//			this.addWord(new Word("BEACH", Math.random()*5+0.5));
-				//			this.addWord(new Word("STEPHEN", Math.random()*5+0.5));
-				//			this.addWord(new Word("BLOOM", Math.random()*5+0.5));
-				//			this.addWord(new Word("CAFE", Math.random()*5+0.5));
-				//			this.addWord(new Word("LONGERWORD", Math.random()*5+0.5));
-				//			this.addWord(new Word("UBERIRONTOWEL", Math.random()*5+0.5));
-				//			this.addWord(new Word("COMPLETELYIRRELEVANT", Math.random()*5+0.5));
-				//			this.addWord(new Word("SCREEN", Math.random()*5+0.5));
-				//			this.addWord(new Word("CPU", Math.random()*5+0.5));
-				//			this.addWord(new Word("CHOCOLATE", Math.random()*5+0.5));
-				//			this.addWord(new Word("small", Math.random()*5+0.5));
+				for(var i:int=0;i<60;i++){
+					this.addWord(new Word("Freedomize", Math.random()*5+0.5));
+					this.addWord(new Word("CaRR", Math.random()*5+0.5));
+					this.addWord(new Word("eclipse", Math.random()*5+0.5));
+					this.addWord(new Word("carz", Math.random()*5+0.5));
+					this.addWord(new Word("sand", Math.random()*5+0.5));
+					this.addWord(new Word("beach", Math.random()*5+0.5));
+					this.addWord(new Word("stephen", Math.random()*5+0.5));
+					this.addWord(new Word("Bloom", Math.random()*5+0.5));
+				}
+
+			}
+			
+			public function renderWords():void{
+				this.wordLoadingComplete = true;
+
 				this.graphics.lineStyle(0.5);
 				
 //				this.drawAll();
 				
-				this.wordLoadingComplete = true;
 				this.addChild(this.renderProgressBar);
 				if(this.hasMore())
 					this.drawNext();
@@ -524,6 +465,9 @@
 			
 			public function withConfinementImage(img:TemplateImage):WordCramRenderer {
 				this.img = img;
+				placer = new ShapeConfinedPlacer(img, new DensityPatchIndex(img));
+				nudger = new ShapeConfinedWordNudger();
+				angler = new ShapeConfinedAngler(img, new MostlyHorizAngler());
 				return this;
 			}
 			
@@ -553,15 +497,19 @@
 					if (fonter == null)
 						fonter = new AlwaysUseFonter("Vera");
 					if (sizer == null)
-						sizer = new ByWeightSizer(5, 45);
+						sizer = new ByWeightSizer(5, 35);
 					if (colorer == null)
-						colorer = new AlwaysUseColorer(0x000000);
+						colorer = new TwoHuesRandomSatsColorer();
 					if (angler == null)
 						angler = new MostlyHorizAngler();
+					if(img==null)
+						img = new TemplateImage("templates/face.png", this);
 					if (placer == null)
+//						placer = new ShapeConfinedPlacer(img, new DensityPatchIndex(img));
 						placer = new CenterClumpPlacer();
 					if (nudger == null)
 						nudger = new SpiralWordNudger();
+					
 					
 					this.wordCramEngine = new WordCramEngine(this, words, fonter,
 						sizer, colorer, angler, placer, nudger, renderOptions,  img);
@@ -668,9 +616,10 @@
 			
 			
 			public function addWord(w:Word):void {
-				if (words != null){
-					words.add(w);
-				}
+				if (words == null)
+					words = new SortedList(new WordComparator());
+				words.add(w);
+				
 			}
 
 			protected function enterFrameHandler(event:Event):void

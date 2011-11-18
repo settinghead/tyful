@@ -87,7 +87,7 @@ public class EngineWord {
 		word.setRenderedPlace(currentLocation.getpVector());
 	}
 
-	function getCurrentLocation():PlaceInfo {
+	public function getCurrentLocation():PlaceInfo {
 		if (currentLocation != null)
 			return new PlaceInfo(currentLocation.getpVector().clone(),
 					currentLocation.getReturnedObj());
@@ -95,7 +95,7 @@ public class EngineWord {
 			return null;
 	}
 
-	function wasPlaced():Boolean {
+	public function wasPlaced():Boolean {
 		return word.wasPlaced();
 	}
 

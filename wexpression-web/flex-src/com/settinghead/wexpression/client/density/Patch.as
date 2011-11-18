@@ -1,9 +1,7 @@
 package com.settinghead.wexpression.client.density
 {
 	import com.settinghead.wexpression.client.TemplateImage;
-	
 	import org.as3commons.collections.Set;
-
 
 	public class Patch  {
 		
@@ -15,7 +13,7 @@ package com.settinghead.wexpression.client.density
 		private var _averageAlpha:Number= -1;
 		private var parent:Patch;
 		private var children:Vector.<Patch> = null;
-		private var _childrenMarker:Set.<Patch>;
+		private var _childrenMarker:Set;
 		private var _area:int= -1;
 		private var _alphaSum:Number= -1;
 		private var _queue:PatchQueue;
@@ -52,7 +50,7 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		public function getImg():TemplateImage {
-			return DensityPatchIndex.this.img;
+			return this._queue.getMap().getIndex().getImg();
 		}
 		
 		private function setWidth(width:int):void {
@@ -69,7 +67,7 @@ package com.settinghead.wexpression.client.density
 				
 				// now remove sub-patches that's already marked
 				this._averageAlpha = this.getAlphaSum();
-				for (var markedChild:Patch in this.getMarkedChildren()) {
+				for each (var markedChild:Patch in this.getMarkedChildren()) {
 					this._averageAlpha -= markedChild.getAverageAlpha()
 						* DensityPatchIndex.MARK_FILL_FACTOR;
 				}
@@ -94,7 +92,7 @@ package com.settinghead.wexpression.client.density
 								this.getX() + i, this.getY() + j);
 						}
 				} else
-					for (var p:Patch in this.getChildren())
+					for each (var p:Patch in this.getChildren())
 						this._alphaSum += p.getAlphaSum();
 			}
 			
@@ -108,7 +106,7 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		
-		private function getRank():int {
+		public function getRank():int {
 			return this.rank;
 		}
 		
@@ -128,7 +126,7 @@ package com.settinghead.wexpression.client.density
 			return this.parent;
 		}
 		
-		private function setChildren(Vector<Patch> children):void {
+		private function setChildren(children:Vector.<Patch>):void {
 			this.children = children;
 		}
 		
@@ -164,7 +162,7 @@ package com.settinghead.wexpression.client.density
 					
 					// the closer to the center, the higher the rank
 					var p:Patch= new Patch(getX() + i, getY() + j,
-						squareWidth, squareHeight, 0, this);
+						squareWidth, squareHeight, 0, this, this._queue);
 					result.push(p);
 					if (breakJ)
 						break;
@@ -178,10 +176,6 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		
-		override public function toString():String {
-			return ("x: " + getX() + ", y: " + getY() + ", width: "
-				+ getWidth() + ", height: " + getHeight());
-		}
 		
 		public function mark(smearedArea:int):void {
 			this.resetWorthCalculations();
@@ -249,9 +243,6 @@ package com.settinghead.wexpression.client.density
 		public function getLevel():int {
 			return _queue.getMyLevel();
 		}
-		
-		public function getRank():int{
-			return this.rank;
-		}
+
 	}
 }
