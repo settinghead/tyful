@@ -7,14 +7,14 @@ package com.settinghead.wexpression.client
 	
 	internal class WordShaper {
 		
-		private static function makeShape(text:String, fontSize:Number, fontName: String = "Arial"):TextShape {
+		public static function makeShape(text:String, fontSize:Number, fontName: String = "Arial", rotation:Number=0):TextShape {
 			
-			var result:TextShape = new TextShape(true,text,0,fontSize,0,fontName);
+			var result:TextShape = new TextShape(true,text,0,fontSize,rotation,fontName);
 			return result;
 		}
 		
 		private static function isTooSmall(shape:TextShape, minShapeSize:int):Boolean {
-			var r:Rectangle = shape.shape.getBounds();
+			var r:Rectangle = shape.shape.getBounds(shape.shape.parent);
 			
 			// Most words will be wider than tall, so this basically boils down to
 			// height.
@@ -22,17 +22,19 @@ package com.settinghead.wexpression.client
 			return r.height < minShapeSize || r.width < minShapeSize;
 		}
 		
-		public static function rotate(shape:TextShape, rotation:Number, centerX:Number,
-									  centerY:Number):TextShape {
+		public static function rotate(shape:TextShape, rotation:Number):TextShape {
 			if (rotation == 0) {
 				return shape;
 			}
+			
+			var centerX:Number=shape.shape.x+shape.shape.width/2;
+			var centerY:Number = shape.shape.y+shape.shape.height/2;
 			
 //			var point:Point=new Point(shape.shape.x+shape.shape.width/2, shape.shape.y+shape.shape.height/2);
 			var m:Matrix=shape.shape.transform.matrix;
 			m.tx -= centerX;
 			m.ty -= centerY;
-			m.rotate = rotation; // was a missing "=" here
+			m.rotate(-rotation); // was a missing "=" here
 			m.tx += centerX;
 			m.ty += centerY;
 			shape.shape.transform.matrix=m;
@@ -45,7 +47,7 @@ package com.settinghead.wexpression.client
 		}
 		
 		public static function moveToOrigin(shape:TextShape):TextShape {
-			var rect:Rectangle= shape.shape.getBounds();
+			var rect:Rectangle= shape.shape.getBounds(shape.shape.parent);
 			
 			if (rect.x == 0&& rect.y == 0) {
 				return shape;

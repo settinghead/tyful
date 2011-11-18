@@ -55,7 +55,9 @@ package com.settinghead.wexpression.client
 		}
 		
 		public function setRotation(rotation:Number):void {
-			this._rotation = rotation;
+			this._rotation = rotation % BBPolarTree.TWO_PI;
+			if(this._rotation<0)
+				this._rotation = BBPolarTree.TWO_PI + this._rotation;
 			this.rootStamp = (new Date()).time;
 		}
 		

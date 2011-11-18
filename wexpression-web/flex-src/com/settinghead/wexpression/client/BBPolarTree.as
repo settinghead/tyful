@@ -34,7 +34,7 @@ package com.settinghead.wexpression.client {
 		
 		protected var rStamp:Number;
 		
-		protected var _x:int, _y :int, _right:int, _bottom:int;
+		protected var _x:Number, _y :Number, _right:Number, _bottom:Number;
 		
 		public var _r1:Number, d1:Number, _r2:Number, d2:Number;
 		protected var _kids:Vector.<BBPolarChildTree>;
@@ -243,7 +243,6 @@ package com.settinghead.wexpression.client {
 		}
 	
 		private function drawLeaves(g:Graphics):void {
-			this.getKids();
 			if (this.isLeaf()) {
 				drawBounds(g);
 			} else {

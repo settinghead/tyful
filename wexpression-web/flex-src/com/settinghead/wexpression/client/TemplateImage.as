@@ -4,9 +4,11 @@
 package com.settinghead.wexpression.client {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
@@ -18,8 +20,8 @@ package com.settinghead.wexpression.client {
 	 * @author settinghead
 	 * 
 	 */
-	public class TemplateImage extends Sprite implements ImageShape {
-		public var img:BitmapData;
+	public class TemplateImage implements ImageShape {
+		public var img:Bitmap;
 		var tree:BBPolarRootTree;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number= 25;
@@ -31,19 +33,20 @@ package com.settinghead.wexpression.client {
 		public function TemplateImage(path:String) {
 			var my_loader:Loader = new Loader();
 			my_loader.load(new URLRequest(path));
-			img = Bitmap(my_loader.content).bitmapData;
+			this.img = new Bitmap();
+			this.img.bitmapData.draw(my_loader.content);
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
-			var rgbPixel : uint = img.getPixel( x, y );
+			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
 			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
 			return colour.brightness;
 		}
 	
 		public function getHue(x:int, y:int):Number {
-			var rgbPixel : uint = img.getPixel( x, y );
+			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
 			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			return colour.brightness;
+			return colour.hue;
 		}
 	
 		public function getHeight():int {
@@ -69,7 +72,7 @@ package com.settinghead.wexpression.client {
 			return this._bounds;
 		}
 	
-		public function contains(x:Number, y:Number, width:Number, height:Number):Boolean {
+		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 			if (tree == null) {
 				// // %1
 				// int threshold = (int) (width * height / 1000);
@@ -107,8 +110,13 @@ package com.settinghead.wexpression.client {
 				return tree.contains(x, y, x + width, y + height);
 			}
 		}
+		
+		
+		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+			return img.hitTestPoint(x,y,true);
+		}
 	
-		public function intersects(x:Number, y:Number, width:Number, height:Number):Boolean {
+		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 			if (tree == null) {
 				var threshold:int= 10;
 				var darkCount:int= 0;
@@ -147,7 +155,7 @@ package com.settinghead.wexpression.client {
 	
 				return false;
 			} else {
-				return tree.overlaps(x, y, x + width, y + height);
+				return tree.overlapsCoord(x, y, x + width, y + height);
 			}
 		}
 	
@@ -201,6 +209,18 @@ package com.settinghead.wexpression.client {
 		//		return hsvColor;
 		//		
 		//	}
+		public function translate(tx:Number, ty: Number):void{
+			var mtx: Matrix = img.transform.matrix;
+			mtx.translate(tx,ty);
+			img.transform.matrix = mtx;
+		}
 		
+		public function get shape():DisplayObject{
+			return img;
+		}
+		
+		public function get object():DisplayObject{
+			return img;
+		}
 	}
 }

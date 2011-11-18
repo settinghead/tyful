@@ -32,6 +32,8 @@ package com.settinghead.wexpression.client
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	
+	import spark.primitives.Rect;
 
 	
 	/**
@@ -41,9 +43,8 @@ package com.settinghead.wexpression.client
 	public class TextShape implements ImageShape
 	{
 		
-		[Embed(source="Vera.ttf", fontFamily="Vera", fontName='Vera', embedAsCFF=true)]
-		public static const VeraFontClass: Class;
-		
+		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
+
 
 		private static const HELPER_MATRIX: Matrix = new Matrix();
 		private var _bmp:Bitmap;
@@ -61,14 +62,15 @@ package com.settinghead.wexpression.client
 			_object.addChild( _textField );
 //			_object.filters = [ new GlowFilter( 0x000000, 1, safetyBorder, safetyBorder, 255 ),  
 //				new DropShadowFilter() ];
-			
+			_object.x = 0;
+			_object.y = 0;
 			_shape = new Sprite();
 			var bounds: Rectangle = _object.getBounds( _object );
 			HELPER_MATRIX.tx = -bounds.x + safetyBorder;
 			HELPER_MATRIX.ty = -bounds.y + safetyBorder;
 			
 			_bmp = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
-			_bmp.bitmapData.draw( _object, HELPER_MATRIX, null, null, null, true );
+			_bmp.bitmapData.draw( _object );
 //			_bmp = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
 //			var a:MovieClip = new MovieClip();
 //			a.width = 100;
@@ -77,8 +79,8 @@ package com.settinghead.wexpression.client
 //			a.graphics.drawRect(25,25,25,25);
 //			a.graphics.endFill();
 //			_bmp.bitmapData.draw(a);
-			_bmp.x = bounds.x;
-			_bmp.y = bounds.y;
+			_bmp.x = 0;
+			_bmp.y = 0;
 			_shape.addChild( _bmp );
 			_object.filters = [];
 			MonsterDebugger.trace(this,_bmp);
@@ -134,31 +136,47 @@ package com.settinghead.wexpression.client
 			return _object;
 		}
 		
-		public function contains(x:Number, y:Number, width:Number, height:Number):Boolean {
-			if(!intersects(x,y,width,height)) {
+		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+			if(!intersects(x,y,width,height,transformed)) {
 				var rX:Number = x+ width*Math.random();
 				var rY:Number = y+ height*Math.random();
-				return _bmp.hitTestPoint(rX, rY, true);
+				if(transformed)
+					return shape.hitTestPoint(rY, rY, true);
+				else
+					return _bmp.hitTestPoint(rX, rY, true);
 			}
 				else return false;
 		}
 		
-		public function intersects(x:Number, y:Number, width:Number, height:Number):Boolean {
+		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+			if(transformed)
+				return shape.hitTestPoint(x,y,true);
+			else{
+				return _bmp.hitTestPoint(x,y,true);
+			}
+		}
+		
+		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 //
 //			if(width<1) width = 1;
 //			if(height<1) height = 1;
-			var test:MovieClip = new MovieClip();
-			test.width = width;
-			test.height = height;
-			test.x=x;
-			test.y=y;
-			test.graphics.beginFill(0x000000);
-			test.graphics.drawRect(0,0,width,height);
-			test.graphics.endFill();
-			var testBmp:BitmapData = new BitmapData(width, height, true, 0);
-			testBmp.draw(test);
-			var r:Boolean = _bmp.bitmapData.hitTest(new Point(_bmp.x,_bmp.y),255,testBmp,new Point(x,y),255);
-			return r;
+			if(transformed)
+				throw new NotImplementedError();
+			else{
+//				var test:MovieClip = new MovieClip();
+//				test.width = width;
+//				test.height = height;
+//				test.x=0;
+//				test.y=0;
+//				test.graphics.beginFill(0x000000);
+//				test.graphics.drawRect(0,0,width,height);
+//				test.graphics.endFill();
+//				var testBmp:BitmapData = new BitmapData(width, height, true, 0);
+//				testBmp.fillRect(new Rectangle(0,0,width,height), 0x000000);
+//				testBmp.draw(test);
+				var r:Boolean = _bmp.bitmapData.hitTest(new Point(0,0),255, new Rectangle(x,y,width,height),null,255);
+				return r;
+			}
 		}
 		
 		public function getBounds2D():Rectangle {
@@ -169,6 +187,39 @@ package com.settinghead.wexpression.client
 		}
 		public function getHeight():int{
 			return shape.height;
+		}
+		
+		public function translate(tx:Number,ty:Number):void{
+			trace("Before:","shape",shape.x,shape.y,"object",object.x,object.y);
+
+			_shape.x = tx;
+			_shape.y = ty;
+			
+			
+			trace("After:","shape",shape.x,shape.y,"object",object.x,object.y);
+//			_bmp.x = tx;
+//			_bmp.y = ty;
+//			_object.x = tx;
+//			_object.y = ty;
+//			
+//			//TODO: get rid of redundant objects
+//			var my_matrix = _shape.transform.matrix;
+//			my_matrix.translate(tx, ty);
+//			_shape.transform.matrix = my_matrix;
+//			
+//			 my_matrix = _bmp.transform.matrix;
+//			my_matrix.translate(tx, ty);
+//			_bmp.transform.matrix = my_matrix;
+//			
+//			 my_matrix = _object.transform.matrix;
+//			my_matrix.translate(tx, ty);
+//			_object.transform.matrix = my_matrix;
+		}
+		
+		
+		
+		public function getShape():DisplayObject{
+			return _shape;
 		}
 	}
 }

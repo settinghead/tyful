@@ -30,7 +30,7 @@ internal class BBPolarTreeBuilder {
 
 	public static function makeTree(shape:ImageShape, swelling:int):BBPolarRootTree {
 		var bounds:Rectangle= shape.getBounds2D();
-		var minBoxSize:int= 1;
+		var minBoxSize:int= 2;
 		// center
 		var x:int= int((bounds.x + bounds.width / 2));
 		var y:int= int((bounds.y + bounds.height / 2));
@@ -52,9 +52,10 @@ internal class BBPolarTreeBuilder {
 		var type:int= determineType(tree);
 
 		var children:Vector.<BBPolarChildTree>= splitTree(tree, shape, minBoxSize, root, type);
-		 if(children.length==0) 
-			 tree.setLeaf(true);
-		 else tree.addKids(children);
+//		 if(children.length==0) 
+//			 tree.setLeaf(true);
+//		 else
+			tree.addKids(children);
 	}
 
 	static function splitTree(tree:BBPolarTree, shape:ImageShape,
@@ -192,19 +193,22 @@ internal class BBPolarTreeBuilder {
 
 		var tree:BBPolarChildTree= new BBPolarChildTree(r1, r2, d1, d2,
 				root, minBoxSize);
-		var r:Rectangle = shape.getBounds2D();
-		var x:Number= tree.getX(false) + r.width / 2;
-		var y:Number= tree.getY(false) + r.height / 2;
+		var x:Number= tree.getX(false) +  shape.object.width / 2;
+		if(x>shape.object.width) return null;
+		var y:Number= tree.getY(false) + shape.object.height / 2;
+		if(y>shape.object.height) return null;
 		var width:Number= tree.getRight(false) - tree.getX(false);
 		if(width<1) return null;
+		if(x+width<0) return null;
 		var height:Number= tree.getBottom(false) - tree.getY(false);
 		if(height<1) return null;
+		if(y+height<0) return null;
 		Assert.isTrue(width > 0);
 		Assert.isTrue(height > 0);
-		if (shape == null || shape.contains(x, y, width, height)) {
+		if (shape == null || shape.contains(x, y, width, height,false)) {
 			return tree;
 		} else {
-			if (shape.intersects(x, y, width, height)) {
+			if (shape.intersects(x, y, width, height,false)) {
 				return tree;
 			} else { // neither contains nor intersects
 				return null;
