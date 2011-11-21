@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ PureMVC AS3 Demo - Flex Employee Admin 
+ Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+-->
+<mx:Panel title="Template Renderer" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:client="com.settinghead.wenwentu.client.*">
+	
+	<!-- Events dispatched by this View Component -->
+	<mx:Metadata>
+
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	
+			public static const MODE_RENDER:String 	= "modeRender";
+			
+			[Bindable] public var template:TemplateVO;
+			[Bindable] public var mode:String;
+			
+			public function setTemplate( template:TemplateVO, mode:String ):void
+			{
+				this.mode = mode;
+
+				this.template = template;
+//				MonsterDebugger.trace(this,this.template);
+//				this.wordCramRenerer = new WordCramRenderer();
+//				this.wordCramRenerer.template = template;
+//				first.setFocus();
+			}
+			
+//			public function reset():void
+//			{
+//				template = null;
+//				templatename.text = "";
+//				first.text = "";
+//				last.text = "";
+//				email.text = ""; 
+//				password.text = ""; 
+//				confirm.text = ""; 
+//				department.selectedItem = DeptEnum.NONE_SELECTED;
+//			}
+			
+			// submit the add or update
+			//			private function submit( ):void
+			//			{
+			//				template = new TemplateVO( templatename.text, 
+			//					  			   first.text, 
+			//								   last.text, 
+			//								   email.text, 
+			//								   password.text,
+			//								   DeptEnum( department.selectedItem )
+			//								 );
+			//				
+			//				if ( template.isValid ) {
+			//					if ( mode == MODE_ADD ) {
+			//						dispatchEvent( new Event( ADD ) );
+			//					} else {
+			//						dispatchEvent( new Event( UPDATE ) );
+			//					}
+			//				}
+			//			}
+			
+//			// cancel the add or update
+//			private function cancel( ):void
+//			{
+//				dispatchEvent( new Event( CANCEL ) );
+//			}
+//			
+//			// enable submit button if required fields are satisfied
+//			private function enableSubmit( u:String, p:String, c:String, d:DeptEnum ):Boolean
+//			{
+//				return ( u != "" && p != '' && p == c && d != DeptEnum.NONE_SELECTED );
+//			}
+
+		]]>
+	</mx:Script>
+	
+<client:WordCramRenderer id="wordCramRenerer" template="{template}" top="0" bottom="0" left="0" right="0" />
+	
+</mx:Panel>

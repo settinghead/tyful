@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event("select")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+			
+			public static const SELECT:String 	= "select";
+
+			
+			[Bindable] public var selectedTemplate:TemplateVO;
+			[Bindable] public var templates:ArrayCollection;
+			[Bindable] private var armed:Boolean = false; // delete confirmation
+
+			
+			// send the named event and reset armed state 
+			private function sendEvent( eventName:String ):void
+			{
+				armed=false;
+				dispatchEvent( new Event( eventName, true ) );
+			}
+			
+			// remove selection in the user list and reset armed state
+			public function deSelect():void
+			{
+				armed=false;
+				templateGrid.selectedIndex = -1;
+			}
+		]]>
+	</fx:Script>
+	<fx:Binding source="templateGrid.selectedItem as TemplateVO" destination="selectedTemplate" />
+	<s:List id="templateGrid" itemRenderer="com.settinghead.wenwentu.client.view.components.TemplateThumbnail" 
+			dataProvider="{templates}" click="if (templateGrid.selectedIndex != -1) sendEvent( SELECT )">
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
+	</s:List>
+	
+</s:Group>
