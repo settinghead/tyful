@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.angler
 {
-	import com.settinghead.wenwentu.client.EngineWord;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	
@@ -14,7 +14,7 @@ package com.settinghead.wenwentu.client.angler
 			this.angles = angles;
 		}
 		
-		public function angleFor(eWord:EngineWord):Number
+		public function angleFor(eWord:EngineWordVO):Number
 		{
 			return angles[prng.nextIntRange(0,angles.length-1)];
 		}

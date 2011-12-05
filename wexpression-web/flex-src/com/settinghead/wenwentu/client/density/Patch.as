@@ -1,6 +1,7 @@
 package com.settinghead.wenwentu.client.density
 {
-	import com.settinghead.wenwentu.client.TemplateImage;
+	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	
 	import org.as3commons.collections.Set;
 
 	public class Patch  {
@@ -49,7 +50,7 @@ package com.settinghead.wenwentu.client.density
 			return this.y;
 		}
 		
-		public function getImg():TemplateImage {
+		public function getImg():TemplateVO {
 			return this._queue.getMap().getIndex().getImg();
 		}
 		

@@ -1,7 +1,7 @@
 package com.settinghead.wenwentu.client.colorer
 {
 	import com.lorentz.SVG.utils.MathUtils;
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	
@@ -19,7 +19,7 @@ package com.settinghead.wenwentu.client.colorer
 
 		}
 		
-		public function colorFor(word:Word):uint
+		public function colorFor(word:WordVO):uint
 		{
 			var hue:Number= hues[prng.nextIntRange(0,hues.length-1)];
 			var sat:Number= Math.random()*256;

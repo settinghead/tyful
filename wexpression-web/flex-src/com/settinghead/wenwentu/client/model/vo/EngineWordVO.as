@@ -1,8 +1,11 @@
-package com.settinghead.wenwentu.client {
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
+package com.settinghead.wenwentu.client.model.vo {
+	import com.settinghead.wenwentu.client.PlaceInfo;
+	import com.settinghead.wenwentu.client.WordShaper;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
 	import com.settinghead.wenwentu.client.placer.WordPlacer;
+	
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -22,38 +25,38 @@ package com.settinghead.wenwentu.client {
 
 
 
-public class EngineWord {
-	var word:Word;
+public class EngineWordVO {
+	var _word:WordVO;
 	var rank:int;
 
-	private var shape:TextShape;
-	public var bbTree:BBPolarRootTree;
+	private var shape:TextShapeVO;
+	public var bbTree:BBPolarRootTreeVO;
 	private var presetAngle:Number = NaN;
 	var renderedAngle:Number;
 
 	private var desiredLocation:PlaceInfo;
 	private var currentLocation:PlaceInfo;
 
-	public function EngineWord(word:Word, rank:int, wordCount:int) {
-		this.word = word;
+	public function EngineWordVO(word:WordVO, rank:int, wordCount:int) {
+		this._word = word;
 		this.rank = rank;
 	}
 
-	function setShape(shape:TextShape, swelling:int):void {
+	public function setShape(shape:TextShapeVO, swelling:int):void {
 		this.shape = shape;
 
 		this.bbTree = BBPolarTreeBuilder.makeTree(shape, swelling);
 	}
 
-	function getShape():TextShape {
+	public function getShape():TextShapeVO {
 		return shape;
 	}
 
-	function overlaps(other:EngineWord):Boolean {
+	public function overlaps(other:EngineWordVO):Boolean {
 		return bbTree.overlaps(other.bbTree);
 	}
 
-	function setDesiredLocation(placer:WordPlacer, count:int,
+	public function setDesiredLocation(placer:WordPlacer, count:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
 			fieldHeight:int):PlaceInfo {
 		desiredLocation = word.getTargetPlace(placer, rank, count,
@@ -63,7 +66,7 @@ public class EngineWord {
 		return currentLocation;
 	}
 
-	function nudge(nudge:Point):void {
+	public function nudge(nudge:Point):void {
 		currentLocation = new PlaceInfo(
 				desiredLocation.getpVector().add(nudge),
 				currentLocation.getReturnedObj());
@@ -71,7 +74,7 @@ public class EngineWord {
 				int(currentLocation.getpVector().y));
 	}
 
-	function finalizeLocation():void {
+	public function finalizeLocation():void {
 
 		var x:Number= currentLocation.getpVector().x ;
 		var y:Number= currentLocation.getpVector().y ;
@@ -98,7 +101,7 @@ public class EngineWord {
 		return word.wasPlaced();
 	}
 
-	public function trespassed(img:TemplateImage):Boolean {
+	public function trespassed(img:TemplateVO):Boolean {
 		if(img==null) return false;
 		var x:Number= (this.currentLocation.getpVector().x - bbTree.getWidth(true) / 2);
 		var y:Number= (this.currentLocation.getpVector().y - bbTree.getHeight(true) / 2);
@@ -109,7 +112,7 @@ public class EngineWord {
 		return !img.contains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false);
 	}
 
-	public function getTree():BBPolarRootTree {
+	public function getTree():BBPolarRootTreeVO {
 		return this.bbTree;
 	}
 
@@ -125,7 +128,7 @@ public class EngineWord {
 	 * 
 	 * @return the Word, for more configuration
 	 */
-	public function setAngle(angle:Number):Word {
+	public function setAngle(angle:Number):WordVO {
 		this.presetAngle = angle;
 		return this.word;
 	}
@@ -140,8 +143,12 @@ public class EngineWord {
 		return renderedAngle;
 	}
 
-	function wasSkipped():Boolean {
+	public function wasSkipped():Boolean {
 		return word.wasSkipped();
+	}
+	
+	public function get word():WordVO{
+		return this._word;
 	}
 }
 }

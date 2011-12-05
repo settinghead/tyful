@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.placer {
 	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -55,7 +55,7 @@ public interface WordPlacer {
 	 *            The height of the field.
 	 * @return the desired location for a Word on the field, as a 2D PVector.
 	 */
-	function place(word:Word, wordIndex:int, wordsCount:int,
+	function place(word:WordVO, wordIndex:int, wordsCount:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
 			fieldHeight:int): PlaceInfo ;
 

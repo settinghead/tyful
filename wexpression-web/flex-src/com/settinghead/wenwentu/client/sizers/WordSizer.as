@@ -1,5 +1,5 @@
 package com.settinghead.wenwentu.client.sizers {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -59,6 +59,6 @@ public interface WordSizer {
 	 *            the total number of Words being rendered
 	 * @return the size to render the Word
 	 */
-	function sizeFor(word:Word, wordRank:int, wordCount:int):Number ;
+	function sizeFor(word:WordVO, wordRank:int, wordCount:int):Number ;
 }
 }

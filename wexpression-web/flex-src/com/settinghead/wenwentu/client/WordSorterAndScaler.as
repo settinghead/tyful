@@ -1,6 +1,7 @@
 package com.settinghead.wenwentu.client {
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -28,7 +29,7 @@ internal class WordSorterAndScaler {
 		
 		var it2:IIterator = rawWords.iterator();
 		while(it2.hasNext()){
-			var w:Word = it2.next();
+			var w:WordVO = it2.next();
 			w.weight = w.weight / maxWeight;
 		}
 

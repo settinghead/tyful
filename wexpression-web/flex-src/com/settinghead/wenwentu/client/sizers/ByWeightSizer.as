@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.sizers
 {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	import com.settinghead.wenwentu.client.math.MathUtils;
 	
 	public class ByWeightSizer implements WordSizer
@@ -15,7 +15,7 @@ package com.settinghead.wenwentu.client.sizers
 			
 		}
 		
-		public function sizeFor(word:Word, wordRank:int, wordCount:int):Number
+		public function sizeFor(word:WordVO, wordRank:int, wordCount:int):Number
 		{
 			//			MathUtils.lerp(minSize+(maxSize-minSize)/2, maxSize, word.weight) 
 

@@ -1,5 +1,5 @@
 package com.settinghead.wenwentu.client.fonter {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -36,6 +36,6 @@ public interface WordFonter {
 	 * @param word the word to pick the PFont for
 	 * @return the PFont for the word
 	 */
-	 function fontFor(word:Word):String ;
+	 function fontFor(word:WordVO):String ;
 }
 }

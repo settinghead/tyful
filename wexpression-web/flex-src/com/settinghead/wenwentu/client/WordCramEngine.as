@@ -1,5 +1,10 @@
 package com.settinghead.wenwentu.client {
+	import com.settinghead.wenwentu.client.angler.WordAngler;
 	import com.settinghead.wenwentu.client.colorer.WordColorer;
+	import com.settinghead.wenwentu.client.fonter.WordFonter;
+	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	import com.settinghead.wenwentu.client.nudger.WordNudger;
+	import com.settinghead.wenwentu.client.placer.WordPlacer;
 	import com.settinghead.wenwentu.client.sizers.WordSizer;
 	
 	import flash.display.DisplayObject;
@@ -9,10 +14,9 @@ package com.settinghead.wenwentu.client {
 	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
-	import com.settinghead.wenwentu.client.fonter.WordFonter;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.placer.WordPlacer;
-	import com.settinghead.wenwentu.client.nudger.WordNudger;
+	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -36,7 +40,7 @@ public class WordCramEngine {
 	private static const MAX_ANGLER_ATTEMPTS:int= 5;
 
 	private var destination:Sprite;
-
+	private var img:TemplateVO;
 	private var fonter:WordFonter;
 	private var sizer:WordSizer;
 	private var colorer:WordColorer;
@@ -45,12 +49,11 @@ public class WordCramEngine {
 	private var nudger:WordNudger;
 
 	private var words:SortedList; // just a safe copy
-	private var eWords:Vector.<EngineWord>;
+	private var eWords:Vector.<EngineWordVO>;
 	private var eWordIndex:int= -1;
 
 	private var renderOptions:RenderOptions;
 
-	private var img:TemplateImage;
 	private var failedLastVar:Boolean;
 	
 	public static const  WordCram_SHAPE_WAS_TOO_SMALL:int = 0; 
@@ -63,7 +66,7 @@ public class WordCramEngine {
 	public function WordCramEngine( destination:Sprite,  words:SortedList,
 									fonter:WordFonter, sizer:WordSizer,
 			colorer:WordColorer, angler:WordAngler, placer:WordPlacer,
-			nudger:WordNudger, renderOptions:RenderOptions, img:TemplateImage = null) {
+			nudger:WordNudger, renderOptions:RenderOptions, img:TemplateVO = null) {
 
 		this.destination = destination;
 		this.img = img;
@@ -83,21 +86,21 @@ public class WordCramEngine {
 //		 frame.setVisible(true);
 	}
 
-	private function wordsIntoEngineWords(words:SortedList):Vector.<EngineWord> {
-		var engineWords:Vector.<EngineWord> = new Vector.<EngineWord>();
+	private function wordsIntoEngineWords(words:SortedList):Vector.<EngineWordVO> {
+		var engineWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
 
 		var maxNumberOfWords:int= renderOptions.maxNumberOfWordsToDraw >= 0? renderOptions.maxNumberOfWordsToDraw
 				: words.size;
 		for (var i:int= 0; i < maxNumberOfWords; i++) {
 
-			var word:Word= words.itemAt(i);
-			var eWord:EngineWord= new EngineWord(word, i, words.size);
+			var word:WordVO= words.itemAt(i);
+			var eWord:EngineWordVO= new EngineWordVO(word, i, words.size);
 
 			var wordFont:String= word.getFont(fonter);
 			var wordSize:Number= word.getSize(sizer, i, words.size);
 			var wordAngle:Number= eWord.getAngle(angler);
 
-			var shape:TextShape= WordShaper.makeShape(eWord.word.word, wordSize, wordFont, wordAngle);
+			var shape:TextShapeVO= WordShaper.makeShape(eWord.word.word, wordSize, wordFont, wordAngle);
 			if (shape == null) {
 				skipWord(word, WordCram_SHAPE_WAS_TOO_SMALL);
 			} else {
@@ -113,7 +116,7 @@ public class WordCramEngine {
 		return engineWords;
 	}
 
-	private function skipWord(word:Word, reason:int):void {
+	private function skipWord(word:WordVO, reason:int):void {
 		// TODO delete these properties when starting a sketch, in case it's a
 		// re-run w/ the same words.
 		// NOTE: keep these as properties, because they (will be) deleted when
@@ -139,7 +142,7 @@ public class WordCramEngine {
 		if (!hasMore())
 			return;
 
-		var eWord:EngineWord= eWords[++eWordIndex];
+		var eWord:EngineWordVO= eWords[++eWordIndex];
 		
 
 
@@ -149,9 +152,9 @@ public class WordCramEngine {
 		}
 	}
 
-	private function placeWord(eWord:EngineWord):Boolean {
+	private function placeWord(eWord:EngineWordVO):Boolean {
 		this.failedLastVar = false;
-		var word:Word= eWord.word;
+		var word:WordVO= eWord.word;
 															// these into
 															// EngineWord.setDesiredLocation?
 															// Does that make
@@ -167,7 +170,7 @@ public class WordCramEngine {
 		var maxAttemptsToPlace:int= renderOptions.maxAttemptsToPlaceWord > 0? renderOptions.maxAttemptsToPlaceWord
 				: calculateMaxAttemptsFromWordWeight(word);
 
-		var lastCollidedWith:EngineWord= null;
+		var lastCollidedWith:EngineWordVO= null;
 		outer: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
 
 			eWord.nudge(nudger.nudgeFor(word, eWord.getCurrentLocation(),
@@ -193,7 +196,7 @@ public class WordCramEngine {
 			var foundOverlap:Boolean= false;
 			
 			for (var i:int= 0; !foundOverlap && i < eWordIndex; i++) {
-				var otherWord:EngineWord= eWords[i];
+				var otherWord:EngineWordVO= eWords[i];
 				if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
 
 				if (eWord.overlaps(otherWord)) {
@@ -226,19 +229,19 @@ public class WordCramEngine {
 		return this.failedLast;
 	}
 	
-	private function calculateMaxAttemptsFromWordWeight(word:Word):int {
+	private function calculateMaxAttemptsFromWordWeight(word:WordVO):int {
 		return int(((1.0 - word.weight) * 600) )+ 100;
 	}
 
-	private function drawWordImage(word:EngineWord):void {
+	private function drawWordImage(word:EngineWordVO):void {
 		destination.addChild(word.getShape().rendition(colorer.colorFor(word.word)));
 //		word.bbTree.draw(destination.graphics);
 	}
 
-	function getWordAt(x:Number, y:Number):Word {
+	function getWordAt(x:Number, y:Number):WordVO {
 		for (var i:int= 0; i < eWords.length; i++) {
 			if (eWords[i].wasPlaced()) {
-				var shape:TextShape = eWords[i].getShape();
+				var shape:TextShapeVO = eWords[i].getShape();
 				if (shape.containsPoint(x, y,true)) {
 					return eWords[i].word;
 				}
@@ -247,11 +250,11 @@ public class WordCramEngine {
 		return null;
 	}
 
-	public function getSkippedWords():Vector.<Word> {
-		var skippedWords:Vector.<Word>  = new Vector.<Word>();
+	public function getSkippedWords():Vector.<WordVO> {
+		var skippedWords:Vector.<WordVO>  = new Vector.<WordVO>();
 		 var it:IIterator = words.iterator();
 		 while(it.hasNext()){
-			 var w:Word = it.next();
+			 var w:WordVO = it.next();
 			 if(w.wasSkipped())
 				 skippedWords.push(w);
 		 }

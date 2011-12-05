@@ -1,5 +1,5 @@
 package com.settinghead.wenwentu.client.colorer {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -38,6 +38,6 @@ public interface WordColorer {
 	 * @param word the word to pick the color for
 	 * @return the color for the word
 	 */
-	function colorFor(word:Word):uint ;
+	function colorFor(word:WordVO):uint ;
 }
 }

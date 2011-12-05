@@ -11,6 +11,11 @@ package com.settinghead.wenwentu.client
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	import mx.graphics.codec.PNGEncoder;
+	import com.settinghead.wenwentu.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
+	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeBuilder;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	public class WordCramTestArea extends UIComponent
 	{
@@ -28,14 +33,14 @@ package com.settinghead.wenwentu.client
 			
 			this.graphics.lineStyle(0.5);
 
-			var word:Word = new Word("FREEDOMIZE",30);
+			var word:WordVO = new WordVO("FREEDOMIZE",30);
 			word.setFont("Vera");
 			word.setColor(0x000000);
 			word.setSize(100);
-			var tShape:TextShape = WordShaper.makeShape(word.word,100,"Vera",0);
-			var eWord:EngineWord = new EngineWord(word,1,200);
+			var tShape:TextShapeVO = WordShaper.makeShape(word.word,100,"Vera",0);
+			var eWord:EngineWordVO = new EngineWordVO(word,1,200);
 			eWord.setShape(tShape,0);
-			var tree:BBPolarRootTree=BBPolarTreeBuilder.makeTree(tShape,0);
+			var tree:BBPolarRootTreeVO=BBPolarTreeBuilder.makeTree(tShape,0);
 			var x:int = 500, y:int = 200;
 			tShape.translate(x-tShape.shape.width/2,y-tShape.shape.height/2);
 

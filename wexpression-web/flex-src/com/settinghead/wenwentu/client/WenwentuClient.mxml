@@ -21,16 +21,12 @@
 		<mx:Label fontWeight="bold" text="Create typography-based art."/>
 	</mx:ApplicationControlBar>
 	
-	<s:Panel id="p" title="Drawing Pad" horizontalCenter="0" width="100%" height="100%">
-		<mx:TabNavigator top="5" width="100%" height="100%" horizontalCenter="0">
-			<s:NavigatorContent width="100%" height="100%" label="Templates?">
-				<components:TemplateList id="templateList" right="0" top="0" bottom="0" width="150">
-				</components:TemplateList>
-				<components:TemplateRenderer id="templateRenderer" left="0" right="150" top="0"
-											 bottom="0"/>		
-			</s:NavigatorContent>
-		</mx:TabNavigator>
-	</s:Panel>
+
+	
+		<components:TemplateList id="templateList" right="0" top="0" bottom="0" left="0" visible="false">
+		</components:TemplateList>
+		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
+		<components:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" visible="false" />
 	
 	<debugger:MonsterDebuggerFlex id="monsterDebugger"/>
 

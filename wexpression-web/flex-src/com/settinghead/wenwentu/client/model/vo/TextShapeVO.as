@@ -12,7 +12,7 @@
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-package com.settinghead.wenwentu.client
+package com.settinghead.wenwentu.client.model.vo
 {
 	
 	import com.demonsters.debugger.MonsterDebugger;
@@ -41,13 +41,14 @@ package com.settinghead.wenwentu.client
 	
 	import spark.components.Label;
 	import spark.primitives.Rect;
+	import com.settinghead.wenwentu.client.NotImplementedError;
 
 	
 	/**
 	 * @author Martin Heidegger
 	 * @version 1.0
 	 */
-	public class TextShape implements ImageShape
+	public class TextShapeVO implements IImageShape
 	{
 		[Embed(source="Vera.ttf", fontFamily="vera", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
@@ -63,7 +64,7 @@ package com.settinghead.wenwentu.client
 		private var _size: Number;
 		private var _centerX:Number, _centerY:Number, _rotation:Number = 0;
 		
-		public function TextShape(embeddedFont: Boolean, text: String, safetyBorder: Number, size: Number, rotation: Number = 0, fontName: String = "Vera")
+		public function TextShapeVO(embeddedFont: Boolean, text: String, safetyBorder: Number, size: Number, rotation: Number = 0, fontName: String = "Vera")
 		{
 			this._size = size;
 

@@ -1,10 +1,9 @@
 package com.settinghead.wenwentu.client.view
 {
 	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.TemplateImage;
 	import com.settinghead.wenwentu.client.model.TemplateProxy;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
-	import com.settinghead.wenwentu.client.view.components.TemplateRenderer;
+	import com.settinghead.wenwentu.client.view.components.TuRenderer;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
@@ -44,10 +43,7 @@ package com.settinghead.wenwentu.client.view
 			switch ( note.getName() )
 			{		
 				case ApplicationFacade.TEMPLATE_SELECTED:
-					templateRenderer.setTemplate( note.getBody() as TemplateVO, 
-						TemplateRenderer.MODE_RENDER );
-					break;
-				
+					//TODO
 			}
 		}
 		
@@ -71,9 +67,9 @@ package com.settinghead.wenwentu.client.view
 //			templateRenderer.reset();
 //		}
 		
-		private function get templateRenderer ():TemplateRenderer
+		private function get Renderer ():TuRenderer
 		{
-			return viewComponent as TemplateRenderer;
+			return viewComponent as TuRenderer;
 		}
 	}
 }

@@ -9,7 +9,6 @@
 	<fx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
-			import com.settinghead.wenwentu.client.TemplateImage;
 			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 			
 			import mx.events.FlexEvent;

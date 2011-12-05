@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.model.vo {
 	import com.settinghead.wenwentu.client.colorer.WordColorer;
 	import com.settinghead.wenwentu.client.sizers.WordSizer;
 	
@@ -7,6 +7,7 @@ package com.settinghead.wenwentu.client {
 	import org.as3commons.collections.Map;
 	import com.settinghead.wenwentu.client.fonter.WordFonter;
 	import com.settinghead.wenwentu.client.placer.WordPlacer;
+	import com.settinghead.wenwentu.client.PlaceInfo;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -74,7 +75,7 @@ package com.settinghead.wenwentu.client {
  * 
  * @author Dan Bernier
  */
-public class Word {
+public class WordVO {
 
 	public var word:String;
 	public var weight:Number;
@@ -95,10 +96,10 @@ public class Word {
 
 	private var properties:Map = new Map();
 
-	public function Word(word:String, weight:Number) {
+	public function WordVO(word:String, weight:Number) {
 		this.word = word;
-		if (this.word == ("nyan"))
-			this.word = "Xiyang Chen";
+//		if (this.word == ("nyan"))
+//			this.word = "Xiyang Chen";
 		this.weight = weight;
 	}
 
@@ -108,7 +109,7 @@ public class Word {
 	 * 
 	 * @return the Word, for more configuration
 	 */
-	public function setSize(size:Number):Word {
+	public function setSize(size:Number):WordVO {
 		this.presetSize = size;
 		return this;
 	}
@@ -119,7 +120,7 @@ public class Word {
 	 * 
 	 * @return the Word, for more configuration
 	 */
-	public function setFont(font:String):Word { // TODO provide a string overload? Will
+	public function setFont(font:String):WordVO { // TODO provide a string overload? Will
 										// need the PApplet...
 		this.presetFont = font;
 		return this;
@@ -131,7 +132,7 @@ public class Word {
 	 * 
 	 * @return the Word, for more configuration
 	 */
-	public function setColor(color:int):Word {
+	public function setColor(color:int):WordVO {
 		this.presetColor = color;
 		return this;
 	}
@@ -142,7 +143,7 @@ public class Word {
 	 * 
 	 * @return the Word, for more configuration
 	 */
-	public function setPlace(place:PlaceInfo):Word {
+	public function setPlace(place:PlaceInfo):WordVO {
 		this.presetTargetPlace = new PlaceInfo(place.getpVector().clone(),
 				place.getReturnedObj());
 		return this;
@@ -301,7 +302,7 @@ public class Word {
 	 * @param propertyValue
 	 * @return the Word, for more configuration
 	 */
-	public function setProperty(propertyName:String, propertyValue:Object):Word {
+	public function setProperty(propertyName:String, propertyValue:Object):WordVO {
 		properties.add(propertyName, propertyValue);
 		return this;
 	}
@@ -310,5 +311,6 @@ public class Word {
 	public function getWeight():Number{
 		return this.weight;
 	}
+	
 }
 }

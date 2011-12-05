@@ -2,8 +2,8 @@
  * 
  */
 package com.settinghead.wenwentu.client.angler {
-	import com.settinghead.wenwentu.client.EngineWord;
-	import com.settinghead.wenwentu.client.TemplateImage;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 	
 	import org.as3commons.lang.Assert;
 
@@ -12,15 +12,15 @@ package com.settinghead.wenwentu.client.angler {
  * 
  */
 public class ShapeConfinedAngler implements WordAngler {
-	var img:TemplateImage;
+	var img:TemplateVO;
 	private var otherwise:WordAngler;
 
-	public function ShapeConfinedAngler(img:TemplateImage, otherwise:WordAngler) {
+	public function ShapeConfinedAngler(img:TemplateVO, otherwise:WordAngler) {
 		this.img = img;
 		this.otherwise = otherwise;
 	}
 
-	public function angleFor(eWord:EngineWord):Number {
+	public function angleFor(eWord:EngineWordVO):Number {
 		if (eWord.getCurrentLocation() == null)
 			return otherwise.angleFor(eWord);
 		// float angle = (img.getHue(

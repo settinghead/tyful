@@ -1,10 +1,10 @@
 package com.settinghead.wenwentu.client.density
 {
-	import com.settinghead.wenwentu.client.TemplateImage;
+	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 
 	public class DensityPatchIndex {
 		
-		private var img:TemplateImage;
+		private var img:TemplateVO;
 		private var _map:LeveledPatchMap;
 		
 		public static const NUMBER_OF_DIVISIONS:int= 3;
@@ -12,7 +12,7 @@ package com.settinghead.wenwentu.client.density
 		public static var MARK_FILL_FACTOR:Number= 0.6;
 		
 		
-		public function DensityPatchIndex(img:TemplateImage) {
+		public function DensityPatchIndex(img:TemplateVO) {
 			this.img = img;
 			_map = new LeveledPatchMap(this);
 		}
@@ -51,7 +51,7 @@ package com.settinghead.wenwentu.client.density
 			patch.unmarkForParent();
 		}
 		
-		public function getImg():TemplateImage {
+		public function getImg():TemplateVO {
 			return this.img;
 		}
 	}

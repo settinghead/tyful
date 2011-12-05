@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ PureMVC AS3 Demo - Flex Employee Admin 
+ Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+-->
+<mx:Panel title="Template Editor" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:client="com.settinghead.wenwentu.client.*" xmlns:s="library://ns.adobe.com/flex/spark">
+	
+	<!-- Events dispatched by this View Component -->
+	<mx:Metadata>
+
+	</mx:Metadata>
+	<mx:TabNavigator left="0" right="0" top="0" bottom="0" width="100%" height="100%">
+		<s:NavigatorContent label="Background">
+			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
+			<mx:Canvas id="imageContainer" />
+		</s:NavigatorContent>
+		<s:NavigatorContent label="Text Flow">
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	<mx:Script>
+		<![CDATA[
+			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+			
+			import flash.display.*;
+			import flash.display.Sprite;
+			import flash.events.*;
+			import flash.events.MouseEvent;
+			import flash.net.*;
+			import flash.utils.ByteArray;
+			
+			import mx.events.FlexEvent;
+			
+			public static const MODE_EDIT:String 	= "modeEdit";
+			
+			[Bindable] public var template:TemplateVO;
+			[Bindable] public var mode:String;
+			
+			public function setTemplate( template:TemplateVO, mode:String ):void
+			{
+				this.mode = mode;
+				this.template = template;
+			}
+			// ------- Constants -------
+			// Display states
+			private static const LOAD:uint = 0;
+			private static const PROGRESS:uint = 1;
+			
+			private var _loadFile:FileReference;
+			private var jagFileRefSave:FileReference = new FileReference();
+			private var loader:Loader = new Loader();
+			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
+
+			// ------- Child controls -------
+			// Common view/containers
+			private var _imageContainer:Sprite;
+			private var _currentViewContainer:Sprite;
+
+			protected function btnUpload_clickHandler(event:MouseEvent):void
+			{
+				jagFileRefSave.browse([imagesFilter]);
+				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+			}
+			
+			
+			private function onClickSave(e:MouseEvent):void{    
+				jagFileRefSave.browse([imagesFilter]);
+				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+			}        
+			private function selectedFile(e:Event):void{
+				jagFileRefSave.load();
+				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
+			}
+			private function loaded(e:Event):void{
+				var rawBytes:ByteArray = jagFileRefSave.data;
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData)
+				loader.loadBytes(rawBytes);
+			}
+			private function getBitmapData(e:Event):void{
+				imageContainer.addChild(loader);
+			}
+			
+		]]>
+	</mx:Script>
+	
+
+</mx:Panel>

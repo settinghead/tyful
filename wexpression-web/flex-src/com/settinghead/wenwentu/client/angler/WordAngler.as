@@ -1,5 +1,5 @@
 package com.settinghead.wenwentu.client.angler {
-	import com.settinghead.wenwentu.client.EngineWord;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -26,7 +26,7 @@ package com.settinghead.wenwentu.client.angler {
  */
 public interface WordAngler {
 
-	import com.settinghead.wenwentu.client.EngineWord;
+	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
 	/**
 	 * What angle should this {@link Word} be rotated at?
 	 * 
@@ -34,6 +34,6 @@ public interface WordAngler {
 	 *            The Word that WordCram is about to draw, and wants to rotate
 	 * @return the rotation angle for the Word, in radians
 	 */
-	function angleFor(eWord:EngineWord):Number ;
+	function angleFor(eWord:EngineWordVO):Number ;
 }
 }

@@ -3,17 +3,18 @@ package com.settinghead.wenwentu.client
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
 
 	
-	internal class WordShaper {
+	public class WordShaper {
 		
-		public static function makeShape(text:String, fontSize:Number, fontName: String = "Arial", rotation:Number=0):TextShape {
+		public static function makeShape(text:String, fontSize:Number, fontName: String = "Arial", rotation:Number=0):TextShapeVO {
 			
-			var result:TextShape = new TextShape(true,text,0,fontSize,rotation,fontName);
+			var result:TextShapeVO = new TextShapeVO(true,text,0,fontSize,rotation,fontName);
 			return result;
 		}
 		
-		private static function isTooSmall(shape:TextShape, minShapeSize:int):Boolean {
+		private static function isTooSmall(shape:TextShapeVO, minShapeSize:int):Boolean {
 			var r:Rectangle = shape.objectBounds;
 			
 			// Most words will be wider than tall, so this basically boils down to
@@ -22,7 +23,7 @@ package com.settinghead.wenwentu.client
 			return r.height < minShapeSize || r.width < minShapeSize;
 		}
 		
-		public static function rotate(shape:TextShape, rotation:Number):TextShape {
+		public static function rotate(shape:TextShapeVO, rotation:Number):TextShapeVO {
 			if (rotation == 0) {
 				return shape;
 			}

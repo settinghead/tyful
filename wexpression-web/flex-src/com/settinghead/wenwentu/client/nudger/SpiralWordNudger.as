@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.nudger {
 	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	import com.settinghead.wenwentu.client.math.MathUtils;
 	
 	import flash.geom.Point;
@@ -28,7 +28,7 @@ public class SpiralWordNudger implements WordNudger {
 	// bigger fonts need a bigger thetaIncrement.
 	private var thetaIncrement:Number= Math.PI * 0.03;
 
-	public function nudgeFor(w:Word, pInfo:PlaceInfo, attempt:int):Point {
+	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int):Point {
 		var rad:Number= powerMap(0.6, attempt, 0, 600, 1, 600);
 
 		thetaIncrement = powerMap(1, attempt, 0, 600, 0.5, 0.3);

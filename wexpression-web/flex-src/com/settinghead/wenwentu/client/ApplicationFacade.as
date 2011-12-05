@@ -2,14 +2,18 @@ package com.settinghead.wenwentu.client
 {
 	import com.settinghead.wenwentu.client.controller.StartupCommand;
 	
+	import flash.display.LoaderInfo;
+	
 	import org.puremvc.as3.patterns.facade.Facade;
 	
 	public class ApplicationFacade extends Facade
 	{
-		public static const STARTUP:String             = "startup";
-		public static const POPULATE_TEMPLATES:String    = "populateTemplates";
-		public static const TEMPLATE_SELECTED:String    = "templateSelected";
-
+		public static const STARTUP:String                = "startup";
+		public static const TU_CREATED:String             = "tuCreated";
+		public static const GENERATE_TU:String			  = "generateTu";
+		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
+		public static const TEMPLATE_SELECTED:String	  = "templateSelected";
+		
 		/**
 		 * Start the application
 		 */
@@ -24,7 +28,8 @@ package com.settinghead.wenwentu.client
 		override protected function initializeController( ) : void 
 		{
 			super.initializeController();            
-			registerCommand( STARTUP, StartupCommand );
+			registerCommand( STARTUP, StartupCommand );			
+			registerCommand( GENERATE_TU, StartupCommand );
 		}
 		
 		/**

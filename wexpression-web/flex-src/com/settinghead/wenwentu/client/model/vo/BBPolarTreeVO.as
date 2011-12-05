@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.model.vo {
 
 
 /*
@@ -17,15 +17,13 @@ package com.settinghead.wenwentu.client {
  limitations under the License.
  */
 
-	import com.settinghead.wenwentu.client.BBPolarChildTree;
-	import com.settinghead.wenwentu.client.BBPolarRootTree;
+	import com.settinghead.wenwentu.client.model.vo.BBPolarChildTreeVO;
+	import com.settinghead.wenwentu.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wenwentu.client.NotImplementedError;
-	
-	import flash.display.Graphics;
 	
 	import org.as3commons.lang.Assert;
 	
-	public class BBPolarTree {
+	public class BBPolarTreeVO {
 		
 		public static const HALF_PI:Number= ((Math.PI / 2));
 		public static const TWO_PI:Number= ((Math.PI * 2));
@@ -37,51 +35,51 @@ package com.settinghead.wenwentu.client {
 		protected var _x:Number, _y :Number, _right:Number, _bottom:Number;
 		
 		public var _r1:Number, d1:Number, _r2:Number, d2:Number;
-		protected var _kids:Vector.<BBPolarChildTree>;
+		protected var _kids:Vector.<BBPolarChildTreeVO>;
 		protected var _computedR1:Number= Number.NaN, _computedR2:Number = Number.NaN;
 		private var pointsStamp:Number;
 		private var _points:Array= null;
 		
 		public static const MARGIN:Number = 3;
 	
-		public function BBPolarTree( r1:Number,  r2:Number, d1:Number, d2:Number, minBoxSize:int) {
+		public function BBPolarTreeVO( r1:Number,  r2:Number, d1:Number, d2:Number, minBoxSize:int) {
 			this._r1 = r1;
 			this._r2 = r2;
 			this.d1 = d1;
 			this.d2 = d2;
 			var r:Number= r2 - r1;
-			var d:Number=  BBPolarTree.PI * (d1+d2) * r / BBPolarTree.TWO_PI;
+			var d:Number=  BBPolarTreeVO.PI * (d1+d2) * r / BBPolarTreeVO.TWO_PI;
 	
 			var tooSmallToContinue:Boolean= d <= minBoxSize || d2 - d1 < minBoxSize;
 			if (tooSmallToContinue)
 				this.setLeaf(true);
 		}
 	
-		function addKids(kidList:Vector.<BBPolarChildTree>):void {
+		 function addKids(kidList:Vector.<BBPolarChildTreeVO>):void {
 			_kids = kidList;
 		}
 	
-		 function getRootX():int {
+		public function getRootX():int {
 			throw new NotImplementedError();
 		 }
 	
-		function getRootY():int {
+		public function getRootY():int {
 			throw new NotImplementedError();
 		}
 	
-		function overlaps(otherTree:BBPolarTree):Boolean {
+		function overlaps(otherTree:BBPolarTreeVO):Boolean {
 	
 			if (this.rectCollide(otherTree)) {
 				if (this.isLeaf() && otherTree.isLeaf()) {
 					return true;
 				} else if (this.isLeaf()) { // Then otherTree isn't a leaf.
-					for each (var otherKid:BBPolarTree in otherTree.getKids()) {
+					for each (var otherKid:BBPolarTreeVO in otherTree.getKids()) {
 						if (this.overlaps(otherKid)) {
 							return true;
 						}
 					}
 				} else {
-					for each (var myKid:BBPolarTree  in this.getKids()) {
+					for each (var myKid:BBPolarTreeVO  in this.getKids()) {
 						if (otherTree.overlaps(myKid)) {
 							return true;
 						}
@@ -91,14 +89,14 @@ package com.settinghead.wenwentu.client {
 			return false;
 		}
 	
-		private function getKids():Vector.<BBPolarChildTree> {
+		public function getKids():Vector.<BBPolarChildTreeVO> {
 			if ((!this.isLeaf()) && this._kids == null)
 				BBPolarTreeBuilder.makeChildren(this, getShape(), getMinBoxSize(),
 						getRoot());
 			return this._kids;
 		}
 	
-		 function getRoot():BBPolarRootTree {
+		 public function getRoot():BBPolarRootTreeVO {
 			 throw new NotImplementedError();
 		 }
 	
@@ -106,17 +104,17 @@ package com.settinghead.wenwentu.client {
 			 throw new NotImplementedError();
 		 }
 	
-		 function getShape():ImageShape {
+		 function getShape():IImageShape {
 			 throw new NotImplementedError();
 		 }
 	
-		function overlapsCoord(x:Number, y:Number, right:Number, bottom:Number):Boolean {
+		public function overlapsCoord(x:Number, y:Number, right:Number, bottom:Number):Boolean {
 	
 			if (this.rectCollideCoord(x, y, right, bottom)) {
 				if (this.isLeaf()) {
 					return true;
 				} else {
-					for each (var myKid:BBPolarChildTree in this.getKids()) {
+					for each (var myKid:BBPolarChildTreeVO in this.getKids()) {
 						if (myKid.overlapsCoord(x, y, right, bottom)) {
 							return true;
 						}
@@ -132,7 +130,7 @@ package com.settinghead.wenwentu.client {
 				if (this.isLeaf())
 					return true;
 				else {
-					for each (var myKid:BBPolarTree in this.getKids()) {
+					for each (var myKid:BBPolarTreeVO in this.getKids()) {
 						if (myKid.contains(x, y, right, bottom)) {
 							return true;
 						}
@@ -197,7 +195,7 @@ package com.settinghead.wenwentu.client {
 			return this._points;
 		}
 	
-		private function rectCollide(bTree:BBPolarTree):Boolean {
+		private function rectCollide(bTree:BBPolarTreeVO):Boolean {
 			var b:Array= bTree.getPoints();
 	
 			return rectCollideCoord(b[0], b[1], b[2], b[3]);
@@ -220,7 +218,7 @@ package com.settinghead.wenwentu.client {
 			return a[3] > y && a[1] < bottom  && a[2] > x && a[0] < right;
 		}
 	
-		function isLeaf():Boolean {
+		public function isLeaf():Boolean {
 			return _leaf;
 		}
 	
@@ -240,65 +238,7 @@ package com.settinghead.wenwentu.client {
 		}
 	
 		
-	
-		function draw(g:Graphics):void {
-			drawLeaves(g);
-		}
-	
-		private function drawLeaves(g:Graphics):void {
-			if (this.isLeaf()) {
-				drawBounds(g);
-			} else {
-				for (var i:int= 0; i < getKids().length; i++) {
-					getKids()[i].drawLeaves(g);
-				}
-			}
-		}
-	
-	
-		private function drawBounds(g:Graphics):void {
-			var x1:int, x2:int, x3:int, x4:int, y1:int, y2:int, y3:int, y4:int;
-			x1 = int((this.getRootX() + this.d1 * Math.cos(getR1(true))));
-			y1 = int((this.getRootY() - this.d1 * Math.sin(getR1(true))));
-			x2 = int((this.getRootX() + this.d1 * Math.cos(getR2(true))));
-			y2 = int((this.getRootY() - this.d1 * Math.sin(getR2(true))));
-			x3 = int((this.getRootX() + this.d2 * Math.cos(getR1(true))));
-			y3 = int((this.getRootY() - this.d2 * Math.sin(getR1(true))));
-			x4 = int((this.getRootX() + this.d2 * Math.cos(getR2(true))));
-			y4 = int((this.getRootY() - this.d2 * Math.sin(getR2(true))));
-	
-			var r:Number= this.getR2(true) - this.getR1(true);
-			if (r < 0)
-				r = TWO_PI + r;
-			Assert.isTrue(r < PI);
-	
-			drawArc(g, this.getRootX(),
-					this.getRootY(), this.d2,
-					 this.getR1(true), this.getR2(true), 1);
-			drawArc(g, this.getRootX(),
-					this.getRootY(), this.d1,
-					 this.getR1(true), this.getR2(true), 1);
-			g.moveTo(x1,y1);
-			g.lineTo(x3,y3);
-			g.moveTo(x2,y2);
-			g.lineTo(x4,y4);
-		}
 
-		public function drawArc(g:Graphics,center_x:Number,center_y:Number,
-								 radius:Number,angle_from:Number,angle_to:Number,precision:Number):void {
-			var angle_diff:Number=angle_to-angle_from;
-			var steps:Number=Math.round(angle_diff*precision);
-			if(steps==0) steps = 1;
-			var angle:Number=angle_from;
-			var px:Number=center_x+radius*Math.cos(angle);
-			var py:Number=center_y-radius*Math.sin(angle);
-			g.moveTo(px,py);
-			for (var i:int=1; i<=steps; i++) {
-				angle=angle_from+angle_diff/steps*i;
-				g.lineTo(center_x+radius*Math.cos(angle),center_y-radius*Math.sin(angle));
-			}
-		}
-	
 		public function getWidth(rotate:Boolean):Number {
 			return this.getRight(rotate) - this.getX(rotate);
 		}

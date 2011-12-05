@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.colorer
 {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	public class AlwaysUseColorer implements WordColorer
 	{
@@ -11,7 +11,7 @@ package com.settinghead.wenwentu.client.colorer
 			this.color = color;
 		}
 		
-		public function colorFor(word:Word):uint
+		public function colorFor(word:WordVO):uint
 		{
 			return color;
 		}

@@ -17,6 +17,13 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.settinghead.wenwentu.client.RenderOptions;
+			import com.settinghead.wenwentu.client.ShapeConfinedPlacer;
+			import com.settinghead.wenwentu.client.ShapeConfinedWordNudger;
+			import com.settinghead.wenwentu.client.WordComparator;
+			import com.settinghead.wenwentu.client.WordCramEngine;
+			import com.settinghead.wenwentu.client.WordSorterAndScaler;
+			import com.settinghead.wenwentu.client.model.vo.WordVO;
 			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
 			import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
@@ -27,6 +34,7 @@
 			import com.settinghead.wenwentu.client.density.DensityPatchIndex;
 			import com.settinghead.wenwentu.client.fonter.AlwaysUseFonter;
 			import com.settinghead.wenwentu.client.fonter.WordFonter;
+			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 			import com.settinghead.wenwentu.client.nudger.WordNudger;
 			import com.settinghead.wenwentu.client.placer.WordPlacer;
 			import com.settinghead.wenwentu.client.sizers.ByRankWordSizer;
@@ -106,8 +114,8 @@
 			
 			private var renderOptions:RenderOptions= new RenderOptions();
 			
-			private var img:TemplateImage;
-			private var lostWords:Vector.<Word> = new Vector.<Word>();
+			private var img:TemplateVO;
+			private var lostWords:Vector.<WordVO> = new Vector.<WordVO>();
 			
 //			public function WordCramRenderer()
 //			{
@@ -131,14 +139,14 @@
 					this.words =  new SortedList(new WordComparator());
 					this.wordLoadingComplete = false;
 					for(var i:int=0;i<60;i++){
-						this.addWord(new Word("Freedomize", Math.random()*5+0.5));
-						this.addWord(new Word("CaRR", Math.random()*5+0.5));
-						this.addWord(new Word("eclipse", Math.random()*5+0.5));
-						this.addWord(new Word("carz", Math.random()*5+0.5));
-						this.addWord(new Word("sand", Math.random()*5+0.5));
-						this.addWord(new Word("beach", Math.random()*5+0.5));
-						this.addWord(new Word("stephen", Math.random()*5+0.5));
-						this.addWord(new Word("Bloom", Math.random()*5+0.5));
+						this.addWord(new WordVO("Freedomize", Math.random()*5+0.5));
+						this.addWord(new WordVO("CaRR", Math.random()*5+0.5));
+						this.addWord(new WordVO("eclipse", Math.random()*5+0.5));
+						this.addWord(new WordVO("carz", Math.random()*5+0.5));
+						this.addWord(new WordVO("sand", Math.random()*5+0.5));
+						this.addWord(new WordVO("beach", Math.random()*5+0.5));
+						this.addWord(new WordVO("stephen", Math.random()*5+0.5));
+						this.addWord(new WordVO("Bloom", Math.random()*5+0.5));
 					}
 				}
 			}
@@ -469,7 +477,7 @@
 			
 		
 			
-			public function set template(img:TemplateImage):void {
+			public function set template(img:TemplateVO):void {
 				reset();
 				this.img = img;
 				placer = new ShapeConfinedPlacer(img, new DensityPatchIndex(img));
@@ -591,7 +599,7 @@
 			 * @return the Word that covers those coordinates, or null if there isn't
 			 *         one
 			 */
-			public function getWordAt(x:Number, y:Number):Word {
+			public function getWordAt(x:Number, y:Number):WordVO {
 				return getWordCramEngine().getWordAt(x, y);
 			}
 			
@@ -600,7 +608,7 @@
 			 * 
 			 * @return An array of the skipped words
 			 */
-			public function getSkippedWords():Vector.<Word> {
+			public function getSkippedWords():Vector.<WordVO> {
 				return getWordCramEngine().getSkippedWords();
 			}
 			
@@ -637,7 +645,7 @@
 			
 			
 			
-			public function addWord(w:Word):void {
+			public function addWord(w:WordVO):void {
 				if (words == null)
 					words = new SortedList(new WordComparator());
 				words.add(w);

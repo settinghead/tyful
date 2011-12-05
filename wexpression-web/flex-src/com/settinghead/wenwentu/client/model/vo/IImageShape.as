@@ -1,10 +1,10 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.model.vo {
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.geom.Rectangle;
 
 
-	internal interface ImageShape {
+	public interface IImageShape {
 	
 		function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean;
 		function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean;

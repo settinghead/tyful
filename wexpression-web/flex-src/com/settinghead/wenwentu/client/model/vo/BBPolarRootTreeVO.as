@@ -1,14 +1,15 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wenwentu.client.model.vo
 {
-	internal class BBPolarRootTree extends BBPolarTree {
+
+	public class BBPolarRootTreeVO extends BBPolarTreeVO {
 		private var rootX:int;
 		private var rootY:int;
 		private var _rotation:Number= 0;
 		protected var rootStamp:Number;
-		private var shape:ImageShape;
+		private var shape:IImageShape;
 		var _minBoxSize:int;
 		
-		public function BBPolarRootTree(shape:ImageShape, centerX:int, centerY:int,
+		public function BBPolarRootTreeVO(shape:IImageShape, centerX:int, centerY:int,
 										d:Number, minBoxSize:int) {
 			super(0, TWO_PI, 0, d, minBoxSize);
 			this.rootX = centerX;
@@ -25,12 +26,12 @@ package com.settinghead.wenwentu.client
 		}
 		
 		
-		override function getRootX():int {
+		public override function getRootX():int {
 			return rootX;
 		}
 		
 		
-		override function getRootY():int {
+		public override function getRootY():int {
 			return rootY;
 		}
 		
@@ -55,9 +56,9 @@ package com.settinghead.wenwentu.client
 		}
 		
 		public function setRotation(rotation:Number):void {
-			this._rotation = rotation % BBPolarTree.TWO_PI;
+			this._rotation = rotation % BBPolarTreeVO.TWO_PI;
 			if(this._rotation<0)
-				this._rotation = BBPolarTree.TWO_PI + this._rotation;
+				this._rotation = BBPolarTreeVO.TWO_PI + this._rotation;
 			this.rootStamp = (new Date()).time;
 		}
 		
@@ -72,7 +73,7 @@ package com.settinghead.wenwentu.client
 		}
 		
 		
-		override function getRoot():BBPolarRootTree {
+		public override function getRoot():BBPolarRootTreeVO {
 			return this;
 		}
 		
@@ -82,7 +83,7 @@ package com.settinghead.wenwentu.client
 		}
 		
 		
-		override function getShape():ImageShape {
+		override function getShape():IImageShape {
 			return this.shape;
 		}
 		

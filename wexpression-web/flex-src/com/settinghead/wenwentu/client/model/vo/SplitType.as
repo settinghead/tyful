@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wenwentu.client.model.vo
 {
 	internal final class SplitType
 	{

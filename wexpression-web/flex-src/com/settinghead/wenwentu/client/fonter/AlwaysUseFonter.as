@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.client.fonter
 {
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	public class AlwaysUseFonter implements WordFonter
 	{
@@ -11,7 +11,7 @@ package com.settinghead.wenwentu.client.fonter
 			this.fontName = fontName;
 		}
 		
-		public function fontFor(word:Word):String
+		public function fontFor(word:WordVO):String
 		{
 			return fontName;
 		}

@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.model.vo {
 /*
  Copyright 2010 Daniel Bernier
 
@@ -15,8 +15,6 @@ package com.settinghead.wenwentu.client {
  limitations under the License.
  */
 
-	import com.settinghead.wenwentu.client.BBPolarChildTree;
-	import com.settinghead.wenwentu.client.BBPolarRootTree;
 	import com.settinghead.wenwentu.client.NotImplementedError;
 	
 	import flash.display.Graphics;
@@ -28,7 +26,7 @@ internal class BBPolarTreeBuilder {
 
 	
 
-	public static function makeTree(shape:ImageShape, swelling:int):BBPolarRootTree {
+	public static function makeTree(shape:IImageShape, swelling:int):BBPolarRootTreeVO {
 		var minBoxSize:int= 2;
 		// center
 		var x:int= int((shape.objectWidth / 2));
@@ -39,28 +37,28 @@ internal class BBPolarTreeBuilder {
 		var d:Number= (Math.sqrt(Math.pow(shape.objectWidth / 2, 2)
 				+ Math.pow(shape.objectHeight / 2, 2)));
 
-		var tree:BBPolarRootTree= new BBPolarRootTree(shape, x, y, d,
+		var tree:BBPolarRootTreeVO= new BBPolarRootTreeVO(shape, x, y, d,
 				minBoxSize);
 		// makeChildren(tree, shape, minBoxSize, tree);
 //		tree.swell(swelling);
 		return tree;
 	}
 
-	public static function makeChildren(tree:BBPolarTree, shape:ImageShape,
-			minBoxSize:int, root:BBPolarRootTree):void {
+	public static function makeChildren(tree:BBPolarTreeVO, shape:IImageShape,
+			minBoxSize:int, root:BBPolarRootTreeVO):void {
 		var type:int= determineType(tree);
 
-		var children:Vector.<BBPolarChildTree>= splitTree(tree, shape, minBoxSize, root, type);
+		var children:Vector.<BBPolarChildTreeVO>= splitTree(tree, shape, minBoxSize, root, type);
 //		 if(children.length==0) 
 //			 tree.setLeaf(true);
 //		 else
 			tree.addKids(children);
 	}
 
-	static function splitTree(tree:BBPolarTree, shape:ImageShape,
-		 minBoxSize:int, root:BBPolarRootTree, type:int):Vector.<BBPolarChildTree> {
-		var result:Vector.<BBPolarChildTree>= new Vector.<BBPolarChildTree>();
-		var re:BBPolarChildTree;
+	static function splitTree(tree:BBPolarTreeVO, shape:IImageShape,
+		 minBoxSize:int, root:BBPolarRootTreeVO, type:int):Vector.<BBPolarChildTreeVO> {
+		var result:Vector.<BBPolarChildTreeVO>= new Vector.<BBPolarChildTreeVO>();
+		var re:BBPolarChildTreeVO;
 		var r:Number, r1:Number, r2:Number, r3:Number, r4:Number, r5:Number;
 		var d:Number, d1:Number, d2:Number, d3:Number, d4:Number, d5:Number;
 		
@@ -172,7 +170,7 @@ internal class BBPolarTreeBuilder {
 		return result;
 	}
 
-	private static function determineType(tree:BBPolarTree):int {
+	private static function determineType(tree:BBPolarTreeVO):int {
 		var d:Number= (tree.d2 - tree.d1);
 		var midLength:Number= ((tree.d2 + tree.d1)
 				* (tree.getR2(false) - tree.getR1(false)) / 2);
@@ -187,10 +185,10 @@ internal class BBPolarTreeBuilder {
 			return SplitType._1RAY1CUT;
 	}
 
-	private static function makeChildTree(shape:ImageShape, minBoxSize:int,
-			r1:Number, r2:Number, d1:Number, d2:Number, root:BBPolarRootTree):BBPolarChildTree {
+	private static function makeChildTree(shape:IImageShape, minBoxSize:int,
+			r1:Number, r2:Number, d1:Number, d2:Number, root:BBPolarRootTreeVO):BBPolarChildTreeVO {
 
-		var tree:BBPolarChildTree= new BBPolarChildTree(r1, r2, d1, d2,
+		var tree:BBPolarChildTreeVO= new BBPolarChildTreeVO(r1, r2, d1, d2,
 				root, minBoxSize);
 		var x:Number= tree.getX(false) +  shape.objectWidth / 2;
 		if(x>shape.objectWidth) return null;

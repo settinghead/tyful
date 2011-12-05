@@ -1,7 +1,7 @@
 package com.settinghead.wenwentu.client.placer
 {
 	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.Word;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	import com.settinghead.wenwentu.client.math.MathUtils;
 	
 	import flash.geom.Point;
@@ -12,7 +12,7 @@ package com.settinghead.wenwentu.client.placer
 		{
 		}
 		
-		public function place(word:Word, wordIndex:int, wordsCount:int,
+		public function place(word:WordVO, wordIndex:int, wordsCount:int,
 							  wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
 							  fieldHeight:int):PlaceInfo {
 			return new PlaceInfo(new Point(getOneUnder(fieldWidth - wordImageWidth),

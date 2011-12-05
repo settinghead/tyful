@@ -1,24 +1,24 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wenwentu.client.model.vo
 {
 	
-		public class BBPolarChildTree extends BBPolarTree {
+		public class BBPolarChildTreeVO extends BBPolarTreeVO {
 			
-			var root:BBPolarRootTree;
+			var root:BBPolarRootTreeVO;
 			
-			public function BBPolarChildTree(r1:Number, r2:Number,
+			public function BBPolarChildTreeVO(r1:Number, r2:Number,
 												  d1:Number, d2:Number, 
-											 root:BBPolarRootTree,  minBoxSize:int) {
+											 root:BBPolarRootTreeVO,  minBoxSize:int) {
 					super(r1, r2, d1, d2, minBoxSize);
 					this.root = root;
 				}
 			
 			
-			override function getRootX():int {
+			public override function getRootX():int {
 				return root.getRootX();
 			}
 			
 			
-			override function getRootY():int {
+			public override function getRootY():int {
 				return root.getRootY();
 			}
 			
@@ -231,7 +231,7 @@ package com.settinghead.wenwentu.client
 			}
 			
 			
-			override function getRoot():BBPolarRootTree {
+			public override function getRoot():BBPolarRootTreeVO {
 				return root;
 			}
 			
@@ -241,7 +241,7 @@ package com.settinghead.wenwentu.client
 			}
 			
 			
-			override function getShape():ImageShape {
+			override function getShape():IImageShape {
 				return root.getShape();
 			}
 		}

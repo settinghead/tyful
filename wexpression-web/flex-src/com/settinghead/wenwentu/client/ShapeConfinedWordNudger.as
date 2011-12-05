@@ -5,6 +5,7 @@ package com.settinghead.wenwentu.client {
 	import flash.geom.Point;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
 	import com.settinghead.wenwentu.client.nudger.WordNudger;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -32,7 +33,7 @@ public class ShapeConfinedWordNudger implements WordNudger {
 	public function ShapeConfinedWordNudger() {
 	}
 
-	public function nudgeFor(w:Word, pInfo:PlaceInfo, attempt:int):Point {
+	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int):Point {
 		var factor:int;
 		if (pInfo != null && pInfo.get().getReturnedObj() != null) {
 			var p:Patch= Patch(pInfo.get().getReturnedObj());
