@@ -309,7 +309,7 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(5,50);
+				this._sizer = new ByWeightSizer(8,35);
 			}
 			return this._sizer;
 		}

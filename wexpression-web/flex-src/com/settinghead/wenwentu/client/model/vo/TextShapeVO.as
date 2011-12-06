@@ -16,6 +16,7 @@ package com.settinghead.wenwentu.client.model.vo
 {
 	
 	import com.demonsters.debugger.MonsterDebugger;
+	import com.settinghead.wenwentu.client.NotImplementedError;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -41,7 +42,6 @@ package com.settinghead.wenwentu.client.model.vo
 	
 	import spark.components.Label;
 	import spark.primitives.Rect;
-	import com.settinghead.wenwentu.client.NotImplementedError;
 
 	
 	/**

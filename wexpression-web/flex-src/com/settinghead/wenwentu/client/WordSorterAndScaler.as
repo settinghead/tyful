@@ -1,7 +1,9 @@
 package com.settinghead.wenwentu.client {
+	import com.settinghead.wenwentu.client.model.vo.WordListVO;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -21,9 +23,9 @@ package com.settinghead.wenwentu.client {
 
 
 
-internal class WordSorterAndScaler {
+public class WordSorterAndScaler {
 
-	public function sortAndScale(rawWords:SortedList):SortedList {
+	public static function sortAndScale(rawWords:WordListVO):WordListVO {
 		
 		var maxWeight:Number= rawWords.first.getWeight();
 		

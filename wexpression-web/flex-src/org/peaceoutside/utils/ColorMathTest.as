@@ -27,7 +27,11 @@ package org.peaceoutside.utils
 		[Test]
 		public function testRGBtoHSB():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			trace((ColorMath.RGBtoHSB(0xffff00)  & 0x00FF0000) >> 16);
+			trace((ColorMath.RGBtoHSB(0xff0000)  & 0x00FF0000) >> 16);
+			trace((ColorMath.RGBtoHSB(0x00ff00)  & 0x00FF0000) >> 16);
+			trace((ColorMath.RGBtoHSB(0x0000ff)  & 0x00FF0000) >> 16);
+
 		}
 	}
 }

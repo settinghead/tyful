@@ -1,6 +1,7 @@
 package com.settinghead.wenwentu.client.controller
 {
 	import com.settinghead.wenwentu.client.model.TemplateProxy;
+	import com.settinghead.wenwentu.client.model.TuProxy;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -26,6 +27,7 @@ package com.settinghead.wenwentu.client.controller
 			
 			// register it
 			facade.registerProxy( templateProxy );
+			facade.registerProxy(new TuProxy );
 			
 		}
 	}

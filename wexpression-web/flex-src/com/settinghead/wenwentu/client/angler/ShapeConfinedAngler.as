@@ -2,6 +2,7 @@
  * 
  */
 package com.settinghead.wenwentu.client.angler {
+	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
 	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 	
@@ -29,7 +30,7 @@ public class ShapeConfinedAngler implements WordAngler {
 		// % BBPolarTree.TWO_PI;
 		var angle:Number= (img.getHue(
 				int(eWord.getCurrentLocation().getpVector().x), int(eWord
-						.getCurrentLocation().getpVector().y)));
+						.getCurrentLocation().getpVector().y)) *BBPolarTreeVO.TWO_PI);
 		if (isNaN(angle) || angle == 0)
 			return otherwise.angleFor(eWord);
 		else

@@ -510,7 +510,7 @@
 			public function getWordCramEngine():WordCramEngine {
 				if (wordCramEngine == null) {
 					
-					words = new WordSorterAndScaler().sortAndScale(words);
+					words = WordSorterAndScaler.sortAndScale(words);
 					
 					if (fonter == null)
 						fonter = new AlwaysUseFonter("Vera");

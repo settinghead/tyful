@@ -59,17 +59,16 @@ package com.settinghead.wenwentu.client.model
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
 			
-			do{
-				word = tu.getNextWordAndIncrement();
-				eWord = tu.generateEngineWord(word);
-			}
-			while(eWord==null && !tu.finishedDisplayWordRendering);
-			
+			word = tu.getNextWordAndIncrement();
+			eWord = tu.generateEngineWord(word);
+		
 			if(eWord!=null){
 				tu.pushEngineWord(eWord);
 				tu.placeWord(eWord);
-				var dw = eWord.getShape().rendition(tu.template.colorer.colorFor(word));
-				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
+				if(!eWord.wasSkipped()){
+					var dw:Sprite = eWord.getShape().rendition(tu.template.colorer.colorFor(word));
+					sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
+				}
 			}
 		}
 		

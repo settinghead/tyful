@@ -3,6 +3,7 @@ package com.settinghead.wenwentu.client.model.vo
 	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.RenderOptions;
 	import com.settinghead.wenwentu.client.WordShaper;
+	import com.settinghead.wenwentu.client.WordSorterAndScaler;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
 	import com.settinghead.wenwentu.client.fonter.WordFonter;
 	import com.settinghead.wenwentu.client.sizers.WordSizer;
@@ -28,13 +29,15 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		private static const SOLID_COLOR:String = "solidColor";
 		private static const BACKGROUND_IMAGE:String = "backgroundImage";
-		private var _currentWordIndex:int = 0;
+		private var _currentWordIndex:int = -1;
 		private var _eWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
 
 		public function TuVO(template:TemplateVO, words:WordListVO){
-			this._width = width;
-			this._height = height;
-			this._words = words;
+			this._template = template;
+			this._width = template.width;
+			this._height = template.height;
+			this._words = WordSorterAndScaler.sortAndScale(words);
+			
 		}
 		
 		public function pushEngineWord(eWord:EngineWordVO):void{
@@ -85,11 +88,11 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		public function get finishedDisplayWordRendering():Boolean{
-			 return this._currentWordIndex >=  this.words.length;
+			 return this._currentWordIndex >=  this.words.size;
 		}
 		
 		public function getNextWordAndIncrement():WordVO{
-			return words.getItemAt(_currentWordIndex++) as WordVO;
+			return words.itemAt(++_currentWordIndex) as WordVO;
 		}
 		
 		public function get currentWordIndex():int{
@@ -181,10 +184,10 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 
 		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var eWord:EngineWordVO= new EngineWordVO(word, this.currentWordIndex , this.words.length);
+			var eWord:EngineWordVO= new EngineWordVO(word, this.currentWordIndex , this.words.size);
 			
 			var wordFont:String= template.fonter.fontFor(word);
-			var wordSize:Number= template.sizer.sizeFor(word,currentWordIndex,this.words.length);
+			var wordSize:Number= template.sizer.sizeFor(word,currentWordIndex,this.words.size);
 			var wordAngle:Number= template.angler.angleFor(eWord);
 			
 			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, wordAngle);
