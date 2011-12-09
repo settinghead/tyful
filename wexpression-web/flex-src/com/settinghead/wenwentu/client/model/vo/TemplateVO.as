@@ -2,8 +2,8 @@ package com.settinghead.wenwentu.client.model.vo
 {
 
 	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.ShapeConfinedPlacer;
-	import com.settinghead.wenwentu.client.ShapeConfinedWordNudger;
+	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
+	import com.settinghead.wenwentu.client.nudger.ShapeConfinedWordNudger;
 	import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
 	import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
 	import com.settinghead.wenwentu.client.angler.WordAngler;

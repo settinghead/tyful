@@ -47,8 +47,12 @@ package com.settinghead.wenwentu.client.density
 			return level - 1;
 		}
 	
-		public function unmark(patch:Patch):void {
-			patch.unmarkForParent();
+//		public function unmark(patch:Patch):void {
+//			patch.unmark(patch);
+//		}
+//		
+		public function add(patch:Patch):void{
+			_map.add(patch);
 		}
 		
 		public function getImg():TemplateVO {

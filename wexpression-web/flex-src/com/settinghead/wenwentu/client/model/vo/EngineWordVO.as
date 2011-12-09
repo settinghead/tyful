@@ -2,10 +2,16 @@ package com.settinghead.wenwentu.client.model.vo {
 	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.WordShaper;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
+	import com.settinghead.wenwentu.client.density.Patch;
 	import com.settinghead.wenwentu.client.placer.WordPlacer;
 	
+	import flash.filters.DropShadowFilter;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.text.AntiAliasType;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -29,37 +35,44 @@ public class EngineWordVO {
 	var _word:WordVO;
 	var rank:int;
 
-	private var shape:TextShapeVO;
+	private var _shape:TextShapeVO;
 	public var bbTree:BBPolarRootTreeVO;
 	private var presetAngle:Number = NaN;
 	var renderedAngle:Number;
 
-	private var desiredLocation:PlaceInfo;
+	private var _desiredLocation:PlaceInfo;
 	private var currentLocation:PlaceInfo;
-
-	public function EngineWordVO(word:WordVO, rank:int, wordCount:int) {
+	
+	public function EngineWordVO(word:WordVO, rank:int, wordCount:int, loc:PlaceInfo) {
 		this._word = word;
 		this.rank = rank;
+		this._desiredLocation = loc;
 	}
 
 	public function setShape(shape:TextShapeVO, swelling:int):void {
-		this.shape = shape;
+		this._shape = shape;
 
 		this.bbTree = BBPolarTreeBuilder.makeTree(shape, swelling);
 	}
 
-	public function getShape():TextShapeVO {
-		return shape;
+	public function get shape():TextShapeVO {
+		return _shape;
 	}
 
 	public function overlaps(other:EngineWordVO):Boolean {
 		return bbTree.overlaps(other.bbTree);
 	}
+	
+	public function get desiredLocation():PlaceInfo{
+		return _desiredLocation;
+	}
+	
+	
 
 	public function setDesiredLocation(placer:WordPlacer, count:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
 			fieldHeight:int):PlaceInfo {
-		desiredLocation = word.getTargetPlace(placer, rank, count,
+		_desiredLocation = word.getTargetPlace(placer, rank, count,
 				wordImageWidth, wordImageHeight, fieldWidth, fieldHeight);
 		currentLocation = desiredLocation != null ? desiredLocation.get()
 				: null;
@@ -69,7 +82,7 @@ public class EngineWordVO {
 	public function nudge(nudge:Point):void {
 		currentLocation = new PlaceInfo(
 				desiredLocation.getpVector().add(nudge),
-				currentLocation.getReturnedObj());
+				currentLocation.patch);
 		bbTree.setLocation(int(currentLocation.getpVector().x),
 				int(currentLocation.getpVector().y));
 	}
@@ -80,7 +93,7 @@ public class EngineWordVO {
 		var y:Number= currentLocation.getpVector().y ;
 		shape.setCenterLocation(x,y);
 
-		shape =
+		_shape =
 		// WordShaper.moveToOrigin(
 		WordShaper.rotate(shape, getTree().getRotation()
 				);
@@ -92,7 +105,7 @@ public class EngineWordVO {
 	public function getCurrentLocation():PlaceInfo {
 		if (currentLocation != null)
 			return new PlaceInfo(currentLocation.getpVector().clone(),
-					currentLocation.getReturnedObj());
+					currentLocation.patch);
 		else
 			return null;
 	}
@@ -150,5 +163,51 @@ public class EngineWordVO {
 	public function get word():WordVO{
 		return this._word;
 	}
+	
+	
+	
+	public function rendition(c:uint):DisplayWordVO{
+		
+		var s:DisplayWordVO = new DisplayWordVO(this);
+			var tt:TextField = new TextField();
+			tt.autoSize = TextFieldAutoSize.LEFT;
+			tt.embedFonts = true;
+			tt.cacheAsBitmap = true;
+			tt.textColor = c;
+			
+			tt.styleSheet = this.shape.textField.styleSheet;
+			
+			tt.antiAliasType = AntiAliasType.ADVANCED;
+			tt.htmlText = this.shape.textField.htmlText;
+			
+			s.filters = [ 
+				//								new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
+				new DropShadowFilter(1,45,0,1.0,1,1) ];
+			
+			s.addChild(tt);
+			
+			var w= s.width;
+			var h = s.height;
+			s.x = this.shape.centerX-w/2;
+			s.y = this.shape.centerY-h/2;
+			
+			if(this.shape.rotation!=0){
+				var centerX:Number=s.x+s.width/2;
+				var centerY:Number = s.y+s.height/2;
+				
+				//			var point:Point=new Point(shape.shape.x+shape.shape.width/2, shape.shape.y+shape.shape.height/2);
+				var m:Matrix=s.transform.matrix;
+				m.tx -= centerX;
+				m.ty -= centerY;
+				m.rotate(-this.shape.rotation); // was a missing "=" here
+				m.tx += centerX;
+				m.ty += centerY;
+				s.transform.matrix = m;
+			}
+			
+			//			var r = Math.sqrt(Math.pow(s.width/2,2)+Math.pow(s.height/2,2));
+			
+			return s;
+		}
 }
 }

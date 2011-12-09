@@ -3,7 +3,7 @@ package com.settinghead.wenwentu.client.model
 	import com.settinghead.wenwentu.client.ApplicationFacade;
 	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.ShapeConfinedPlacer;
+	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wenwentu.client.WordShaper;
 	import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
 	import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
@@ -53,24 +53,33 @@ package com.settinghead.wenwentu.client.model
 		{
 			return data as ArrayCollection;
 		}
-		
+		var indexOffset:int=0;
+
 		public function renderNextDisplayWord(tu:TuVO):void{
 			//TODO
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
 			
 			word = tu.getNextWordAndIncrement();
-			eWord = tu.generateEngineWord(word);
+			if(word==null) return;
+			eWord = tu.generateEngineWord(word, indexOffset);
 		
 			if(eWord!=null){
-				tu.pushEngineWord(eWord);
 				tu.placeWord(eWord);
+				while (eWord.wasSkipped()){
+					indexOffset+=tu.words.size/100;
+					if(indexOffset+tu.currentWordIndex>tu.words.size) break;
+					eWord = tu.generateEngineWord(word,indexOffset, eWord.desiredLocation);
+					tu.placeWord(eWord);
+				}
+				
+				tu.pushEngineWord(eWord);
+
 				if(!eWord.wasSkipped()){
-					var dw:Sprite = eWord.getShape().rendition(tu.template.colorer.colorFor(word));
+					var dw:DisplayWordVO = eWord.rendition(tu.template.colorer.colorFor(word));
 					sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 				}
 			}
 		}
-		
 	}
 }

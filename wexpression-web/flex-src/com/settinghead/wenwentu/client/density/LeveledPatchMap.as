@@ -18,7 +18,7 @@ package com.settinghead.wenwentu.client.density
 			return queue.getBestPatch(smearedArea);
 		}
 		
-		private function getQueue(level:int):PatchQueue {
+		public function getQueue(level:int):PatchQueue {
 			if (level >= _map.length)
 				generateLevelQueue(level);
 			return _map[level];
@@ -35,5 +35,10 @@ package com.settinghead.wenwentu.client.density
 		public function getIndex():DensityPatchIndex{
 			return this._index;
 		}
+		
+		public function add(patch:Patch):void{
+			getQueue(patch.getLevel()).tryAdd(patch);
+		}
+		
 	}
 }

@@ -68,11 +68,11 @@ package com.settinghead.wenwentu.client.density
 				
 				// now remove sub-patches that's already marked
 				this._averageAlpha = this.getAlphaSum();
-				for each (var markedChild:Patch in this.getMarkedChildren()) {
-					this._averageAlpha -= markedChild.getAverageAlpha()
-						* DensityPatchIndex.MARK_FILL_FACTOR;
-				}
-				
+//				for each (var markedChild:Patch in this.getMarkedChildren()) {
+//					this._averageAlpha -= markedChild.getAverageAlpha()
+//						* DensityPatchIndex.MARK_FILL_FACTOR;
+//				}
+//				
 				this._averageAlpha /= this.getArea();
 				
 			}
@@ -100,11 +100,11 @@ package com.settinghead.wenwentu.client.density
 			return this._alphaSum;
 		}
 		
-		private function getMarkedChildren(): Set {
-			if (this._childrenMarker == null)
-				this._childrenMarker = new Set();
-			return this._childrenMarker;
-		}
+//		private function getMarkedChildren(): Set {
+//			if (this._childrenMarker == null)
+//				this._childrenMarker = new Set();
+//			return this._childrenMarker;
+//		}
 		
 		
 		public function getRank():int {
@@ -178,44 +178,46 @@ package com.settinghead.wenwentu.client.density
 		
 		
 		
-		public function mark(smearedArea:int):void {
+		public function mark(smearedArea:int, spreadSmearToChildren:Boolean):void {
 			this.resetWorthCalculations();
 			this.getAlphaSum();
-			if (this.getChildren() == null
-				|| this.getChildren().length == 0)
-				this._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR;
-			
-			if (getParent() != null)
-				getParent().markChild(this);
-			
-		}
-		
-		public function unmarkForParent():void {
-			if (getParent() != null)
-				getParent().unmarkChild(this);
-		}
-		
-		private function markChild(patch:Patch):void {
-			this.getMarkedChildren().add(patch);
-			this.resetWorthCalculations();
-			// re-sort
-			this.reRank();
-			// // cascading mark parents
-			// if (this.getParent() != null)
-			// this.getParent().markChild(this);
-		}
-		
-		private function unmarkChild(patch:Patch):void {
-			if (this.getMarkedChildren().remove(patch)) {
-				this.resetWorthCalculations();
-				// re-sort
-				this.reRank();
-				// cascading mark parents
-				// if (this.getParent() != null)
-				// this.getParent().markChild(this);
-				// this.unmarkForParent();
+			this._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR;
+			if(spreadSmearToChildren)
+				for each (var child:Patch in this.getChildren()){
+				child._alphaSum -=  smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length;
 			}
+//			if (getParent() != null)
+//				getParent().markChild(this);
+			if (getParent() != null)
+				parent.mark(smearedArea, false);
 		}
+		
+//		public function unmarkForParent():void {
+//			if (getParent() != null)
+//				getParent().unmarkChild(this);
+//		}
+//		
+//		private function markChild(patch:Patch):void {
+//			this.getMarkedChildren().add(patch);
+//			this.resetWorthCalculations();
+//			// re-sort
+//			this.reRank();
+//			// // cascading mark parents
+//			// if (this.getParent() != null)
+//			// this.getParent().markChild(this);
+//		}
+//		
+//		private function unmarkChild(patch:Patch):void {
+//			if (this.getMarkedChildren().remove(patch)) {
+//				this.resetWorthCalculations();
+//				// re-sort
+//				this.reRank();
+//				// cascading mark parents
+//				// if (this.getParent() != null)
+//				// this.getParent().markChild(this);
+//				// this.unmarkForParent();
+//			}
+//		}
 		
 		private function resetWorthCalculations():void {
 			this._area = -1;

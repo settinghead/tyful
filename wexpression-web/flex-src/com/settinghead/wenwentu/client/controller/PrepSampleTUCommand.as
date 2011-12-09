@@ -13,8 +13,6 @@ package com.settinghead.wenwentu.client.controller
 	
 	public class PrepSampleTUCommand extends SimpleCommand
 	{
-		
-		
 		private var template:TemplateVO;
 		private  var tuProxy:TuProxy;
 		

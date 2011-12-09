@@ -7,16 +7,15 @@ package com.settinghead.wenwentu.client.model.vo
 
 	public class DisplayWordVO extends Sprite
 	{
-		private var _tree: BBPolarRootTreeVO;
-		private var _word:WordVO;
+		private var _engineWord: EngineWordVO;
 		
-		public function DisplayWordVO(tree:BBPolarRootTreeVO){
+		public function DisplayWordVO(eWord:EngineWordVO){
 			super();
-			this._tree = tree;
+			this._engineWord = eWord;
 		}
 		
-		public function get tree():BBPolarRootTreeVO{
-			return this._tree;
+		public function get engineWord():EngineWordVO{
+			return this._engineWord;
 		}
 	}
 }

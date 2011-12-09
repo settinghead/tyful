@@ -156,50 +156,7 @@ package com.settinghead.wenwentu.client.model.vo
 	
 		
 
-		
-		public function rendition(c:uint):Sprite{
 
-			var s:Sprite = new Sprite();
-			var tt:TextField = new TextField();
-			tt.autoSize = TextFieldAutoSize.LEFT;
-			tt.embedFonts = true;
-			tt.cacheAsBitmap = true;
-			tt.textColor = c;
-
-			tt.styleSheet = _textField.styleSheet;
-			
-			tt.antiAliasType = AntiAliasType.ADVANCED;
-			tt.htmlText = _textField.htmlText;
-
-			s.filters = [ 
-//								new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
-								new DropShadowFilter(1,45,0,1.0,1,1) ];
-			
-			s.addChild(tt);
-			
-			var w= s.width;
-		var h = s.height;
-		s.x = _centerX-w/2;
-		s.y = _centerY-h/2;
-		
-		if(this._rotation!=0){
-			var centerX:Number=s.x+s.width/2;
-			var centerY:Number = s.y+s.height/2;
-			
-			//			var point:Point=new Point(shape.shape.x+shape.shape.width/2, shape.shape.y+shape.shape.height/2);
-			var m:Matrix=s.transform.matrix;
-			m.tx -= centerX;
-			m.ty -= centerY;
-			m.rotate(-this._rotation); // was a missing "=" here
-			m.tx += centerX;
-			m.ty += centerY;
-			s.transform.matrix = m;
-		}
-			
-//			var r = Math.sqrt(Math.pow(s.width/2,2)+Math.pow(s.height/2,2));
-		
-			return s;
-		}
 		
 		private var matrix:Matrix = new Matrix();
 		
@@ -208,6 +165,19 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		public function get objectHeight():Number{
 			return _textField.height;
+		}
+		public function get rotation():Number{
+			return _rotation;
+		}
+		public function get centerX():Number{
+			return _centerX;
+		}
+		public function get centerY():Number{
+			return _centerY;
+		}
+		
+		public function get textField():TextField{
+			return _textField;
 		}
 		
 		public function get objectBounds():Rectangle{

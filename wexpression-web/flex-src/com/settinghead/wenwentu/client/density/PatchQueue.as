@@ -24,7 +24,7 @@ package com.settinghead.wenwentu.client.density
 		public function getBestPatch(smearedArea:int):Patch {
 			var result:Patch= poll();
 			if (result != null) {
-				result.mark(smearedArea);
+//				result.mark(smearedArea, true);
 				tryAdd(result);
 			}
 			return result;

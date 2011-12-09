@@ -6,7 +6,6 @@ package com.settinghead.wenwentu.client.view
 	import com.settinghead.wenwentu.client.model.vo.TuVO;
 	import com.settinghead.wenwentu.client.view.components.TuRenderer;
 	
-	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -45,7 +44,7 @@ package com.settinghead.wenwentu.client.view
 					tuRenderer.tu =  note.getBody() as TuVO;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
-					tuRenderer.slapWord(note.getBody() as Sprite);
+					tuRenderer.slapWord(note.getBody() as DisplayWordVO);
 			}
 		}
 		

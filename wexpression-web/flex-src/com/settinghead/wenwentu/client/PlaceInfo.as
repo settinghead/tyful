@@ -1,14 +1,16 @@
 package com.settinghead.wenwentu.client
 {
+	import com.settinghead.wenwentu.client.density.Patch;
+	
 	import flash.geom.Point;
 
 	public class PlaceInfo {
 		private var pVector:Point;
-		private var returnedObj:Object;
+		private var _patch:Patch;
 		
-		public function PlaceInfo(pVector:Point, returnedObj:Object = null) {
+		public function PlaceInfo(pVector:Point, p:Patch = null) {
 			this.setpVector(pVector);
-			this.setReturnedObj(returnedObj);
+			this.patch = p;
 		}
 		
 		
@@ -20,16 +22,16 @@ package com.settinghead.wenwentu.client
 			return pVector;
 		}
 		
-		private function setReturnedObj(returnedObj:Object):void {
-			this.returnedObj = returnedObj;
+		public function set patch(p:Patch):void{
+			this._patch = p;
 		}
 		
-		public function getReturnedObj():Object {
-			return returnedObj;
+		public function get patch():Patch{
+			return this._patch;
 		}
 		
 		public function get():PlaceInfo {
-			return new PlaceInfo(this.getpVector().clone(), this.getReturnedObj());
+			return new PlaceInfo(this.getpVector().clone(), this.patch);
 		}
 	}
 

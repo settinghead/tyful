@@ -18,8 +18,8 @@
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.wenwentu.client.RenderOptions;
-			import com.settinghead.wenwentu.client.ShapeConfinedPlacer;
-			import com.settinghead.wenwentu.client.ShapeConfinedWordNudger;
+			import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
+			import com.settinghead.wenwentu.client.nudger.ShapeConfinedWordNudger;
 			import com.settinghead.wenwentu.client.WordComparator;
 			import com.settinghead.wenwentu.client.WordCramEngine;
 			import com.settinghead.wenwentu.client.WordSorterAndScaler;

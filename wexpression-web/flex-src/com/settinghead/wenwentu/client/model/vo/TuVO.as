@@ -11,6 +11,8 @@ package com.settinghead.wenwentu.client.model.vo
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	
+	import org.as3commons.lang.Assert;
+	
 	import spark.primitives.BitmapImage;
 
 	public class TuVO
@@ -105,7 +107,9 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(word:WordVO):int {
-			return int(((1.0 - word.weight) * 600) )+ 100;
+			var result:int = int(((1.0 - word.weight) * 600) )+ 100;
+			Assert.isTrue(result>0);
+			return result;
 		}
 		
 		public function placeWord(eWord:EngineWordVO):Boolean {
@@ -115,8 +119,8 @@ package com.settinghead.wenwentu.client.model.vo
 			// EngineWord.setDesiredLocation?
 			// Does that make
 			// sense?
-			var wordImageWidth:int= int(eWord.getTree().getWidth(true));
-			var wordImageHeight:int= int(eWord.getTree().getHeight(true));
+			var wordImageWidth:int= int(eWord.shape.textField.width);
+			var wordImageHeight:int= int(eWord.shape.textField.height);
 			
 			var info:PlaceInfo= eWord.setDesiredLocation(template.placer, _eWords.length,
 				wordImageWidth, wordImageHeight, template.width,
@@ -130,7 +134,7 @@ package com.settinghead.wenwentu.client.model.vo
 			
 			outer: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
 				
-				eWord.nudge(template.nudger.nudgeFor(word, eWord.getCurrentLocation(),
+				eWord.nudge(template.nudger.nudgeFor(word, eWord.desiredLocation,
 					attempt));
 				var angle:Number= template.angler.angleFor(eWord);
 				//			eWord.getTree().draw(destination.graphics);
@@ -169,7 +173,8 @@ package com.settinghead.wenwentu.client.model.vo
 					// eWord.setShape(WordShaper.rotate(eWord.getShape(), eWord
 					// .getTree().getRotation(), (float) eWord.getTree()
 					// .getRootX(), (float) eWord.getTree().getRootY()), 0);
-					template.placer.success(info.getReturnedObj());
+					info.patch.mark(wordImageWidth*wordImageHeight, true);
+					template.placer.success(info.patch);
 					eWord.finalizeLocation();
 					return true;
 				}
@@ -177,17 +182,19 @@ package com.settinghead.wenwentu.client.model.vo
 			}
 			
 			skipWord(eWord.word, SKIP_REASON_NO_SPACE);
-			template.placer.fail(info.getReturnedObj());
+//			info.patch.mark(wordImageWidth*wordImageHeight, true);
+			template.placer.fail(info.patch);
 			this.failedLastVar = true;
 			trace("failed:", info.getpVector());
 			return false;
 		}
 
-		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var eWord:EngineWordVO= new EngineWordVO(word, this.currentWordIndex , this.words.size);
+		public function generateEngineWord(word:WordVO, indexOffset:int, loc:PlaceInfo = null):EngineWordVO{
+			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
+			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size, loc);
 			
 			var wordFont:String= template.fonter.fontFor(word);
-			var wordSize:Number= template.sizer.sizeFor(word,currentWordIndex,this.words.size);
+			var wordSize:Number= template.sizer.sizeFor(word,newIndex,this.words.size);
 			var wordAngle:Number= template.angler.angleFor(eWord);
 			
 			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, wordAngle);
@@ -196,7 +203,7 @@ package com.settinghead.wenwentu.client.model.vo
 			} else {
 				eWord.setShape(shape, template.renderOptions.wordPadding);
 			}
-			
+						
 			return eWord;
 		}
 		

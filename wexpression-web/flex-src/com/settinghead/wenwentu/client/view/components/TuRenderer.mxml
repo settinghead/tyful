@@ -15,6 +15,7 @@
 	<fx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wenwentu.client.density.Patch;
 			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.wenwentu.client.model.vo.DisplayWordListVO;
 			import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
@@ -23,15 +24,15 @@
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
 			
-			
-			
 			public static const CREAT_NEXT_DISPLAYWORD:String = "createNextDisplayWord";
 			
 			private var _tu:TuVO;
 			
-			public function slapWord(dWord:Sprite){
+			public function slapWord(dWord:DisplayWordVO){
 				this.wordLayer.addChild(dWord);
 				this._tu.dWords.addItem(dWord);
+				this.highlightPatch(dWord.engineWord.desiredLocation.patch);
+				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
 			}
 			
 			[Bindable] public function set tu(_tu:TuVO):void{
@@ -44,8 +45,20 @@
 				this.height = _tu.height;
 				if(_tu.backgroundImage!=null)
 					this.backgroundLayer.addChild(_tu.backgroundImage);
-				for each(var displayWord:Sprite in _tu.dWords)
+				for each(var displayWord:DisplayWordVO in _tu.dWords)
 					this.slapWord(displayWord);	
+			}
+			
+			public function wordMouseOver(e:MouseEvent){
+				var dWord:DisplayWordVO = e.target as DisplayWordVO;
+				highlightPatch(dWord.engineWord.desiredLocation.patch);
+			}
+			
+			public function highlightPatch(patch:Patch){
+				patchLayer.graphics.clear();
+				patchLayer.graphics.beginFill(0xeeeeee,0.5);
+				patchLayer.graphics.drawRect(patch.getX(), patch.getY(), patch.getWidth(), patch.getHeight());
+				patchLayer.graphics.endFill();
 			}
 			
 			public function drawTree(){
@@ -120,4 +133,6 @@
 		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="false"/>
 		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
 		<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
+		<mx:UIComponent id="patchLayer" top="0" bottom="0" left="0" right="0" visible="true" />
+
 </s:Group>

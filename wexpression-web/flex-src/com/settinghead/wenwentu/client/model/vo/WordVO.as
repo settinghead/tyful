@@ -145,7 +145,7 @@ public class WordVO {
 	 */
 	public function setPlace(place:PlaceInfo):WordVO {
 		this.presetTargetPlace = new PlaceInfo(place.getpVector().clone(),
-				place.getReturnedObj());
+				place.patch);
 		return this;
 	}
 

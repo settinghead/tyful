@@ -1,11 +1,11 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.nudger {
 	import com.settinghead.wenwentu.client.density.Patch;
 	import com.settinghead.wenwentu.client.math.MathUtils;
 	
 	import flash.geom.Point;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.nudger.WordNudger;
 	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wenwentu.client.PlaceInfo;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -27,7 +27,7 @@ public class ShapeConfinedWordNudger implements WordNudger {
 
 	// Who knows? this seems to be good, but it seems to depend on the font --
 	// bigger fonts need a bigger thetaIncrement.
-	private var thetaIncrement:Number= Math.PI * 0.03;
+//	private var thetaIncrement:Number= Math.PI * 0.03;
 	private var angler:WordAngler;
 
 	public function ShapeConfinedWordNudger() {
@@ -35,22 +35,22 @@ public class ShapeConfinedWordNudger implements WordNudger {
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int):Point {
 		var factor:int;
-		if (pInfo != null && pInfo.get().getReturnedObj() != null) {
-			var p:Patch= Patch(pInfo.get().getReturnedObj());
+//		if (pInfo != null && pInfo.get().patch != null) {
+			var p:Patch= Patch(pInfo.get().patch);
 			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
 					.getHeight();
 			if (p.getLevel() == 0)
 				factor /= 6;
 			else if (p.getLevel() == 1)
 				factor /= 2;
-		} else
-			factor = 30;
+//		} else
+//			factor = 30;
 
 		factor *= 6;
 		
-		var rad:Number= powerMap(0.6, attempt, 0, 600, 1, factor * 6);
+		var rad:Number= powerMap(0.6, attempt, 0, 600, 1, factor * 10);
 
-		thetaIncrement = powerMap(1, attempt, 0, 600, 0.5, 0.3);
+		var thetaIncrement = powerMap(1, attempt, 0, 600, 0.5, 0.3);
 		var theta:Number= thetaIncrement * attempt;
 		var x:Number= Math.cos(theta) * rad;
 		var y:Number= Math.sin(theta) * rad;

@@ -1,11 +1,11 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wenwentu.client.placer {
+	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.density.DensityPatchIndex;
 	import com.settinghead.wenwentu.client.density.Patch;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
-	import com.settinghead.wenwentu.client.placer.WordPlacer;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	import flash.geom.Point;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
 
 
 public class ShapeConfinedPlacer implements WordPlacer {
@@ -46,13 +46,14 @@ public class ShapeConfinedPlacer implements WordPlacer {
 	}
 
 	
- 	public function fail(returnedObj:Object):void {
-		index.unmark(Patch(returnedObj));
+ 	public function fail(returnedObject:Object):void {
+		var patch:Patch = returnedObject as Patch;
+		index.add(patch);
 	}
 
 	
 	 public function success(returnedObj:Object):void {
-		// index.add((Patch) returnedObj);
+		index.add(returnedObj as Patch);
 	}
 
 }

@@ -10,6 +10,10 @@ package com.settinghead.wenwentu.client.model.vo
 	
 	public class WordListVO extends SortedList
 	{
+		public function WordListVO(){
+			super(new WordComparator());
+		}
+		
 		public static function generateWords():WordListVO{
 			var list:WordListVO = new WordListVO();
 			for(var i:int=0;i<60;i++){
