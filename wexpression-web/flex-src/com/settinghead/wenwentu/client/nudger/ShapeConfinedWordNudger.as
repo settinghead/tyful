@@ -33,7 +33,7 @@ public class ShapeConfinedWordNudger implements WordNudger {
 	public function ShapeConfinedWordNudger() {
 	}
 
-	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int):Point {
+	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 		var factor:int;
 //		if (pInfo != null && pInfo.get().patch != null) {
 			var p:Patch= Patch(pInfo.get().patch);
@@ -48,9 +48,9 @@ public class ShapeConfinedWordNudger implements WordNudger {
 
 		factor *= 6;
 		
-		var rad:Number= powerMap(0.6, attempt, 0, 600, 1, factor * 10);
+		var rad:Number= powerMap(0.6, attempt, 0, totalPlannedAttempt, 1, factor * 10);
 
-		var thetaIncrement = powerMap(1, attempt, 0, 600, 0.5, 0.3);
+		var thetaIncrement = powerMap(1, attempt, 0, totalPlannedAttempt, 0.5, 0.3);
 		var theta:Number= thetaIncrement * attempt;
 		var x:Number= Math.cos(theta) * rad;
 		var y:Number= Math.sin(theta) * rad;

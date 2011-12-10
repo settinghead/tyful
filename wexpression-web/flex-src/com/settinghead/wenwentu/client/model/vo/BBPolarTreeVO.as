@@ -40,7 +40,7 @@ package com.settinghead.wenwentu.client.model.vo {
 		private var pointsStamp:Number;
 		private var _points:Array= null;
 		
-		public static const MARGIN:Number = 3;
+		public static const MARGIN:Number = 2;
 	
 		public function BBPolarTreeVO( r1:Number,  r2:Number, d1:Number, d2:Number, minBoxSize:int) {
 			this._r1 = r1;

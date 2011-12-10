@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   creationComplete="onCreationCompleteHandler(event)">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Button;
+			
+			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
+			private var _angle:Number = 0;
+			
+			public static const BUTTON_WIDTH:Number = 30;
+			
+			public function get angle():Number{
+				return _angle;
+			}
+			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+				generateButtons();
+			}
+			
+			private function generateButtons():void{
+//				var numButtons:int = this.width/BUTTON_WIDTH;
+				var numButtons:int = 25;
+
+				for(var i=0;i<numButtons;i++){
+					var ang:Number = BBPolarTreeVO.TWO_PI/numButtons*i;
+//					a.addEventListener(MouseEvent.CLICK, function( evt:Event ){this._angle = ang; });
+					this.buttonArray.addItem(ang);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:List id="buttonList"
+			itemRenderer="com.settinghead.wenwentu.client.view.components.template.DirectionButton"
+			dataProvider="{buttonArray}">
+		<s:layout>
+			<s:HorizontalLayout  />
+		</s:layout>
+	</s:List>
+	
+
+	</mx:Canvas>

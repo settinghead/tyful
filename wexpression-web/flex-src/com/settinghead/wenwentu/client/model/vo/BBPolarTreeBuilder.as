@@ -27,7 +27,7 @@ internal class BBPolarTreeBuilder {
 	
 
 	public static function makeTree(shape:IImageShape, swelling:int):BBPolarRootTreeVO {
-		var minBoxSize:int= 2;
+		var minBoxSize:int= 1;
 		// center
 		var x:int= int((shape.objectWidth / 2));
 		var y:int= int((shape.objectHeight / 2));

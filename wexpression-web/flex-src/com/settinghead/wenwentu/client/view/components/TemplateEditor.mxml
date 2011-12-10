@@ -4,20 +4,40 @@
  Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 -->
-<mx:Panel title="Template Editor" 
+<mx:Canvas
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:client="com.settinghead.wenwentu.client.*" xmlns:s="library://ns.adobe.com/flex/spark">
+	xmlns:client="com.settinghead.wenwentu.client.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wenwentu.client.view.components.template.*">
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
 
 	</mx:Metadata>
-	<mx:TabNavigator left="0" right="0" top="0" bottom="0" width="100%" height="100%">
+	<mx:states>
+		<mx:State name="TextFlowMouseDown"/>
+	</mx:states>
+	<mx:TabNavigator left="0" right="0" top="0" bottom="0">
+		<s:NavigatorContent label="Text Flow Directions">
+				<mx:ControlBar>
+					<mx:VBox>
+						<template:DirectionPicker id="directionPicker"  />
+						<template:ThicknessPicker id="thicknessPicker"  />		
+					</mx:VBox>
+				
+
+				</mx:ControlBar>			
+			<mx:UIComponent id="textFlowCanvas" 
+					   mouseDown="textFlowCanvas_mouseDownHandler(event)" 
+					   mouseUp="textFlowCanvas_mouseUpHandler(event)" 
+					   mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
+					   creationComplete="textFlowCanvas_creationCompleteHandler(event)"
+					   top="100" left="0"  />
+			
+		</s:NavigatorContent>
+		
 		<s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
 			<mx:Canvas id="imageContainer" />
-		</s:NavigatorContent>
-		<s:NavigatorContent label="Text Flow">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 	<mx:Script>
@@ -34,20 +54,21 @@
 			
 			import mx.events.FlexEvent;
 			
-			public static const MODE_EDIT:String 	= "modeEdit";
+//			public static const MODE_EDIT:String 	= "modeEdit";
 			
-			[Bindable] public var template:TemplateVO;
-			[Bindable] public var mode:String;
-			
-			public function setTemplate( template:TemplateVO, mode:String ):void
-			{
-				this.mode = mode;
-				this.template = template;
-			}
+//			[Bindable] public var mode:String;
+//			
+//			public function setTemplate( template:TemplateVO, mode:String ):void
+//			{
+//				this.mode = mode;
+//				this.template = template;
+//			}
 			// ------- Constants -------
 			// Display states
 			private static const LOAD:uint = 0;
 			private static const PROGRESS:uint = 1;
+			
+			private var _template:TemplateVO;
 			
 			private var _loadFile:FileReference;
 			private var jagFileRefSave:FileReference = new FileReference();
@@ -58,6 +79,8 @@
 			// Common view/containers
 			private var _imageContainer:Sprite;
 			private var _currentViewContainer:Sprite;
+			
+			private var drawingState:Boolean = false;
 
 			protected function btnUpload_clickHandler(event:MouseEvent):void
 			{
@@ -83,8 +106,64 @@
 				imageContainer.addChild(loader);
 			}
 			
+			protected function textFlowCanvas_mouseDownHandler(event:MouseEvent):void
+			{
+				this.drawingState = true;
+				oldMouseX = textFlowCanvas.mouseX;
+				oldMouseY = textFlowCanvas.mouseY;
+			}
+			
+			
+			protected function textFlowCanvas_mouseUpHandler(event:MouseEvent):void
+			{
+				this.drawingState = false;
+				
+			}
+			
+			private var oldMouseX:Number, oldMouseY:Number;
+			
+			protected function textFlowCanvas_mouseMoveHandler(event:MouseEvent):void
+			{
+				if(drawingState){
+					var shape:Shape = new Shape();
+					shape.graphics.lineStyle(thicknessPicker.thickness,0xeeeeee,1.0);
+					shape.graphics.moveTo(oldMouseX, oldMouseY);
+					shape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
+					bmp.bitmapData.draw(shape);
+					oldMouseX = textFlowCanvas.mouseX;
+					oldMouseY = textFlowCanvas.mouseY;
+				}
+			}
+			
+			public function get template():TemplateVO{
+				return _template;
+			}
+			
+			[Bindable] public function set template(_template:TemplateVO):void{
+				this._template = _template;
+			}
+			
+			protected function textFlowCanvas_creationCompleteHandler(event:FlexEvent):void
+			{
+				populateTemplate();
+			}
+			
+			private function populateTemplate():void{
+				if(this.template!=null)
+				{
+					if(bmp!=null) this.textFlowCanvas.removeChild(bmp);
+					bmp = new Bitmap(new BitmapData(_template.width, _template.height, true, 0xffffff));
+					this.textFlowCanvas.width = _template.width;
+					this.textFlowCanvas.height = _template.height;
+					bmp.x=0; bmp.y=0;
+					this.textFlowCanvas.addChild(bmp);
+				}
+			}
+			
+			private var bmp:Bitmap;
+			
 		]]>
 	</mx:Script>
 	
 
-</mx:Panel>
+</mx:Canvas>

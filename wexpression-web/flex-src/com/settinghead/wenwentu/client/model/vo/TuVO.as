@@ -107,7 +107,8 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(word:WordVO):int {
-			var result:int = int(((1.0 - word.weight) * 600) )+ 100;
+			
+			var result:int = int(((1.0 - word.weight) * 300) )+ 50 + 200*Math.random();
 			Assert.isTrue(result>0);
 			return result;
 		}
@@ -135,7 +136,7 @@ package com.settinghead.wenwentu.client.model.vo
 			outer: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
 				
 				eWord.nudge(template.nudger.nudgeFor(word, eWord.desiredLocation,
-					attempt));
+					attempt,maxAttemptsToPlace));
 				var angle:Number= template.angler.angleFor(eWord);
 				//			eWord.getTree().draw(destination.graphics);
 				

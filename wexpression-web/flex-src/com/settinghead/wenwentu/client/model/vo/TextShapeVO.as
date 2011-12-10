@@ -95,7 +95,7 @@ package com.settinghead.wenwentu.client.model.vo
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.background = false;
 			textField.selectable = false;
-//			textField.embedFonts = true;
+			textField.embedFonts = true;
 			textField.cacheAsBitmap = true;
 //			textField.text  = text;
 			textField.htmlText = "<div>"+text+"</div>";

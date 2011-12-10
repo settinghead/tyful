@@ -66,17 +66,18 @@ package com.settinghead.wenwentu.client.model
 		
 			if(eWord!=null){
 				tu.placeWord(eWord);
-				while (eWord.wasSkipped()){
-					indexOffset+=tu.words.size/100;
-					if(indexOffset+tu.currentWordIndex>tu.words.size) break;
-					eWord = tu.generateEngineWord(word,indexOffset, eWord.desiredLocation);
-					tu.placeWord(eWord);
-				}
+//				while (eWord.wasSkipped()){
+//					indexOffset+=tu.words.size/100;
+//					if(indexOffset+tu.currentWordIndex>tu.words.size) break;
+//					eWord = tu.generateEngineWord(word,indexOffset, eWord.desiredLocation);
+//					tu.placeWord(eWord);
+//				}
 				
 				tu.pushEngineWord(eWord);
 
 				if(!eWord.wasSkipped()){
 					var dw:DisplayWordVO = eWord.rendition(tu.template.colorer.colorFor(word));
+					tu.dWords.addItem(dw);
 					sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 				}
 			}

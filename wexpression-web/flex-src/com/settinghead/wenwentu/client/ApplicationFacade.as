@@ -10,9 +10,11 @@ package com.settinghead.wenwentu.client
 	{
 		public static const STARTUP:String                = "startup";
 		public static const TU_CREATED:String             = "tuCreated";
+		public static const EDIT_TEMPLATE:String             = "editTemplate";
 		public static const GENERATE_TU:String			  = "generateTu";
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
 		public static const TEMPLATE_SELECTED:String	  = "templateSelected";
+		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
 		
 		/**
 		 * Start the application

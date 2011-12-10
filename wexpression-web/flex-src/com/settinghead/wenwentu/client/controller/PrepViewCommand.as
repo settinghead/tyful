@@ -1,9 +1,11 @@
 package com.settinghead.wenwentu.client.controller
 {
 	import com.settinghead.wenwentu.client.WenwentuClient;
+	import com.settinghead.wenwentu.client.view.ApplicationMediator;
+	import com.settinghead.wenwentu.client.view.TemplateEditorMediator;
 	import com.settinghead.wenwentu.client.view.TemplateListMediator;
-	import com.settinghead.wenwentu.client.view.TemplateMediator;
 	import com.settinghead.wenwentu.client.view.TuMediator;
+	import com.settinghead.wenwentu.client.view.components.TemplateEditor;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
@@ -20,8 +22,10 @@ package com.settinghead.wenwentu.client.controller
 		override public function execute( note:INotification ) : void    
 		{
 			var app:WenwentuClient = WenwentuClient( note.getBody() );
-			facade.registerMediator( new TemplateListMediator( app.templateList ) );
-			facade.registerMediator(new TuMediator(app.tuRenderer));	
+			facade.registerMediator( new TemplateListMediator( app.applicationComponent.templateList ) );
+			facade.registerMediator( new TemplateEditorMediator( app.applicationComponent.templateEditor ) );
+			facade.registerMediator(new TuMediator(app.applicationComponent.tuRenderer));
+			facade.registerMediator(new ApplicationMediator(app.applicationComponent));	
 		}
 	}
 }

@@ -5,7 +5,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:ViewStack id="vwStack">
-		<components:TuRenderer id="tuRenderer" />
+	<mx:ViewStack id="vwStack" right="0" top="0" bottom="0" left="0" >
+		<components:TemplateList id="templateList" right="0" top="0" bottom="0" left="0" />
+		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
+		<components:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" />
 	</mx:ViewStack>
 </s:Group>

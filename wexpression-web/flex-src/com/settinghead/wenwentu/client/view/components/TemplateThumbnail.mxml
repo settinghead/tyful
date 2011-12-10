@@ -36,9 +36,9 @@
 //					(data as TemplateVO).thumbnail.draw(thumb);
 				}
 				
-			
-				MonsterDebugger.trace(this,	(data as TemplateVO).thumbnail);
-				MonsterDebugger.trace(this,	thumb.graphics);
+//			
+//				MonsterDebugger.trace(this,	(data as TemplateVO).thumbnail);
+//				MonsterDebugger.trace(this,	thumb.graphics);
 				
 
 			}

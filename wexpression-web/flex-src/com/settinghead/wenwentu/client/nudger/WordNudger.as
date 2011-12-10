@@ -1,7 +1,8 @@
 package com.settinghead.wenwentu.client.nudger {
-	import flash.geom.Point;
 	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	
+	import flash.geom.Point;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -58,6 +59,6 @@ public interface WordNudger {
 	 * @return the PVector to add to the word's desired location, to get the
 	 *         next spot to try fitting the word
 	 */
-	 function nudgeFor(word:WordVO, pInfo:PlaceInfo, attemptNumber:int):Point ;
+	 function nudgeFor(word:WordVO, pInfo:PlaceInfo, attemptNumber:int, totalPlannedAttempt:int):Point ;
 }
 }

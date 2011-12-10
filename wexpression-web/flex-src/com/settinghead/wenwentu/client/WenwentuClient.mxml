@@ -16,18 +16,12 @@
 			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
 		]]>
 	</fx:Script>
-	<mx:ApplicationControlBar verticalAlign="middle" dock="true">
+		<components:Application id="applicationComponent" left="0" right="0" top="0" bottom="0" />
+	<mx:ApplicationControlBar verticalAlign="middle" dock="true" right="0" bottom="0" alpha="0.8">
 		<mx:Text text="Wenwentu" fontFamily="Verdana" fontSize="22" fontStyle="normal" color="#0559CC"/>
-		<mx:Label fontWeight="bold" text="Create typography-based art."/>
+		<mx:Label fontWeight="bold" text="Create typography-based artwork."/>
 	</mx:ApplicationControlBar>
-	
 
-	
-		<components:TemplateList id="templateList" right="0" top="0" bottom="0" left="0" visible="false">
-		</components:TemplateList>
-		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
-		<components:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" visible="false" />
-	
 	<debugger:MonsterDebuggerFlex id="monsterDebugger"/>
 
 </s:Application>

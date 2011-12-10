@@ -4,10 +4,10 @@
  Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 -->
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 enterFrame="onEnterFrameHandler(event)">
+		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)">
 	
 	<!-- Events dispatched by this View Component -->
 	<fx:Metadata>
@@ -21,6 +21,8 @@
 			import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
 			import com.settinghead.wenwentu.client.model.vo.TuVO;
 			
+			import mx.events.FlexEvent;
+			
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
 			
@@ -33,25 +35,24 @@
 				this._tu.dWords.addItem(dWord);
 				this.highlightPatch(dWord.engineWord.desiredLocation.patch);
 				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+
 			}
 			
 			[Bindable] public function set tu(_tu:TuVO):void{
 				this._tu = _tu;
-				while(this.backgroundLayer.numChildren>0) 
-					this.backgroundLayer.removeChildAt(0);
-				while(this.wordLayer.numChildren>0)
-					this.wordLayer.removeChildAt(0);				
-				this.width = _tu.width;
-				this.height = _tu.height;
-				if(_tu.backgroundImage!=null)
-					this.backgroundLayer.addChild(_tu.backgroundImage);
-				for each(var displayWord:DisplayWordVO in _tu.dWords)
-					this.slapWord(displayWord);	
 			}
 			
 			public function wordMouseOver(e:MouseEvent){
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
 				highlightPatch(dWord.engineWord.desiredLocation.patch);
+				dWord.visible = false;
+				drawTree(dWord.engineWord.bbTree);
+			}
+			
+			public function wordMouseOut(e:MouseEvent){
+				var dWord:DisplayWordVO = e.target as DisplayWordVO;
+				dWord.visible = true;
 			}
 			
 			public function highlightPatch(patch:Patch){
@@ -61,8 +62,10 @@
 				patchLayer.graphics.endFill();
 			}
 			
-			public function drawTree(){
-				this.treeLayer.visible = true;
+			private function drawTree(tree:BBPolarTreeVO):void{
+				treeLayer.graphics.clear();
+				treeLayer.graphics.lineStyle(1,0x000000,1.0);
+				drawLeaves(tree);
 			}
 			
 			private function drawLeaves(tree:BBPolarTreeVO):void {
@@ -128,11 +131,27 @@
 				return _tu;
 			}
 			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+				if(this.tu!=null){
+					while(this.backgroundLayer.numChildren>0) 
+						this.backgroundLayer.removeChildAt(0);
+					while(this.wordLayer.numChildren>0)
+						this.wordLayer.removeChildAt(0);				
+					this.width = _tu.width;
+					this.height = _tu.height;
+					if(_tu.backgroundImage!=null)
+						this.backgroundLayer.addChild(_tu.backgroundImage);
+					for each(var displayWord:DisplayWordVO in _tu.dWords)
+					this.slapWord(displayWord);
+				}
+			}
+			
 		]]>
 	</fx:Script>
-		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="false"/>
-		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
-		<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
+		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="true"/>
 		<mx:UIComponent id="patchLayer" top="0" bottom="0" left="0" right="0" visible="true" />
+		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
+		<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
 
-</s:Group>
+</mx:Canvas>

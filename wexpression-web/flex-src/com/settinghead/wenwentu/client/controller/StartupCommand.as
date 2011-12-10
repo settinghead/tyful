@@ -25,7 +25,7 @@ package com.settinghead.wenwentu.client.controller
 			this.addSubCommand( PrepModelCommand );
 			this.addSubCommand( PrepViewCommand );
 			this.addSubCommand( PrepSampleTUCommand );
-			this.addSubCommand( GenerateTuCommand );
+
 		}
 	}
 }
