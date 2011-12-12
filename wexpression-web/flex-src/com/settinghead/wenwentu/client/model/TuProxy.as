@@ -53,7 +53,6 @@ package com.settinghead.wenwentu.client.model
 		{
 			return data as ArrayCollection;
 		}
-		var indexOffset:int=0;
 
 		public function renderNextDisplayWord(tu:TuVO):void{
 			//TODO
@@ -62,7 +61,7 @@ package com.settinghead.wenwentu.client.model
 			
 			word = tu.getNextWordAndIncrement();
 			if(word==null) return;
-			eWord = tu.generateEngineWord(word, indexOffset);
+			eWord = tu.generateEngineWord(word);
 		
 			if(eWord!=null){
 				tu.placeWord(eWord);
@@ -73,8 +72,8 @@ package com.settinghead.wenwentu.client.model
 //					tu.placeWord(eWord);
 //				}
 				if (eWord.wasSkipped()){
-					indexOffset+=tu.words.size/15;
-					if(indexOffset+tu.currentWordIndex>tu.words.size) indexOffset = tu.words.size -1;
+					tu.indexOffset+=tu.words.size/15;
+					if(tu.indexOffset+tu.currentWordIndex>tu.words.size) tu.indexOffset = tu.words.size -1;
 				}				
 				
 				tu.pushEngineWord(eWord);

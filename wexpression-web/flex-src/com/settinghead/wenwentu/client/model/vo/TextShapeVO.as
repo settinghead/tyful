@@ -88,7 +88,7 @@ package com.settinghead.wenwentu.client.model.vo
 			var textField: TextField = new TextField();
 //			textField.setTextFormat( new TextFormat( font.fontName, size ) );
 			var style:StyleSheet = new StyleSheet();
-			style.parseCSS("div{font-size: "+_size+"; font-family: "+font.fontName+"; }");
+			style.parseCSS("div{font-size: "+_size+"; font-family: "+font.fontName+"; leading: 0; text-align: center; }");
 			textField.styleSheet = style;
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.background = false;

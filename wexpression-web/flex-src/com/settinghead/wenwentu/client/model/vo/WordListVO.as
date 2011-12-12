@@ -16,11 +16,11 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public static function generateWords():WordListVO{
 			var list:WordListVO = new WordListVO();
-			for(var i:int=0;i<60;i++){
+			for(var i:int=0;i<90;i++){
 				list.add(new WordVO("Freedomize", Math.random()*5+0.5));
-				list.add(new WordVO("CaRRRR", Math.random()*5+0.5));
-				list.add(new WordVO("eclipse", Math.random()*5+0.5));
-				list.add(new WordVO("carz", Math.random()*5+0.5));
+				list.add(new WordVO("philosophy", Math.random()*5+0.5));
+				list.add(new WordVO("Rachel McAdams", Math.random()*5+0.5));
+				list.add(new WordVO("form of forms", Math.random()*5+0.5));
 				list.add(new WordVO("sand", Math.random()*5+0.5));
 				list.add(new WordVO("beach", Math.random()*5+0.5));
 				list.add(new WordVO("stephen", Math.random()*5+0.5));

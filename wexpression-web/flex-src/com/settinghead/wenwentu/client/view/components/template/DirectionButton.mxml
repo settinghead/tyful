@@ -37,7 +37,7 @@
 				var matrix:Matrix = new Matrix();
 				matrix.tx -= a.width/2;
 				matrix.ty -= a.height/2;
-				matrix.rotate(_ang);
+				matrix.rotate(-_ang);
 				matrix.tx += a.width/2;
 				matrix.ty += a.height/2;
 				matrix.scale(DirectionPicker.BUTTON_WIDTH/a.width, DirectionPicker.BUTTON_WIDTH/a.height);

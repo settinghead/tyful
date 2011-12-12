@@ -173,6 +173,11 @@ public class EngineWordVO {
 			
 			tt.antiAliasType = AntiAliasType.ADVANCED;
 			tt.htmlText = this.shape.textField.htmlText;
+			if(word.word.length>10){ //TODO: this is a temporary fix
+				var w:Number = tt.width;
+				tt.wordWrap = true;
+				tt.width = w/(word.word.length/10)*1.1 ;
+			}
 			
 			s.filters = [ 
 //												new GlowFilter( 0x000000, 1, 0, 0, 255 ),  

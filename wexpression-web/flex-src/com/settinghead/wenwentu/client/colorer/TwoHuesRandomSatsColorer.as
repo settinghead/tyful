@@ -22,8 +22,9 @@ package com.settinghead.wenwentu.client.colorer
 		public function colorFor(word:WordVO):uint
 		{
 			var hue:Number= hues[prng.nextIntRange(0,hues.length-1)];
-			var sat:Number= Math.random()*256;
-			var val:Number= prng.nextIntRange(100, 256);
+//			var sat:Number= Math.random()*256;
+			var sat:Number= prng.nextIntRange(150, 256);
+			var val:Number= prng.nextIntRange(50, 256);
 			
 			
 			return ColorMath.HSLToRGB(hue/256, sat/256, val/256);

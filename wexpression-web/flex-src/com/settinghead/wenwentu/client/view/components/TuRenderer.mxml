@@ -7,11 +7,12 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)">
+		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)">
 	
 	<!-- Events dispatched by this View Component -->
 	<fx:Metadata>
 	</fx:Metadata>
+
 	<fx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
@@ -28,23 +29,28 @@
 			import org.as3commons.lang.Assert;
 			
 			public static const CREAT_NEXT_DISPLAYWORD:String = "createNextDisplayWord";
+			public static const EDIT_TEMPLATE:String = "editTemplate";
+
 			
 			private var _tu:TuVO;
 			
 			public function slapWord(dWord:DisplayWordVO){
 				this.wordLayer.addChild(dWord);
 				this._tu.dWords.addItem(dWord);
-				patchLayer.graphics.clear();
-				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
-					this.highlightPatch(pi.patch);
+//				patchLayer.graphics.clear();
+//				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
+//					this.highlightPatch(pi.patch);
 				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
 				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
 
 			}
 			
-			[Bindable] public function set tu(_tu:TuVO):void{
-				this._tu = _tu;
+			protected function btnEditTemplate_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(EDIT_TEMPLATE));
 			}
+			
+			
 			
 			public function wordMouseOver(e:MouseEvent){
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
@@ -127,28 +133,42 @@
 			
 			protected function onEnterFrameHandler(event:Event):void
 			{
-				if(_tu!=null && !_tu.finishedDisplayWordRendering)
-					dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
+				if(this.visible){
+					if(_tu!=null && !_tu.finishedDisplayWordRendering)
+						dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
+				}
 			}
 			
 			public function get tu():TuVO{
 				return _tu;
 			}
 			
+			private var newTu:Boolean = false;
+			
+			[Bindable] public function set tu(_tu:TuVO):void{
+				this._tu = _tu;
+				newTu = true;
+			}
+			
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
-				if(this.tu!=null){
-					while(this.backgroundLayer.numChildren>0) 
-						this.backgroundLayer.removeChildAt(0);
-					while(this.wordLayer.numChildren>0)
-						this.wordLayer.removeChildAt(0);				
-					this.width = _tu.width;
-					this.height = _tu.height;
-					if(_tu.backgroundImage!=null)
-						this.backgroundLayer.addChild(_tu.backgroundImage);
-					for each(var displayWord:DisplayWordVO in _tu.dWords)
-					this.slapWord(displayWord);
+				if(newTu && this.tu!=null){
+					prepareForTu();
 				}
+			}
+			
+			private function prepareForTu():void{
+				while(this.backgroundLayer.numChildren>0) 
+					this.backgroundLayer.removeChildAt(0);
+				while(this.wordLayer.numChildren>0)
+					this.wordLayer.removeChildAt(0);				
+				this.width = _tu.width;
+				this.height = _tu.height;
+				if(_tu.backgroundImage!=null)
+					this.backgroundLayer.addChild(_tu.backgroundImage);
+				for each(var displayWord:DisplayWordVO in _tu.dWords)
+					this.slapWord(displayWord);
+				newTu = false;
 			}
 			
 		]]>
@@ -158,5 +178,9 @@
 		<mx:UIComponent id="patchLayer" top="0" bottom="0" left="0" right="0" visible="true" />
 		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
 		<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
-		<s:Label id="lossCounter" top="0" left="0" text="{tu.lossRate}"/>
+	<mx:ControlBar>
+	</mx:ControlBar>
+	<s:Label id="lossCounter" top="0" left="0" text="{tu.lossRate}"/>
+	<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+		
 </mx:Canvas>

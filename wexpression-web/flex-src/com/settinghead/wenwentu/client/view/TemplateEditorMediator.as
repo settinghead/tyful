@@ -2,7 +2,10 @@ package com.settinghead.wenwentu.client.view
 {
 	import com.settinghead.wenwentu.client.ApplicationFacade;
 	import com.settinghead.wenwentu.client.model.TemplateProxy;
+	import com.settinghead.wenwentu.client.model.TuProxy;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	import com.settinghead.wenwentu.client.model.vo.TuVO;
+	import com.settinghead.wenwentu.client.model.vo.WordListVO;
 	import com.settinghead.wenwentu.client.view.components.TemplateEditor;
 	import com.settinghead.wenwentu.client.view.components.TuRenderer;
 	
@@ -28,6 +31,7 @@ package com.settinghead.wenwentu.client.view
 		public function TemplateEditorMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
+			templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
 		}
 		
 		
@@ -52,6 +56,12 @@ package com.settinghead.wenwentu.client.view
 		private function get templateEditor ():TemplateEditor
 		{
 			return viewComponent as TemplateEditor;
+		}
+		
+		private function renderTu( event:Event = null ):void
+		{
+			var tu:TuVO = new TuVO(templateEditor.template, WordListVO.generateWords());
+			facade.sendNotification(ApplicationFacade.TU_CREATED, tu);
 		}
 	
 	}

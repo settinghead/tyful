@@ -34,6 +34,9 @@ package com.settinghead.wenwentu.client.model.vo
 		private var _currentWordIndex:int = -1;
 		private var _eWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
 
+		public var indexOffset:int=0;
+
+		
 		public function TuVO(template:TemplateVO, words:WordListVO){
 			this._template = template;
 			this._width = template.width;
@@ -116,7 +119,8 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		private var successCount:Number = 0, totalCount:Number = 0;
 		[Bindable]public function get lossRate():Number{
-			return 1- (successCount)/(totalCount);
+//			return 1- (successCount)/(totalCount);
+			return 0;
 		}
 		
 		public function placeWord(eWord:EngineWordVO):Boolean {
@@ -192,7 +196,7 @@ package com.settinghead.wenwentu.client.model.vo
 			return false;
 		}
 
-		public function generateEngineWord(word:WordVO, indexOffset:int):EngineWordVO{
+		public function generateEngineWord(word:WordVO):EngineWordVO{
 			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
 			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size);
 			

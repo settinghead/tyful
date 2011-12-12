@@ -44,7 +44,7 @@ package com.settinghead.wenwentu.client.model.vo
 		public var _img:Bitmap;
 		var tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
-		private static const SAMPLE_DISTANCE:Number= 25;
+		private static const SAMPLE_DISTANCE:Number= 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 		private var _path:String;
 		private var _sizer:WordSizer;
@@ -195,10 +195,11 @@ package com.settinghead.wenwentu.client.model.vo
 				
 				// sampling approach
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
+//				var numSamples = 10;
 				// TODO: devise better lower bound
 				if (numSamples < 10)
 					numSamples = 10;
-				var threshold:int= 5;
+				var threshold:int= 1;
 				var darkCount:int= 0;
 				var i:int= 0;
 				while (i < numSamples) {
@@ -296,14 +297,15 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(14,25);
+				this._sizer = new ByWeightSizer(14,40);
 			}
 			return this._sizer;
 		}
 		
+		
 		public function get fonter():WordFonter{
 			if(this._fonter==null){
-				this._fonter = new AlwaysUseFonter("Velo");
+				this._fonter = new AlwaysUseFonter("Vera");
 			}
 			return this._fonter;
 		}

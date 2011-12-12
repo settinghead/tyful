@@ -21,7 +21,8 @@ package com.settinghead.wenwentu.client.view
 		{
 			super(NAME, viewComponent);
 			tuRenderer.addEventListener(TuRenderer.CREAT_NEXT_DISPLAYWORD, createNextDisplayWord);
-			
+			tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
+
 		}
 		
 		override public function onRegister():void
@@ -58,12 +59,16 @@ package com.settinghead.wenwentu.client.view
 		}
 		
 		private function createNextDisplayWord( event:Event = null ):void
-		{
-			
+		{	
 			if(!waitingForWord){
 				waitingForWord = true;
 				tuProxy.renderNextDisplayWord(tuRenderer.tu);
 			}
+		}
+		
+		private function editTemplate( event:Event = null ):void
+		{
+			sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);
 		}
 	}
 }
