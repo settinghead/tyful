@@ -2,8 +2,6 @@ package com.settinghead.wenwentu.client.model.vo
 {
 
 	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.wenwentu.client.nudger.ShapeConfinedWordNudger;
 	import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
 	import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
 	import com.settinghead.wenwentu.client.angler.WordAngler;
@@ -12,7 +10,10 @@ package com.settinghead.wenwentu.client.model.vo
 	import com.settinghead.wenwentu.client.density.DensityPatchIndex;
 	import com.settinghead.wenwentu.client.fonter.AlwaysUseFonter;
 	import com.settinghead.wenwentu.client.fonter.WordFonter;
+	import com.settinghead.wenwentu.client.nudger.ShapeConfinedRandomWordNudger;
+	import com.settinghead.wenwentu.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wenwentu.client.nudger.WordNudger;
+	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wenwentu.client.placer.WordPlacer;
 	import com.settinghead.wenwentu.client.sizers.ByWeightSizer;
 	import com.settinghead.wenwentu.client.sizers.WordSizer;
@@ -25,6 +26,7 @@ package com.settinghead.wenwentu.client.model.vo
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
@@ -36,7 +38,7 @@ package com.settinghead.wenwentu.client.model.vo
 	
 	
 	[Bindable]
-	public class TemplateVO
+	public class TemplateVO implements IImageShape
 	{
 		private var _thumbnail:BitmapData;
 		public var _img:Bitmap;
@@ -135,14 +137,17 @@ package com.settinghead.wenwentu.client.model.vo
 		{
 			this._img = new Bitmap(event.target.content.bitmapData);
 			//this.renderer.withConfinementImage(this);
-			//			this.tree = BBPolarTreeBuilder.makeTree(this, 0);
+//			this.tree = BBPolarTreeBuilder.makeTree(this, 0);
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
 			//			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
 			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
 			//			return colour.brightness;
-			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
+			var rgbPixel : uint = img.bitmapData.getPixel32( x, y );
+			var alpha = rgbPixel>> 24 & 0xFF;
+			if(alpha == 0) 
+				return NaN;
 			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
 			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
 			//			Assert.isTrue(!isNaN(colour.hue));
@@ -152,7 +157,7 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		public function getHue(x:int, y:int):Number {
-			var rgbPixel : int = img.bitmapData.getPixel( x, y );
+			var rgbPixel : int = img.bitmapData.getPixel32( x, y );
 			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
 			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
 			//			Assert.isTrue(!isNaN(colour.hue));
@@ -186,17 +191,7 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 			if (tree == null) {
-				// // %1
-				// int threshold = (int) (width * height / 1000);
-				// int darkCount = 0;
-				// for (int i = 0; i < width; i++) {
-				// for (int j = 0; j < height; j++) {
-				// if (getBrightness((int) (x + i), (int) (y + j)) < 0.01
-				// && ++darkCount >= threshold)
-				// return false;
-				// }
-				// }
-				// return true;
+				
 				
 				// sampling approach
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
@@ -212,7 +207,8 @@ package com.settinghead.wenwentu.client.model.vo
 					var sampleX:int= relativeX + x;
 					var sampleY:int= relativeY + y;
 					var brightness:Number = getBrightness(sampleX, sampleY);
-					if (brightness < 0.01&& ++darkCount >= threshold)
+					if ((isNaN(brightness) || brightness < 0.01) && ++darkCount >= threshold)
+//					if ((!containsPoint(sampleX, sampleY, false)) && ++darkCount >= threshold)
 						return false;
 					i++;
 				}
@@ -225,7 +221,7 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+		public function containsPoint(x:Number, y:Number, transform:Boolean):Boolean{
 			return img.hitTestPoint(x,y,true);
 		}
 		
@@ -234,17 +230,6 @@ package com.settinghead.wenwentu.client.model.vo
 				var threshold:int= 10;
 				var darkCount:int= 0;
 				var brightCount:int= 0;
-				// for (int i = 0; i < width; i++) {
-				// for (int j = 0; j < height; j++) {
-				// if (getBrightness((int) (x + i), (int) (y + j)) < 0.01)
-				// darkCount++;
-				// else
-				// brightCount++;
-				// if (darkCount >= threshold && brightCount >= threshold)
-				// return true;
-				// }
-				// }
-				// return false;
 				
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
 				// TODO: devise better lower bound
@@ -258,6 +243,7 @@ package com.settinghead.wenwentu.client.model.vo
 					var sampleX:int= int((relativeX + x));
 					var sampleY:int= int((relativeY + y));
 					if (getBrightness(int((sampleX)), int((sampleY))) < 0.01)
+//					if(!containsPoint(sampleX, sampleY, false))
 						darkCount++;
 					else
 						brightCount++;
@@ -267,6 +253,7 @@ package com.settinghead.wenwentu.client.model.vo
 				}
 				
 				return false;
+				
 			} else {
 				return tree.overlapsCoord(x, y, x + width, y + height);
 			}
@@ -309,7 +296,7 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(14,40);
+				this._sizer = new ByWeightSizer(14,25);
 			}
 			return this._sizer;
 		}
@@ -337,7 +324,9 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public function get nudger():WordNudger{
 			if(this._nudger==null){
-				this._nudger = new ShapeConfinedWordNudger();
+				this._nudger = new ShapeConfinedSpiralWordNudger();
+//				this._nudger = new ShapeConfinedRandomWordNudger();
+
 			}
 			return this._nudger;
 		}

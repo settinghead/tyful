@@ -13,8 +13,8 @@ import flash.geom.Rectangle;
 //		function get object(): DisplayObject;
 //		function get shape(): DisplayObject
 		
-		function get objectWidth():Number;
-		function get objectHeight():Number;
+		function get width():Number;
+		function get height():Number;
 
 	}
 }

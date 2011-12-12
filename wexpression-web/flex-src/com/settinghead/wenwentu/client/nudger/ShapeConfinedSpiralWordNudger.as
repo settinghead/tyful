@@ -1,11 +1,12 @@
 package com.settinghead.wenwentu.client.nudger {
+	import com.settinghead.wenwentu.client.PlaceInfo;
+	import com.settinghead.wenwentu.client.angler.WordAngler;
 	import com.settinghead.wenwentu.client.density.Patch;
 	import com.settinghead.wenwentu.client.math.MathUtils;
+	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.wenwentu.client.model.vo.WordVO;
 	
 	import flash.geom.Point;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
-	import com.settinghead.wenwentu.client.PlaceInfo;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -23,14 +24,14 @@ package com.settinghead.wenwentu.client.nudger {
  limitations under the License.
  */
 
-public class ShapeConfinedWordNudger implements WordNudger {
+public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 	// Who knows? this seems to be good, but it seems to depend on the font --
 	// bigger fonts need a bigger thetaIncrement.
 //	private var thetaIncrement:Number= Math.PI * 0.03;
 	private var angler:WordAngler;
 
-	public function ShapeConfinedWordNudger() {
+	public function ShapeConfinedSpiralWordNudger() {
 	}
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
@@ -39,19 +40,20 @@ public class ShapeConfinedWordNudger implements WordNudger {
 			var p:Patch= Patch(pInfo.get().patch);
 			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
 					.getHeight();
-			if (p.getLevel() == 0)
-				factor /= 6;
-			else if (p.getLevel() == 1)
-				factor /= 2;
+//			if (p.getLevel() == 0)
+//				factor /= 6;
+//			else if (p.getLevel() == 1)
+//				factor /= 2;
 //		} else
 //			factor = 30;
 
-		factor *= 6;
+//		factor *= 6;
 		
-		var rad:Number= powerMap(0.6, attempt, 0, totalPlannedAttempt, 1, factor * 10);
+		var rad:Number= powerMap(0.6, attempt, 0, totalPlannedAttempt, 1, factor * 4);
 
-		var thetaIncrement = powerMap(1, attempt, 0, totalPlannedAttempt, 0.5, 0.3);
-		var theta:Number= thetaIncrement * attempt;
+//		var thetaIncrement = powerMap(1, attempt, 0, totalPlannedAttempt, 0.5, 0.3);
+//		var theta:Number= thetaIncrement * attempt;
+		var theta = Math.random() * BBPolarTreeVO.TWO_PI;
 		var x:Number= Math.cos(theta) * rad;
 		var y:Number= Math.sin(theta) * rad;
 		return new Point(x, y);

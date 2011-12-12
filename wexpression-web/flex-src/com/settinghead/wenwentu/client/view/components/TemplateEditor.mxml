@@ -43,6 +43,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 			
 			import flash.display.*;
@@ -53,6 +54,8 @@
 			import flash.utils.ByteArray;
 			
 			import mx.events.FlexEvent;
+			
+			import org.peaceoutside.utils.ColorMath;
 			
 //			public static const MODE_EDIT:String 	= "modeEdit";
 			
@@ -126,7 +129,10 @@
 			{
 				if(drawingState){
 					var shape:Shape = new Shape();
-					shape.graphics.lineStyle(thicknessPicker.thickness,0xeeeeee,1.0);
+					var color:uint = ColorMath.HSLToRGB(directionPicker.angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
+					shape.graphics.lineStyle(thicknessPicker.
+						thickness,color
+						,1);
 					shape.graphics.moveTo(oldMouseX, oldMouseY);
 					shape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
 					bmp.bitmapData.draw(shape);

@@ -1,4 +1,5 @@
 package com.settinghead.wenwentu.client.placer {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.settinghead.wenwentu.client.PlaceInfo;
 	import com.settinghead.wenwentu.client.density.DensityPatchIndex;
 	import com.settinghead.wenwentu.client.density.Patch;
@@ -20,13 +21,15 @@ public class ShapeConfinedPlacer implements WordPlacer {
 
 	public function place(word:WordVO, wordIndex:int, wordsCount:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
-			fieldHeight:int):PlaceInfo {
-		var patch:Patch= Patch(index.findPatchFor(wordImageWidth,
-				wordImageHeight));
-		if (patch == null)
-			return null;
-		return new PlaceInfo(new Point(patch.getX() + patch.getWidth() / 2, patch.getY()
-				+ patch.getHeight() / 2), patch);
+			fieldHeight:int): Vector.<PlaceInfo> {
+		var patches:Vector.<Patch> = index.findPatchFor(wordImageWidth,
+				wordImageHeight);
+		
+		var places:Vector.<PlaceInfo> = new Vector.<PlaceInfo>();
+		for(var i=0;i<patches.length;i++)
+			places.push(new PlaceInfo(new Point(patches[i].getX() + patches[i].getWidth() / 2, patches[i].getY()
+			+ patches[i].getHeight() / 2), patches[i]));
+		return places;
 	}
 
 	private function setImg(img:TemplateVO):void {
@@ -46,14 +49,17 @@ public class ShapeConfinedPlacer implements WordPlacer {
 	}
 
 	
- 	public function fail(returnedObject:Object):void {
-		var patch:Patch = returnedObject as Patch;
-		index.add(patch);
+ 	public function fail(returnedObj:Object):void {
+		for each(var pi:PlaceInfo in (returnedObj as Vector.<PlaceInfo>)){
+			index.add(pi.patch);
+		}
 	}
 
 	
 	 public function success(returnedObj:Object):void {
-		index.add(returnedObj as Patch);
+		 for each(var pi:PlaceInfo in (returnedObj as Vector.<PlaceInfo>)){
+			index.add(pi.patch);
+		 }
 	}
 
 }

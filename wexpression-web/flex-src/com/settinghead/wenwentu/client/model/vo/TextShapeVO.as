@@ -24,8 +24,6 @@ package com.settinghead.wenwentu.client.model.vo
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -160,10 +158,10 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		private var matrix:Matrix = new Matrix();
 		
-		public function get objectWidth():Number{
+		public function get width():Number{
 			return _textField.width;
 		}
-		public function get objectHeight():Number{
+		public function get height():Number{
 			return _textField.height;
 		}
 		public function get rotation():Number{

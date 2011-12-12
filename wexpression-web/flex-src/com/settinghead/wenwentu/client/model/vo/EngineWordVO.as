@@ -40,13 +40,12 @@ public class EngineWordVO {
 	private var presetAngle:Number = NaN;
 	var renderedAngle:Number;
 
-	private var _desiredLocation:PlaceInfo;
+	private var _desiredLocation:Vector.<PlaceInfo>;
 	private var currentLocation:PlaceInfo;
 	
-	public function EngineWordVO(word:WordVO, rank:int, wordCount:int, loc:PlaceInfo) {
+	public function EngineWordVO(word:WordVO, rank:int, wordCount:int) {
 		this._word = word;
 		this.rank = rank;
-		this._desiredLocation = loc;
 	}
 
 	public function setShape(shape:TextShapeVO, swelling:int):void {
@@ -63,7 +62,7 @@ public class EngineWordVO {
 		return bbTree.overlaps(other.bbTree);
 	}
 	
-	public function get desiredLocation():PlaceInfo{
+	public function get desiredLocation():Vector.<PlaceInfo>{
 		return _desiredLocation;
 	}
 	
@@ -71,18 +70,13 @@ public class EngineWordVO {
 
 	public function setDesiredLocation(placer:WordPlacer, count:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
-			fieldHeight:int):PlaceInfo {
+			fieldHeight:int):void {
 		_desiredLocation = word.getTargetPlace(placer, rank, count,
 				wordImageWidth, wordImageHeight, fieldWidth, fieldHeight);
-		currentLocation = desiredLocation != null ? desiredLocation.get()
-				: null;
-		return currentLocation;
 	}
 
-	public function nudge(nudge:Point):void {
-		currentLocation = new PlaceInfo(
-				desiredLocation.getpVector().add(nudge),
-				currentLocation.patch);
+	public function nudgeTo(loc:Point, patch:Patch):void {
+		currentLocation = new PlaceInfo(loc, patch);
 		bbTree.setLocation(int(currentLocation.getpVector().x),
 				int(currentLocation.getpVector().y));
 	}
@@ -181,8 +175,9 @@ public class EngineWordVO {
 			tt.htmlText = this.shape.textField.htmlText;
 			
 			s.filters = [ 
-				//								new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
-				new DropShadowFilter(1,45,0,1.0,1,1) ];
+//												new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
+				new DropShadowFilter(0.5,45,0,1.0,0.5,0.5) 
+			];
 			
 			s.addChild(tt);
 			

@@ -69,17 +69,22 @@ package com.settinghead.wenwentu.client.model
 //				while (eWord.wasSkipped()){
 //					indexOffset+=tu.words.size/100;
 //					if(indexOffset+tu.currentWordIndex>tu.words.size) break;
-//					eWord = tu.generateEngineWord(word,indexOffset, eWord.desiredLocation);
+//					eWord = tu.generateEngineWord(word,indexOffset);
 //					tu.placeWord(eWord);
 //				}
+				if (eWord.wasSkipped()){
+					indexOffset+=tu.words.size/15;
+					if(indexOffset+tu.currentWordIndex>tu.words.size) indexOffset = tu.words.size -1;
+				}				
 				
 				tu.pushEngineWord(eWord);
-
+				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
-					var dw:DisplayWordVO = eWord.rendition(tu.template.colorer.colorFor(word));
+					dw = eWord.rendition(tu.template.colorer.colorFor(word));
 					tu.dWords.addItem(dw);
-					sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 				}
+				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
+
 			}
 		}
 	}

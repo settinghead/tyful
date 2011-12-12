@@ -15,6 +15,7 @@
 	<fx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wenwentu.client.PlaceInfo;
 			import com.settinghead.wenwentu.client.density.Patch;
 			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.wenwentu.client.model.vo.DisplayWordListVO;
@@ -33,7 +34,9 @@
 			public function slapWord(dWord:DisplayWordVO){
 				this.wordLayer.addChild(dWord);
 				this._tu.dWords.addItem(dWord);
-				this.highlightPatch(dWord.engineWord.desiredLocation.patch);
+				patchLayer.graphics.clear();
+				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
+					this.highlightPatch(pi.patch);
 				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
 				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
 
@@ -45,7 +48,9 @@
 			
 			public function wordMouseOver(e:MouseEvent){
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
-				highlightPatch(dWord.engineWord.desiredLocation.patch);
+				patchLayer.graphics.clear();
+				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
+					this.highlightPatch(pi.patch);
 				dWord.visible = false;
 				drawTree(dWord.engineWord.bbTree);
 			}
@@ -56,15 +61,14 @@
 			}
 			
 			public function highlightPatch(patch:Patch){
-				patchLayer.graphics.clear();
-				patchLayer.graphics.beginFill(0xeeeeee,0.5);
+				patchLayer.graphics.beginFill(0xCCCCCC,0.5);
 				patchLayer.graphics.drawRect(patch.getX(), patch.getY(), patch.getWidth(), patch.getHeight());
 				patchLayer.graphics.endFill();
 			}
 			
 			private function drawTree(tree:BBPolarTreeVO):void{
 				treeLayer.graphics.clear();
-				treeLayer.graphics.lineStyle(1,0x000000,1.0);
+				treeLayer.graphics.lineStyle(1,0x111111,1.0);
 				drawLeaves(tree);
 			}
 			
@@ -149,9 +153,10 @@
 			
 		]]>
 	</fx:Script>
+
 		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="true"/>
 		<mx:UIComponent id="patchLayer" top="0" bottom="0" left="0" right="0" visible="true" />
 		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
 		<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
-
+		<s:Label id="lossCounter" top="0" left="0" text="{tu.lossRate}"/>
 </mx:Canvas>

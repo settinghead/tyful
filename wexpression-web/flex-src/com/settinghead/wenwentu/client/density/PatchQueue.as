@@ -21,12 +21,12 @@ package com.settinghead.wenwentu.client.density
 			}
 		}
 		
-		public function getBestPatch(smearedArea:int):Patch {
+		public function getBestPatch():Patch {
 			var result:Patch= poll();
-			if (result != null) {
-//				result.mark(smearedArea, true);
-				tryAdd(result);
-			}
+//			if (result != null) {
+////				result.mark(smearedArea, true);
+////				tryAdd(result);
+//			}
 			return result;
 		}
 		

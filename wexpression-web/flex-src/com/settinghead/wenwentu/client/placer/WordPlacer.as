@@ -57,7 +57,7 @@ public interface WordPlacer {
 	 */
 	function place(word:WordVO, wordIndex:int, wordsCount:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
-			fieldHeight:int): PlaceInfo ;
+			fieldHeight:int): Vector.<PlaceInfo> ;
 
 	 function fail(returnedObj:Object):void ;
 

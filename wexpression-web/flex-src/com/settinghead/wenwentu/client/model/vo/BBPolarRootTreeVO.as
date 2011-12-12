@@ -37,22 +37,34 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		
 		override function computeX(rotate:Boolean):Number {
-			return -super.d2;
+//			if(shape.width<STOP_COMPUTE_TREE_THRESHOLD)
+//				return -shape.width/2;
+//			else 
+				return -super.d2;
 		}
 		
 		
 		override  function computeY(rotate:Boolean):Number {
-			return -super.d2;
+//			if(shape.height<STOP_COMPUTE_TREE_THRESHOLD)
+//				return -shape.height/2;
+//			else 
+				return -super.d2;
 		}
 		
 		
 		override function computeRight(rotate:Boolean):Number {
-			return (super.d2);
+//			if(shape.width<STOP_COMPUTE_TREE_THRESHOLD)
+//				return shape.width/2;
+//			else 
+				return (super.d2);
 		}
 		
 		
 		override function computeBottom(rotate:Boolean):Number {
-			return (super.d2);
+	//			if(shape.height<STOP_COMPUTE_TREE_THRESHOLD)
+	//				return -shape.height/2;
+	//			else 
+				return (super.d2);
 		}
 		
 		public function setRotation(rotation:Number):void {

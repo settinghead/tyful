@@ -15,7 +15,8 @@ package com.settinghead.wenwentu.client.view
 	{
 		public static const NAME:String = "TuMediator";
 		private var tuProxy:TuProxy;
-		
+		private var waitingForWord = false;
+
 		public function TuMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
@@ -39,12 +40,15 @@ package com.settinghead.wenwentu.client.view
 		override public function handleNotification( note:INotification ):void
 		{
 			switch ( note.getName() )
-			{		
+			{
 				case ApplicationFacade.TU_CREATED:
 					tuRenderer.tu =  note.getBody() as TuVO;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
-					tuRenderer.slapWord(note.getBody() as DisplayWordVO);
+					if(note.getBody()!=null)
+						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
+					waitingForWord = false;
+					break;
 			}
 		}
 		
@@ -55,7 +59,11 @@ package com.settinghead.wenwentu.client.view
 		
 		private function createNextDisplayWord( event:Event = null ):void
 		{
-			tuProxy.renderNextDisplayWord(tuRenderer.tu);
+			
+			if(!waitingForWord){
+				waitingForWord = true;
+				tuProxy.renderNextDisplayWord(tuRenderer.tu);
+			}
 		}
 	}
 }

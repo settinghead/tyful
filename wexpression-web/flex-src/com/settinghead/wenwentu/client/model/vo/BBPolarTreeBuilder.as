@@ -24,18 +24,19 @@ package com.settinghead.wenwentu.client.model.vo {
 
 internal class BBPolarTreeBuilder {
 
-	
+	private static const STOP_COMPUTE_TREE_THRESHOLD:Number = 20;
+
 
 	public static function makeTree(shape:IImageShape, swelling:int):BBPolarRootTreeVO {
 		var minBoxSize:int= 1;
 		// center
-		var x:int= int((shape.objectWidth / 2));
-		var y:int= int((shape.objectHeight / 2));
+		var x:int= int((shape.width / 2));
+		var y:int= int((shape.height / 2));
 		// Assert.isTrue(x > 0);
 		// Assert.isTrue(y > 0);
 
-		var d:Number= (Math.sqrt(Math.pow(shape.objectWidth / 2, 2)
-				+ Math.pow(shape.objectHeight / 2, 2)));
+		var d:Number= (Math.sqrt(Math.pow(shape.width / 2, 2)
+				+ Math.pow(shape.height / 2, 2)));
 
 		var tree:BBPolarRootTreeVO= new BBPolarRootTreeVO(shape, x, y, d,
 				minBoxSize);
@@ -190,10 +191,10 @@ internal class BBPolarTreeBuilder {
 
 		var tree:BBPolarChildTreeVO= new BBPolarChildTreeVO(r1, r2, d1, d2,
 				root, minBoxSize);
-		var x:Number= tree.getX(false) +  shape.objectWidth / 2;
-		if(x>shape.objectWidth) return null;
-		var y:Number= tree.getY(false) + shape.objectHeight / 2;
-		if(y>shape.objectHeight) return null;
+		var x:Number= tree.getX(false) +  shape.width / 2;
+		if(x>shape.width) return null;
+		var y:Number= tree.getY(false) + shape.height / 2;
+		if(y>shape.height) return null;
 		var width:Number= tree.getRight(false) - tree.getX(false);
 //		if(width<1) return null;
 		if(x+width<0) return null;

@@ -42,6 +42,8 @@ package com.settinghead.wenwentu.client.model.vo
 			
 		}
 		
+		
+		
 		public function pushEngineWord(eWord:EngineWordVO):void{
 			this._eWords.push(eWord);
 		}
@@ -108,12 +110,17 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		private function calculateMaxAttemptsFromWordWeight(word:WordVO):int {
 			
-			var result:int = int(((1.0 - word.weight) * 300) )+ 50 + 200*Math.random();
+			var result:int = int(((1.0 - word.weight) * 100) )+ 50 + 100*Math.random();
 			Assert.isTrue(result>0);
 			return result;
 		}
+		private var successCount:Number = 0, totalCount:Number = 0;
+		[Bindable]public function get lossRate():Number{
+			return 1- (successCount)/(totalCount);
+		}
 		
 		public function placeWord(eWord:EngineWordVO):Boolean {
+			totalCount++;
 			this.failedLastVar = false;
 			var word:WordVO= eWord.word;
 			// these into
@@ -123,76 +130,71 @@ package com.settinghead.wenwentu.client.model.vo
 			var wordImageWidth:int= int(eWord.shape.textField.width);
 			var wordImageHeight:int= int(eWord.shape.textField.height);
 			
-			var info:PlaceInfo= eWord.setDesiredLocation(template.placer, _eWords.length,
+			eWord.setDesiredLocation(template.placer, _eWords.length,
 				wordImageWidth, wordImageHeight, template.width,
 				template.height);
-			
 			// Set maximum number of placement trials
 			var maxAttemptsToPlace:int= template.renderOptions.maxAttemptsToPlaceWord > 0? template.renderOptions.maxAttemptsToPlaceWord
 				: calculateMaxAttemptsFromWordWeight(word);
 			
-			var lastCollidedWith:EngineWordVO = null;
-			
-			outer: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
-				
-				eWord.nudge(template.nudger.nudgeFor(word, eWord.desiredLocation,
-					attempt,maxAttemptsToPlace));
-				var angle:Number= template.angler.angleFor(eWord);
-				//			eWord.getTree().draw(destination.graphics);
-				
-				// // TODO
-				eWord.getTree().setRotation(angle);
-				//
-				if (eWord.trespassed(template))
-					continue;
-				var loc:PlaceInfo= eWord.getCurrentLocation();
-				if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= template.width
-					|| loc.getpVector().y + wordImageHeight >= template.height) {
-					continue;
-				}
-				
-				if (lastCollidedWith != null && eWord.overlaps(lastCollidedWith)) {
-					continue;
-				}
-				
-				var foundOverlap:Boolean= false;
-				
-				for (var i:int= 0; !foundOverlap && i < currentWordIndex; i++) {
-					var otherWord:EngineWordVO= _eWords[i];
-					if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
+			outer: for each(var candidateLoc:PlaceInfo in eWord.desiredLocation){
+				var lastCollidedWith:EngineWordVO = null;
+				inner: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
+					eWord.nudgeTo(candidateLoc.getpVector().add(template.nudger.nudgeFor(word, candidateLoc,
+						attempt,maxAttemptsToPlace)), candidateLoc.patch);
+					var angle:Number= template.angler.angleFor(eWord);
+					//			eWord.getTree().draw(destination.graphics);
 					
-					if (eWord.overlaps(otherWord)) {
-						foundOverlap = true;
-						
-						lastCollidedWith = otherWord;
-						continue outer;
+					// // TODO
+					eWord.getTree().setRotation(angle);
+					//
+					if (eWord.trespassed(template))
+						continue;
+					var loc:PlaceInfo= eWord.getCurrentLocation();
+					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= template.width
+						|| loc.getpVector().y + wordImageHeight >= template.height) {
+						continue;
 					}
+					
+					if (lastCollidedWith != null && eWord.overlaps(lastCollidedWith)) {
+						continue;
+					}
+					
+					var foundOverlap:Boolean= false;
+					
+					for (var i:int= 0; !foundOverlap && i < currentWordIndex; i++) {
+						var otherWord:EngineWordVO= _eWords[i];
+						if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
+						
+						if (eWord.overlaps(otherWord)) {
+							foundOverlap = true;
+							
+							lastCollidedWith = otherWord;
+							continue inner;
+						}
+					}
+					
+					if (!foundOverlap) {
+						candidateLoc.patch.mark(wordImageWidth*wordImageHeight, true);
+						template.placer.success(eWord.desiredLocation);
+						eWord.finalizeLocation();
+						successCount++;
+						return true;
+					}
+					
 				}
-				
-				if (!foundOverlap) {
-					//eWord.getTree().draw(applet.getGraphics());
-					// eWord.setShape(WordShaper.rotate(eWord.getShape(), eWord
-					// .getTree().getRotation(), (float) eWord.getTree()
-					// .getRootX(), (float) eWord.getTree().getRootY()), 0);
-					info.patch.mark(wordImageWidth*wordImageHeight, true);
-					template.placer.success(info.patch);
-					eWord.finalizeLocation();
-					return true;
-				}
-				
 			}
 			
 			skipWord(eWord.word, SKIP_REASON_NO_SPACE);
 //			info.patch.mark(wordImageWidth*wordImageHeight, true);
-			template.placer.fail(info.patch);
+			this.template.placer.fail(eWord.desiredLocation);
 			this.failedLastVar = true;
-			trace("failed:", info.getpVector());
 			return false;
 		}
 
-		public function generateEngineWord(word:WordVO, indexOffset:int, loc:PlaceInfo = null):EngineWordVO{
+		public function generateEngineWord(word:WordVO, indexOffset:int):EngineWordVO{
 			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
-			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size, loc);
+			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size);
 			
 			var wordFont:String= template.fonter.fontFor(word);
 			var wordSize:Number= template.sizer.sizeFor(word,newIndex,this.words.size);
@@ -208,10 +210,11 @@ package com.settinghead.wenwentu.client.model.vo
 			return eWord;
 		}
 		
-		
 		private function skipWord(word:WordVO, reason:int):void {
 			word.wasSkippedBecause(reason);
 		}
+		
+		
 			
 	}
 }

@@ -11,12 +11,12 @@ package com.settinghead.wenwentu.client.density
 		private var y:int;
 		private var width:int;
 		private var height:int;
-		private var _averageAlpha:Number= -1;
+		private var _averageAlpha:Number= Number.NaN;
 		private var parent:Patch;
 		private var children:Vector.<Patch> = null;
 		private var _childrenMarker:Set;
-		private var _area:int= -1;
-		private var _alphaSum:Number= -1;
+		private var _area:Number= Number.NaN;
+		private var _alphaSum:Number= Number.NaN;
 		private var _queue:PatchQueue;
 		private var rank:int;
 		
@@ -64,7 +64,7 @@ package com.settinghead.wenwentu.client.density
 		
 		public function getAverageAlpha():Number {
 			
-			if (this._averageAlpha < 0) {
+			if (isNaN(this._averageAlpha)) {
 				
 				// now remove sub-patches that's already marked
 				this._averageAlpha = this.getAlphaSum();
@@ -80,7 +80,7 @@ package com.settinghead.wenwentu.client.density
 		}
 		
 		private function getAlphaSum():Number {
-			if (this._alphaSum < 0)
+			if (isNaN(this._alphaSum))
 				// lazy calc
 			{
 				this._alphaSum = 0;
@@ -89,13 +89,21 @@ package com.settinghead.wenwentu.client.density
 					|| this.getChildren().length == 0) {
 					for (var i:int= 0; i < this.getWidth(); i++)
 						for (var j:int= 0; j < this.getHeight(); j++) {
-							this._alphaSum += _queue.getMap().getIndex().getImg().getBrightness(
+							var brightness = _queue.getMap().getIndex().getImg().getBrightness(
 								this.getX() + i, this.getY() + j);
+							if(isNaN(brightness))
+								brightness = 0;
+							else 
+								brightness = brightness;
+							this._alphaSum += brightness;
 						}
 				} else
 					for each (var p:Patch in this.getChildren())
 						this._alphaSum += p.getAlphaSum();
 			}
+			
+			if(this._alphaSum==0) 
+				this._alphaSum= Number.NEGATIVE_INFINITY;
 			
 			return this._alphaSum;
 		}
@@ -220,16 +228,16 @@ package com.settinghead.wenwentu.client.density
 //		}
 		
 		private function resetWorthCalculations():void {
-			this._area = -1;
-			this._averageAlpha = -1;
+			this._area = NaN;
+			this._averageAlpha = NaN;
 			
 		}
 		
 		/**
 		 * @return the area
 		 */
-		public function getArea():int {
-			if (this._area < 0)
+		public function getArea():Number {
+			if (isNaN(this._area))
 				this._area = getWidth() * getHeight();
 			return this._area;
 		}

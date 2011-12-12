@@ -19,7 +19,7 @@
 		<![CDATA[
 			import com.settinghead.wenwentu.client.RenderOptions;
 			import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
-			import com.settinghead.wenwentu.client.nudger.ShapeConfinedWordNudger;
+			import com.settinghead.wenwentu.client.nudger.ShapeConfinedSpiralWordNudger;
 			import com.settinghead.wenwentu.client.WordComparator;
 			import com.settinghead.wenwentu.client.WordCramEngine;
 			import com.settinghead.wenwentu.client.WordSorterAndScaler;
@@ -481,7 +481,7 @@
 				reset();
 				this.img = img;
 				placer = new ShapeConfinedPlacer(img, new DensityPatchIndex(img));
-				nudger = new ShapeConfinedWordNudger();
+				nudger = new ShapeConfinedSpiralWordNudger();
 				angler = new ShapeConfinedAngler(img, new MostlyHorizAngler());
 				colorer = new TwoHuesRandomSatsColorer();
 				loadWords();
@@ -524,7 +524,7 @@
 //						placer = new ShapeConfinedPlacer(img, new DensityPatchIndex(img));
 						placer = new ShapeConfinedPlacer(this.img, new DensityPatchIndex(this.img));
 					if (nudger == null)
-						nudger = new ShapeConfinedWordNudger();
+						nudger = new ShapeConfinedSpiralWordNudger();
 					
 					
 					this.wordCramEngine = new WordCramEngine(this, words, fonter,

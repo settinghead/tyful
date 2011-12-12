@@ -83,14 +83,13 @@ public class WordVO {
 	private var presetSize:Number;
 	private var presetFont:String;
 	private var presetColor:int;
-	private var presetTargetPlace:PlaceInfo;
 
 	// These are null until they're rendered, and can be wiped out for a
 	// re-render.
 	private var renderedSize:Number = NaN;
 	private var renderedFont:String;
 	private var renderedColor:int = -1;
-	private var targetPlaceInfo:PlaceInfo;
+	private var targetPlaceInfo:Vector.<PlaceInfo>;
 	private var renderedPlace:Point;
 	private var skippedBecause:int = -1;
 
@@ -137,17 +136,17 @@ public class WordVO {
 		return this;
 	}
 
-	/**
-	 * Set the place this Word should be rendered at - WordCram won't call the
-	 * WordPlacer.
-	 * 
-	 * @return the Word, for more configuration
-	 */
-	public function setPlace(place:PlaceInfo):WordVO {
-		this.presetTargetPlace = new PlaceInfo(place.getpVector().clone(),
-				place.patch);
-		return this;
-	}
+//	/**
+//	 * Set the place this Word should be rendered at - WordCram won't call the
+//	 * WordPlacer.
+//	 * 
+//	 * @return the Word, for more configuration
+//	 */
+//	public function setPlace(place:PlaceInfo):WordVO {
+//		this.presetTargetPlace = new PlaceInfo(place.getpVector().clone(),
+//				place.patch);
+//		return this;
+//	}
 
 
 	/*
@@ -176,9 +175,8 @@ public class WordVO {
 
 	function getTargetPlace(placer:WordPlacer, rank:int, count:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
-			fieldHeight:int):PlaceInfo {
-		targetPlaceInfo = presetTargetPlace != null ? presetTargetPlace
-				: placer.place(this, rank, count, wordImageWidth,
+			fieldHeight:int):Vector.<PlaceInfo> {
+		targetPlaceInfo =  placer.place(this, rank, count, wordImageWidth,
 						wordImageHeight, fieldWidth, fieldHeight);
 		return targetPlaceInfo;
 	}
@@ -221,7 +219,7 @@ public class WordVO {
 	 * Get the place the Word was supposed to be rendered at: either the value
 	 * passed to setPlace(), or the value returned from the WordPlacer.
 	 */
-	public function getCurrentTargetPlace():PlaceInfo {
+	public function getCurrentTargetPlace():Vector.<PlaceInfo> {
 		return targetPlaceInfo;
 	}
 

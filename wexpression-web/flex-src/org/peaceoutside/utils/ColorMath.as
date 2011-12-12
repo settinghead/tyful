@@ -67,6 +67,27 @@ package org.peaceoutside.utils
 			return (r << 16) | (g << 8) | b;
 		}
 		
+		public static function HSLtoRGB(a:Number=1,hue:Number=0,saturation:Number=0.5,lightness:Number=1):uint{
+			a = Math.max(0,Math.min(1,a));
+			saturation = Math.max(0,Math.min(1,saturation));
+			lightness = Math.max(0,Math.min(1,lightness));
+			hue = hue%360;
+			if(hue<0)hue+=360;
+			hue/=60;
+			var C:Number = (1-Math.abs(2*lightness-1))*saturation;
+			var X:Number = C*(1-Math.abs((hue%2)-1));
+			var m:Number = lightness-0.5*C;
+			C=(C+m)*255;
+			X=(X+m)*255;
+			m*=255;
+			if(hue<1) return (Math.round(a*255)<<24)+(C<<16)+(X<<8)+m;
+			if(hue<2) return (Math.round(a*255)<<24)+(X<<16)+(C<<8)+m;
+			if(hue<3) return (Math.round(a*255)<<24)+(m<<16)+(C<<8)+X;
+			if(hue<4) return (Math.round(a*255)<<24)+(m<<16)+(X<<8)+C;
+			if(hue<5) return (Math.round(a*255)<<24)+(X<<16)+(m<<8)+C;
+			return (Math.round(a*255)<<24)+(C<<16)+(m<<8)+X;
+		}
+		
 		public static function HLS(color:int = 0):int
 		{
 			var h:Number = ((color & 0xFF0000) >> 16) * 0.003921568627450980392156862745098;
@@ -135,9 +156,9 @@ package org.peaceoutside.utils
 				return 0xff000000 | (x << 16) | ( y << 8) | z;
 		}
 		
-		public static function RGBtoHSB(rgbPixel:uint):int {
-			var r:int = (rgbPixel & 0xFF0000) >> 16;
-			var g:int = (rgbPixel & 0xFF00) >> 8;
+		public static function RGBtoHSB(rgbPixel:Number):int {
+			var r:int = (rgbPixel) >> 16 & 0xFF;
+			var g:int = (rgbPixel) >> 8 & 0xFF;
 			var b:int = rgbPixel & 0xFF;
 			var hue:Number, saturation:Number, brightness:Number;
 			

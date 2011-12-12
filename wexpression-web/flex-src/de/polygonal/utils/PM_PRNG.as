@@ -112,5 +112,27 @@ package de.polygonal.utils
 			//var lo:uint = 16807 * (seed & 0xFFFF) + ((hi & 0x7FFF) << 16) + (hi >> 15);
 			//return seed = (lo > 0x7FFFFFFF ? lo - 0x7FFFFFFF : lo);
 		}
+		
+		private var haveNextNextGaussian:Boolean;
+		private var nextNextGaussian:Number;
+		
+		 public  function nextGaussian():Number {
+			// See Knuth, ACP, Section 3.4.1 Algorithm C.
+			if (haveNextNextGaussian) {
+				haveNextNextGaussian = false;
+				return nextNextGaussian;
+			} else {
+				var v1:Number, v2:Number, s:Number;
+				do {
+					v1 = 2 * nextDouble() - 1; // between -1 and 1
+					v2 = 2 * nextDouble() - 1; // between -1 and 1
+					s = v1 * v1 + v2 * v2;
+				} while (s >= 1 || s == 0);
+				var multiplier:Number = Math.sqrt(-2 * Math.log(s)/s);
+				nextNextGaussian = v2 * multiplier;
+				haveNextNextGaussian = true;
+				return v1 * multiplier;
+			}
+		}
 	}
 }

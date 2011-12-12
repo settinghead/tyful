@@ -1,5 +1,7 @@
 package com.settinghead.wenwentu.client.density
 {
+	import com.demonsters.debugger.MonsterDebugger;
+
 	public class LeveledPatchMap {
 		
 		private var _map : Vector.<PatchQueue> = new Vector.<PatchQueue>();
@@ -8,14 +10,15 @@ package com.settinghead.wenwentu.client.density
 		public function LeveledPatchMap(index:DensityPatchIndex){
 			this._index = index;
 			//top level map
-			var topLevelQueue:PatchQueue= new PatchQueue(0, this);
-			this._map.push(topLevelQueue);
+//			var topLevelQueue:PatchQueue= new PatchQueue(0, this);
+//			this._map.push(topLevelQueue);
+
 		}
 		
 		
-		public function getBestPatchAtLevel(level:int, smearedArea:int):Patch {
+		public function getBestPatchAtLevel(level:int):Patch {
 			var queue:PatchQueue= getQueue(level);
-			return queue.getBestPatch(smearedArea);
+			return queue.getBestPatch();
 		}
 		
 		public function getQueue(level:int):PatchQueue {
@@ -26,9 +29,17 @@ package com.settinghead.wenwentu.client.density
 		}
 		
 		private function generateLevelQueue(level:int):void {
-			if (level > _map.length)
-				generateLevelQueue(level - 1);
-			_map.push((_map[_map.length - 1].descend(level)));
+			if(level==0)
+			{
+				var topLevelQueue:PatchQueue= new PatchQueue(0, this);
+				this._map.push(topLevelQueue);
+			}
+			else 
+			{
+				if (level > _map.length)
+					generateLevelQueue(level - 1);
+				_map.push((_map[_map.length - 1].descend(level)));
+			}
 			
 		}
 		
