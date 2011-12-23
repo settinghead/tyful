@@ -9,7 +9,8 @@ package com.settinghead.wenwentu.client
 	public class ApplicationFacade extends Facade
 	{
 		public static const STARTUP:String                = "startup";
-		public static const TU_CREATED:String             = "tuCreated";
+		public static const TU_INITIALIZED:String             = "tuInitialized";
+		public static const TU_GENERATED:String             = "tuGenerated";
 		public static const EDIT_TEMPLATE:String             = "editTemplate";
 		public static const GENERATE_TU:String			  = "generateTu";
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";

@@ -24,7 +24,7 @@ package com.settinghead.wenwentu.client.view
 		override public function listNotificationInterests():Array
 		{
 			return [
-				ApplicationFacade.TU_CREATED,
+				ApplicationFacade.TU_INITIALIZED,
 				ApplicationFacade.EDIT_TEMPLATE
 			];
 		}
@@ -33,7 +33,7 @@ package com.settinghead.wenwentu.client.view
 		{
 			switch ( note.getName() )
 			{		
-				case ApplicationFacade.TU_CREATED:
+				case ApplicationFacade.TU_INITIALIZED:
 					applicationComponent.vwStack.selectedChild = applicationComponent.tuRenderer; 
 					break;
 				

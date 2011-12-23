@@ -61,11 +61,9 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 	private function powerMap(power:Number, v:Number, min1:Number, max1:Number,
 			min2:Number, max2:Number):Number {
-
 		var val:Number= MathUtils.norm(v, min1, max1);
 		val = Math.pow(val, power);
 		return MathUtils.lerp(min2, max2, val);
 	}
-
 }
 }

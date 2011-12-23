@@ -122,7 +122,7 @@ package com.settinghead.wenwentu.client.model.vo
 		}
 		
 		
-		public function loadTemplate(callback:Function = null){
+		public function loadTemplate(callback:Function = null):void{
 			var my_loader:Loader = new Loader();
 			my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			if(callback!=null)
@@ -145,7 +145,7 @@ package com.settinghead.wenwentu.client.model.vo
 			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
 			//			return colour.brightness;
 			var rgbPixel : uint = img.bitmapData.getPixel32( x, y );
-			var alpha = rgbPixel>> 24 & 0xFF;
+			var alpha:uint = rgbPixel>> 24 & 0xFF;
 			if(alpha == 0) 
 				return NaN;
 			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );

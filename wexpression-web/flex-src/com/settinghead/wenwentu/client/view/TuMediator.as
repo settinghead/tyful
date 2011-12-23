@@ -33,7 +33,7 @@ package com.settinghead.wenwentu.client.view
 		override public function listNotificationInterests():Array
 		{
 			return [
-				ApplicationFacade.TU_CREATED,
+				ApplicationFacade.TU_INITIALIZED,
 				ApplicationFacade.DISPLAYWORD_CREATED
 			];
 		}
@@ -42,7 +42,7 @@ package com.settinghead.wenwentu.client.view
 		{
 			switch ( note.getName() )
 			{
-				case ApplicationFacade.TU_CREATED:
+				case ApplicationFacade.TU_INITIALIZED:
 					tuRenderer.tu =  note.getBody() as TuVO;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
@@ -64,6 +64,10 @@ package com.settinghead.wenwentu.client.view
 				waitingForWord = true;
 				tuProxy.renderNextDisplayWord(tuRenderer.tu);
 			}
+			
+			//finished rendering; dispatch TU_GENERATED event
+			if(tuRenderer.tu.finishedDisplayWordRendering)
+				sendNotification(ApplicationFacade.TU_GENERATED, tuRenderer.tu);
 		}
 		
 		private function editTemplate( event:Event = null ):void

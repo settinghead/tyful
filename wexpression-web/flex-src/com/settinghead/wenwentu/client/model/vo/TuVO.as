@@ -17,8 +17,8 @@ package com.settinghead.wenwentu.client.model.vo
 
 	public class TuVO
 	{
-		private static const SKIP_REASON_NO_SPACE:int = 0;
-		private static const SKIP_REASON_SHAPE_TOO_SMALL:int = 1;
+		private static const SKIP_REASON_NO_SPACE:int = 1;
+		private static const SKIP_REASON_SHAPE_TOO_SMALL:int = 2;
 		
 		private var _template:TemplateVO;
 		private var _words:WordListVO;
@@ -28,6 +28,9 @@ package com.settinghead.wenwentu.client.model.vo
 		private var _bgMode:String;
 		private var _width:uint, _height:uint;
 		private var failedLastVar:Boolean;
+		
+		//the generated image
+		private var _generatedImage:BitmapData = null;
 		
 		private static const SOLID_COLOR:String = "solidColor";
 		private static const BACKGROUND_IMAGE:String = "backgroundImage";
@@ -98,6 +101,12 @@ package com.settinghead.wenwentu.client.model.vo
 			 return this._currentWordIndex >=  this.words.size;
 		}
 		
+		public function get almostFinishedDisplayWordRendering():Boolean{
+			//TODO 
+			return this._currentWordIndex >=  this.words.size * 0.9;
+		}
+		
+		
 		public function getNextWordAndIncrement():WordVO{
 			return words.itemAt(++_currentWordIndex) as WordVO;
 		}
@@ -118,9 +127,39 @@ package com.settinghead.wenwentu.client.model.vo
 			return result;
 		}
 		private var successCount:Number = 0, totalCount:Number = 0;
-		[Bindable]public function get lossRate():Number{
+		public function get lossRate():Number{
 //			return 1- (successCount)/(totalCount);
 			return 0;
+		}
+
+		public function generateEngineWord(word:WordVO):EngineWordVO{
+			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
+			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size);
+			
+			var wordFont:String= template.fonter.fontFor(word);
+			var wordSize:Number= template.sizer.sizeFor(word,newIndex,this.words.size);
+			var wordAngle:Number= template.angler.angleFor(eWord);
+			
+			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, wordAngle);
+			if (shape == null) {
+				skipWord(word, SKIP_REASON_SHAPE_TOO_SMALL);
+			} else {
+				eWord.setShape(shape, template.renderOptions.wordPadding);
+			}
+						
+			return eWord;
+		}
+		
+		private function skipWord(word:WordVO, reason:int):void {
+			word.wasSkippedBecause(reason);
+		}
+		
+		public function get generatedImage():BitmapData{
+			return this._generatedImage;
+		}
+		
+		public function set generatedImage(img:BitmapData):void{
+			this._generatedImage = img;
 		}
 		
 		public function placeWord(eWord:EngineWordVO):Boolean {
@@ -190,35 +229,12 @@ package com.settinghead.wenwentu.client.model.vo
 			}
 			
 			skipWord(eWord.word, SKIP_REASON_NO_SPACE);
-//			info.patch.mark(wordImageWidth*wordImageHeight, true);
+			//			info.patch.mark(wordImageWidth*wordImageHeight, true);
 			this.template.placer.fail(eWord.desiredLocation);
 			this.failedLastVar = true;
 			return false;
 		}
 
-		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
-			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size);
-			
-			var wordFont:String= template.fonter.fontFor(word);
-			var wordSize:Number= template.sizer.sizeFor(word,newIndex,this.words.size);
-			var wordAngle:Number= template.angler.angleFor(eWord);
-			
-			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, wordAngle);
-			if (shape == null) {
-				skipWord(word, SKIP_REASON_SHAPE_TOO_SMALL);
-			} else {
-				eWord.setShape(shape, template.renderOptions.wordPadding);
-			}
-						
-			return eWord;
-		}
-		
-		private function skipWord(word:WordVO, reason:int):void {
-			word.wasSkippedBecause(reason);
-		}
-		
-		
 			
 	}
 }

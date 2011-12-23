@@ -16,15 +16,17 @@ package com.settinghead.wenwentu.client.model.vo
 		
 		public static function generateWords():WordListVO{
 			var list:WordListVO = new WordListVO();
-			for(var i:int=0;i<90;i++){
+			for(var i:int=0;i<80;i++){
 				list.add(new WordVO("Freedomize", Math.random()*5+0.5));
 				list.add(new WordVO("philosophy", Math.random()*5+0.5));
-				list.add(new WordVO("Rachel McAdams", Math.random()*5+0.5));
+				list.add(new WordVO("Ministry of Tofu", Math.random()*5+0.5));
 				list.add(new WordVO("form of forms", Math.random()*5+0.5));
 				list.add(new WordVO("sand", Math.random()*5+0.5));
 				list.add(new WordVO("beach", Math.random()*5+0.5));
-				list.add(new WordVO("stephen", Math.random()*5+0.5));
-				list.add(new WordVO("Bloom", Math.random()*5+0.5));			
+				list.add(new WordVO("for the lulz", Math.random()*5+0.5));
+				list.add(new WordVO("Bloom", Math.random()*5+0.5));	
+				list.add(new WordVO("MOLLY", Math.random()*5+0.5));			
+				list.add(new WordVO("shake spear", Math.random()*5+0.5));
 			}
 			return list;
 		}

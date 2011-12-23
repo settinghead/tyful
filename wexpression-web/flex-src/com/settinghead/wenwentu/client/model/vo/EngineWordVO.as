@@ -186,8 +186,8 @@ public class EngineWordVO {
 			
 			s.addChild(tt);
 			
-			var w= s.width;
-			var h = s.height;
+			var w:Number = s.width;
+			var h:Number = s.height;
 			s.x = this.shape.centerX-w/2;
 			s.y = this.shape.centerY-h/2;
 			

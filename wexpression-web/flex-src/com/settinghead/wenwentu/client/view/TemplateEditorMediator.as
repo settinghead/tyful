@@ -6,7 +6,7 @@ package com.settinghead.wenwentu.client.view
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
 	import com.settinghead.wenwentu.client.model.vo.TuVO;
 	import com.settinghead.wenwentu.client.model.vo.WordListVO;
-	import com.settinghead.wenwentu.client.view.components.TemplateEditor;
+	import com.settinghead.wenwentu.client.view.components.template.TemplateEditor;
 	import com.settinghead.wenwentu.client.view.components.TuRenderer;
 	
 	import flash.display.Sprite;
@@ -61,7 +61,7 @@ package com.settinghead.wenwentu.client.view
 		private function renderTu( event:Event = null ):void
 		{
 			var tu:TuVO = new TuVO(templateEditor.template, WordListVO.generateWords());
-			facade.sendNotification(ApplicationFacade.TU_CREATED, tu);
+			facade.sendNotification(ApplicationFacade.TU_INITIALIZED, tu);
 		}
 	
 	}

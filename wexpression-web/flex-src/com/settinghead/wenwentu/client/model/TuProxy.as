@@ -66,9 +66,9 @@ package com.settinghead.wenwentu.client.model
 			if(eWord!=null){
 				tu.placeWord(eWord);
 //				while (eWord.wasSkipped()){
-//					indexOffset+=tu.words.size/100;
-//					if(indexOffset+tu.currentWordIndex>tu.words.size) break;
-//					eWord = tu.generateEngineWord(word,indexOffset);
+//					tu.indexOffset+=tu.words.size/15;
+//					if(tu.indexOffset+tu.currentWordIndex>tu.words.size) break;
+//					eWord = tu.generateEngineWord(word);
 //					tu.placeWord(eWord);
 //				}
 				if (eWord.wasSkipped()){

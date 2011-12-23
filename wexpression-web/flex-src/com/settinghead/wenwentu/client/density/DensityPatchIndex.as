@@ -23,7 +23,7 @@ package com.settinghead.wenwentu.client.density
 				level = 0;
 			var result:Vector.<Patch> = new Vector.<Patch>();
 			var area:Number = width * height;
-			for(var i=0;i<NUMBER_OF_ATTEMPTED_PATCHES; i++)
+			for(var i:int=0;i<NUMBER_OF_ATTEMPTED_PATCHES; i++)
 				result.push(getBestPatchAtLevel(level));
 			return result;
 		}

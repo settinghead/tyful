@@ -55,7 +55,7 @@ package com.settinghead.wenwentu.client.model.vo {
 				this.setLeaf(true);
 		}
 	
-		 function addKids(kidList:Vector.<BBPolarChildTreeVO>):void {
+		public function addKids(kidList:Vector.<BBPolarChildTreeVO>):void {
 			_kids = kidList;
 		}
 	

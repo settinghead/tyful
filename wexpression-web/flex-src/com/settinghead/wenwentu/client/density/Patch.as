@@ -89,7 +89,7 @@ package com.settinghead.wenwentu.client.density
 					|| this.getChildren().length == 0) {
 					for (var i:int= 0; i < this.getWidth(); i++)
 						for (var j:int= 0; j < this.getHeight(); j++) {
-							var brightness = _queue.getMap().getIndex().getImg().getBrightness(
+							var brightness:Number = _queue.getMap().getIndex().getImg().getBrightness(
 								this.getX() + i, this.getY() + j);
 							if(isNaN(brightness))
 								brightness = 0;

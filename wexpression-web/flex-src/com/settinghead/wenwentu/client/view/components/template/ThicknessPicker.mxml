@@ -32,7 +32,7 @@
 //				var numButtons:int = this.width/BUTTON_WIDTH;
 				var numButtons:int = 25;
 
-				for(var i=0;i<numButtons;i++){
+				for(var i:int=0;i<numButtons;i++){
 					var thickness:Number = 100/numButtons*i;
 //					a.addEventListener(MouseEvent.CLICK, function( evt:Event ){this._angle = ang; });
 					this.buttonArray.addItem(thickness);

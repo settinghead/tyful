@@ -7,7 +7,7 @@ package com.settinghead.wenwentu.client.view
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
-	import com.settinghead.wenwentu.client.view.components.TemplateList;
+	import com.settinghead.wenwentu.client.view.components.template.TemplateList;
 	
 	public class TemplateListMediator extends Mediator
 	{

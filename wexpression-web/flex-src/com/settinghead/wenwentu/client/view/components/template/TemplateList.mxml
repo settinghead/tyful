@@ -37,7 +37,7 @@
 		]]>
 	</fx:Script>
 	<fx:Binding source="templateGrid.selectedItem as TemplateVO" destination="selectedTemplate" />
-	<s:List id="templateGrid" itemRenderer="com.settinghead.wenwentu.client.view.components.TemplateThumbnail" 
+	<s:List id="templateGrid" itemRenderer="com.settinghead.wenwentu.client.view.components.template.TemplateThumbnail" 
 			dataProvider="{templates}" click="if (templateGrid.selectedIndex != -1) sendEvent( SELECT )">
 		<s:layout>
 			<s:VerticalLayout />
