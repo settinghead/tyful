@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" top="0" bottom="0" left="0" right="0" xmlns:components="com.settinghead.wenwentu.client.view.components.*" xmlns:template="com.settinghead.wenwentu.client.view.components.template.*">
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:components="com.settinghead.wenwentu.client.view.components.*"
+		 xmlns:template="com.settinghead.wenwentu.client.view.components.template.*"
+		 xmlns:shop="com.settinghead.wenwentu.client.view.components.shop.*"
+		 left="0" right="0" top="0" bottom="0" currentState="withoutShop">
+	<s:states>
+		<s:State name="withShop"/>
+		<s:State name="withoutShop"/>
+	</s:states>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:ViewStack id="vwStack" right="0" top="0" bottom="0" left="0" >
+	<shop:ShopItemList id="shopItemList"
+					   visible.withoutShop="false"
+					   visible.withShop="true" top="0" right="0" width="150" bottom="0" />
+
+	<mx:ViewStack id="vwStack" left="0" right="0" top="0" bottom="0"
+				  right.withShop="150">
 		<template:TemplateList id="templateList" right="0" top="0" bottom="0" left="0" />
 		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
 		<template:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" />

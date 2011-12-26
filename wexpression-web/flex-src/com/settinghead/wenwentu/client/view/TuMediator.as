@@ -22,6 +22,7 @@ package com.settinghead.wenwentu.client.view
 			super(NAME, viewComponent);
 			tuRenderer.addEventListener(TuRenderer.CREAT_NEXT_DISPLAYWORD, createNextDisplayWord);
 			tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
+			tuRenderer.addEventListener(TuRenderer.TU_GENERATED, tuGenerated);
 
 		}
 		
@@ -64,15 +65,16 @@ package com.settinghead.wenwentu.client.view
 				waitingForWord = true;
 				tuProxy.renderNextDisplayWord(tuRenderer.tu);
 			}
-			
-			//finished rendering; dispatch TU_GENERATED event
-			if(tuRenderer.tu.finishedDisplayWordRendering)
-				sendNotification(ApplicationFacade.TU_GENERATED, tuRenderer.tu);
 		}
 		
 		private function editTemplate( event:Event = null ):void
 		{
 			sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);
+		}
+		
+		private function tuGenerated( event: Event = null ):void{
+			//finished rendering; dispatch TU_GENERATED event
+				sendNotification(ApplicationFacade.TU_GENERATED, tuRenderer.tu);
 		}
 	}
 }

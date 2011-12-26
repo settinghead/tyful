@@ -1,17 +1,22 @@
 package com.settinghead.wenwentu.client.view
 {
 	import com.settinghead.wenwentu.client.ApplicationFacade;
+	import com.settinghead.wenwentu.client.model.ShopProxy;
 	import com.settinghead.wenwentu.client.model.vo.TuVO;
 	import com.settinghead.wenwentu.client.view.components.shop.ShopItemList;
+	
+	import mx.collections.ArrayCollection;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	public class ShopMediator extends Mediator
 	{
-		public function ShopMediator(viewComponent:Object=null)
+		private var shopProxy:ShopProxy;
+		public static const NAME:String = "ShopMediator";
+
+		public function ShopMediator(viewComponent:Object)
 		{
-			public static const NAME:String = "ShopMediator";
 			super(NAME, viewComponent);
 		}
 		
@@ -22,6 +27,7 @@ package com.settinghead.wenwentu.client.view
 		
 		override public function onRegister():void
 		{
+			shopProxy = facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
 		}
 		
 		override public function listNotificationInterests():Array
@@ -36,7 +42,8 @@ package com.settinghead.wenwentu.client.view
 			switch ( note.getName() )
 			{
 				case ApplicationFacade.TU_GENERATED:
-					shopItemList.img =  (note.getBody() as TuVO).img;
+					shopItemList.img =  (note.getBody() as TuVO).generatedImage;
+					shopItemList.list = shopProxy.shop;
 					break;
 			}
 		}

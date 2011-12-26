@@ -31,7 +31,7 @@
 			
 			public static const CREAT_NEXT_DISPLAYWORD:String = "createNextDisplayWord";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
-
+			public static const TU_GENERATED:String = "tuGenerated";
 			
 			private var _tu:TuVO;
 			
@@ -41,8 +41,8 @@
 //				patchLayer.graphics.clear();
 //				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
 //					this.highlightPatch(pi.patch);
-				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
-				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+//				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+//				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
 
 			}
 			
@@ -59,6 +59,9 @@
 				file.save(bild, "tu.png");
 			}
 			
+			protected function btnForceFinish_clickHandler(event:MouseEvent):void{
+				generateImage();
+			}
 			
 			
 			public function wordMouseOver(e:MouseEvent):void{
@@ -158,7 +161,7 @@
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
 				bmpData.draw(mainCanvas);
 				_tu.generatedImage = bmpData;
-				
+				dispatchEvent(new Event(TU_GENERATED));
 			}
 			
 			public function get tu():TuVO{
@@ -207,6 +210,8 @@
 		<s:Label id="lossCounter" top="0" left="0" text="{tu.lossRate}"/>
 		<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 		<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
+		<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+
 	</mx:ControlBar>
 	
 </mx:Canvas>

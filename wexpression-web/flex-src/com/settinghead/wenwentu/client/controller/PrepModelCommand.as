@@ -1,5 +1,6 @@
 package com.settinghead.wenwentu.client.controller
 {
+	import com.settinghead.wenwentu.client.model.ShopProxy;
 	import com.settinghead.wenwentu.client.model.TemplateProxy;
 	import com.settinghead.wenwentu.client.model.TuProxy;
 	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
@@ -28,6 +29,7 @@ package com.settinghead.wenwentu.client.controller
 			// register it
 			facade.registerProxy( templateProxy );
 			facade.registerProxy(new TuProxy );
+			facade.registerProxy(new ShopProxy);
 			
 		}
 	}

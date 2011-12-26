@@ -23,16 +23,13 @@ package com.settinghead.wenwentu.client.controller
 		
 		override public function execute( note:INotification ) : void    
 		{
-			facade.registerProxy(new TuProxy());
 			tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			template = new TemplateVO("templates/wheel_v.png");
+			template = new TemplateVO("templates/dog.png");
 			template.loadTemplate(templateLoadComplete);
 		}
 		
 		private function templateLoadComplete(event:Event):void{
-//			var tu:TuVO = new TuVO(template, WordListVO.generateWords());
-//			tuProxy.addItem(tu);
-//			facade.sendNotification(ApplicationFacade.TU_CREATED, tu);
+
 			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 
 		}

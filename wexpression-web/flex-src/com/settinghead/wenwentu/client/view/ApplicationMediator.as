@@ -15,7 +15,6 @@ package com.settinghead.wenwentu.client.view
 			super(NAME, viewComponent);
 		}
 		
-		
 		override public function onRegister():void
 		{
 			
@@ -25,6 +24,7 @@ package com.settinghead.wenwentu.client.view
 		{
 			return [
 				ApplicationFacade.TU_INITIALIZED,
+				ApplicationFacade.TU_GENERATED,
 				ApplicationFacade.EDIT_TEMPLATE
 			];
 		}
@@ -39,6 +39,10 @@ package com.settinghead.wenwentu.client.view
 				
 				case ApplicationFacade.EDIT_TEMPLATE:
 					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor; 
+					break;
+				
+				case ApplicationFacade.TU_GENERATED:
+					applicationComponent.currentState = "withShop";
 					break;
 			}
 		}

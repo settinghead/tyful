@@ -32,7 +32,6 @@ package com.settinghead.wenwentu.client
 		{
 			super.initializeController();            
 			registerCommand( STARTUP, StartupCommand );			
-			registerCommand( GENERATE_TU, StartupCommand );
 		}
 		
 		/**

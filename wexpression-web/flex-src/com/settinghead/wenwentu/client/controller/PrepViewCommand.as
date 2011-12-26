@@ -2,6 +2,7 @@ package com.settinghead.wenwentu.client.controller
 {
 	import com.settinghead.wenwentu.client.WenwentuClient;
 	import com.settinghead.wenwentu.client.view.ApplicationMediator;
+	import com.settinghead.wenwentu.client.view.ShopMediator;
 	import com.settinghead.wenwentu.client.view.TemplateEditorMediator;
 	import com.settinghead.wenwentu.client.view.TemplateListMediator;
 	import com.settinghead.wenwentu.client.view.TuMediator;
@@ -25,6 +26,7 @@ package com.settinghead.wenwentu.client.controller
 			facade.registerMediator( new TemplateListMediator( app.applicationComponent.templateList ) );
 			facade.registerMediator( new TemplateEditorMediator( app.applicationComponent.templateEditor ) );
 			facade.registerMediator(new TuMediator(app.applicationComponent.tuRenderer));
+			facade.registerMediator(new ShopMediator(app.applicationComponent.shopItemList));
 			facade.registerMediator(new ApplicationMediator(app.applicationComponent));	
 		}
 	}

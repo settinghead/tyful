@@ -8,8 +8,9 @@ package com.settinghead.wenwentu.client.model.vo
 		private var _thumb:BitmapData;
 		private var _item_url:String;
 		
-		public function ShopItemVO()
+		public function ShopItemVO(url:String)
 		{
+			this._item_url = url;
 		}
 		
 		public function get image():BitmapData{
