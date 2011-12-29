@@ -6,7 +6,6 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 	<cache:annotation-driven />
 
-
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
 		p:cache-manager-ref="ehcache" />
 
@@ -14,5 +13,4 @@
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
 		p:config-location="/WEB-INF/ehcache.xml" />
 	<!-- rest of the file omitted -->
-
 </beans>

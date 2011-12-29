@@ -10,6 +10,9 @@
 
 	<!-- Enable @Annotation-drive bean configuration -->
 	<context:annotation-config />
+	<context:component-scan
+		base-package="org.socialsignin.springframework.social.security" />
+
 
 	<!-- Configures External Property Resolution -->
 	<import resource="properties.xml" />
@@ -22,7 +25,6 @@
 
 	<!-- Configures Spring Social -->
 	<bean class="com.settinghead.wexpression.web.config.SocialConfig" />
-	
 
 
 </beans>
