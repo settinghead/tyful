@@ -1,10 +1,10 @@
 /**
  * 
  */
-package com.settinghead.wenwentu.client.angler {
-	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
-	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+package com.settinghead.wexpression.client.angler {
+	import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
+	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	
 	import org.as3commons.lang.Assert;
 

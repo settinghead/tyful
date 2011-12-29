@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.fonter
+package com.settinghead.wexpression.client.fonter
 {
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	public class AlwaysUseFonter implements WordFonter
 	{

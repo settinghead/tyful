@@ -1,9 +1,9 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
 	import org.as3commons.collections.framework.IComparator;
 	import org.as3commons.collections.utils.NumericComparator;
 	import org.as3commons.collections.utils.UncomparableType;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	public class WordComparator implements IComparator
 	{

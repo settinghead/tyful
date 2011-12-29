@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {
-	import com.settinghead.wenwentu.client.PlaceInfo;
+	import com.settinghead.wexpression.client.PlaceInfo;
 	
 	import org.as3commons.concurrency.thread.IRunnable;
 	

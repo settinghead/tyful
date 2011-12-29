@@ -1,7 +1,7 @@
-package com.settinghead.wenwentu.client.sizers
+package com.settinghead.wexpression.client.sizers
 {
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
-	import com.settinghead.wenwentu.client.math.MathUtils;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.math.MathUtils;
 	
 	public class ByWeightSizer implements WordSizer
 	{

@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.model.vo {
+package com.settinghead.wexpression.client.model.vo {
 /*
  Copyright 2010 Daniel Bernier
 
@@ -15,7 +15,7 @@ package com.settinghead.wenwentu.client.model.vo {
  limitations under the License.
  */
 
-	import com.settinghead.wenwentu.client.NotImplementedError;
+	import com.settinghead.wexpression.client.NotImplementedError;
 	
 	import flash.display.Graphics;
 	import flash.geom.Rectangle;

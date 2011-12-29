@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.test {
+package com.settinghead.wexpression.client.test {
 /*
  Copyright 2010 Daniel Bernier
 

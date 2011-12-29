@@ -1,5 +1,5 @@
-package com.settinghead.wenwentu.client.sizers {
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+package com.settinghead.wexpression.client.sizers {
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier

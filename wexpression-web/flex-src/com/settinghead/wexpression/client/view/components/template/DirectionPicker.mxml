@@ -8,7 +8,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
@@ -44,7 +44,7 @@
 	</fx:Script>
 	<fx:Binding source="buttonList.selectedItem as Number" destination="_angle" />
 	<s:List id="buttonList"
-			itemRenderer="com.settinghead.wenwentu.client.view.components.template.DirectionButton"
+			itemRenderer="com.settinghead.wexpression.client.view.components.template.DirectionButton"
 			dataProvider="{buttonArray}">
 		<s:layout>
 			<s:HorizontalLayout  />

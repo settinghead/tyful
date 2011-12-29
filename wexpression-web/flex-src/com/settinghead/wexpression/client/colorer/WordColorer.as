@@ -1,5 +1,5 @@
-package com.settinghead.wenwentu.client.colorer {
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+package com.settinghead.wexpression.client.colorer {
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier

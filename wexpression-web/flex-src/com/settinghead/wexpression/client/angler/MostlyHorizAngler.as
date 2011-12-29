@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.angler
+package com.settinghead.wexpression.client.angler
 {
-	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
 
 	public class MostlyHorizAngler extends PickFromAngler
 	{

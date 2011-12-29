@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.model
+package com.settinghead.wexpression.client.model
 {
-	import com.settinghead.wenwentu.client.view.components.shop.ShopItemList;
+	import com.settinghead.wexpression.client.view.components.shop.ShopItemList;
 	
 	import mx.collections.ArrayCollection;
 	

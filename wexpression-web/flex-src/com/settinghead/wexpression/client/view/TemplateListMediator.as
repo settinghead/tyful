@@ -1,13 +1,13 @@
-package com.settinghead.wenwentu.client.view
+package com.settinghead.wexpression.client.view
 {
-	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.model.TemplateProxy;
+	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.TemplateProxy;
 	
 	import flash.events.Event;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
-	import com.settinghead.wenwentu.client.view.components.template.TemplateList;
+	import com.settinghead.wexpression.client.view.components.template.TemplateList;
 	
 	public class TemplateListMediator extends Mediator
 	{

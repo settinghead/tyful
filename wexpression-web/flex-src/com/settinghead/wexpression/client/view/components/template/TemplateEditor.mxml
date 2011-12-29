@@ -6,8 +6,8 @@
 -->
 <mx:Canvas
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:client="com.settinghead.wenwentu.client.*" 
-	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wenwentu.client.view.components.template.*">
+	xmlns:client="com.settinghead.wexpression.client.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*">
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -46,8 +46,8 @@
 	<mx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
-			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
-			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.TemplateVO;
 			
 			import flash.display.*;
 			import flash.display.Sprite;

@@ -43,7 +43,7 @@
 	</fx:Script>
 	<fx:Binding source="buttonList.selectedItem as Number" destination="_thickness" />
 	<s:List id="buttonList"
-			itemRenderer="com.settinghead.wenwentu.client.view.components.template.ThicknessButton"
+			itemRenderer="com.settinghead.wexpression.client.view.components.template.ThicknessButton"
 			dataProvider="{buttonArray}">
 		<s:layout>
 			<s:HorizontalLayout  />

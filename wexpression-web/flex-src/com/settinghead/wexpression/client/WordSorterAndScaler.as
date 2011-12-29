@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client {
-	import com.settinghead.wenwentu.client.model.vo.WordListVO;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+package com.settinghead.wexpression.client {
+	import com.settinghead.wexpression.client.model.vo.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;

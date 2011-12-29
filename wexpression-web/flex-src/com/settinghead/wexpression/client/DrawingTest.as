@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
 	import com.demonsters.debugger.MonsterDebugger;
 	

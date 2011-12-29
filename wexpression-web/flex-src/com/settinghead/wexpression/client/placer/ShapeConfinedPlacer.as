@@ -1,10 +1,10 @@
-package com.settinghead.wenwentu.client.placer {
+package com.settinghead.wexpression.client.placer {
 	import com.demonsters.debugger.MonsterDebugger;
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.density.DensityPatchIndex;
-	import com.settinghead.wenwentu.client.density.Patch;
-	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.density.DensityPatchIndex;
+	import com.settinghead.wexpression.client.density.Patch;
+	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	import flash.geom.Point;
 

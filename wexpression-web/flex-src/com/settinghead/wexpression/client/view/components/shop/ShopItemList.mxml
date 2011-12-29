@@ -21,7 +21,7 @@
 		]]>
 	</fx:Script>
 	
-	<s:List dataProvider="{list}" itemRenderer="com.settinghead.wenwentu.client.view.components.shop.ShopItemRenderer">
+	<s:List dataProvider="{list}" itemRenderer="com.settinghead.wexpression.client.view.components.shop.ShopItemRenderer">
 		<s:layout>
 			<s:VerticalLayout  />
 		</s:layout>

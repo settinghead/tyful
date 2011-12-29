@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client {
+package com.settinghead.wexpression.client {
 
 public class RenderOptions {
 	public var maxAttemptsToPlaceWord:int= -1; // default: based on Word weight

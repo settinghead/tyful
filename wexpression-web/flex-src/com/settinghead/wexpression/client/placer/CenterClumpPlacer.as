@@ -1,8 +1,8 @@
-package com.settinghead.wenwentu.client.placer
+package com.settinghead.wexpression.client.placer
 {
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
-	import com.settinghead.wenwentu.client.math.MathUtils;
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.math.MathUtils;
 	
 	import flash.geom.Point;
 	

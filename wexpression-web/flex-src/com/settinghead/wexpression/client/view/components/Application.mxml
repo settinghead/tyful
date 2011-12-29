@@ -2,9 +2,9 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:components="com.settinghead.wenwentu.client.view.components.*"
-		 xmlns:template="com.settinghead.wenwentu.client.view.components.template.*"
-		 xmlns:shop="com.settinghead.wenwentu.client.view.components.shop.*"
+		 xmlns:components="com.settinghead.wexpression.client.view.components.*"
+		 xmlns:template="com.settinghead.wexpression.client.view.components.template.*"
+		 xmlns:shop="com.settinghead.wexpression.client.view.components.shop.*"
 		 left="0" right="0" top="0" bottom="0" currentState="withoutShop">
 	<s:states>
 		<s:State name="withShop"/>

@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
-	import com.settinghead.wenwentu.client.density.Patch;
+	import com.settinghead.wexpression.client.density.Patch;
 	
 	import flash.geom.Point;
 

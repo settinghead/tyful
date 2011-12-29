@@ -16,12 +16,12 @@
 	<fx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
-			import com.settinghead.wenwentu.client.PlaceInfo;
-			import com.settinghead.wenwentu.client.density.Patch;
-			import com.settinghead.wenwentu.client.model.vo.BBPolarTreeVO;
-			import com.settinghead.wenwentu.client.model.vo.DisplayWordListVO;
-			import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
-			import com.settinghead.wenwentu.client.model.vo.TuVO;
+			import com.settinghead.wexpression.client.PlaceInfo;
+			import com.settinghead.wexpression.client.density.Patch;
+			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.DisplayWordListVO;
+			import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
+			import com.settinghead.wexpression.client.model.vo.TuVO;
 			
 			import mx.events.FlexEvent;
 			import mx.graphics.codec.PNGEncoder;

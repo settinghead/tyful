@@ -1,9 +1,9 @@
-package com.settinghead.wenwentu.client.controller
+package com.settinghead.wexpression.client.controller
 {
-	import com.settinghead.wenwentu.client.model.ShopProxy;
-	import com.settinghead.wenwentu.client.model.TemplateProxy;
-	import com.settinghead.wenwentu.client.model.TuProxy;
-	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.ShopProxy;
+	import com.settinghead.wexpression.client.model.TemplateProxy;
+	import com.settinghead.wexpression.client.model.TuProxy;
+	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;

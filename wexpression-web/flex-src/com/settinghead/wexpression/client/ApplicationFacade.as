@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
-	import com.settinghead.wenwentu.client.controller.StartupCommand;
+	import com.settinghead.wexpression.client.controller.StartupCommand;
 	
 	import flash.display.LoaderInfo;
 	
@@ -20,7 +20,7 @@ package com.settinghead.wenwentu.client
 		/**
 		 * Start the application
 		 */
-		public function startup( app:WenwentuClient ):void
+		public function startup( app:WexpressionClient ):void
 		{
 			sendNotification( STARTUP, app );    
 		}

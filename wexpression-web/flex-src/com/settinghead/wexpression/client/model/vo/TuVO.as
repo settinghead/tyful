@@ -1,12 +1,12 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {	
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.WordShaper;
-	import com.settinghead.wenwentu.client.WordSorterAndScaler;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.fonter.WordFonter;
-	import com.settinghead.wenwentu.client.sizers.WordSizer;
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.RenderOptions;
+	import com.settinghead.wexpression.client.WordShaper;
+	import com.settinghead.wexpression.client.WordSorterAndScaler;
+	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.fonter.WordFonter;
+	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

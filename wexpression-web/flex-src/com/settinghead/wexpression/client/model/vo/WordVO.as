@@ -1,13 +1,13 @@
-package com.settinghead.wenwentu.client.model.vo {
-	import com.settinghead.wenwentu.client.colorer.WordColorer;
-	import com.settinghead.wenwentu.client.sizers.WordSizer;
+package com.settinghead.wexpression.client.model.vo {
+	import com.settinghead.wexpression.client.colorer.WordColorer;
+	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.geom.Point;
 	
 	import org.as3commons.collections.Map;
-	import com.settinghead.wenwentu.client.fonter.WordFonter;
-	import com.settinghead.wenwentu.client.placer.WordPlacer;
-	import com.settinghead.wenwentu.client.PlaceInfo;
+	import com.settinghead.wexpression.client.fonter.WordFonter;
+	import com.settinghead.wexpression.client.placer.WordPlacer;
+	import com.settinghead.wexpression.client.PlaceInfo;
 
 /*
  Copyright 2010 Daniel Bernier

@@ -1,9 +1,9 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
+	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
 
 	
 	public class WordShaper {

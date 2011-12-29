@@ -1,22 +1,22 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {
 
-	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
-	import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.colorer.TwoHuesRandomSatsColorer;
-	import com.settinghead.wenwentu.client.colorer.WordColorer;
-	import com.settinghead.wenwentu.client.density.DensityPatchIndex;
-	import com.settinghead.wenwentu.client.fonter.AlwaysUseFonter;
-	import com.settinghead.wenwentu.client.fonter.WordFonter;
-	import com.settinghead.wenwentu.client.nudger.ShapeConfinedRandomWordNudger;
-	import com.settinghead.wenwentu.client.nudger.ShapeConfinedSpiralWordNudger;
-	import com.settinghead.wenwentu.client.nudger.WordNudger;
-	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.wenwentu.client.placer.WordPlacer;
-	import com.settinghead.wenwentu.client.sizers.ByWeightSizer;
-	import com.settinghead.wenwentu.client.sizers.WordSizer;
+	import com.settinghead.wexpression.client.RenderOptions;
+	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
+	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
+	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.colorer.TwoHuesRandomSatsColorer;
+	import com.settinghead.wexpression.client.colorer.WordColorer;
+	import com.settinghead.wexpression.client.density.DensityPatchIndex;
+	import com.settinghead.wexpression.client.fonter.AlwaysUseFonter;
+	import com.settinghead.wexpression.client.fonter.WordFonter;
+	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
+	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
+	import com.settinghead.wexpression.client.nudger.WordNudger;
+	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
+	import com.settinghead.wexpression.client.placer.WordPlacer;
+	import com.settinghead.wexpression.client.sizers.ByWeightSizer;
+	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

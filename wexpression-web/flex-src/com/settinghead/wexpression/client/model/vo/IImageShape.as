@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.model.vo {
+package com.settinghead.wexpression.client.model.vo {
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.geom.Rectangle;

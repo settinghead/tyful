@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.density
+package com.settinghead.wexpression.client.density
 {
-	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	
 	import org.as3commons.collections.Set;
 

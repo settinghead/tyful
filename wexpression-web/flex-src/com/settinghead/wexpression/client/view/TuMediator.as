@@ -1,10 +1,10 @@
-package com.settinghead.wenwentu.client.view
+package com.settinghead.wexpression.client.view
 {
-	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.model.TuProxy;
-	import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
-	import com.settinghead.wenwentu.client.model.vo.TuVO;
-	import com.settinghead.wenwentu.client.view.components.TuRenderer;
+	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.TuProxy;
+	import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
+	import com.settinghead.wexpression.client.model.vo.TuVO;
+	import com.settinghead.wexpression.client.view.components.TuRenderer;
 	
 	import flash.events.Event;
 	

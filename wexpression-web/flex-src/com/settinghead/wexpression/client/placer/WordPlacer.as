@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.placer {
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+package com.settinghead.wexpression.client.placer {
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier

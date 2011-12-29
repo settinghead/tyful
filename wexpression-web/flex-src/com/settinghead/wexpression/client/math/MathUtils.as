@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.math
+package com.settinghead.wexpression.client.math
 {
 	public class MathUtils
 	{

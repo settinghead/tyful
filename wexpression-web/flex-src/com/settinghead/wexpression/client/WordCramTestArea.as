@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
 	import com.demonsters.debugger.MonsterDebugger;
 	
@@ -11,11 +11,11 @@ package com.settinghead.wenwentu.client
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	import mx.graphics.codec.PNGEncoder;
-	import com.settinghead.wenwentu.client.model.vo.BBPolarRootTreeVO;
-	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
-	import com.settinghead.wenwentu.client.model.vo.BBPolarTreeBuilder;
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
+	import com.settinghead.wexpression.client.model.vo.BBPolarTreeBuilder;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	public class WordCramTestArea extends UIComponent
 	{

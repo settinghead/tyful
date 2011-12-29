@@ -5,7 +5,7 @@
 				autoDrawBackground="true">
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.wenwentu.client.model.vo.ShopItemVO;
+			import com.settinghead.wexpression.client.model.vo.ShopItemVO;
 			public function get item():ShopItemVO{
 				return data as ShopItemVO;
 			}

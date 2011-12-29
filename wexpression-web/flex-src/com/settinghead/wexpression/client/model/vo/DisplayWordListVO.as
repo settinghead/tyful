@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {
-	import com.settinghead.wenwentu.client.WordComparator;
+	import com.settinghead.wexpression.client.WordComparator;
 	
 	import mx.collections.ArrayCollection;
 	

@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.model.vo {
+package com.settinghead.wexpression.client.model.vo {
 
 
 /*
@@ -17,9 +17,9 @@ package com.settinghead.wenwentu.client.model.vo {
  limitations under the License.
  */
 
-	import com.settinghead.wenwentu.client.model.vo.BBPolarChildTreeVO;
-	import com.settinghead.wenwentu.client.model.vo.BBPolarRootTreeVO;
-	import com.settinghead.wenwentu.client.NotImplementedError;
+	import com.settinghead.wexpression.client.model.vo.BBPolarChildTreeVO;
+	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.wexpression.client.NotImplementedError;
 	
 	import org.as3commons.lang.Assert;
 	

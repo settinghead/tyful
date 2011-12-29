@@ -1,7 +1,7 @@
-package com.settinghead.wenwentu.client.view
+package com.settinghead.wexpression.client.view
 {
-	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.view.components.Application;
+	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.view.components.Application;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;

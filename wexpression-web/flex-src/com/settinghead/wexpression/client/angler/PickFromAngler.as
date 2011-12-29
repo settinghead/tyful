@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.angler
+package com.settinghead.wexpression.client.angler
 {
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	

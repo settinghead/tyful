@@ -11,7 +11,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.TemplateVO;
 			
 			public static const SELECT:String 	= "select";
 
@@ -37,7 +37,7 @@
 		]]>
 	</fx:Script>
 	<fx:Binding source="templateGrid.selectedItem as TemplateVO" destination="selectedTemplate" />
-	<s:List id="templateGrid" itemRenderer="com.settinghead.wenwentu.client.view.components.template.TemplateThumbnail" 
+	<s:List id="templateGrid" itemRenderer="com.settinghead.wexpression.client.view.components.template.TemplateThumbnail" 
 			dataProvider="{templates}" click="if (templateGrid.selectedIndex != -1) sendEvent( SELECT )">
 		<s:layout>
 			<s:VerticalLayout />

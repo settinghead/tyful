@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.colorer
+package com.settinghead.wexpression.client.colorer
 {
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	public class AlwaysUseColorer implements WordColorer
 	{

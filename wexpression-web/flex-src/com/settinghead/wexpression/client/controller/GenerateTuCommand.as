@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.controller
+package com.settinghead.wexpression.client.controller
 {
-	import com.settinghead.wenwentu.client.model.vo.TuVO;
+	import com.settinghead.wexpression.client.model.vo.TuVO;
 	
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;

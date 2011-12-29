@@ -1,7 +1,7 @@
-package com.settinghead.wenwentu.client.colorer
+package com.settinghead.wexpression.client.colorer
 {
 	import com.lorentz.SVG.utils.MathUtils;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	

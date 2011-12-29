@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {
 	
 		public class BBPolarChildTreeVO extends BBPolarTreeVO {

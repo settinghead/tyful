@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.client
+package com.settinghead.wexpression.client
 {
 	public class NotImplementedError extends Error
 	{

@@ -1,25 +1,25 @@
-package com.settinghead.wenwentu.client.model
+package com.settinghead.wexpression.client.model
 {
-	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.RenderOptions;
-	import com.settinghead.wenwentu.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.wenwentu.client.WordShaper;
-	import com.settinghead.wenwentu.client.angler.MostlyHorizAngler;
-	import com.settinghead.wenwentu.client.angler.ShapeConfinedAngler;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.colorer.WordColorer;
-	import com.settinghead.wenwentu.client.fonter.WordFonter;
-	import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
-	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
-	import com.settinghead.wenwentu.client.model.vo.TextShapeVO;
-	import com.settinghead.wenwentu.client.model.vo.TuVO;
-	import com.settinghead.wenwentu.client.model.vo.WordListVO;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
-	import com.settinghead.wenwentu.client.nudger.WordNudger;
-	import com.settinghead.wenwentu.client.placer.WordPlacer;
-	import com.settinghead.wenwentu.client.sizers.WordSizer;
+	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.RenderOptions;
+	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
+	import com.settinghead.wexpression.client.WordShaper;
+	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
+	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
+	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.colorer.WordColorer;
+	import com.settinghead.wexpression.client.fonter.WordFonter;
+	import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
+	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
+	import com.settinghead.wexpression.client.model.vo.TuVO;
+	import com.settinghead.wexpression.client.model.vo.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.nudger.WordNudger;
+	import com.settinghead.wexpression.client.placer.WordPlacer;
+	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;

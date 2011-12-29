@@ -1,9 +1,9 @@
-package com.settinghead.wenwentu.client.view
+package com.settinghead.wexpression.client.view
 {
-	import com.settinghead.wenwentu.client.ApplicationFacade;
-	import com.settinghead.wenwentu.client.model.ShopProxy;
-	import com.settinghead.wenwentu.client.model.vo.TuVO;
-	import com.settinghead.wenwentu.client.view.components.shop.ShopItemList;
+	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.ShopProxy;
+	import com.settinghead.wexpression.client.model.vo.TuVO;
+	import com.settinghead.wexpression.client.view.components.shop.ShopItemList;
 	
 	import mx.collections.ArrayCollection;
 	

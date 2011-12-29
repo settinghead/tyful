@@ -1,9 +1,9 @@
-package com.settinghead.wenwentu.client.nudger {
-	import com.settinghead.wenwentu.client.PlaceInfo;
-	import com.settinghead.wenwentu.client.angler.WordAngler;
-	import com.settinghead.wenwentu.client.density.Patch;
-	import com.settinghead.wenwentu.client.math.MathUtils;
-	import com.settinghead.wenwentu.client.model.vo.WordVO;
+package com.settinghead.wexpression.client.nudger {
+	import com.settinghead.wexpression.client.PlaceInfo;
+	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.density.Patch;
+	import com.settinghead.wexpression.client.math.MathUtils;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	

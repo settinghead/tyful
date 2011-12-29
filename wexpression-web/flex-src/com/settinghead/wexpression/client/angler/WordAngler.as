@@ -1,5 +1,5 @@
-package com.settinghead.wenwentu.client.angler {
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+package com.settinghead.wexpression.client.angler {
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -26,7 +26,7 @@ package com.settinghead.wenwentu.client.angler {
  */
 public interface WordAngler {
 
-	import com.settinghead.wenwentu.client.model.vo.EngineWordVO;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	/**
 	 * What angle should this {@link Word} be rotated at?
 	 * 

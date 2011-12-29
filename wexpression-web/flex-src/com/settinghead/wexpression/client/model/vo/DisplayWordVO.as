@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.client.model.vo
+package com.settinghead.wexpression.client.model.vo
 {
-	import com.settinghead.wenwentu.client.sizers.WordSizer;
+	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.Sprite;
 	import flash.text.TextField;

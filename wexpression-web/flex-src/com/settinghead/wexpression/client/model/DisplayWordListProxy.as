@@ -1,7 +1,7 @@
-package com.settinghead.wenwentu.client.model
+package com.settinghead.wexpression.client.model
 {
-	import com.settinghead.wenwentu.client.model.vo.DisplayWordListVO;
-	import com.settinghead.wenwentu.client.model.vo.DisplayWordVO;
+	import com.settinghead.wexpression.client.model.vo.DisplayWordListVO;
+	import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
