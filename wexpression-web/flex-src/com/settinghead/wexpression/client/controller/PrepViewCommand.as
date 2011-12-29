@@ -10,6 +10,7 @@ package com.settinghead.wexpression.client.controller
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	import org.puremvc.as3.utilities.loadup.model.LoadupMonitorProxy;
 	
 	public class PrepViewCommand extends SimpleCommand
 	{

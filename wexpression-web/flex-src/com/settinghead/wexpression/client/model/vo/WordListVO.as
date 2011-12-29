@@ -10,25 +10,13 @@ package com.settinghead.wexpression.client.model.vo
 	
 	public class WordListVO extends SortedList
 	{
-		public function WordListVO(){
+		public function WordListVO(array:ArrayCollection = null){
 			super(new WordComparator());
-		}
-		
-		public static function generateWords():WordListVO{
-			var list:WordListVO = new WordListVO();
-			for(var i:int=0;i<80;i++){
-				list.add(new WordVO("Freedomize", Math.random()*5+0.5));
-				list.add(new WordVO("philosophy", Math.random()*5+0.5));
-				list.add(new WordVO("Ministry of Tofu", Math.random()*5+0.5));
-				list.add(new WordVO("form of forms", Math.random()*5+0.5));
-				list.add(new WordVO("sand", Math.random()*5+0.5));
-				list.add(new WordVO("beach", Math.random()*5+0.5));
-				list.add(new WordVO("for the lulz", Math.random()*5+0.5));
-				list.add(new WordVO("Bloom", Math.random()*5+0.5));	
-				list.add(new WordVO("MOLLY", Math.random()*5+0.5));			
-				list.add(new WordVO("shake spear", Math.random()*5+0.5));
+			if(array!=null){
+				for(var i:int = 0; i<array.length; i++){
+					this.add(new WordVO(array[i].word,array[i].weight));
+				}
 			}
-			return list;
 		}
 	}
 }

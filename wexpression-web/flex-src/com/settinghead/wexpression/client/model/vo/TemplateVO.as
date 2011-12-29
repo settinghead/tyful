@@ -136,8 +136,6 @@ package com.settinghead.wexpression.client.model.vo
 		private function onLoadComplete (event:Event):void
 		{
 			this._img = new Bitmap(event.target.content.bitmapData);
-			//this.renderer.withConfinementImage(this);
-//			this.tree = BBPolarTreeBuilder.makeTree(this, 0);
 		}
 		
 		public function getBrightness(x:int, y:int):Number {

@@ -5,15 +5,19 @@ package com.settinghead.wexpression.client.model
 	import mx.collections.ArrayCollection;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
+	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
 	
-	public class ShopProxy extends Proxy
+	public class ShopProxy extends EntityProxy implements ILoadupProxy
 	{
 		public static const NAME:String = "ShopProxy";
+		public static const SRNAME:String = "ShopSRProxy";
 		
 		public function ShopProxy()
 		{
 			super(NAME, new ArrayCollection());
-			
+		}
+		
+		public function load() :void{
 		}
 		
 		// return data property cast to proper type

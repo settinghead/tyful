@@ -16,6 +16,8 @@ package com.settinghead.wexpression.client
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
 		public static const TEMPLATE_SELECTED:String	  = "templateSelected";
 		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
+		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
+		
 		
 		/**
 		 * Start the application

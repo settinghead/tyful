@@ -3,11 +3,12 @@ package com.settinghead.wexpression.client.view
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
+	import com.settinghead.wexpression.client.model.WordListProxy;
 	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
-	import com.settinghead.wexpression.client.view.components.template.TemplateEditor;
 	import com.settinghead.wexpression.client.view.components.TuRenderer;
+	import com.settinghead.wexpression.client.view.components.template.TemplateEditor;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -60,8 +61,12 @@ package com.settinghead.wexpression.client.view
 		
 		private function renderTu( event:Event = null ):void
 		{
-			var tu:TuVO = new TuVO(templateEditor.template, WordListVO.generateWords());
-			facade.sendNotification(ApplicationFacade.TU_INITIALIZED, tu);
+			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
+			tuProxy.template =  templateEditor.template;
+			tuProxy.wordList = wordListProxy.currentWordList;
+			
+			tuProxy.load();
 		}
 	
 	}

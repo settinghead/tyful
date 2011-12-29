@@ -3,7 +3,6 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.RenderOptions;
-	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
 	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
@@ -18,23 +17,32 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
+	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
 	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
 	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
+	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
+	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
+	import org.springextensions.actionscript.context.support.mxml.Template;
 	
-	public class TuProxy extends Proxy
+	public class TuProxy extends EntityProxy implements ILoadupProxy
 	{
 		public static const NAME:String = "TuProxy";
+		public static const SRNAME:String = "TuSRProxy";
+		
+		private var _template:TemplateVO;
+		private var _wordList:WordListVO;
 		
 		public function TuProxy()
 		{
@@ -52,6 +60,19 @@ package com.settinghead.wexpression.client.model
 		public function get tus():ArrayCollection
 		{
 			return data as ArrayCollection;
+		}
+		
+		public function load() :void{
+			var tu:TuVO = new TuVO(_template, _wordList);
+			facade.sendNotification(ApplicationFacade.TU_INITIALIZED, tu);
+		}
+		
+		public function set template(t:TemplateVO):void{
+			this._template = t;
+		}
+		
+		public function set wordList(wl:WordListVO):void{
+			this._wordList = wl;
 		}
 
 		public function renderNextDisplayWord(tu:TuVO):void{

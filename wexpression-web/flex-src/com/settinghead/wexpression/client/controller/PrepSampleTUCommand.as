@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.controller
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
@@ -10,11 +11,10 @@ package com.settinghead.wexpression.client.controller
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	import org.puremvc.as3.utilities.loadup.model.LoadupMonitorProxy;
 	
 	public class PrepSampleTUCommand extends SimpleCommand
 	{
-		private var template:TemplateVO;
-		private  var tuProxy:TuProxy;
 		
 		public function PrepSampleTUCommand()
 		{
@@ -23,15 +23,11 @@ package com.settinghead.wexpression.client.controller
 		
 		override public function execute( note:INotification ) : void    
 		{
-			tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			template = new TemplateVO("templates/dog.png");
-			template.loadTemplate(templateLoadComplete);
-		}
-		
-		private function templateLoadComplete(event:Event):void{
-
-			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
-
+			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+			templateProxy.templatePath = "templates/wheel_v.png";
+			
+			var monitor:LoadupMonitorProxy = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
+			monitor.loadResources();
 		}
 	}
 }
