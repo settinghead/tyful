@@ -162,7 +162,7 @@ public class WordCramEngine {
 		var wordImageWidth:int= int(eWord.getTree().getWidth(true));
 		var wordImageHeight:int= int(eWord.getTree().getHeight(true));
 
-		var info:PlaceInfo= eWord.setDesiredLocation(placer, eWords.length,
+		var info:PlaceInfo= eWord.retrieveDesiredLocations(placer, eWords.length,
 				wordImageWidth, wordImageHeight, destination.width,
 				destination.height);
 

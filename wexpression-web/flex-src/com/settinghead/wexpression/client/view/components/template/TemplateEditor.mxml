@@ -29,16 +29,21 @@
 				
 
 				</mx:ControlBar>			
+			
+			<mx:UIComponent id="cvnTransparentBackground" top="100"
+							left="0" visible="true" />
 			<mx:UIComponent id="textFlowCanvas" 
-					   mouseDown="textFlowCanvas_mouseDownHandler(event)" 
-					   mouseUp="textFlowCanvas_mouseUpHandler(event)" 
-					   mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
-					   creationComplete="textFlowCanvas_creationCompleteHandler(event)"
-					   top="100" left="0"  />
+							mouseDown="textFlowCanvas_mouseDownHandler(event)" 
+							mouseUp="textFlowCanvas_mouseUpHandler(event)" 
+							mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
+							creationComplete="textFlowCanvas_creationCompleteHandler(event)"
+							top="100" left="0"  />
+			<template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" />
+			
 			
 		</s:NavigatorContent>
-		
-		<s:NavigatorContent label="Background">
+
+		<s:NavigatorContent label="navButtons">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
 			<mx:Canvas id="imageContainer" />
 		</s:NavigatorContent>
@@ -165,7 +170,7 @@
 				{
 					if(bmp!=null) this.textFlowCanvas.removeChild(bmp);
 					
-					if( this.template._img!=null){
+					if( this.template.img!=null){
 						bmp = template.img;
 					}
 					else{
@@ -175,15 +180,35 @@
 					this.textFlowCanvas.height = _template.height;
 					bmp.x=0; bmp.y=0;
 					this.textFlowCanvas.addChild(bmp);
+					drawTransparentBackground();
+//					this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 				}
 			}
 			
 			protected function btnRender_clickHandler(event:MouseEvent):void
 			{
-				dispatchEvent(new Event(RENDER_TU));
+				template._img = bmp;
 				
+				dispatchEvent(new Event(RENDER_TU));	
 			}
 			
+			
+			protected function drawTransparentBackground():void
+			{
+				var bmpdTile:BitmapData  = new BitmapData(30,30);
+				var spriteTile:Sprite = new Sprite();
+				spriteTile.graphics.beginFill(0xccc, 1.0);
+				spriteTile.graphics.drawRect(0,0,15,15);
+				spriteTile.graphics.drawRect(15,15,30,30);
+				spriteTile.graphics.endFill();
+				bmpdTile.draw(spriteTile);
+				
+				cvnTransparentBackground.width = this.textFlowCanvas.width;
+				cvnTransparentBackground.height = this.textFlowCanvas.height;
+				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
+				cvnTransparentBackground.graphics.drawRect(0,0, this.textFlowCanvas.width, this.textFlowCanvas.height);
+				cvnTransparentBackground.graphics.endFill();
+			}
 			
 		]]>
 	</mx:Script>

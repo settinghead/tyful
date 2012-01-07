@@ -15,7 +15,7 @@ package com.settinghead.wexpression.client.controller
 	
 	public class PrepSampleTUCommand extends SimpleCommand
 	{
-		
+	
 		public function PrepSampleTUCommand()
 		{
 			super();
@@ -24,7 +24,7 @@ package com.settinghead.wexpression.client.controller
 		override public function execute( note:INotification ) : void    
 		{
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
-			templateProxy.templatePath = "templates/wheel_v.png";
+			templateProxy.templatePath = "templates/face.png";
 			
 			var monitor:LoadupMonitorProxy = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
 			monitor.loadResources();

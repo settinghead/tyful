@@ -186,10 +186,10 @@ package com.settinghead.wexpression.client.model.vo {
 	
 		private function getPoints():Array {
 			if (this.pointsStamp != this.getCurrentStamp()) {
-				this._points = new Array( getRootX() - swelling + getX(true),
+				this._points = [ getRootX() - swelling + getX(true),
 						getRootY() - swelling + getY(true),
 						getRootX() + swelling + getRight(true),
-						getRootY() + swelling + getBottom(true) );
+						getRootY() + swelling + getBottom(true) ];
 				this.pointsStamp = this.getCurrentStamp();
 			}
 			return this._points;

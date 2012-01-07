@@ -12,6 +12,7 @@ package com.settinghead.wexpression.client.model.vo
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
+	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
 	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
@@ -54,7 +55,8 @@ package com.settinghead.wexpression.client.model.vo
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
 		private var _renderOptions:RenderOptions;
-		
+		private var hsbArray:Array;
+		private var _patchIndex:DensityPatchIndex;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
 		
@@ -130,34 +132,41 @@ package com.settinghead.wexpression.client.model.vo
 			my_loader.load(new URLRequest(this._path));
 		}
 		
-		private var done:Function;
-		//private var renderer:WordCramRenderer;
-		
 		private function onLoadComplete (event:Event):void
 		{
 			this._img = new Bitmap(event.target.content.bitmapData);
+			this.hsbArray = new Array(this._img.width);
+			this._patchIndex = new DensityPatchIndex(this);
+		}
+		
+		private function getHSB(x:int, y:int):int{
+			if(this.hsbArray[x]==null)
+				this.hsbArray[x] = new Array(this._img.height);
+			if(this.hsbArray[x][y]==null){
+				var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
+				var alpha:uint = rgbPixel>> 24 & 0xFF;
+				if(alpha == 0) {
+					hsbArray[x][y]  = NaN;
+					return NaN;
+				}
+				else {
+					var colour:int =  ColorMath.RGBtoHSB(rgbPixel);
+					hsbArray[x][y] = colour;
+					return colour;
+				}
+			}
+			return this.hsbArray[x][y];
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
-			//			var rgbPixel : uint = img.bitmapData.getPixel( x, y );
-			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			//			return colour.brightness;
-			var rgbPixel : uint = img.bitmapData.getPixel32( x, y );
-			var alpha:uint = rgbPixel>> 24 & 0xFF;
-			if(alpha == 0) 
-				return NaN;
-			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
-			//			Assert.isTrue(!isNaN(colour.hue));
+			var colour : int =getHSB(x,y);
 			var b:Number= (colour & 0xFF);
 			b/=255;
 			return b;
 		}
 		
 		public function getHue(x:int, y:int):Number {
-			var rgbPixel : int = img.bitmapData.getPixel32( x, y );
-			//			var colour : HSBColor = HSBColor.convertRGBtoHSB( rgbPixel );
-			var colour : int = ColorMath.RGBtoHSB(rgbPixel);
+			var colour : int = getHSB(x,y);
 			//			Assert.isTrue(!isNaN(colour.hue));
 			var h:Number= ( (colour & 0x00FF0000) >> 16);
 			h/=255;
@@ -317,7 +326,7 @@ package com.settinghead.wexpression.client.model.vo
 		
 		public function get placer():WordPlacer{
 			if(this._placer==null){
-				this._placer = new ShapeConfinedPlacer(this, new DensityPatchIndex(this));
+				this._placer = new ShapeConfinedPlacer(this, _patchIndex);
 			}
 			return this._placer;
 		}
@@ -326,6 +335,7 @@ package com.settinghead.wexpression.client.model.vo
 			if(this._nudger==null){
 				this._nudger = new ShapeConfinedSpiralWordNudger();
 //				this._nudger = new ShapeConfinedRandomWordNudger();
+//				this._nudger = new ShapeConfinedZigZagWordNudger();
 
 			}
 			return this._nudger;
@@ -345,5 +355,8 @@ package com.settinghead.wexpression.client.model.vo
 			return this._renderOptions;
 		}
 		
+		public function get patchIndex():DensityPatchIndex{
+			return this._patchIndex;
+		}
 	}
 }

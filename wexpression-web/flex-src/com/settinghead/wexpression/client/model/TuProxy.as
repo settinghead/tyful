@@ -87,8 +87,10 @@ package com.settinghead.wexpression.client.model
 			if(eWord!=null){
 				tu.placeWord(eWord);
 				if (eWord.wasSkipped()){
-					tu.indexOffset+=tu.words.size/15;
+					tu.indexOffset+=tu.words.size/10;
 					if(tu.indexOffset+tu.currentWordIndex>tu.words.size) tu.indexOffset = tu.words.size -1;
+//					tu.placeWord(eWord);
+
 				}				
 				
 				tu.pushEngineWord(eWord);

@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.density
 {
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.TemplateVO;
 	
 	import org.as3commons.collections.Set;
@@ -19,11 +20,12 @@ package com.settinghead.wexpression.client.density
 		private var _alphaSum:Number= Number.NaN;
 		private var _queue:PatchQueue;
 		private var rank:int;
-		
+		private var _numOfFailures:int;
+		private var _lastAttempt = 0;
+		private var _eWords:Vector.<EngineWordVO> = null;
 		
 		public function Patch(x:int, y:int, width:int, height:int, rank:int,
 							  parent:Patch, queue:PatchQueue) {
-			
 			this.setX(x);
 			this.setY(y);
 			this.setWidth(width);
@@ -65,7 +67,6 @@ package com.settinghead.wexpression.client.density
 		public function getAverageAlpha():Number {
 			
 			if (isNaN(this._averageAlpha)) {
-				
 				// now remove sub-patches that's already marked
 				this._averageAlpha = this.getAlphaSum();
 //				for each (var markedChild:Patch in this.getMarkedChildren()) {
@@ -79,23 +80,27 @@ package com.settinghead.wexpression.client.density
 			return this._averageAlpha;
 		}
 		
-		private function getAlphaSum():Number {
+		public function getAlphaSum():Number {
 			if (isNaN(this._alphaSum))
 				// lazy calc
 			{
 				this._alphaSum = 0;
-				
+				this.getArea();
+
 				if (this.getChildren() == null
 					|| this.getChildren().length == 0) {
 					for (var i:int= 0; i < this.getWidth(); i++)
 						for (var j:int= 0; j < this.getHeight(); j++) {
 							var brightness:Number = _queue.getMap().getIndex().getImg().getBrightness(
 								this.getX() + i, this.getY() + j);
-							if(isNaN(brightness))
+							if(isNaN(brightness)){
 								brightness = 0;
+							}
 							else 
 								brightness = brightness;
 							this._alphaSum += brightness;
+							if(brightness==0)
+								this._area -= 1;
 						}
 				} else
 					for each (var p:Patch in this.getChildren())
@@ -143,7 +148,7 @@ package com.settinghead.wexpression.client.density
 			return this.children;
 		}
 		
-		public function divideIntoNineOrMore() :Vector.<Patch>{
+		public function divideIntoNineOrMore(newQueue:PatchQueue) :Vector.<Patch>{
 			var result:Vector.<Patch> = new Vector.<Patch>();
 			var min:int= getWidth() < getHeight() ? getWidth()
 				: getHeight();
@@ -171,7 +176,7 @@ package com.settinghead.wexpression.client.density
 					
 					// the closer to the center, the higher the rank
 					var p:Patch= new Patch(getX() + i, getY() + j,
-						squareWidth, squareHeight, 0, this, this._queue);
+						squareWidth, squareHeight, 0, this, newQueue);
 					result.push(p);
 					if (breakJ)
 						break;
@@ -181,24 +186,31 @@ package com.settinghead.wexpression.client.density
 			}
 			
 			setChildren(result);
+//			trace("Patches", this.getLevel() + 1, result.length);  
 			return result;
 		}
 		
 		
 		
 		public function mark(smearedArea:int, spreadSmearToChildren:Boolean):void {
-			this.resetWorthCalculations();
-			this.getAlphaSum();
+//			this.resetWorthCalculations();
+//			this.getAlphaSum();
 			this._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR;
 			if(spreadSmearToChildren)
 				for each (var child:Patch in this.getChildren()){
 				child._alphaSum -=  smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length;
+				child._queue.remove(child);
+				child._queue.tryAdd(child);
 			}
 //			if (getParent() != null)
 //				getParent().markChild(this);
-			if (getParent() != null)
+			if (getParent() != null){
 				parent.mark(smearedArea, false);
+				parent._queue.remove(parent);
+				parent._queue.tryAdd(parent);
+			}
 		}
+
 		
 //		public function unmarkForParent():void {
 //			if (getParent() != null)
@@ -227,11 +239,10 @@ package com.settinghead.wexpression.client.density
 //			}
 //		}
 		
-		private function resetWorthCalculations():void {
-			this._area = NaN;
-			this._averageAlpha = NaN;
-			
-		}
+//		private function resetWorthCalculations():void {
+//			this._area = NaN;
+//			this._averageAlpha = NaN;
+//		}
 		
 		/**
 		 * @return the area
@@ -242,18 +253,84 @@ package com.settinghead.wexpression.client.density
 			return this._area;
 		}
 		
-		public function reRank():void {
-			_queue.remove(this);
-			_queue.tryAdd(this);
-			if (getParent() != null) {
-				getParent().resetWorthCalculations();
-				getParent().reRank();
-			}
-		}
+	
 		
 		public function getLevel():int {
 			return _queue.getMyLevel();
 		}
-
+		
+		public function fail():void{
+			_numOfFailures ++; 
+		}
+		
+		public function get numberOfFailures():int{
+			return _numOfFailures;
+		}
+		
+		public function get lastAttempt():int{
+			return _lastAttempt;
+		}
+		
+		public function set lastAttempt(n:int):void{
+			_lastAttempt = n;
+		}
+		
+		public function get eWords():Vector.<EngineWordVO>{
+			if(this._eWords==null)
+				this._eWords = new Vector.<EngineWordVO>();
+			return this._eWords;
+		}
+		
+		private var _neighborsAndMe:Set = null;
+		public function get neighborsAndMe():Set{
+			if(this._neighborsAndMe ==null){
+				this._neighborsAndMe = new Set();
+				var min:Number = this.width < this.height ? this.width:this.height;
+				var leftX:Number = this.x - min, rightX: Number = this.x + min, 
+					topY:Number = this.y - min, bottomY: Number = this.y + min;
+				var p:Patch;
+				p = this._queue.patchAtCoordinate(leftX, topY);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(leftX, this.y);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(leftX, bottomY);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(this.x, topY);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(this.x, this.y);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(this.x, bottomY);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(rightX, topY);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(rightX, this.y);
+				if(p!=null) _neighborsAndMe.add(p);	
+				p = this._queue.patchAtCoordinate(rightX, bottomY);
+				if(p!=null) _neighborsAndMe.add(p);	
+			}
+			return this._neighborsAndMe;
+		}
+		
+		public function ancestorsAndOffsprngs():Vector.<Patch>{
+			var result:Vector.<Patch> = new Vector.<Patch>();
+			ancestors(result);
+			offsprings(result);
+			return result;
+		}
+		
+		private function ancestors(collector:Vector.<Patch>):void{
+			if(this.parent!=null){
+				collector.push(parent);
+				parent.ancestors(collector);
+			}
+				
+		}
+		
+		private function offsprings(collector:Vector.<Patch>):void{
+			for each (var p:Patch in this.children){
+				collector.push(p);
+				p.offsprings(collector);
+			}
+		}
 	}
 }

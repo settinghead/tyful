@@ -12,7 +12,7 @@
 				return _img;
 			}
 			
-			public function set img(_img:BitmapData){
+			public function set img(_img:BitmapData):void{
 				this._img = _img;
 			}
 			

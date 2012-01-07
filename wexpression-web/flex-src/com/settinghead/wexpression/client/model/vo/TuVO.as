@@ -5,13 +5,17 @@ package com.settinghead.wexpression.client.model.vo
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.WordSorterAndScaler;
 	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	
+	import org.as3commons.collections.Set;
+	import org.as3commons.collections.framework.IIterator;
 	import org.as3commons.lang.Assert;
+	import org.as3commons.lang.IIterator;
 	
 	import spark.primitives.BitmapImage;
 
@@ -47,8 +51,7 @@ package com.settinghead.wexpression.client.model.vo
 			this._words = WordSorterAndScaler.sortAndScale(words);
 			
 		}
-		
-		
+
 		
 		public function pushEngineWord(eWord:EngineWordVO):void{
 			this._eWords.push(eWord);
@@ -120,16 +123,17 @@ package com.settinghead.wexpression.client.model.vo
 			return this.failedLast;
 		}
 		
-		private function calculateMaxAttemptsFromWordWeight(word:WordVO):int {
-			
-			var result:int = int(((1.0 - word.weight) * 100) )+ 50 + 100*Math.random();
-			Assert.isTrue(result>0);
-			return result;
+		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height);
+			var area:Number = p.getWidth() * p.getHeight();
+//			var result:int = area / 10000 * int(((1.0 - word.weight) * 60) )+ 30 + 40*Math.random();
+//			Assert.isTrue(result>0);
+//			return result;
 		}
-		private var successCount:Number = 0, totalCount:Number = 0;
+		[Bindable] private var successCount:Number = 0, totalCount:Number = 0;
 		public function get lossRate():Number{
-//			return 1- (successCount)/(totalCount);
-			return 0;
+			return 1- (successCount)/(totalCount);
+//			return 0;
 		}
 
 		public function generateEngineWord(word:WordVO):EngineWordVO{
@@ -173,16 +177,39 @@ package com.settinghead.wexpression.client.model.vo
 			var wordImageWidth:int= int(eWord.shape.textField.width);
 			var wordImageHeight:int= int(eWord.shape.textField.height);
 			
-			eWord.setDesiredLocation(template.placer, _eWords.length,
+			eWord.retrieveDesiredLocations(template.placer, _eWords.length,
 				wordImageWidth, wordImageHeight, template.width,
 				template.height);
 			// Set maximum number of placement trials
-			var maxAttemptsToPlace:int= template.renderOptions.maxAttemptsToPlaceWord > 0? template.renderOptions.maxAttemptsToPlaceWord
-				: calculateMaxAttemptsFromWordWeight(word);
 			
-			outer: for each(var candidateLoc:PlaceInfo in eWord.desiredLocation){
+			
+			while(eWord.hasNextDesiredLocation()){
+				var candidateLoc = eWord.nextDesiredLocation();
+				
+				var maxAttemptsToPlace:int= template.renderOptions.maxAttemptsToPlaceWord > 0? template.renderOptions.maxAttemptsToPlaceWord
+					: calculateMaxAttemptsFromWordWeight(eWord, candidateLoc.patch);
+				
 				var lastCollidedWith:EngineWordVO = null;
-				inner: for (var attempt:int= 0; attempt < maxAttemptsToPlace; attempt++) {
+				var attempt:int;
+				var neighboringPatches:Set = candidateLoc.patch.neighborsAndMe;
+//				var neighboringEWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
+				
+//				var iter:org.as3commons.collections.framework.IIterator = neighboringPatches.iterator();
+				
+//				
+//				while(iter.hasNext()){
+//					var p:Patch = iter.next();
+//					for each (var ew:EngineWordVO in p.eWords)
+//						neighboringEWords.push(ew);
+//					var ao:Vector.<Patch> = p.ancestorsAndOffsprngs();
+//					for each (var p1:Patch in ao){
+//						for each (var ew:EngineWordVO in p1.eWords)
+//							neighboringEWords.push(ew);
+//					}
+//				}
+				
+				
+				inner: for (attempt= 0; attempt < maxAttemptsToPlace; attempt++) {
 					eWord.nudgeTo(candidateLoc.getpVector().add(template.nudger.nudgeFor(word, candidateLoc,
 						attempt,maxAttemptsToPlace)), candidateLoc.patch);
 					var angle:Number= template.angler.angleFor(eWord);
@@ -205,8 +232,10 @@ package com.settinghead.wexpression.client.model.vo
 					
 					var foundOverlap:Boolean= false;
 					
+//					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
 					for (var i:int= 0; !foundOverlap && i < currentWordIndex; i++) {
-						var otherWord:EngineWordVO= _eWords[i];
+//						var otherWord:EngineWordVO= neighboringEWords[i];
+						var otherWord:EngineWordVO = _eWords[i];
 						if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
 						
 						if (eWord.overlaps(otherWord)) {
@@ -219,18 +248,20 @@ package com.settinghead.wexpression.client.model.vo
 					
 					if (!foundOverlap) {
 						candidateLoc.patch.mark(wordImageWidth*wordImageHeight, true);
-						template.placer.success(eWord.desiredLocation);
+						template.placer.success(eWord.desiredLocations);
 						eWord.finalizeLocation();
 						successCount++;
+						candidateLoc.patch.lastAttempt = attempt;
 						return true;
 					}
-					
 				}
+				candidateLoc.patch.lastAttempt = attempt;
+				candidateLoc.patch.fail();
 			}
 			
 			skipWord(eWord.word, SKIP_REASON_NO_SPACE);
 			//			info.patch.mark(wordImageWidth*wordImageHeight, true);
-			this.template.placer.fail(eWord.desiredLocation);
+			this.template.placer.fail(eWord.desiredLocations);
 			this.failedLastVar = true;
 			return false;
 		}

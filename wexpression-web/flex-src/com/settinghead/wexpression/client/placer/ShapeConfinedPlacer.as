@@ -24,7 +24,7 @@ public class ShapeConfinedPlacer implements WordPlacer {
 			fieldHeight:int): Vector.<PlaceInfo> {
 		var patches:Vector.<Patch> = index.findPatchFor(wordImageWidth,
 				wordImageHeight);
-		
+		index.lock();
 		var places:Vector.<PlaceInfo> = new Vector.<PlaceInfo>();
 		for(var i=0;i<patches.length;i++)
 			places.push(new PlaceInfo(new Point(patches[i].getX() + patches[i].getWidth() / 2, patches[i].getY()
@@ -50,9 +50,12 @@ public class ShapeConfinedPlacer implements WordPlacer {
 
 	
  	public function fail(returnedObj:Object):void {
+		
 		for each(var pi:PlaceInfo in (returnedObj as Vector.<PlaceInfo>)){
 			index.add(pi.patch);
 		}
+		
+		index.unlock();
 	}
 
 	
@@ -60,6 +63,8 @@ public class ShapeConfinedPlacer implements WordPlacer {
 		 for each(var pi:PlaceInfo in (returnedObj as Vector.<PlaceInfo>)){
 			index.add(pi.patch);
 		 }
+		 
+		 index.unlock();
 	}
 
 }

@@ -9,8 +9,6 @@
 		<constructor-arg ref="facebook" />
 		<constructor-arg ref="fbPosts" />
 		<constructor-arg ref="connectionRepository" />
-		<constructor-arg ref="wordCram" />
-
 	</bean>
 
 	<!-- Controls rendering of the home page once a user has signed in -->

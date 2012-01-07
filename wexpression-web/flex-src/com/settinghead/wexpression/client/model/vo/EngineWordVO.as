@@ -39,8 +39,10 @@ public class EngineWordVO {
 	public var bbTree:BBPolarRootTreeVO;
 	private var presetAngle:Number = NaN;
 	var renderedAngle:Number;
+	
+	private var desiredLocationIndex:int;
 
-	private var _desiredLocation:Vector.<PlaceInfo>;
+	private var _desiredLocations:Vector.<PlaceInfo>;
 	private var currentLocation:PlaceInfo;
 	
 	public function EngineWordVO(word:WordVO, rank:int, wordCount:int) {
@@ -61,18 +63,20 @@ public class EngineWordVO {
 	public function overlaps(other:EngineWordVO):Boolean {
 		return bbTree.overlaps(other.bbTree);
 	}
-	
-	public function get desiredLocation():Vector.<PlaceInfo>{
-		return _desiredLocation;
-	}
-	
-	
 
-	public function setDesiredLocation(placer:WordPlacer, count:int,
+	public function retrieveDesiredLocations(placer:WordPlacer, count:int,
 			wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
 			fieldHeight:int):void {
-		_desiredLocation = word.getTargetPlace(placer, rank, count,
+		_desiredLocations = word.getTargetPlace(placer, rank, count,
 				wordImageWidth, wordImageHeight, fieldWidth, fieldHeight);
+	}
+	
+	public function hasNextDesiredLocation():Boolean{
+		return desiredLocationIndex < _desiredLocations.length; 
+	}
+	
+	public function nextDesiredLocation():PlaceInfo{
+		return _desiredLocations[desiredLocationIndex++];
 	}
 
 	public function nudgeTo(loc:Point, patch:Patch):void {
@@ -94,6 +98,19 @@ public class EngineWordVO {
 
 		 bbTree.setLocation(currentLocation.getpVector().x, currentLocation.getpVector().y);
 		word.setRenderedPlace(currentLocation.getpVector());
+		currentLocation.patch.eWords.push(this);
+	}
+	
+	public function get desiredLocations():Vector.<PlaceInfo>{
+		return this._desiredLocations;
+	}
+	
+	public function get offsetDistance():Number{
+		var distSum:Number = 0;
+		for(var i:int=0;i<desiredLocationIndex;i++){
+			distSum += this.currentLocation.distanceFrom(this._desiredLocations[i]);
+		}
+		return distSum;
 	}
 
 	public function getCurrentLocation():PlaceInfo {

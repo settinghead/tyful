@@ -33,6 +33,12 @@ package com.settinghead.wexpression.client
 		public function get():PlaceInfo {
 			return new PlaceInfo(this.getpVector().clone(), this.patch);
 		}
+		
+		public function distanceFrom(p:PlaceInfo):Number{
+			return Math.sqrt(
+				Math.pow(p.getpVector().x - this.getpVector().x, 2) +
+				Math.pow(p.getpVector().y - this.getpVector().y, 2));
+		}
 	}
 
 }

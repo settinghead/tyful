@@ -1,19 +1,25 @@
 package com.settinghead.wexpression.client.density
 {
+	import flash.utils.Dictionary;
+	
 	import org.as3commons.collections.SortedList;
+	import org.as3commons.collections.Treap;
 	import org.as3commons.collections.framework.IIterator;
+	import org.as3commons.lang.Assert;
 
-	public class PatchQueue {
+	public class PatchQueue extends SortedList {
 		/**
 		 * 
 		 */
 		
-		private var _queue: SortedList = new SortedList(new PatchComparator());
+//		private var _queue: Treap = new Treap(new PatchComparator());
 		
 		private var myLevel:int;
 		private var _map: LeveledPatchMap;
+		private var _lookupMap:Dictionary = new Dictionary();
 		
 		public function PatchQueue(myLevel:int, map:LeveledPatchMap) {
+			super(new PatchComparator());
 			this.myLevel = myLevel;
 			this._map = map;
 			if (myLevel == 0) {
@@ -23,15 +29,11 @@ package com.settinghead.wexpression.client.density
 		
 		public function getBestPatch():Patch {
 			var result:Patch= poll();
-//			if (result != null) {
-////				result.mark(smearedArea, true);
-////				tryAdd(result);
-//			}
 			return result;
 		}
 		
-		public function poll():Patch {
-			return this._queue.removeFirst();
+		private function poll():Patch {
+			return super.removeFirst();
 		}
 		
 		/**
@@ -41,9 +43,6 @@ package com.settinghead.wexpression.client.density
 			return myLevel;
 		}
 		
-		public function remove(patch:Patch):void {
-			this._queue.remove(patch);
-		}
 		
 		public function tryAddAll(patches:Vector.<Patch>):void {
 			for each (var p:Patch in patches)
@@ -51,17 +50,29 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		public function tryAdd(p:Patch):void {
-			if (p.getAverageAlpha() > DensityPatchIndex.QUEUE_ALPHA_THRESHOLD)
-				this._queue.add(p);
+			if (p.getAverageAlpha() > DensityPatchIndex.QUEUE_ALPHA_THRESHOLD){
+				super.add(p);
+				_lookupMap[p.getX().toString()+", " +p.getY().toString()] = p;
+				trace(p.getX().toString()+", " +p.getY().toString());
+			}
+			else 
+				trace (p.getAverageAlpha());
 		}
 		
+		public function patchAtCoordinate(x:Number, y:Number){
+			var p:Patch = _lookupMap[x.toString()+", "+y.toString()];
+			trace("lookup patch: " +x.toString()+", "+y.toString());
+			return p;
+		}
 		
 		public function descend(queueLevel:int):PatchQueue {
 			var queue:PatchQueue= new PatchQueue(queueLevel, this._map);
-			var it:IIterator = this._queue.iterator();
+			var it:IIterator = super.iterator();
 			while(it.hasNext()){
 				 var patch:Patch = it.next();
-				queue.tryAddAll(patch.divideIntoNineOrMore());
+				 var children:Vector.<Patch> = patch.divideIntoNineOrMore(queue);
+//				 Assert.isTrue(children.length == DensityPatchIndex.NUMBER_OF_DIVISIONS);
+				queue.tryAddAll(children);
 			}
 			return queue;
 		}

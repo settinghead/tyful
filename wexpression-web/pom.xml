@@ -27,6 +27,7 @@
 		<org.springframework.social-version>1.0.0.RELEASE</org.springframework.social-version>
 		<org.springframework-version>3.1.0.M2</org.springframework-version>
 		<org.springframework.security.crypto-version>3.1.0.RC2.crypto</org.springframework.security.crypto-version>
+		<cxf.version>2.2.3</cxf.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -195,6 +196,27 @@
 			<artifactId>commons-pool</artifactId>
 			<version>1.5.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!-- Jetty is needed if you're are not using the CXFServlet -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sleepycat</groupId>
+			<artifactId>je</artifactId>
+			<version>5.0.34</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -250,7 +272,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
 			<id>ObjectWEB</id>
 			<url>http://maven.ow2.org/maven2/</url>
@@ -261,7 +282,12 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		<repository>
+			<id>oracleReleases</id>
+			<name>Oracle Released Java Packages</name>
+			<url>http://download.oracle.com/maven</url>
+			<layout>default</layout>
+		</repository>
 		<repository>
 			<id>yoolab</id>
 			<url>http://projects.yoolab.org/maven/content/repositories/releases</url>

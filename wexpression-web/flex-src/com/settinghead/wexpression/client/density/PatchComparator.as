@@ -8,7 +8,7 @@ package com.settinghead.wexpression.client.density
 	{
 		
 		public var _numComparator: NumericComparator; 
-		public function PatchComparator(order : String = NumericComparator.ORDER_ASC)
+		public function PatchComparator(order : String = NumericComparator.ORDER_DESC)
 		{
 			_numComparator = new NumericComparator(order);
 		}
@@ -21,12 +21,17 @@ package com.settinghead.wexpression.client.density
 			var p1:Patch = item1;
 			var p2:Patch = item2;
 			
-			var r:int= -_numComparator.compare(p1.getAverageAlpha(),
-				p2.getAverageAlpha());
-			if (r == 0)
-				return p1.getRank() - p2.getRank();
-			else
-				return r;
+//			var r:int= -_numComparator.compare(p1.getAverageAlpha(),p2.getAverageAlpha());
+			var r:int= - _numComparator.compare(p1.numberOfFailures, p2.numberOfFailures);
+			
+			if(r==0){
+				r = _numComparator.compare(p1.getAlphaSum(), p2.getAlphaSum());
+				if (r == 0)
+					return p1.getRank() - p2.getRank();
+				else
+					return r;
+			}
+			else return r;
 		}
 	}
 }

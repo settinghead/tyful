@@ -7,7 +7,7 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)">
+		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" xmlns:template="com.settinghead.wexpression.client.view.components.template.*">
 	
 	<!-- Events dispatched by this View Component -->
 	<fx:Metadata>
@@ -33,16 +33,21 @@
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const TU_GENERATED:String = "tuGenerated";
 			
+			[Bindable] private var _driftDistanceSum:Number = 0;
+			
 			private var _tu:TuVO;
 			
 			public function slapWord(dWord:DisplayWordVO):void{
 				this.wordLayer.addChild(dWord);
 				this._tu.dWords.addItem(dWord);
-//				patchLayer.graphics.clear();
-//				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
-//					this.highlightPatch(pi.patch);
-//				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
-//				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+				patchLayer.graphics.clear();
+				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
+					this.highlightPatch(pi.patch);
+				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+				this._driftDistanceSum += dWord.engineWord.offsetDistance;
+				
+								patchLayer.patchQueue = patchLayer.patchQueue;
 
 			}
 			
@@ -67,7 +72,7 @@
 			public function wordMouseOver(e:MouseEvent):void{
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
 				patchLayer.graphics.clear();
-				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocation)
+				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
 					this.highlightPatch(pi.patch);
 				dWord.visible = false;
 				drawTree(dWord.engineWord.bbTree);
@@ -193,8 +198,13 @@
 					this.backgroundLayer.addChild(_tu.backgroundImage);
 				for each(var displayWord:DisplayWordVO in _tu.dWords)
 					this.slapWord(displayWord);
+					
+				patchLayer.patchQueue=this._tu.template.patchIndex.map.getQueue(3);
+
 				newTu = false;
+				
 			}
+			
 			
 		]]>
 	</fx:Script>
@@ -202,15 +212,17 @@
 		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="true"/>
 		<mx:UIComponent id="wordLayer" top="0" bottom="0" left="0" right="0" />
 	</mx:Canvas>
-	<mx:UIComponent id="patchLayer" top="0" bottom="0" left="0" right="0" visible="true" />
 	<mx:UIComponent id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
-
+	<template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" />
 
 	<mx:ControlBar>
 		<s:Label id="lossCounter" top="0" left="0" text="{tu.lossRate}"/>
+		<s:Label id="lblDriftDistanceSum" top="0" left="0" text="{_driftDistanceSum}"/>
+
 		<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 		<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
 		<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+		<s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" />
 
 	</mx:ControlBar>
 	

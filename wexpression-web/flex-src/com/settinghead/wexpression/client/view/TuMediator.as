@@ -49,7 +49,6 @@ package com.settinghead.wexpression.client.view
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)
 						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
-					waitingForWord = false;
 					break;
 			}
 		}
@@ -63,8 +62,12 @@ package com.settinghead.wexpression.client.view
 		{	
 			if(!waitingForWord){
 				waitingForWord = true;
-				tuProxy.renderNextDisplayWord(tuRenderer.tu);
+				var count:int = 0;
+				while(!tuRenderer.tu.finishedDisplayWordRendering && ++count<2) 
+					tuProxy.renderNextDisplayWord(tuRenderer.tu);
+				waitingForWord = false;
 			}
+			else trace("a");
 		}
 		
 		private function editTemplate( event:Event = null ):void

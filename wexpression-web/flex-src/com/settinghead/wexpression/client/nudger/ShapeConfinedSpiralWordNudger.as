@@ -36,10 +36,13 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 		var factor:int;
+		attempt = ( attempt + pInfo.patch.lastAttempt ) % totalPlannedAttempt;
+
 //		if (pInfo != null && pInfo.get().patch != null) {
 			var p:Patch= Patch(pInfo.get().patch);
-			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
+			factor = p.getWidth() < p.getHeight() ? p.getWidth() : p
 					.getHeight();
+			factor/=1.8;
 //			if (p.getLevel() == 0)
 //				factor /= 6;
 //			else if (p.getLevel() == 1)
@@ -49,7 +52,7 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 //		factor *= 6;
 		
-		var rad:Number= powerMap(0.6, attempt, 0, totalPlannedAttempt, 1, factor * 4);
+		var rad:Number= powerMap(0.6, attempt, 0, totalPlannedAttempt, 1, factor);
 
 //		var thetaIncrement = powerMap(1, attempt, 0, totalPlannedAttempt, 0.5, 0.3);
 //		var theta:Number= thetaIncrement * attempt;

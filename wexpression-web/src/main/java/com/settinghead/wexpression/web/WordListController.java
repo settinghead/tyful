@@ -44,7 +44,7 @@ import wordcram.WordCramImage;
  * @author Keith Donald
  */
 @Controller
-public class HomeController {
+public class WordListController {
 
 	private final Facebook facebook;
 	static String extraStopWords = "";
@@ -73,7 +73,7 @@ public class HomeController {
 	}
 
 	@Inject
-	public HomeController(Facebook facebook, FacebookPosts fbPosts,
+	public WordListController(Facebook facebook, FacebookPosts fbPosts,
 			ConnectionRepository connectionRepository)
 			throws IOException {
 		this.facebook = facebook;

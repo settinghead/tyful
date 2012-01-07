@@ -5,4 +5,7 @@
 		overflowToDisk="false" />
 	<cache name="fbPostsCache" maxElementsInMemory="200" eternal="true"
 		overflowToDisk="false" />
+	<cache name="wordListCache" maxElementsInMemory="20000" eternal="true"
+		overflowToDisk="false" />
+		
 </ehcache>
