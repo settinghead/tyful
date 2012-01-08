@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo
+package com.settinghead.wexpression.client.model.vo.template
 {
 
 	import com.settinghead.wexpression.client.RenderOptions;
@@ -36,6 +36,8 @@ package com.settinghead.wexpression.client.model.vo
 	import org.as3commons.bytecode.util.Assertions;
 	import org.as3commons.lang.Assert;
 	import org.peaceoutside.utils.ColorMath;
+	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.wexpression.client.model.vo.IImageShape;
 	
 	
 	[Bindable]
@@ -304,7 +306,7 @@ package com.settinghead.wexpression.client.model.vo
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(14,40);
+				this._sizer = new ByWeightSizer(14,100);
 			}
 			return this._sizer;
 		}
@@ -333,9 +335,9 @@ package com.settinghead.wexpression.client.model.vo
 		
 		public function get nudger():WordNudger{
 			if(this._nudger==null){
-				this._nudger = new ShapeConfinedSpiralWordNudger();
+//				this._nudger = new ShapeConfinedSpiralWordNudger();
 //				this._nudger = new ShapeConfinedRandomWordNudger();
-//				this._nudger = new ShapeConfinedZigZagWordNudger();
+				this._nudger = new ShapeConfinedZigZagWordNudger();
 
 			}
 			return this._nudger;
