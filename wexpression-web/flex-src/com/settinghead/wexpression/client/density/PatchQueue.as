@@ -50,13 +50,13 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		public function tryAdd(p:Patch):void {
-			if (p.getAverageAlpha() > DensityPatchIndex.QUEUE_ALPHA_THRESHOLD){
+			if (p.getAlphaSum() > DensityPatchIndex.QUEUE_ALPHA_THRESHOLD){
 				super.add(p);
-				_lookupMap[p.getX().toString()+", " +p.getY().toString()] = p;
-				trace(p.getX().toString()+", " +p.getY().toString());
+//				_lookupMap[p.getX().toString()+", " +p.getY().toString()] = p;
+//				trace(p.getX().toString()+", " +p.getY().toString());
 			}
 			else 
-				trace (p.getAverageAlpha());
+				trace ("failed to add back to queue, alpha sum: " + p.getAlphaSum().toString());
 		}
 		
 		public function patchAtCoordinate(x:Number, y:Number){

@@ -1,7 +1,7 @@
 package com.settinghead.wexpression.client.model
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import flash.events.Event;
 	

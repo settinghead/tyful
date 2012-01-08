@@ -39,11 +39,17 @@ public class ShapeConfinedZigZagWordNudger implements WordNudger {
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 		var factor:int;
 			attempt = ( attempt + pInfo.patch.lastAttempt ) % totalPlannedAttempt;
-//		if (pInfo != null && pInfo.get().patch != null) {
 			var p:Patch= Patch(pInfo.get().patch);
 			var unitDistance:Number = Math.sqrt(p.getWidth() * p.getHeight()/totalPlannedAttempt);
-			var x:Number = ((attempt / (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getWidth() / 2) * 1.2;
-			var y:Number = ((attempt % (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getHeight() / 2) * 1.2;
+			var x:Number = ((attempt / (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getWidth() / 2);
+			var y:Number = ((attempt % (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getHeight() / 2);
+			if(attempt % 2==0)
+			{
+				x = p.getWidth() - x;
+				y = p.getHeight() - y;
+			}
+			x*=1.2;
+			y*=1.2;
 			
 		return new Point(x, y);
 	}

@@ -19,7 +19,7 @@
 			private var _ang:Number;
 			
 			[Embed("A.png")]
-			private static var A:Class;
+			public static var A:Class;
 			
 			public function get angle():Number{
 				return _ang;

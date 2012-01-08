@@ -32,27 +32,29 @@
 			
 			<mx:UIComponent id="cvnTransparentBackground" top="100"
 							left="0" visible="true" />
+			<mx:UIComponent id="backgroundLayer" top="100"
+							left="0" visible="true" />
 			<mx:UIComponent id="textFlowCanvas" 
 							mouseDown="textFlowCanvas_mouseDownHandler(event)" 
 							mouseUp="textFlowCanvas_mouseUpHandler(event)" 
 							mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
 							creationComplete="textFlowCanvas_creationCompleteHandler(event)"
-							top="100" left="0"  />
+							top="100" left="0" alpha="0.7" />
+			
 			<template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" />
 			
 			
 		</s:NavigatorContent>
 
-		<s:NavigatorContent label="navButtons">
+		<s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
-			<mx:Canvas id="imageContainer" />
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 	<mx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
-			import com.settinghead.wexpression.client.model.vo.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 			
 			import flash.display.*;
 			import flash.display.Sprite;
@@ -61,6 +63,7 @@
 			import flash.net.*;
 			import flash.utils.ByteArray;
 			
+			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
 			
 			import org.peaceoutside.utils.ColorMath;
@@ -88,6 +91,7 @@
 			private var loader:Loader = new Loader();
 			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
 			private var bmp:Bitmap;
+			private var bmpDirection:Bitmap;
 
 			// ------- Child controls -------
 			// Common view/containers
@@ -113,11 +117,11 @@
 			}
 			private function loaded(e:Event):void{
 				var rawBytes:ByteArray = jagFileRefSave.data;
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData)
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
 				loader.loadBytes(rawBytes);
 			}
 			private function getBitmapData(e:Event):void{
-				imageContainer.addChild(loader);
+				backgroundLayer.addChild(loader);
 			}
 			
 			protected function textFlowCanvas_mouseDownHandler(event:MouseEvent):void
@@ -136,17 +140,32 @@
 			
 			private var oldMouseX:Number, oldMouseY:Number;
 			
+			[Embed("SmallA.png")]
+			public static var SmallA:Class;
 			protected function textFlowCanvas_mouseMoveHandler(event:MouseEvent):void
 			{
 				if(drawingState){
 					var shape:Shape = new Shape();
+					var dirShape:Shape = new Shape();
 					var color:uint = ColorMath.HSLToRGB(directionPicker.angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
 					shape.graphics.lineStyle(thicknessPicker.
 						thickness,color
 						,1);
+					var a:BitmapAsset = new SmallA();
+					var m:Matrix = a.transform.matrix;
+					m.rotate(-directionPicker.angle);
+					dirShape.graphics.lineStyle(thicknessPicker.
+						thickness,0,0.7,true);
+					dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
 					shape.graphics.moveTo(oldMouseX, oldMouseY);
+					dirShape.graphics.moveTo(oldMouseX, oldMouseY);
 					shape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
+					dirShape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
+					
+
 					bmp.bitmapData.draw(shape);
+					bmpDirection.bitmapData.draw(dirShape);
+					
 					oldMouseX = textFlowCanvas.mouseX;
 					oldMouseY = textFlowCanvas.mouseY;
 				}
@@ -165,21 +184,30 @@
 				populateTemplate();
 			}
 			
+			
+			
 			private function populateTemplate():void{
 				if(this.template!=null)
 				{
 					if(bmp!=null) this.textFlowCanvas.removeChild(bmp);
+					if(bmpDirection!=null) this.textFlowCanvas.removeChild(bmpDirection);
+					
 					
 					if( this.template.img!=null){
 						bmp = template.img;
 					}
 					else{
 						bmp = new Bitmap(new BitmapData(_template.width, _template.height, true, 0xffffff));
+						bmp.visible = false;
 					}
+					
+					bmpDirection = new Bitmap(new BitmapData(_template.width, _template.height, true, 0xffffff));
+					
 					this.textFlowCanvas.width = _template.width;
 					this.textFlowCanvas.height = _template.height;
-					bmp.x=0; bmp.y=0;
+					bmpDirection.x = bmp.x=0; bmpDirection.y = bmp.y = 0;
 					this.textFlowCanvas.addChild(bmp);
+					this.textFlowCanvas.addChild(bmpDirection);
 					drawTransparentBackground();
 //					this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 				}
@@ -197,7 +225,7 @@
 			{
 				var bmpdTile:BitmapData  = new BitmapData(30,30);
 				var spriteTile:Sprite = new Sprite();
-				spriteTile.graphics.beginFill(0xccc, 1.0);
+				spriteTile.graphics.beginFill(0xeeeeee, 1.0);
 				spriteTile.graphics.drawRect(0,0,15,15);
 				spriteTile.graphics.drawRect(15,15,30,30);
 				spriteTile.graphics.endFill();

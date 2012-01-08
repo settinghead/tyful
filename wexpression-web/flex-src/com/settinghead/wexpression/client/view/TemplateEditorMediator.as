@@ -4,7 +4,7 @@ package com.settinghead.wexpression.client.view
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.WordListProxy;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	import com.settinghead.wexpression.client.view.components.TuRenderer;

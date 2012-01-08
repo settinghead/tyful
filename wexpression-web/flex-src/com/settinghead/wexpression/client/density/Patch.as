@@ -1,7 +1,7 @@
 package com.settinghead.wexpression.client.density
 {
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import org.as3commons.collections.Set;
 
@@ -197,17 +197,18 @@ package com.settinghead.wexpression.client.density
 //			this.getAlphaSum();
 			this._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR;
 			if(spreadSmearToChildren)
-				for each (var child:Patch in this.getChildren()){
-				child._alphaSum -=  smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length;
-				child._queue.remove(child);
-				child._queue.tryAdd(child);
+				for each (var child:Patch in this.getChildren()) {
+				child.mark(smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length, true);
+//				child._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length;
+//				child._queue.remove(child);
+//				child._queue.tryAdd(child);
 			}
 //			if (getParent() != null)
 //				getParent().markChild(this);
 			if (getParent() != null){
 				parent.mark(smearedArea, false);
-				parent._queue.remove(parent);
-				parent._queue.tryAdd(parent);
+//				parent._queue.remove(parent);
+//				parent._queue.tryAdd(parent);
 			}
 		}
 

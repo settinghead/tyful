@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client {
 	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.colorer.WordColorer;
 	import com.settinghead.wexpression.client.fonter.WordFonter;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
 	import com.settinghead.wexpression.client.sizers.WordSizer;

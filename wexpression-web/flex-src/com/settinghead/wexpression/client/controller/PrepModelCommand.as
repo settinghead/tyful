@@ -4,7 +4,7 @@ package com.settinghead.wexpression.client.controller
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.WordListProxy;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;

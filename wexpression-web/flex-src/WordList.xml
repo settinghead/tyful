@@ -3,15 +3,99 @@
   <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="challenge accepted" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />
+  <word word="Y U NO" weight="33" />
    <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="meme" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="incremental change" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="exit" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="China Chronicles" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="bus stop" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="meaningless talk" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="blackboard" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="air pump" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="milk" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="aliens" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="cowboys" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="Practical joke" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="Hail" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="George Washington" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="The Constitution" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="Beatles" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="Journey" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="Hi" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="Howdy" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="Bible" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="Quran" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="Decoration" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="Declaration of Independence" weight="30" />
+  <word word="Jane Lee" weight="6" />
+  <word word="Richard Scott" weight="10" />
+  <word word="Maria Anna" weight="22" />
+  <word word="high five" weight="33" />  <word word="John" weight="10" />
+  <word word="Richard" weight="20" />
+  <word word="Maria" weight="20" />
+  <word word="中文测试" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
@@ -108,262 +192,178 @@
   <word word="Maria Anna" weight="22" />
   <word word="Roger" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Panda Express" weight="20" />
+  <word word="Lee Christmas" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Joy" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Happiness" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="lamp" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Glee" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Bissell" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Howdy" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Form of forms" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Stephen Dadulas" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Fulfilment" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Laptop" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Facebook" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Funny pictures" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="South Park" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Bicycles" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Cup of tea" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Hoister" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Squash" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Laika come home" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Spiritual enlightenment" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="TROLOLOLO" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Nyan Cat" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="endless stream" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="TV show" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="America" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Vietnam" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="India" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Pakistan" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="France" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="United Kingdom" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Xiyang" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Goldman" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Ruby" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Book worm" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="TARDIS" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Fly across" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Maintain" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Peace" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Next generation" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="revitalization" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Vacumm" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Spelling bee" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Twitter" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Techcrunch" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="HotAirB" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Toshiba" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="Standard Poor" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
+  <word word="Shoes" weight="33" />  <word word="John" weight="10" />
   <word word="Richard" weight="20" />
   <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
+  <word word="New Arrivals" weight="30" />
   <word word="Jane Lee" weight="6" />
   <word word="Richard Scott" weight="10" />
   <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />  <word word="John" weight="10" />
-  <word word="Richard" weight="20" />
-  <word word="Maria" weight="20" />
-  <word word="Roger" weight="30" />
-  <word word="Jane Lee" weight="6" />
-  <word word="Richard Scott" weight="10" />
-  <word word="Maria Anna" weight="22" />
-  <word word="Roger" weight="33" />
+  <word word="Hesitant" weight="33" />
 </wordList>

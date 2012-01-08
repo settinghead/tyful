@@ -3,7 +3,7 @@ package com.settinghead.wexpression.client.controller
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	
@@ -24,7 +24,7 @@ package com.settinghead.wexpression.client.controller
 		override public function execute( note:INotification ) : void    
 		{
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
-			templateProxy.templatePath = "templates/face.png";
+			templateProxy.templatePath = "templates/heart.png";
 			
 			var monitor:LoadupMonitorProxy = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
 			monitor.loadResources();

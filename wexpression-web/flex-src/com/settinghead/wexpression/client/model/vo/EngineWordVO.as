@@ -12,6 +12,7 @@ package com.settinghead.wexpression.client.model.vo {
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 
 /*
  Copyright 2010 Daniel Bernier

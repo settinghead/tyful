@@ -11,7 +11,7 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
@@ -83,14 +83,19 @@ package com.settinghead.wexpression.client.model
 			word = tu.getNextWordAndIncrement();
 			if(word==null) return;
 			eWord = tu.generateEngineWord(word);
-		
+
 			if(eWord!=null){
 				tu.placeWord(eWord);
 				if (eWord.wasSkipped()){
-					tu.indexOffset+=tu.words.size/10;
-					if(tu.indexOffset+tu.currentWordIndex>tu.words.size) tu.indexOffset = tu.words.size -1;
+//				while (eWord.wasSkipped()){
+					tu.indexOffset+=tu.words.size/15;
+					if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
+					{
+						tu.indexOffset = tu.words.size -1;
+//						break;
+					}
+//					eWord = tu.generateEngineWord(word);
 //					tu.placeWord(eWord);
-
 				}				
 				
 				tu.pushEngineWord(eWord);

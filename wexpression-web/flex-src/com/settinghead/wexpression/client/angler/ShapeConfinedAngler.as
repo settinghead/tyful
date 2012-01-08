@@ -4,7 +4,7 @@
 package com.settinghead.wexpression.client.angler {
 	import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
-	import com.settinghead.wexpression.client.model.vo.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import org.as3commons.lang.Assert;
 

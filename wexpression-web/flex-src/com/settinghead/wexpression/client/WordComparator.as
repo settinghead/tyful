@@ -8,7 +8,7 @@ package com.settinghead.wexpression.client
 	public class WordComparator implements IComparator
 	{
 		public var _numComparator: NumericComparator; 
-		public function WordComparator(order : String = NumericComparator.ORDER_ASC)
+		public function WordComparator(order : String = NumericComparator.ORDER_DESC)
 		{
 			_numComparator = new NumericComparator(order);
 		}
@@ -21,7 +21,7 @@ package com.settinghead.wexpression.client
 			var p1:WordVO = item1;
 			var p2:WordVO = item2;
 			
-			var r:int= -_numComparator.compare(p1.getWeight(), p2.getWeight());
+			var r:int= _numComparator.compare(p1.getWeight(), p2.getWeight());
 			return r;
 			
 		}

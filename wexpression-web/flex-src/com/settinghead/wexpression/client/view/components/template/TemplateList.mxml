@@ -11,7 +11,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import com.settinghead.wexpression.client.model.vo.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 			
 			public static const SELECT:String 	= "select";
 
