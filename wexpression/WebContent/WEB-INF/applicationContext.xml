@@ -16,7 +16,9 @@
 		http://www.springframework.org/schema/jdbc
 		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
-	<context:component-scan base-package="com.settinghead.wexpression.services" />
+	<context:component-scan base-package="com.settinghead.wexpression" />
+	<context:component-scan base-package="org.springframework.social.quickstart" />
+
 	<tx:annotation-driven />
 	<jdbc:embedded-database id="dataSource" type="H2" />
 	<bean id="sessionFactory"
@@ -34,4 +36,20 @@
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+		<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- Enable @Annotation-drive bean configuration -->
+	<context:annotation-config />
+
+	<!-- Configures External Property Resolution -->
+	<import resource="spring/properties.xml" />
+
+	<!-- Configures Shared Data Access Resources -->
+	<import resource="spring/data.xml" />
+
+	<!-- Configures Spring Social -->
+	<bean class="org.springframework.social.quickstart.config.SocialConfig" />
+	
+	
 </beans>

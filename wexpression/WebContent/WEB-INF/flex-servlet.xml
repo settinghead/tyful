@@ -18,4 +18,5 @@
 	<flex:message-broker>
 		<flex:remoting-service default-channels="my-amf" />
 	</flex:message-broker>
+
 </beans>
