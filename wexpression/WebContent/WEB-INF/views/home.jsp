@@ -13,6 +13,6 @@
 	<c:forEach items="${friends}" var="friend">
 		<li><img src="http://graph.facebook.com/<c:out value="${friend.id}"/>/picture" align="middle"/><c:out value="${friend.name}"/></li>
 	</c:forEach>
-	</ul>	
+	</ul>
 	</body>
 </html>
