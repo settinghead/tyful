@@ -32,7 +32,7 @@ public class FacebookPostRepository {
 
 	// @Transactional
 
-	@Cacheable(value = "fbPostsCache", key = "#fbId")
+	@Cacheable(value = "facebookPostCache", key = "#fbId")
 	public List<Post> getPosts(String fbId, int limit, Facebook facebook) {
 		List<Post> posts;
 

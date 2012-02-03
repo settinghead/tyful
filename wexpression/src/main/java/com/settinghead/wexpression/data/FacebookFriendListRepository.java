@@ -6,6 +6,7 @@ package com.settinghead.wexpression.data;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.ehcache.annotations.Cacheable;
@@ -14,6 +15,7 @@ import com.googlecode.ehcache.annotations.Cacheable;
  * @author settinghead
  * 
  */
+@Repository
 public class FacebookFriendListRepository {
 
 	private SessionFactory sessionFactory;
