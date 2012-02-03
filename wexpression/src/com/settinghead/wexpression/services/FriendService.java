@@ -28,4 +28,6 @@ public class FriendService {
 		f.setName(name);
 		sessionFactory.getCurrentSession().save(f);
 	}
+	
+	
 }
