@@ -68,7 +68,7 @@ object:focus {
 	attributes.id = "Main";
 	attributes.name = "Main";
 	attributes.align = "middle";
-	swfobject.embedSWF("resources/flash/Main.swf", "flashContent", "100%",
+	swfobject.embedSWF("resources/flash/WexpressionClient.swf", "flashContent", "100%",
 			"100%", swfVersionStr, xiSwfUrlStr, flashvars, params, attributes);
 	// JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
 	swfobject.createCSS("#flashContent", "display:block;text-align:left;");
@@ -94,7 +94,7 @@ object:focus {
 	<noscript>
 		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 			width="100%" height="100%" id="Main">
-			<param name="movie" value="resources/flash/Main.swf" />
+			<param name="movie" value="resources/flash/WexpressionClient.swf" />
 			<param name="quality" value="high" />
 			<param name="bgcolor" value="#ffffff" />
 			<param name="allowScriptAccess" value="sameDomain" />
@@ -102,7 +102,7 @@ object:focus {
 			<param name="FlashVars" value="wordListId=${wordListId}" />
 			<!--[if !IE]>-->
 			<object type="application/x-shockwave-flash"
-				data="resources/flash/Main.swf" width="100%" height="100%">
+				data="resources/flash/WexpressionClient.swf" width="100%" height="100%">
 				<param name="quality" value="high" />
 				<param name="bgcolor" value="#ffffff" />
 				<param name="allowScriptAccess" value="sameDomain" />
