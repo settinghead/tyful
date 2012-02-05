@@ -44,7 +44,9 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private function templateLoadComplete(event:Event):void{	
+			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, _template);
 			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, _template);
+
 		}
 		
 		// return data property cast to proper type

@@ -34,6 +34,7 @@ package com.settinghead.wexpression.client.view
 			switch ( note.getName() )
 			{		
 				case ApplicationFacade.TU_INITIALIZED:
+					hideAll();
 					applicationComponent.vwStack.selectedChild = applicationComponent.tuRenderer; 
 					break;
 				
@@ -45,6 +46,11 @@ package com.settinghead.wexpression.client.view
 					applicationComponent.currentState = "withShop";
 					break;
 			}
+		}
+		
+		private function hideAll():void{
+			applicationComponent.tuRenderer.visible = false;
+			applicationComponent.templateEditor.visible = false;
 		}
 		
 		private function get applicationComponent ():Application

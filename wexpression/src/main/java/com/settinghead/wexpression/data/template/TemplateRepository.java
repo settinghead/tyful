@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.data;
+package com.settinghead.wexpression.data.template;
 
 /**
  * 
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  */
 @Repository
-public class WordListRepository {
+public class TemplateRepository {
 
 	private SessionFactory sessionFactory;
 
@@ -25,17 +25,18 @@ public class WordListRepository {
 	}
 
 	@Transactional
-	public void saveWordList(WordList list) {
+	public void saveTemplate(Template list) {
 		// for (Word word : list.getList())
 		// sessionFactory.getCurrentSession().save(word);
 		sessionFactory.getCurrentSession().save(list);
+		System.out.println("Template saved: "+ list.getId());
 	}
 
 	@Transactional
-	@Cacheable(value = "wordListCache")
-	public WordList getWordList(String id) {
-		return (WordList) sessionFactory.getCurrentSession()
-				.createQuery("from WordList where id=?").setString(0, id)
+	@Cacheable(value = "templateCache")
+	public Template getTemplate(String id) {
+		return (Template) sessionFactory.getCurrentSession()
+				.createQuery("from Template where id=?").setString(0, id)
 				.list().get(0);
 	}
 }

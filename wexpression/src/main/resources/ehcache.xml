@@ -6,4 +6,6 @@
 		overflowToDisk="false" />
 		<cache name="wordListCache" maxElementsInMemory="10" eternal="false"
 		overflowToDisk="false" />
+		<cache name="templateCache" maxElementsInMemory="10" eternal="false"
+		overflowToDisk="false" />
 </ehcache>

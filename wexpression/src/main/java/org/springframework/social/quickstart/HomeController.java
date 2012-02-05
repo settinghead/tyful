@@ -15,13 +15,11 @@
  */
 package org.springframework.social.quickstart;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Comment;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.Post;
@@ -30,9 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.settinghead.wexpression.data.FacebookFriendListRepository;
 import com.settinghead.wexpression.data.FacebookPostRepository;
-import com.settinghead.wexpression.data.Word;
 import com.settinghead.wexpression.data.WordList;
 import com.settinghead.wexpression.data.WordListRepository;
 
@@ -126,7 +122,11 @@ public class HomeController {
 			}
 		}
 		
-		
+		//personalize by adding your name
+		int nameFreq = allWords.getCount(allWords.getMostFrequent(1).get(0)) + 3;
+		String name = facebook.userOperations().getUserProfile().getFirstName();
+		//System.out.println(name+", "+nameFreq);
+		allWords.note(name, nameFreq);
 		WordList list = new WordList(allWords);
 		
 		wordListRepository.saveWordList(list);

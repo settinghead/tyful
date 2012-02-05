@@ -23,10 +23,13 @@
 				<mx:ControlBar>
 					<mx:VBox>
 						<template:DirectionPicker id="directionPicker"  />
-						<template:ThicknessPicker id="thicknessPicker"  />	
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+						<template:ThicknessPicker id="thicknessPicker"  />
+						<mx:HBox>
+							<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />						
+						</mx:HBox>
+
 					</mx:VBox>
-				
 
 				</mx:ControlBar>			
 			
@@ -84,6 +87,7 @@
 			private static const PROGRESS:uint = 1;
 			
 			public static const RENDER_TU:String = "renderTu";
+			public static const SAVE_TEMPLATE:String = "renderTu";
 			
 			private var _template:TemplateVO;
 			
@@ -223,6 +227,10 @@
 				dispatchEvent(new Event(RENDER_TU));	
 			}
 			
+			protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(SAVE_TEMPLATE));	
+			}
 			
 			protected function drawTransparentBackground():void
 			{

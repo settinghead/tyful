@@ -15,11 +15,7 @@
  */
 package org.springframework.social.quickstart.config;
 
-import java.util.Properties;
-
 import javax.inject.Inject;
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -31,7 +27,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 
 /**
  * Spring MVC Configuration.
@@ -43,8 +38,6 @@ import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
 
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	@Inject
-	private DataSource dataSource;
 
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new UserInterceptor(usersConnectionRepository));

@@ -1,6 +1,8 @@
 package com.settinghead.wexpression.client
 {
-	import com.settinghead.wexpression.client.controller.StartupCommand;
+	import com.settinghead.wexpression.client.controller.main.StartupCommand;
+	import com.settinghead.wexpression.client.controller.template.LoadTemplateCommand;
+	import com.settinghead.wexpression.client.controller.template.SaveTemplateCommand;
 	
 	import flash.display.LoaderInfo;
 	
@@ -14,10 +16,12 @@ package com.settinghead.wexpression.client
 		public static const EDIT_TEMPLATE:String             = "editTemplate";
 		public static const GENERATE_TU:String			  = "generateTu";
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
-		public static const TEMPLATE_SELECTED:String	  = "templateSelected";
 		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
 		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
-		
+		public static const TEMPLATE_LOADED:String			= "templateLoaded";
+		public static const LOAD_TEMPLATE:String			= "loadTemplate";
+		public static const TEMPLATE_SAVED:String			= "templateSaved";
+		public static const SAVE_TEMPLATE:String			= "saveTemplate";
 		
 		/**
 		 * Start the application
@@ -33,7 +37,10 @@ package com.settinghead.wexpression.client
 		override protected function initializeController( ) : void 
 		{
 			super.initializeController();            
-			registerCommand( STARTUP, StartupCommand );			
+			registerCommand( STARTUP, StartupCommand );	
+			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
+			registerCommand (SAVE_TEMPLATE, SaveTemplateCommand);
+
 		}
 		
 		/**

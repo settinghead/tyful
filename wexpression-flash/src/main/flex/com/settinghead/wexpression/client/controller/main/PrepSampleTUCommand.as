@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.controller
+package com.settinghead.wexpression.client.controller.main
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
@@ -24,7 +24,7 @@ package com.settinghead.wexpression.client.controller
 		override public function execute( note:INotification ) : void    
 		{
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
-			templateProxy.templatePath = "resources/templates/heart.png";
+			templateProxy.templatePath = "resources/templates/egg.png";
 			
 			var monitor:LoadupMonitorProxy = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
 			monitor.loadResources();

@@ -14,7 +14,7 @@ package com.settinghead.wexpression.client.density
 		public static const NUMBER_OF_DIVISIONS:int= 2;
 		public static const QUEUE_ALPHA_THRESHOLD:Number= Number.NEGATIVE_INFINITY;
 		public static var MARK_FILL_FACTOR:Number= 1;
-		public static var NUMBER_OF_ATTEMPTED_PATCHES:int = 3;
+		public static var NUMBER_OF_ATTEMPTED_PATCHES:int = 4;
 		private var locked:Boolean = false;
 		
 		public function DensityPatchIndex(img:TemplateVO) {

@@ -79,6 +79,8 @@ package com.settinghead.wexpression.client.model
 			this._wordList = wl;
 		}
 
+		
+		private var failureCount:int = 0;
 		public function renderNextDisplayWord(tu:TuVO):void{
 			//TODO
 			var eWord:EngineWordVO = null;
@@ -92,23 +94,35 @@ package com.settinghead.wexpression.client.model
 			if(eWord!=null){
 				tu.placeWord(eWord);
 
-				if (eWord.wasSkipped()){
-//				while (eWord.wasSkipped()){
+//				if (eWord.wasSkipped()){
+				while (eWord.wasSkipped()){
+					if(tu.indexOffset+tu.currentWordIndex==tu.words.size - 1)
+						break;
 					tu.indexOffset+=tu.words.size/15;
 					if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
 					{
 						tu.indexOffset = tu.words.size -1;
-//						break;
+						break;
 					}
-//					eWord = tu.generateEngineWord(word);
-//					tu.placeWord(eWord);
+					eWord = tu.generateEngineWord(word);
+					tu.placeWord(eWord);
 				}				
 
+				
+				
 				tu.pushEngineWord(eWord);
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
+					failureCount = 0;
 					dw = eWord.rendition(tu.template.colorer.colorFor(word));
 					tu.dWords.addItem(dw);
+				}
+				else{
+					failureCount ++;
+					
+					//5 consecutive failures. Put rendering to an end.
+					if (failureCount > 15)
+						tu.skipToLast();
 				}
 
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);

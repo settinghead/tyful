@@ -122,16 +122,19 @@ package com.settinghead.wexpression.client.model.vo
 			return _currentWordIndex;
 		}
 		
+		public function skipToLast():void{
+			 _currentWordIndex = words.size;
+		}
 		
 		public function get failedLast():Boolean{
 			return this.failedLast;
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 3 
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 20 
 				* (1+ Math.random() * 0.4)
 				;
-			var area:Number = p.getWidth() * p.getHeight();
+//			var area:Number = p.getWidth() * p.getHeight();
 //			var result:int = area / 10000 * int(((1.0 - word.weight) * 60) )+ 30 + 40*Math.random();
 //			Assert.isTrue(result>0);
 //			return result;

@@ -34,17 +34,19 @@ package com.settinghead.wexpression.client.view
 		{
 			super(NAME, viewComponent);
 			templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
+			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
+
 		}
 		
 		
 		
 		override public function listNotificationInterests():Array {
-			return [ApplicationFacade.EDIT_TEMPLATE];
+			return [ApplicationFacade.EDIT_TEMPLATE,ApplicationFacade.TEMPLATE_LOADED];
 		}
 		
 		override public function handleNotification(notification:INotification):void {
 			switch (notification.getName()) {
-				case ApplicationFacade.EDIT_TEMPLATE:
+				case ApplicationFacade.TEMPLATE_LOADED:
 					templateEditor.template = notification.getBody() as TemplateVO;
 					break;
 			}
@@ -68,6 +70,11 @@ package com.settinghead.wexpression.client.view
 			tuProxy.wordList = wordListProxy.currentWordList;
 
 			tuProxy.load();
+		}
+		
+		private function saveTemplate( event:Event = null ):void
+		{
+			 facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
 		}
 	
 	}

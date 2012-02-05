@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import org.hibernate.annotations.IndexColumn;
 import org.springframework.transaction.annotation.Transactional;
 

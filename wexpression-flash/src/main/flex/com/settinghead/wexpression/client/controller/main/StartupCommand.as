@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.controller
+package com.settinghead.wexpression.client.controller.main
 {
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.model.TuProxy;
