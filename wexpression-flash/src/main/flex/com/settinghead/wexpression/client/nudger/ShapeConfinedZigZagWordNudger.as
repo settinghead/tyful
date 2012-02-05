@@ -31,13 +31,14 @@ package com.settinghead.wexpression.client.nudger {
 //				Alert.show(unitDistance.toString());
 				var x:Number = ((attempt / (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getWidth() / 2);
 				var y:Number = ((attempt % (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getHeight() / 2);
+				x*=2;
+				y*=2;
+				
 				if(attempt % 2==0)
 				{
 					x = p.getWidth() - x;
 					y = p.getHeight() - y;
 				}
-				x*=1.2;
-				y*=1.2;
 				
 			return new Point(x, y);
 		}

@@ -40,7 +40,7 @@ package com.settinghead.wexpression.client.model.vo {
 		private var pointsStamp:Number;
 		private var _points:Array= null;
 		
-		public static const MARGIN:Number = 2;
+		public static const MARGIN:Number = 0;
 	
 		public function BBPolarTreeVO( r1:Number,  r2:Number, d1:Number, d2:Number, minBoxSize:int) {
 			this._r1 = r1;
@@ -50,7 +50,9 @@ package com.settinghead.wexpression.client.model.vo {
 			var r:Number= r2 - r1;
 			var d:Number=  BBPolarTreeVO.PI * (d1+d2) * r / BBPolarTreeVO.TWO_PI;
 	
-			var tooSmallToContinue:Boolean= d <= minBoxSize || d2 - d1 < minBoxSize;
+			var tooSmallToContinue:Boolean= d <= minBoxSize || d2 - d1 <= minBoxSize;
+//			var tooSmallToContinue:Boolean = 
+//				this.getWidth(false) < minBoxSize || this.getHeight(false) < minBoxSize;
 			if (tooSmallToContinue)
 				this.setLeaf(true);
 		}
@@ -195,7 +197,7 @@ package com.settinghead.wexpression.client.model.vo {
 			return this._points;
 		}
 	
-		private function rectCollide(bTree:BBPolarTreeVO):Boolean {
+		protected function rectCollide(bTree:BBPolarTreeVO):Boolean {
 			var b:Array= bTree.getPoints();
 	
 			return rectCollideCoord(b[0], b[1], b[2], b[3]);

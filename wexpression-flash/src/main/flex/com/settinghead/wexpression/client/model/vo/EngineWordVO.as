@@ -239,28 +239,28 @@ public class EngineWordVO {
 	public function rendition(c:uint):DisplayWordVO{
 		
 		var s:DisplayWordVO = new DisplayWordVO(this);
-			var tt:TextField = new TextField();
-			tt.autoSize = TextFieldAutoSize.LEFT;
-			tt.embedFonts = true;
-			tt.cacheAsBitmap = true;
-			tt.textColor = c;
+//			var tt:TextField = new TextField();
+//			tt.autoSize = TextFieldAutoSize.LEFT;
+//			tt.embedFonts = true;
+//			tt.background = false;
+//			tt.selectable = false;
+//
+//			tt.cacheAsBitmap = true;
+//			tt.textColor = c;
+//			
+//			tt.styleSheet = this.shape.textField.styleSheet;
+//			
+//			tt.antiAliasType = AntiAliasType.ADVANCED;
+//			tt.htmlText = this.shape.textField.htmlText;
+//			
+//			
+//			tt.filters = this.shape.textField.filters;
+//			tt.autoSize = this.shape.textField.autoSize;
+//			tt.wordWrap = this.shape.textField.wordWrap;
+//			tt.width = this.shape.textField.width;
 			
-			tt.styleSheet = this.shape.textField.styleSheet;
-			
-			tt.antiAliasType = AntiAliasType.ADVANCED;
-			tt.htmlText = this.shape.textField.htmlText;
-			if(word.word.length>10){ //TODO: this is a temporary fix
-				var ww:Number = tt.width;
-				tt.wordWrap = true;
-				tt.width = ww/(word.word.length/10)*1.1 ;
-			}
-			
-			s.filters = [ 
-//												new GlowFilter( 0x000000, 1, 0, 0, 255 ),  
-				new DropShadowFilter(0.5,45,0,1.0,0.5,0.5) 
-			];
-			
-			s.addChild(tt);
+			this.shape.textField.textColor = c;
+			s.addChild(this.shape.textField);
 			
 			var w:Number = s.width;
 			var h:Number = s.height;

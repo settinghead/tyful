@@ -24,6 +24,7 @@ package com.settinghead.wexpression.client.model.vo
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -34,6 +35,7 @@ package com.settinghead.wexpression.client.model.vo
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
+	import mx.controls.Alert;
 	import mx.controls.Label;
 	
 	import org.as3commons.lang.Assert;
@@ -74,7 +76,19 @@ package com.settinghead.wexpression.client.model.vo
 			HELPER_MATRIX.ty = -bounds.y + safetyBorder;
 			
 			_bmp = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
-			_bmp.bitmapData.draw( _textField );
+			var s:Sprite = new Sprite();
+			s.width = _textField.width;
+			s.height = textField.height;
+
+//			if(size < 20){
+//				
+//				s.graphics.beginFill(0xbcbcbc,0.5);
+//				s.graphics.drawRect(0,0,s.width,s.height);
+//				s.graphics.endFill();
+//			}
+				
+			s.addChild(_textField);
+			_bmp.bitmapData.draw( s );
 
 			_bmp.x = 0;
 			_bmp.y = 0;
@@ -95,8 +109,13 @@ package com.settinghead.wexpression.client.model.vo
 			textField.selectable = false;
 			textField.embedFonts = true;
 			textField.cacheAsBitmap = true;
+			textField.x = 0;
+			textField.y = 0;
+			textField.antiAliasType = AntiAliasType.ADVANCED;
 //			textField.text  = text;
 			textField.htmlText = "<div>"+text+"</div>";
+			textField.filters = [				new DropShadowFilter(0.5,45,0,1.0,0.5,0.5) 
+];
 			if(text.length>10){ //TODO: this is a temporary fix
 				var w:Number = textField.width;
 				textField.wordWrap = true;
@@ -132,20 +151,17 @@ package com.settinghead.wexpression.client.model.vo
 			if(transformed)
 				throw new NotImplementedError();
 			else{
-				var r:Boolean = _bmp.bitmapData.hitTest(new Point(0,0),255, new Rectangle(x,y,width,height),null,255);
+//				for(var xx:Number = x; xx<x+width;xx++)
+//					for(var yy:Number = y; yy<y+height;yy++){
+//						if(_bmp.bitmapData.getPixel(xx,yy)!=0xffffff)
+//							return true;
+//					}
+//				return false;
+
+				var r:Boolean = _bmp.bitmapData.hitTest(new Point(0,0),1, new Rectangle(x,y,width,height),null,1);
 				return r;
 			}
 		}
-		
-//		public function getBounds2D():Rectangle {
-//			return _textField.getBounds(shape.parent);
-////		}
-//		public function getWidth():int{
-//			return _textFi.width;
-//		}
-//		public function getHeight():int{
-//			return shape.height;
-//		}
 		
 		public function setCenterLocation(centerX:Number,centerY:Number):void{
 			this._centerX = centerX;

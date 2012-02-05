@@ -121,7 +121,7 @@ package com.settinghead.wexpression.client.model
 					failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > 15)
+					if (failureCount > 10)
 						tu.skipToLast();
 				}
 

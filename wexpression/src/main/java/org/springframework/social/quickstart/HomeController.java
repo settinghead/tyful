@@ -15,6 +15,7 @@
  */
 package org.springframework.social.quickstart;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.facebook.api.Comment;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.Page;
 import org.springframework.social.facebook.api.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +74,6 @@ public class HomeController {
 		String userId = facebook.userOperations().getUserProfile().getId();
 		System.out.println("Current user ID: " + userId);
 		List<Post> posts = fbPosts.getPosts(userId, 400, facebook);
-
 		final Counter<String> allWords = new Counter<String>();
 
 		for (Post post : posts) {
@@ -109,8 +110,14 @@ public class HomeController {
 				}
 
 			final Counter<String> words = new Counter<String>();
-			for (final String word : new WordIterator(sb.toString())) {
-				if (!StopWords.English.isStopWord(word))
+
+			StopWords.English.readStopWords(HomeController.class
+					.getResourceAsStream("stopwords_1000.txt"), Charset
+					.defaultCharset());
+
+			for (String word : new WordIterator(sb.toString())) {
+				word = word.trim();
+				if (word.length() > 0 && !StopWords.English.isStopWord(word))
 					words.note(word);
 			}
 
@@ -121,14 +128,20 @@ public class HomeController {
 				allWords.note(word, count);
 			}
 		}
-		
-		//personalize by adding your name
+
+		int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
+		for (Page p : facebook.likeOperations().getPagesLiked()) {
+			if (p.getName().length() > 0 && p.getName().length() < 20)
+				allWords.note(p.getName(), maxFreq - 2);
+		}
+
+		// personalize by adding your name
 		int nameFreq = allWords.getCount(allWords.getMostFrequent(1).get(0)) + 3;
 		String name = facebook.userOperations().getUserProfile().getFirstName();
-		//System.out.println(name+", "+nameFreq);
+		// System.out.println(name+", "+nameFreq);
 		allWords.note(name, nameFreq);
 		WordList list = new WordList(allWords);
-		
+
 		wordListRepository.saveWordList(list);
 		model.addAttribute("wordListId", list.getId());
 

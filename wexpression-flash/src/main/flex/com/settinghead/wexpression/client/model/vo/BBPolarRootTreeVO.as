@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.model.vo
 {
+	import mx.controls.Alert;
 
 	public class BBPolarRootTreeVO extends BBPolarTreeVO {
 		private var rootX:int;
@@ -98,6 +99,19 @@ package com.settinghead.wexpression.client.model.vo
 		public override function getShape():IImageShape {
 			return this.shape;
 		}
+		
+//		public override function overlaps(otherTree:BBPolarTreeVO):Boolean {
+//			var min:Number = 30;
+//			if(this.getHeight(false)<min || 
+//				this.getWidth(false)<min || 
+//				otherTree.getHeight(false)<min ||
+//				otherTree.getWidth(false)<min
+//			){
+//				return rectCollide(otherTree);
+//			}
+//			else
+//				return super.overlaps(otherTree);
+//		}
 		
 	}
 
