@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.user;
+package com.settinghead.wexpression.users;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -22,7 +22,7 @@ import org.springframework.social.connect.ConnectionSignUp;
 
 /**
  * Simple little {@link ConnectionSignUp} command that allocates new userIds in memory.
- * Doesn't bother storing a user record in any local database, since this quickstart just stores the user id in a cookie.
+ * Doesn't bother storing a user record in any local database, since this wepxression just stores the user id in a cookie.
  * @author Keith Donald
  */
 public final class SimpleConnectionSignUp implements ConnectionSignUp {

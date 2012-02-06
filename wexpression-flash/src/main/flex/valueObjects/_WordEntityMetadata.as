@@ -2,15 +2,13 @@
 /**
  * This is a generated class and is not intended for modification.  
  */
-package com.settinghead.wexpression.client.model.vo.wordlist
+package valueObjects
 {
 import com.adobe.fiber.styles.IStyle;
 import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
-import mx.collections.ArrayCollection;
-import valueObjects.Word;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -18,31 +16,31 @@ import mx.events.PropertyChangeEvent;
 use namespace model_internal;
 
 [ExcludeClass]
-internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
+internal class _WordEntityMetadata extends com.adobe.fiber.valueobjects.AbstractEntityMetadata
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "list");
+    model_internal static var allProperties:Array = new Array("id", "weight", "word");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "list");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "weight", "word");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "list");
+    model_internal static var dataProperties:Array = new Array("id", "weight", "word");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "list");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "weight", "word");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array("list");
+    model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
-    model_internal static var entityName:String = "WordList";
+    model_internal static var entityName:String = "Word";
     model_internal static var dependentsOnMap:Object;
     model_internal static var dependedOnServices:Array = new Array();
     model_internal static var propertyTypeMap:Object;
 
 
-    model_internal var _instance:_Super_WordList;
+    model_internal var _instance:_Super_Word;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
 
-    public function _WordListEntityMetadata(value : _Super_WordList)
+    public function _WordEntityMetadata(value : _Super_Word)
     {
         // initialize property maps
         if (model_internal::dependentsOnMap == null)
@@ -50,17 +48,18 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["id"] = new Array();
-            model_internal::dependentsOnMap["list"] = new Array();
+            model_internal::dependentsOnMap["weight"] = new Array();
+            model_internal::dependentsOnMap["word"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
-            model_internal::collectionBaseMap["list"] = "valueObjects.Word";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["id"] = "String";
-        model_internal::propertyTypeMap["list"] = "ArrayCollection";
+        model_internal::propertyTypeMap["weight"] = "Number";
+        model_internal::propertyTypeMap["word"] = "String";
 
         model_internal::_instance = value;
     }
@@ -113,7 +112,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     override public function getDependants(propertyName:String):Array
     {
        if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a data property of entity WordList");
+            throw new Error(propertyName + " is not a data property of entity Word");
             
        return model_internal::dependentsOnMap[propertyName] as Array;  
     }
@@ -131,7 +130,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     override public function getCollectionBase(propertyName:String):String
     {
         if (model_internal::collectionProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a collection property of entity WordList");
+            throw new Error(propertyName + " is not a collection property of entity Word");
 
         return model_internal::collectionBaseMap[propertyName];
     }
@@ -139,7 +138,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     override public function getPropertyType(propertyName:String):String
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
-            throw new Error(propertyName + " is not a property of WordList");
+            throw new Error(propertyName + " is not a property of Word");
 
         return model_internal::propertyTypeMap[propertyName];
     }
@@ -153,7 +152,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity WordList");
+            throw new Error(propertyName + " does not exist for entity Word");
         }
 
         return model_internal::_instance[propertyName];
@@ -163,7 +162,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     {
         if (model_internal::nonDerivedProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " is not a modifiable property of entity WordList");
+            throw new Error(propertyName + " is not a modifiable property of entity Word");
         }
 
         model_internal::_instance[propertyName] = value;
@@ -195,7 +194,7 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     {
         if (model_internal::allProperties.indexOf(propertyName) == -1)
         {
-            throw new Error(propertyName + " does not exist for entity WordList");
+            throw new Error(propertyName + " does not exist for entity Word");
         }
 
         if (model_internal::allAlwaysAvailableProperties.indexOf(propertyName) != -1)
@@ -296,7 +295,13 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]
-    public function get isListAvailable():Boolean
+    public function get isWeightAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isWordAvailable():Boolean
     {
         return true;
     }
@@ -318,7 +323,13 @@ internal class _WordListEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]   
-    public function get listStyle():com.adobe.fiber.styles.Style
+    public function get weightStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get wordStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

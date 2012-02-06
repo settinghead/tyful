@@ -29,13 +29,14 @@ package com.settinghead.wexpression.client.model
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
+	import mx.graphics.codec.PNGEncoder;
+	import mx.rpc.IResponder;
 	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
-	import org.springextensions.actionscript.context.support.mxml.Template;
 	
 	public class TuProxy extends EntityProxy implements ILoadupProxy
 	{
@@ -64,9 +65,7 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		public function load() :void{
-
 			var tu:TuVO = new TuVO(_template, _wordList);
-
 			facade.sendNotification(ApplicationFacade.TU_INITIALIZED, tu);
 
 		}
@@ -78,7 +77,15 @@ package com.settinghead.wexpression.client.model
 		public function set wordList(wl:WordListVO):void{
 			this._wordList = wl;
 		}
+		
+		private var _previewGenerationResponder:IResponder;
+		public function get previewGenerationResponder():IResponder{
+			return _previewGenerationResponder;
+		}
 
+		public function set previewGenerationResponder(r:IResponder):void{
+			this._previewGenerationResponder = r;
+		}
 		
 		private var failureCount:int = 0;
 		public function renderNextDisplayWord(tu:TuVO):void{
@@ -121,12 +128,19 @@ package com.settinghead.wexpression.client.model
 					failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > 10)
+					if (failureCount > 10){
 						tu.skipToLast();
+						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+					}
+
 				}
 
+				if(tu.finishedDisplayWordRendering && this.previewGenerationResponder!=null){
+					var encoder:PNGEncoder = new PNGEncoder();
+					tu.template.previewPNG = encoder.encode(tu.generatedImage);
+					this.previewGenerationResponder.result(tu.template);
+				}
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
-
 			}
 		}
 	}

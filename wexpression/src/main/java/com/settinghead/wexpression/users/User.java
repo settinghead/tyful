@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.user;
+package com.settinghead.wexpression.users;
 
 /**
  * Simple little User model. 

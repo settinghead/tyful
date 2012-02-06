@@ -8,22 +8,22 @@ import javax.persistence.Lob;
 
 @Entity
 public class Template {
-	private byte[] data;
+	private byte[] previewPNG;
 	private String id;
-
+	
 	/**
 	 * @param data the data to set
 	 */
-	public void setData(byte[] data) {
-		this.data = data;
+	public void setPreviewPNG(byte[] data) {
+		this.previewPNG = data;
 	}
 
 	/**
 	 * @return the data
 	 */
 	@Lob
-	public byte[] getData() {
-		return data;
+	public byte[] getPreviewPNG() {
+		return this.previewPNG;
 	}
 
 	/**

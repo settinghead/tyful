@@ -35,7 +35,6 @@ package com.settinghead.wexpression.client.view
 			super(NAME, viewComponent);
 			templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
 			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
-
 		}
 		
 		
@@ -68,8 +67,8 @@ package com.settinghead.wexpression.client.view
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
 			tuProxy.template =  templateEditor.template;
 			tuProxy.wordList = wordListProxy.currentWordList;
-
 			tuProxy.load();
+
 		}
 		
 		private function saveTemplate( event:Event = null ):void

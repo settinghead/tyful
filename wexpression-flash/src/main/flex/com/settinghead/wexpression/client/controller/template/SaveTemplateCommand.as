@@ -16,8 +16,13 @@ package com.settinghead.wexpression.client.controller.template
 	{
 		override public function execute( note:INotification ) : void    {
 			var template:TemplateVO = note.getBody() as TemplateVO;
-			var delegate:TemplateDelegate = new TemplateDelegate(this);
-			delegate.saveTemplate(template);
+			if(template.previewPNG==null){
+				sendNotification(ApplicationFacade.GENERATE_TEMPLATE_PREVIEW, template);
+			}
+			else{
+				var delegate:TemplateDelegate = new TemplateDelegate(this);
+				delegate.saveTemplate(template);
+			}
 		}
 		
 		public function result(data:Object):void

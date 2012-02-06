@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.config;
+package com.settinghead.wexpression.config;
 
 import javax.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.quickstart.user.UserInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -27,6 +26,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.settinghead.wexpression.users.UserInterceptor;
 
 /**
  * Spring MVC Configuration.
@@ -60,8 +61,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
-
-	
 
 	private @Inject
 	UsersConnectionRepository usersConnectionRepository;

@@ -1,4 +1,4 @@
-package org.springframework.social.quickstart.config;
+package com.settinghead.wexpression.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

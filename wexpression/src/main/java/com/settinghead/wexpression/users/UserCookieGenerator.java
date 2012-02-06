@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.user;
+package com.settinghead.wexpression.users;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ final class UserCookieGenerator {
 	private final CookieGenerator userCookieGenerator = new CookieGenerator();
 
 	public UserCookieGenerator() {
-		userCookieGenerator.setCookieName("quickstart_user");
+		userCookieGenerator.setCookieName("wexpression_user");
 	}
 
 	public void addCookie(String userId, HttpServletResponse response) {

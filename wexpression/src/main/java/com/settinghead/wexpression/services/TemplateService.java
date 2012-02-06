@@ -18,6 +18,8 @@ import com.settinghead.wexpression.data.WordListRepository;
 import com.settinghead.wexpression.data.template.Template;
 import com.settinghead.wexpression.data.template.TemplateRepository;
 
+import flex.messaging.io.amf.ASObject;
+
 @Repository
 @RemotingDestination
 public class TemplateService {
@@ -31,47 +33,15 @@ public class TemplateService {
 
 	@RemotingInclude
 	@Transactional
-	public Object getTemplate(String id) {
+	public Template getTemplate(String id) {
 		Template t = templateRepository.getTemplate(id);
-		return toObject(t.getData());
-
+		return t;
 	}
 
 	@RemotingInclude
 	@Transactional
-	public void saveTemplate(Object o) throws IOException {
+	public void saveTemplate(Template o) throws IOException {
 		Template t = new Template();
-		t.setData(toByteArray(o));
 		templateRepository.saveTemplate(t);
-	}
-
-	private byte[] toByteArray(Object obj) throws IOException{
-		byte[] bytes = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(obj);
-			oos.flush();
-			oos.close();
-			bos.close();
-			bytes = bos.toByteArray();
-		} catch (IOException ex) {
-			throw ex;
-		}
-		return bytes;
-	}
-
-	private Object toObject(byte[] bytes) {
-		Object obj = null;
-		try {
-			ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-			ObjectInputStream ois = new ObjectInputStream(bis);
-			obj = ois.readObject();
-		} catch (IOException ex) {
-			// TODO: Handle the exception
-		} catch (ClassNotFoundException ex) {
-			// TODO: Handle the exception
-		}
-		return obj;
 	}
 }

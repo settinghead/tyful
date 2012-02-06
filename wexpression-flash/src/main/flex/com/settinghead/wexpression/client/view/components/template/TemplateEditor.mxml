@@ -20,18 +20,24 @@
 	</mx:states>
 	<mx:TabNavigator left="0" right="0" top="0" bottom="0">
 		<s:NavigatorContent label="Text Flow Directions">
-				<mx:ControlBar>
-					<mx:VBox>
-						<template:DirectionPicker id="directionPicker"  />
-						<template:ThicknessPicker id="thicknessPicker"  />
-						<mx:HBox>
-							<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
-							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />						
-						</mx:HBox>
-
-					</mx:VBox>
-
-				</mx:ControlBar>			
+			<s:Group>
+					<s:layout>
+				<s:VerticalLayout>
+			
+				</s:VerticalLayout>
+			</s:layout>
+				<template:DirectionPicker id="directionPicker"  />
+				<template:ThicknessPicker id="thicknessPicker"  />
+				<s:Group>
+					<s:layout>
+						<s:HorizontalLayout />
+					</s:layout>
+					<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+					<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+				</s:Group>
+			</s:Group>
+		
+			
 			
 			<mx:UIComponent id="cvnTransparentBackground" top="100"
 							left="0" visible="true" />
@@ -87,7 +93,7 @@
 			private static const PROGRESS:uint = 1;
 			
 			public static const RENDER_TU:String = "renderTu";
-			public static const SAVE_TEMPLATE:String = "renderTu";
+			public static const SAVE_TEMPLATE:String = "saveTemplate";
 			
 			private var _template:TemplateVO;
 			
@@ -230,6 +236,7 @@
 			protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new Event(SAVE_TEMPLATE));	
+
 			}
 			
 			protected function drawTransparentBackground():void

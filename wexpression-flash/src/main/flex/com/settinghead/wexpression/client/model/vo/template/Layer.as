@@ -61,13 +61,28 @@ package com.settinghead.wexpression.client.model.vo.template
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 		private var _path:String;
 		private var _colorer:WordColorer;
-		private var _placer:WordPlacer;
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
 		private var _renderOptions:RenderOptions;
 		private var hsbArray:Array;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
+		
+		private var _fonter:WordFonter = null;
+		public function get fonter():WordFonter{
+			if(this._fonter==null){
+				return this._template.fonter;
+			}
+			else return this._fonter;
+		}
+		
+		private var _placer:WordPlacer;
+		public function get colorer():WordColorer{
+			if(this._colorer==null){
+				return this._template.colorer;
+			}
+			else return this._colorer;
+		}
 		
 		
 		public function get thumbnail():BitmapData{			
@@ -297,15 +312,6 @@ package com.settinghead.wexpression.client.model.vo.template
 		public function get height():Number{
 			return _img.height;
 		}
-		
-		
-		public function get colorer():WordColorer{
-			if(this._colorer==null){
-				return _template.colorer;
-			}
-			else return this._colorer;
-		}
-	
 		
 		public function get nudger():WordNudger{
 			if(this._nudger==null){

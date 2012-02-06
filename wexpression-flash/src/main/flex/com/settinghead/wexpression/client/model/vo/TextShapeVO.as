@@ -53,7 +53,12 @@ package com.settinghead.wexpression.client.model.vo
 		[Embed(source="Vera.ttf", fontFamily="vera", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const Vera: Class;
-		public static const font:Font = new Vera();
+		
+		[Embed(source="pokoljaro-kRB.ttf", fontFamily="pokoljaro", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Pokoljaro: Class;
+
+
 		
 		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
 
@@ -64,7 +69,7 @@ package com.settinghead.wexpression.client.model.vo
 		private var _size: Number;
 		private var _centerX:Number, _centerY:Number, _rotation:Number = 0;
 		
-		public function TextShapeVO(embeddedFont: Boolean, text: String, safetyBorder: Number, size: Number, rotation: Number = 0, fontName: String = "Vera")
+		public function TextShapeVO(embeddedFont: Boolean, text: String, safetyBorder: Number, size: Number, rotation: Number = 0, fontName: String = "pokoljaro")
 		{
 			this._size = size;
 
@@ -102,13 +107,13 @@ package com.settinghead.wexpression.client.model.vo
 			var textField: TextField = new TextField();
 //			textField.setTextFormat( new TextFormat( font.fontName, size ) );
 			var style:StyleSheet = new StyleSheet();
-			style.parseCSS("div{font-size: "+_size+"; font-family: "+font.fontName+"; leading: 0; text-align: center; }");
+			style.parseCSS("div{font-size: "+_size+"; font-family: "+fontName+"; leading: 0; text-align: center; }");
 			textField.styleSheet = style;
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.background = false;
 			textField.selectable = false;
 			textField.embedFonts = true;
-			textField.cacheAsBitmap = true;
+			textField.cacheAsBitmap = false;
 			textField.x = 0;
 			textField.y = 0;
 			textField.antiAliasType = AntiAliasType.ADVANCED;
@@ -116,10 +121,10 @@ package com.settinghead.wexpression.client.model.vo
 			textField.htmlText = "<div>"+text+"</div>";
 			textField.filters = [				new DropShadowFilter(0.5,45,0,1.0,0.5,0.5) 
 ];
-			if(text.length>10){ //TODO: this is a temporary fix
+			if(text.length>11){ //TODO: this is a temporary fix
 				var w:Number = textField.width;
 				textField.wordWrap = true;
-				textField.width = w/(text.length/10)*1.1 ;
+				textField.width = w/(text.length/11)*1.1 ;
 			}
 			return textField;
 		}

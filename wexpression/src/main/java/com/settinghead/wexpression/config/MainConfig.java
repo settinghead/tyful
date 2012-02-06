@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.config;
+package com.settinghead.wexpression.config;
 
 import java.util.Properties;
 
@@ -46,9 +46,9 @@ import com.settinghead.wexpression.data.WordListRepository;
  * @author Keith Donald
  */
 @Configuration
-@ComponentScan(basePackages = { "org.springframework.social.quickstart",
+@ComponentScan(basePackages = { "com.settinghead.wexpression.controllers",
 		"com.settinghead.wexpression" }, excludeFilters = { @Filter(Configuration.class) })
-@PropertySource("classpath:org/springframework/social/quickstart/config/application.properties")
+@PropertySource("classpath:com/settinghead/wexpression/config/application.properties")
 @EnableTransactionManagement
 public class MainConfig {
 	@Inject
@@ -57,7 +57,7 @@ public class MainConfig {
 	@Bean(destroyMethod = "shutdown")
 	public DataSource dataSource() {
 		EmbeddedDatabaseFactory factory = new EmbeddedDatabaseFactory();
-		factory.setDatabaseName("spring-social-quickstart");
+		factory.setDatabaseName("wexpression");
 		factory.setDatabaseType(EmbeddedDatabaseType.H2);
 		factory.setDatabasePopulator(databasePopulator());
 		return factory.getDatabase();

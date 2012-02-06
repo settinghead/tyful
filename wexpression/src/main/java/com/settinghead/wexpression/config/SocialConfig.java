@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.quickstart.config;
+package com.settinghead.wexpression.config;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -34,10 +34,11 @@ import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.quickstart.user.SecurityContext;
-import org.springframework.social.quickstart.user.SimpleConnectionSignUp;
-import org.springframework.social.quickstart.user.SimpleSignInAdapter;
-import org.springframework.social.quickstart.user.User;
+
+import com.settinghead.wexpression.users.SecurityContext;
+import com.settinghead.wexpression.users.SimpleConnectionSignUp;
+import com.settinghead.wexpression.users.SimpleSignInAdapter;
+import com.settinghead.wexpression.users.User;
 
 /**
  * Spring Social Configuration.

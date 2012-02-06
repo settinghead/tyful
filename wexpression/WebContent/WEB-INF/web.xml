@@ -62,7 +62,7 @@
 		that makeup this application -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>org.springframework.social.quickstart.config</param-value>
+		<param-value>com.settinghead.wexpression.config</param-value>
 	</context-param>
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->

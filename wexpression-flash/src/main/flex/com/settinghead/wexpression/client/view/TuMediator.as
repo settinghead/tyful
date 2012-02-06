@@ -37,7 +37,8 @@ package com.settinghead.wexpression.client.view
 		{
 			return [
 				ApplicationFacade.TU_INITIALIZED,
-				ApplicationFacade.DISPLAYWORD_CREATED
+				ApplicationFacade.DISPLAYWORD_CREATED,
+				ApplicationFacade.TU_GENERATION_LAST_CALL
 			];
 		}
 		
@@ -46,12 +47,14 @@ package com.settinghead.wexpression.client.view
 			switch ( note.getName() )
 			{
 				case ApplicationFacade.TU_INITIALIZED:
-
 					tuRenderer.tu =  note.getBody() as TuVO;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)
 						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
+					break;
+				case ApplicationFacade.TU_GENERATION_LAST_CALL:
+					tuRenderer.generateImage();
 					break;
 			}
 		}

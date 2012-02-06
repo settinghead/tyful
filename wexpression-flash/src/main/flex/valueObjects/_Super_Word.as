@@ -1,16 +1,15 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - WordList.as.
+ * of this value object you may modify the generated sub-class of this class - Word.as.
  */
 
-package com.settinghead.wexpression.client.model.vo.wordlist
+package valueObjects
 {
 import com.adobe.fiber.services.IFiberManagingService;
 import com.adobe.fiber.valueobjects.IValueObject;
 import flash.events.EventDispatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import valueObjects.Word;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -21,29 +20,28 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 use namespace model_internal;
 
 [ExcludeClass]
-public class _Super_WordList extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_Word extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
         try
         {
-            if (flash.net.getClassByAlias("com.settinghead.wexpression.data.WordList") == null)
+            if (flash.net.getClassByAlias("com.settinghead.wexpression.data.Word") == null)
             {
-                flash.net.registerClassAlias("com.settinghead.wexpression.data.WordList", cz);
+                flash.net.registerClassAlias("com.settinghead.wexpression.data.Word", cz);
             }
         }
         catch (e:Error)
         {
-            flash.net.registerClassAlias("com.settinghead.wexpression.data.WordList", cz);
+            flash.net.registerClassAlias("com.settinghead.wexpression.data.Word", cz);
         }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
-        valueObjects.Word.initRemoteClassAliasSingleChild();
     }
 
-    model_internal var _dminternal_model : _WordListEntityMetadata;
+    model_internal var _dminternal_model : _WordEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -61,11 +59,13 @@ public class _Super_WordList extends flash.events.EventDispatcher implements com
      * properties
      */
     private var _internal_id : String;
-    private var _internal_list : ArrayCollection;
-    model_internal var _internal_list_leaf:valueObjects.Word;
+    private var _internal_weight : Number;
+    private var _internal_word : String;
 
     private static var emptyArray:Array = new Array();
 
+    // Change this value according to your application's floating-point precision
+    private static var epsilon:Number = 0.0001;
 
     /**
      * derived property cache initialization
@@ -74,9 +74,9 @@ public class _Super_WordList extends flash.events.EventDispatcher implements com
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_WordList()
+    public function _Super_Word()
     {
-        _model = new _WordListEntityMetadata(this);
+        _model = new _WordEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
 
@@ -93,9 +93,15 @@ public class _Super_WordList extends flash.events.EventDispatcher implements com
     }
 
     [Bindable(event="propertyChange")]
-    public function get list() : ArrayCollection
+    public function get weight() : Number
     {
-        return _internal_list;
+        return _internal_weight;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get word() : String
+    {
+        return _internal_word;
     }
 
     public function clearAssociations() : void
@@ -116,28 +122,23 @@ public class _Super_WordList extends flash.events.EventDispatcher implements com
         }
     }
 
-    public function set list(value:*) : void
+    public function set weight(value:Number) : void
     {
-        var oldValue:ArrayCollection = _internal_list;
+        var oldValue:Number = _internal_weight;
+        if (isNaN(_internal_weight) == true || Math.abs(oldValue - value) > epsilon)
+        {
+            _internal_weight = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "weight", oldValue, _internal_weight));
+        }
+    }
+
+    public function set word(value:String) : void
+    {
+        var oldValue:String = _internal_word;
         if (oldValue !== value)
         {
-            if (value is ArrayCollection)
-            {
-                _internal_list = value;
-            }
-            else if (value is Array)
-            {
-                _internal_list = new ArrayCollection(value);
-            }
-            else if (value == null)
-            {
-                _internal_list = null;
-            }
-            else
-            {
-                throw new Error("value of list must be a collection");
-            }
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "list", oldValue, _internal_list));
+            _internal_word = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "word", oldValue, _internal_word));
         }
     }
 
@@ -201,14 +202,14 @@ public class _Super_WordList extends flash.events.EventDispatcher implements com
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _WordListEntityMetadata
+    public function get _model() : _WordEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _WordListEntityMetadata) : void
+    public function set _model(value : _WordEntityMetadata) : void
     {
-        var oldValue : _WordListEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _WordEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;

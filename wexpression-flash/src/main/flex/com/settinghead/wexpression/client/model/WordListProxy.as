@@ -36,7 +36,7 @@ package com.settinghead.wexpression.client.model
 
 		private var _list:WordListVO = null;
 		
-		public function WordListProxy(data:Object=null)
+		public function WordListProxy()
 		{
 			super(NAME, null);
 		}
@@ -70,7 +70,7 @@ package com.settinghead.wexpression.client.model
 			return _list;
 		}
 		
-		private static function generateWords():WordListVO{
+		public function generateWords():WordListVO{
 			var list:WordListVO = new WordListVO();
 			for(var i:int=0;i<80;i++){
 				list.add(new WordVO("Freedomize", Math.random()*5+0.5));
@@ -83,6 +83,16 @@ package com.settinghead.wexpression.client.model
 				list.add(new WordVO("Bloom", Math.random()*5+0.5));	
 				list.add(new WordVO("MOLLY", Math.random()*5+0.5));			
 				list.add(new WordVO("shake spear", Math.random()*5+0.5));
+			}
+			return list;
+		}
+		
+		public function sampleWordList():WordListVO{
+			var list:WordListVO = new WordListVO();
+			for(var i:int=0;i<1000;i++){
+				list.add(new WordVO("Artwork", Math.random()*5+0.5));
+				list.add(new WordVO("Sample", Math.random()*5+0.5));
+				list.add(new WordVO("typography", Math.random()*5+0.5));
 			}
 			return list;
 		}

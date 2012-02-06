@@ -32,6 +32,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
 	
 	import mx.utils.HSBColor;
 	
@@ -59,6 +60,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var hsbArray:Array;
 		private var _patchIndex:DensityPatchIndex;
 		private var _width:Number, _height:Number;
+		private var _previewPNG: ByteArray;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -97,6 +99,14 @@ package com.settinghead.wexpression.client.model.vo.template
 			return _height;
 		}
 		
+		public function get previewPNG():ByteArray{
+			return _previewPNG;
+		}
+		
+		public function set previewPNG(p:ByteArray):void{
+			 _previewPNG = p;
+		}
+		
 		public function get patchIndex():DensityPatchIndex{
 			return this._patchIndex;
 		}
@@ -114,8 +124,7 @@ package com.settinghead.wexpression.client.model.vo.template
 			}
 			return this._sizer;
 		}
-		
-		
+
 		public function get fonter():WordFonter{
 			if(this._fonter==null){
 				this._fonter = new AlwaysUseFonter("Vera");

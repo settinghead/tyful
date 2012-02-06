@@ -156,14 +156,14 @@
 						dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
 					}
 
-					if((_tu.finishedDisplayWordRendering || _tu.almostFinishedDisplayWordRendering)
-					    && _tu.generatedImage==null){
+					if(_tu!=null && (_tu.finishedDisplayWordRendering || (_tu.almostFinishedDisplayWordRendering
+					    && _tu.generatedImage==null))){
 						generateImage();
 					}
 				}
 			}
 			
-			private function generateImage():void{
+			public function generateImage():void{
 				var bmpData:BitmapData = new BitmapData(mainCanvas.width, mainCanvas.height,true);
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
 				bmpData.draw(mainCanvas);
