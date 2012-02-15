@@ -7,8 +7,8 @@ package com.settinghead.wexpression.client.model.vo
 			
 			public function BBPolarChildTreeVO(r1:Number, r2:Number,
 												  d1:Number, d2:Number, 
-											 root:BBPolarRootTreeVO,  minBoxSize:int) {
-					super(r1, r2, d1, d2, minBoxSize);
+											 root:BBPolarRootTreeVO) {
+					super(r1, r2, d1, d2);
 					this.root = root;
 				}
 			
@@ -233,12 +233,6 @@ package com.settinghead.wexpression.client.model.vo
 			public override function getRoot():BBPolarRootTreeVO {
 				return root;
 			}
-			
-			
-			public override function getMinBoxSize():int {
-				return root.getMinBoxSize();
-			}
-			
 			
 			public override function getShape():IImageShape {
 				return root.getShape();

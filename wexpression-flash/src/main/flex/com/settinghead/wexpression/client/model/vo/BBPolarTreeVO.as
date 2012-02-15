@@ -29,6 +29,7 @@ package com.settinghead.wexpression.client.model.vo {
 		public static const TWO_PI:Number= ((Math.PI * 2));
 		public static const PI:Number = (Math.PI);
 		public static const ONE_AND_HALF_PI:Number= ((Math.PI + HALF_PI));
+		public static const MIN_BOX_SIZE:Number= 0.5;
 		
 		protected var rStamp:Number;
 		
@@ -42,7 +43,7 @@ package com.settinghead.wexpression.client.model.vo {
 		
 		public static const MARGIN:Number = 0;
 	
-		public function BBPolarTreeVO( r1:Number,  r2:Number, d1:Number, d2:Number, minBoxSize:int) {
+		public function BBPolarTreeVO( r1:Number,  r2:Number, d1:Number, d2:Number) {
 			this._r1 = r1;
 			this._r2 = r2;
 			this.d1 = d1;
@@ -50,7 +51,7 @@ package com.settinghead.wexpression.client.model.vo {
 			var r:Number= r2 - r1;
 			var d:Number=  BBPolarTreeVO.PI * (d1+d2) * r / BBPolarTreeVO.TWO_PI;
 	
-			var tooSmallToContinue:Boolean= d <= minBoxSize || d2 - d1 <= minBoxSize;
+			var tooSmallToContinue:Boolean= d < MIN_BOX_SIZE || d2 - d1 < MIN_BOX_SIZE;
 //			var tooSmallToContinue:Boolean = 
 //				this.getWidth(false) < minBoxSize || this.getHeight(false) < minBoxSize;
 			if (tooSmallToContinue)
@@ -93,16 +94,12 @@ package com.settinghead.wexpression.client.model.vo {
 	
 		public function getKids():Vector.<BBPolarChildTreeVO> {
 			if ((!this.isLeaf()) && this._kids == null)
-				BBPolarTreeBuilder.makeChildren(this, getShape(), getMinBoxSize(),
+				BBPolarTreeBuilder.makeChildren(this, getShape(),
 						getRoot());
 			return this._kids;
 		}
 	
 		 public function getRoot():BBPolarRootTreeVO {
-			 throw new NotImplementedError();
-		 }
-	
-		 public function getMinBoxSize():int {
 			 throw new NotImplementedError();
 		 }
 	

@@ -8,15 +8,13 @@ package com.settinghead.wexpression.client.model.vo
 		private var _rotation:Number= 0;
 		protected var rootStamp:Number;
 		private var shape:IImageShape;
-		private var _minBoxSize:int;
 		
 		public function BBPolarRootTreeVO(shape:IImageShape, centerX:int, centerY:int,
-										d:Number, minBoxSize:int) {
-			super(0, TWO_PI, 0, d, minBoxSize);
+										d:Number) {
+			super(0, TWO_PI, 0, d);
 			this.rootX = centerX;
 			this.rootY = centerY;
 			this.shape = shape;
-			this._minBoxSize = minBoxSize;
 			this.rootStamp = (new Date()).time;
 		}
 		
@@ -89,12 +87,6 @@ package com.settinghead.wexpression.client.model.vo
 		public override function getRoot():BBPolarRootTreeVO {
 			return this;
 		}
-		
-		
-		public override function getMinBoxSize():int {
-			return this._minBoxSize;
-		}
-		
 		
 		public override function getShape():IImageShape {
 			return this.shape;

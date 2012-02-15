@@ -7,7 +7,7 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.model.business.TemplateDelegate;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	
 	import mx.controls.Alert;
 	import mx.managers.CursorManager;
@@ -29,7 +29,7 @@ package com.settinghead.wexpression.client.controller.template
 		}
 		
 		override public function execute( note:INotification ) : void    {
-			var template:TemplateVO = note.getBody() as TemplateVO;
+			var template:Template = note.getBody() as Template;
 			Assert.notNull(template);
 			tuProxy.setData(template);
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;

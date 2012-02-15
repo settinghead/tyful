@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client.controller.main
 {
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.model.TuProxy;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	

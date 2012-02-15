@@ -4,11 +4,8 @@ package com.settinghead.wexpression.client.model.vo
 	import com.settinghead.wexpression.client.RenderOptions;
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.WordSorterAndScaler;
-	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.density.Patch;
-	import com.settinghead.wexpression.client.fonter.WordFonter;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
-	import com.settinghead.wexpression.client.sizers.WordSizer;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -27,7 +24,7 @@ package com.settinghead.wexpression.client.model.vo
 		private static const SKIP_REASON_NO_SPACE:int = 1;
 		private static const SKIP_REASON_SHAPE_TOO_SMALL:int = 2;
 		
-		private var _template:TemplateVO;
+		private var _template:Template;
 		private var _words:WordListVO;
 		private var _dWords:DisplayWordListVO = new DisplayWordListVO();
 		private var _bgImg:Bitmap = null;
@@ -47,7 +44,7 @@ package com.settinghead.wexpression.client.model.vo
 		public var indexOffset:int=0;
 
 		
-		public function TuVO(template:TemplateVO, words:WordListVO){
+		public function TuVO(template:Template, words:WordListVO){
 			this._template = template;
 			this._width = template.width;
 			this._height = template.height;
@@ -65,7 +62,7 @@ package com.settinghead.wexpression.client.model.vo
 			return _dWords;
 		}
 		
-		public function get template():TemplateVO{
+		public function get template():Template{
 			return _template;
 		}
 		

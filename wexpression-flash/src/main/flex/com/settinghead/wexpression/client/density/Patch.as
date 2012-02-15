@@ -2,7 +2,8 @@ package com.settinghead.wexpression.client.density
 {
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	
 	import org.as3commons.collections.Set;
 
@@ -59,7 +60,7 @@ package com.settinghead.wexpression.client.density
 			return this.y;
 		}
 		
-		public function getImg():TemplateVO {
+		public function getImg():Template {
 			return this._queue.getMap().getIndex().getImg();
 		}
 		

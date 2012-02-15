@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client {
 	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.colorer.WordColorer;
 	import com.settinghead.wexpression.client.fonter.WordFonter;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
 	import com.settinghead.wexpression.client.sizers.WordSizer;
@@ -40,7 +40,7 @@ public class WordCramEngine {
 	private static const MAX_ANGLER_ATTEMPTS:int= 5;
 
 	private var destination:Sprite;
-	private var img:TemplateVO;
+	private var img:Template;
 	private var fonter:WordFonter;
 	private var sizer:WordSizer;
 	private var colorer:WordColorer;
@@ -66,7 +66,7 @@ public class WordCramEngine {
 	public function WordCramEngine( destination:Sprite,  words:SortedList,
 									fonter:WordFonter, sizer:WordSizer,
 			colorer:WordColorer, angler:WordAngler, placer:WordPlacer,
-			nudger:WordNudger, renderOptions:RenderOptions, img:TemplateVO = null) {
+			nudger:WordNudger, renderOptions:RenderOptions, img:Template = null) {
 
 		this.destination = destination;
 		this.img = img;

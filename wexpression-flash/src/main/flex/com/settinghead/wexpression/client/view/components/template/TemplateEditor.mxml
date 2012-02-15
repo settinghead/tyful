@@ -63,7 +63,7 @@
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
-			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.template.Template;
 			
 			import flash.display.*;
 			import flash.display.Sprite;
@@ -95,7 +95,7 @@
 			public static const RENDER_TU:String = "renderTu";
 			public static const SAVE_TEMPLATE:String = "saveTemplate";
 			
-			private var _template:TemplateVO;
+			private var _template:Template;
 			
 			private var _loadFile:FileReference;
 			private var jagFileRefSave:FileReference = new FileReference();
@@ -182,11 +182,11 @@
 				}
 			}
 			
-			public function get template():TemplateVO{
+			public function get template():Template{
 				return _template;
 			}
 			
-			[Bindable] public function set template(_template:TemplateVO):void{
+			[Bindable] public function set template(_template:Template):void{
 				this._template = _template;
 			}
 			

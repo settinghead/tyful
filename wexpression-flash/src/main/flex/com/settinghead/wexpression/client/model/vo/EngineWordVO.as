@@ -1,11 +1,11 @@
 package com.settinghead.wexpression.client.model.vo {
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.WordShaper;
-	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
-	import com.settinghead.wexpression.client.placer.WordPlacer;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
+	import com.settinghead.wexpression.client.model.vo.template.WordAngler;
+	import com.settinghead.wexpression.client.model.vo.template.WordPlacer;
 	
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;

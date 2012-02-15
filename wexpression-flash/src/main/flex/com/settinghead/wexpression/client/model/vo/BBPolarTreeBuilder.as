@@ -38,18 +38,17 @@ internal class BBPolarTreeBuilder {
 		var d:Number= (Math.sqrt(Math.pow(shape.width / 2, 2)
 				+ Math.pow(shape.height / 2, 2)));
 
-		var tree:BBPolarRootTreeVO= new BBPolarRootTreeVO(shape, x, y, d,
-				minBoxSize);
-		// makeChildren(tree, shape, minBoxSize, tree);
+		var tree:BBPolarRootTreeVO= new BBPolarRootTreeVO(shape, x, y, d);
+		// makeChildren(tree, shape,  tree);
 //		tree.swell(swelling);
 		return tree;
 	}
 
 	public static function makeChildren(tree:BBPolarTreeVO, shape:IImageShape,
-			minBoxSize:int, root:BBPolarRootTreeVO):void {
+										root:BBPolarRootTreeVO):void {
 		var type:int= determineType(tree);
 
-		var children:Vector.<BBPolarChildTreeVO>= splitTree(tree, shape, minBoxSize, root, type);
+		var children:Vector.<BBPolarChildTreeVO>= splitTree(tree, shape, root, type);
 //		 if(children.length==0) 
 //			 tree.setLeaf(true);
 //		 else
@@ -57,7 +56,7 @@ internal class BBPolarTreeBuilder {
 	}
 
 	public static function splitTree(tree:BBPolarTreeVO, shape:IImageShape,
-		 minBoxSize:int, root:BBPolarRootTreeVO, type:int):Vector.<BBPolarChildTreeVO> {
+		 root:BBPolarRootTreeVO, type:int):Vector.<BBPolarChildTreeVO> {
 		var result:Vector.<BBPolarChildTreeVO>= new Vector.<BBPolarChildTreeVO>();
 		var re:BBPolarChildTreeVO;
 		var r:Number, r1:Number, r2:Number, r3:Number, r4:Number, r5:Number;
@@ -72,13 +71,13 @@ internal class BBPolarTreeBuilder {
 			r4 = r3 + r;
 			r5 = tree.getR2(false);
 			Assert.isTrue(r1 < r2 && r2 < r3 && r3 < r4 && r4 < r5);
-			re = makeChildTree(shape, minBoxSize, r1, r2, tree.d1, tree.d2, root);
+			re = makeChildTree(shape, r1, r2, tree.d1, tree.d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r2, r3, tree.d1, tree.d2, root);
+			re = makeChildTree(shape, r2, r3, tree.d1, tree.d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r3, r4, tree.d1, tree.d2,root);
+			re = makeChildTree(shape,  r3, r4, tree.d1, tree.d2,root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r4, r5, tree.d1, tree.d2,root);
+			re = makeChildTree(shape,  r4, r5, tree.d1, tree.d2,root);
 			if(re!=null) result.push(re);
 		}
 			break;
@@ -93,13 +92,13 @@ internal class BBPolarTreeBuilder {
 			d2 = tree.d1 + (tree.d2 - tree.d1) / 2;
 			d3 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3 && r3 < r4);
-			re = makeChildTree(shape, minBoxSize, r1, r4, d1, d2, root);
+			re = makeChildTree(shape,  r1, r4, d1, d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			re = makeChildTree(shape,  r1, r2, d2, d3, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r2, r3, d2, d3, root);
+			re = makeChildTree(shape,  r2, r3, d2, d3, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r3, r4, d2, d3, root);
+			re = makeChildTree(shape,  r3, r4, d2, d3, root);
 			if(re!=null) result.push(re);
 		}
 			break;
@@ -114,13 +113,13 @@ internal class BBPolarTreeBuilder {
 			d3 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3);
 
-			re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
+			re = makeChildTree(shape,  r1, r2, d1, d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r2, r3, d1, d2, root);
+			re = makeChildTree(shape,  r2, r3, d1, d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			re = makeChildTree(shape,  r1, r2, d2, d3, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r2, r3, d2, d3, root);
+			re = makeChildTree(shape,  r2, r3, d2, d3, root);
 			if(re!=null) result.push(re);
 		}
 			break;
@@ -136,13 +135,13 @@ internal class BBPolarTreeBuilder {
 			d4 = tree.d2;
 			Assert.isTrue(r1 < r2 && r2 < r3);
 
-			re = makeChildTree(shape, minBoxSize, r1, r3, d1, d2, root);
+			re = makeChildTree(shape,  r1, r3, d1, d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r3, d2, d3, root);
+			re = makeChildTree(shape,  r1, r3, d2, d3, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d3, d4, root);
+			re = makeChildTree(shape,  r1, r2, d3, d4, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r2, r3, d3, d4, root);
+			re = makeChildTree(shape,  r2, r3, d3, d4, root);
 			if(re!=null) result.push(re);
 		}
 			break;
@@ -157,13 +156,13 @@ internal class BBPolarTreeBuilder {
 			d5 = tree.d2;
 			Assert.isTrue(r1 < r2);
 
-			re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
+			re = makeChildTree(shape,  r1, r2, d1, d2, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d2, d3, root);
+			re = makeChildTree(shape,  r1, r2, d2, d3, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d3, d4, root);
+			re = makeChildTree(shape,  r1, r2, d3, d4, root);
 			if(re!=null) result.push(re);
-			re = makeChildTree(shape, minBoxSize, r1, r2, d4, d5, root);
+			re = makeChildTree(shape,  r1, r2, d4, d5, root);
 			if(re!=null) result.push(re);
 		}
 			break;
@@ -186,11 +185,11 @@ internal class BBPolarTreeBuilder {
 			return SplitType._1RAY1CUT;
 	}
 
-	private static function makeChildTree(shape:IImageShape, minBoxSize:int,
+	private static function makeChildTree(shape:IImageShape,
 			r1:Number, r2:Number, d1:Number, d2:Number, root:BBPolarRootTreeVO):BBPolarChildTreeVO {
 
 		var tree:BBPolarChildTreeVO= new BBPolarChildTreeVO(r1, r2, d1, d2,
-				root, minBoxSize);
+				root);
 		var x:Number= tree.getX(false) +  shape.width / 2;
 		if(x>shape.width) return null;
 		var y:Number= tree.getY(false) + shape.height / 2;

@@ -129,7 +129,9 @@ public class HomeController {
 			}
 		}
 
-		int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
+		int maxFreq = 1;
+		if (allWords.keySet().size() > 0)
+			maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
 		for (Page p : facebook.likeOperations().getPagesLiked()) {
 			if (p.getName().length() > 0 && p.getName().length() < 20)
 				allWords.note(p.getName(), maxFreq - 2);

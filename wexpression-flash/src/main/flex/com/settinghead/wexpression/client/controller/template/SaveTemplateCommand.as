@@ -3,7 +3,7 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.business.TemplateDelegate;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	
 	import mx.controls.Alert;
 	import mx.managers.CursorManager;
@@ -15,7 +15,7 @@ package com.settinghead.wexpression.client.controller.template
 	public class SaveTemplateCommand extends SimpleCommand implements IResponder
 	{
 		override public function execute( note:INotification ) : void    {
-			var template:TemplateVO = note.getBody() as TemplateVO;
+			var template:Template = note.getBody() as Template;
 			if(template.previewPNG==null){
 				sendNotification(ApplicationFacade.GENERATE_TEMPLATE_PREVIEW, template);
 			}

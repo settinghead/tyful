@@ -7,6 +7,14 @@ package com.settinghead.wexpression.client.model.vo.template
 {
 import com.adobe.fiber.services.IFiberManagingService;
 import com.adobe.fiber.valueobjects.IValueObject;
+import com.settinghead.wexpression.client.model.vo.template.Layer;
+import com.settinghead.wexpression.client.model.vo.template.RenderOptions;
+import com.settinghead.wexpression.client.model.vo.template.WordAngler;
+import com.settinghead.wexpression.client.model.vo.template.WordColorer;
+import com.settinghead.wexpression.client.model.vo.template.WordFonter;
+import com.settinghead.wexpression.client.model.vo.template.WordNudger;
+import com.settinghead.wexpression.client.model.vo.template.WordPlacer;
+import com.settinghead.wexpression.client.model.vo.template.WordSizer;
 import flash.events.EventDispatcher;
 import flash.utils.ByteArray;
 import mx.collections.ArrayCollection;
@@ -20,6 +28,7 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 
 use namespace model_internal;
 
+[Managed]
 [ExcludeClass]
 public class _Super_Template extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
@@ -40,6 +49,14 @@ public class _Super_Template extends flash.events.EventDispatcher implements com
 
     model_internal static function initRemoteClassAliasAllRelated() : void
     {
+        com.settinghead.wexpression.client.model.vo.template.WordSizer.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.WordAngler.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.Layer.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.WordColorer.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.WordFonter.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.WordNudger.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.RenderOptions.initRemoteClassAliasSingleChild();
+        com.settinghead.wexpression.client.model.vo.template.WordPlacer.initRemoteClassAliasSingleChild();
     }
 
     model_internal var _dminternal_model : _TemplateEntityMetadata;
@@ -60,7 +77,17 @@ public class _Super_Template extends flash.events.EventDispatcher implements com
      * properties
      */
     private var _internal_id : String;
+    private var _internal_sizer : com.settinghead.wexpression.client.model.vo.template.WordSizer;
     private var _internal_previewPNG : ByteArray;
+    private var _internal_angler : com.settinghead.wexpression.client.model.vo.template.WordAngler;
+    private var _internal_layers : ArrayCollection;
+    model_internal var _internal_layers_leaf:com.settinghead.wexpression.client.model.vo.template.Layer;
+    private var _internal_path : String;
+    private var _internal_renderOptions : com.settinghead.wexpression.client.model.vo.template.RenderOptions;
+    private var _internal_colorer : com.settinghead.wexpression.client.model.vo.template.WordColorer;
+    private var _internal_fonter : com.settinghead.wexpression.client.model.vo.template.WordFonter;
+    private var _internal_placer : com.settinghead.wexpression.client.model.vo.template.WordPlacer;
+    private var _internal_nudger : com.settinghead.wexpression.client.model.vo.template.WordNudger;
 
     private static var emptyArray:Array = new Array();
 
@@ -91,9 +118,63 @@ public class _Super_Template extends flash.events.EventDispatcher implements com
     }
 
     [Bindable(event="propertyChange")]
+    public function get sizer() : com.settinghead.wexpression.client.model.vo.template.WordSizer
+    {
+        return _internal_sizer;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get previewPNG() : ByteArray
     {
         return _internal_previewPNG;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get angler() : com.settinghead.wexpression.client.model.vo.template.WordAngler
+    {
+        return _internal_angler;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get layers() : ArrayCollection
+    {
+        return _internal_layers;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get path() : String
+    {
+        return _internal_path;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get renderOptions() : com.settinghead.wexpression.client.model.vo.template.RenderOptions
+    {
+        return _internal_renderOptions;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get colorer() : com.settinghead.wexpression.client.model.vo.template.WordColorer
+    {
+        return _internal_colorer;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get fonter() : com.settinghead.wexpression.client.model.vo.template.WordFonter
+    {
+        return _internal_fonter;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get placer() : com.settinghead.wexpression.client.model.vo.template.WordPlacer
+    {
+        return _internal_placer;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get nudger() : com.settinghead.wexpression.client.model.vo.template.WordNudger
+    {
+        return _internal_nudger;
     }
 
     public function clearAssociations() : void
@@ -110,7 +191,15 @@ public class _Super_Template extends flash.events.EventDispatcher implements com
         if (oldValue !== value)
         {
             _internal_id = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "id", oldValue, _internal_id));
+        }
+    }
+
+    public function set sizer(value:com.settinghead.wexpression.client.model.vo.template.WordSizer) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordSizer = _internal_sizer;
+        if (oldValue !== value)
+        {
+            _internal_sizer = value;
         }
     }
 
@@ -120,7 +209,93 @@ public class _Super_Template extends flash.events.EventDispatcher implements com
         if (oldValue !== value)
         {
             _internal_previewPNG = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "previewPNG", oldValue, _internal_previewPNG));
+        }
+    }
+
+    public function set angler(value:com.settinghead.wexpression.client.model.vo.template.WordAngler) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordAngler = _internal_angler;
+        if (oldValue !== value)
+        {
+            _internal_angler = value;
+        }
+    }
+
+    public function set layers(value:*) : void
+    {
+        var oldValue:ArrayCollection = _internal_layers;
+        if (oldValue !== value)
+        {
+            if (value is ArrayCollection)
+            {
+                _internal_layers = value;
+            }
+            else if (value is Array)
+            {
+                _internal_layers = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_layers = null;
+            }
+            else
+            {
+                throw new Error("value of layers must be a collection");
+            }
+        }
+    }
+
+    public function set path(value:String) : void
+    {
+        var oldValue:String = _internal_path;
+        if (oldValue !== value)
+        {
+            _internal_path = value;
+        }
+    }
+
+    public function set renderOptions(value:com.settinghead.wexpression.client.model.vo.template.RenderOptions) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.RenderOptions = _internal_renderOptions;
+        if (oldValue !== value)
+        {
+            _internal_renderOptions = value;
+        }
+    }
+
+    public function set colorer(value:com.settinghead.wexpression.client.model.vo.template.WordColorer) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordColorer = _internal_colorer;
+        if (oldValue !== value)
+        {
+            _internal_colorer = value;
+        }
+    }
+
+    public function set fonter(value:com.settinghead.wexpression.client.model.vo.template.WordFonter) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordFonter = _internal_fonter;
+        if (oldValue !== value)
+        {
+            _internal_fonter = value;
+        }
+    }
+
+    public function set placer(value:com.settinghead.wexpression.client.model.vo.template.WordPlacer) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordPlacer = _internal_placer;
+        if (oldValue !== value)
+        {
+            _internal_placer = value;
+        }
+    }
+
+    public function set nudger(value:com.settinghead.wexpression.client.model.vo.template.WordNudger) : void
+    {
+        var oldValue:com.settinghead.wexpression.client.model.vo.template.WordNudger = _internal_nudger;
+        if (oldValue !== value)
+        {
+            _internal_nudger = value;
         }
     }
 

@@ -9,7 +9,16 @@ import com.adobe.fiber.styles.Style;
 import com.adobe.fiber.valueobjects.AbstractEntityMetadata;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 import com.adobe.fiber.valueobjects.IPropertyIterator;
+import com.settinghead.wexpression.client.model.vo.template.Layer;
+import com.settinghead.wexpression.client.model.vo.template.RenderOptions;
+import com.settinghead.wexpression.client.model.vo.template.WordAngler;
+import com.settinghead.wexpression.client.model.vo.template.WordColorer;
+import com.settinghead.wexpression.client.model.vo.template.WordFonter;
+import com.settinghead.wexpression.client.model.vo.template.WordNudger;
+import com.settinghead.wexpression.client.model.vo.template.WordPlacer;
+import com.settinghead.wexpression.client.model.vo.template.WordSizer;
 import flash.utils.ByteArray;
+import mx.collections.ArrayCollection;
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.valueobjects.IModelType;
 import mx.events.PropertyChangeEvent;
@@ -21,16 +30,16 @@ internal class _TemplateEntityMetadata extends com.adobe.fiber.valueobjects.Abst
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("id", "previewPNG");
+    model_internal static var allProperties:Array = new Array("id", "sizer", "previewPNG", "angler", "layers", "path", "renderOptions", "colorer", "fonter", "placer", "nudger");
     model_internal static var allAssociationProperties:Array = new Array();
-    model_internal static var allRequiredProperties:Array = new Array();
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "previewPNG");
+    model_internal static var allRequiredProperties:Array = new Array("id");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("id", "sizer", "previewPNG", "angler", "layers", "path", "renderOptions", "colorer", "fonter", "placer", "nudger");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("id", "previewPNG");
+    model_internal static var dataProperties:Array = new Array("id", "sizer", "previewPNG", "angler", "layers", "path", "renderOptions", "colorer", "fonter", "placer", "nudger");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("id", "previewPNG");
+    model_internal static var nonDerivedProperties:Array = new Array("id", "sizer", "previewPNG", "angler", "layers", "path", "renderOptions", "colorer", "fonter", "placer", "nudger");
     model_internal static var derivedProperties:Array = new Array();
-    model_internal static var collectionProperties:Array = new Array();
+    model_internal static var collectionProperties:Array = new Array("layers");
     model_internal static var collectionBaseMap:Object;
     model_internal static var entityName:String = "Template";
     model_internal static var dependentsOnMap:Object;
@@ -49,16 +58,35 @@ internal class _TemplateEntityMetadata extends com.adobe.fiber.valueobjects.Abst
             // dependents map
             model_internal::dependentsOnMap = new Object();
             model_internal::dependentsOnMap["id"] = new Array();
+            model_internal::dependentsOnMap["sizer"] = new Array();
             model_internal::dependentsOnMap["previewPNG"] = new Array();
+            model_internal::dependentsOnMap["angler"] = new Array();
+            model_internal::dependentsOnMap["layers"] = new Array();
+            model_internal::dependentsOnMap["path"] = new Array();
+            model_internal::dependentsOnMap["renderOptions"] = new Array();
+            model_internal::dependentsOnMap["colorer"] = new Array();
+            model_internal::dependentsOnMap["fonter"] = new Array();
+            model_internal::dependentsOnMap["placer"] = new Array();
+            model_internal::dependentsOnMap["nudger"] = new Array();
 
             // collection base map
             model_internal::collectionBaseMap = new Object();
+            model_internal::collectionBaseMap["layers"] = "com.settinghead.wexpression.client.model.vo.template.Layer";
         }
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
         model_internal::propertyTypeMap["id"] = "String";
+        model_internal::propertyTypeMap["sizer"] = "com.settinghead.wexpression.client.model.vo.template.WordSizer";
         model_internal::propertyTypeMap["previewPNG"] = "ByteArray";
+        model_internal::propertyTypeMap["angler"] = "com.settinghead.wexpression.client.model.vo.template.WordAngler";
+        model_internal::propertyTypeMap["layers"] = "ArrayCollection";
+        model_internal::propertyTypeMap["path"] = "String";
+        model_internal::propertyTypeMap["renderOptions"] = "com.settinghead.wexpression.client.model.vo.template.RenderOptions";
+        model_internal::propertyTypeMap["colorer"] = "com.settinghead.wexpression.client.model.vo.template.WordColorer";
+        model_internal::propertyTypeMap["fonter"] = "com.settinghead.wexpression.client.model.vo.template.WordFonter";
+        model_internal::propertyTypeMap["placer"] = "com.settinghead.wexpression.client.model.vo.template.WordPlacer";
+        model_internal::propertyTypeMap["nudger"] = "com.settinghead.wexpression.client.model.vo.template.WordNudger";
 
         model_internal::_instance = value;
     }
@@ -213,6 +241,7 @@ internal class _TemplateEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     override public function getIdentityMap():Object
     {
         var returnMap:Object = new Object();
+        returnMap["id"] = model_internal::_instance.id;
 
         return returnMap;
     }
@@ -294,7 +323,61 @@ internal class _TemplateEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]
+    public function get isSizerAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isPreviewPNGAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isAnglerAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isLayersAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isPathAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isRenderOptionsAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isColorerAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isFonterAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isPlacerAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isNudgerAvailable():Boolean
     {
         return true;
     }
@@ -316,7 +399,61 @@ internal class _TemplateEntityMetadata extends com.adobe.fiber.valueobjects.Abst
     }
 
     [Bindable(event="propertyChange")]   
+    public function get sizerStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get previewPNGStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get anglerStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get layersStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get pathStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get renderOptionsStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get colorerStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get fonterStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get placerStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get nudgerStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

@@ -1,6 +1,5 @@
 package com.settinghead.wexpression.client.model.vo
 {
-	import com.settinghead.wexpression.client.sizers.WordSizer;
 	
 	import flash.display.Sprite;
 	import flash.text.TextField;

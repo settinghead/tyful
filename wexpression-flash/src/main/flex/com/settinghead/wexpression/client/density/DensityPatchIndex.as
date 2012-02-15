@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client.density
 {
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	
 	import mx.controls.Alert;
 	
@@ -8,7 +8,7 @@ package com.settinghead.wexpression.client.density
 
 	public class DensityPatchIndex {
 		
-		private var img:TemplateVO;
+		private var img:Template;
 		private var _map:LeveledPatchMap;
 		
 		public static const NUMBER_OF_DIVISIONS:int= 2;
@@ -17,7 +17,7 @@ package com.settinghead.wexpression.client.density
 		public static var NUMBER_OF_ATTEMPTED_PATCHES:int = 5;
 		private var locked:Boolean = false;
 		
-		public function DensityPatchIndex(img:TemplateVO) {
+		public function DensityPatchIndex(img:Template) {
 			this.img = img;
 			_map = new LeveledPatchMap(this);
 		}
@@ -77,7 +77,7 @@ package com.settinghead.wexpression.client.density
 			_map.add(patch);
 		}
 		
-		public function getImg():TemplateVO {
+		public function getImg():Template {
 			return this.img;
 		}
 		

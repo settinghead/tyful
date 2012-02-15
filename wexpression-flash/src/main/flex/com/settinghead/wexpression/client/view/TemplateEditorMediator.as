@@ -6,7 +6,7 @@ package com.settinghead.wexpression.client.view
 	import com.settinghead.wexpression.client.model.WordListProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.Template;
 	import com.settinghead.wexpression.client.view.components.TuRenderer;
 	import com.settinghead.wexpression.client.view.components.template.TemplateEditor;
 	
@@ -46,7 +46,7 @@ package com.settinghead.wexpression.client.view
 		override public function handleNotification(notification:INotification):void {
 			switch (notification.getName()) {
 				case ApplicationFacade.TEMPLATE_LOADED:
-					templateEditor.template = notification.getBody() as TemplateVO;
+					templateEditor.template = notification.getBody() as Template;
 					break;
 			}
 		}
