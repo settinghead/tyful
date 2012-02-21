@@ -7,7 +7,8 @@
 <mx:Canvas
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:client="com.settinghead.wexpression.client.*" 
-	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*">
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*"
+	 creationComplete="creationCompleteHandler(event)">
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -41,11 +42,21 @@
 						<s:HorizontalLayout />
 					</s:layout>
 					<s:Group id="layerNavigation">
-						<s:Button id="btnShowAllLayers" label="All Layers" />
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<s:Button id="btnShowAllLayers" label="All" />
+							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true">
+								<s:layout>
+									<s:VerticalLayout />
+								</s:layout>
+							</s:List>
+						<s:Button id="btnAddLayer" label="+" />
 					</s:Group>
-					<mx:UIComponent id="cvnTransparentBackground" top="100"
-									left="0" visible="true" />
-					<s:Group id="layers" />	
+					<s:Group>
+						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
+						<s:Group id="layers" />
+					</s:Group>
 				</s:Group>
 			</s:Group>
 	
@@ -73,6 +84,7 @@
 			import flash.net.*;
 			import flash.utils.ByteArray;
 			
+			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
@@ -151,11 +163,13 @@
 				if(this.template!=null)
 				{
 					this.layers.removeAllElements();
-					
+
 					for each(var layer:Layer in this.template.layers){
 						if(layer is WordLayer){
 							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
-							this.layers.addChild(canvas);
+							BindingUtils.bindProperty(canvas, "thickness", this.thicknessPicker, "thickness");
+							BindingUtils.bindProperty(canvas, "angle", this.directionPicker, "angle");
+							this.layers.addElement(canvas);
 						}
 					}
 					

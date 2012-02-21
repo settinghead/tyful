@@ -139,7 +139,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		
 		
-		private function getHSB(x:int, y:int):int{
+		public function getHSB(x:int, y:int):int{
 			if(this.hsbArray[x]==null)
 				this.hsbArray[x] = new Array(this._img.height);
 			if(this.hsbArray[x][y]==null){

@@ -15,12 +15,18 @@
 			import spark.components.Button;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
-			[Bindable] private var _thickness:Number = 20;
+			private var _thickness:Number = 20;
 			
 			public static const BUTTON_WIDTH:Number = 30;
 			
+			[Bindable(event="ThicknessChanged")]
 			public function get thickness():Number{
 				return _thickness;
+			}
+			
+			public function set thickness(t:Number):void{
+				this._thickness = t;
+				dispatchEvent(new Event("ThicknessChanged"));
 			}
 			
 			protected function onCreationCompleteHandler(event:FlexEvent):void
@@ -41,7 +47,7 @@
 			
 		]]>
 	</fx:Script>
-	<fx:Binding source="buttonList.selectedItem as Number" destination="_thickness" />
+	<fx:Binding source="buttonList.selectedItem as Number" destination="thickness" />
 	<s:List id="buttonList"
 			itemRenderer="com.settinghead.wexpression.client.view.components.template.ThicknessButton"
 			dataProvider="{buttonArray}">
