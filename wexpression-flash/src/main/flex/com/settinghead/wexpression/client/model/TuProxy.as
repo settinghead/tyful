@@ -8,6 +8,7 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
 	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.colorer.WordColorer;
+	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
@@ -32,6 +33,7 @@ package com.settinghead.wexpression.client.model
 	import mx.graphics.codec.PNGEncoder;
 	import mx.rpc.IResponder;
 	
+	import org.as3commons.collections.Set;
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IIterator;
 	import org.puremvc.as3.interfaces.IProxy;
@@ -52,16 +54,10 @@ package com.settinghead.wexpression.client.model
 
 		}
 		
-		// add an item to the data    
-		public function addItem( item:Object ):void
-		{
-			tus.addItem( item );
-		}
-		
 		// return data property cast to proper type
-		public function get tus():ArrayCollection
+		public function get tu():TuVO
 		{
-			return data as ArrayCollection;
+			return data as TuVO;
 		}
 		
 		public function load() :void{
@@ -96,10 +92,10 @@ package com.settinghead.wexpression.client.model
 			word = tu.getNextWordAndIncrement();
 
 			if(word==null) return;
-			eWord = tu.generateEngineWord(word);
+			eWord = generateEngineWord(word);
 
 			if(eWord!=null){
-				tu.placeWord(eWord);
+				placeWord(eWord);
 
 //				if (eWord.wasSkipped()){
 				while (eWord.wasSkipped()){
@@ -111,8 +107,8 @@ package com.settinghead.wexpression.client.model
 						tu.indexOffset = tu.words.size -1;
 						break;
 					}
-					eWord = tu.generateEngineWord(word);
-					tu.placeWord(eWord);
+					eWord = generateEngineWord(word);
+					placeWord(eWord);
 				}				
 
 				
@@ -143,5 +139,141 @@ package com.settinghead.wexpression.client.model
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}
 		}
+		
+		public function generateEngineWord(word:WordVO):EngineWordVO{
+			var newIndex:int = tu.currentWordIndex+tu.indexOffset<tu.words.size?
+				tu.currentWordIndex + tu.indexOffset:tu.words.size;
+			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , tu.words.size);
+			
+			var wordFont:String= tu.template.fonter.fontFor(word);
+			var wordSize:Number= tu.template.sizer.sizeFor(word,newIndex,tu.words.size);
+			//			var wordAngle:Number= template.angler.angleFor(eWord);
+			
+			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, 0);
+			if (shape == null) {
+				skipWord(eWord, EngineWordVO.SKIP_REASON_SHAPE_TOO_SMALL);
+			} else {
+				eWord.setShape(shape, tu.template.renderOptions.wordPadding);
+			}
+			
+			return eWord;
+		}
+		
+		public function placeWord(eWord:EngineWordVO):Boolean {
+//			totalCount++;
+//			tu.failedLastVar = false;
+			var word:WordVO= eWord.word;
+			
+			// these into
+			// EngineWord.setDesiredLocation?
+			// Does that make
+			// sense?
+			var wordImageWidth:int= int(eWord.shape.textField.width);
+			var wordImageHeight:int= int(eWord.shape.textField.height);
+			
+			eWord.retrieveDesiredLocations(tu.template.placer, tu.eWords.length,
+				wordImageWidth, wordImageHeight, tu.template.width,
+				tu.template.height);
+			// Set maximum number of placement trials
+			
+			
+			while(eWord.hasNextDesiredLocation()){
+				var candidateLoc:PlaceInfo = eWord.nextDesiredLocation();
+				
+				var maxAttemptsToPlace:int= tu.template.renderOptions.maxAttemptsToPlaceWord > 0? tu.template.renderOptions.maxAttemptsToPlaceWord
+					: calculateMaxAttemptsFromWordWeight(eWord, candidateLoc.patch);
+				
+				var lastCollidedWith:EngineWordVO = null;
+				var attempt:int;
+//				var neighboringPatches:Set = candidateLoc.patch.neighborsAndMe;
+				//				var neighboringEWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
+				
+				//				var iter:org.as3commons.collections.framework.IIterator = neighboringPatches.iterator();
+				
+				//				
+				//				while(iter.hasNext()){
+				//					var p:Patch = iter.next();
+				//					for each (var ew:EngineWordVO in p.eWords)
+				//						neighboringEWords.push(ew);
+				//					var ao:Vector.<Patch> = p.ancestorsAndOffsprngs();
+				//					for each (var p1:Patch in ao){
+				//						for each (var ew:EngineWordVO in p1.eWords)
+				//							neighboringEWords.push(ew);
+				//					}
+				//				}
+				
+				
+				inner: for (attempt= 0; attempt < maxAttemptsToPlace; attempt++) {
+					eWord.nudgeTo(candidateLoc.getpVector().add(tu.template.nudger.nudgeFor(word, candidateLoc,
+						attempt,maxAttemptsToPlace)), candidateLoc.patch);
+					
+					var angle:Number= candidateLoc.patch.layer.angler.angleFor(eWord);
+					//			eWord.getTree().draw(destination.graphics);
+					
+					// // TODO
+					eWord.getTree().setRotation(angle);
+					//
+					if (eWord.trespassed(candidateLoc.patch.layer))
+						continue;
+					var loc:PlaceInfo= eWord.getCurrentLocation();
+					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= tu.template.width
+						|| loc.getpVector().y + wordImageHeight >= tu.template.height) {
+						continue;
+					}
+					
+					if (lastCollidedWith != null && eWord.overlaps(lastCollidedWith)) {
+						continue;
+					}
+					
+					var foundOverlap:Boolean= false;
+					
+					//					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
+					for (var i:int= 0; !foundOverlap && i < tu.currentWordIndex; i++) {
+						//						var otherWord:EngineWordVO= neighboringEWords[i];
+						var otherWord:EngineWordVO = tu.eWords[i];
+						if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
+						
+						if (eWord.overlaps(otherWord)) {
+							foundOverlap = true;
+							
+							lastCollidedWith = otherWord;
+							continue inner;
+						}
+					}
+					
+					if (!foundOverlap) {
+						candidateLoc.patch.mark(wordImageWidth*wordImageHeight, false);
+						tu.template.placer.success(eWord.desiredLocations);
+						eWord.finalizeLocation();
+//						successCount++;
+						candidateLoc.patch.lastAttempt = attempt;
+						return true;
+					}
+				}
+				candidateLoc.patch.lastAttempt = attempt;
+				candidateLoc.patch.fail();
+			}
+			
+			skipWord(eWord, EngineWordVO.SKIP_REASON_NO_SPACE);
+			//			info.patch.mark(wordImageWidth*wordImageHeight, true);
+			tu.template.placer.fail(eWord.desiredLocations);
+//			tu.failedLastVar = true;
+			return false;
+		}
+		
+		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 20 
+				* (1+ Math.random() * 0.4)
+				;
+			//			var area:Number = p.getWidth() * p.getHeight();
+			//			var result:int = area / 10000 * int(((1.0 - word.weight) * 60) )+ 30 + 40*Math.random();
+			//			Assert.isTrue(result>0);
+			//			return result;
+		}
+		
+		private function skipWord(eWord:EngineWordVO, reason:int):void {
+			eWord.wasSkippedBecause(reason);
+		}
+		
 	}
 }

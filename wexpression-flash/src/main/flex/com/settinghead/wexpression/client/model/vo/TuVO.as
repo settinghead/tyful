@@ -24,9 +24,7 @@ package com.settinghead.wexpression.client.model.vo
 
 	public class TuVO
 	{
-		private static const SKIP_REASON_NO_SPACE:int = 1;
-		private static const SKIP_REASON_SHAPE_TOO_SMALL:int = 2;
-		
+
 		private var _template:TemplateVO;
 		private var _words:WordListVO;
 		private var _dWords:DisplayWordListVO = new DisplayWordListVO();
@@ -34,7 +32,7 @@ package com.settinghead.wexpression.client.model.vo
 		private var _backgroundColor:uint = 0xffffff;
 		private var _bgMode:String;
 		private var _width:uint, _height:uint;
-		private var failedLastVar:Boolean;
+//		private var failedLastVar:Boolean;
 		
 		//the generated image
 		private var _generatedImage:BitmapData = null;
@@ -56,6 +54,9 @@ package com.settinghead.wexpression.client.model.vo
 			
 		}
 
+		public function get eWords():Vector.<EngineWordVO>{
+			return this._eWords;
+		}
 		
 		public function pushEngineWord(eWord:EngineWordVO):void{
 			this._eWords.push(eWord);
@@ -130,42 +131,13 @@ package com.settinghead.wexpression.client.model.vo
 			return this.failedLast;
 		}
 		
-		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 20 
-				* (1+ Math.random() * 0.4)
-				;
-//			var area:Number = p.getWidth() * p.getHeight();
-//			var result:int = area / 10000 * int(((1.0 - word.weight) * 60) )+ 30 + 40*Math.random();
-//			Assert.isTrue(result>0);
-//			return result;
-		}
+	
 		[Bindable] private var successCount:Number = 0, totalCount:Number = 0;
 		public function get lossRate():Number{
 			return 1- (successCount)/(totalCount);
 //			return 0;
 		}
 
-		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var newIndex:int = this.currentWordIndex+indexOffset<this.words.size?this.currentWordIndex+indexOffset:this.words.size;
-			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , this.words.size);
-			
-			var wordFont:String= template.fonter.fontFor(word);
-			var wordSize:Number= template.sizer.sizeFor(word,newIndex,this.words.size);
-//			var wordAngle:Number= template.angler.angleFor(eWord);
-			
-			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, 0);
-			if (shape == null) {
-				skipWord(eWord, SKIP_REASON_SHAPE_TOO_SMALL);
-			} else {
-				eWord.setShape(shape, template.renderOptions.wordPadding);
-			}
-						
-			return eWord;
-		}
-		
-		private function skipWord(eWord:EngineWordVO, reason:int):void {
-			eWord.wasSkippedBecause(reason);
-		}
 		
 		public function get generatedImage():BitmapData{
 			return this._generatedImage;
@@ -175,108 +147,6 @@ package com.settinghead.wexpression.client.model.vo
 			this._generatedImage = img;
 		}
 		
-		public function placeWord(eWord:EngineWordVO):Boolean {
-			totalCount++;
-			this.failedLastVar = false;
-			var word:WordVO= eWord.word;
-
-			// these into
-			// EngineWord.setDesiredLocation?
-			// Does that make
-			// sense?
-			var wordImageWidth:int= int(eWord.shape.textField.width);
-			var wordImageHeight:int= int(eWord.shape.textField.height);
-
-			eWord.retrieveDesiredLocations(template.placer, _eWords.length,
-				wordImageWidth, wordImageHeight, template.width,
-				template.height);
-			// Set maximum number of placement trials
-			
-
-			while(eWord.hasNextDesiredLocation()){
-				var candidateLoc:PlaceInfo = eWord.nextDesiredLocation();
-				
-				var maxAttemptsToPlace:int= template.renderOptions.maxAttemptsToPlaceWord > 0? template.renderOptions.maxAttemptsToPlaceWord
-					: calculateMaxAttemptsFromWordWeight(eWord, candidateLoc.patch);
-				
-				var lastCollidedWith:EngineWordVO = null;
-				var attempt:int;
-				var neighboringPatches:Set = candidateLoc.patch.neighborsAndMe;
-//				var neighboringEWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
-				
-//				var iter:org.as3commons.collections.framework.IIterator = neighboringPatches.iterator();
-				
-//				
-//				while(iter.hasNext()){
-//					var p:Patch = iter.next();
-//					for each (var ew:EngineWordVO in p.eWords)
-//						neighboringEWords.push(ew);
-//					var ao:Vector.<Patch> = p.ancestorsAndOffsprngs();
-//					for each (var p1:Patch in ao){
-//						for each (var ew:EngineWordVO in p1.eWords)
-//							neighboringEWords.push(ew);
-//					}
-//				}
-				
-				
-				inner: for (attempt= 0; attempt < maxAttemptsToPlace; attempt++) {
-					eWord.nudgeTo(candidateLoc.getpVector().add(template.nudger.nudgeFor(word, candidateLoc,
-						attempt,maxAttemptsToPlace)), candidateLoc.patch);
-					
-					var angle:Number= candidateLoc.patch.layer.angler.angleFor(eWord);
-					//			eWord.getTree().draw(destination.graphics);
-					
-					// // TODO
-					eWord.getTree().setRotation(angle);
-					//
-					if (eWord.trespassed(candidateLoc.patch.layer))
-						continue;
-					var loc:PlaceInfo= eWord.getCurrentLocation();
-					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= template.width
-						|| loc.getpVector().y + wordImageHeight >= template.height) {
-						continue;
-					}
-					
-					if (lastCollidedWith != null && eWord.overlaps(lastCollidedWith)) {
-						continue;
-					}
-					
-					var foundOverlap:Boolean= false;
-					
-//					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
-					for (var i:int= 0; !foundOverlap && i < currentWordIndex; i++) {
-//						var otherWord:EngineWordVO= neighboringEWords[i];
-						var otherWord:EngineWordVO = _eWords[i];
-						if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
-						
-						if (eWord.overlaps(otherWord)) {
-							foundOverlap = true;
-							
-							lastCollidedWith = otherWord;
-							continue inner;
-						}
-					}
-					
-					if (!foundOverlap) {
-						candidateLoc.patch.mark(wordImageWidth*wordImageHeight, false);
-						template.placer.success(eWord.desiredLocations);
-						eWord.finalizeLocation();
-						successCount++;
-						candidateLoc.patch.lastAttempt = attempt;
-						return true;
-					}
-				}
-				candidateLoc.patch.lastAttempt = attempt;
-				candidateLoc.patch.fail();
-			}
-			
-			skipWord(eWord, SKIP_REASON_NO_SPACE);
-			//			info.patch.mark(wordImageWidth*wordImageHeight, true);
-			this.template.placer.fail(eWord.desiredLocations);
-			this.failedLastVar = true;
-			return false;
-		}
-
-			
+	
 	}
 }

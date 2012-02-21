@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.density
 {
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	
 	import flash.utils.Dictionary;
 	
@@ -25,8 +26,9 @@ package com.settinghead.wexpression.client.density
 			this.myLevel = myLevel;
 			this._map = map;
 			if (myLevel == 0) {
-				for each (var layer:Layer in _map.getIndex().getImg().layers)
-					tryAdd(new Patch(0, 0, _map.getIndex().getImg().width, _map.getIndex().getImg().height, 0, null, this, layer));
+				for each (var layer:Layer in _map.getIndex().template.layers)
+					if(layer is WordLayer)
+						tryAdd(new Patch(0, 0, _map.getIndex().template.width, _map.getIndex().template.height, 0, null, this, layer as WordLayer));
 			}
 		}
 		

@@ -5,6 +5,7 @@ package com.settinghead.wexpression.client.model.vo {
 	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
 	
 	import flash.filters.DropShadowFilter;
@@ -36,6 +37,11 @@ package com.settinghead.wexpression.client.model.vo {
 
 
 public class EngineWordVO {
+	
+	public static const SKIP_REASON_NO_SPACE:int = 1;
+	public static const SKIP_REASON_SHAPE_TOO_SMALL:int = 2;
+	
+	
 	private var _word:WordVO;
 	private var rank:int;
 
@@ -129,7 +135,7 @@ public class EngineWordVO {
 			return null;
 	}
 
-	public function trespassed(layer:Layer):Boolean {
+	public function trespassed(layer:WordLayer):Boolean {
 		if(layer==null) return false;
 		var x:Number= (this.currentLocation.getpVector().x - bbTree.getWidth(true) / 2);
 		var y:Number= (this.currentLocation.getpVector().y - bbTree.getHeight(true) / 2);

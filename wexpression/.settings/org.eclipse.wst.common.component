@@ -2,7 +2,8 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="wexpression">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <dependent-module archiveName="flex-messaging-core.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-core/flex-messaging-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -31,6 +32,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="commons-logging.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-logging/commons-logging">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cue.language.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cue.language/cue.language">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="wexpression"/>

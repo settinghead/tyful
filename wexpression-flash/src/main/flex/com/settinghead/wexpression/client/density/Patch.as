@@ -3,6 +3,7 @@ package com.settinghead.wexpression.client.density
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	
 	import org.as3commons.collections.Set;
 
@@ -24,10 +25,10 @@ package com.settinghead.wexpression.client.density
 		private var _numOfFailures:int;
 		private var _lastAttempt:int = 0;
 		private var _eWords:Vector.<EngineWordVO> = null;
-		private var _layer:Layer;
+		private var _layer:WordLayer;
 		
 		public function Patch(x:int, y:int, width:int, height:int, rank:int,
-							  parent:Patch, queue:PatchQueue, layer:Layer) {
+							  parent:Patch, queue:PatchQueue, layer:WordLayer) {
 			this.setX(x);
 			this.setY(y);
 			this.setWidth(width);
@@ -39,7 +40,7 @@ package com.settinghead.wexpression.client.density
 			
 		}
 		
-		public function get layer():Layer{
+		public function get layer():WordLayer{
 			return this._layer;
 		}
 		
@@ -60,7 +61,7 @@ package com.settinghead.wexpression.client.density
 		}
 		
 		public function getImg():TemplateVO {
-			return this._queue.getMap().getIndex().getImg();
+			return this._queue.getMap().getIndex().template;
 		}
 		
 		private function setWidth(width:int):void {

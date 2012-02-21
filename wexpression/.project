@@ -13,6 +13,7 @@
 		<project>flex-messaging-common</project>
 		<project>flex-messaging-remoting</project>
 		<project>commons-logging</project>
+		<project>cue.language</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -77,7 +77,7 @@ package com.settinghead.wexpression.client.density
 			_map.add(patch);
 		}
 		
-		public function getImg():TemplateVO {
+		public function get template():TemplateVO {
 			return this.img;
 		}
 		

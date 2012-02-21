@@ -150,16 +150,16 @@ package com.settinghead.wexpression.client.model.vo.template
 			return this._nudger;
 		}
 		
-		public function onLoadComplete (event:Event):void
-		{
-			this._patchIndex = new DensityPatchIndex(this);
-		}
-		
 		public function get renderOptions():RenderOptions{
 			if(this._renderOptions==null){
 				this._renderOptions = new RenderOptions();
 			}
 			return this._renderOptions;
+		}
+		
+		public function onLoadComplete (event:Event):void
+		{
+			this._patchIndex = new DensityPatchIndex(this);
 		}
 	}
 }

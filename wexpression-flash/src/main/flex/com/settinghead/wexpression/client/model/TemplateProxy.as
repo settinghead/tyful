@@ -3,6 +3,7 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
@@ -36,7 +37,7 @@ package com.settinghead.wexpression.client.model
 		public function load() :void{
 			if(_pathToLoad!=null){
 				_template = new TemplateVO(_pathToLoad);
-				var l:Layer = new Layer(_template);
+				var l:WordLayer = new WordLayer(_template);
 				//TODO: different path for template and layer PNG
 				l.path = _pathToLoad;
 				l.loadLayerFromPNG(templateLoadComplete);

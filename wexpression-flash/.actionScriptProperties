@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="Main.mxml" projectUUID="1ef9c8d9-a562-45b2-b084-b2dc7a863cdc" version="10">
-  <compiler additionalCompilerArguments="-services &quot;/Users/settinghead/wexpression/wexpression/WebContent/WEB-INF/flex/services-config.xml&quot; -locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="true" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="/Users/settinghead/wexpression/wexpression/WebContent/resources/flash" outputFolderPath="bin-debug" removeUnusedRSL="true" rootURL="" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="com/settinghead/wexpression/client/WexpressionClient.mxml" projectUUID="1ef9c8d9-a562-45b2-b084-b2dc7a863cdc" version="10">
+  <compiler additionalCompilerArguments="-services &quot;/Users/settinghead/wexpression/wexpression/WebContent/WEB-INF/flex/services-config.xml&quot; -locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="true" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="/Users/settinghead/wexpression/wexpression/WebContent/resources/flash" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src/main/flex" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -19,6 +19,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="com/settinghead/wexpression/client/WexpressionClient.mxml"/>
     <application path="Main.mxml"/>
   </applications>
   <modules/>

@@ -7,7 +7,7 @@
 <mx:Canvas
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:client="com.settinghead.wexpression.client.*" 
-	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*">
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*">
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -18,52 +18,53 @@
 	
 		
 	</mx:states>
-	<mx:TabNavigator left="0" right="0" top="0" bottom="0">
-		<s:NavigatorContent label="Text Flow Directions">
 			<s:Group>
-					<s:layout>
-				<s:VerticalLayout>
-			
-				</s:VerticalLayout>
-			</s:layout>
-				<template:DirectionPicker id="directionPicker"  />
-				<template:ThicknessPicker id="thicknessPicker"  />
+				<s:layout>
+					<s:VerticalLayout />
+				</s:layout>
 				<s:Group>
+					<s:layout>
+						<s:VerticalLayout />
+					</s:layout>
+					<template:DirectionPicker id="directionPicker"  />
+					<template:ThicknessPicker id="thicknessPicker"  />
+					<s:Group>
+						<s:layout>
+							<s:HorizontalLayout />
+						</s:layout>
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+					</s:Group>
+				</s:Group>	
+				<s:Group id="mainCanvasArea">
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>
-					<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
-					<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+					<s:Group id="layerNavigation">
+						<s:Button id="btnShowAllLayers" label="All Layers" />
+					</s:Group>
+					<mx:UIComponent id="cvnTransparentBackground" top="100"
+									left="0" visible="true" />
+					<s:Group id="layers" />	
 				</s:Group>
 			</s:Group>
-		
-			
-			
-			<mx:UIComponent id="cvnTransparentBackground" top="100"
-							left="0" visible="true" />
-			<mx:UIComponent id="backgroundLayer" top="100"
-							left="0" visible="true" />
-			<mx:UIComponent id="textFlowCanvas" 
-							mouseDown="textFlowCanvas_mouseDownHandler(event)" 
-							mouseUp="textFlowCanvas_mouseUpHandler(event)" 
-							mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
-							creationComplete="textFlowCanvas_creationCompleteHandler(event)"
-							top="100" left="0" alpha="0.7" />
-			
+	
+				
 			<template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" />
 			
 			
-		</s:NavigatorContent>
 
-		<s:NavigatorContent label="Background">
+		<!--s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
-		</s:NavigatorContent>
-	</mx:TabNavigator>
+		</s:NavigatorContent-->
 	<mx:Script>
 		<![CDATA[
 			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.template.Layer;
 			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.template.WordLayer;
+			import com.settinghead.wexpression.client.view.components.template.canvas.TextFlowCanvas;
 			
 			import flash.display.*;
 			import flash.display.Sprite;
@@ -101,86 +102,37 @@
 			private var jagFileRefSave:FileReference = new FileReference();
 			private var loader:Loader = new Loader();
 			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
-			private var bmp:Bitmap;
-			private var bmpDirection:Bitmap;
+		
 
 			// ------- Child controls -------
 			// Common view/containers
 			private var _imageContainer:Sprite;
 			private var _currentViewContainer:Sprite;
 			
-			private var drawingState:Boolean = false;
 
-			protected function btnUpload_clickHandler(event:MouseEvent):void
-			{
-				jagFileRefSave.browse([imagesFilter]);
-				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-			}
-			
-			
-			private function onClickSave(e:MouseEvent):void{    
-				jagFileRefSave.browse([imagesFilter]);
-				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-			}        
-			private function selectedFile(e:Event):void{
-				jagFileRefSave.load();
-				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
-			}
-			private function loaded(e:Event):void{
-				var rawBytes:ByteArray = jagFileRefSave.data;
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
-				loader.loadBytes(rawBytes);
-			}
-			private function getBitmapData(e:Event):void{
-				backgroundLayer.addChild(loader);
-			}
-			
-			protected function textFlowCanvas_mouseDownHandler(event:MouseEvent):void
-			{
-				this.drawingState = true;
-				oldMouseX = textFlowCanvas.mouseX;
-				oldMouseY = textFlowCanvas.mouseY;
-			}
-			
-			
-			protected function textFlowCanvas_mouseUpHandler(event:MouseEvent):void
-			{
-				this.drawingState = false;
-				
-			}
-			
-			private var oldMouseX:Number, oldMouseY:Number;
-			
-			[Embed("SmallA.png")]
-			public static var SmallA:Class;
-			protected function textFlowCanvas_mouseMoveHandler(event:MouseEvent):void
-			{
-				if(drawingState){
-					var shape:Shape = new Shape();
-					var dirShape:Shape = new Shape();
-					var color:uint = ColorMath.HSLToRGB(directionPicker.angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
-					shape.graphics.lineStyle(thicknessPicker.
-						thickness,color
-						,1);
-					var a:BitmapAsset = new SmallA();
-					var m:Matrix = a.transform.matrix;
-					m.rotate(-directionPicker.angle);
-					dirShape.graphics.lineStyle(thicknessPicker.
-						thickness,0,0.7,true);
-					dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-					shape.graphics.moveTo(oldMouseX, oldMouseY);
-					dirShape.graphics.moveTo(oldMouseX, oldMouseY);
-					shape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
-					dirShape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
-					
-
-					bmp.bitmapData.draw(shape);
-					bmpDirection.bitmapData.draw(dirShape);
-					
-					oldMouseX = textFlowCanvas.mouseX;
-					oldMouseY = textFlowCanvas.mouseY;
-				}
-			}
+//			protected function btnUpload_clickHandler(event:MouseEvent):void
+//			{
+//				jagFileRefSave.browse([imagesFilter]);
+//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+//			}
+//			
+//			
+//			private function onClickSave(e:MouseEvent):void{    
+//				jagFileRefSave.browse([imagesFilter]);
+//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+//			}        
+//			private function selectedFile(e:Event):void{
+//				jagFileRefSave.load();
+//				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
+//			}
+//			private function loaded(e:Event):void{
+//				var rawBytes:ByteArray = jagFileRefSave.data;
+//				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
+//				loader.loadBytes(rawBytes);
+//			}
+//			private function getBitmapData(e:Event):void{
+//				backgroundLayer.addChild(loader);
+//			}
 			
 			public function get template():TemplateVO{
 				return _template;
@@ -190,46 +142,30 @@
 				this._template = _template;
 			}
 			
-			protected function textFlowCanvas_creationCompleteHandler(event:FlexEvent):void
+			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				populateTemplate();
 			}
 			
-			
-			
 			private function populateTemplate():void{
 				if(this.template!=null)
 				{
-
-					if(bmp!=null) this.textFlowCanvas.removeChild(bmp);
-					if(bmpDirection!=null) this.textFlowCanvas.removeChild(bmpDirection);
+					this.layers.removeAllElements();
 					
-					//TODO
-					if( this.template.layers[0].img!=null){
-						bmp = template.layers[0].img;
+					for each(var layer:Layer in this.template.layers){
+						if(layer is WordLayer){
+							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
+							this.layers.addChild(canvas);
+						}
 					}
-					else{
-						bmp = new Bitmap(new BitmapData(_template.width, _template.height, true, 0xffffff));
-						bmp.visible = false;
-					}
-
-					bmpDirection = new Bitmap(new BitmapData(_template.width, _template.height, true, 0xffffff));
 					
-					this.textFlowCanvas.width = _template.width;
-					this.textFlowCanvas.height = _template.height;
-					bmpDirection.x = bmp.x=0; bmpDirection.y = bmp.y = 0;
-					this.textFlowCanvas.addChild(bmp);
-
-					this.textFlowCanvas.addChild(bmpDirection);
 					drawTransparentBackground();
-//					this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 				}
 				
 			}
 			
 			protected function btnRender_clickHandler(event:MouseEvent):void
 			{
-				template.layers[0].img = bmp;
 				dispatchEvent(new Event(RENDER_TU));	
 			}
 			
@@ -249,10 +185,10 @@
 				spriteTile.graphics.endFill();
 				bmpdTile.draw(spriteTile);
 				
-				cvnTransparentBackground.width = this.textFlowCanvas.width;
-				cvnTransparentBackground.height = this.textFlowCanvas.height;
+				cvnTransparentBackground.width = this.template.width;
+				cvnTransparentBackground.height = this.template.height;
 				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
-				cvnTransparentBackground.graphics.drawRect(0,0, this.textFlowCanvas.width, this.textFlowCanvas.height);
+				cvnTransparentBackground.graphics.drawRect(0,0, this.template.width, this.template.height);
 				cvnTransparentBackground.graphics.endFill();
 			}
 			

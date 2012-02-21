@@ -6,6 +6,7 @@ package com.settinghead.wexpression.client.angler {
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	
 	import org.as3commons.lang.Assert;
 
@@ -14,10 +15,10 @@ package com.settinghead.wexpression.client.angler {
  * 
  */
 public class ShapeConfinedAngler implements WordAngler {
-	private var layer:Layer;
+	private var layer:WordLayer;
 	private var otherwise:WordAngler;
 
-	public function ShapeConfinedAngler(layer:Layer, otherwise:WordAngler) {
+	public function ShapeConfinedAngler(layer:WordLayer, otherwise:WordAngler) {
 		this.layer = layer;
 		this.otherwise = otherwise;
 	}
