@@ -32,6 +32,7 @@
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
 				generateButtons();
+				thickness = 40;
 			}
 			
 			private function generateButtons():void{

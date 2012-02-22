@@ -42,9 +42,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	
 	public class WordLayer extends Layer
 	{
-		public function WordLayer(template:TemplateVO)
+		public function WordLayer(name:String, template:TemplateVO)
 		{
-			super(template);
+			super(name, template);
 		}
 		
 		public var _img:Bitmap;
@@ -292,8 +292,13 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function get img():Bitmap{
-			if(this._img == null)
-				this.loadLayerFromPNG();
+			if(this._img == null){
+				if(path!=null)
+					this.loadLayerFromPNG();
+				else{
+					this.img = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
+				}
+			}
 			return _img;
 		}
 		

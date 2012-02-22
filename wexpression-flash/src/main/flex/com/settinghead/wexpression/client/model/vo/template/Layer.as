@@ -48,11 +48,20 @@ package com.settinghead.wexpression.client.model.vo.template
 	{
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;
-
+		private var _name:String;
 		
-		public function Layer(template:TemplateVO){
+		public function get name():String{
+			return _name;
+		}
+		
+		public function set name(v:String):void{
+			this._name = v;
+		}
+		
+		public function Layer(n:String, template:TemplateVO){
+			this.name = n;
 			this._template = template;
-			this._template.layers.push(this);
+			this._template.layers.addItem(this);
 		}
 		
 		public function get width():Number{
@@ -61,6 +70,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get height():Number{
 			throw new  NotImplementedError();
+		}
+		
+		public function toString():String{
+			return name;
 		}
 	
 	}

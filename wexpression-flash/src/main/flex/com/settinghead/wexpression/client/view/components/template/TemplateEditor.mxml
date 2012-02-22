@@ -8,7 +8,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:client="com.settinghead.wexpression.client.*" 
 	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*"
-	 creationComplete="creationCompleteHandler(event)"
+	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.wexpression.client.view.components.*"
 	 >
 	
 	<!-- Events dispatched by this View Component -->
@@ -47,16 +47,22 @@
 							<s:VerticalLayout />
 						</s:layout>
 						<s:Button id="btnShowAllLayers" label="All" />
-							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true">
+							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
+									dataProvider="{template.layers}" 
+									itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton">
 								<s:layout>
 									<s:VerticalLayout />
 								</s:layout>
 							</s:List>
-						<s:Button id="btnAddLayer" label="+" />
+						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
 					</s:Group>
 					<s:Group>
 						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
-						<s:Group id="layers" />
+						<components:LayerStack id="layers" dataProvider="{template.layers}" 
+												  itemRendererFunction="layers_itemRendererFunc" >
+							
+						</components:LayerStack>
+						
 					</s:Group>
 				</s:Group>
 			</s:Group>
@@ -89,6 +95,10 @@
 			import mx.controls.Alert;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
+			
+			import org.as3commons.lang.HashArray;
+			
+			private var layersMap:HashArray;
 			
 			import org.peaceoutside.utils.ColorMath;
 			
@@ -153,6 +163,7 @@
 			
 			[Bindable] public function set template(_template:TemplateVO):void{
 				this._template = _template;
+				this.layersMap = new HashArray("name",false,_template.layers.toArray());
 			}
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -163,16 +174,17 @@
 			private function populateTemplate():void{
 				if(this.template!=null)
 				{
-					this.layers.removeAllElements();
+					
+//					this.layers.removeAllElements();
 
-					for each(var layer:Layer in this.template.layers){
-						if(layer is WordLayer){
-							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
-							BindingUtils.bindProperty(canvas, "thickness", this.thicknessPicker, "thickness");
-							BindingUtils.bindProperty(canvas, "angle", this.directionPicker, "angle");
-							this.layers.addElement(canvas);
-						}
-					}
+//					for each(var layer:Layer in this.template.layers){
+//						if(layer is WordLayer){
+//							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
+//							
+//
+//							this.layers.addChild(canvas);
+//						}
+//					}
 					
 					drawTransparentBackground();
 				}
@@ -203,7 +215,7 @@
 				cvnTransparentBackground.width = this.template.width;
 				cvnTransparentBackground.height = this.template.height;
 				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
-				cvnTransparentBackground.graphics.drawRect(0,0, this.template.width, this.template.height);
+				cvnTransparentBackground.graphics.drawRect(0, 0, this.template.width, this.template.height);
 				cvnTransparentBackground.graphics.endFill();
 			}
 			
@@ -221,6 +233,21 @@
 				else if (event.keyCode == Keyboard.A){
 					this.directionPicker.angle += 0.05;
 				}
+			}
+			
+			protected function btnAddLayer_clickHandler(event:MouseEvent):void
+			{
+				new WordLayer("layer2",template);
+			}
+			
+			private function layers_itemRendererFunc(item:Object):ClassFactory {
+				var cla:Class;
+				if(item is WordLayer){
+					cla = TextFlowCanvas;
+				}
+				var renderer:ClassFactory = new ClassFactory(cla);
+				renderer.properties = {templateEditor: this, depth: template.layers.length};
+				return renderer;
 			}
 			
 		]]>

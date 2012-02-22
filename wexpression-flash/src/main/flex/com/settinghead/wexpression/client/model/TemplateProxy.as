@@ -37,7 +37,7 @@ package com.settinghead.wexpression.client.model
 		public function load() :void{
 			if(_pathToLoad!=null){
 				_template = new TemplateVO(_pathToLoad);
-				var l:WordLayer = new WordLayer(_template);
+				var l:WordLayer = new WordLayer("layer1", _template);
 				//TODO: different path for template and layer PNG
 				l.path = _pathToLoad;
 				l.loadLayerFromPNG(templateLoadComplete);

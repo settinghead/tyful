@@ -34,6 +34,8 @@ package com.settinghead.wexpression.client.model.vo.template
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.utils.HSBColor;
 	
 	import org.as3commons.bytecode.util.Assertions;
@@ -57,21 +59,21 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
 		private var _renderOptions:RenderOptions;
-		private var hsbArray:Array;
+//		private var hsbArray:Array;
 		private var _patchIndex:DensityPatchIndex;
 		private var _width:Number, _height:Number;
 		private var _previewPNG: ByteArray;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
-		private var _layers:Vector.<Layer> =  new Vector.<Layer>();
+		private var _layers:ArrayCollection =  new ArrayCollection();
 		
 		public function TemplateVO(path:String)
 		{
 			this._path = path;
 		}
 		
-		public function get layers():Vector.<Layer>{
+		public function get layers():ArrayCollection{
 			return this._layers;
 		}
 		

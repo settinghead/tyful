@@ -1,7 +1,9 @@
 package com.settinghead.wexpression.client.view.components.template.canvas
 {
 	import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
+	import com.settinghead.wexpression.client.view.components.template.TemplateEditor;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -14,6 +16,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 	import flash.text.TextField;
 	import flash.ui.Mouse;
 	
+	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.core.BitmapAsset;
@@ -23,41 +26,62 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 	import org.peaceoutside.utils.ColorMath;
 	
 	import spark.components.BorderContainer;
+	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
 	
-	public class TextFlowCanvas extends UIComponent
+	public class TextFlowCanvas extends ItemRenderer
 	{
 		
-		public function TextFlowCanvas(l:WordLayer)
+		public function TextFlowCanvas()
 		{
 			super();
-			this.layer = l;
 			this.addEventListener(MouseEvent.MOUSE_DOWN, this_mouseDownHandler);
 			this.addEventListener(MouseEvent.MOUSE_UP, this_mouseUpHandler);
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this_mouseMoveHandler);
 			this.addEventListener(MouseEvent.MOUSE_OVER, this_mouseOverHandler);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this_mouseOutHandler);
 			this.addEventListener("creationComplete", this_creationCompleteHandler);
-			
+			this.autoDrawBackground = false;
+		}
+		
+		private var _templateEditor:TemplateEditor;
+		public function set templateEditor(v:TemplateEditor):void{
+			this._templateEditor = v;
+			BindingUtils.bindProperty(this, "thickness", _templateEditor.thicknessPicker, "thickness");
+			BindingUtils.bindProperty(this, "angle", _templateEditor.directionPicker, "angle");
+			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");
+		}
+		
+		public function get templateEditor():TemplateEditor{
+			return _templateEditor;
 		}
 		
 		private var oldMouseX:Number, oldMouseY:Number;
 		private var drawingState:Boolean = false;
-		private var layer:WordLayer;
-//		private var bmp:Bitmap;
 		private var bmpDirection:Bitmap;
+		private var bmpElement:BitmapImage;
+		private var bmpDirElement:BitmapImage;
+
+		
 		
 		protected function this_mouseDownHandler(event:MouseEvent):void
 		{
-			this.drawingState = true;
-			oldMouseX = this.mouseX;
-			oldMouseY = this.mouseY;
+			if(isCurrentLayer){
+				this.drawingState = true;
+				oldMouseX = this.mouseX;
+				oldMouseY = this.mouseY;
+			}
 		}
 		
+		private function get layer():WordLayer{
+			return data as WordLayer;
+		}
 		
 		protected function this_mouseUpHandler(event:MouseEvent):void
 		{
-			this.drawingState = false;
+			if(isCurrentLayer){
+				this.drawingState = false;
+			}
 		}
 		
 		protected function this_mouseOutHandler(event:MouseEvent):void
@@ -90,7 +114,18 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		public function set thickness(t:Number):void{
 			this._thickness = t;
 			rebuildCursor();
-		}		
+		}
+		
+		public function set currentLayer(l:Layer):void{
+			this._isCurrentLayer = (l==this.layer);
+		}
+		
+		private var _isCurrentLayer:Boolean;
+		
+		public function get isCurrentLayer():Boolean{
+			return _isCurrentLayer;
+		}
+		
 		private function rebuildCursor():void{
 			if(cursor!=null){
 				cursor.graphics.clear();
@@ -161,7 +196,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			cursor.graphics.clear();
 			
 			cursor.blendMode = BlendMode.HARDLIGHT;
-			this.addChild(cursor);
+			this.addElement(cursor);
 		}
 		
 		private function populateLayer():void{
@@ -178,11 +213,15 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 					layer.img.visible = false;
 				}
 				
+				
 				bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
 				bmpDirection.alpha = 0.8;
+
+				
 				this.width = layer.width;
 				this.height = layer.height;
 				bmpDirection.x = layer.img.x=0; bmpDirection.y = layer.img.y = 0;
+				
 				
 				for(var w:Number = 0; w<layer.img.width;w+=a.width){
 					for(var h:Number = 0; h<layer.img.height;h+=a.height){
@@ -213,20 +252,18 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 					}
 				}
 				
-				this.addChild(layer.img);
-				this.addChild(bmpDirection);
+				bmpElement = new BitmapImage();
+				bmpElement.source = layer.img;
+				bmpDirElement = new BitmapImage();
+				bmpDirElement.source = bmpDirection;
+				bmpDirElement.alpha = 0.8;
+				
+				this.addElement(bmpElement);
+				this.addElement(bmpDirElement);
 				//this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 			}
 		}
-		private function addBitmap(bm:Bitmap ):void	
-		{
-			var bitmapHolder:UIComponent = new UIComponent();	
-			var mySprite:Sprite = new Sprite();
-			mySprite.addChild(bm);
-			bitmapHolder.addChild(mySprite);
-			this.addChild(bitmapHolder);
-			
-		}
+		
 
 	}
 }
