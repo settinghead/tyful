@@ -40,7 +40,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	import org.peaceoutside.utils.ColorMath;
 	import org.springextensions.actionscript.context.support.mxml.Template;
 	
-	public class WordLayer extends Layer
+	public class WordLayer extends Layer implements IImageShape
 	{
 		public function WordLayer(name:String, template:TemplateVO)
 		{
@@ -48,7 +48,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public var _img:Bitmap;
-		private var tree:BBPolarRootTreeVO;
+		private var _tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number= 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
@@ -206,16 +206,14 @@ package com.settinghead.wexpression.client.model.vo.template
 			return this._bounds;
 		}
 		
-		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
-			if (tree == null) {
-				
-				
+		public override function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+//			if (tree == null) {
 				// sampling approach
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
 				//				var numSamples = 10;
 				// TODO: devise better lower bound
-				if (numSamples < 10)
-					numSamples = 10;
+				if (numSamples < 20)
+					numSamples = 20;
 				var threshold:int= 1;
 				var darkCount:int= 0;
 				var i:int= 0;
@@ -233,9 +231,9 @@ package com.settinghead.wexpression.client.model.vo.template
 				
 				return true;
 				
-			} else {
-				return tree.contains(x, y, x + width, y + height);
-			}
+//			} else {
+//				return tree.contains(x, y, x + width, y + height);
+//			}
 		}
 		
 		
@@ -243,16 +241,16 @@ package com.settinghead.wexpression.client.model.vo.template
 			return img.hitTestPoint(x,y,true);
 		}
 		
-		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
-			if (tree == null) {
+		public override function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+			if (_tree == null) {
 				var threshold:int= 10;
 				var darkCount:int= 0;
 				var brightCount:int= 0;
 				
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
 				// TODO: devise better lower bound
-				if (numSamples < 4)
-					numSamples = 4;
+				if (numSamples < 10)
+					numSamples = 10;
 				
 				var i:int= 0;
 				while (i < numSamples) {
@@ -260,7 +258,7 @@ package com.settinghead.wexpression.client.model.vo.template
 					var relativeY:int= int((Math.random() * height));
 					var sampleX:int= int((relativeX + x));
 					var sampleY:int= int((relativeY + y));
-					if (getBrightness(int((sampleX)), int((sampleY))) < 0.01)
+					if (isNaN(getBrightness(int((sampleX)), int((sampleY)))))
 						//					if(!containsPoint(sampleX, sampleY, false))
 						darkCount++;
 					else
@@ -273,7 +271,7 @@ package com.settinghead.wexpression.client.model.vo.template
 				return false;
 				
 			} else {
-				return tree.overlapsCoord(x, y, x + width, y + height);
+				return _tree.overlapsCoord(x, y, x + width, y + height);
 			}
 		}
 		

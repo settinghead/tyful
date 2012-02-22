@@ -11,6 +11,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
 	import flash.text.TextField;
@@ -40,6 +41,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this_mouseMoveHandler);
 			this.addEventListener(MouseEvent.MOUSE_OVER, this_mouseOverHandler);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this_mouseOutHandler);
+			this.addEventListener(FocusEvent.FOCUS_OUT, this_focusOutHandler);
 			this.addEventListener("creationComplete", this_creationCompleteHandler);
 			this.autoDrawBackground = false;
 		}
@@ -50,6 +52,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			BindingUtils.bindProperty(this, "thickness", _templateEditor.thicknessPicker, "thickness");
 			BindingUtils.bindProperty(this, "angle", _templateEditor.directionPicker, "angle");
 			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");
+			
 		}
 		
 		public function get templateEditor():TemplateEditor{
@@ -86,9 +89,17 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		
 		protected function this_mouseOutHandler(event:MouseEvent):void
 		{
-//			Mouse.show();
-//			this.drawingState = false;
+			//			Mouse.show();
+			//			this.drawingState = false;
 		}
+		
+		protected function this_focusOutHandler(event:MouseEvent):void
+		{
+						Mouse.hide();
+						this.drawingState = false;
+		}
+		
+		
 		
 		protected function this_mouseOverHandler(event:MouseEvent):void
 		{
@@ -118,6 +129,15 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		
 		public function set currentLayer(l:Layer):void{
 			this._isCurrentLayer = (l==this.layer);
+			this.mouseEnabled=_isCurrentLayer;
+			if(_isCurrentLayer){
+				this.alpha = 1;
+			}
+			else{
+				this.alpha = 0.5;
+				Mouse.hide();
+			}
+
 		}
 		
 		private var _isCurrentLayer:Boolean;
@@ -150,11 +170,13 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		protected function this_mouseMoveHandler(event:MouseEvent):void
 		{
 			if(this.mouseX>0 && this.mouseX<this.width && this.mouseY > 0 && this.mouseY < this.height){
+				this.cursor.visible = true;
 				cursor.x = this.mouseX;
 				cursor.y = this.mouseY;
 			}
 			else{
 				this.drawingState = false;
+				this.cursor.visible = false;
 				Mouse.show();
 			}
 			

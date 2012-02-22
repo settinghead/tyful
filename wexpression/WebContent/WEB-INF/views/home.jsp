@@ -74,7 +74,7 @@ object:focus {
 	swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 </script>
 </head>
-<body>
+<body onLoad="window.document.Main.focus();">
 	<!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
              JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
              when JavaScript is disabled.
@@ -93,7 +93,7 @@ object:focus {
 
 	<noscript>
 		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-			width="100%" height="100%" id="Main">
+			width="100%" height="100%" id="Main" name="Main">
 			<param name="movie" value="resources/flash/WexpressionClient.swf" />
 			<param name="quality" value="high" />
 			<param name="bgcolor" value="#ffffff" />

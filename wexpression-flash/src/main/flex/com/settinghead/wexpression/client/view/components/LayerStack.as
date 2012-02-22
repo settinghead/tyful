@@ -6,6 +6,7 @@ package com.settinghead.wexpression.client.view.components
 	import mx.controls.listClasses.IListItemRenderer;
 	
 	import spark.components.SkinnableDataContainer;
+	import spark.events.IndexChangeEvent;
 	import spark.layouts.BasicLayout;
 	
 	public class LayerStack extends SkinnableDataContainer
@@ -15,6 +16,6 @@ package com.settinghead.wexpression.client.view.components
 			super();
 			this.layout = new BasicLayout();
 		}
-		
+			
 	}
 }

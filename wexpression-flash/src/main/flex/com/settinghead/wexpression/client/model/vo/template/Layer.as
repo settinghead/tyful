@@ -49,6 +49,8 @@ package com.settinghead.wexpression.client.model.vo.template
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;
 		private var _name:String;
+		public var above:Layer;
+		public var below:Layer;
 		
 		public function get name():String{
 			return _name;
@@ -61,6 +63,11 @@ package com.settinghead.wexpression.client.model.vo.template
 		public function Layer(n:String, template:TemplateVO){
 			this.name = n;
 			this._template = template;
+			if(this._template.layers.length>0)
+			{
+				connect(this, this._template.layers[this._template.layers.length-1] as Layer);
+					
+			}
 			this._template.layers.addItem(this);
 		}
 		
@@ -74,6 +81,28 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function toString():String{
 			return name;
+		}
+		
+		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+			throw new NotImplementedError();
+		}
+		
+		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+			throw new NotImplementedError();
+		}
+		
+		public function aboveContains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+			if(above!=null){
+				if(above.contains(x,y,width,height,transformed)) return true;
+				else return above.aboveContains(x,y,width,height,transformed);
+			}
+			else return false;
+		}
+
+		
+		public static function connect(above:Layer, below:Layer):void{
+			above.below = below;
+			below.above = above;
 		}
 	
 	}

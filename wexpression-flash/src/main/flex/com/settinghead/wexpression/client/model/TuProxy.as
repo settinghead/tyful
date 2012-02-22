@@ -62,7 +62,7 @@ package com.settinghead.wexpression.client.model
 		
 		public function load() :void{
 			var tu:TuVO = new TuVO(_template, _wordList);
-			facade.sendNotification(ApplicationFacade.TU_INITIALIZED, tu);
+			this.setData(tu);
 
 		}
 		
@@ -101,7 +101,7 @@ package com.settinghead.wexpression.client.model
 				while (eWord.wasSkipped()){
 					if(tu.indexOffset+tu.currentWordIndex==tu.words.size - 1)
 						break;
-					tu.indexOffset+=tu.words.size/15;
+					tu.indexOffset+=tu.words.size/80;
 					if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
 					{
 						tu.indexOffset = tu.words.size -1;
@@ -125,7 +125,7 @@ package com.settinghead.wexpression.client.model
 					
 					//5 consecutive failures. Put rendering to an end.
 					if (failureCount > 10){
-						tu.skipToLast();
+//						tu.skipToLast();
 						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 					}
 

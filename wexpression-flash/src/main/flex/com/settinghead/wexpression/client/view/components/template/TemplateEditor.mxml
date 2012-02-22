@@ -9,7 +9,7 @@
 	xmlns:client="com.settinghead.wexpression.client.*" 
 	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*"
 	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.wexpression.client.view.components.*"
-	 >
+	 keyDown="editor_keyDownHandler(event)" >
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -17,61 +17,62 @@
 	</mx:Metadata>
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
-	
-		
 	</mx:states>
-			<s:Group>
+			<s:Group left="0" right="0" top="0" bottom="0">
 				<s:layout>
 					<s:VerticalLayout />
 				</s:layout>
-				<s:Group>
+				<s:Group mouseOver="controlArea_mouseOverHandler(event)" left="0" right="0" top="0" height="60">
 					<s:layout>
 						<s:VerticalLayout />
 					</s:layout>
-					<template:DirectionPicker id="directionPicker"  />
-					<template:ThicknessPicker id="thicknessPicker"  />
 					<s:Group>
 						<s:layout>
 							<s:HorizontalLayout />
 						</s:layout>
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+						<mx:ToggleButtonBar id="toggleButtonBar"
+											dataProvider="{ribbonViewStack}" toggleOnClick="true" />						
 						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" skinClass="com.settinghead.wexpression.client.view.components.template.RenderButtonSkin"/>
+
 					</s:Group>
+					<mx:ViewStack id="ribbonViewStack" height="40" width="1000" visible="{toggleButtonBar.selectedIndex>=0}"
+								  >
+							<template:DirectionPicker label="Text direction" id="directionPicker"  />
+							<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
+							<components:MultiColorPicker label="Text color" id="colorPicker" />
+					</mx:ViewStack>
 				</s:Group>	
-				<s:Group id="mainCanvasArea">
+				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0">
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>
-					<s:Group id="layerNavigation">
+					<s:Group id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" left="0" top="0" bottom="0" width="100">
 						<s:layout>
 							<s:VerticalLayout />
 						</s:layout>
 						<s:Button id="btnShowAllLayers" label="All" />
 							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
 									dataProvider="{template.layers}" 
-									itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton">
+									itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton"
+									>
 								<s:layout>
 									<s:VerticalLayout />
 								</s:layout>
 							</s:List>
 						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
 					</s:Group>
-					<s:Group>
+					<s:Scroller>
+					<s:Group left="100" right="0" top="0" bottom="0">
 						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
 						<components:LayerStack id="layers" dataProvider="{template.layers}" 
 												  itemRendererFunction="layers_itemRendererFunc" >
-							
 						</components:LayerStack>
-						
+						<!--template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" /-->
 					</s:Group>
+					</s:Scroller>
 				</s:Group>
 			</s:Group>
-	
-				
-			<template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" />
-			
-			
-
 		<!--s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
 		</s:NavigatorContent-->
@@ -97,6 +98,8 @@
 			import mx.events.FlexEvent;
 			
 			import org.as3commons.lang.HashArray;
+			
+			import spark.events.IndexChangeEvent;
 			
 			private var layersMap:HashArray;
 			
@@ -219,7 +222,7 @@
 				cvnTransparentBackground.graphics.endFill();
 			}
 			
-			protected override function keyDownHandler(event:KeyboardEvent):void
+			protected function editor_keyDownHandler(event:KeyboardEvent):void
 			{
 				if (event.keyCode == Keyboard.Z){
 					this.thicknessPicker.thickness += 1;
@@ -237,7 +240,7 @@
 			
 			protected function btnAddLayer_clickHandler(event:MouseEvent):void
 			{
-				new WordLayer("layer2",template);
+				new WordLayer("layer"+(template.layers.length+1).toString(),template);
 			}
 			
 			private function layers_itemRendererFunc(item:Object):ClassFactory {
@@ -248,6 +251,14 @@
 				var renderer:ClassFactory = new ClassFactory(cla);
 				renderer.properties = {templateEditor: this, depth: template.layers.length};
 				return renderer;
+			}
+			
+			
+			
+			
+			protected function controlArea_mouseOverHandler(event:MouseEvent):void
+			{
+				Mouse.show();
 			}
 			
 		]]>

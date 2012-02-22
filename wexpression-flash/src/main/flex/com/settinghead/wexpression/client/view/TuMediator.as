@@ -36,7 +36,7 @@ package com.settinghead.wexpression.client.view
 		override public function listNotificationInterests():Array
 		{
 			return [
-				ApplicationFacade.TU_INITIALIZED,
+				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.DISPLAYWORD_CREATED,
 				ApplicationFacade.TU_GENERATION_LAST_CALL
 			];
@@ -46,8 +46,8 @@ package com.settinghead.wexpression.client.view
 		{
 			switch ( note.getName() )
 			{
-				case ApplicationFacade.TU_INITIALIZED:
-					tuRenderer.tu =  note.getBody() as TuVO;
+				case ApplicationFacade.RENDER_TU:
+					tuRenderer.tu =  tuProxy.tu;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)

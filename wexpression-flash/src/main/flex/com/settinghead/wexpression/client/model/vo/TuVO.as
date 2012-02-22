@@ -105,38 +105,35 @@ package com.settinghead.wexpression.client.model.vo
 			return _words;
 		}
 		
+		private var _finishedDisplayWordRendering:Boolean = false;
 		public function get finishedDisplayWordRendering():Boolean{
-			 return this._currentWordIndex >=  this.words.size;
+			 return this._finishedDisplayWordRendering;
 		}
 		
-		public function get almostFinishedDisplayWordRendering():Boolean{
-			//TODO 
-			return this._currentWordIndex >=  this.words.size * 0.9;
+		public function set finishedDisplayWordRendering(f:Boolean):void{
+			this._finishedDisplayWordRendering = f;
 		}
 		
 		
 		public function getNextWordAndIncrement():WordVO{
-			return words.itemAt(++_currentWordIndex) as WordVO;
+			return words.itemAt(++_currentWordIndex % words.size) as WordVO;
 		}
 		
 		public function get currentWordIndex():int{
 			return _currentWordIndex;
 		}
 		
-		public function skipToLast():void{
-			 _currentWordIndex = words.size;
-		}
 		
 		public function get failedLast():Boolean{
 			return this.failedLast;
 		}
 		
 	
-		[Bindable] private var successCount:Number = 0, totalCount:Number = 0;
-		public function get lossRate():Number{
-			return 1- (successCount)/(totalCount);
-//			return 0;
-		}
+//		[Bindable] private var successCount:Number = 0, totalCount:Number = 0;
+//		public function get lossRate():Number{
+//			return 1- (successCount)/(totalCount);
+////			return 0;
+//		}
 
 		
 		public function get generatedImage():BitmapData{

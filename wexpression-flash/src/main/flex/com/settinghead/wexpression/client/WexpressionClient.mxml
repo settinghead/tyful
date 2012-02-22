@@ -3,10 +3,10 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:debugger="com.demonsters.debugger.*" 
-			   minWidth="955" minHeight="600"
 			   creationComplete="facade.startup(this);" 
 			   xmlns:components="com.settinghead.wexpression.client.view.components.*" 
 			   xmlns:client="com.settinghead.wexpression.client.*"
+			    left="0" right="0" top="0"  bottom="0"
 			   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -16,7 +16,8 @@
 			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
 		]]>
 	</fx:Script>
-		<components:Application id="applicationComponent" left="0" right="0" top="0" bottom="0" />
+		<components:Application id="applicationComponent" left="0" right="0" top="0" bottom="0" >
+		</components:Application>
 	<mx:ApplicationControlBar verticalAlign="middle" dock="true" right="0" bottom="0" alpha="0.8">
 		<mx:Text text="Wexpression" fontFamily="Verdana" fontSize="22" fontStyle="normal" color="#0559CC"/>
 		<mx:Label fontWeight="bold" text="Create typography art."/>

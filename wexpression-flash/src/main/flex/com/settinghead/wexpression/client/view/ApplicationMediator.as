@@ -23,7 +23,7 @@ package com.settinghead.wexpression.client.view
 		override public function listNotificationInterests():Array
 		{
 			return [
-				ApplicationFacade.TU_INITIALIZED,
+				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.TU_GENERATED,
 				ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_SAVED
@@ -35,7 +35,7 @@ package com.settinghead.wexpression.client.view
 		{
 			switch ( note.getName() )
 			{		
-				case ApplicationFacade.TU_INITIALIZED:
+				case ApplicationFacade.RENDER_TU:
 					hideAll();
 					applicationComponent.vwStack.selectedChild = applicationComponent.tuRenderer; 
 					break;
@@ -44,7 +44,7 @@ package com.settinghead.wexpression.client.view
 				case ApplicationFacade.TEMPLATE_SAVED:
 					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor; 
 					applicationComponent.currentState = "withoutShop";
-
+					applicationComponent.parent.stage.focus = applicationComponent.templateEditor; 
 					break;
 				
 				case ApplicationFacade.TU_GENERATED:

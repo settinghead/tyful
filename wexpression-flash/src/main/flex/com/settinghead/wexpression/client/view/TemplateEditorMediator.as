@@ -68,6 +68,8 @@ package com.settinghead.wexpression.client.view
 			tuProxy.template =  templateEditor.template;
 			tuProxy.wordList = wordListProxy.currentWordList;
 			tuProxy.load();
+			facade.sendNotification(ApplicationFacade.RENDER_TU);
+
 
 		}
 		

@@ -60,6 +60,4 @@
 			<s:HorizontalLayout  />
 		</s:layout>
 	</s:List>
-	
-
-	</mx:Canvas>
+</mx:Canvas>

@@ -135,15 +135,20 @@ public class EngineWordVO {
 			return null;
 	}
 
-	public function trespassed(layer:WordLayer):Boolean {
-		if(layer==null) return false;
-		var x:Number= (this.currentLocation.getpVector().x - bbTree.getWidth(true) / 2);
-		var y:Number= (this.currentLocation.getpVector().y - bbTree.getHeight(true) / 2);
+	public function trespassed(layer:Layer):Boolean {
+		if(layer==null) return false;		
+		var x:Number = (this.currentLocation.getpVector().x - bbTree.getWidth(true) / 2);
+		var y:Number = (this.currentLocation.getpVector().y - bbTree.getHeight(true) / 2);
+
 		// float right = (float) (this.currentLocation.getpVector().x + bounds
 		// .getWidth());
 		// float bottom = (float) (this.currentLocation.getpVector().y + bounds
 		// .getHeight());
-		return !layer.contains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false);
+		if (layer.contains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false))
+	    {
+			return (layer.aboveContains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false));
+		}
+		else return true;
 	}
 
 	public function getTree():BBPolarRootTreeVO {

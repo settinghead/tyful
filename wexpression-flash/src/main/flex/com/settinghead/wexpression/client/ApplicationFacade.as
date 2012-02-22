@@ -13,7 +13,7 @@ package com.settinghead.wexpression.client
 	public class ApplicationFacade extends Facade
 	{
 		public static const STARTUP:String                = "startup";
-		public static const TU_INITIALIZED:String             = "tuInitialized";
+		public static const RENDER_TU:String             = "renderTu";
 		public static const TU_GENERATED:String             = "tuGenerated";
 		public static const EDIT_TEMPLATE:String             = "editTemplate";
 		public static const GENERATE_TU:String			  = "generateTu";

@@ -28,7 +28,7 @@ package com.settinghead.wexpression.client.density
 			if (myLevel == 0) {
 				for each (var layer:Layer in _map.getIndex().template.layers)
 					if(layer is WordLayer)
-						tryAdd(new Patch(0, 0, _map.getIndex().template.width, _map.getIndex().template.height, 0, null, this, layer as WordLayer));
+						tryAdd(new Patch(0, 0, layer.width, layer.height, 0, null, this, layer as WordLayer));
 			}
 		}
 		
