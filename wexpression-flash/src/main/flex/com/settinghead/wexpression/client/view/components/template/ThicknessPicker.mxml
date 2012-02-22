@@ -45,6 +45,10 @@
 				}
 			}
 			
+			protected override function keyDownHandler(event:KeyboardEvent):void{
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Binding source="buttonList.selectedItem as Number" destination="thickness" />

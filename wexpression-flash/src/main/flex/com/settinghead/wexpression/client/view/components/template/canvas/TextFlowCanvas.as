@@ -5,11 +5,14 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.BlendMode;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.text.TextField;
+	import flash.ui.Mouse;
 	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
@@ -32,7 +35,10 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			this.addEventListener(MouseEvent.MOUSE_DOWN, this_mouseDownHandler);
 			this.addEventListener(MouseEvent.MOUSE_UP, this_mouseUpHandler);
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this_mouseMoveHandler);
+			this.addEventListener(MouseEvent.MOUSE_OVER, this_mouseOverHandler);
+			this.addEventListener(MouseEvent.MOUSE_OUT, this_mouseOutHandler);
 			this.addEventListener("creationComplete", this_creationCompleteHandler);
+			
 		}
 		
 		private var oldMouseX:Number, oldMouseY:Number;
@@ -52,18 +58,71 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		protected function this_mouseUpHandler(event:MouseEvent):void
 		{
 			this.drawingState = false;
-			
 		}
 		
+		protected function this_mouseOutHandler(event:MouseEvent):void
+		{
+//			Mouse.show();
+//			this.drawingState = false;
+		}
+		
+		protected function this_mouseOverHandler(event:MouseEvent):void
+		{
+			Mouse.hide();
+		}
+		
+		private var cursor:UIComponent;
+		
+		private var _angle:Number;
+		private var _thickness:Number;
 		[Bindable]
-		public var angle:Number;
+		public function get angle():Number{
+			return _angle;
+		}
+		public function set angle(a:Number):void{
+			this._angle = a;
+			rebuildCursor();
+		}
 		[Bindable]
-		public var thickness:Number;
+		public function get thickness():Number{
+			return _thickness;
+		}
+		public function set thickness(t:Number):void{
+			this._thickness = t;
+			rebuildCursor();
+		}		
+		private function rebuildCursor():void{
+			if(cursor!=null){
+				cursor.graphics.clear();
+				var a:BitmapAsset = new SmallA();
+				var m:Matrix = a.transform.matrix;
+				m.tx -= a.width/2;
+				m.ty -= a.height/2;
+				m.rotate(-angle);
+				m.tx += a.width/2;
+				m.ty += a.height/2;
+				cursor.width = thickness;
+				cursor.height = thickness;
+				cursor.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+				cursor.graphics.beginBitmapFill(a.bitmapData,m,true, true);
+				cursor.graphics.drawCircle(0, 0, thickness/2);
+				cursor.graphics.endFill();
+			}
+		}
 		
 		[Embed("SmallA.png")]
 		public static var SmallA:Class;
 		protected function this_mouseMoveHandler(event:MouseEvent):void
 		{
+			if(this.mouseX>0 && this.mouseX<this.width && this.mouseY > 0 && this.mouseY < this.height){
+				cursor.x = this.mouseX;
+				cursor.y = this.mouseY;
+			}
+			else{
+				this.drawingState = false;
+				Mouse.show();
+			}
+			
 			if(drawingState){
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
@@ -72,8 +131,8 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 					,1);
 				var a:BitmapAsset = new SmallA();
 				var m:Matrix = a.transform.matrix;
-				m.rotate(angle);
-				dirShape.graphics.lineStyle(thickness,0,0.7,true);
+				m.rotate(-angle);
+				dirShape.graphics.lineStyle(thickness,0,0.8,true);
 				dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
 				shape.graphics.moveTo(oldMouseX, oldMouseY);
 				dirShape.graphics.moveTo(oldMouseX, oldMouseY);
@@ -92,6 +151,17 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		protected function this_creationCompleteHandler(event:FlexEvent):void
 		{
 			populateLayer();
+			initCursor();
+			rebuildCursor();
+		}
+		
+		private function initCursor():void{
+			cursor = new UIComponent();
+			cursor.depth = 999;
+			cursor.graphics.clear();
+			
+			cursor.blendMode = BlendMode.HARDLIGHT;
+			this.addChild(cursor);
 		}
 		
 		private function populateLayer():void{
@@ -109,6 +179,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				}
 				
 				bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
+				bmpDirection.alpha = 0.8;
 				this.width = layer.width;
 				this.height = layer.height;
 				bmpDirection.x = layer.img.x=0; bmpDirection.y = layer.img.y = 0;
@@ -125,9 +196,8 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 						m.tx += a.width/2;
 						m.ty += a.height/2;
 						var dirShape:Shape = new Shape();
-						dirShape.graphics.lineStyle(1,0,0.7,false);
+						dirShape.graphics.lineStyle(1,0,0.3,false);
 						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-
 						for(var ox:Number = 0; ox<a.width;ox++)
 							for(var oy:Number = 0; oy<a.height;oy++){
 								if(layer.getBrightness(ox+w,oy+h)>0){

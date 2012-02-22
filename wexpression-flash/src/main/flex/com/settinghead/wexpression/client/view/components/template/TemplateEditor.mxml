@@ -8,7 +8,8 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:client="com.settinghead.wexpression.client.*" 
 	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*"
-	 creationComplete="creationCompleteHandler(event)">
+	 creationComplete="creationCompleteHandler(event)"
+	 >
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -204,6 +205,22 @@
 				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
 				cvnTransparentBackground.graphics.drawRect(0,0, this.template.width, this.template.height);
 				cvnTransparentBackground.graphics.endFill();
+			}
+			
+			protected override function keyDownHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.Z){
+					this.thicknessPicker.thickness += 1;
+				}
+				else if (event.keyCode == Keyboard.X){
+					this.thicknessPicker.thickness -= 1;
+				}
+				else if (event.keyCode == Keyboard.S){
+					this.directionPicker.angle -= 0.05;
+				}
+				else if (event.keyCode == Keyboard.A){
+					this.directionPicker.angle += 0.05;
+				}
 			}
 			
 		]]>

@@ -57,7 +57,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
 		private var _renderOptions:RenderOptions;
-		private var hsbArray:Array;
+//		private var hsbArray:Array;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
 		
@@ -140,22 +140,32 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		
 		public function getHSB(x:int, y:int):int{
-			if(this.hsbArray[x]==null)
-				this.hsbArray[x] = new Array(this._img.height);
-			if(this.hsbArray[x][y]==null){
-				var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
-				var alpha:uint = rgbPixel>> 24 & 0xFF;
-				if(alpha == 0) {
-					hsbArray[x][y]  = NaN;
-					return NaN;
-				}
-				else {
-					var colour:int =  ColorMath.RGBtoHSB(rgbPixel);
-					hsbArray[x][y] = colour;
-					return colour;
-				}
+//			if(this.hsbArray[x]==null)
+//				this.hsbArray[x] = new Array(this._img.height);
+//			if(this.hsbArray[x][y]==null){
+//				var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
+//				var alpha:uint = rgbPixel>> 24 & 0xFF;
+//				if(alpha == 0) {
+//					hsbArray[x][y]  = NaN;
+//					return NaN;
+//				}
+//				else {
+//					var colour:int =  ColorMath.RGBtoHSB(rgbPixel);
+//					hsbArray[x][y] = colour;
+//					return colour;
+//				}
+//			}
+//			return this.hsbArray[x][y];
+			
+			var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
+			var alpha:uint = rgbPixel>> 24 & 0xFF;
+			if(alpha == 0) {
+				return NaN;
 			}
-			return this.hsbArray[x][y];
+			else {
+				var colour:int =  ColorMath.RGBtoHSB(rgbPixel);
+				return colour;
+			}
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
@@ -328,7 +338,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private function onLoadComplete (event:Event):void
 		{
 			this._img = new Bitmap(event.target.content.bitmapData);
-			this.hsbArray = new Array(this._img.width);
+//			this.hsbArray = new Array(this._img.width);
 			this._template.onLoadComplete(event);
 		}
 	}

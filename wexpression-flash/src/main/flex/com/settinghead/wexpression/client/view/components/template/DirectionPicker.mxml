@@ -40,10 +40,13 @@
 				var numButtons:int = 25;
 
 				for(var i:int=0;i<numButtons;i++){
-					var ang:Number = BBPolarTreeVO.TWO_PI/numButtons*i;
+					var ang:Number = BBPolarTreeVO.TWO_PI - BBPolarTreeVO.TWO_PI/numButtons*i;
 //					a.addEventListener(MouseEvent.CLICK, function( evt:Event ){this._angle = ang; });
 					this.buttonArray.addItem(ang);
 				}
+			}
+			protected override function keyDownHandler(event:KeyboardEvent):void{
+				
 			}
 			
 		]]>
