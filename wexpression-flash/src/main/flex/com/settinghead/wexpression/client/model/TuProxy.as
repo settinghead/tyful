@@ -101,7 +101,7 @@ package com.settinghead.wexpression.client.model
 				while (eWord.wasSkipped()){
 					if(tu.indexOffset+tu.currentWordIndex==tu.words.size - 1)
 						break;
-					tu.indexOffset+=tu.words.size/80;
+					tu.indexOffset+=tu.words.size/40;
 					if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
 					{
 						tu.indexOffset = tu.words.size -1;
@@ -117,14 +117,14 @@ package com.settinghead.wexpression.client.model
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
 					failureCount = 0;
-					dw = eWord.rendition(tu.template.colorer.colorFor(word));
+					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
 				}
 				else{
 					failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > 10){
+					if (failureCount > 6){
 //						tu.skipToLast();
 						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 					}
@@ -262,7 +262,7 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 20 
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 10 
 				* (1+ Math.random() * 0.4)
 				;
 			//			var area:Number = p.getWidth() * p.getHeight();

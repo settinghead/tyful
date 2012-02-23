@@ -51,8 +51,8 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			this._templateEditor = v;
 			BindingUtils.bindProperty(this, "thickness", _templateEditor.thicknessPicker, "thickness");
 			BindingUtils.bindProperty(this, "angle", _templateEditor.directionPicker, "angle");
-			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");
-			
+			BindingUtils.bindProperty(this, "colorPattern", _templateEditor.colorPicker, "colorPattern");
+			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");			
 		}
 		
 		public function get templateEditor():TemplateEditor{
@@ -64,8 +64,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		private var bmpDirection:Bitmap;
 		private var bmpElement:BitmapImage;
 		private var bmpDirElement:BitmapImage;
-
-		
+		private var colorSheetElement:BitmapImage;
 		
 		protected function this_mouseDownHandler(event:MouseEvent):void
 		{
@@ -110,6 +109,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		
 		private var _angle:Number;
 		private var _thickness:Number;
+		private var _colorPattern:BitmapData;
 		[Bindable]
 		public function get angle():Number{
 			return _angle;
@@ -124,6 +124,14 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		}
 		public function set thickness(t:Number):void{
 			this._thickness = t;
+			rebuildCursor();
+		}
+		[Bindable]
+		public function get colorPattern():BitmapData{
+			return _colorPattern;
+		}
+		public function set colorPattern(p:BitmapData):void{
+			this._colorPattern = p;
 			rebuildCursor();
 		}
 		
@@ -148,20 +156,40 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 		
 		private function rebuildCursor():void{
 			if(cursor!=null){
-				cursor.graphics.clear();
 				var a:BitmapAsset = new SmallA();
+
+				var colorLayer:UIComponent = new UIComponent();
+				colorLayer.graphics.clear();
+				colorLayer.x = 0;
+				colorLayer.y = 0;
+				colorLayer.width = thickness;
+				colorLayer.height = thickness;
+				colorLayer.graphics.lineBitmapStyle(colorPattern,null,true,true);
+				colorLayer.graphics.beginBitmapFill(colorPattern,null,true,true);
+				colorLayer.graphics.drawCircle(0, 0, thickness/2);
+				colorLayer.graphics.endFill();
+				
+				var textLayer:UIComponent = new UIComponent();
+				textLayer.graphics.clear();
 				var m:Matrix = a.transform.matrix;
 				m.tx -= a.width/2;
 				m.ty -= a.height/2;
 				m.rotate(-angle);
 				m.tx += a.width/2;
 				m.ty += a.height/2;
-				cursor.width = thickness;
-				cursor.height = thickness;
-				cursor.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-				cursor.graphics.beginBitmapFill(a.bitmapData,m,true, true);
-				cursor.graphics.drawCircle(0, 0, thickness/2);
-				cursor.graphics.endFill();
+				textLayer.width = thickness;
+				textLayer.height = thickness;
+				textLayer.x = 0;
+				textLayer.y = 0;
+				textLayer.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+				textLayer.graphics.beginBitmapFill(a.bitmapData,m,true, true);
+				textLayer.graphics.drawCircle(0, 0, thickness/2);
+				textLayer.graphics.endFill();
+				
+				cursor.width = colorLayer.width;
+				cursor.height = colorLayer.height;
+				cursor.addChild(colorLayer);
+				cursor.addChild(textLayer);
 			}
 		}
 		
@@ -183,22 +211,27 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 			if(drawingState){
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
-				var color:uint = ColorMath.HSLToRGB(angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
-				shape.graphics.lineStyle(thickness,color
-					,1);
+				var colorShape:Shape = new Shape();
+				var dirColor:uint = ColorMath.HSLToRGB(angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
+				shape.graphics.lineStyle(thickness, dirColor, 1);
+				colorShape.graphics.lineStyle(thickness,0,1,true);
+				dirShape.graphics.lineStyle(thickness,0,0.5,true);
+				colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
 				var a:BitmapAsset = new SmallA();
 				var m:Matrix = a.transform.matrix;
 				m.rotate(-angle);
-				dirShape.graphics.lineStyle(thickness,0,0.8,true);
 				dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
 				shape.graphics.moveTo(oldMouseX, oldMouseY);
 				dirShape.graphics.moveTo(oldMouseX, oldMouseY);
+				colorShape.graphics.moveTo(oldMouseX, oldMouseY);
 				shape.graphics.lineTo(this.mouseX,this.mouseY);
 				dirShape.graphics.lineTo(this.mouseX,this.mouseY);
+				colorShape.graphics.lineTo(this.mouseX,this.mouseY);
 				
 				
 				layer.img.bitmapData.draw(shape);
 				bmpDirection.bitmapData.draw(dirShape);
+				layer.colorSheet.bitmapData.draw(colorShape);
 				
 				oldMouseX = this.mouseX;
 				oldMouseY = this.mouseY;
@@ -276,11 +309,14 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				
 				bmpElement = new BitmapImage();
 				bmpElement.source = layer.img;
+				colorSheetElement = new BitmapImage();
+				colorSheetElement.source = layer.colorSheet;
 				bmpDirElement = new BitmapImage();
 				bmpDirElement.source = bmpDirection;
-				bmpDirElement.alpha = 0.8;
+				bmpDirElement.alpha = 0.5;
 				
-				this.addElement(bmpElement);
+//				this.addElement(bmpElement);
+				this.addElement(colorSheetElement);
 				this.addElement(bmpDirElement);
 				//this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 			}

@@ -40,7 +40,7 @@
 								  >
 							<template:DirectionPicker label="Text direction" id="directionPicker"  />
 							<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
-							<components:MultiColorPicker label="Text color" id="colorPicker" />
+							<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
 					</mx:ViewStack>
 				</s:Group>	
 				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0">
@@ -135,7 +135,6 @@
 			private var _imageContainer:Sprite;
 			private var _currentViewContainer:Sprite;
 			
-
 //			protected function btnUpload_clickHandler(event:MouseEvent):void
 //			{
 //				jagFileRefSave.browse([imagesFilter]);

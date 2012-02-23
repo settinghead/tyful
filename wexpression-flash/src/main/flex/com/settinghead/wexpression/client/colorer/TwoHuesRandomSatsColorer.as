@@ -1,7 +1,10 @@
 package com.settinghead.wexpression.client.colorer
 {
 	import com.lorentz.SVG.utils.MathUtils;
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.template.Layer;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	
@@ -19,7 +22,7 @@ package com.settinghead.wexpression.client.colorer
 
 		}
 		
-		public function colorFor(word:WordVO):uint
+		public function colorFor(eWord:EngineWordVO):uint
 		{
 			var hue:Number= hues[prng.nextIntRange(0,hues.length-1)];
 //			var sat:Number= Math.random()*256;

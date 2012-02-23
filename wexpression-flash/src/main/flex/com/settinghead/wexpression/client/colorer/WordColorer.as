@@ -1,5 +1,7 @@
 package com.settinghead.wexpression.client.colorer {
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -38,6 +40,6 @@ public interface WordColorer {
 	 * @param word the word to pick the color for
 	 * @return the color for the word
 	 */
-	function colorFor(word:WordVO):uint ;
+	function colorFor(word:EngineWordVO):uint ;
 }
 }

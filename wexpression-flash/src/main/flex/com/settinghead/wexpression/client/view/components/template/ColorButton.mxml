@@ -3,8 +3,6 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				autoDrawBackground="false">
-	
-	<s:Label text="A" backgroundColor="{data as int}"/>
-	<mx:ColorPicker selectedColor="{data as int}" />
+	<mx:ColorPicker selectedColor="@{data.v}" />
 	
 </s:ItemRenderer>

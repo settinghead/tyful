@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.colorer
 {
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	public class AlwaysUseColorer implements WordColorer
@@ -11,7 +12,7 @@ package com.settinghead.wexpression.client.colorer
 			this.color = color;
 		}
 		
-		public function colorFor(word:WordVO):uint
+		public function colorFor(eWord:EngineWordVO):uint
 		{
 			return color;
 		}

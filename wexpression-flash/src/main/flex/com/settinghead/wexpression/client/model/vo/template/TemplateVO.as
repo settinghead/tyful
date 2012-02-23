@@ -5,6 +5,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
 	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
 	import com.settinghead.wexpression.client.angler.WordAngler;
+	import com.settinghead.wexpression.client.colorer.ColorSheetColorer;
 	import com.settinghead.wexpression.client.colorer.TwoHuesRandomSatsColorer;
 	import com.settinghead.wexpression.client.colorer.WordColorer;
 	import com.settinghead.wexpression.client.density.DensityPatchIndex;
@@ -63,6 +64,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _patchIndex:DensityPatchIndex;
 		private var _width:Number, _height:Number;
 		private var _previewPNG: ByteArray;
+		public var mixColorDistance:int = 5;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -137,7 +139,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get colorer():WordColorer{
 			if(this._colorer==null){
-				this._colorer = new TwoHuesRandomSatsColorer();
+				this._colorer = new ColorSheetColorer();
 			}
 			return this._colorer;
 		}

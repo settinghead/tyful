@@ -45,7 +45,7 @@ package com.settinghead.wexpression.client.model
 			if(this._list==null){
 				
 				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
-				new WordListDelegate(this).getWordList(wordListId);
+				(new WordListDelegate(this)).getWordList(wordListId);
 			}
 		}
 		

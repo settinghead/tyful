@@ -47,7 +47,8 @@ package com.settinghead.wexpression.client.model.vo.template
 			super(name, template);
 		}
 		
-		public var _img:Bitmap;
+		private var _img:Bitmap;
+		private var _colorSheet:Bitmap;
 		private var _tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number= 100;
@@ -294,7 +295,7 @@ package com.settinghead.wexpression.client.model.vo.template
 				if(path!=null)
 					this.loadLayerFromPNG();
 				else{
-					this.img = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
+					this._img = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
 				}
 			}
 			return _img;
@@ -302,6 +303,17 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function set img(bmp:Bitmap):void{
 			this._img = bmp;
+		}
+		
+		public function set colorSheet(bmp:Bitmap):void{
+			this._colorSheet = bmp;
+		}
+		
+		public function get colorSheet():Bitmap{
+			if(this._colorSheet == null){
+				this._colorSheet = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
+			}
+			return _colorSheet;
 		}
 		
 		public function get path():String{
