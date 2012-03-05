@@ -36,11 +36,12 @@ public class ShapeConfinedRandomWordNudger implements WordNudger {
 	public function ShapeConfinedRandomWordNudger() {
 		
 	}
+	private var retPoint:Point = new Point(0,0);
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 		var factor:int;
 //		if (pInfo != null && pInfo.get().patch != null) {
-			var p:Patch= Patch(pInfo.get().patch);
+			var p:Patch= Patch(pInfo.patch);
 			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
 					.getHeight();
 			if (p.getLevel() == 0)
@@ -51,8 +52,9 @@ public class ShapeConfinedRandomWordNudger implements WordNudger {
 //			factor = 30;
 
 		factor *= 6;
-		
-		return new Point(next(attempt, factor), next(attempt, factor));
+		retPoint.x = next(attempt, factor);
+		retPoint.y = next(attempt, factor);
+		return retPoint;
 	}
 	
 	private function next( attempt:int, stdDev:Number):Number {

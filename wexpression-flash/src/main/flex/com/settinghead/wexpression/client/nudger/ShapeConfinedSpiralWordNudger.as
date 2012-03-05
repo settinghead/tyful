@@ -33,13 +33,14 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 	public function ShapeConfinedSpiralWordNudger() {
 	}
+	private var retPoint:Point = new Point(0,0);
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 		var factor:int;
 		attempt = ( attempt + pInfo.patch.lastAttempt ) % totalPlannedAttempt;
 
 //		if (pInfo != null && pInfo.get().patch != null) {
-			var p:Patch= Patch(pInfo.get().patch);
+			var p:Patch= Patch(pInfo.patch);
 			factor = p.getWidth() < p.getHeight() ? p.getWidth() : p
 					.getHeight();
 			factor/=1.8;
@@ -59,7 +60,9 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 		var theta = Math.random() * BBPolarTreeVO.TWO_PI;
 		var x:Number= Math.cos(theta) * rad;
 		var y:Number= Math.sin(theta) * rad;
-		return new Point(x, y);
+		retPoint.x = x;
+		retPoint.y = y;
+		return retPoint;
 	}
 
 	private function powerMap(power:Number, v:Number, min1:Number, max1:Number,

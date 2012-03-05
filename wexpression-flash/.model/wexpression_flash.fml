@@ -14,7 +14,7 @@
       <item name="contextRoot">/wexpression</item>
       <item name="rootUrl">http://localhost:8080/wexpression</item>
       <item name="LINKED_FILE"></item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost:8080/wexpression/messagebroker/amf</item>
+      <item name="ABSOLUTE_ENDPOINT"></item>
     </annotation>
     <annotation name="ServiceTypeGroup">
       <item name="ServiceBackendType">BlazeDS</item>

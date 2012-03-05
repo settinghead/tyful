@@ -10,14 +10,25 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.powerflasher.fdt.core.FlashBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>com.powerflasher.fdt.core.FlashNature</nature>
 		<nature>com.adobe.flexbuilder.project.flexnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>bin-debug</name>
+			<type>2</type>
+			<location>/Users/settinghead/wexpression/wexpression/WebContent/resources/flash</location>
+		</link>
+		<link>
+			<name>bin-release</name>
 			<type>2</type>
 			<location>/Users/settinghead/wexpression/wexpression/WebContent/resources/flash</location>
 		</link>

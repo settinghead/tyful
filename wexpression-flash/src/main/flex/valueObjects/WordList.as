@@ -1,5 +1,5 @@
 /**
- * This is a generated sub-class of _Template.as and is intended for behavior
+ * This is a generated sub-class of _WordList.as and is intended for behavior
  * customization.  This class is only generated when there is no file already present
  * at its target location.  Thus custom behavior that you add here will survive regeneration
  * of the super-class. 
@@ -10,12 +10,12 @@
  * corresponding entity 
  **/ 
  
-package com.settinghead.wexpression.client.model.vo.template
+package valueObjects
 {
 
 import com.adobe.fiber.core.model_internal;
 
-public class Template extends _Super_Template
+public class WordList extends _Super_WordList
 {
     /** 
      * DO NOT MODIFY THIS STATIC INITIALIZER - IT IS NECESSARY
@@ -30,17 +30,17 @@ public class Template extends _Super_Template
      */     
     public static function _initRemoteClassAlias() : void
     {
-        _Super_Template.model_internal::initRemoteClassAliasSingle(com.settinghead.wexpression.client.model.vo.template.Template);
-        _Super_Template.model_internal::initRemoteClassAliasAllRelated();
+        _Super_WordList.model_internal::initRemoteClassAliasSingle(valueObjects.WordList);
+        _Super_WordList.model_internal::initRemoteClassAliasAllRelated();
     }
      
     model_internal static function initRemoteClassAliasSingleChild() : void
     {
-        _Super_Template.model_internal::initRemoteClassAliasSingle(com.settinghead.wexpression.client.model.vo.template.Template);
+        _Super_WordList.model_internal::initRemoteClassAliasSingle(valueObjects.WordList);
     }
     
     {
-        _Super_Template.model_internal::initRemoteClassAliasSingle(com.settinghead.wexpression.client.model.vo.template.Template);
+        _Super_WordList.model_internal::initRemoteClassAliasSingle(valueObjects.WordList);
     }
     /** 
      * END OF DO NOT MODIFY SECTION

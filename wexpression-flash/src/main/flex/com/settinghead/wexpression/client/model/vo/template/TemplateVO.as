@@ -93,6 +93,10 @@ package com.settinghead.wexpression.client.model.vo.template
 			return _width;
 		}
 		
+		public function set width(v:Number):void{
+			 _width = v;
+		}
+		
 		public function get height():Number{
 			if(isNaN(_height)){
 				var maxHeight:Number = 0;
@@ -101,6 +105,10 @@ package com.settinghead.wexpression.client.model.vo.template
 				if(maxHeight > 0) _height = maxHeight; 
 			}
 			return _height;
+		}
+		
+		public function set height(v:Number):void{
+			_height = v;
 		}
 		
 		public function get previewPNG():ByteArray{
@@ -124,7 +132,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(10,100);
+				this._sizer = new ByWeightSizer(14,100);
 			}
 			return this._sizer;
 		}
@@ -165,5 +173,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		{
 			this._patchIndex = new DensityPatchIndex(this);
 		}
+		
+		
 	}
 }

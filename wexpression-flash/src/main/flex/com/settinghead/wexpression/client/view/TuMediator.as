@@ -70,7 +70,7 @@ package com.settinghead.wexpression.client.view
 			if(!waitingForWord){
 				waitingForWord = true;
 				var count:int = 0;
-				while(!tuRenderer.tu.finishedDisplayWordRendering && ++count<3) 
+				while(!tuRenderer.tu.finishedDisplayWordRendering && ++count<2) 
 					tuProxy.renderNextDisplayWord(tuRenderer.tu);
 				waitingForWord = false;
 			}

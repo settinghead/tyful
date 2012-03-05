@@ -7,8 +7,8 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" xmlns:template="com.settinghead.wexpression.client.view.components.template.*"
-		  mouseOver="canvas1_mouseOverHandler(event)"
+		 creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" xmlns:template="com.settinghead.wexpression.client.view.components.template.*"
+		  mouseOver="canvas1_mouseOverHandler(event)" enterFrame="onEnterFrameHandler(event)"
 		 >
 	
 	<!-- Events dispatched by this View Component -->
@@ -23,6 +23,7 @@
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.wexpression.client.model.vo.DisplayWordListVO;
 			import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
+			import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 			import com.settinghead.wexpression.client.model.vo.TuVO;
 			
 			import mx.controls.Alert;
@@ -79,6 +80,22 @@
 					this.highlightPatch(pi.patch);
 				dWord.visible = false;
 				drawTree(dWord.engineWord.bbTree);
+				drawSamplePoints(dWord.engineWord);
+			}
+			
+			private function drawSamplePoints(ew:EngineWordVO):void{
+//				treeLayer.graphics.clear();
+				treeLayer.graphics.beginFill(0xcccccc,1.0);
+				for(var i:int = 0 ;i<ew.samplePoints.length;i++){
+					var theta:Number = (ew.samplePoints[i] as Array)[0];
+					var d:Number = (ew.samplePoints[i] as Array)[1];
+					theta -= ew.bbTree.getRotation();
+					var x:Number = ew.bbTree.getRootX() + Math.cos(theta) * d;
+					var y:Number = ew.bbTree.getRootY() + Math.sin(theta) * d;
+					
+					treeLayer.graphics.drawCircle(x,y,2);
+				}
+				treeLayer.graphics.endFill();
 			}
 			
 			public function wordMouseOut(e:MouseEvent):void{
@@ -154,6 +171,9 @@
 			protected function onEnterFrameHandler(event:Event):void
 			{
 				if(this.visible){
+					if(newTu && this.tu!=null){
+						prepareForTu();
+					}
 					if(_tu!=null){
 						if(!_tu.finishedDisplayWordRendering){
 							dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
@@ -234,7 +254,8 @@
 		</s:layout>
 			<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 			<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
-			<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+		<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+		<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 			<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
 	</s:Group>
 	

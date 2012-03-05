@@ -47,23 +47,8 @@
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>
-					<s:Group id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" left="0" top="0" bottom="0" width="100">
-						<s:layout>
-							<s:VerticalLayout />
-						</s:layout>
-						<s:Button id="btnShowAllLayers" label="All" />
-							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
-									dataProvider="{template.layers}" 
-									itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton"
-									>
-								<s:layout>
-									<s:VerticalLayout />
-								</s:layout>
-							</s:List>
-						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
-					</s:Group>
 					<s:Scroller>
-					<s:Group left="100" right="0" top="0" bottom="0">
+					<s:Group left="0" right="100" top="0" bottom="0">
 						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
 						<components:LayerStack id="layers" dataProvider="{template.layers}" 
 												  itemRendererFunction="layers_itemRendererFunc" >
@@ -71,6 +56,21 @@
 						<!--template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" /-->
 					</s:Group>
 					</s:Scroller>
+					<s:Group id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" top="0" bottom="0" width="100" right="0">
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<s:Button id="btnShowAllLayers" label="All" />
+						<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
+								dataProvider="{template.layers}" 
+								itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton"
+								>
+							<s:layout>
+								<s:VerticalLayout />
+							</s:layout>
+						</s:List>
+						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
+					</s:Group>
 				</s:Group>
 			</s:Group>
 		<!--s:NavigatorContent label="Background">

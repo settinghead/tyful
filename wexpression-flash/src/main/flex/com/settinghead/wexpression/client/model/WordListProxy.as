@@ -44,8 +44,9 @@ package com.settinghead.wexpression.client.model
 		public function load() :void{
 			if(this._list==null){
 				
-				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
-				(new WordListDelegate(this)).getWordList(wordListId);
+//				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
+//				(new WordListDelegate(this)).getWordList(wordListId);
+				this._list = sampleWordList();
 			}
 		}
 		
@@ -73,8 +74,9 @@ package com.settinghead.wexpression.client.model
 		public function sampleWordList():WordListVO{
 			var list:WordListVO = new WordListVO();
 			for(var i:int=0;i<1000;i++){
-				list.add(new WordVO("Artwork", Math.random()*5+0.5));
+				list.add(new WordVO("Art", Math.random()*5+0.5));
 				list.add(new WordVO("Sample", Math.random()*5+0.5));
+				list.add(new WordVO("Created by Wexpression", Math.random()*5+0.5));
 				list.add(new WordVO("typography", Math.random()*5+0.5));
 			}
 			return list;

@@ -7,11 +7,11 @@ package services
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.services.wrapper.RemoteObjectServiceWrapper;
 import com.adobe.serializers.utility.TypeUtility;
-import com.settinghead.wexpression.client.model.vo.wordlist.WordList;
 import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
+import valueObjects.WordList;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
@@ -32,7 +32,7 @@ internal class _Super_WordListService extends com.adobe.fiber.services.wrapper.R
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getWordList");
-         operation.resultType = com.settinghead.wexpression.client.model.vo.wordlist.WordList;
+         operation.resultType = valueObjects.WordList;
         operations["getWordList"] = operation;
 
         _serviceControl.operations = operations;

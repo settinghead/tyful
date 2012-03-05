@@ -60,9 +60,9 @@ package com.settinghead.wexpression.client.model.vo
 					}
 				} else {
 					if (getR2(rotate) < HALF_PI) {
-						var x1:Number= d1 * Math.cos(getR1(rotate));
-						var x2:Number= d1 * Math.cos(getR2(rotate));
-						x = x1 < x2 ? x1 : x2;
+						var xx1:Number= d1 * Math.cos(getR1(rotate));
+						var xx2:Number= d1 * Math.cos(getR2(rotate));
+						x = xx1 < xx2 ? xx1 : xx2;
 					} else if (getR2(rotate) < PI) {
 						x = d2 * Math.cos(getR2(rotate));
 					} else if (getR2(rotate) < getR1(rotate)) {

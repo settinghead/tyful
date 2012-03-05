@@ -203,7 +203,7 @@ internal class BBPolarTreeBuilder {
 		if(y+height<0) return null;
 		Assert.isTrue(width > 0);
 		Assert.isTrue(height > 0);
-		if (shape == null || shape.contains(x, y, width, height,false)) {
+		if (shape == null || shape.contains(x, y, width, height, 0, false)) {
 			return tree;
 		} else {
 			if (shape.intersects(x, y, width, height,false)) {

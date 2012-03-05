@@ -51,7 +51,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _colorSheet:Bitmap;
 		private var _tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
-		private static const SAMPLE_DISTANCE:Number= 100;
+		public static const SAMPLE_DISTANCE:Number= 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 		private var _path:String;
 		private var _colorer:WordColorer;
@@ -207,8 +207,8 @@ package com.settinghead.wexpression.client.model.vo.template
 			return this._bounds;
 		}
 		
-		public override function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
-//			if (tree == null) {
+		public override function contains(x:Number, y:Number, width:Number, height:Number, rotation:Number, transformed:Boolean):Boolean {
+			if (_tree == null) {
 				// sampling approach
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
 				//				var numSamples = 10;
@@ -221,24 +221,51 @@ package com.settinghead.wexpression.client.model.vo.template
 				while (i < numSamples) {
 					var relativeX:int= int((Math.random() * width));
 					var relativeY:int= int((Math.random() * height));
+					
+					//rotation
+					rotation = - rotation;
+					
+					if(rotation!=0){
+					
+	//					Alert.show(rotation.toString());
+						if(relativeX==0) relativeX = 0.001;
+						relativeX = (relativeX - width/2);
+						relativeY = (relativeY - height/2);
+						
+						var r:Number = Math.sqrt(Math.pow(relativeX, 2)+Math.pow(relativeY, 2));
+						var theta:Number = Math.atan2(relativeY, relativeX);
+						theta += rotation;
+	
+						relativeX = r * Math.cos(theta);
+						relativeY = r * Math.sin(theta);
+						
+	//					relativeX = (relativeX * Math.cos(rotation))
+	//						- (relativeY * Math.sin(rotation));
+	//					relativeY = Math.sin(rotation) * relativeX
+	//						+ Math.cos(rotation ) * relativeY;
+						
+						relativeX = (relativeX + width/2);
+						relativeY = (relativeY + height/2);
+					}
 					var sampleX:int= relativeX + x;
 					var sampleY:int= relativeY + y;
+					
 					var brightness:Number = getBrightness(sampleX, sampleY);
 					if ((isNaN(brightness) || brightness < 0.01) && ++darkCount >= threshold)
-						//					if ((!containsPoint(sampleX, sampleY, false)) && ++darkCount >= threshold)
+//											if ((!containsPoint(sampleX, sampleY, false)) && ++darkCount >= threshold)
 						return false;
 					i++;
 				}
 				
 				return true;
 				
-//			} else {
-//				return tree.contains(x, y, x + width, y + height);
-//			}
+			} else {
+				return _tree.overlapsCoord(x, y, x + width, y + height);
+			}
 		}
 		
 		
-		public function containsPoint(x:Number, y:Number, transform:Boolean):Boolean{
+		public override function containsPoint(x:Number, y:Number, transform:Boolean):Boolean{
 			return img.hitTestPoint(x,y,true);
 		}
 		
@@ -303,6 +330,9 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function set img(bmp:Bitmap):void{
 			this._img = bmp;
+//			var inverseLayer:InverseWordLayer = new InverseWordLayer(this);
+//			this._tree = new BBPolarRootTreeVO(inverseLayer, 0, 0, 
+//				Math.sqrt(Math.pow(inverseLayer.width/2, 2) + Math.pow(inverseLayer.width/2, 2)), 20); 
 		}
 		
 		public function set colorSheet(bmp:Bitmap):void{

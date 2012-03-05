@@ -92,27 +92,28 @@ package com.settinghead.wexpression.client.density
 			if (isNaN(this._alphaSum))
 				// lazy calc
 			{
-				this._alphaSum = 0;
-				this.getArea();
-
-				if (this.getChildren() == null
-					|| this.getChildren().length == 0) {
-					for (var i:int= 0; i < this.getWidth(); i++)
-						for (var j:int= 0; j < this.getHeight(); j++) {
-							var brightness:Number = _layer.getBrightness(
-								this.getX() + i, this.getY() + j);
-							if(isNaN(brightness)){
-								brightness = 0;
-							}
-							else 
-								brightness = brightness;
-							this._alphaSum += brightness;
-							if(brightness==0)
-								this._area -= 1;
-						}
-				} else
-					for each (var p:Patch in this.getChildren())
-						this._alphaSum += p.getAlphaSum();
+//				this._alphaSum = 0;
+//				this.getArea();
+//
+//				if (this.getChildren() == null
+//					|| this.getChildren().length == 0) {
+//					for (var i:int= 0; i < this.getWidth(); i++)
+//						for (var j:int= 0; j < this.getHeight(); j++) {
+//							var brightness:Number = _layer.getBrightness(
+//								this.getX() + i, this.getY() + j);
+//							if(isNaN(brightness)){
+//								brightness = 0;
+//							}
+//							else 
+//								brightness = brightness;
+//							this._alphaSum += brightness;
+//							if(brightness==0)
+//								this._area -= 1;
+//						}
+//				} else
+//					for each (var p:Patch in this.getChildren())
+//						this._alphaSum += p.getAlphaSum();
+				this._alphaSum = 1;
 			}
 			
 			if(this._alphaSum==0) 

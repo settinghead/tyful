@@ -17,13 +17,13 @@ package com.settinghead.wexpression.client.model.vo
 			this.rootY = centerY;
 			this.shape = shape;
 			this._minBoxSize = minBoxSize;
-			this.rootStamp = (new Date()).time;
+			this.rootStamp = Math.random();
 		}
 		
 		public function setLocation(centerX:int, centerY:int):void {
 			this.rootX = centerX;
 			this.rootY = centerY;
-			this.rootStamp = (new Date()).time;
+			this.rootStamp = Math.random();
 		}
 		
 		
@@ -72,7 +72,7 @@ package com.settinghead.wexpression.client.model.vo
 			this._rotation = rotation % BBPolarTreeVO.TWO_PI;
 			if(this._rotation<0)
 				this._rotation = BBPolarTreeVO.TWO_PI + this._rotation;
-			this.rootStamp = (new Date()).time;
+			this.rootStamp = Math.random();
 		}
 		
 		

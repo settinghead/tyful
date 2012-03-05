@@ -17,6 +17,8 @@ package com.settinghead.wexpression.client.model.vo {
 	import flash.text.TextFieldAutoSize;
 	
 	import mx.controls.Alert;
+	
+	import org.as3commons.lang.Assert;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -57,6 +59,7 @@ public class EngineWordVO {
 	private var targetPlaceInfo:Vector.<PlaceInfo>;
 	private var renderedPlace:Point;
 	private var skippedBecause:int = -1;
+	public var samplePoints:Array;
 	
 	
 	public function EngineWordVO(word:WordVO, rank:int, wordCount:int) {
@@ -66,8 +69,29 @@ public class EngineWordVO {
 
 	public function setShape(shape:TextShapeVO, swelling:int):void {
 		this._shape = shape;
-
 		this.bbTree = BBPolarTreeBuilder.makeTree(shape, swelling);
+		drawSamples();
+	}
+	
+	private function drawSamples():void{
+		this.samplePoints = new Array();
+		var numSamples:int= int((shape.width * shape.height / WordLayer.SAMPLE_DISTANCE));
+		//				var numSamples = 10;
+		// TODO: devise better lower bound
+		if (numSamples < 20)
+			numSamples = 20;
+		for(var i:int = 0; i<numSamples;i++){
+			var relativeX:Number= int((Math.random() * shape.width));
+			var relativeY:Number= int((Math.random() * shape.height));
+//			if(shape.containsPoint(relativeX, relativeY,false))
+//			{
+				relativeX -= shape.width/2;
+				relativeY -= shape.height/2;
+				var d:Number = Math.sqrt(Math.pow(relativeX,2)+Math.pow(relativeY,2));
+				var r:Number = Math.atan2(relativeY, relativeX);
+				samplePoints.push([r,d]);
+//			}
+		}
 	}
 
 	public function get shape():TextShapeVO {
@@ -129,24 +153,33 @@ public class EngineWordVO {
 
 	public function getCurrentLocation():PlaceInfo {
 		if (currentLocation != null)
-			return new PlaceInfo(currentLocation.getpVector().clone(),
-					currentLocation.patch);
+			return currentLocation;
 		else
 			return null;
 	}
 
-	public function trespassed(layer:Layer):Boolean {
+	public function trespassed(layer:Layer, rotation:Number):Boolean {
 		if(layer==null) return false;		
-		var x:Number = (this.currentLocation.getpVector().x - bbTree.getWidth(true) / 2);
-		var y:Number = (this.currentLocation.getpVector().y - bbTree.getHeight(true) / 2);
+		var x:Number = (this.currentLocation.getpVector().x - this.shape.textField.width / 2);
+		var y:Number = (this.currentLocation.getpVector().y - this.shape.textField.height / 2);
 
 		// float right = (float) (this.currentLocation.getpVector().x + bounds
 		// .getWidth());
 		// float bottom = (float) (this.currentLocation.getpVector().y + bounds
 		// .getHeight());
-		if (layer.contains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false))
+//		Assert.isTrue( this.shape.textField.width>0);
+//		Assert.isTrue( this.shape.textField.height > 0);
+		
+		if (layer.containsAllPolarPoints(this.currentLocation.getpVector().x ,
+			this.currentLocation.getpVector().y, this.samplePoints, rotation))
+		{
+			return (layer.aboveContainsAllPolarPoints(this.currentLocation.getpVector().x ,
+				this.currentLocation.getpVector().y, this.samplePoints, rotation));
+		}
+		
+		if (layer.contains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false))
 	    {
-			return (layer.aboveContains(x, y, bbTree.getWidth(true), bbTree.getHeight(true),false));
+			return (layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
 		}
 		else return true;
 	}

@@ -129,7 +129,8 @@ package com.settinghead.wexpression.client.model.vo
 			return textField;
 		}
 
-		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+		public function contains(x:Number, y:Number, width:Number, height:Number, rotation:Number, transformed:Boolean):Boolean {
+			if(rotation!=0) throw new NotImplementedError();
 			if(!intersects(x,y,width,height,transformed)) {
 				var rX:Number = x+ width*Math.random();
 				var rY:Number = y+ height*Math.random();
@@ -149,6 +150,8 @@ package com.settinghead.wexpression.client.model.vo
 			}
 		}
 		
+		private var origin:Point = new Point(0,0);
+		private var testRect:Rectangle = new Rectangle(0,0,1,1);
 		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 //
 //			if(width<1) width = 1;
@@ -162,8 +165,11 @@ package com.settinghead.wexpression.client.model.vo
 //							return true;
 //					}
 //				return false;
-
-				var r:Boolean = _bmp.bitmapData.hitTest(new Point(0,0),1, new Rectangle(x,y,width,height),null,1);
+				testRect.x = x;
+				testRect.y = y;
+				testRect.width = width;
+				testRect.height = height;
+				var r:Boolean = _bmp.bitmapData.hitTest(origin,1, testRect,null,1);
 				return r;
 			}
 		}

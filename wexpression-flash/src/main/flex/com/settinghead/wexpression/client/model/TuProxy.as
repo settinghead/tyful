@@ -111,8 +111,6 @@ package com.settinghead.wexpression.client.model
 					placeWord(eWord);
 				}				
 
-				
-				
 				tu.pushEngineWord(eWord);
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
@@ -213,7 +211,7 @@ package com.settinghead.wexpression.client.model
 					// // TODO
 					eWord.getTree().setRotation(angle);
 					//
-					if (eWord.trespassed(candidateLoc.patch.layer))
+					if (eWord.trespassed(candidateLoc.patch.layer, angle))
 						continue;
 					var loc:PlaceInfo= eWord.getCurrentLocation();
 					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= tu.template.width

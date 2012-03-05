@@ -44,7 +44,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	
 	
 	[Bindable]
-	public class Layer
+	public class Layer implements IImageShape
 	{
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;
@@ -83,18 +83,42 @@ package com.settinghead.wexpression.client.model.vo.template
 			return name;
 		}
 		
-		public function contains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+		public function contains(x:Number, y:Number, width:Number, height:Number,rotation:Number, transformed:Boolean):Boolean {
 			throw new NotImplementedError();
+		}
+		
+		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+			throw new NotImplementedError();
+		}
+		
+		public function containsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number):Boolean{
+			for(var i:int = 0 ;i<points.length;i++){
+				var theta:Number = (points[i] as Array)[0];
+				var d:Number = (points[i] as Array)[1];
+				theta -= rotation;
+				var x:Number = centerX + Math.cos(theta) * d;
+				var y:Number = centerY + Math.sin(theta) * d;
+				if(!containsPoint(x,y,false)) return false;
+			}
+			return true;
 		}
 		
 		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 			throw new NotImplementedError();
 		}
 		
-		public function aboveContains(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
+		public function aboveContains(x:Number, y:Number, width:Number, height:Number,rotation:Number, transformed:Boolean):Boolean {
 			if(above!=null){
-				if(above.contains(x,y,width,height,transformed)) return true;
-				else return above.aboveContains(x,y,width,height,transformed);
+				if(above.contains(x,y,width,height, rotation, transformed)) return true;
+				else return above.aboveContains(x,y,width,height,rotation, transformed);
+			}
+			else return false;
+		}
+		
+		public function aboveContainsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number):Boolean{
+			if(above!=null){
+				if(above.containsAllPolarPoints(centerX,centerY,points, rotation)) return true;
+				else return above.aboveContainsAllPolarPoints(centerX,centerY, points, rotation);
 			}
 			else return false;
 		}

@@ -22,11 +22,12 @@ package com.settinghead.wexpression.client.nudger {
 	
 		public function ShapeConfinedZigZagWordNudger() {
 		}
-	
+		
+		private var retPoint:Point = new Point(0,0);
 		public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
 			var factor:int;
 				attempt = ( attempt + pInfo.patch.lastAttempt + totalPlannedAttempt / 2) % totalPlannedAttempt;
-				var p:Patch= Patch(pInfo.get().patch);
+				var p:Patch= Patch(pInfo.patch);
 				var unitDistance:Number = Math.sqrt(p.getWidth() * p.getHeight()/totalPlannedAttempt);
 //				Alert.show(unitDistance.toString());
 				var x:Number = ((attempt / (pInfo.patch.getHeight() / unitDistance)) * unitDistance - p.getWidth() / 2);
@@ -39,7 +40,9 @@ package com.settinghead.wexpression.client.nudger {
 					y = p.getHeight() - y;
 				}
 				
-			return new Point(x, y);
+			retPoint.x = x;
+			retPoint.y = y;
+			return retPoint;
 		}
 	}
 }

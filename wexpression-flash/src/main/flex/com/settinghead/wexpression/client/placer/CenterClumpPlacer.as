@@ -1,8 +1,8 @@
 package com.settinghead.wexpression.client.placer
 {
 	import com.settinghead.wexpression.client.PlaceInfo;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
 	import com.settinghead.wexpression.client.math.MathUtils;
+	import com.settinghead.wexpression.client.model.vo.WordVO;
 	
 	import flash.geom.Point;
 	
@@ -14,9 +14,13 @@ package com.settinghead.wexpression.client.placer
 		
 		public function place(word:WordVO, wordIndex:int, wordsCount:int,
 							  wordImageWidth:int, wordImageHeight:int, fieldWidth:int,
-							  fieldHeight:int):PlaceInfo {
-			return new PlaceInfo(new Point(getOneUnder(fieldWidth - wordImageWidth),
+							  fieldHeight:int):Vector.<PlaceInfo> {
+			
+			var p:PlaceInfo = new PlaceInfo(new Point(getOneUnder(fieldWidth - wordImageWidth),
 				getOneUnder(fieldHeight - wordImageHeight)));
+			var v:Vector.<PlaceInfo> = new Vector.<PlaceInfo>();
+			v.push(p);
+			return v;
 		}
 		
 		private function getOneUnder(upperLimit:Number):int {
