@@ -4,6 +4,7 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.model.business.WordListDelegate;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordList;
 	
 	import de.aggro.utils.CookieUtil;
 	
@@ -29,7 +30,7 @@ package com.settinghead.wexpression.client.model
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
 	
-	public class WordListProxy extends EntityProxy implements ILoadupProxy, IResponder
+	public class WordListProxy extends EntityProxy implements ILoadupProxy
 	{
 		public static const NAME:String = "WordListProxy";
 		public static const SRNAME:String = "WordListSRProxy";
@@ -41,31 +42,28 @@ package com.settinghead.wexpression.client.model
 			super(NAME, null);
 		}
 		
+		private var loader : URLLoader;
 		public function load() :void{
 			if(this._list==null){
 				
-//				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
-//				(new WordListDelegate(this)).getWordList(wordListId);
-				this._list = sampleWordList();
+				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
+				var request : URLRequest = new URLRequest  ( "wordlists/" + wordListId );
+				var urlVariables : URLVariables = new URLVariables ();
+				request.data = urlVariables;
+				request.method = URLRequestMethod.GET;
+				loader = new URLLoader ();
+				loader.addEventListener( Event.COMPLETE, jsonLoaded )
+				loader.load ( request );
+
 			}
 		}
 		
-		public function result(data:Object):void{
-			this._list = new WordListVO( data.result.list as ArrayCollection);
-			sendLoadedNotification( ApplicationFacade.WORD_LIST_LOADED, NAME, SRNAME );
+		public function jsonLoaded(e:Event):void{
+			var l:Array = JSON.parse(loader.data as String).list as Array;
+			var wordList:WordListVO = new WordListVO(l);
+			this._list = wordList;
 		}
-		
-		public function fault(info:Object):void{
-			Alert.show(info.toString());
-		}
-		
-		private function xmlToArrayCollection(xmlStr:String):ArrayCollection{
-			var xmlDocument:XMLDocument = new XMLDocument(xmlStr);
-			var xmlDecoder:SimpleXMLDecoder = new SimpleXMLDecoder(true);
-			var resultObj:Object = xmlDecoder.decodeXML(xmlDocument);
-			var tmp : Object = resultObj.wordList.word;
-			return resultObj.wordList.word as ArrayCollection;
-		}
+	
 		
 		public function get currentWordList():WordListVO{
 			return _list;

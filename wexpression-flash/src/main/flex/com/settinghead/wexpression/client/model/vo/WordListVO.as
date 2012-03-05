@@ -10,7 +10,7 @@ package com.settinghead.wexpression.client.model.vo
 	
 	public class WordListVO extends SortedList
 	{
-		public function WordListVO(array:ArrayCollection = null){
+		public function WordListVO(array:Array = null){
 			super(new WordComparator());
 			if(array!=null){
 				for(var i:int = 0; i<array.length; i++){
