@@ -38,6 +38,8 @@
 			public static const TU_GENERATED:String = "tuGenerated";
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
+			[Bindable] public var autoPostToFacebook:Boolean = true;
+
 			
 			private var _tu:TuVO;
 			
@@ -242,8 +244,8 @@
 			
 		]]>
 	</fx:Script>
-	<mx:Canvas id="mainCanvas" top="0" bottom="0" left="0" right="0">
-		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="true"/>
+	<mx:Canvas id="mainCanvas" top="0" left="0">
+		<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 		<mx:UIComponent id="wordLayer" top="0" left="0" />
 	</mx:Canvas>
 	<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
@@ -257,6 +259,8 @@
 		<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
 		<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 			<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
+		
+		<s:CheckBox label="Auto post to Facebook" selected="@{autoPostToFacebook}" />
 	</s:Group>
 	
 	

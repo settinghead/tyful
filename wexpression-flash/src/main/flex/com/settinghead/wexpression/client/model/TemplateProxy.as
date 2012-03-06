@@ -9,7 +9,10 @@ package com.settinghead.wexpression.client.model
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.URLRequestHeader;
+	import flash.net.URLRequestMethod;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
 	
@@ -25,7 +28,7 @@ package com.settinghead.wexpression.client.model
 		public static const NAME:String = "TemplateProxy";
 		public static const SRNAME:String = "TemplateSRProxy";
 		private var _pathToLoad:String;
-		private var _template:TemplateVO;
+		private var urlLoader : URLLoader;
 
 		public function TemplateProxy( )
 		{
@@ -39,8 +42,8 @@ package com.settinghead.wexpression.client.model
 		
 		public function load() :void{
 			if(_pathToLoad!=null){
-				_template = new TemplateVO(_pathToLoad);
-				var l:WordLayer = new WordLayer("layer1", _template);
+				template = new TemplateVO(_pathToLoad);
+				var l:WordLayer = new WordLayer("layer1", template);
 				//TODO: different path for template and layer PNG
 				l.path = _pathToLoad;
 				l.loadLayerFromPNG(templateLoadComplete);
@@ -48,8 +51,8 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private function templateLoadComplete(event:Event):void{	
-			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, _template);
-			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, _template);
+			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
+			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 		}
 		
 		public function get template():TemplateVO{
@@ -66,6 +69,26 @@ package com.settinghead.wexpression.client.model
 			zipOutput.process(template);
 			var zipBytes:ByteArray = zipOutput.zipUp();
 			return zipBytes;
+		}
+		
+		public function uploadTemplate():void{
+			var b:ByteArray = toFile();
+			// set up the request & headers for the image upload;
+			var urlRequest : URLRequest = new URLRequest();
+			urlRequest.url = 'templates/u';
+			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
+			urlRequest.method = URLRequestMethod.POST;
+			urlRequest.data = b;
+			urlRequest.requestHeaders.push(header);
+			// create the image loader & send the image to the server;
+			urlLoader = new URLLoader();
+			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
+			urlLoader.load( urlRequest );
+		}
+		
+		public function uploadComplete(e:Event):void{
+			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED, urlLoader.data);
 		}
 	}
 }

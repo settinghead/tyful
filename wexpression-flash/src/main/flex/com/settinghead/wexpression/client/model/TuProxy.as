@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.model
 {
+	import com.adobe.images.PNGEncoder;
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.RenderOptions;
@@ -27,10 +28,14 @@ package com.settinghead.wexpression.client.model
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestHeader;
+	import flash.net.URLRequestMethod;
+	import flash.utils.ByteArray;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
-	import mx.graphics.codec.PNGEncoder;
 	import mx.rpc.IResponder;
 	
 	import org.as3commons.collections.Set;
@@ -128,7 +133,7 @@ package com.settinghead.wexpression.client.model
 					failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > 6){
+					if (failureCount > tu.template.dilligence){
 //						tu.skipToLast();
 						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 					}
@@ -136,8 +141,7 @@ package com.settinghead.wexpression.client.model
 				}
 
 				if(tu.finishedDisplayWordRendering && this.previewGenerationResponder!=null){
-					var encoder:PNGEncoder = new PNGEncoder();
-					tu.template.previewPNG = encoder.encode(tu.generatedImage);
+					tu.template.previewPNG = PNGEncoder.encode(tu.generatedImage);
 					this.previewGenerationResponder.result(tu.template);
 				}
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
@@ -279,5 +283,25 @@ package com.settinghead.wexpression.client.model
 			eWord.wasSkippedBecause(reason);
 		}
 		
+		private var urlLoader : URLLoader;
+
+		public function postToFacebook():void{
+			var b:ByteArray = PNGEncoder.encode(tu.generatedImage);
+			// set up the request & headers for the image upload;
+			var urlRequest : URLRequest = new URLRequest();
+			urlRequest.url = 'facebook/publish_photo';
+			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
+			urlRequest.method = URLRequestMethod.POST;
+			urlRequest.data = b;
+			urlRequest.requestHeaders.push(header);
+			// create the image loader & send the image to the server;
+			urlLoader = new URLLoader();
+			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			urlLoader.addEventListener(Event.COMPLETE, photoPostComplete);
+			urlLoader.load( urlRequest );	
+		}
+		
+		public function photoPostComplete(e:Event):void{
+		}
 	}
 }

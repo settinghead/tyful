@@ -42,22 +42,9 @@ package com.settinghead.wexpression.client.controller.template
 //			}
 		}
 		
-		private var urlLoader : URLLoader;
 		public function result(data:Object):void
 		{
-			var b:ByteArray = templateProxy.toFile();
-			// set up the request & headers for the image upload;
-			var urlRequest : URLRequest = new URLRequest();
-			urlRequest.url = 'templates/u';
-			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
-			urlRequest.method = URLRequestMethod.POST;
-			urlRequest.data = b;
-			urlRequest.requestHeaders.push(header);
-			// create the image loader & send the image to the server;
-			urlLoader = new URLLoader();
-//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
-			urlLoader.load( urlRequest );
+			templateProxy.uploadTemplate();
 			
 		}
 		
@@ -67,9 +54,6 @@ package com.settinghead.wexpression.client.controller.template
 			Alert.show("Error: "+ info.toString());
 		}
 		
-		public function uploadComplete(e:Event):void{
-			Alert.show(urlLoader.data as String);
-			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED);
-		}
+		
 	}
 }

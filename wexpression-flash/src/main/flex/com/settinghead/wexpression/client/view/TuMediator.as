@@ -38,7 +38,8 @@ package com.settinghead.wexpression.client.view
 			return [
 				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.DISPLAYWORD_CREATED,
-				ApplicationFacade.TU_GENERATION_LAST_CALL
+				ApplicationFacade.TU_GENERATION_LAST_CALL,
+				ApplicationFacade.TU_GENERATED
 			];
 		}
 		
@@ -55,6 +56,9 @@ package com.settinghead.wexpression.client.view
 					break;
 				case ApplicationFacade.TU_GENERATION_LAST_CALL:
 					tuRenderer.generateImage();
+					break;
+				case ApplicationFacade.TU_GENERATED:
+					if(this.autoPostToFacebook) tuProxy.postToFacebook();
 					break;
 			}
 		}
@@ -83,7 +87,8 @@ package com.settinghead.wexpression.client.view
 		
 		private function tuGenerated( event: Event = null ):void{
 			//finished rendering; dispatch TU_GENERATED event
-				sendNotification(ApplicationFacade.TU_GENERATED, tuRenderer.tu);
+			tuProxy.tu = tuRenderer.tu;
+			sendNotification(ApplicationFacade.TU_GENERATED, tuRenderer.tu);
 		}
 	}
 }

@@ -73,6 +73,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _width:Number, _height:Number;
 		private var _previewPNG: ByteArray;
 		public var mixColorDistance:int = 5;
+		public var dilligence:int = 10;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -202,6 +203,7 @@ package com.settinghead.wexpression.client.model.vo.template
 			dict.path = this._path;
 			dict.width = this._width;
 			dict.height = this._height;
+			dict.dilligence = this.dilligence;
 		}
 		
 	}

@@ -14,6 +14,8 @@ package com.settinghead.wexpression.client.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import flashx.textLayout.elements.BreakElement;
+	
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	
@@ -42,13 +44,19 @@ package com.settinghead.wexpression.client.view
 		
 		
 		override public function listNotificationInterests():Array {
-			return [ApplicationFacade.EDIT_TEMPLATE,ApplicationFacade.TEMPLATE_LOADED];
+			return [ApplicationFacade.EDIT_TEMPLATE,
+				ApplicationFacade.TEMPLATE_LOADED,
+				ApplicationFacade.TEMPLATE_UPLOADED
+			];
 		}
 		
 		override public function handleNotification(notification:INotification):void {
 			switch (notification.getName()) {
 				case ApplicationFacade.TEMPLATE_LOADED:
 					templateEditor.template = notification.getBody() as TemplateVO;
+					break;
+				case ApplicationFacade.TEMPLATE_UPLOADED:
+					Alert.show(notification.getBody().toString());
 					break;
 			}
 		}
