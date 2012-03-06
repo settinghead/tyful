@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.model
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.vo.ZipOutputImpl;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
@@ -9,6 +10,8 @@ package com.settinghead.wexpression.client.model
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.net.URLRequest;
+	import flash.net.registerClassAlias;
+	import flash.utils.ByteArray;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -47,20 +50,22 @@ package com.settinghead.wexpression.client.model
 		private function templateLoadComplete(event:Event):void{	
 			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, _template);
 			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, _template);
-
 		}
 		
-		// return data property cast to proper type
-		public function get templates():ArrayCollection
-		{
-			return data as ArrayCollection;
+		public function get template():TemplateVO{
+			return this.getData() as TemplateVO;
 		}
 		
-		// add an item to the data    
-		public function addItem( item:Object ):void
-		{
-			templates.addItem( item );
+		public function set template(t:TemplateVO):void{
+			this.setData(t);
 		}
 		
+		public function toFile(template:TemplateVO = null):ByteArray{
+			if(template==null) template = this.template;
+			var zipOutput:ZipOutputImpl = new ZipOutputImpl();
+			zipOutput.process(template);
+			var zipBytes:ByteArray = zipOutput.zipUp();
+			return zipBytes;
+		}
 	}
 }

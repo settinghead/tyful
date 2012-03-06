@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.model.vo.template
 {
 
+	import com.adobe.serializers.json.JSONEncoder;
 	import com.settinghead.wexpression.client.RenderOptions;
 	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
 	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
@@ -13,6 +14,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
+	import com.settinghead.wexpression.client.model.vo.IZipInput;
+	import com.settinghead.wexpression.client.model.vo.IZipOutput;
+	import com.settinghead.wexpression.client.model.vo.IZippable;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
@@ -34,6 +38,10 @@ package com.settinghead.wexpression.client.model.vo.template
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
@@ -41,13 +49,13 @@ package com.settinghead.wexpression.client.model.vo.template
 	
 	import org.as3commons.bytecode.util.Assertions;
 	import org.as3commons.lang.Assert;
+	import org.as3commons.logging.util.jsonXify;
 	import org.peaceoutside.utils.ColorMath;
 	
 	
 	[Bindable]
-	public class TemplateVO
+	public class TemplateVO implements IZippable
 	{
-		private var _thumbnail:BitmapData;
 		private var tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number= 100;
@@ -174,6 +182,27 @@ package com.settinghead.wexpression.client.model.vo.template
 			this._patchIndex = new DensityPatchIndex(this);
 		}
 		
+		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
+			output.putBytesToFile("preview.png", previewPNG);
+			output.process(this.layers, "layers");
+			output.process(this.fonter, "fonter");
+			output.process(this.sizer, "sizer");
+			output.process(this.colorer, "colorer");
+//			output.process(this._nudger, "nudger");
+//			output.process(this._angler, "angler");
+//			output.process(this._placer, "placer");
+			output.process(this.renderOptions, "renderOptions");
+		}
+		
+		public function readNonJSONPropertiesFromZip(input:IZipInput): void{
+			
+		}
+		
+		public function saveProperties(dict:Object):void{
+			dict.path = this._path;
+			dict.width = this._width;
+			dict.height = this._height;
+		}
 		
 	}
 }

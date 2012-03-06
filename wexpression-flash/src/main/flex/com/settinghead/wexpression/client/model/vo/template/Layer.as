@@ -8,11 +8,13 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.colorer.TwoHuesRandomSatsColorer;
 	import com.settinghead.wexpression.client.colorer.WordColorer;
-	import com.settinghead.wexpression.client.density.DensityPatchIndex;
 	import com.settinghead.wexpression.client.fonter.AlwaysUseFonter;
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
+	import com.settinghead.wexpression.client.model.vo.IZipInput;
+	import com.settinghead.wexpression.client.model.vo.IZipOutput;
+	import com.settinghead.wexpression.client.model.vo.IZippable;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
@@ -33,6 +35,10 @@ package com.settinghead.wexpression.client.model.vo.template
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
+	import flash.utils.Dictionary;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
 	
 	import mx.controls.Alert;
 	import mx.utils.HSBColor;
@@ -44,7 +50,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	
 	
 	[Bindable]
-	public class Layer implements IImageShape
+	public class Layer implements IImageShape, IZippable
 	{
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;
@@ -128,6 +134,17 @@ package com.settinghead.wexpression.client.model.vo.template
 			above.below = below;
 			below.above = above;
 		}
-	
+		
+		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
+			throw new NotImplementedError();
+		}
+		
+		public function readNonJSONPropertiesFromZip(input:IZipInput):void {
+			throw new NotImplementedError();
+		}
+		
+		public function saveProperties(dict:Object):void{
+			throw new NotImplementedError();
+		}
 	}
 }

@@ -32,7 +32,8 @@
 						</s:layout>
 						<mx:ToggleButtonBar id="toggleButtonBar"
 											dataProvider="{ribbonViewStack}" toggleOnClick="true" />						
-						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template to file..." />
+						<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
 						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" skinClass="com.settinghead.wexpression.client.view.components.template.RenderButtonSkin"/>
 
 					</s:Group>
@@ -121,6 +122,7 @@
 			
 			public static const RENDER_TU:String = "renderTu";
 			public static const SAVE_TEMPLATE:String = "saveTemplate";
+			public static const UPLOAD_TEMPLATE:String = "uploadTemplate";
 			
 			private var _template:TemplateVO;
 			
@@ -201,7 +203,10 @@
 			protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new Event(SAVE_TEMPLATE));	
-
+			}
+			protected function btnUploadTemplate_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(UPLOAD_TEMPLATE));	
 			}
 			
 			protected function drawTransparentBackground():void

@@ -9,6 +9,8 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
+	import flash.net.Responder;
+	
 	import mx.controls.Alert;
 	import mx.managers.CursorManager;
 	import mx.rpc.IResponder;
@@ -22,6 +24,8 @@ package com.settinghead.wexpression.client.controller.template
 	{
 		
 		private var tuProxy:TuProxy ;
+		
+		private var responder:IResponder;
 
 		public function GenerateTemplatePreviewCommand(){
 			super();
@@ -29,25 +33,27 @@ package com.settinghead.wexpression.client.controller.template
 		}
 		
 		override public function execute( note:INotification ) : void    {
+			this.responder = note.getBody() as IResponder;
 			var template:TemplateVO = note.getBody() as TemplateVO;
 			Assert.notNull(template);
 			tuProxy.setData(template);
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
 			tuProxy.previewGenerationResponder = this;
 			var tu:TuVO = new TuVO(template,wordListProxy.sampleWordList());
-			sendNotification(ApplicationFacade.GENERATE_TU, tu);
+			tuProxy.tu = tu;
+			sendNotification(ApplicationFacade.GENERATE_TU);
 		}
 		
 		public function result(data:Object):void
 		{
 			tuProxy.previewGenerationResponder = null;
-			sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED, data);
+			responder.result(data);
 		}
 		
 		public function fault(info:Object):void
 		{
 			CursorManager.removeBusyCursor();
-			Alert.show("Error: "+ info.toString());
+			responder.fault(info);
 		}
 	}
 }

@@ -3,9 +3,14 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.business.TemplateDelegate;
+	import com.settinghead.wexpression.client.model.vo.ZipOutputImpl;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
+	import flash.net.FileReference;
+	import flash.utils.ByteArray;
+	
 	import mx.controls.Alert;
+	import mx.effects.Zoom;
 	import mx.managers.CursorManager;
 	import mx.rpc.IResponder;
 	
@@ -16,18 +21,18 @@ package com.settinghead.wexpression.client.controller.template
 	{
 		override public function execute( note:INotification ) : void    {
 			var template:TemplateVO = note.getBody() as TemplateVO;
-			if(template.previewPNG==null){
-				sendNotification(ApplicationFacade.GENERATE_TEMPLATE_PREVIEW, template);
-			}
-			else{
-				var delegate:TemplateDelegate = new TemplateDelegate(this);
-				delegate.saveTemplate(template);
-			}
+			if(template==null) template = templateProxy.template;
+			
+			var templateProxy:TemplateProxy = (facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy);
+			
+			var fr:FileReference = new FileReference();
+			fr.save(templateProxy.toFile(template), "template.zip");
+			sendNotification(ApplicationFacade.TEMPLATE_SAVED);
+
 		}
 		
 		public function result(data:Object):void
 		{
-			sendNotification(ApplicationFacade.TEMPLATE_SAVED);
 		}
 		
 		public function fault(info:Object):void

@@ -11,6 +11,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
+	import com.settinghead.wexpression.client.model.vo.IZipInput;
+	import com.settinghead.wexpression.client.model.vo.IZipOutput;
+	import com.settinghead.wexpression.client.model.vo.IZippable;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
@@ -31,6 +34,10 @@ package com.settinghead.wexpression.client.model.vo.template
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
+	import flash.utils.Dictionary;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
 	
 	import mx.controls.Alert;
 	import mx.utils.HSBColor;
@@ -40,7 +47,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	import org.peaceoutside.utils.ColorMath;
 	import org.springextensions.actionscript.context.support.mxml.Template;
 	
-	public class WordLayer extends Layer implements IImageShape
+	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
 		public function WordLayer(name:String, template:TemplateVO)
 		{
@@ -57,7 +64,6 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _colorer:WordColorer;
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
-		private var _renderOptions:RenderOptions;
 //		private var hsbArray:Array;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -386,5 +392,23 @@ package com.settinghead.wexpression.client.model.vo.template
 //			this.hsbArray = new Array(this._img.width);
 			this._template.onLoadComplete(event);
 		}
+		
+		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
+			output.process(this._fonter, "fonter");
+			output.process(this._colorer, "colorer");
+			output.putBitmapDataToPNGFile("direction.png", this._img.bitmapData);
+			output.putBitmapDataToPNGFile("color.png", this._colorSheet.bitmapData);
+			//			output.process(this._nudger, "nudger");
+			//			output.process(this._angler, "angler");
+			//			output.process(this._placer, "placer");
+		}
+		
+		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{
+			//TODO
+		}
+		
+		public override function saveProperties(dict:Object):void{
+		}
+		
 	}
 }

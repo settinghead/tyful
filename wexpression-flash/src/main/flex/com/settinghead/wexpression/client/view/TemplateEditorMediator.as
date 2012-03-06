@@ -30,11 +30,13 @@ package com.settinghead.wexpression.client.view
 		private var _clear			:Sprite;
 		private var _canvas			:Canvas;
 		
+		
 		public function TemplateEditorMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
 			templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
 			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
+			templateEditor.addEventListener(TemplateEditor.UPLOAD_TEMPLATE, uploadTemplate);
 		}
 		
 		
@@ -75,7 +77,13 @@ package com.settinghead.wexpression.client.view
 		
 		private function saveTemplate( event:Event = null ):void
 		{
-			 facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
+			
+			facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
+		}
+		
+		private function uploadTemplate( event:Event = null ):void
+		{
+			facade.sendNotification(ApplicationFacade.UPLOAD_TEMPLATE, templateEditor.template);
 		}
 	
 	}

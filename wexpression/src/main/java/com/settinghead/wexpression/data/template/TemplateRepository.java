@@ -32,11 +32,11 @@ public class TemplateRepository {
 	}
 
 	@Transactional
-	public void saveTemplate(Template list) {
+	public void saveTemplate(Template template) {
 		// for (Word word : list.getList())
 		// sessionFactory.getCurrentSession().save(word);
-		sessionFactory.getCurrentSession().save(list);
-		System.out.println("Template saved: " + list.getId());
+		sessionFactory.getCurrentSession().save(template);
+		System.out.println("Template saved: " + template.getId());
 	}
 
 	@Transactional

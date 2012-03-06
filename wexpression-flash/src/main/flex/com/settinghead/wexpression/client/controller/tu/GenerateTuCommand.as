@@ -17,6 +17,8 @@ package com.settinghead.wexpression.client.controller.tu
 		override public function execute( note:INotification ):void {
 			var tu:TuVO = note.getBody() as TuVO;
 			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+			if(tu==null)
+				 tu = tuProxy.tu;
 			tuProxy.template = tu.template;
 			tuProxy.wordList = tu.words;
 			tuProxy.load();

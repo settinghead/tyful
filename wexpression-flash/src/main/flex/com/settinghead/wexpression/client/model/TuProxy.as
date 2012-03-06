@@ -60,6 +60,12 @@ package com.settinghead.wexpression.client.model
 			return data as TuVO;
 		}
 		
+		public function set tu(tu:TuVO):void
+		{
+			this.setData(tu);
+		}
+		
+		
 		public function load() :void{
 			var tu:TuVO = new TuVO(_template, _wordList);
 			this.setData(tu);

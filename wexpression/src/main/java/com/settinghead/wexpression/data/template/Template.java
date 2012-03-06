@@ -8,7 +8,8 @@ import javax.persistence.Lob;
 
 @Entity
 public class Template {
-	private byte[] previewPNG;
+	private byte[] previewPNG;	
+	private byte[] data;
 	private String id;
 	
 	/**
@@ -40,5 +41,20 @@ public class Template {
 	@GeneratedValue
 	public String getId() {
 		return id;
+	}
+
+	/**
+	 * @return the data
+	 */
+	@Lob
+	public byte[] getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 }

@@ -4,6 +4,7 @@ package com.settinghead.wexpression.client
 	import com.settinghead.wexpression.client.controller.template.GenerateTemplatePreviewCommand;
 	import com.settinghead.wexpression.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.wexpression.client.controller.template.SaveTemplateCommand;
+	import com.settinghead.wexpression.client.controller.template.UploadTemplateCommand;
 	import com.settinghead.wexpression.client.controller.tu.GenerateTuCommand;
 	
 	import flash.display.LoaderInfo;
@@ -23,7 +24,9 @@ package com.settinghead.wexpression.client
 		public static const TEMPLATE_LOADED:String			= "templateLoaded";
 		public static const LOAD_TEMPLATE:String			= "loadTemplate";
 		public static const TEMPLATE_SAVED:String			= "templateSaved";
+		public static const TEMPLATE_UPLOADED:String			= "templateUploaded";
 		public static const SAVE_TEMPLATE:String			= "saveTemplate";
+		public static const UPLOAD_TEMPLATE:String			= "uploadTemplate";
 		public static const GENERATE_TEMPLATE_PREVIEW:String = "generateTemplatePreview";
 		public static const TEMPLATE_PREVIEW_GENERATED:String= "templatePreviewGenerated";
 		public static const TU_GENERATION_LAST_CALL:String	= "tuGenerationLastCall";
@@ -46,8 +49,8 @@ package com.settinghead.wexpression.client
 			registerCommand( STARTUP, StartupCommand );	
 			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (SAVE_TEMPLATE, SaveTemplateCommand);
+			registerCommand (UPLOAD_TEMPLATE, UploadTemplateCommand);
 			registerCommand (GENERATE_TEMPLATE_PREVIEW, GenerateTemplatePreviewCommand);
-			registerCommand (TEMPLATE_PREVIEW_GENERATED, SaveTemplateCommand);
 			registerCommand (GENERATE_TU, GenerateTuCommand);
 		}
 		
