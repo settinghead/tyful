@@ -17,7 +17,7 @@ public class Word implements Serializable {
 	private static final long serialVersionUID = -6086016682496314563L;
 	private String word;
 	private double weight;
-	private String id;
+	private int id;
 
 	public Word() {
 
@@ -63,7 +63,7 @@ public class Word implements Serializable {
 	 *            the id to set
 	 */
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -73,7 +73,7 @@ public class Word implements Serializable {
 	@Id
 	@GeneratedValue
 	@IndexColumn(name = "id")
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 

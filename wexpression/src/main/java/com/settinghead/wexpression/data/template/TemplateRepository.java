@@ -33,8 +33,6 @@ public class TemplateRepository {
 
 	@Transactional
 	public void saveTemplate(Template template) {
-		// for (Word word : list.getList())
-		// sessionFactory.getCurrentSession().save(word);
 		sessionFactory.getCurrentSession().save(template);
 		System.out.println("Template saved: " + template.getId());
 	}
@@ -47,7 +45,6 @@ public class TemplateRepository {
 				.list().get(0);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Template> getAllTemplates() {
 		List<Template> result = new ArrayList<Template>();

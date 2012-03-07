@@ -20,10 +20,15 @@
 			
 		]]>
 	</fx:Script>
-	
-	<s:List dataProvider="{list}" itemRenderer="com.settinghead.wexpression.client.view.components.shop.ShopItemRenderer">
+	<s:Group left="0" right="0">
 		<s:layout>
-			<s:VerticalLayout  />
+			<s:VerticalLayout />
 		</s:layout>
-	</s:List>
+		<s:Label text="Make a gift!" left="0" right="0" />
+		<s:List dataProvider="{list}" itemRenderer="com.settinghead.wexpression.client.view.components.shop.ShopItemRenderer">
+			<s:layout>
+				<s:VerticalLayout  />
+			</s:layout>
+		</s:List>
+	</s:Group>
 </s:Group>

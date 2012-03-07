@@ -141,7 +141,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(14,100);
+				this._sizer = new ByWeightSizer(11,100);
 			}
 			return this._sizer;
 		}

@@ -53,6 +53,7 @@ public class SocialConfig {
 	@Inject
 	private DataSource dataSource;
 
+	
 	/**
 	 * When a new provider is added to the app, register its {@link ConnectionFactory} here.
 	 * @see FacebookConnectionFactory

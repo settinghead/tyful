@@ -29,15 +29,16 @@ package com.settinghead.wexpression.client.controller.main
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 			
 			var templates :Array = new Array(
-				"resources/templates/egg.png",
-//				"resources/templates/egg_small.png"
+//				"resources/templates/egg.png",
+////				"resources/templates/egg_small.png"
+////				,
+//				"resources/templates/face.png"
 //				,
-				"resources/templates/face.png"
-				,
-				"resources/templates/wheel_h.png",
-				"resources/templates/wheel_v.png",
-				"resources/templates/dog.png",
+//				"resources/templates/wheel_h.png",
+//				"resources/templates/wheel_v.png",
+//				"resources/templates/dog.png",
 				"resources/templates/heart.png"
+//				"resources/templates/apple.png"
 			);
 			var randomNum:int = Math.floor(Math.random() * (templates.length));
 			templateProxy.templatePath = templates[randomNum];

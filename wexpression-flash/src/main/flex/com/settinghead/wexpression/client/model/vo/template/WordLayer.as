@@ -272,6 +272,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		
 		public override function containsPoint(x:Number, y:Number, transform:Boolean):Boolean{
+			if(x<0 || y<0 || x>width || y>height) return true;
 			return img.hitTestPoint(x,y,true);
 		}
 		

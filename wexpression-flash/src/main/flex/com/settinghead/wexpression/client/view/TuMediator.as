@@ -58,7 +58,7 @@ package com.settinghead.wexpression.client.view
 					tuRenderer.generateImage();
 					break;
 				case ApplicationFacade.TU_GENERATED:
-					if(this.autoPostToFacebook) tuProxy.postToFacebook();
+					if(tuRenderer.autoPostToFacebook) tuProxy.postToFacebook();
 					break;
 			}
 		}

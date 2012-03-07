@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 public class Template {
@@ -37,8 +39,8 @@ public class Template {
 	/**
 	 * @return the id
 	 */
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	public String getId() {
 		return id;
 	}

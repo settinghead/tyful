@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
 import cue.lang.Counter;
@@ -42,10 +43,8 @@ public class WordList implements Serializable {
 		setList(l);
 	}
 
-	@Id
-	// @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
-	@GeneratedValue
-	// (generator = "generator")
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	public String getId() {
 		return id;
 	}

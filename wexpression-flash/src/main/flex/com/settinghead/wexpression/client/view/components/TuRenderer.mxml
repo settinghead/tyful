@@ -38,7 +38,7 @@
 			public static const TU_GENERATED:String = "tuGenerated";
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
-			[Bindable] public var autoPostToFacebook:Boolean = true;
+			[Bindable] public var autoPostToFacebook:Boolean = false;
 
 			
 			private var _tu:TuVO;

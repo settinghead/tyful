@@ -59,6 +59,7 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		public function jsonLoaded(e:Event):void{
+
 			var l:Array = JSON.parse(loader.data as String).list as Array;
 			var wordList:WordListVO = new WordListVO(l);
 			this._list = wordList;
