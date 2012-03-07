@@ -15,7 +15,6 @@
 package com.settinghead.wexpression.client.model.vo
 {
 	
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.settinghead.wexpression.client.NotImplementedError;
 	
 	import flash.display.Bitmap;

@@ -9,9 +9,6 @@ package com.settinghead.wexpression.client.nudger {
 	import flash.geom.Point;
 	
 	import mx.controls.Alert;
-	
-	import org.as3commons.logging.util.xml.xmlNs;
-
 
 	public class ShapeConfinedZigZagWordNudger implements WordNudger {
 	

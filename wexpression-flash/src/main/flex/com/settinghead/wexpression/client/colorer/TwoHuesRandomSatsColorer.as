@@ -1,15 +1,12 @@
 package com.settinghead.wexpression.client.colorer
 {
-	import com.lorentz.SVG.utils.MathUtils;
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.WordVO;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import de.polygonal.utils.PM_PRNG;
-	
-	import mx.utils.ColorUtil;
-	
+		
 	import org.peaceoutside.utils.ColorMath;
 	
 	public class TwoHuesRandomSatsColorer implements WordColorer

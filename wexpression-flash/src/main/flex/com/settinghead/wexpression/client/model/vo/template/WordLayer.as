@@ -45,7 +45,6 @@ package com.settinghead.wexpression.client.model.vo.template
 	import org.as3commons.bytecode.util.Assertions;
 	import org.as3commons.lang.Assert;
 	import org.peaceoutside.utils.ColorMath;
-	import org.springextensions.actionscript.context.support.mxml.Template;
 	
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{

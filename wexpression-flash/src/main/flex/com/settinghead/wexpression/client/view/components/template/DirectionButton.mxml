@@ -7,9 +7,7 @@
 		
 	</fx:Declarations>
 	<fx:Script>
-		<![CDATA[
-			import com.demonsters.debugger.MonsterDebugger;
-			
+		<![CDATA[			
 			import mx.collections.ArrayCollection;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;

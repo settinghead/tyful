@@ -34,7 +34,8 @@
 											dataProvider="{ribbonViewStack}" toggleOnClick="true" />						
 						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template to file..." />
 						<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" skinClass="com.settinghead.wexpression.client.view.components.template.RenderButtonSkin"/>
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" 
+								  />
 
 					</s:Group>
 					<mx:ViewStack id="ribbonViewStack" height="40" width="1000" visible="{toggleButtonBar.selectedIndex>=0}"
@@ -79,7 +80,6 @@
 		</s:NavigatorContent-->
 	<mx:Script>
 		<![CDATA[
-			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.wexpression.client.model.vo.template.Layer;
 			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;

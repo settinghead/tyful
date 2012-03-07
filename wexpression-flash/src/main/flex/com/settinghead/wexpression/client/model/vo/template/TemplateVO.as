@@ -1,7 +1,6 @@
 package com.settinghead.wexpression.client.model.vo.template
 {
 
-	import com.adobe.serializers.json.JSONEncoder;
 	import com.settinghead.wexpression.client.RenderOptions;
 	import com.settinghead.wexpression.client.angler.MostlyHorizAngler;
 	import com.settinghead.wexpression.client.angler.ShapeConfinedAngler;
@@ -49,7 +48,6 @@ package com.settinghead.wexpression.client.model.vo.template
 	
 	import org.as3commons.bytecode.util.Assertions;
 	import org.as3commons.lang.Assert;
-	import org.as3commons.logging.util.jsonXify;
 	import org.peaceoutside.utils.ColorMath;
 	
 	
@@ -163,9 +161,9 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get nudger():WordNudger{
 			if(this._nudger==null){
-//								this._nudger = new ShapeConfinedSpiralWordNudger();
+								this._nudger = new ShapeConfinedSpiralWordNudger();
 				//				this._nudger = new ShapeConfinedRandomWordNudger();
-				this._nudger = new ShapeConfinedZigZagWordNudger();
+//				this._nudger = new ShapeConfinedZigZagWordNudger();
 				
 			}
 			return this._nudger;

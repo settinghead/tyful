@@ -1,5 +1,4 @@
 package com.settinghead.wexpression.client.placer {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.density.DensityPatchIndex;
 	import com.settinghead.wexpression.client.density.Patch;

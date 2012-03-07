@@ -1,6 +1,8 @@
 package com.settinghead.wexpression.client.model.vo
 {
 	import com.adobe.images.PNGEncoder;
+	import com.adobe.serialization.json.JSONEncoder;
+	
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
@@ -60,12 +62,12 @@ package com.settinghead.wexpression.client.model.vo
 				if (object is IZippable){
 					var properties:Object = new Object();
 					(object as IZippable).saveProperties(properties);
-					putStringToFile("properties.json",JSON.stringify(properties));
+					putStringToFile("properties.json", (new JSONEncoder(properties)).getString());
 
 					(object as IZippable).writeNonJSONPropertiesToZip(this);
 				}
 				else{
-					putStringToFile("properties.json",JSON.stringify(object));
+					putStringToFile("properties.json",(new JSONEncoder(object)).getString());
 				}
 			}
 			prefix = prev_prefix;

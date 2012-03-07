@@ -27,10 +27,8 @@
   <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/frameworks/themes/Halo"/>
   <applications>
     <application path="com/settinghead/wexpression/client/WexpressionClient.mxml"/>
-    <application path="Main.mxml"/>
-    <application path="FlexUnitCompilerApplication.mxml"/>
-    <application path="FlexUnitApplication.mxml"/>
     <application path="EwordTrespassTest.mxml"/>
+    <application path="Main.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

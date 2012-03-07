@@ -17,7 +17,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			import com.demonsters.debugger.MonsterDebugger;
 			import com.settinghead.wexpression.client.PlaceInfo;
 			import com.settinghead.wexpression.client.density.Patch;
 			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;

@@ -40,8 +40,8 @@ package com.settinghead.wexpression.client.model.vo.template
 			s.graphics.drawRect(400,400,200,200);
 			s.graphics.endFill();
 			l.img.bitmapData.draw(s);
-//			Assert.assertTrue(l.contains(41,41,10,10,0,false));
-//			Assert.assertTrue(l.contains(50,40,10,5,0,false));
+			Assert.assertTrue(l.contains(41,41,10,10,0,false));
+			Assert.assertTrue(l.contains(50,40,10,5,0,false));
 			Assert.assertFalse(l.contains(500,400,100,50,Math.PI/2,false));
 			
 		}

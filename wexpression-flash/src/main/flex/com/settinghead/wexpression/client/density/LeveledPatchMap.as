@@ -1,6 +1,5 @@
 package com.settinghead.wexpression.client.density
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 
 	public class LeveledPatchMap {

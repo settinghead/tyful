@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.model
 {
+	import com.adobe.serialization.json.JSONDecoder;
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.business.WordListDelegate;
 	import com.settinghead.wexpression.client.model.vo.WordListVO;
@@ -60,7 +61,7 @@ package com.settinghead.wexpression.client.model
 		
 		public function jsonLoaded(e:Event):void{
 
-			var l:Array = JSON.parse(loader.data as String).list as Array;
+			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object).list as Array;
 			var wordList:WordListVO = new WordListVO(l);
 			this._list = wordList;
 		}

@@ -57,7 +57,7 @@ public class ShapeConfinedSpiralWordNudger implements WordNudger {
 
 //		var thetaIncrement = powerMap(1, attempt, 0, totalPlannedAttempt, 0.5, 0.3);
 //		var theta:Number= thetaIncrement * attempt;
-		var theta = Math.random() * BBPolarTreeVO.TWO_PI;
+		var theta:Number = Math.random() * BBPolarTreeVO.TWO_PI;
 		var x:Number= Math.cos(theta) * rad;
 		var y:Number= Math.sin(theta) * rad;
 		retPoint.x = x;
