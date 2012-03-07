@@ -32,7 +32,7 @@ public class TemplateRepository {
 	}
 
 	@Transactional
-	public void saveTemplate(Template template) {
+	public void saveTemplate(Template template, byte[] data) {
 		sessionFactory.getCurrentSession().save(template);
 		System.out.println("Template saved: " + template.getId());
 	}

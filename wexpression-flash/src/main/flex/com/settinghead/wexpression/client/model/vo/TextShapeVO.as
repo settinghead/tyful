@@ -107,7 +107,7 @@ package com.settinghead.wexpression.client.model.vo
 			var textField: TextField = new TextField();
 //			textField.setTextFormat( new TextFormat( font.fontName, size ) );
 			var style:StyleSheet = new StyleSheet();
-			style.parseCSS("div{font-size: "+_size+"; font-family: "+fontName+"; leading: 0; text-align: center; }");
+			style.parseCSS("div{font-size: "+_size+"; font-family: "+fontName+"; leading: 0; text-align: center; padding: 0; margin: 0; }");
 			textField.styleSheet = style;
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.background = false;

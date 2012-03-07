@@ -35,9 +35,10 @@ import com.settinghead.wexpression.data.WordListRepository;
 @Configuration
 @ComponentScan(basePackages = { "com.settinghead.wexpression.controllers",
 		"com.settinghead.wexpression" }, excludeFilters = { @Filter(Configuration.class) })
-@PropertySource("classpath:com/settinghead/wexpression/config/application.properties")
+@PropertySource({
+		"classpath:com/settinghead/wexpression/config/application.properties",
+		"classpath:com/settinghead/wexpression/config/application.properties.${env:dev}" })
 public class MainConfig {
-	
 
 	@Bean
 	public FacebookFriendListRepository facebookFriendListRepository() {
@@ -53,7 +54,5 @@ public class MainConfig {
 	public FacebookPostRepository facebookPostRepository() {
 		return new FacebookPostRepository();
 	}
-
-
 
 }

@@ -47,12 +47,12 @@ import com.settinghead.wexpression.users.User;
 @Configuration
 public class SocialConfig {
 
-	@Inject
-	private Environment environment;
 
 	@Inject
 	private DataSource dataSource;
 
+	@Inject
+	private Environment environment;
 	
 	/**
 	 * When a new provider is added to the app, register its {@link ConnectionFactory} here.
@@ -65,7 +65,6 @@ public class SocialConfig {
 				environment.getProperty("facebook.clientSecret")));
 		return registry;
 	}
-
 	/**
 	 * Singleton data access object providing access to connections across all users.
 	 */

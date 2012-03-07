@@ -78,8 +78,8 @@ public class EngineWordVO {
 		var numSamples:int= int((shape.width * shape.height / WordLayer.SAMPLE_DISTANCE));
 		//				var numSamples = 10;
 		// TODO: devise better lower bound
-		if (numSamples < 20)
-			numSamples = 20;
+		if (numSamples < 11)
+			numSamples = 11;
 		for(var i:int = 0; i<numSamples;i++){
 			var relativeX:Number= int((Math.random() * shape.width));
 			var relativeY:Number= int((Math.random() * shape.height));
@@ -283,25 +283,6 @@ public class EngineWordVO {
 	public function rendition(c:uint):DisplayWordVO{
 		
 		var s:DisplayWordVO = new DisplayWordVO(this);
-//			var tt:TextField = new TextField();
-//			tt.autoSize = TextFieldAutoSize.LEFT;
-//			tt.embedFonts = true;
-//			tt.background = false;
-//			tt.selectable = false;
-//
-//			tt.cacheAsBitmap = true;
-//			tt.textColor = c;
-//			
-//			tt.styleSheet = this.shape.textField.styleSheet;
-//			
-//			tt.antiAliasType = AntiAliasType.ADVANCED;
-//			tt.htmlText = this.shape.textField.htmlText;
-//			
-//			
-//			tt.filters = this.shape.textField.filters;
-//			tt.autoSize = this.shape.textField.autoSize;
-//			tt.wordWrap = this.shape.textField.wordWrap;
-//			tt.width = this.shape.textField.width;
 			
 			this.shape.textField.textColor = c;
 			s.addChild(this.shape.textField);

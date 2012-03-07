@@ -38,10 +38,4 @@ public class TemplateService {
 		return t;
 	}
 
-	@RemotingInclude
-	@Transactional
-	public void saveTemplate(Template o) throws IOException {
-		Template t = new Template();
-		templateRepository.saveTemplate(t);
-	}
 }

@@ -37,9 +37,7 @@ import com.settinghead.wexpression.users.UserInterceptor;
  */
 @Configuration
 @EnableWebMvc
-
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-
 
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new UserInterceptor(usersConnectionRepository));
@@ -62,11 +60,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
-	
+
 	@Bean
-	public CommonsMultipartResolver multipartResolver(){
+	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setMaxUploadSize(1024*1024*1024);
+		resolver.setMaxUploadSize(1024 * 1024 * 1024);
 		return resolver;
 	}
 

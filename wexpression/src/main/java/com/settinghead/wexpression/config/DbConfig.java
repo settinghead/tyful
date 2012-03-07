@@ -73,7 +73,7 @@ public class DbConfig {
 		Properties prop = new Properties();
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
-		prop.setProperty("configLocation", "classpath:hibernate.cfg.xml");
+//		prop.setProperty("configLocation", "classpath:hibernate.cfg.xml");
 		prop.setProperty("hibernate.connection.password", "0");
 		prop.setProperty("hibernate.connection.username","root");
 		prop.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");

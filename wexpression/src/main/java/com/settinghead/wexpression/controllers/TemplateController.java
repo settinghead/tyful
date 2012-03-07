@@ -3,6 +3,7 @@ package com.settinghead.wexpression.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,16 +35,7 @@ public class TemplateController {
 		model.addAttribute("templates", templateRepository.getAllTemplates());
 		return "templates/list";
 	}
-	
-	@RequestMapping(value="/{templateId}/preview", method=RequestMethod.GET)
-	public void preview(
-			@PathVariable("templateId") 
-			String templateId, OutputStream outputStream) throws IOException{
-		Template template = templateRepository.getTemplate(templateId);
-		byte[] pBytes = template.getPreviewPNG();
-		outputStream.write(pBytes);
-		outputStream.close();
-	}
+
 	
 	@RequestMapping(value = "/u", method = RequestMethod.POST, produces = {
 		      MediaType.APPLICATION_JSON_VALUE })
@@ -54,8 +46,7 @@ public class TemplateController {
             byte[] bytes = IOUtils.toByteArray(inputStream);
             
             Template t = new Template();
-            t.setData(bytes);
-            templateRepository.saveTemplate(t);
+            templateRepository.saveTemplate(t, bytes);
             
             // store the bytes somewhere
             UploadTemplateResponder r = new UploadTemplateResponder();
