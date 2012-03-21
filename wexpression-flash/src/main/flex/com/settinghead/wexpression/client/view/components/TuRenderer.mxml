@@ -117,11 +117,11 @@
 			}
 			
 			private function drawLeaves(tree:BBPolarTreeVO):void {
-				if (tree.isLeaf()) {
+				if (tree.isLeaf() || tree.getKidsNoGrowth()==null || tree.getKidsNoGrowth().length==0) {
 					drawBounds(tree);
 				} else {
-					for (var i:int= 0; i < tree.getKids().length; i++) {
-						drawLeaves(tree.getKids()[i]);
+					for (var i:int= 0; i < tree.getKidsNoGrowth().length; i++) {
+						drawLeaves(tree.getKidsNoGrowth()[i]);
 					}
 				}
 			}

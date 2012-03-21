@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.config;
 
+import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -28,18 +29,20 @@ import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 @Configuration
 @EnableTransactionManagement
 public class DbConfig {
 
-    @Autowired
-    private PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer;
-    
-    @Bean
-    public PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer(){
-    	return new PropertySourcesPlaceholderConfigurer();
-    }
-    
+	@Autowired
+	private PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer;
+
+	@Bean
+	public PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
 	// internal helpers
 
 	private DatabasePopulator databasePopulator() {
@@ -49,21 +52,34 @@ public class DbConfig {
 				JdbcUsersConnectionRepository.class));
 		return populator;
 	}
-	
-	
+
 	@Bean(destroyMethod = "close")
-	public DataSource dataSource() {
-		BasicDataSource source = new BasicDataSource();
-		source.setDriverClassName("com.mysql.jdbc.Driver");
-		source.setUrl("jdbc:mysql://localhost:3306/wexpression?characterEncoding=UTF-8");
-		source.setUsername("root");
-		source.setPassword("0");
-		return source;	
+	public DataSource dataSource() throws PropertyVetoException {
+//		ComboPooledDataSource source = new ComboPooledDataSource();
+//		Properties properties = new Properties();
+//		properties.setProperty("driverClass", "com.mysql.jdbc.Driver");
+//		properties
+//				.setProperty("jdbcUrl",
+//						"jdbc:mysql://localhost:3306/wexpression?characterEncoding=UTF-8");
+//		properties.setProperty("user", "root");
+//		properties.setProperty("password", "0");
+//		properties.setProperty("initialPoolSize", "3");
+//		properties.setProperty("minPoolSize", "3");
+//		properties.setProperty("maxPoolSize", "50");
+//		source.setProperties(properties);
+//		source.setDriverClass("com.mysql.jdbc.Driver");
+//		return source;
+		 BasicDataSource source = new BasicDataSource();
+		 source.setDriverClassName("com.mysql.jdbc.Driver");
+		 source.setUrl("jdbc:mysql://localhost:3306/wexpression?characterEncoding=UTF-8");
+		 source.setUsername("root");
+		 source.setPassword("0");
+		 return source;
 	}
-    
+
 	@Autowired
 	private DataSource dataSource;
- 
+
 	@Bean
 	public AnnotationSessionFactoryBean sessionFactory() {
 		AnnotationSessionFactoryBean sessionFactory = new AnnotationSessionFactoryBean();
@@ -71,15 +87,18 @@ public class DbConfig {
 		sessionFactory
 				.setPackagesToScan(new String[] { "com.settinghead.wexpression" });
 		Properties prop = new Properties();
-		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		prop.setProperty("hibernate.dialect",
+				"org.hibernate.dialect.MySQLDialect");
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
-//		prop.setProperty("configLocation", "classpath:hibernate.cfg.xml");
+		// prop.setProperty("configLocation", "classpath:hibernate.cfg.xml");
 		prop.setProperty("hibernate.connection.password", "0");
-		prop.setProperty("hibernate.connection.username","root");
-		prop.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-		prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/wexpression?characterEncoding=UTF-8");
+		prop.setProperty("hibernate.connection.username", "root");
+		prop.setProperty("hibernate.connection.driver_class",
+				"com.mysql.jdbc.Driver");
+		prop.setProperty("hibernate.connection.url",
+				"jdbc:mysql://localhost:3306/wexpression?characterEncoding=UTF-8");
 		prop.setProperty("hibernate.connection.defaultNChar", "true");
-		
+
 		sessionFactory.setHibernateProperties(prop);
 		return sessionFactory;
 	}

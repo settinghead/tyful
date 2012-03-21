@@ -73,7 +73,7 @@ package com.settinghead.wexpression.client.model.vo {
 		
 		public function overlaps(otherTree:BBPolarTreeVO):Boolean {
 			
-			if (this.rectCollide(otherTree)) {
+			if (this.collide(otherTree)) {
 				if (this.isLeaf() && otherTree.isLeaf()) {
 					return true;
 				} else if (this.isLeaf()) { // Then otherTree isn't a leaf.
@@ -97,6 +97,10 @@ package com.settinghead.wexpression.client.model.vo {
 			if ((!this.isLeaf()) && this._kids == null)
 				BBPolarTreeBuilder.makeChildren(this, getShape(), getMinBoxSize(),
 					getRoot());
+			return this._kids;
+		}
+		
+		public function getKidsNoGrowth():Vector.<BBPolarChildTreeVO> {
 			return this._kids;
 		}
 		
@@ -227,6 +231,27 @@ package com.settinghead.wexpression.client.model.vo {
 			checkUpdatePoints();
 			return this._pbottom;
 		}
+		
+		
+		protected function collide(bTree:BBPolarTreeVO):Boolean {	
+			var dist:Number = Math.sqrt(Math.pow( this.getRootX()-bTree.getRootX(), 2)+Math.pow( this.getRootY()-bTree.getRootY(), 2));
+			if(dist > this.d2 + bTree.d2) return false;
+			else 
+			{
+//				var angle1:Number = -Math.atan2(bTree.getRootY() - this.getRootY(), bTree.getRootX() - this.getRootX());
+//				var angle2:Number;
+//				if(angle1>=0) angle2 = angle1-Math.PI;
+//				else angle2 = angle1 + Math.PI;
+//				var angleSum1:Number = Math.abs(this.getR2(true)-angle2)%Math.PI + Math.abs(bTree.getR1(true)-angle1)%Math.PI;
+//				var angleSum2:Number = Math.abs(this.getR1(true)-angle1)%Math.PI+Math.abs(bTree.getR2(true)-angle2)%Math.PI;
+//				if(Math.abs(this.getR2(true)-angle2)%Math.PI + Math.abs(bTree.getR1(true)-angle1)%Math.PI>Math.PI 
+//					&& Math.abs(this.getR2(true)-angle2)%Math.PI + Math.abs(bTree.getR2(true)-angle2)%Math.PI>Math.PI
+//				&& Math.abs(this.getR1(true)-angle1)%Math.PI + Math.abs(bTree.getR2(true)-angle2)%Math.PI
+//				&& Math.abs(this.getR1(true)-angle1)%Math.PI + Math.abs(bTree.getR1(true)-angle1)%Math.PI) return false;
+				return rectCollide(bTree);
+			}
+		}
+		
 		
 		protected function rectCollide(bTree:BBPolarTreeVO):Boolean {	
 			return rectCollideCoord(bTree.px, bTree.py, bTree.pright, bTree.pbottom);

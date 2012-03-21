@@ -161,9 +161,9 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get nudger():WordNudger{
 			if(this._nudger==null){
-								this._nudger = new ShapeConfinedSpiralWordNudger();
+//								this._nudger = new ShapeConfinedSpiralWordNudger();
 				//				this._nudger = new ShapeConfinedRandomWordNudger();
-//				this._nudger = new ShapeConfinedZigZagWordNudger();
+				this._nudger = new ShapeConfinedZigZagWordNudger();
 				
 			}
 			return this._nudger;

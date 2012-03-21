@@ -13,9 +13,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.settinghead.wexpression.services.TemplateService;
-
-import flex.messaging.io.amf.ASObject;
 
 /**
  * @author settinghead

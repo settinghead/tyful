@@ -78,19 +78,19 @@ public class EngineWordVO {
 		var numSamples:int= int((shape.width * shape.height / WordLayer.SAMPLE_DISTANCE));
 		//				var numSamples = 10;
 		// TODO: devise better lower bound
-		if (numSamples < 11)
-			numSamples = 11;
+		if (numSamples < 20)
+			numSamples = 20;
 		for(var i:int = 0; i<numSamples;i++){
 			var relativeX:Number= int((Math.random() * shape.width));
 			var relativeY:Number= int((Math.random() * shape.height));
-//			if(shape.containsPoint(relativeX, relativeY,false))
-//			{
+			if(shape.containsPoint(relativeX, relativeY,false))
+			{
 				relativeX -= shape.width/2;
 				relativeY -= shape.height/2;
 				var d:Number = Math.sqrt(Math.pow(relativeX,2)+Math.pow(relativeY,2));
 				var r:Number = Math.atan2(relativeY, relativeX);
 				samplePoints.push([r,d]);
-//			}
+			}
 		}
 	}
 

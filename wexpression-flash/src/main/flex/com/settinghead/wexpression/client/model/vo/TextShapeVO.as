@@ -142,11 +142,12 @@ package com.settinghead.wexpression.client.model.vo
 		}
 		
 		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
-			if(transformed)
-				return _textField.hitTestPoint(x,y,true);
-			else{
-				return _bmp.hitTestPoint(x,y,true);
-			}
+//			if(transformed)
+//				return _textField.hitTestPoint(x,y,true);
+//			else{
+//				return _bmp.hitTestPoint(x,y,true);
+//			}
+			return _bmp.bitmapData.getPixel32(x,y) > 0x00000000;
 		}
 		
 		private var origin:Point = new Point(0,0);
