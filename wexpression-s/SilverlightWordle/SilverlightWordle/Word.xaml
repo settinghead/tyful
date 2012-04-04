@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="SilverlightWordle.Word"
+    xmlns="http://schemas.microsoft.com/client/2007" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Storyboard x:Name="sbShow">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" MouseEnter="LayoutRoot_MouseEnter" MouseLeave="LayoutRoot_MouseLeave" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="1" ScaleY="1" x:Name="Scale" />
+                <TranslateTransform X="0" Y="0" x:Name="Translate" />                
+            </TransformGroup>            
+        </Grid.RenderTransform>
+        <Border x:Name="tbTestBorder" BorderBrush="Blue" BorderThickness="0">
+            <TextBlock x:Name="tbTest" Text="TEST" FontSize="40" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.RenderTransform>
+                            <RotateTransform x:Name="Rotate" Angle="0" />                        
+                        </TextBlock.RenderTransform>
+            </TextBlock>
+        </Border>
+        <Border x:Name="imgBorder" BorderBrush="Red" BorderThickness="0">
+            <Image HorizontalAlignment="Left" x:Name="img" Visibility="Collapsed" />
+        </Border>
+    </Grid>
+</UserControl>
