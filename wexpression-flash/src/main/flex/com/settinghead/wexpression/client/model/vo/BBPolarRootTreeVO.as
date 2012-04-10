@@ -6,7 +6,7 @@ package com.settinghead.wexpression.client.model.vo
 		private var rootX:int;
 		private var rootY:int;
 		private var _rotation:Number= 0;
-		protected var rootStamp:Number;
+		protected var rootStamp:int = 0;
 		private var shape:IImageShape;
 		private var _minBoxSize:int;
 		
@@ -17,13 +17,13 @@ package com.settinghead.wexpression.client.model.vo
 			this.rootY = centerY;
 			this.shape = shape;
 			this._minBoxSize = minBoxSize;
-			this.rootStamp = Math.random();
+			this.rootStamp++;
 		}
 		
 		public function setLocation(centerX:int, centerY:int):void {
 			this.rootX = centerX;
 			this.rootY = centerY;
-			this.rootStamp = Math.random();
+			this.rootStamp++;
 		}
 		
 		
@@ -72,7 +72,7 @@ package com.settinghead.wexpression.client.model.vo
 			this._rotation = rotation % BBPolarTreeVO.TWO_PI;
 			if(this._rotation<0)
 				this._rotation = BBPolarTreeVO.TWO_PI + this._rotation;
-			this.rootStamp = Math.random();
+			this.rootStamp++;
 		}
 		
 		

@@ -28,11 +28,11 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Main
         ///
         public void execute(INotification note)
         {
-            WexpressionClient app = WexpressionClient(note.GetBody());
-            facade.RegisterMediator(new TemplateEditorMediator(app.applicationComponent.templateEditor));
-            facade.RegisterMediator(new TuMediator(app.applicationComponent.tuRenderer));
-            facade.RegisterMediator(new ShopMediator(app.applicationComponent.shopItemList));
-            facade.RegisterMediator(new ApplicationMediator(app.applicationComponent));
+            WexpressionClient app =  (WexpressionClient)note.Body;
+            Facade.RegisterMediator(new TemplateEditorMediator(app.applicationComponent.templateEditor));
+            Facade.RegisterMediator(new TuMediator(app.applicationComponent.tuRenderer));
+            Facade.RegisterMediator(new ShopMediator(app.applicationComponent.shopItemList));
+            Facade.RegisterMediator(new ApplicationMediator(app.applicationComponent));
         }
     }
 }

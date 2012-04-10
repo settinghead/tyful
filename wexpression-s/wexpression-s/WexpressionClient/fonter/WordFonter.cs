@@ -15,7 +15,7 @@ namespace Com.Settinghead.Wexpression.Client.Fonter
     public interface WordFonter
     {
 
-        public String FontFor(WordVO word);
+        String FontFor(WordVO word);
     }
 
 }

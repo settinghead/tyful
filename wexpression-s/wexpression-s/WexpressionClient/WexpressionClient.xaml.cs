@@ -9,16 +9,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-
-namespace com.settinghead.wexpression.client
+using PureMVC.Interfaces;
+using PureMVC.Patterns;
+namespace Com.Settinghead.Wexpression.Client
 {
     public partial class WexpressionClient : UserControl
     {
         private ApplicationFacade Facade;
 
-        public WexpressionClient()
+        public WexpressionClient(ResourceDictionary dict)
         {
             InitializeComponent();
+            foreach (var k in dict.Keys)
+                this.Resources.Add(k, dict[k]);
 
             Facade = ApplicationFacade.getInstance() as ApplicationFacade;
             Facade.Startup(this);

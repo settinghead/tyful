@@ -27,7 +27,7 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Main
 
         public void execute(INotification note)
         {
-            this.shopProxy = facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
+            this.shopProxy = Facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
             ShopItemVO maleTee = new ShopItemVO("http://www.zazzle.com/male");
             ShopItemVO femaleTee = new ShopItemVO("http://www.zazzle.com/female");
             //TODO

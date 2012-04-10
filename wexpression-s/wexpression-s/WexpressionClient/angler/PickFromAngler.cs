@@ -18,7 +18,7 @@ namespace Com.Settinghead.Wexpression.Client.Angler
     {
 
         private IList<double> angles;
-        private static PM_PRNG prng = new PM_PRNG();
+        private Random rnd = new Random();
         public PickFromAngler(IList<double> angles)
         {
             this.angles = angles;
@@ -26,7 +26,7 @@ namespace Com.Settinghead.Wexpression.Client.Angler
 
         public virtual double AngleFor(EngineWordVO eWord)
         {
-            return angles[prng.NextIntRange(0, angles.length - 1)];
+            return angles[rnd.Next(angles.Count)];
         }
     }
 

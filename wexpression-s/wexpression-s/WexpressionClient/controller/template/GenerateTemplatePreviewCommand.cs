@@ -18,7 +18,7 @@ using PureMVC.Interfaces;
 
 namespace Com.Settinghead.Wexpression.Client.Controller.Template
 {
-    public class GenerateTemplatePreviewCommand : SimpleCommand, IResponder
+    public class GenerateTemplatePreviewCommand : SimpleCommand
     {
 
         private TuProxy tuProxy;
@@ -27,8 +27,7 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Template
 
         public GenerateTemplatePreviewCommand()
         {
-            super();
-            this.tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+            this.tuProxy = Facade.retrieveProxy(TuProxy.NAME) as TuProxy;
         }
 
         public void execute(INotification note)
@@ -37,23 +36,17 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Template
             TemplateVO template = note.getBody() as TemplateVO;
             Assert.notNull(template);
             tuProxy.setData(template);
-            WordListProxy wordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
-            tuProxy.previewGenerationResponder = this;
+            WordListProxy wordListProxy = Facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
+            tuProxy.TuGenerated += Result;
             TuVO tu = new TuVO(template, wordListProxy.sampleWordList());
             tuProxy.tu = tu;
             sendNotification(ApplicationFacade.GENERATE_TU);
         }
 
-        public void Result(Object data)
+        private void Result(Object semder, EventArgs e)
         {
             tuProxy.previewGenerationResponder = null;
             responder.Result(data);
-        }
-
-        public void Fault(Object info)
-        {
-            CursorManager.RemoveBusyCursor();
-            responder.Fault(info);
         }
     }
 }

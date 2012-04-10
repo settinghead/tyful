@@ -5,22 +5,22 @@
 // ${CustomMessageForDisclaimer}                                                                             
 // --------------------------------------------------------------------------------------------------
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Wintellect.PowerCollections;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
-    public class WordListVO : SortedList
+    public class WordListVO : OrderedBag<WordVO>
     {
-        public WordListVO(Array array = null)
+        public WordListVO(List<WordVO> array = null):base()
         {
-            super(new WordComparator());
             if (array != null)
             {
                 for (int i = 0; i < array.length; i++)
                 {
-                    this.add(new WordVO(array[i].word, array[i].weight));
+                    this.Add(new WordVO(array[i].word, array[i].weight));
                 }
             }
         }

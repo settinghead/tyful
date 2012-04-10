@@ -35,12 +35,12 @@ namespace Com.Settinghead.Wexpression.Client.Density
 
 
 
-        public ArrayList<Patch> FindPatchFor(int width, int height)
+        public IList<Patch> FindPatchFor(int width, int height)
         {
 
             if (locked) throw new Exception("Concurrent access of density patch index not supported.");
 
-            ArrayList<Patch> result = new List<Patch>();
+            List<Patch> result = new List<Patch>();
 
             //			result.push( getBestPatchAtLevel(0));
 

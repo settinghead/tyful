@@ -10,12 +10,13 @@ using Com.Settinghead.Wexpression.Client.Angler;
 using Com.Settinghead.Wexpression.Client.Density;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using De.Polygonal.Utils;
-using Java.Awt;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 namespace Com.Settinghead.Wexpression.Client.Nudger
 {
 
@@ -48,7 +49,7 @@ namespace Com.Settinghead.Wexpression.Client.Nudger
         public ShapeConfinedRandomWordNudger()
         {
             this.prng = new PM_PRNG();
-            this.retPoint = new Po((int)0, 0);
+            this.retPoint = new Point(0, 0);
 
         }
         private Point retPoint;

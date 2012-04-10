@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     /*
@@ -150,7 +151,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
                         d2 = d1 + d;
                         d3 = d2 + d;
                         d4 = tree.d2;
-                        Assert.isTrue(r1 < r2 && r2 < r3);
+                        Debug.Assert(r1 < r2 && r2 < r3);
 
                         re = makeChildTree(shape, minBoxSize, r1, r3, d1, d2, root);
                         if (re != null) result.push(re);
@@ -172,7 +173,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
                         d3 = d2 + d;
                         d4 = d3 + d;
                         d5 = tree.d2;
-                        Assert.isTrue(r1 < r2);
+                        Debug.Assert(r1 < r2);
 
                         re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
                         if (re != null) result.push(re);
@@ -219,8 +220,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             double height = tree.GetBottom(false) - tree.GetY(false);
             //		if(height<1) return null;
             if (y + height < 0) return null;
-            Assert.IsTrue(width > 0);
-            Assert.IsTrue(height > 0);
+            Debug.Assert(width > 0);
+            Debug.Assert(height > 0);
             if (shape == null || shape.Contains(x, y, width, height, 0, false))
             {
                 return tree;

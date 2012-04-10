@@ -14,11 +14,11 @@ namespace Com.Settinghead.Wexpression.Client.Angler
     public class MostlyHorizAngler : PickFromAngler
     {
         public MostlyHorizAngler()
-        {
-            super(new double[]{0, 0, 0, 0, 0
+            : base(new double[]{0, 0, 0, 0, 0
 				//	, BBPolarTreeVO.HALF_PI,-BBPolarTreeVO.HALF_PI
-				});
-            //			super(Vector.<double>([0.3,-0.3]));
+				})
+        {
+
         }
     }
 

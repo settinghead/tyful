@@ -10,6 +10,7 @@ using Com.Settinghead.Wexpression.Client.Model.Vo;
 using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -30,11 +31,11 @@ namespace Com.Settinghead.Wexpression.Client.Placer
             this.SetIndex(index_1);
         }
 
-        public virtual ArrayList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
+        public virtual IList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
         {
 
 
-            ArrayList<Patch> patches = indPatchFor(wordImageWidth,
+            IList<Patch> patches = index.FindPatchFor(wordImageWidth,
                     wordImageHeight);
 
             index.Lock();

@@ -12,6 +12,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using PureMVC.Patterns;
 using PureMVC.Interfaces;
+using Com.Settinghead.Wexpression.Client.View.Components;
+
 namespace Com.Settinghead.Wexpression.Client.View
 {
 
@@ -21,8 +23,9 @@ namespace Com.Settinghead.Wexpression.Client.View
         public const string NAME = "ApplicationMediator";
 
         public ApplicationMediator(Object viewComponent = null)
+            : base(NAME, viewComponent)
         {
-            super(NAME, viewComponent);
+           
         }
 
         public void OnRegister()
@@ -30,7 +33,7 @@ namespace Com.Settinghead.Wexpression.Client.View
 
         }
 
-        override public IList<string> listNotificationInterests()
+        override public IList<string> ListNotificationInterests()
         {
             return new List<string>{
 					ApplicationFacade.RENDER_TU,
@@ -72,7 +75,7 @@ namespace Com.Settinghead.Wexpression.Client.View
         {
             get
             {
-                return (Application)viewComponent;
+                return (Application)ViewComponent;
             }
         }
     }

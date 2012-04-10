@@ -6,14 +6,17 @@
 // --------------------------------------------------------------------------------------------------
 
 using Com.Settinghead.Wexpression.Client;
-using Java.Awt;
+
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using PureMVC.Patterns;
 using PureMVC.Interfaces;
+using Com.Settinghead.Wexpression.Client.View.Components.Template;
+using Com.Settinghead.Wexpression.Client.Model;
 
 namespace Com.Settinghead.Wexpression.Client.View
 {
@@ -22,27 +25,21 @@ namespace Com.Settinghead.Wexpression.Client.View
     public class TemplateEditorMediator : Mediator
     {
 
-        public static const string NAME = "TemplateEditorMediator";
-        private Sprite _colorPicker;
-        private Sprite _pen;
-        private Sprite _eraser;
-        private Sprite _clear;
-        private Canvas _canvas;
+        new public const string NAME = "TemplateEditorMediator";
 
-
-        public TemplateEditorMediator(Object viewComponent = null)
+        public TemplateEditorMediator(Object viewComponent)
+            : base(NAME, viewComponent)
         {
-            super(NAME, viewComponent);
-            templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
-            templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
-            templateEditor.addEventListener(TemplateEditor.UPLOAD_TEMPLATE, uploadTemplate);
+            templateEditor.RenderTu += renderTu;
+            templateEditor.UploadTemplate += uploadTemplate;
+            templateEditor.SaveTemplate += saveTemplate;
         }
 
 
 
         public IList<String> listNotificationInterests()
         {
-            return new List(){ApplicationFacade.EDIT_TEMPLATE,
+            return new List<String>(){ApplicationFacade.EDIT_TEMPLATE,
 					ApplicationFacade.TEMPLATE_LOADED,
 					ApplicationFacade.TEMPLATE_UPLOADED
 				};
@@ -71,31 +68,31 @@ namespace Com.Settinghead.Wexpression.Client.View
         {
             get
             {
-                return (TemplateEditor)viewComponent;
+                return (TemplateEditor)ViewComponent;
             }
         }
 
-        private void renderTu(Event evt0 = null)
+        private void renderTu(object sender)
         {
-            TuProxy tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-            WordListProxy wordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
+            TuProxy tuProxy = Facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+            WordListProxy wordListProxy = Facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
             tuProxy.template = templateEditor.template;
             tuProxy.wordList = wordListProxy.currentWordList;
             tuProxy.load();
-            facade.sendNotification(ApplicationFacade.RENDER_TU);
+            Facade.sendNotification(ApplicationFacade.RENDER_TU);
 
 
         }
 
-        private void saveTemplate(Event evt0 = null)
+        private void saveTemplate(object sender)
         {
 
-            facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
+            Facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
         }
 
-        private void uploadTemplate(Event evt0 = null)
+        private void uploadTemplate(object sender)
         {
-            facade.sendNotification(ApplicationFacade.UPLOAD_TEMPLATE, templateEditor.template);
+            Facade.sendNotification(ApplicationFacade.UPLOAD_TEMPLATE, templateEditor.template);
         }
 
     }

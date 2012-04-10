@@ -11,7 +11,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
-    public class WordVO
+    public class WordVO:IComparable<WordVO>
     {
         public String word;
         public double weight;
@@ -20,6 +20,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         {
             this.word = word;
             this.weight = weight;
+        }
+
+        public int CompareTo(WordVO w)
+        {
+            return this.weight.CompareTo(w.weight);
         }
     }
 

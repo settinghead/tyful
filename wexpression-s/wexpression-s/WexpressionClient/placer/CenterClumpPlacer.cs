@@ -8,12 +8,14 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Com.Settinghead.Wexpression.Client.Utils;
+
 namespace Com.Settinghead.Wexpression.Client.Placer
 {
-
 
     public class CenterClumpPlacer : WordPlacer
     {
@@ -22,12 +24,12 @@ namespace Com.Settinghead.Wexpression.Client.Placer
             this.haveNextNextGaussian = false;
         }
 
-        public virtual ArrayList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
+        public virtual IList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
         {
 
             PlaceInfo p = new PlaceInfo(new Po((int)getOneUnder(fieldWidth - wordImageWidth),
                 getOneUnder(fieldHeight - wordImageHeight)));
-            ArrayList<PlaceInfo> v = new List<PlaceInfo>();
+            IList<PlaceInfo> v = new List<PlaceInfo>();
             v.push(p);
             return v;
         }
@@ -36,13 +38,13 @@ namespace Com.Settinghead.Wexpression.Client.Placer
         {
             double stdev = 0.4d;
 
-            return Math.Round(Com.Settinghead.Wexpression.Client.Math.MathUtils.Map((NextGaussian()
+            return Math.Round(MathUtils.Map((NextGaussian()
                         ) * stdev, -2, 2, 0, upperLimit), MidpointRounding.AwayFromZero);
         }
 
         private bool haveNextNextGaussian;
         private double nextNextGaussian;
-
+        private Random rnd = new Random();
         private double NextGaussian()
         {
             if (haveNextNextGaussian)
@@ -55,8 +57,8 @@ namespace Com.Settinghead.Wexpression.Client.Placer
                 double v1, v2, s;
                 do
                 {
-                    v1 = 2 * Math.random() - 1;   // between -1.0 and 1.0
-                    v2 = 2 * Math.random() - 1;   // between -1.0 and 1.0
+                    v1 = 2 * rnd.NextDouble() - 1;   // between -1.0 and 1.0
+                    v2 = 2 * rnd.NextDouble() - 1;   // between -1.0 and 1.0
                     s = v1 * v1 + v2 * v2;
                 } while (s >= 1 || s == 0);
                 double multiplier = Math.sqrt(-2 * Math.log(s) / s);

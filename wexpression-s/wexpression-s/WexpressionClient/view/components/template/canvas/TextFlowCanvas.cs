@@ -6,17 +6,18 @@
 // --------------------------------------------------------------------------------------------------
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
-using Java.Awt;
-using Java.Awt.Event;
-using Org.Peaceoutside.Utils;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Windows.Input;
+
 namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 {
-    public class TextFlowCanvas : ItemRenderer
+    public class TextFlowCanvas : UserControl
     {
 
         public TextFlowCanvas()
@@ -33,7 +34,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
         }
 
         private TemplateEditor _templateEditor;
-        public TemplateEditor templateEditor
+        public TemplateEditor TemplateEditor
         {
             set
             {
@@ -43,10 +44,6 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 BindingUtils.bindProperty(this, "colorPattern", _templateEditor.colorPicker, "colorPattern");
                 BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");
             }
-        }
-
-        public TemplateEditor templateEditor
-        {
             get
             {
                 return _templateEditor;
@@ -55,12 +52,12 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 
         private double oldMouseX, oldMouseY;
         private bool drawingState = false;
-        private Bitmap bmpDirection;
+        private BitmapImage bmpDirection;
         private BitmapImage bmpElement;
         private BitmapImage bmpDirElement;
         private BitmapImage colorSheetElement;
 
-        protected internal void this_mouseDownHandler(MouseEvent evt0)
+        protected internal void this_mouseDownHandler(object sender, MouseEventArgs e)
         {
             if (isCurrentLayer)
             {
@@ -78,7 +75,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
             }
         }
 
-        protected internal void this_mouseUpHandler(MouseEvent evt0)
+        protected internal void this_mouseUpHandler(object sender, MouseEventArgs e)
         {
             if (isCurrentLayer)
             {
@@ -86,13 +83,13 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
             }
         }
 
-        protected internal void this_mouseOutHandler(MouseEvent evt0)
+        protected internal void this_mouseOutHandler(object sender, MouseEventArgs e)
         {
             //			Mouse.show();
             //			this.drawingState = false;
         }
 
-        protected internal void this_focusOutHandler(MouseEvent evt0)
+        protected internal void this_focusOutHandler(object sender, MouseEventArgs e)
         {
             Mouse.hide();
             this.drawingState = false;
@@ -100,33 +97,30 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 
 
 
-        protected internal void this_mouseOverHandler(MouseEvent evt0)
+        protected internal void this_mouseOverHandler(object sender, MouseEventArgs e)
         {
             Mouse.hide();
         }
 
-        private UIComponent cursor;
+        private UserControl cursor;
 
         private double _angle;
         private double _thickness;
-        private BitmapData _colorPattern;
+        private WriteableBitmap _colorPattern;
         [Bindable]
-        public double angle
+        public double Angle
         {
             get
             {
                 return _angle;
             }
-        }
-        public double angle
-        {
             set
             {
                 this._angle = a;
                 rebuildCursor();
             }
-
         }
+
         [Bindable]
         public double thickness
         {
@@ -134,32 +128,27 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
             {
                 return _thickness;
             }
-        }
-        public double thickness
-        {
             set
             {
                 this._thickness = t;
                 rebuildCursor();
             }
-
         }
+
         [Bindable]
-        public BitmapData colorPattern
+        public WriteableBitmap ColorPattern
         {
             get
             {
                 return _colorPattern;
             }
-        }
-        public BitmapData colorPattern
-        {
             set
             {
                 this._colorPattern = p;
                 rebuildCursor();
             }
         }
+
 
         public Layer currentLayer
         {
@@ -182,7 +171,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 
         private bool _isCurrentLayer;
 
-        public boolean isCurrentLayer
+        public bool isCurrentLayer
         {
             get
             {
@@ -196,7 +185,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
             {
                 BitmapAsset a = new SmallA();
 
-                UIComponent colorLayer = new UIComponent();
+                UserControl colorLayer = new UserControl();
                 colorLayer.graphics.clear();
                 colorLayer.x = 0;
                 colorLayer.y = 0;
@@ -207,7 +196,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 colorLayer.graphics.drawCircle(0, 0, thickness / 2);
                 colorLayer.graphics.endFill();
 
-                UIComponent textLayer = new UIComponent();
+                UserControl textLayer = new UserControl();
                 textLayer.graphics.clear();
                 Matrix m = a.transform.matrix;
                 m.tx -= a.width / 2;
@@ -219,8 +208,8 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 textLayer.height = thickness;
                 textLayer.x = 0;
                 textLayer.y = 0;
-                textLayer.graphics.lineBitmapStyle(a.bitmapData, m, true, true);
-                textLayer.graphics.beginBitmapFill(a.bitmapData, m, true, true);
+                textLayer.graphics.lineBitmapStyle(a.WriteableBitmap, m, true, true);
+                textLayer.graphics.beginBitmapFill(a.WriteableBitmap, m, true, true);
                 textLayer.graphics.drawCircle(0, 0, thickness / 2);
                 textLayer.graphics.endFill();
 
@@ -233,7 +222,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 
         //[Embed("SmallA.png")]
         public static Type SmallA;
-        protected internal void this_mouseMoveHandler(MouseEvent evt0)
+        protected internal void this_mouseMoveHandler(object sender, MouseEventArgs e)
         {
             if (this.mouseX > 0 && this.mouseX < this.width && this.mouseY > 0 && this.mouseY < this.height)
             {
@@ -261,7 +250,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 BitmapAsset a = new SmallA();
                 Matrix m = a.transform.matrix;
                 m.rotate(-angle);
-                dirShape.graphics.lineBitmapStyle(a.bitmapData, m, true, true);
+                dirShape.graphics.lineBitmapStyle(a.WriteableBitmap, m, true, true);
                 shape.graphics.moveTo(oldMouseX, oldMouseY);
                 dirShape.graphics.moveTo(oldMouseX, oldMouseY);
                 colorShape.graphics.moveTo(oldMouseX, oldMouseY);
@@ -270,16 +259,16 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 colorShape.graphics.lineTo(this.mouseX, this.mouseY);
 
 
-                layer.img.bitmapData.draw(shape);
-                bmpDirection.bitmapData.draw(dirShape);
-                layer.colorSheet.bitmapData.draw(colorShape);
+                layer.img.WriteableBitmap.draw(shape);
+                bmpDirection.WriteableBitmap.draw(dirShape);
+                layer.colorSheet.WriteableBitmap.draw(colorShape);
 
                 oldMouseX = this.mouseX;
                 oldMouseY = this.mouseY;
             }
         }
 
-        protected internal void this_creationCompleteHandler(FlexEvent evt0)
+        protected internal void this_creationCompleteHandler(object sender, EventArgs e)
         {
             populateLayer();
             initCursor();
@@ -288,7 +277,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
 
         private void InitCursor()
         {
-            cursor = new UIComponent();
+            cursor = new UserControl();
             cursor.depth = 999;
             cursor.graphics.clear();
 
@@ -309,12 +298,12 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                 }
                 else
                 {
-                    layer.img = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
+                    layer.img = new Bitmap(new WriteableBitmap(layer.width, layer.height, true, 0xffffff));
                     layer.img.visible = false;
                 }
 
 
-                bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
+                bmpDirection = new Bitmap(new WriteableBitmap(layer.width, layer.height, true, 0xffffff));
                 bmpDirection.alpha = 0.8d;
 
 
@@ -338,7 +327,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                         m.ty += a.height / 2;
                         Shape dirShape = new Shape();
                         dirShape.graphics.lineStyle(1, 0, 0.3d, false);
-                        dirShape.graphics.lineBitmapStyle(a.bitmapData, m, true, true);
+                        dirShape.graphics.lineBitmapStyle(a.WriteableBitmap, m, true, true);
                         for (double ox = 0; ox < a.width; ox++)
                             for (double oy = 0; oy < a.height; oy++)
                             {
@@ -351,7 +340,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components.Template.Canvas
                         m = new Matrix();
                         m.tx += w;
                         m.ty += h;
-                        bmpDirection.bitmapData.draw(dirShape, m);
+                        bmpDirection.WriteableBitmap.draw(dirShape, m);
 
                     }
                 }

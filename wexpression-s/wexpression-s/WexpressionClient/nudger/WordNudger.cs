@@ -6,7 +6,7 @@
 // --------------------------------------------------------------------------------------------------
 using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
-using Java.Awt;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -18,7 +18,7 @@ namespace Com.Settinghead.Wexpression.Client.Nudger
 
     public interface WordNudger
     {
-        public Point NudgeFor(WordVO w, PlaceInfo pInfo, int attempt, int totalPlannedAttempt);
+        Point NudgeFor(WordVO w, PlaceInfo pInfo, int attempt, int totalPlannedAttempt);
 
     }
 

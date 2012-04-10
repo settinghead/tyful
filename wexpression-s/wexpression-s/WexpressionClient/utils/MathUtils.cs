@@ -10,7 +10,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-namespace Com.Settinghead.Wexpression.Client.Math
+namespace Com.Settinghead.Wexpression.Client.Utils
 {
     public class MathUtils
     {

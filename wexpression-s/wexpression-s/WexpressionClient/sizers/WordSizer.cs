@@ -15,7 +15,7 @@ namespace Com.Settinghead.Wexpression.Client.Sizers
     public interface WordSizer
     {
 
-        public virtual double SizeFor(WordVO word, int wordRank, int wordCount);
+        double SizeFor(WordVO word, int wordRank, int wordCount);
 
     }
 

@@ -16,13 +16,14 @@ namespace Com.Settinghead.Wexpression.Client.Model
     public class EntityProxy : Proxy, IProxy
     {
         public EntityProxy(String name, Object data = null)
+            : base(name, data)
         {
-            super(name, data);
+            
         }
 
         protected internal void SendLoadedNotification(String noteName, String noteBody, String srName)
         {
-            LoadupResourceProxy srProxy = facade.retrieveProxy(srName) as LoadupResourceProxy;
+            LoadupResourceProxy srProxy = Facade.retrieveProxy(srName) as LoadupResourceProxy;
             if (!srProxy.isTimedOut())
             {
                 sendNotification(noteName, noteBody);

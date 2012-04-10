@@ -15,7 +15,7 @@ namespace Com.Settinghead.Wexpression.Client.Colorer
 
     public interface WordColorer
     {
-        public uint colorFor(EngineWordVO eWord);
+        uint ColorFor(EngineWordVO eWord);
     }
 
 }

@@ -6,16 +6,16 @@
 // --------------------------------------------------------------------------------------------------
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
-using ILOG.J2CsMapping.Collections;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 namespace Com.Settinghead.Wexpression.Client.Density
 {
 
-    public class Patch
+    public class Patch : IComparable<Patch>
     {
 
 
@@ -25,15 +25,15 @@ namespace Com.Settinghead.Wexpression.Client.Density
         private int height;
         private double _averageAlpha = double.NaN;
         private Patch parent;
-        private ArrayList<Patch> children = null;
-        private ILOG.J2CsMapping.Collections.ISet _childrenMarker;
+        private IList<Patch> children = null;
+        private HashSet<Patch> _childrenMarker;
         private double _area = double.NaN;
         private double _alphaSum = double.NaN;
         private PatchQueue _queue;
         private int rank;
         private int _numOfFailures;
         private int _lastAttempt;
-        private ArrayList<EngineWordVO> _eWords = null;
+        private IList<EngineWordVO> _eWords = null;
         private WordLayer _layer;
 
         public Patch(int x_0, int y_1, int width_2, int height_3, int rank_4, Patch parent_5, PatchQueue queue, WordLayer layer)
@@ -97,54 +97,57 @@ namespace Com.Settinghead.Wexpression.Client.Density
         public double GetAverageAlpha()
         {
 
-            if (IsNaN(this._averageAlpha))
+            if (Double.IsNaN(this._averageAlpha))
             {
                 // now remove sub-patches that's already marked
-                this._averageAlpha = this.GetAlphaSum();
+                this._averageAlpha = this.AlphaSum;
                 //				for each (Patch markedChild in this.getMarkedChildren()) {
                 //					this._averageAlpha -= markedChild.getAverageAlpha()
                 //						* DensityPatchIndex.MARK_FILL_FACTOR;
                 //				}
                 //				
-                this._averageAlpha /= this.GetArea();
+                this._averageAlpha /= this.Area;
 
             }
             return this._averageAlpha;
         }
 
-        public double GetAlphaSum()
+        public double AlphaSum
         {
-            if (isNaN(this._alphaSum))
-            // lazy calc
+            get
             {
-                //				this._alphaSum = 0;
-                //				this.getArea();
-                //
-                //				if (this.getChildren() == null
-                //					|| this.getChildren().length == 0) {
-                //					for (int i= 0; i < this.getWidth(); i++)
-                //						for (int j= 0; j < this.getHeight(); j++) {
-                //							double brightness = _layer.getBrightness(
-                //								this.getX() + i, this.getY() + j);
-                //							if(isNaN(brightness)){
-                //								brightness = 0;
-                //							}
-                //							else 
-                //								brightness = brightness;
-                //							this._alphaSum += brightness;
-                //							if(brightness==0)
-                //								this._area -= 1;
-                //						}
-                //				} else
-                //					for each (Patch p in this.getChildren())
-                //						this._alphaSum += p.getAlphaSum();
-                this._alphaSum = 1;
+                if (Double.IsNaN(this._alphaSum))
+                // lazy calc
+                {
+                    //				this._alphaSum = 0;
+                    //				this.getArea();
+                    //
+                    //				if (this.getChildren() == null
+                    //					|| this.getChildren().length == 0) {
+                    //					for (int i= 0; i < this.getWidth(); i++)
+                    //						for (int j= 0; j < this.getHeight(); j++) {
+                    //							double brightness = _layer.getBrightness(
+                    //								this.getX() + i, this.getY() + j);
+                    //							if(Double.IsNaN(brightness)){
+                    //								brightness = 0;
+                    //							}
+                    //							else 
+                    //								brightness = brightness;
+                    //							this._alphaSum += brightness;
+                    //							if(brightness==0)
+                    //								this._area -= 1;
+                    //						}
+                    //				} else
+                    //					for each (Patch p in this.getChildren())
+                    //						this._alphaSum += p.getAlphaSum();
+                    this._alphaSum = 1;
+                }
+
+                if (this._alphaSum == 0)
+                    this._alphaSum = double.NEGATIVE_INFINITY;
+
+                return this._alphaSum;
             }
-
-            if (this._alphaSum == 0)
-                this._alphaSum = double.NEGATIVE_INFINITY;
-
-            return this._alphaSum;
         }
 
         //		private Set getMarkedChildren() {
@@ -184,19 +187,19 @@ namespace Com.Settinghead.Wexpression.Client.Density
             this.children = children;
         }
 
-        public ArrayList<Patch> GetChildren()
+        public IList<Patch> GetChildren()
         {
             return this.children;
         }
 
-        public ArrayList<Patch> DivideIntoNineOrMore(PatchQueue newQueue)
+        public IList<Patch> DivideIntoNineOrMore(PatchQueue newQueue)
         {
             ArrayList<Patch> result = new List<Patch>();
             int min = getWidth() < getHeight() ? getWidth()
                 : getHeight();
             int squareLength = min / DensityPatchIndex.NUMBER_OF_DIVISIONS;
             int centerCount = (DensityPatchIndex.NUMBER_OF_DIVISIONS + 1) / 2;
-            boolean breakI = false;
+            bool breakI = false;
             for (int i = 0; i < getWidth(); i += squareLength)
             {
                 int squareWidth;
@@ -208,7 +211,7 @@ namespace Com.Settinghead.Wexpression.Client.Density
                 }
                 else
                     squareWidth = squareLength;
-                boolean breakJ = false;
+                bool breakJ = false;
 
                 for (int j = 0; j < getHeight(); j += squareLength)
                 {
@@ -298,11 +301,14 @@ namespace Com.Settinghead.Wexpression.Client.Density
 
 
         /// <returns>the area</returns>
-        public double GetArea()
+        public double Area
         {
-            if (IsNaN(this._area))
-                this._area = GetWidth() * GetHeight();
-            return this._area;
+            get
+            {
+                if (Double.IsNaN(this._area))
+                    this._area = GetWidth() * GetHeight();
+                return this._area;
+            }
         }
 
 
@@ -348,8 +354,8 @@ namespace Com.Settinghead.Wexpression.Client.Density
             }
         }
 
-        private ILOG.J2CsMapping.Collections.ISet _neighborsAndMe;
-        public Set neighborsAndMe
+        private HashSet<Patch> _neighborsAndMe;
+        public HashSet<Patch> neighborsAndMe
         {
             get
             {
@@ -383,11 +389,11 @@ namespace Com.Settinghead.Wexpression.Client.Density
             }
         }
 
-        public ArrayList<Patch> AncestorsAndOffsprngs
+        public IList<Patch> AncestorsAndOffsprngs
         {
             get
             {
-                ArrayList<Patch> result = new List<Patch>();
+                List<Patch> result = new List<Patch>();
                 ancestors(result);
                 offsprings(result);
                 return result;
@@ -411,6 +417,24 @@ namespace Com.Settinghead.Wexpression.Client.Density
                 collector.push(p);
                 p.offsprings(collector);
             }
+        }
+
+        public int CompareTo(Patch p)
+        {
+
+            //			int r= -_numComparator.compare(p1.getAverageAlpha(),p2.getAverageAlpha());
+            int r = this.numberOfFailures.CompareTo(p2.numberOfFailures);
+
+            if (r == 0)
+            {
+                r = this.AlphaSum.CompareTo(p.AlphaSum);
+                if (r == 0)
+                    return this.Rank - p.Rank;
+                else
+                    return r;
+            }
+            else return r;
+
         }
     }
 }

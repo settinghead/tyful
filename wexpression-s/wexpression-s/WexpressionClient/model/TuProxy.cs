@@ -14,11 +14,13 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Net;
+using Vci.Silverlight.FileUploader;
 
 namespace Com.Settinghead.Wexpression.Client.Model
 {
 
-    public class TuProxy : EntityProxy, ILoadupProxy
+    public class TuProxy : EntityProxy
     {
         public const string NAME = "TuProxy";
         public const string SRNAME = "TuSRProxy";
@@ -27,8 +29,9 @@ namespace Com.Settinghead.Wexpression.Client.Model
         private WordListVO _wordList;
 
         public TuProxy()
+            : base(NAME, new ArrayCollection())
         {
-            super(NAME, new ArrayCollection());
+            
 
         }
 
@@ -69,20 +72,20 @@ namespace Com.Settinghead.Wexpression.Client.Model
             }
         }
 
-        private IResponder _previewGenerationResponder;
+        //private IResponder _previewGenerationResponder;
 
-        public IResponder previewGenerationResponder
-        {
-            get
-            {
-                return _previewGenerationResponder;
+        //public IResponder previewGenerationResponder
+        //{
+        //    get
+        //    {
+        //        return _previewGenerationResponder;
 
-            }
-            set
-            {
-                this._previewGenerationResponder = value;
-            }
-        }
+        //    }
+        //    set
+        //    {
+        //        this._previewGenerationResponder = value;
+        //    }
+        //}
 
         private int failureCount = 0;
         public void RenderNextDisplayWord(TuVO tu)
@@ -301,26 +304,24 @@ namespace Com.Settinghead.Wexpression.Client.Model
             eWord.WasSkippedBecause(reason);
         }
 
-        private URLLoader urlLoader;
 
         public void PostToFacebook()
         {
-            ByteArray b = PNGEncoder.encode(tu.generatedImage);
+            //TODO: png encoding
+            byte[] b = PNGEncoder.encode(tu.generatedImage);
             // set up the request & headers for the image upload;
-            URLRequest urlRequest = new URLRequest();
-            urlRequest.url = "facebook/publish_photo";
-            URLRequestHeader header = new URLRequestHeader("Content-type", "application/octet-stream");
-            urlRequest.method = URLRequestMethod.POST;
-            urlRequest.data = b;
-            urlRequest.requestHeaders.push(header);
+           
             // create the image loader & send the image to the server;
-            urlLoader = new URLLoader();
-            //			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-            urlLoader.addEventListener(Event.COMPLETE, photoPostComplete);
-            urlLoader.load(urlRequest);
+            UserFile file = new UserFile();
+            file.FileStream = stream;
+            file.FileName = "a.png";
+            HttpFileUploader uploader = new HttpFileUploader(file, "/facebook/publish_photo", 1024 * 1024);
+            uploader.UploadFinished +=photoPostComplete;
+            uploader.StartUpload(null, null);
+            
         }
 
-        public void photoPostComplete(Event e)
+        public void photoPostComplete(object sender, OpenReadCompletedEventArgs e)
         {
         }
     }

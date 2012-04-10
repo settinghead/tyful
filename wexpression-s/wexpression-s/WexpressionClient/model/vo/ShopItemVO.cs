@@ -9,12 +9,13 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     public class ShopItemVO
     {
-        private BitmapData _img;
-        private BitmapData _thumb;
+        private WriteableBitmap _img;
+        private WriteableBitmap _thumb;
         private String _item_url;
 
         public ShopItemVO(String url)
@@ -22,7 +23,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             this._item_url = url;
         }
 
-        public BitmapData image
+        public WriteableBitmap image
         {
             get
             {
@@ -34,7 +35,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             }
         }
 
-        public BitmapData thumbnail
+        public WriteableBitmap thumbnail
         {
             get
             {

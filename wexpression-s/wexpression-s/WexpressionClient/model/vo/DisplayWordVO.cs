@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.IO;
 using System.Runtime.CompilerServices;
-namespace com.settinghead.wexpression.client.model.vo
+namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
 
 

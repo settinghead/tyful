@@ -11,6 +11,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using PureMVC.Patterns;
+using PureMVC.Interfaces;
 namespace Com.Settinghead.Wexpression.Client.Controller.Tu
 {
 
@@ -20,7 +22,7 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Tu
         public void execute(INotification note)
         {
             TuVO tu = note.getBody() as TuVO;
-            TuProxy tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+            TuProxy tuProxy = Facade.retrieveProxy(TuProxy.NAME) as TuProxy;
             if (tu == null)
                 tu = tuProxy.tu;
             tuProxy.template = tu.template;

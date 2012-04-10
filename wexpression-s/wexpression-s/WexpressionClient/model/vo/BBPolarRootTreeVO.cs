@@ -127,7 +127,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             return this.shape;
         }
 
-        //		public boolean overlaps(BBPolarTreeVO otherTree) {
+        //		public bool overlaps(BBPolarTreeVO otherTree) {
         //			double min = 30;
         //			if(this.getHeight(false)<min || 
         //				this.getWidth(false)<min || 
@@ -137,7 +137,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         //				return rectCollide(otherTree);
         //			}
         //			else
-        //				return super.overlaps(otherTree);
+        //				return base.overlaps(otherTree);
         //		}
 
     }

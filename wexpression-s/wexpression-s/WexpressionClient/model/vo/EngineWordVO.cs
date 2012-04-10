@@ -8,12 +8,15 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Angler;
 using Com.Settinghead.Wexpression.Client.Density;
 using Com.Settinghead.Wexpression.Client.Placer;
-using Java.Awt;
+
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
 
@@ -53,9 +56,9 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         private int desiredLocationIndex;
 
-        private ArrayList<PlaceInfo> _desiredLocations;
+        private IList<PlaceInfo> _desiredLocations;
         private PlaceInfo currentLocation;
-        private ArrayList<PlaceInfo> targetPlaceInfo;
+        private IList<PlaceInfo> targetPlaceInfo;
         private Point renderedPlace;
         private int skippedBecause = -1;
         public Array samplePoints;
@@ -82,10 +85,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             // TODO: devise better lower bound
             if (numSamples < 20)
                 numSamples = 20;
+            Random rnd = new Random();
             for (int i = 0; i < numSamples; i++)
             {
-                double relativeX = ((int)(Math.random() * shape.width));
-                double relativeY = ((int)(Math.random() * shape.height));
+                double relativeX = ((int)(rnd.NextDouble() * shape.width));
+                double relativeY = ((int)(rnd.NextDouble() * shape.height));
                 if (shape.containsPo((int)relativeX, relativeY, false))
                 {
                     relativeX -= shape.width / 2;
@@ -216,7 +220,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         public double GetAngle(WordAngler angler)
         {
-            renderedAngle = (!IsNaN(presetAngle)) ? presetAngle : angler
+            renderedAngle = (!Double.IsNaN(presetAngle)) ? presetAngle : angler
                     .AngleFor(this);
             return renderedAngle;
         }
@@ -254,7 +258,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         }
 
 
-        public ArrayList<PlaceInfo> GetTargetPlace(WordPlacer placer, int rank_0, int count, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
+        public IList<PlaceInfo> GetTargetPlaces(WordPlacer placer, int rank_0, int count, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight)
         {
 
             targetPlaceInfo = placer.place(this.word, rank_0, count, wordImageWidth,

@@ -9,9 +9,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using com.settinghead.wexpression.client.PlaceInfo;
-using com.settinghead.wexpression.client.density.Patch;
-using com.settinghead.wexpression.client.model.vo;
+using Com.Settinghead.Wexpression.Client;
+using Com.Settinghead.Wexpression.Client.Density;
+using Com.Settinghead.Wexpression.Client.Model.Vo;
+using System.Windows.Media.Imaging;
 
 namespace Com.Settinghead.Wexpression.Client.View.Components
 {
@@ -24,7 +25,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
         //	[Bindable] 
         private double _driftDistanceSum = 0;
         //	[Bindable] 
-        public boolean autoPostToFacebook = false;
+        public bool autoPostToFacebook = false;
         private TuVO _tu;
 
         public TuRenderer()
@@ -49,28 +50,28 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
         }
 
 
-        protected void btnEditTemplate_clickHandler(MouseEvent e)
+        protected void btnEditTemplate_clickHandler(object sender, MouseEventArgs e)
         {
             dispatchEvent(new Event(EDIT_TEMPLATE));
         }
 
 
-        protected void btnSaveAsPng_clickHandler(MouseEvent e)
+        protected void btnSaveAsPng_clickHandler(object sender, MouseEventArgs e)
         {
             generateImage();
             PNGEncoder encoder = new PNGEncoder();
-            ByteArray bild = encoder.encode(_tu.generatedImage);
+            byte[] bild = encoder.encode(_tu.generatedImage);
             FileReference file = new FileReference();
             file.save(bild, "tu.png");
         }
 
-        protected void btnForceFinish_clickHandler(MouseEvent e)
+        protected void btnForceFinish_clickHandler(object sender, MouseEventArgs e)
         {
             generateImage();
         }
 
 
-        public void wordMouseOver(MouseEvent e)
+        public void wordMouseOver(object sender, MouseEventArgs e)
         {
             DisplayWordVO dWord = (DisplayWordVO)e.target;
             //				patchLayer.graphics.clear();
@@ -90,15 +91,15 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
                 double theta = (ew.samplePoints[i] as Array)[0];
                 double d = (ew.samplePoints[i] as Array)[1];
                 theta -= ew.bbTree.getRotation();
-                double x = ew.bbTree.getRootX() + Math.cos(theta) * d;
-                double y = ew.bbTree.getRootY() + Math.sin(theta) * d;
+                double x = ew.bbTree.getRootX() +Math.Cos(theta) * d;
+                double y = ew.bbTree.getRootY() +Math.Sin(theta) * d;
 
                 treeLayer.graphics.drawCircle(x, y, 2);
             }
             treeLayer.graphics.endFill();
         }
 
-        public void wordMouseOut(MouseEvent e)
+        public void wordMouseOut(object sender, MouseEventArgs e)
         {
             DisplayWordVO dWord = (DisplayWordVO)e.target;
             dWord.visible = true;
@@ -136,14 +137,14 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
         private void drawBounds(BBPolarTreeVO tree)
         {
             int x1, x2, x3, x4, y1, y2, y3, y4;
-            x1 = ((int)(tree.getRootX() + tree.d1 * Math.cos(tree.getR1(true))));
-            y1 = ((int)(tree.getRootY() - tree.d1 * Math.sin(tree.getR1(true))));
-            x2 = ((int)(tree.getRootX() + tree.d1 * Math.cos(tree.getR2(true))));
-            y2 = ((int)(tree.getRootY() - tree.d1 * Math.sin(tree.getR2(true))));
-            x3 = ((int)(tree.getRootX() + tree.d2 * Math.cos(tree.getR1(true))));
-            y3 = ((int)(tree.getRootY() - tree.d2 * Math.sin(tree.getR1(true))));
-            x4 = ((int)(tree.getRootX() + tree.d2 * Math.cos(tree.getR2(true))));
-            y4 = ((int)(tree.getRootY() - tree.d2 * Math.sin(tree.getR2(true))));
+            x1 = ((int)(tree.getRootX() + tree.d1 *Math.Cos(tree.getR1(true))));
+            y1 = ((int)(tree.getRootY() - tree.d1 *Math.Sin(tree.getR1(true))));
+            x2 = ((int)(tree.getRootX() + tree.d1 *Math.Cos(tree.getR2(true))));
+            y2 = ((int)(tree.getRootY() - tree.d1 *Math.Sin(tree.getR2(true))));
+            x3 = ((int)(tree.getRootX() + tree.d2 *Math.Cos(tree.getR1(true))));
+            y3 = ((int)(tree.getRootY() - tree.d2 *Math.Sin(tree.getR1(true))));
+            x4 = ((int)(tree.getRootX() + tree.d2 *Math.Cos(tree.getR2(true))));
+            y4 = ((int)(tree.getRootY() - tree.d2 *Math.Sin(tree.getR2(true))));
 
             double r = tree.getR2(true) - tree.getR1(true);
             if (r < 0)
@@ -168,17 +169,17 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
             double steps = Math.round(angle_diff * precision);
             if (steps == 0) steps = 1;
             double angle = angle_from;
-            double px = center_x + radius * Math.cos(angle);
-            double py = center_y - radius * Math.sin(angle);
+            double px = center_x + radius *Math.Cos(angle);
+            double py = center_y - radius *Math.Sin(angle);
             treeLayer.graphics.moveTo(px, py);
             for (int i = 1; i <= steps; i++)
             {
                 angle = angle_from + angle_diff / steps * i;
-                treeLayer.graphics.lineTo(center_x + radius * Math.cos(angle), center_y - radius * Math.sin(angle));
+                treeLayer.graphics.lineTo(center_x + radius *Math.Cos(angle), center_y - radius *Math.Sin(angle));
             }
         }
 
-        protected void onEnterFrameHandler(Event e)
+        protected void onEnterFrameHandler(Object sender, EventArgs e)
         {
             if (this.visible)
             {
@@ -205,7 +206,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
 
         public void generateImage()
         {
-            BitmapData bmpData = new BitmapData(mainCanvas.width, mainCanvas.height, true);
+            WriteableBitmap bmpData = new WriteableBitmap(mainCanvas.width, mainCanvas.height, true);
             //						Bitmap bmp = new Bitmap(bmpData,"auto",true);
             bmpData.draw(mainCanvas);
             _tu.generatedImage = bmpData;
@@ -226,7 +227,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
             }
         }
 
-        private boolean newTu = false;
+        private bool newTu = false;
 
         private void prepareForTu()
         {
@@ -245,7 +246,7 @@ namespace Com.Settinghead.Wexpression.Client.View.Components
         }
 
 
-        protected void canvas1_mouseOverHandler(MouseEvent e)
+        protected void canvas1_mouseOverHandler(object sender, MouseEventArgs e)
         {
             Mouse.show();
         }

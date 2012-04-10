@@ -18,12 +18,16 @@
 // 3/28/12 3:01 AM    
 // ${CustomMessageForDisclaimer}                                                                             
 // --------------------------------------------------------------------------------------------------
-using com.settinghead.wexpression.client;
+using Com.Settinghead.Wexpression.Client;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Media;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     public class TextShapeVO : IImageShape
@@ -36,14 +40,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         //embedAsCFF='false', advancedAntiAliasing="true")]
         //public static const Pokoljaro: Class;
 
-
-
-        private const Matrix HELPER_MATRIX = new Matrix(1, 0, 0, 1);
-
-
-        private const Matrix HELPER_MATRIX = new Matrix();
-        private Bitmap _bmp;
-        private TextField _textField;
+        private WriteableBitmap _bmp;
+        private TextBlock _textField;
         private double _size;
         private double _centerX, _centerY, _rotation = 0;
 
@@ -51,111 +49,49 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         {
             this._size = size;
 
-            _textField = createTextField(fontName, text, size);
-            _textField.rotation = rotation;
+            _textField = CreateTextField(fontName, text, size);
 
-            Rectangle bounds = _textField.getBounds(_textField);
-            HELPER_MATRIX.tx = -bounds.x + safetyBorder;
-            HELPER_MATRIX.ty = -bounds.y + safetyBorder;
 
-            _bmp = new Bitmap(new BitmapData(bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0));
-            Sprite s = new Sprite();
-            s.width = _textField.width;
-            s.height = textField.height;
-
-            //			if(size < 20){
-            //				
-            //				s.graphics.beginFill(0xbcbcbc,0.5);
-            //				s.graphics.drawRect(0,0,s.width,s.height);
-            //				s.graphics.endFill();
-            //			}
-
-            s.addChild(_textField);
-            _bmp.bitmapData.draw(s);
-
-            _bmp.x = 0;
-            _bmp.y = 0;
-
+            _bmp = new WriteableBitmap((int)(_textField.ActualWidth + safetyBorder * 2), (int)(_textField.ActualHeight + safetyBorder * 2));
+            _bmp.Render(_textField, null);
         }
 
-        private TextField CreateTextField(String fontName, String text, double size)
-			{
-	
-				
-				TextField textField = new TextField();
-	//			textField.setTextFormat( new TextFormat( font.fontName, size ) );
-				StyleSheet style = new StyleSheet();
-				style.parseCSS("div{font-size: "+_size+"; font-family: "+fontName+"; leading: 0; text-align: center; padding: 0; margin: 0; }");
-				textField.styleSheet = style;
-				textField.autoSize = TextFieldAutoSize.LEFT;
-				textField.background = false;
-				textField.selectable = false;
-				textField.embedFonts = true;
-				textField.cacheAsBitmap = false;
-				textField.x = 0;
-				textField.y = 0;
-				textField.antiAliasType = AntiAliasType.ADVANCED;
-	//			textField.text  = text;
-				textField.htmlText = "<div>"+text+"</div>";
-    //            textField.filters = [				new DropShadowFilter(0.5,45,0,1.0,0.5,0.5) 
-    //];
-				if(text.length>11){ //TODO: this is a temporary fix
-					double w = textField.width;
-					textField.wordWrap = true;
-					textField.width = w/(text.length/11)*1.1 ;
-				}
-				return textField;
-			}
-
-        public virtual bool Contains(double x, double y, double width, double height, double rotation, bool transformed)
+        private TextBlock CreateTextField(String fontName, String text, double size)
         {
-            if (rotation != 0) throw new NotImplementedError();
-            if (!Intersects(x, y, width, height, transformed))
-            {
-                double rX = x + width * (new Random()).Next();
-                double rY = y + height * (new Random()).Next();
-                if (transformed)
-                    return _textField.HitTestPo((int)rY, rY, true);
-                else
-                    return _bmp.HitTestPo((int)rX, rY, true);
+
+            TextBlock textField = new TextBlock();
+            textField.Text = text;
+            textField.FontFamily = FontFamily(fontName);
+            textField.FontSize = _size;
+            textField.TextAlignment = TextAlignment.Center;
+            if (text.length > 11)
+            { //TODO: this is a temporary fix
+                double w = textField.width;
+                textField.TextWrapping = TextWrapping.Wrap;
+                textField.width = w / (text.length / 11) * 1.1;
             }
-            else return false;
+            return textField;
         }
 
-        public virtual bool ContainsPoint(double x, double y, bool transformed)
+        public virtual bool Contains(int x, int y, int width, int height, double rotation, bool transformed)
+        {
+            if (rotation != 0) throw new Exception("Not implemented.");
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                {
+                    if (!ContainsPoint(x + i, y + j, transformed)) return false;
+                }
+            return true;
+        }
+
+        public virtual bool ContainsPoint(int x, int y, bool transformed)
         {
             //			if(transformed)
             //				return _textField.hitTestPo((int)x,y,true);
             //			else{
             //				return _bmp.hitTestPo((int)x,y,true);
             //			}
-            return _bmp.bitmapData.getPixel32(x, y) > 0x00000000;
-        }
-
-        private Point origin = new Po((int)0, 0);
-        private Rectangle testRect = new Rectangle(0, 0, 1, 1);
-        public virtual bool Intersects(double x, double y, double width, double height, bool transformed)
-        {
-            //
-            //			if(width<1) width = 1;
-            //			if(height<1) height = 1;
-            if (transformed)
-                throw new NotImplementedError();
-            else
-            {
-                //				for(double xx = x; xx<x+width;xx++)
-                //					for(double yy = y; yy<y+height;yy++){
-                //						if(_bmp.bitmapData.getPixel(xx,yy)!=0xffffff)
-                //							return true;
-                //					}
-                //				return false;
-                testRect.x = x;
-                testRect.y = y;
-                testRect.width = width;
-                testRect.height = height;
-                bool r = _bmp.bitmapData.HitTest(origin, 1, testRect, null, 1);
-                return r;
-            }
+            return _bmp.Pixels[_bmp.PixelWidth * x + y] != 0;
         }
 
         public void SetCenterLocation(double centerX, double centerY)
@@ -164,41 +100,35 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             this._centerY = centerY;
         }
 
-
-
-
-
-        private Matrix matrix = new Matrix();
-
-        public int width
+        public double Width
         {
             get
             {
-                return _textField.width;
+                return _textField.ActualWidth;
             }
         }
-        public double height
+        public double Height
         {
             get
             {
-                return _textField.height;
+                return _textField.ActualHeight;
             }
         }
-        public double rotation
+        public double Rotation
         {
             get
             {
                 return _rotation;
             }
         }
-        public double centerX
+        public double CenterX
         {
             get
             {
                 return _centerX;
             }
         }
-        public double centerY
+        public double CenterY
         {
             get
             {
@@ -206,19 +136,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             }
         }
 
-        public TextField textField
+        public TextBlock TextField
         {
             get
             {
                 return _textField;
-            }
-        }
-
-        public Rectangle objectBounds
-        {
-            get
-            {
-                return _textField.getBounds(_textField.parent);
             }
         }
 

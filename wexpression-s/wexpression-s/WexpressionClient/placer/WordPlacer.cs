@@ -7,6 +7,7 @@
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -15,7 +16,7 @@ namespace Com.Settinghead.Wexpression.Client.Placer
 
     public interface WordPlacer
     {
-        public ArrayList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight);
+        IList<PlaceInfo> Place(WordVO word, int wordIndex, int wordsCount, int wordImageWidth, int wordImageHeight, int fieldWidth, int fieldHeight);
 
 
 

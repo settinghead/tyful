@@ -21,7 +21,7 @@ namespace Com.Settinghead.Wexpression.Client.Colorer
             this.color = color;
         }
 
-        public uint colorFor(EngineWordVO eWord)
+        public uint ColorFor(EngineWordVO eWord)
         {
             return color;
         }

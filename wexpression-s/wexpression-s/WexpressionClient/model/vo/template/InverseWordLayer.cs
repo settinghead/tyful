@@ -22,12 +22,12 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             this._l = wordLayer;
         }
 
-        public virtual bool Contains(double x, double y, double width, double height, double rotation, bool transformed)
+        public bool Contains(int x, int y, int width, int height, double rotation, bool transformed)
         {
             return !_l.Contains(x, y, width, height, rotation, transformed);
         }
 
-        public virtual bool ContainsPoint(double x, double y, boolean transformed)
+        public bool ContainsPoint(int x, int y, bool transformed)
         {
             return !_l.containsPo((int)x, y, transformed);
         }
@@ -37,7 +37,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             return !_l.Intersects(x, y, width, height, transformed);
         }
 
-        public double width
+        public double Width
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public double height
+        public double Height
         {
             get
             {

@@ -7,39 +7,37 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Com.Settinghead.Wexpression.Client.Model.Vo;
 namespace Com.Settinghead.Wexpression.Client.Model
 {
 
-    public class ShopProxy : EntityProxy, ILoadupProxy
+    public class ShopProxy : EntityProxy
     {
-        public static const string NAME = "ShopProxy";
-        public static const string SRNAME = "ShopSRProxy";
+        new public const string NAME = "ShopProxy";
+        new public const string SRNAME = "ShopSRProxy";
 
-        public ShopProxy()
-        {
-            super(NAME, new ArrayCollection());
-        }
-
-        public void Load()
+        public ShopProxy():base(NAME, new List<ShopItemVO>())
         {
         }
 
         // return data property cast to proper type
-        public ArrayCollection shop
+        public IList<ShopItemVO>  Shop
         {
             get
             {
-                return (ArrayCollection)data;
+                return (IList<ShopItemVO>)data;
             }
         }
 
         // add an item to the data
-        public void AddItem(Object item)
+        public void AddItem(ShopItemVO item)
         {
-            shop.AddItem(item);
+            Shop.Add(item);
         }
     }
 }

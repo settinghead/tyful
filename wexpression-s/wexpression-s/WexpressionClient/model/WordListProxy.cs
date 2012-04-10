@@ -7,48 +7,44 @@
 using Com.Settinghead.Wexpression.Client.Model.Vo;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Net;
 namespace Com.Settinghead.Wexpression.Client.Model
 {
 
-    public class WordListProxy : EntityProxy, ILoadupProxy
+    public class WordListProxy : EntityProxy
     {
-        public static const string NAME = "WordListProxy";
-        public static const string SRNAME = "WordListSRProxy";
+        new public const string NAME = "WordListProxy";
+        new public const string SRNAME = "WordListSRProxy";
 
         private WordListVO _list = null;
-
-        public WordListProxy()
+        private WebClient mvc = new WebClient();
+        public WordListProxy():base(NAME, null)
         {
-            super(NAME, null);
+            
         }
 
-        private URLLoader loader;
         public void Load()
         {
             if (this._list == null)
             {
 
-                String wordListId = FlexGlobals.topLevelApplication.parameters.wordListId;
-                URLRequest request = new URLRequest("wordlists/" + wordListId);
-                URLVariables urlVariables = new URLVariables();
-                request.data = urlVariables;
-                request.method = URLRequestMethod.GET;
-                loader = new URLLoader();
-                loader.addEventListener(Event.COMPLETE, jsonLoaded);
-                loader.load(request);
+                String wordListId = ClientGlobals.Resources["wordListId"];
+                WebClient loader = new WebClient();
+                loader.OpenReadCompleted += jsonLoaded;
+                loader.OpenReadAsync(new Uri("wordlists/" + wordListId, UriKind.Relative));
 
             }
         }
 
-        public void jsonLoaded(Event e)
+        public void jsonLoaded(Object sender, OpenReadCompletedEventArgs e)
         {
-
-            Array l = (new JSONDecoder(loader.data, false).getValue() as Object).list;
-            WordListVO wordList = new WordListVO(l);
-            this._list = wordList;
+            DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(List<WordVO>));
+            List<WordVO> l = (List<WordVO>)json.ReadObject(e.Result);
+            this._list = new WordListVO(l);
         }
 
 

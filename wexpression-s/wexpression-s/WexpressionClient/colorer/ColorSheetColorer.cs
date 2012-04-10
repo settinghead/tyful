@@ -21,10 +21,10 @@ namespace Com.Settinghead.Wexpression.Client.Colorer
 
         }
 
-        public uint colorFor(EngineWordVO eWord)
+        public uint ColorFor(EngineWordVO eWord)
         {
             uint color =
-                eWord.GetCurrentLocation().patch.layer.colorSheet.bitmapData.GetPixel(
+                eWord.GetCurrentLocation().patch.layer.colorSheet.WriteableBitmap.GetPixel(
                     eWord.GetCurrentLocation().GetpVector().x, eWord.GetCurrentLocation().GetpVector().y);
             if (color > 0) return color;
             else return otherwise.ColorFor(eWord);

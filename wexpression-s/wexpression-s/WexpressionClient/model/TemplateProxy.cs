@@ -8,22 +8,25 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Net;
+using Com.Settinghead.Wexpression.Client.Model.Vo;
+using Vci.Silverlight.FileUploader;
 namespace Com.Settinghead.Wexpression.Client.Model
 {
 
-    public class TemplateProxy : EntityProxy, ILoadupProxy
+    public class TemplateProxy : EntityProxy
     {
-        public static const string NAME = "TemplateProxy";
-        public static const string SRNAME = "TemplateSRProxy";
+        new public const string NAME = "TemplateProxy";
+        new public const string SRNAME = "TemplateSRProxy";
         private string _pathToLoad;
-        private URLLoader urlLoader;
 
-        public TemplateProxy()
+        public TemplateProxy():base(NAME, new List<TemplateVO>())
         {
-            super(NAME, new ArrayCollection());
+            
         }
 
         public string templatePath
@@ -31,7 +34,7 @@ namespace Com.Settinghead.Wexpression.Client.Model
             set
             {
                 this._pathToLoad = value;
-                load();
+                Load();
             }
         }
 
@@ -47,10 +50,10 @@ namespace Com.Settinghead.Wexpression.Client.Model
             }
         }
 
-        private void templateLoadComplete(Event evt0)
+        private void templateLoadComplete(object sender, EventArgs e)
         {
-            facade.SendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
-            facade.SendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
+            Facade.SendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
+            Facade.SendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
         }
 
         public TemplateVO template
@@ -65,33 +68,32 @@ namespace Com.Settinghead.Wexpression.Client.Model
             }
         }
 
-        public ByteArray toFile(TemplateVO template = null)
+        public Stream toFile(TemplateVO template = null)
         {
+            MemoryStream stream = new MemoryStream();
             if (template == null) template = this.template;
-            ZipOutputImpl zipOutput = new ZipOutputImpl();
+            ZipOutputImpl zipOutput = new ZipOutputImpl(stream);
             zipOutput.process(template);
-            ByteArray zipBytes = zipOutput.zipUp();
-            return zipBytes;
+             zipOutput.zipUp();
+            stream.Seek(0,SeekOrigin.Begin);
+            return stream;
         }
+        private const int CHUNK_SIZE = 4096;
+        private long _bytesUploaded;
+        private Stream zipFileStream;
 
         public void UploadTemplate()
         {
-            ByteArray b = toFile();
-            // set up the request & headers for the image upload;
-            URLRequest urlRequest = new URLRequest();
-            urlRequest.url = "templates/u";
-            URLRequestHeader header = new URLRequestHeader("Content-type", "application/octet-stream");
-            urlRequest.method = URLRequestMethod.POST;
-            urlRequest.data = b;
-            urlRequest.requestHeaders.push(header);
-            // create the image loader & send the image to the server;
-            urlLoader = new URLLoader();
-            //			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-            urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
-            urlLoader.load(urlRequest);
+            zipFileStream = toFile();
+            UserFile file = new UserFile();
+            file.FileName = "template_" + file.Guid + ".zip";
+            file.FileStream = zipFileStream;
+            HttpFileUploader uploader = new HttpFileUploader(file, "/template/u", 1023 * 1024);
+            uploader.UploadFinished += uploadComplete;
+            uploader.StartUpload(null, null);
         }
 
-        public void uploadComplete(Event e)
+        private void uploadComplete(object sender, EventArgs e)
         {
             SendNotification(ApplicationFacade.TEMPLATE_UPLOADED, urlLoader.data);
         }

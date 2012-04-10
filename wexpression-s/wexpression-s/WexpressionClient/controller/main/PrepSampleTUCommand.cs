@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using PureMVC.Interfaces;
 using PureMVC.Patterns;
 
-namespace com.settinghead.wexpression.client.controller.main
+namespace Com.Settinghead.Wexpression.Client.Controller.Main
 {
     public class PrepSampleTUCommand : SimpleCommand
     {
@@ -25,7 +25,7 @@ namespace com.settinghead.wexpression.client.controller.main
 
         public void execute(INotification note)
         {
-            TemplateProxy templateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+            TemplateProxy templateProxy = Facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 
             Array templates = new Array(
                 //				"resources/templates/egg.png",
@@ -39,10 +39,10 @@ namespace com.settinghead.wexpression.client.controller.main
                 "resources/templates/heart.png"
                 //				"resources/templates/apple.png"
             );
-            int randomNum = Math.floor(Math.random() * (templates.length));
+            int randomNum = Math.Floor(new Random().NextDouble() * (templates.length));
             templateProxy.templatePath = templates[randomNum];
 
-            LoadupMonitorProxy monitor = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
+            LoadupMonitorProxy monitor = Facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
             monitor.loadResources();
         }
     }

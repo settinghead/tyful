@@ -6,7 +6,7 @@
 // --------------------------------------------------------------------------------------------------
 using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
-using Java.Awt;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -55,7 +55,7 @@ namespace Com.Settinghead.Wexpression.Client.Nudger
             double theta = thetaIncrement * attempt;
             double x = System.Math.Cos(theta) * rad;
             double y = System.Math.Sin(theta) * rad;
-            return new Po((int)x, y);
+            return new Point(x, y);
         }
 
         private double PowerMap(double power, double v, double min1, double max1, double min2, double max2)

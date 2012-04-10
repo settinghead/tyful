@@ -4,22 +4,28 @@
 // 3/28/12 3:00 AM    
 // ${CustomMessageForDisclaimer}                                                                             
 // --------------------------------------------------------------------------------------------------
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-namespace Com.Settinghead.Wexpression.Client.View.Components
+namespace Com.Settinghead.Wexpression.Client
 {
-    public class LayerStack : SkinnableDataContainer
+
+    public class RenderOptions
     {
-        public LayerStack()
-            : base()
+        public RenderOptions()
         {
-            this.layout = new BasicLayout();
+            this.maxAttemptsToPlaceWord = -1;
+            this.maxdoubleOfWordsToDraw = -1;
+            this.minShapeSize = 10;
+            this.wordPadding = 0;
         }
-
+        public int maxAttemptsToPlaceWord; // default: based on Word weight
+        public int maxdoubleOfWordsToDraw; // default: unlimited
+        public int minShapeSize;
+        public int wordPadding;
     }
+
 }
-
-

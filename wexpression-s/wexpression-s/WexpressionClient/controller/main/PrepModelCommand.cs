@@ -10,20 +10,15 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using PureMVC.Interfaces;
+using PureMVC.Patterns;
+
 namespace Com.Settinghead.Wexpression.Client.Controller.Main
 {
     public class PrepModelCommand : SimpleCommand
     {
-
-        private LoadupMonitorProxy monitor;
-        /// <summary>
-        /// Prepare the Model.
-        /// </summary>
-        ///
         public void execute(INotification note)
         {
-            facade.registerProxy(new LoadupMonitorProxy());
-            monitor = facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy;
             // Create Template Proxy, 
             TemplateProxy templateProxy = new TemplateProxy();
             TuProxy tuProxy = new TuProxy();
@@ -31,27 +26,10 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Main
             WordListProxy wordListProxy = new WordListProxy();
 
             // register it
-            facade.registerProxy(templateProxy);
-            facade.registerProxy(tuProxy);
-            facade.registerProxy(shopProxy);
-            facade.registerProxy(wordListProxy);
-
-            LoadupResourceProxy rTemplate = registerResourceProxy(TemplateProxy.SRNAME, templateProxy);
-            LoadupResourceProxy rTu = registerResourceProxy(TuProxy.SRNAME, tuProxy);
-            LoadupResourceProxy rShop = registerResourceProxy(ShopProxy.SRNAME, shopProxy);
-            LoadupResourceProxy rWordList = registerResourceProxy(WordListProxy.SRNAME, wordListProxy);
-
-            rTu.requires = new List() { rWordList, rTemplate };
-            rShop.requires = new List() { rTu };
-        }
-
-        private LoadupResourceProxy registerResourceProxy(String srName, ILoadupProxy px)
-        {
-            LoadupResourceProxy rProxy = new LoadupResourceProxy(srName, px);
-            facade.registerProxy(rProxy);
-            monitor.addResource(rProxy);
-            return rProxy;
-
+            Facade.registerProxy(templateProxy);
+            Facade.registerProxy(tuProxy);
+            Facade.registerProxy(shopProxy);
+            Facade.registerProxy(wordListProxy);
         }
     }
 }

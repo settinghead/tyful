@@ -10,28 +10,31 @@ using Com.Settinghead.Wexpression.Client.Model.Vo;
 using Com.Settinghead.Wexpression.Client.Nudger;
 using Com.Settinghead.Wexpression.Client.Colorer;
 using Com.Settinghead.Wexpression.Client.Placer;
-using Org.Peaceoutside.Utils;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Media.Imaging;
 using System.Runtime.CompilerServices;
 
 namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 {
+    public delegate void LayerLoadedFromPNGHandler(object sender);
     public class WordLayer : Layer, IImageShape, IZippable
     {
+        public event LayerLoadedFromPNGHandler LayerLoadedFromPNG;
+
         public WordLayer(String name, TemplateVO template)
+            : base(name, template)
         {
-            super(name, template);
+
         }
 
-        private Bitmap _img;
-        private Bitmap _colorSheet;
+        private WriteableBitmap _img;
+        private WriteableBitmap _colorSheet;
         private BBPolarRootTreeVO _tree;
-        private Rectangle _bounds = null;
-        public static const double SAMPLE_DISTANCE = 100;
-        private static const double MISS_PERCENTAGE_THRESHOLD = 0.1;
+        public static double SAMPLE_DISTANCE = 100;
+        private static double MISS_PERCENTAGE_THRESHOLD = 0.1;
         private String _path;
         private WordColorer _colorer;
         private WordNudger _nudger;
@@ -67,23 +70,23 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         }
 
 
-        public BitmapData thumbnail
+        public WriteableBitmap thumbnail
         {
             get
             {
                 if (this._thumbnail == null && this.img != null)
-                    this._thumbnail = createThumbnail(this.img.bitmapData);
+                    this._thumbnail = createThumbnail(this.img.WriteableBitmap);
                 return this._thumbnail;
             }
         }
 
-        private static BitmapData createThumbnail(BitmapData bmp)
+        private static WriteableBitmap createThumbnail(WriteableBitmap bmp)
         {
             return resizeImage(bmp, 100, 100);
         }
 
-        private static const double IDEAL_RESIZE_PERCENT = .5;
-        public static BitmapData resizeImage(BitmapData source, uint width, uint height, bool constrainProportions = true)
+        private const double IDEAL_RESIZE_PERCENT = .5;
+        public static WriteableBitmap resizeImage(WriteableBitmap source, uint width, uint height, bool constrainProportions = true)
         {
             double scaleX = width / source.width;
             double scaleY = height / source.height;
@@ -93,13 +96,13 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                 else scaleY = scaleX;
             }
 
-            BitmapData bitmapData = source;
+            WriteableBitmap WriteableBitmap = source;
 
             if (scaleX >= 1 && scaleY >= 1)
             {
-                bitmapData = new BitmapData(Math.ceil(source.width * scaleX), Math.ceil(source.height * scaleY), true, 0);
-                bitmapData.draw(source, new Matrix(scaleX, 0, 0, scaleY), null, null, null, true);
-                return bitmapData;
+                WriteableBitmap bmp = new WriteableBitmap(Math.Ceiling(source.width * scaleX), Math.Ceiling(source.height * scaleY), true, 0);
+                bmp.Render(source, new Matrix(scaleX, 0, 0, scaleY), null, null, null, true);
+                return bmp;
             }
 
             // scale it by the IDEAL for best quality
@@ -111,9 +114,9 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             if (scaleX < IDEAL_RESIZE_PERCENT) nextScaleX *= IDEAL_RESIZE_PERCENT;
             if (scaleY < IDEAL_RESIZE_PERCENT) nextScaleY *= IDEAL_RESIZE_PERCENT;
 
-            BitmapData temp = new BitmapData(bitmapData.width * nextScaleX, bitmapData.height * nextScaleY, true, 0);
-            temp.draw(bitmapData, new Matrix(nextScaleX, 0, 0, nextScaleY), null, null, null, true);
-            bitmapData = temp;
+            WriteableBitmap temp = new WriteableBitmap(WriteableBitmap.width * nextScaleX, WriteableBitmap.height * nextScaleY, true, 0);
+            temp.draw(WriteableBitmap, new Matrix(nextScaleX, 0, 0, nextScaleY), null, null, null, true);
+            WriteableBitmap = temp;
 
             nextScaleX *= IDEAL_RESIZE_PERCENT;
             nextScaleY *= IDEAL_RESIZE_PERCENT;
@@ -122,15 +125,15 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             {
                 double actualScaleX = nextScaleX >= scaleX ? IDEAL_RESIZE_PERCENT : 1;
                 double actualScaleY = nextScaleY >= scaleY ? IDEAL_RESIZE_PERCENT : 1;
-                temp = new BitmapData(bitmapData.width * actualScaleX, bitmapData.height * actualScaleY, true, 0);
-                temp.draw(bitmapData, new Matrix(actualScaleX, 0, 0, actualScaleY), null, null, null, true);
-                bitmapData.dispose();
+                temp = new WriteableBitmap(WriteableBitmap.width * actualScaleX, WriteableBitmap.height * actualScaleY, true, 0);
+                temp.draw(WriteableBitmap, new Matrix(actualScaleX, 0, 0, actualScaleY), null, null, null, true);
+                WriteableBitmap.dispose();
                 nextScaleX *= IDEAL_RESIZE_PERCENT;
                 nextScaleY *= IDEAL_RESIZE_PERCENT;
-                bitmapData = temp;
+                WriteableBitmap = temp;
             }
 
-            return bitmapData;
+            return WriteableBitmap;
         }
 
 
@@ -141,7 +144,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             //			if(this.hsbArray[x]==null)
             //				this.hsbArray[x] = new Array(this._img.height);
             //			if(this.hsbArray[x][y]==null){
-            //				uint rgbPixel = _img.bitmapData.getPixel32( x, y );
+            //				uint rgbPixel = _img.WriteableBitmap.getPixel32( x, y );
             //				uint alpha = rgbPixel>> 24 & 0xFF;
             //				if(alpha == 0) {
             //					hsbArray[x][y]  = NaN;
@@ -155,7 +158,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             //			}
             //			return this.hsbArray[x][y];
 
-            uint rgbPixel = _img.bitmapData.getPixel32(x, y);
+            uint rgbPixel = _img.WriteableBitmap.getPixel32(x, y);
             uint alpha = rgbPixel >> 24 & 0xFF;
             if (alpha == 0)
             {
@@ -179,13 +182,13 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         public double GetHue(int x, int y)
         {
             int colour = getHSB(x, y);
-            //			Assert.isTrue(!isNaN(colour.hue));
+            //			Assert.isTrue(!Double.IsNaN(colour.hue));
             double h = ((colour & 0x00FF0000) >> 16);
             h /= 255;
             return h;
         }
 
-        public double height
+        public override double Height
         {
             get
             {
@@ -193,7 +196,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public double width
+        public override double Width
         {
             get
             {
@@ -201,24 +204,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public Rectangle GetBounds2D()
-        {
 
-            if (this._bounds == null)
-            {
-                double centerX = img.width / 2;
-                double centerY = img.height / 2;
-                double radius = Math.sqrt(Math.pow(centerX, 2)
-                    + Math.pow(centerY, 2));
-                int diameter = ((int)(radius * 2));
-
-                this._bounds = new Rectangle(((int)(centerX - radius)),
-                    ((int)(centerY - radius)), diameter, diameter);
-            }
-            return this._bounds;
-        }
-
-        public override bool Contains(double x, double y, double width, double height, double rotation, bool transformed)
+        public override bool Contains(int x, int y, int width, int height, double rotation, bool transformed)
         {
             if (_tree == null)
             {
@@ -251,13 +238,13 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                         double theta = Math.atan2(relativeY, relativeX);
                         theta += rotation;
 
-                        relativeX = r * Math.cos(theta);
-                        relativeY = r * Math.sin(theta);
+                        relativeX = r * Math.Cos(theta);
+                        relativeY = r * Math.Sin(theta);
 
-                        //					relativeX = (relativeX * Math.cos(rotation))
-                        //						- (relativeY * Math.sin(rotation));
-                        //					relativeY = Math.sin(rotation) * relativeX
-                        //						+ Math.cos(rotation ) * relativeY;
+                        //					relativeX = (relativeX *Math.Cos(rotation))
+                        //						- (relativeY *Math.Sin(rotation));
+                        //					relativeY =Math.Sin(rotation) * relativeX
+                        //						+Math.Cos(rotation ) * relativeY;
 
                         relativeX = (relativeX + width / 2);
                         relativeY = (relativeY + height / 2);
@@ -266,7 +253,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                     int sampleY = relativeY + y;
 
                     double brightness = getBrightness(sampleX, sampleY);
-                    if ((isNaN(brightness) || brightness < 0.01d) && ++darkCount >= threshold)
+                    if ((Double.IsNaN(brightness) || brightness < 0.01d) && ++darkCount >= threshold)
                         //											if ((!containsPo((int)sampleX, sampleY, false)) && ++darkCount >= threshold)
                         return false;
                     i++;
@@ -282,10 +269,10 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         }
 
 
-        public override bool ContainsPoint(double x, double y, boolean transform)
+        public override bool ContainsPoint(int x, int y, bool transform)
         {
             //			if(x<0 || y<0 || x>width || y>height) return true;
-            return img.hitTestPo((int)x, y, true);
+            return Img.hitTestPoint(x, y, true);
         }
 
         public override bool Intersects(double x, double y, double width, double height, bool transformed)
@@ -308,7 +295,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                     int relativeY = ((int)(Math.random() * height));
                     int sampleX = ((int)(relativeX + x));
                     int sampleY = ((int)(relativeY + y));
-                    if (isNaN(getBrightness(((int)(sampleX)), ((int)(sampleY)))))
+                    if (Double.IsNaN(getBrightness(((int)(sampleX)), ((int)(sampleY)))))
                         //					if(!containsPo((int)sampleX, sampleY, false))
                         darkCount++;
                     else
@@ -334,23 +321,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             img.transform.matrix = mtx;
         }
 
-        public DisplayObject Shape
-        {
-            get
-            {
-                return img;
-            }
-        }
-
-        public DisplayObject Object
-        {
-            get
-            {
-                return img;
-            }
-        }
-
-        public Bitmap img
+        public BitmapImage Img
         {
             get
             {
@@ -360,7 +331,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                         this.loadLayerFromPNG();
                     else
                     {
-                        this._img = new Bitmap(new BitmapData(this._template.width, this._template.height, true, 0));
+                        this._img = new WriteableBitmap(this._template.width, this._template.height, true, 0);
                     }
                 }
                 return _img;
@@ -372,27 +343,23 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public Bitmap colorSheet
+        public WriteableBitmap ColorSheet
         {
             set
             {
                 this._colorSheet = bmp;
             }
-        }
-
-        public Bitmap colorSheet
-        {
             get
             {
                 if (this._colorSheet == null)
                 {
-                    this._colorSheet = new Bitmap(new BitmapData(this._template.width, this._template.height, true, 0));
+                    this._colorSheet = new WriteableBitmap(this._template.width, this._template.height);
                 }
                 return _colorSheet;
             }
         }
 
-        public string path
+        public string Path
         {
             get
             {
@@ -405,7 +372,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         }
 
 
-        public WordNudger nudger
+        public WordNudger Nudger
         {
             get
             {
@@ -417,7 +384,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public WordAngler angler
+        public WordAngler Angler
         {
             get
             {
@@ -430,7 +397,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         }
 
 
-        public void loadLayerFromPNG(Function callback = null)
+        public void loadLayerFromPNG()
         {
             Loader my_loader = new Loader();
 
@@ -441,9 +408,9 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             my_loader.load(new URLRequest(this._path));
         }
 
-        private void onLoadComplete(Event evt0)
+        private void onLoadComplete(Object sender, EventArgs e)
         {
-            this._img = new Bitmap(evt0.target.content.bitmapData);
+            this._img = new Bitmap(evt0.target.content.WriteableBitmap);
             //			this.hsbArray = new Array(this._img.width);
             this._template.onLoadComplete(evt0);
         }
@@ -452,8 +419,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         {
             output.process(this._fonter, "fonter");
             output.process(this._colorer, "colorer");
-            output.putBitmapDataToPNGFile("direction.png", this._img.bitmapData);
-            output.putBitmapDataToPNGFile("color.png", this._colorSheet.bitmapData);
+            output.putWriteableBitmapToPNGFile("direction.png", this._img);
+            output.putWriteableBitmapToPNGFile("color.png", this._colorSheet);
             //			output.process(this._nudger, "nudger");
             //			output.process(this._angler, "angler");
             //			output.process(this._placer, "placer");

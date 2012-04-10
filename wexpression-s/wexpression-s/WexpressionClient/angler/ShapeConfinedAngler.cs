@@ -36,7 +36,7 @@ namespace Com.Settinghead.Wexpression.Client.Angler
             double angle = (layer.GetHue(
                     ((int)eWord.GetCurrentLocation().GetpVector().x), ((int)eWord
                             .GetCurrentLocation().GetpVector().y)) * BBPolarTreeVO.TWO_PI);
-            if (IsNaN(angle) || angle == 0)
+            if (Double.IsNaN(angle) || angle == 0)
                 return otherwise.AngleFor(eWord);
             else
                 return angle;

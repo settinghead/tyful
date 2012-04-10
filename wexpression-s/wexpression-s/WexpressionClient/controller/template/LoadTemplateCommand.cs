@@ -6,7 +6,6 @@
 // --------------------------------------------------------------------------------------------------
 using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model;
-using Com.Settinghead.Wexpression.Client.Model.Business;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -14,21 +13,29 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using PureMVC.Interfaces;
 using PureMVC.Patterns;
+using System.Net;
+using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
 namespace Com.Settinghead.Wexpression.Client.Controller.Template
 {
 
-    public class LoadTemplateCommand : SimpleCommand, IResponder
+    public class LoadTemplateCommand : SimpleCommand
     {
         public void execute(INotification note)
         {
-            String templateId = note.getBody() as String;
-            TemplateDelegate _delegate = new TemplateDelegate(this);
-            _delegate.getTemplate(templateId);
+            String templateId = (String) note.getBody();
+            WebClient client = new WebClient();
+            Uri templateUri = new Uri("/template/" + templateId + "/get", UriKind.Relative);
+            client.OpenReadCompleted += Result;
+
+            client.OpenReadAsync(templateUri);
         }
 
-        public void Result(Object data)
+        public void Result(Object sender, OpenReadCompletedEventArgs e)
         {
-            facade.RetrieveProxy(TemplateProxy.NAME).SetData(data.result);
+            Stream s = e.Result;
+            TemplateVO template = new TemplateVO(s);
+            
+            Facade.RetrieveProxy(TemplateProxy.NAME).SetData(template);
             SendNotification(ApplicationFacade.TEMPLATE_LOADED);
         }
 

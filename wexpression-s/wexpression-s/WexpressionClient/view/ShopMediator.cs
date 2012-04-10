@@ -8,35 +8,40 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Model;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Com.Settinghead.Wexpression.Client.View.Components;
+using PureMVC.Interfaces;
+using PureMVC.Patterns; 
 namespace Com.Settinghead.Wexpression.Client.View
 {
 
     public class ShopMediator : Mediator
     {
         private ShopProxy shopProxy;
-        public static const string NAME = "ShopMediator";
+        new public const string NAME = "ShopMediator";
 
         public ShopMediator(Object viewComponent)
+            : base(NAME, viewComponent)
         {
-            super(NAME, viewComponent);
+            
         }
 
         private ShopItemList shopItemList
         {
             get
             {
-                return (ShopItemList)viewComponent;
+                return (ShopItemList)ViewComponent;
             }
         }
 
         public void OnRegister()
         {
-            shopProxy = facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
+            shopProxy = Facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
         }
 
-        public override IList<String> listNotificationInterests()
+        public override IList<String> ListNotificationInterests()
         {
             return new List<string>{
 					ApplicationFacade.TU_GENERATED};

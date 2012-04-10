@@ -32,7 +32,7 @@ package com.settinghead.wexpression.client.model.vo {
 		public static const PI:Number = (Math.PI);
 		public static const ONE_AND_HALF_PI:Number= ((Math.PI + HALF_PI));
 		
-		protected var rStamp:Number;
+		protected var rStamp:int;
 		
 		protected var _x:Number, _y :Number, _right:Number, _bottom:Number;
 		

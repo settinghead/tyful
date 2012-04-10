@@ -14,34 +14,34 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using PureMVC.Interfaces;
 using PureMVC.Patterns;
-
+using Com.Settinghead.Wexpression.Client.View.Components;
 namespace Com.Settinghead.Wexpression.Client.View
 {
 
     public class TuMediator : Mediator
     {
-        public static const string NAME = "TuMediator";
+        new const string NAME = "TuMediator";
         private TuProxy tuProxy;
         private bool waitingForWord;
 
-        public TuMediator(Object viewComponent = null)
+        public TuMediator(TuRenderer viewComponent)
             : base(NAME, viewComponent)
         {
             this.waitingForWord = false;
-            tuRenderer.addEventListener(TuRenderer.CREAT_NEXT_DISPLAYWORD, createNextDisplayWord);
-            tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
-            tuRenderer.addEventListener(TuRenderer.TU_GENERATED, tuGenerated);
+            tuRenderer.CreateNextDisplayWord += createNextDisplayWord;
+            tuRenderer.EditTemplate += editTemplate;
+            tuRenderer.TuGenerated += tuGenerated;
 
         }
 
         public void OnRegister()
         {
-            tuProxy = TuProxy(facade.RetrieveProxy(TuProxy.NAME));
+            tuProxy = TuProxy(Facade.RetrieveProxy(TuProxy.NAME));
         }
 
         public override IList<String> ListNotificationInterests()
         {
-            return new List(){
+            return new List<String>(){
 					ApplicationFacade.RENDER_TU,
 					ApplicationFacade.DISPLAYWORD_CREATED,
 					ApplicationFacade.TU_GENERATION_LAST_CALL,
@@ -73,11 +73,11 @@ namespace Com.Settinghead.Wexpression.Client.View
         {
             get
             {
-                return (TuRenderer)viewComponent;
+                return (TuRenderer)ViewComponent;
             }
         }
 
-        private void createNextDisplayWord(Event evt0 = null)
+        private void createNextDisplayWord(object sender)
         {
 
             if (!waitingForWord)
@@ -90,12 +90,12 @@ namespace Com.Settinghead.Wexpression.Client.View
             }
         }
 
-        private void editTemplate(Event evt0 = null)
+        private void editTemplate(object sender)
         {
             sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);
         }
 
-        private void tuGenerated(Event evt0 = null)
+        private void tuGenerated(object sender)
         {
             //finished rendering; dispatch TU_GENERATED event
             tuProxy.tu = tuRenderer.tu;

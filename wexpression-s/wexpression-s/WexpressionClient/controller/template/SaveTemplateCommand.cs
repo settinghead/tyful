@@ -24,7 +24,7 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Template
             TemplateVO template = note.getBody() as TemplateVO;
             if (template == null) template = templateProxy.template;
 
-            TemplateProxy templateProxy = (facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy);
+            TemplateProxy templateProxy = (Facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy);
 
             FileReference fr = new FileReference();
             fr.save(templateProxy.toFile(template), "template.zip");

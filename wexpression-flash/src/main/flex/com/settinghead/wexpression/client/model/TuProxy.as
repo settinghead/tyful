@@ -270,7 +270,7 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 10 
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 5
 				* (1+ Math.random() * 0.4)
 				;
 			//			var area:Number = p.getWidth() * p.getHeight();

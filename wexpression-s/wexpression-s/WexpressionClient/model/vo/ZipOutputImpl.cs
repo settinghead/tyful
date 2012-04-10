@@ -10,6 +10,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using ICSharpCode.SharpZipLib.Zip;
+using System.Windows.Media.Imaging;
+using ImageTools;
+using ImageTools.IO;
+using ImageTools.IO.Png;
+using System.Windows.Media;
 
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
@@ -17,34 +22,48 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
     public class ZipOutputImpl : IZipOutput
     {
 
-        private ZipOutputStream zipOut = new ZipOutputStream();
+        private readonly ZipOutputStream zipOut;
         private String prefix = "";
 
-        public ZipOutputImpl()
+        public ZipOutputImpl(Stream outputStream)
         {
+            zipOut = new ZipOutputStream(outputStream);
         }
 
         public virtual void PutStringToFile(String fileName, String data)
         {
             if (data == null) return;
-            ByteArray b = new ByteArray();
-            b.WriteMultiByte(data, "utf-8");
-            PutBytesToFile(fileName, b);
+            MemoryStream ms = new MemoryStream();
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                writer.Write(data);
+            }
+            PutBytesToFile(fileName, ms);
         }
 
-        public void putBytesToFile(String fileName, byte[] bytes)
+        public void PutBytesToFile(String fileName, Stream stream)
         {
             if (bytes == null) return;
             ZipEntry ze = new ZipEntry(prefix + fileName);
             zipOut.PutNextEntry(ze);
-            zipOut.Write(bytes);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            byte[] buffer = new byte[2048];
+            int n;
+            while ((n = stream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                zipOut.Write(buffer, 0, n);
+            }
             zipOut.CloseEntry();
         }
 
-        public void putBitmapDataToPNGFile(String fileName, BitmapData bmpData)
+        public void PutWriteableBitmapToPNGFile(String fileName, WriteableBitmap bmpData)
         {
             if (bmpData == null) return;
-            PutBytesToFile(fileName, PNGEncoder.Encode(bmpData));
+            PngEncoder encoder = new PngEncoder();
+            Stream stream = new MemoryStream();
+            encoder.Encode(bmpData.ToImage(), stream);
+            PutBytesToFile(fileName, stream);
         }
 
         public virtual void Process(Object obj0, String dirName = "")
@@ -52,12 +71,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             if (obj0 == null) return;
             String prev_prefix = prefix;
             prefix += dirName + "/";
-            if (obj0 is Vector || obj0 is Array || obj0 is ArrayCollection)
+            if (obj0 is IList || obj0.GetType().IsArray)
             {
-                for (int i = 0; i < obj0.length; i++)
-                {
-                    process(obj0[i], i.toString());
-                }
+                int count = 0;
+                foreach (var o in obj0)
+                    process(o, (count++).ToString());
             }
             else
             {
@@ -77,10 +95,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             prefix = prev_prefix;
         }
 
-        public ByteArray zipUp()
+        public void zipUp()
         {
+            zipOut.Flush();
+
             zipOut.Finish();
-            return zipOut.byteArray;
         }
     }
 

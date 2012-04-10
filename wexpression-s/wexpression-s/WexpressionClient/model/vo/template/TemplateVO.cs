@@ -14,9 +14,10 @@ using Com.Settinghead.Wexpression.Client.Model.Vo;
 using Com.Settinghead.Wexpression.Client.Nudger;
 using Com.Settinghead.Wexpression.Client.Placer;
 using Com.Settinghead.Wexpression.Client.Sizers;
-using Java.Awt;
+
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -26,9 +27,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
     public class TemplateVO : IZippable
     {
         private BBPolarRootTreeVO tree;
-        private Rectangle _bounds = null;
-        private static const double SAMPLE_DISTANCE = 100;
-        private static const double MISS_PERCENTAGE_THRESHOLD = 0.1;
+        private const double SAMPLE_DISTANCE = 100;
+        private const double MISS_PERCENTAGE_THRESHOLD = 0.1;
         private String _path;
         private WordSizer _sizer;
         private WordFonter _fonter;
@@ -40,20 +40,26 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         //		private Array hsbArray;
         private DensityPatchIndex _patchIndex;
         private double _width, _height;
-        private ByteArray _previewPNG;
+        private byte[] _previewPNG;
         public int mixColorDistance = 5;
         public int dilligence = 10;
 
         // Applet applet = new Applet();
         // Frame frame = new Frame("Roseindia.net");
-        private ArrayCollection _layers = new ArrayCollection();
+        private IList<Layer> _layers = new IList<Layer>();
 
         public TemplateVO(String path)
         {
             this._path = path;
         }
 
-        public ArrayCollection layers
+        public TemplateVO(Stream zipStream)
+        {
+            IZipInput input = IZipInputImpl(zipStream);
+            this.ReadNonJSONPropertiesFromZip(input);
+        }
+
+        public IList<Layer> Layers
         {
             get
             {
@@ -73,10 +79,10 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         {
             get
             {
-                if (isNaN(_width))
+                if (Double.IsNaN(_width))
                 {
                     double maxWidth = 0;
-                    foreach (Layer l in layers)
+                    foreach (Layer l in Layers)
                         if (maxWidth < l.width) maxWidth = l.width;
                     if (maxWidth > 0) _width = maxWidth;
                 }
@@ -92,7 +98,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         {
             get
             {
-                if (isNaN(_height))
+                if (Double.IsNaN(_height))
                 {
                     double maxHeight = 0;
                     foreach (Layer l in layers)
@@ -108,7 +114,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
         }
 
 
-        public ByteArray previewPNG
+        public byte[] previewPNG
         {
             get
             {
@@ -204,7 +210,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             }
         }
 
-        public void onLoadComplete(Event evt0)
+        public void onLoadComplete(Object sender, EventArgs e)
         {
             this._patchIndex = new DensityPatchIndex(this);
         }

@@ -11,19 +11,20 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
 
 namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 {
     [Bindable]
-    public class Layer : IImageShape, IZippable
+    public abstract class Layer : IImageShape, IZippable
     {
         protected internal TemplateVO _template;
-        protected internal BitmapData _thumbnail;
+        protected internal WriteableBitmap _thumbnail;
         private String _name;
         public Layer above;
         public Layer below;
 
-        public string name
+        public string Name
         {
             get { return _name; }
             set { this._name = value; }
@@ -31,7 +32,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 
         public Layer(String n, TemplateVO template)
         {
-            this.name = n;
+            this.Name = n;
             this._template = template;
             if (this._template.layers.length > 0)
             {
@@ -41,12 +42,12 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
             this._template.layers.addItem(this);
         }
 
-        public abstract double width
+        public abstract double Width
         {
             get;
         }
 
-        public abstract double height
+        public abstract double Height
         {
             get;
         }
@@ -58,12 +59,12 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 
         public virtual bool Contains(double x, double y, double width, double height, double rotation, bool transformed)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
-        public virtual bool ContainsPoint(double x, double y, boolean transformed)
+        public virtual bool ContainsPoint(double x, double y, bool transformed)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public bool containsAllPolarPoints(double centerX, double centerY, Array points, double rotation)
@@ -73,8 +74,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
                 double theta = (points[i] as Array)[0];
                 double d = (points[i] as Array)[1];
                 theta -= rotation;
-                double x = centerX + Math.cos(theta) * d;
-                double y = centerY + Math.sin(theta) * d;
+                double x = centerX +Math.Cos(theta) * d;
+                double y = centerY +Math.Sin(theta) * d;
                 if (!containsPo((int)x, y, false)) return false;
             }
             return true;
@@ -82,7 +83,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 
         public virtual bool Intersects(double x, double y, double width, double height, bool transformed)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public bool AboveContains(double x, double y, double width, double height, double rotation, bool transformed)
@@ -114,18 +115,21 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo.Template
 
         public virtual void WriteNonJSONPropertiesToZip(IZipOutput output)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual void ReadNonJSONPropertiesFromZip(IZipInput input)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual void SaveProperties(Object dict)
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
+
+        public abstract bool ContainsPoint(int x, int y, bool transformed);
+        public abstract bool Contains(int x, int y, int width, int height, double rotation, bool transformed);
 
     }
 

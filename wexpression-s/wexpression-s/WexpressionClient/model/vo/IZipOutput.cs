@@ -9,11 +9,15 @@ using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     public interface IZipOutput
     {
-        void PutStringToFile(String fileName, String data); void putBytesToFile(String fileName, ByteArray bytes); void putBitmapDataToPNGFile(String fileName, BitmapData bmpData); void Process(Object obj0, String dirName = null);
+        void PutStringToFile(String fileName, String data);
+        void PutBytesToFile(String fileName, Stream stream); 
+        void PutWriteableBitmapToPNGFile(String fileName, WriteableBitmap bmpData); 
+        void Process(Object obj0, String dirName = null);
     }
 
 }

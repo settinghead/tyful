@@ -24,7 +24,7 @@ namespace Com.Settinghead.Wexpression.Client.Colorer
 
         }
 
-        public uint colorFor(EngineWordVO eWord)
+        public uint ColorFor(EngineWordVO eWord)
         {
             double hue = hues[prng.NextIntRange(0, hues.length - 1)];
             //			double sat= Math.random()*256;

@@ -8,7 +8,7 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Angler;
 using Com.Settinghead.Wexpression.Client.Density;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
-using Java.Awt;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -45,7 +45,7 @@ namespace Com.Settinghead.Wexpression.Client.Nudger
 
         public ShapeConfinedSpiralWordNudger()
         {
-            this.retPoint = new Po((int)0, 0);
+            this.retPoint = new Point(0, 0);
         }
         private Point retPoint;
 

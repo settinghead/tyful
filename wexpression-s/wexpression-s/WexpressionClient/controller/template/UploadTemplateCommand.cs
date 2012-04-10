@@ -22,7 +22,7 @@ namespace Com.Settinghead.Wexpression.Client.Controller.Template
         public void execute(INotification note)
         {
             TemplateVO template = note.getBody() as TemplateVO;
-            templateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+            templateProxy = Facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 
             templateProxy.template = template;
 

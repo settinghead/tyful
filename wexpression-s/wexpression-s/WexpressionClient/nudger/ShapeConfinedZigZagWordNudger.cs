@@ -8,12 +8,14 @@ using Com.Settinghead.Wexpression.Client;
 using Com.Settinghead.Wexpression.Client.Angler;
 using Com.Settinghead.Wexpression.Client.Density;
 using Com.Settinghead.Wexpression.Client.Model.Vo;
-using Java.Awt;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
+
 namespace Com.Settinghead.Wexpression.Client.Nudger
 {
 

@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -15,7 +16,7 @@ namespace Com.Settinghead.Wexpression.Client.Density
     public class LeveledPatchMap
     {
 
-        private ArrayList<PatchQueue> _map = new List<PatchQueue>();
+        private IList<PatchQueue> _map = new List<PatchQueue>();
         private DensityPatchIndex _index;
 
         public LeveledPatchMap(DensityPatchIndex index)

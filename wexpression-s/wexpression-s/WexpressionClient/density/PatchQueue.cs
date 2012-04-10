@@ -7,31 +7,34 @@
 using Com.Settinghead.Wexpression.Client.Model.Vo.Template;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Wintellect.PowerCollections;
 namespace Com.Settinghead.Wexpression.Client.Density
 {
 
-    public class PatchQueue : SortedList
+    public class PatchQueue : OrderedBag<Patch>
     {
         //		private Treap _queue = new Treap(new PatchComparator());
 
         private int myLevel;
         private LeveledPatchMap _map;
-        private Dictionary _lookupMap;
+        private Dictionary<string, Patch> _lookupMap;
 
-        public PatchQueue(int myLevel_0, LeveledPatchMap map) {
-				this._lookupMap = new Dictionary();
-				super(new PatchComparator());
-				this.myLevel = myLevel_0;
-				this._map = map;
-				if (myLevel_0 == 0) {
-					foreach (Layer layer in _map.getIndex().template.layers)
-						if(layer is WordLayer)
-							tryAdd(new Patch(0, 0, layer.width, layer.height, 0, null, this, (WordLayer)layer));
-				}
-			}
+        public PatchQueue(int myLevel_0, LeveledPatchMap map)
+        {
+            this._lookupMap = new Dictionary<string, Patch>();
+            this.myLevel = myLevel_0;
+            this._map = map;
+            if (myLevel_0 == 0)
+            {
+                foreach (Layer layer in _map.getIndex().template.layers)
+                    if (layer is WordLayer)
+                        tryAdd(new Patch(0, 0, layer.width, layer.height, 0, null, this, (WordLayer)layer));
+            }
+        }
 
         public Patch GetBestPatch()
         {
@@ -52,10 +55,11 @@ namespace Com.Settinghead.Wexpression.Client.Density
         }
 
 
-        public void TryAddAll(IList<Patch> patches) {
-				foreach (Patch p in patches)
-					tryAdd(p);
-			}
+        public void TryAddAll(IList<Patch> patches)
+        {
+            foreach (Patch p in patches)
+                tryAdd(p);
+        }
 
         public void TryAdd(Patch p)
         {
@@ -79,13 +83,13 @@ namespace Com.Settinghead.Wexpression.Client.Density
         public PatchQueue Descend(int queueLevel)
         {
             PatchQueue queue = new PatchQueue(queueLevel, this._map);
-            IIterator it = super.iterator();
+            IIterator it = base.iterator();
             while (it.hasNext())
             {
                 Patch patch = it.next();
-                ArrayList<Patch> children = patch.divideIntoNineOrMore(queue);
+                IList<Patch> children = patch.divideIntoNineOrMore(queue);
                 //				 Assert.isTrue(children.length == DensityPatchIndex.NUMBER_OF_DIVISIONS);
-                queue.tryAddAll(children);
+                queue.TryAddAll(children);
             }
             return queue;
         }

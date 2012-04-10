@@ -18,8 +18,8 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         private BBPolarRootTreeVO root;
 
         public BBPolarChildTreeVO(double r1, double r2, double d1, double d2, BBPolarRootTreeVO root_0, int minBoxSize)
+            : base(r1, r2, d1, d2, minBoxSize)
         {
-            super(r1, r2, d1, d2, minBoxSize);
             this.root = root_0;
         }
 

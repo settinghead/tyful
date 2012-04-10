@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
+
 namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     public class TuVO
@@ -19,19 +21,19 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         private TemplateVO _template;
         private WordListVO _words;
-        private DisplayWordListVO _dWords = new DisplayWordListVO();
-        private Bitmap _bgImg = null;
+        private IList<DisplayWordVO> _dWords = new List<DisplayWordVO>();
+        private WriteableBitmap _bgImg = null;
         private uint _backgroundColor = 0xffffff;
         private String _bgMode;
         private uint _width, _height;
-        //		private boolean failedLastVar;
+        //		private bool failedLastVar;
 
         //the generated image
-        private BitmapData _generatedImage = null;
+        private WriteableBitmap _generatedImage = null;
 
         private const string SOLID_COLOR = "solidColor";
         private int _currentWordIndex = -1;
-        private ArrayList<EngineWordVO> _eWords = new List<EngineWordVO>();
+        private IList<EngineWordVO> _eWords = new List<EngineWordVO>();
 
         public int indexOffset = 0;
 
@@ -59,7 +61,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             this._eWords.Push(eWord);
         }
 
-        public DisplayWordListVO dWords
+        public IList<DisplayWordVO> dWords
         {
             get
             {
@@ -151,7 +153,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         //		}
 
 
-        public BitmapData generatedImage
+        public WriteableBitmap generatedImage
         {
             get
             {

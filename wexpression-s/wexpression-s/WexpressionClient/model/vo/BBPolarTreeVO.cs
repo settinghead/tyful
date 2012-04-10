@@ -35,11 +35,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
     public class BBPolarTreeVO
     {
 
-        public const double HALF_PI = ((Math.PI / 2));
-        public const double TWO_PI = ((Math.PI * 2));
-        public const double PI = (Math.PI);
-        public const double ONE_AND_HALF_PI = ((System.Math.PI + HALF_PI));
-        public const double MARGIN = 0;
+        public readonly static double HALF_PI = ((System.Math.PI / 2));
+        public readonly static double TWO_PI = ((System.Math.PI * 2));
+        public readonly static double PI = (Math.PI);
+        public readonly static double ONE_AND_HALF_PI = ((System.Math.PI + HALF_PI));
+        public readonly static double MARGIN = 0;
 
         protected internal int rStamp;
 
@@ -64,7 +64,7 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
             double d = BBPolarTreeVO.PI * (d1_0 + d2) * r / BBPolarTreeVO.TWO_PI;
 
             bool tooSmallToContinue = d <= minBoxSize || d2 - d1_0 <= minBoxSize;
-            //			boolean tooSmallToContinue = 
+            //			bool tooSmallToContinue = 
             //				this.getWidth(false) < minBoxSize || this.getHeight(false) < minBoxSize;
             if (tooSmallToContinue)
                 this.SetLeaf(true);
@@ -77,12 +77,12 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         public virtual int GetRootX()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual int GetRootY()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public bool Overlaps(BBPolarTreeVO otherTree)
@@ -133,17 +133,17 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         public virtual BBPolarRootTreeVO GetRoot()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual int GetMinBoxSize()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual IImageShape GetShape()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public bool OverlapsCoord(double x, double y, double right, double bottom)
@@ -192,10 +192,10 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
                 return false;
         }
 
-        protected internal virtual double ComputeX(bool rotate) { throw new NotImplementedError(); }
-        protected internal virtual double ComputeY(bool rotate) { throw new NotImplementedError(); }
-        protected internal virtual double ComputeRight(bool rotate) { throw new NotImplementedError(); }
-        protected internal virtual double ComputeBottom(bool rotate) { throw new NotImplementedError(); }
+        protected internal virtual double ComputeX(bool rotate) { throw new Exception("Not implemented."); }
+        protected internal virtual double ComputeY(bool rotate) { throw new Exception("Not implemented."); }
+        protected internal virtual double ComputeRight(bool rotate) { throw new Exception("Not implemented."); }
+        protected internal virtual double ComputeBottom(bool rotate) { throw new Exception("Not implemented."); }
 
         public double GetR1(bool rotate)
         {
@@ -419,28 +419,28 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 
         private double GetRelativeX()
         {
-            if (IsNaN(this._relativeX))
+            if (Double.IsNaN(this._relativeX))
                 this._relativeX = ComputeX(false);
             return this._relativeX;
         }
 
         private double GetRelativeY()
         {
-            if (IsNaN(this._relativeY))
+            if (Double.IsNaN(this._relativeY))
                 this._relativeY = ComputeY(false);
             return this._relativeY;
         }
 
         private double GetRelativeRight()
         {
-            if (IsNaN(this._relativeRight))
+            if (Double.IsNaN(this._relativeRight))
                 this._relativeRight = ComputeRight(false);
             return this._relativeRight;
         }
 
         private double GetRelativeBottom()
         {
-            if (IsNaN(this._relativeBottom))
+            if (Double.IsNaN(this._relativeBottom))
                 this._relativeBottom = ComputeBottom(false);
             return this._relativeBottom;
         }
@@ -492,12 +492,12 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
         /// <returns>the rotation</returns>
         public virtual double GetRotation()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public virtual double GetCurrentStamp()
         {
-            throw new NotImplementedError();
+            throw new Exception("Not implemented.");
         }
 
         public void SetLeaf(bool b)

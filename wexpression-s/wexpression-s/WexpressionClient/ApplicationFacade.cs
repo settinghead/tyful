@@ -11,6 +11,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using PureMVC.Patterns;
 using Com.Settinghead.Wexpression.Client.Controller;
+using Com.Settinghead.Wexpression.Client.Controller.Template;
+using Com.Settinghead.Wexpression.Client.Controller.Tu;
 namespace Com.Settinghead.Wexpression.Client
 {
     public class ApplicationFacade : Facade
@@ -66,8 +68,8 @@ namespace Com.Settinghead.Wexpression.Client
         ///
         public static ApplicationFacade getInstance()
         {
-            if (instance == null) instance = new ApplicationFacade();
-            return (ApplicationFacade)instance;
+            if (Instance == null) Instance = new ApplicationFacade();
+            return (ApplicationFacade)Instance;
         }
     }
 

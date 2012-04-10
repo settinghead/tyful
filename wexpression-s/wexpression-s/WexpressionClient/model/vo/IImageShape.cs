@@ -13,11 +13,11 @@ namespace Com.Settinghead.Wexpression.Client.Model.Vo
 {
     public interface IImageShape
     {
-        bool Contains(double x, double y, double width, double height, double rotation, bool transformed);
-        bool ContainsPoint(double x, double y, boolean transformed);
-        bool Intersects(double x, double y, double width, double height, bool transformed);
+        bool Contains(int x, int y, int width, int height, double rotation, bool transformed);
+        bool ContainsPoint(int x, int y, bool transformed);
+        //bool Intersects(double x, double y, double width, double height, bool transformed);
 
-        double width { get; }
-        double height { get; }
+        double Width { get; }
+        double Height { get; }
     }
 }
