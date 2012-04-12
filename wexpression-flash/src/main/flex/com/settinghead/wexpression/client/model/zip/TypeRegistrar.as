@@ -7,13 +7,13 @@ package com.settinghead.wexpression.client.model.zip
 
 	public class TypeRegistrar
 	{
-		public static function getObject(type:String, name:String = null, parent:* = null):*{
+		public static function getObject(type:String, name:String = null, parent:* = null, grandParent:* = null):*{
 			switch(type){
 				case "Template":
 					return new TemplateVO();
 					break;
 				case "WordLayer":
-					return new WordLayer(name, parent);
+					return new WordLayer(name, grandParent);
 					break;
 				case "InverseWordLayer":
 					return new InverseWordLayer();

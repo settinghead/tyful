@@ -2,6 +2,7 @@ package com.settinghead.wexpression.client.model.vo.template
 {
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
 	
+	[Bindable]
 	public class InverseWordLayer implements IImageShape
 	{
 		private var _l:WordLayer;

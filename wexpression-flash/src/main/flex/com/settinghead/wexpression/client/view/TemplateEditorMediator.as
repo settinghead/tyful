@@ -34,6 +34,7 @@ package com.settinghead.wexpression.client.view
 		private var _eraser			:Sprite;
 		private var _clear			:Sprite;
 		private var _canvas			:Canvas;
+		private var templateProxy:TemplateProxy;
 		
 		
 		public function TemplateEditorMediator(viewComponent:Object=null)
@@ -43,6 +44,7 @@ package com.settinghead.wexpression.client.view
 			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
 			templateEditor.addEventListener(TemplateEditor.OPEN_TEMPLATE, openTemplate);
 			templateEditor.addEventListener(TemplateEditor.UPLOAD_TEMPLATE, uploadTemplate);
+			templateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 		}
 		
 		
@@ -57,7 +59,7 @@ package com.settinghead.wexpression.client.view
 		override public function handleNotification(notification:INotification):void {
 			switch (notification.getName()) {
 				case ApplicationFacade.TEMPLATE_LOADED:
-					templateEditor.template = notification.getBody() as TemplateVO;
+					templateEditor.template = templateProxy.template;
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
 					Alert.show(notification.getBody().toString());
@@ -97,13 +99,16 @@ package com.settinghead.wexpression.client.view
 			var imageFileTypes:FileFilter = new FileFilter("Template file (*.zip)", "*.zip");
 			ref.browse([imageFileTypes]);
 			ref.addEventListener(Event.SELECT,openTemplateFileSelectedHandler);
-			ref.load();
 		}
 		
 		private function openTemplateFileSelectedHandler(e:Event):void{ // file loaded
-			var ba:ByteArray=ref.data;
-			facade.sendNotification(ApplicationFacade.LOAD_TEMPLATE, ba);
+			ref.addEventListener(Event.COMPLETE,openTemplateCompleteHandler);
+			ref.load();
 		}
+		
+		private function openTemplateCompleteHandler(e:Event):void{ // file loaded
+			var ba:ByteArray=ref.data;
+			facade.sendNotification(ApplicationFacade.LOAD_TEMPLATE, ba);		}
 		
 		private function uploadTemplate( event:Event = null ):void
 		{

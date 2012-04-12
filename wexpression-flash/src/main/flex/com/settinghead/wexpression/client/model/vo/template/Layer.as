@@ -130,8 +130,8 @@ package com.settinghead.wexpression.client.model.vo.template
 
 		
 		public static function connect(above:Layer, below:Layer):void{
-			above.below = below;
-			below.above = above;
+			if(above!=null) above.below = below;
+			if(below!=null) below.above = above;
 		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {

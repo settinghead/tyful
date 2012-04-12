@@ -35,10 +35,11 @@ package com.settinghead.wexpression.client.model.zip
 		private function process(e:ZipEntry, root:Object):void{
 			var pos:int = 0;
 			var prevPos:int = 0;
-			while((pos = nextPos(e.name, pos))<e.name.length) {
-				processCurrent(e, prevPos, pos, root);
-				prevPos = pos;
-			}
+//			while((pos = nextPos(e.name, pos))<e.name.length) {
+			pos = nextPos(e.name,pos);
+				processCurrent(e, prevPos+1, pos, root, null);
+//				prevPos = pos;
+//			}
 		}
 		
 		private function nextPos(name:String, pos:int):int{
@@ -49,10 +50,11 @@ package com.settinghead.wexpression.client.model.zip
 			return pos;
 		}
 		
-		private function processCurrent(e:ZipEntry, start:int, end:int, parent:Object, numericalName:Boolean = false):void{
-			if(start==end || end>=name.length) return;
+		private function processCurrent(e:ZipEntry, start:int, end:int, parent:Object, grandParent:Object, numericalName:Boolean = false):void{
+			if(start==end || end>=e.name.length) return;
 			var name:String = e.name.substring(start, end);
 			
+			if(name=="/") return;
 			if(name=="properties.json"){
 				var jsonStr:String = readStringFromFile(e);
 				var decoder:JSONDecoder = new JSONDecoder(jsonStr,true, parent);
@@ -63,27 +65,43 @@ package com.settinghead.wexpression.client.model.zip
 			}
 			else if(numericalName)
 			{
-				//determine instance type
-				var jsonEntry:ZipEntry = file.getEntry(e.name.substring(0, end) + "/properties.json");
-				var str:String = readStringFromFile(jsonEntry);
-				var jsonDecoder:JSONDecoder = new JSONDecoder(str,true);
-				var jsonObj:Object = jsonDecoder.getValue();
-				var typeStr:String = jsonObj["type"] as String;
-				var newInstance:* = TypeRegistrar.getObject(typeStr);
-				
 				var index:int = parseInt(name);
-				parent[index] = newInstance;
-				processCurrent(e, end, nextPos(e.name, end), newInstance);
+				//expand to fit capacity
+				while(parent.length < index+1){
+					if(parent is ArrayCollection)
+						ArrayCollection(parent).addItem(null);
+					else if(parent is Vector)
+						parent.push(null);
+					else if(parent is Array)
+						Array(parent).push(null);
+				}
+				if(parent[index]==undefined || parent[index]==null){
+					//determine instance type
+					parent[index] = instantiateInstance(e,name,parent,grandParent,start,end);
+				}
+				processCurrent(e, end+1, nextPos(e.name, end), parent[index], parent);
 			}
 			else{
-				var obj:* = parent[name];
-				if (obj is Vector || obj is Array || obj is ArrayCollection){
-					processCurrent(e, end, nextPos(e.name, end), obj, true);
+				if (parent[name] is Vector || parent[name] is Array || parent[name] is ArrayCollection){
+					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent, true);
 				}
 				else{
-					processCurrent(e, end, nextPos(e.name, end), obj);
+					if(parent[name]==null||parent[name]==undefined){
+						parent[name] = instantiateInstance(e,name,parent,grandParent,start,end);
+					}
+					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent);
 				}
 			}
+		}
+		
+		private function instantiateInstance(e:ZipEntry, name:String, parent:Object, grandParent:Object, start:int, end:int):*{
+			var jsonEntry:ZipEntry = file.getEntry(e.name.substring(0, end) + "/properties.json");
+			var str:String = readStringFromFile(jsonEntry);
+			var jsonDecoder:JSONDecoder = new JSONDecoder(str,true);
+			var jsonObj:Object = jsonDecoder.getValue();
+			var typeStr:String = jsonObj["type"] as String;
+			var newInstance:* = TypeRegistrar.getObject(typeStr, name, parent, grandParent);
+			return newInstance;
 		}
 		
 		private function readBitmapFromPNGFile(e:ZipEntry):BitmapData{

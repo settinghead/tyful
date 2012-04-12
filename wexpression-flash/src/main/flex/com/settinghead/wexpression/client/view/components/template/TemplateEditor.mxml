@@ -177,17 +177,16 @@
 				populateTemplate();
 			}
 			
-			private function populateTemplate():void{
+			public function populateTemplate():void{
 				if(this.template!=null)
 				{
 					
-//					this.layers.removeAllElements();
-
+//					this.layers.removeAllChildren();
+//
 //					for each(var layer:Layer in this.template.layers){
 //						if(layer is WordLayer){
 //							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
 //							
-//
 //							this.layers.addChild(canvas);
 //						}
 //					}

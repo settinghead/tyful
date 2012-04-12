@@ -16,6 +16,11 @@ package com.settinghead.wexpression.client.view.components
 			super();
 			this.layout = new BasicLayout();
 		}
+		
+		public function removeAllChildren():void{
+			while(this.numChildren>0)
+				this.removeChildAt(0);
+		}
 			
 	}
 }

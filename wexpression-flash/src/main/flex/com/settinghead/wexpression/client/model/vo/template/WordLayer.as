@@ -46,6 +46,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	import org.as3commons.lang.Assert;
 	import org.peaceoutside.utils.ColorMath;
 	
+	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
 		public function WordLayer(name:String, template:TemplateVO)

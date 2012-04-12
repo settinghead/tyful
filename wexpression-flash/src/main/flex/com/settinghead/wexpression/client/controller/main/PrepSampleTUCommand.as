@@ -37,8 +37,8 @@ package com.settinghead.wexpression.client.controller.main
 //				"resources/templates/wheel_h.png",
 //				"resources/templates/wheel_v.png",
 //				"resources/templates/dog.png",
-				"resources/templates/heart.png"
-//				"resources/templates/apple.png"
+//				"resources/templates/heart.png"
+				"resources/templates/apple.png"
 			);
 			var randomNum:int = Math.floor(Math.random() * (templates.length));
 			templateProxy.templatePath = templates[randomNum];
