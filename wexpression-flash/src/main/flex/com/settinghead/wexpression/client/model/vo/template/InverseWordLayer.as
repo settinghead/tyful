@@ -6,7 +6,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	{
 		private var _l:WordLayer;
 		
-		public function InverseWordLayer(wordLayer:WordLayer)
+		public function InverseWordLayer(wordLayer:WordLayer = null)
 		{
 			this._l = wordLayer;
 		}
@@ -34,6 +34,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		public function get height():Number
 		{
 			return _l.height;
+		}
+		
+		public function get type():String{
+			return "InverseWordLayer";
 		}
 	}
 }

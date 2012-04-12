@@ -13,9 +13,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
-	import com.settinghead.wexpression.client.model.vo.IZipInput;
-	import com.settinghead.wexpression.client.model.vo.IZipOutput;
-	import com.settinghead.wexpression.client.model.vo.IZippable;
+	import com.settinghead.wexpression.client.model.zip.IZipInput;
+	import com.settinghead.wexpression.client.model.zip.IZipOutput;
+	import com.settinghead.wexpression.client.model.zip.IZippable;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
@@ -77,7 +77,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		// Frame frame = new Frame("Roseindia.net");
 		private var _layers:ArrayCollection =  new ArrayCollection();
 		
-		public function TemplateVO(path:String)
+		public function TemplateVO(path:String = null)
 		{
 			this._path = path;
 		}
@@ -162,7 +162,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		public function get nudger():WordNudger{
 			if(this._nudger==null){
 //								this._nudger = new ShapeConfinedSpiralWordNudger();
-				//				this._nudger = new ShapeConfinedRandomWordNudger();
+//								this._nudger = new ShapeConfinedRandomWordNudger();
 				this._nudger = new ShapeConfinedZigZagWordNudger();
 				
 			}
@@ -202,6 +202,10 @@ package com.settinghead.wexpression.client.model.vo.template
 			dict.width = this._width;
 			dict.height = this._height;
 			dict.dilligence = this.dilligence;
+		}
+		
+		public function get type():String{
+			return "Template";
 		}
 		
 	}

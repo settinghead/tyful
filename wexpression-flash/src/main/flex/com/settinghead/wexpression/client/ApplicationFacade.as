@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client
 {
+	import com.settinghead.wexpression.client.controller.main.PrepSampleShopCommand;
 	import com.settinghead.wexpression.client.controller.main.StartupCommand;
 	import com.settinghead.wexpression.client.controller.template.GenerateTemplatePreviewCommand;
 	import com.settinghead.wexpression.client.controller.template.LoadTemplateCommand;
@@ -22,6 +23,7 @@ package com.settinghead.wexpression.client
 		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
 		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
 		public static const TEMPLATE_LOADED:String			= "templateLoaded";
+		public static const DOWNLOAD_TEMPLATE:String			= "downloadTemplate";
 		public static const LOAD_TEMPLATE:String			= "loadTemplate";
 		public static const TEMPLATE_SAVED:String			= "templateSaved";
 		public static const TEMPLATE_UPLOADED:String			= "templateUploaded";
@@ -47,11 +49,13 @@ package com.settinghead.wexpression.client
 		{
 			super.initializeController();            
 			registerCommand( STARTUP, StartupCommand );	
-			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
+			registerCommand (DOWNLOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (SAVE_TEMPLATE, SaveTemplateCommand);
 			registerCommand (UPLOAD_TEMPLATE, UploadTemplateCommand);
+			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (GENERATE_TEMPLATE_PREVIEW, GenerateTemplatePreviewCommand);
 			registerCommand (GENERATE_TU, GenerateTuCommand);
+			registerCommand ( TU_GENERATED, PrepSampleShopCommand);
 		}
 		
 		/**

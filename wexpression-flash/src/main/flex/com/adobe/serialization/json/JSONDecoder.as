@@ -51,6 +51,8 @@ package com.adobe.serialization.json
 		/** The current token from the tokenizer */
 		private var token:JSONToken;
 		
+		private var root:Object;
+		
 		/**
 		 * Constructs a new JSONDecoder to parse a JSON string
 		 * into a native object.
@@ -63,13 +65,14 @@ package com.adobe.serialization.json
 		 * @playerversion Flash 9.0
 		 * @tiptext
 		 */
-		public function JSONDecoder( s:String, strict:Boolean )
+		public function JSONDecoder( s:String, strict:Boolean, root:Object = null )
 		{
 			this.strict = strict;
 			tokenizer = new JSONTokenizer( s, strict );
 			
 			nextToken();
 			value = parseValue();
+			this.root = root;
 			
 			// Make sure the input stream is empty
 			if ( strict && nextToken() != null )
@@ -262,7 +265,9 @@ package com.adobe.serialization.json
 					{
 						// move past the : and read/assign a value for the key
 						nextToken();
-						o[ key ] = parseValue();
+						var val:* = parseValue();
+						o[ key ] = val;
+						if(root!=null) root[key] = val; 
 						
 						// move past the value to see what's next
 						nextValidToken();

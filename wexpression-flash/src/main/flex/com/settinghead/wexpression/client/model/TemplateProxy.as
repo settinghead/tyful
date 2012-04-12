@@ -1,7 +1,10 @@
 package com.settinghead.wexpression.client.model
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
-	import com.settinghead.wexpression.client.model.vo.ZipOutputImpl;
+	import com.settinghead.wexpression.client.model.zip.IZipInput;
+	import com.settinghead.wexpression.client.model.zip.IZipOutput;
+	import com.settinghead.wexpression.client.model.zip.ZipInputImpl;
+	import com.settinghead.wexpression.client.model.zip.ZipOutputImpl;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
@@ -55,6 +58,7 @@ package com.settinghead.wexpression.client.model
 			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 		}
 		
+		
 		public function get template():TemplateVO{
 			return this.getData() as TemplateVO;
 		}
@@ -65,10 +69,16 @@ package com.settinghead.wexpression.client.model
 		
 		public function toFile(template:TemplateVO = null):ByteArray{
 			if(template==null) template = this.template;
-			var zipOutput:ZipOutputImpl = new ZipOutputImpl();
+			var zipOutput:IZipOutput = new ZipOutputImpl();
 			zipOutput.process(template);
 			var zipBytes:ByteArray = zipOutput.zipUp();
 			return zipBytes;
+		}
+		
+		public function fromFile(b:ByteArray):void{
+			var zipInput:IZipInput = new ZipInputImpl();
+			template = new TemplateVO(null);
+			zipInput.fulfil(template, b);
 		}
 		
 		public function uploadTemplate():void{

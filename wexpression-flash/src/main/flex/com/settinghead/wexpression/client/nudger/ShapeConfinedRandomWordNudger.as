@@ -39,21 +39,23 @@ public class ShapeConfinedRandomWordNudger implements WordNudger {
 	private var retPoint:Point = new Point(0,0);
 
 	public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
-		var factor:int;
-//		if (pInfo != null && pInfo.get().patch != null) {
-			var p:Patch= Patch(pInfo.patch);
-			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
-					.getHeight();
-			if (p.getLevel() == 0)
-				factor /= 6;
-			else if (p.getLevel() == 1)
-				factor /= 2;
-//		} else
-//			factor = 30;
-
-		factor *= 6;
-		retPoint.x = next(attempt, factor);
-		retPoint.y = next(attempt, factor);
+//		var factor:int;
+////		if (pInfo != null && pInfo.get().patch != null) {
+			var p:Patch= pInfo.patch;
+//			factor = p.getWidth() > p.getHeight() ? p.getWidth() : p
+//					.getHeight();
+//			if (p.getLevel() == 0)
+//				factor /= 6;
+//			else if (p.getLevel() == 1)
+//				factor /= 2;
+////		} else
+////			factor = 30;
+//
+//		factor *= 6;
+//		retPoint.x = next(attempt, factor);
+//		retPoint.y = next(attempt, factor);
+		retPoint.x = Math.random()*p.getWidth();
+		retPoint.y = Math.random()*p.getHeight();
 		return retPoint;
 	}
 	

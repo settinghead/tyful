@@ -13,6 +13,9 @@ package com.settinghead.wexpression.client.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.net.FileFilter;
+	import flash.net.FileReference;
+	import flash.utils.ByteArray;
 	
 	import flashx.textLayout.elements.BreakElement;
 	
@@ -38,6 +41,7 @@ package com.settinghead.wexpression.client.view
 			super(NAME, viewComponent);
 			templateEditor.addEventListener(TemplateEditor.RENDER_TU, renderTu);
 			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
+			templateEditor.addEventListener(TemplateEditor.OPEN_TEMPLATE, openTemplate);
 			templateEditor.addEventListener(TemplateEditor.UPLOAD_TEMPLATE, uploadTemplate);
 		}
 		
@@ -85,8 +89,20 @@ package com.settinghead.wexpression.client.view
 		
 		private function saveTemplate( event:Event = null ):void
 		{
-			
 			facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
+		}
+		private var ref:FileReference;
+		private function openTemplate(event:Event = null):void{
+			ref = new FileReference();
+			var imageFileTypes:FileFilter = new FileFilter("Template file (*.zip)", "*.zip");
+			ref.browse([imageFileTypes]);
+			ref.addEventListener(Event.SELECT,openTemplateFileSelectedHandler);
+			ref.load();
+		}
+		
+		private function openTemplateFileSelectedHandler(e:Event):void{ // file loaded
+			var ba:ByteArray=ref.data;
+			facade.sendNotification(ApplicationFacade.LOAD_TEMPLATE, ba);
 		}
 		
 		private function uploadTemplate( event:Event = null ):void

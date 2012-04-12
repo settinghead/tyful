@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo
+package com.settinghead.wexpression.client.model.zip
 {
 	import flash.utils.Dictionary;
 
@@ -7,5 +7,6 @@ package com.settinghead.wexpression.client.model.vo
 		function writeNonJSONPropertiesToZip(output:IZipOutput):void;
 		function readNonJSONPropertiesFromZip(input:IZipInput):void;
 		function saveProperties(dict:Object):void;
+		function get type():String;
 	}
 }

@@ -11,9 +11,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	import com.settinghead.wexpression.client.fonter.WordFonter;
 	import com.settinghead.wexpression.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.wexpression.client.model.vo.IImageShape;
-	import com.settinghead.wexpression.client.model.vo.IZipInput;
-	import com.settinghead.wexpression.client.model.vo.IZipOutput;
-	import com.settinghead.wexpression.client.model.vo.IZippable;
+	import com.settinghead.wexpression.client.model.zip.IZipInput;
+	import com.settinghead.wexpression.client.model.zip.IZipOutput;
+	import com.settinghead.wexpression.client.model.zip.IZippable;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedRandomWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedSpiralWordNudger;
 	import com.settinghead.wexpression.client.nudger.ShapeConfinedZigZagWordNudger;
@@ -405,9 +405,14 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{
 			//TODO
+			
 		}
 		
 		public override function saveProperties(dict:Object):void{
+		}
+		
+		public override function get type():String{
+			return "WordLayer";
 		}
 		
 	}

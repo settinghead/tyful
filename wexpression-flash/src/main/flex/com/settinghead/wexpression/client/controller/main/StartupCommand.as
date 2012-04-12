@@ -26,7 +26,6 @@ package com.settinghead.wexpression.client.controller.main
 			this.addSubCommand( PrepModelCommand );
 			this.addSubCommand( PrepViewCommand );
 			this.addSubCommand( PrepSampleTUCommand );
-			this.addSubCommand( PrepSampleShopCommand );
 		}
 	}
 }

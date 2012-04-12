@@ -7,6 +7,7 @@ package com.settinghead.wexpression.client.model.vo
 		private var _img:BitmapData;
 		private var _thumb:BitmapData;
 		private var _item_url:String;
+		private var _overlayImageUrl:String;
 		
 		public function ShopItemVO(url:String)
 		{
@@ -27,6 +28,14 @@ package com.settinghead.wexpression.client.model.vo
 		
 		public function set image(img:BitmapData):void{
 			this._img = img;
+		}
+		
+		public function set overlayImageUrl(url:String):void{
+			this._overlayImageUrl = url;
+		}
+		
+		public function get overlayImageUrl():String{
+			return this._overlayImageUrl;
 		}
 		
 		public function set thumb(thb:BitmapData):void{

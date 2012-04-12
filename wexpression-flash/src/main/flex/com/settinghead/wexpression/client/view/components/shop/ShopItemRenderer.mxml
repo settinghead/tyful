@@ -11,7 +11,7 @@
 			}
 		]]>
 	</fx:Script>
-	<mx:LinkButton id="btnShopLink" label="{data.itemUrl}" click="navigateToURL(new URLRequest(data.itemUrl), '_blank')" /> 
-	
+	<s:BitmapImage id="bmpImage" scaleX="30" scaleY="30" />
+	<mx:LinkButton id="btnShopLink" label="{data.itemUrl}" click="navigateToURL(new URLRequest(data.itemUrl), '_blank')"  /> 
 
 </s:ItemRenderer>

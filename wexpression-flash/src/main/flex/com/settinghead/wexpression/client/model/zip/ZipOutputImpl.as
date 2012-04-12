@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo
+package com.settinghead.wexpression.client.model.zip
 {
 	import com.adobe.images.PNGEncoder;
 	import com.adobe.serialization.json.JSONEncoder;
@@ -62,6 +62,8 @@ package com.settinghead.wexpression.client.model.vo
 				if (object is IZippable){
 					var properties:Object = new Object();
 					(object as IZippable).saveProperties(properties);
+					if((object as IZippable).type!=null)
+						properties["type"] = (object as IZippable).type;
 					putStringToFile("properties.json", (new JSONEncoder(properties)).getString());
 
 					(object as IZippable).writeNonJSONPropertiesToZip(this);
