@@ -13,25 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.settinghead.wexpression.users;
+package com.settinghead.wexpression.account;
 
-/**
- * Simple little User model. 
- * Just stores the user's id for simplicity.
- * @author Keith Donald
- */
-public final class User {
-	
-	private final String id;
-	
-	
-	public User(String id) {
-		this.id = id;
+public class UsernameAlreadyInUseException extends Exception {
+	public UsernameAlreadyInUseException(String username) {
+		super("The username '" + username + "' is already in use.");
 	}
-	
-	
-	public String getId() {
-		return id;
-	}
-	
 }

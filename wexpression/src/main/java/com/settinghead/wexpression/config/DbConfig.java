@@ -20,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -54,7 +55,7 @@ public class DbConfig {
 	}
 
 	@Bean(destroyMethod = "close")
-	public DataSource dataSource() throws PropertyVetoException {
+	public DataSource dataSource() {
 //		ComboPooledDataSource source = new ComboPooledDataSource();
 //		Properties properties = new Properties();
 //		properties.setProperty("driverClass", "com.mysql.jdbc.Driver");
@@ -108,5 +109,11 @@ public class DbConfig {
 		HibernateTransactionManager manager = new HibernateTransactionManager();
 		manager.setSessionFactory(sessionFactory().getObject());
 		return manager;
+	}
+	
+	
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		return new JdbcTemplate(dataSource());
 	}
 }

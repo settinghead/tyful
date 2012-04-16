@@ -39,4 +39,5 @@ public final class SimpleSignInAdapter implements SignInAdapter {
 		return null;
 	}
 
+
 }

@@ -102,12 +102,12 @@ public class HomeController {
 				}
 			}
 
-			// get comments by self
-			if (post.getComments() != null)
-				for (Comment comment : post.getComments()) {
-					if (comment.getFrom().getId().equals(userId))
-						sb.append(comment.getMessage()).append(". ");
-				}
+//			// get comments by self
+//			if (post.getComments() != null)
+//				for (Comment comment : post.getComments()) {
+//					if (comment.getFrom().getId().equals(userId))
+//						sb.append(comment.getMessage()).append(". ");
+//				}
 
 			final Counter<String> words = new Counter<String>();
 
@@ -129,11 +129,11 @@ public class HomeController {
 			}
 		}
 
-		int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
-		for (Page p : facebook.likeOperations().getPagesLiked()) {
-			if (p.getName().length() > 0 && p.getName().length() < 20)
-				allWords.note(p.getName(), maxFreq - 2);
-		}
+//		int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
+//		for (Page p : facebook.likeOperations().getPagesLiked()) {
+//			if (p.getName().length() > 0 && p.getName().length() < 20)
+//				allWords.note(p.getName(), maxFreq - 2);
+//		}
 
 		// personalize by adding your name
 		int nameFreq = allWords.getCount(allWords.getMostFrequent(1).get(0)) + 3;
