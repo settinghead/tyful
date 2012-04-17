@@ -21,6 +21,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -28,6 +29,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -36,23 +38,11 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableTransactionManagement
 public class DbConfig {
 
-	@Autowired
-	private PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer;
-
 	@Bean
 	public PropertySourcesPlaceholderConfigurer propertySourcePlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
-	// internal helpers
-
-	private DatabasePopulator databasePopulator() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource(
-				"JdbcUsersConnectionRepository.sql",
-				JdbcUsersConnectionRepository.class));
-		return populator;
-	}
 
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
@@ -104,11 +94,16 @@ public class DbConfig {
 		return sessionFactory;
 	}
 
+//	@Bean
+//	public HibernateTransactionManager transactionManager() {
+//		HibernateTransactionManager manager = new HibernateTransactionManager();
+//		manager.setSessionFactory(sessionFactory().getObject());
+//		return manager;
+//	}
+	
 	@Bean
-	public HibernateTransactionManager transactionManager() {
-		HibernateTransactionManager manager = new HibernateTransactionManager();
-		manager.setSessionFactory(sessionFactory().getObject());
-		return manager;
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
 	}
 	
 	

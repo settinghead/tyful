@@ -23,7 +23,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -31,15 +35,14 @@ import org.springframework.social.connect.NotConnectedException;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
-import com.settinghead.wexpression.users.SecurityContext;
-import com.settinghead.wexpression.users.SimpleConnectionSignUp;
-import com.settinghead.wexpression.users.SimpleSignInAdapter;
-import com.settinghead.wexpression.users.User;
 
+import com.settinghead.wexpression.signin.SimpleSignInAdapter;
 /**
  * Spring Social Configuration.
  * @author Keith Donald
@@ -47,62 +50,64 @@ import com.settinghead.wexpression.users.User;
 @Configuration
 public class SocialConfig {
 
+	@Inject
+	private Environment environment;
 
 	@Inject
 	private DataSource dataSource;
 
-	@Inject
-	private Environment environment;
-	
-	/**
-	 * When a new provider is added to the app, register its {@link ConnectionFactory} here.
-	 * @see FacebookConnectionFactory
-	 */
 	@Bean
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+//		registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
+//				environment.getProperty("twitter.consumerSecret")));
 		registry.addConnectionFactory(new FacebookConnectionFactory(environment.getProperty("facebook.clientId"),
 				environment.getProperty("facebook.clientSecret")));
 		return registry;
 	}
-	/**
-	 * Singleton data access object providing access to connections across all users.
-	 */
+
 	@Bean
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
 	public UsersConnectionRepository usersConnectionRepository() {
-		JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource,
-				connectionFactoryLocator(), Encryptors.noOpText());
-		repository.setConnectionSignUp(new SimpleConnectionSignUp());
-		return repository;
+		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
 	}
 
-	/**
-	 * Request-scoped data access object providing access to the current user's connections.
-	 */
 	@Bean
-	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
 	public ConnectionRepository connectionRepository() {
-	    User user = SecurityContext.getCurrentUser();
-	    return usersConnectionRepository().createConnectionRepository(user.getId());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null) {
+			throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
+		}
+		return usersConnectionRepository().createConnectionRepository(authentication.getName());
 	}
 
-	/**
-	 * A proxy to a request-scoped object representing the current user's primary Facebook account.
-	 * @throws NotConnectedException if the user is not connected to facebook.
-	 */
 	@Bean
 	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
 	public Facebook facebook() {
-	    return connectionRepository().getPrimaryConnection(Facebook.class).getApi();
+		Connection<Facebook> facebook = connectionRepository().findPrimaryConnection(Facebook.class);
+		return facebook != null ? facebook.getApi() : new FacebookTemplate();
 	}
 	
-	/**
-	 * The Spring MVC Controller that allows users to sign-in with their provider accounts.
-	 */
+//	@Bean
+//	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
+//	public Twitter twitter() {
+//		Connection<Twitter> twitter = connectionRepository().findPrimaryConnection(Twitter.class);
+//		return twitter != null ? twitter.getApi() : new TwitterTemplate();
+//	}
+	
 	@Bean
-	public ProviderSignInController providerSignInController() {
-		return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(),
-				new SimpleSignInAdapter());
+	public ConnectController connectController() {
+		ConnectController connectController = new ConnectController(connectionFactoryLocator(), connectionRepository());
+//		connectController.addInterceptor(new PostToWallAfterConnectInterceptor());
+//		connectController.addInterceptor(new TweetAfterConnectInterceptor());
+		return connectController;
+	}
+
+	@Bean
+	public ProviderSignInController providerSignInController(RequestCache requestCache) {
+		return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache));
 	}
 
 }

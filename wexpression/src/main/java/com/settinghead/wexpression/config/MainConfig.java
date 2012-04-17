@@ -33,8 +33,7 @@ import com.settinghead.wexpression.data.WordListRepository;
  * @author Keith Donald
  */
 @Configuration
-@ComponentScan(basePackages = { "com.settinghead.wexpression.controllers",
-		"com.settinghead.wexpression" }, excludeFilters = { @Filter(Configuration.class) })
+@ComponentScan(basePackages = { "com.settinghead.wexpression" }, excludeFilters = { @Filter(Configuration.class) })
 @PropertySource({
 		"classpath:com/settinghead/wexpression/config/application.properties",
 		"classpath:com/settinghead/wexpression/config/application.properties.${env:dev}" })
