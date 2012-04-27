@@ -2,6 +2,15 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://www.springframework.org/spring-social/social/tags" prefix="social" %>
 
+
+<h4><a href="<c:url value="/templates"/>">Templates</a></h4>
+<ul class="menu">
+	<li><a href="<c:url value="/templates/my"/>">My Own</a></li>
+	<li><a href="<c:url value="/templates/recommended"/>">Recommended</a></li>
+	<li><a href="<c:url value="/templates/popular"/>">Popular</a></li>
+	<li><a href="<c:url value="/templates/new"/>">Create new</a></li>
+</ul>
+
 <h4><a href="<c:url value="/connect"/>">Connections</a></h4>
 
 <h4><a href="<c:url value="/twitter"/>">Twitter</a></h4>

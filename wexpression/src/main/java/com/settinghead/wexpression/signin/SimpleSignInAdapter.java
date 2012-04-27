@@ -35,16 +35,42 @@ public class SimpleSignInAdapter implements SignInAdapter {
 	public SimpleSignInAdapter(RequestCache requestCache) {
 		this.requestCache = requestCache;
 	}
-	
+
 	@Override
-	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
+	public String signIn(String localUserId, Connection<?> connection,
+			NativeWebRequest request) {
 		SignInUtils.signin(localUserId);
+		// compileWordList(localUserId);
 		return extractOriginalUrl(request);
 	}
 
+//	private void compileWordList(String localUserId) {
+//
+//		// JobDataMap jobDataMap = new JobDataMap();
+//		// jobDataMap.put("userId", account.getId());
+//		// jobDataMap.put("facebook", getFacebook());
+//		// SimpleTrigger trigger = new SimpleTrigger();
+//		// trigger.setStartTime(new Date());
+//		// JobDetail job = new JobDetail();
+//		// job.setName("wordlist_fb_" + localUserId);
+//		// trigger.setName("tr_wordlist_fb_" + localUserId);
+//		//
+//		// job.setJobClass(FacebookWordListJob.class);
+//		// job.setJobDataMap(jobDataMap);
+//		// try {
+//		// scheduler.getScheduler().scheduleJob(job, trigger);
+//		// } catch (SchedulerException e) {
+//		// // TODO Auto-generated catch block
+//		// e.printStackTrace();
+//		// }
+//
+//	}
+
 	private String extractOriginalUrl(NativeWebRequest request) {
-		HttpServletRequest nativeReq = request.getNativeRequest(HttpServletRequest.class);
-		HttpServletResponse nativeRes = request.getNativeResponse(HttpServletResponse.class);
+		HttpServletRequest nativeReq = request
+				.getNativeRequest(HttpServletRequest.class);
+		HttpServletResponse nativeRes = request
+				.getNativeResponse(HttpServletResponse.class);
 		SavedRequest saved = requestCache.getRequest(nativeReq, nativeRes);
 		if (saved == null) {
 			return null;
@@ -53,7 +79,7 @@ public class SimpleSignInAdapter implements SignInAdapter {
 		removeAutheticationAttributes(nativeReq.getSession(false));
 		return saved.getRedirectUrl();
 	}
-		 
+
 	private void removeAutheticationAttributes(HttpSession session) {
 		if (session == null) {
 			return;

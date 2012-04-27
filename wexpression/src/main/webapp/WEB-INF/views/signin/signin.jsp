@@ -45,6 +45,6 @@
 
 	<!-- FACEBOOK SIGNIN -->
 	<form name="fb_signin" id="fb_signin" action="<c:url value="/signin/facebook"/>" method="POST">
-        <input type="hidden" name="scope" value="publish_stream,user_photos,offline_access" />
+        <input type="hidden" name="scope" value="publish_stream,user_photos,read_stream,user_status,user_questions,user_location,user_likes,user_interests,user_hometown,user_education_history,user_about_me,user_activities,user_notes,offline_access" />
 		<button type="submit"><img src="<c:url value="/resources/social/facebook/sign-in-with-facebook.png"/>" /></button>
 	</form>

@@ -41,10 +41,12 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
-
+import com.settinghead.wexpression.account.AccountRepository;
 import com.settinghead.wexpression.signin.SimpleSignInAdapter;
+
 /**
  * Spring Social Configuration.
+ * 
  * @author Keith Donald
  */
 @Configuration
@@ -56,58 +58,77 @@ public class SocialConfig {
 	@Inject
 	private DataSource dataSource;
 
+	@Inject
+	private AccountRepository accountRepository;
+	@Inject
+	private ConnectionRepository connectionRepository;
+
+
 	@Bean
-	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
+	@Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-//		registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
-//				environment.getProperty("twitter.consumerSecret")));
-		registry.addConnectionFactory(new FacebookConnectionFactory(environment.getProperty("facebook.clientId"),
-				environment.getProperty("facebook.clientSecret")));
+		// registry.addConnectionFactory(new
+		// TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
+		// environment.getProperty("twitter.consumerSecret")));
+		registry.addConnectionFactory(new FacebookConnectionFactory(environment
+				.getProperty("facebook.clientId"), environment
+				.getProperty("facebook.clientSecret")));
 		return registry;
 	}
 
 	@Bean
-	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
+	@Scope(value = "singleton", proxyMode = ScopedProxyMode.INTERFACES)
 	public UsersConnectionRepository usersConnectionRepository() {
-		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator(), Encryptors.noOpText());
+		return new JdbcUsersConnectionRepository(dataSource,
+				connectionFactoryLocator(), Encryptors.noOpText());
 	}
 
 	@Bean
-	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
+	@Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
 	public ConnectionRepository connectionRepository() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		if (authentication == null) {
-			throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
+			throw new IllegalStateException(
+					"Unable to get a ConnectionRepository: no user signed in");
 		}
-		return usersConnectionRepository().createConnectionRepository(authentication.getName());
+		return usersConnectionRepository().createConnectionRepository(
+				authentication.getName());
 	}
 
 	@Bean
-	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
+	@Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
 	public Facebook facebook() {
-		Connection<Facebook> facebook = connectionRepository().findPrimaryConnection(Facebook.class);
+		Connection<Facebook> facebook = connectionRepository()
+				.findPrimaryConnection(Facebook.class);
 		return facebook != null ? facebook.getApi() : new FacebookTemplate();
 	}
-	
-//	@Bean
-//	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
-//	public Twitter twitter() {
-//		Connection<Twitter> twitter = connectionRepository().findPrimaryConnection(Twitter.class);
-//		return twitter != null ? twitter.getApi() : new TwitterTemplate();
-//	}
-	
+
+	// @Bean
+	// @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+	// public Twitter twitter() {
+	// Connection<Twitter> twitter =
+	// connectionRepository().findPrimaryConnection(Twitter.class);
+	// return twitter != null ? twitter.getApi() : new TwitterTemplate();
+	// }
+
 	@Bean
 	public ConnectController connectController() {
-		ConnectController connectController = new ConnectController(connectionFactoryLocator(), connectionRepository());
-//		connectController.addInterceptor(new PostToWallAfterConnectInterceptor());
-//		connectController.addInterceptor(new TweetAfterConnectInterceptor());
+		ConnectController connectController = new ConnectController(
+				connectionFactoryLocator(), connectionRepository());
+		// connectController.addInterceptor(new
+		// PostToWallAfterConnectInterceptor());
+		// connectController.addInterceptor(new TweetAfterConnectInterceptor());
 		return connectController;
 	}
 
 	@Bean
-	public ProviderSignInController providerSignInController(RequestCache requestCache) {
-		return new ProviderSignInController(connectionFactoryLocator(), usersConnectionRepository(), new SimpleSignInAdapter(requestCache));
+	public ProviderSignInController providerSignInController(
+			RequestCache requestCache) {
+		return new ProviderSignInController(connectionFactoryLocator(),
+				usersConnectionRepository(), new SimpleSignInAdapter(
+						requestCache));
 	}
 
 }

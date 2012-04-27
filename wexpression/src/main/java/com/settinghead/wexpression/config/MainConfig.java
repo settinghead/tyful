@@ -15,16 +15,19 @@
  */
 package com.settinghead.wexpression.config;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.settinghead.wexpression.data.FacebookFriendListRepository;
-import com.settinghead.wexpression.data.FacebookPostRepository;
-import com.settinghead.wexpression.data.WordListRepository;
+import com.settinghead.wexpression.facebook.FacebookFriendListRepository;
+import com.settinghead.wexpression.facebook.FacebookPostRepository;
+import com.settinghead.wexpression.wordlist.WordListRepository;
 
 /**
  * Main configuration class for the application. Turns on @Component scanning,
@@ -37,6 +40,9 @@ import com.settinghead.wexpression.data.WordListRepository;
 @PropertySource({
 		"classpath:com/settinghead/wexpression/config/application.properties",
 		"classpath:com/settinghead/wexpression/config/application.properties.${env:dev}" })
+@EnableAsync
+@EnableScheduling
+@EnableCaching
 public class MainConfig {
 
 	@Bean

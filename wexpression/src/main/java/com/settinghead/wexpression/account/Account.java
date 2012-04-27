@@ -24,7 +24,15 @@ public class Account {
 	private final String firstName;
 
 	private final String lastName;
+	
+	private int id = -1;
 
+	public Account(int id, String username, String password, String firstName, String lastName) {
+		this(username, password, firstName, lastName);
+		this.id = id;
+
+	}
+	
 	public Account(String username, String password, String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
@@ -46,5 +54,9 @@ public class Account {
 
 	public String getLastName() {
 		return lastName;
+	}
+	
+	public int getId(){
+		return id;
 	}
 }
