@@ -47,13 +47,13 @@ package com.settinghead.wexpression.client.model
 		public function load() :void{
 			if(this._list==null){
 				
-				var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
-				var request : URLRequest = new URLRequest  ( "wordlists/" + wordListId );
+				//var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
+				var request : URLRequest = new URLRequest  ( "/word_list/recent" );
 				var urlVariables : URLVariables = new URLVariables ();
 				request.data = urlVariables;
 				request.method = URLRequestMethod.GET;
 				loader = new URLLoader ();
-				loader.addEventListener( Event.COMPLETE, jsonLoaded )
+				loader.addEventListener( Event.COMPLETE, jsonLoaded );
 				loader.load ( request );
 
 			}
@@ -61,7 +61,7 @@ package com.settinghead.wexpression.client.model
 		
 		public function jsonLoaded(e:Event):void{
 
-			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object).list as Array;
+			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object) as Array;
 			var wordList:WordListVO = new WordListVO(l);
 			this._list = wordList;
 		}

@@ -1,18 +1,20 @@
 package com.settinghead.wexpression.client.model
 {
+	import com.adobe.serialization.json.JSONDecoder;
 	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.vo.template.Layer;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	import com.settinghead.wexpression.client.model.zip.IZipInput;
 	import com.settinghead.wexpression.client.model.zip.IZipOutput;
 	import com.settinghead.wexpression.client.model.zip.ZipInputImpl;
 	import com.settinghead.wexpression.client.model.zip.ZipOutputImpl;
-	import com.settinghead.wexpression.client.model.vo.template.Layer;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
-	import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
@@ -21,17 +23,21 @@ package com.settinghead.wexpression.client.model
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
+	
+	import ru.inspirit.net.MultipartURLLoader;
+	import ru.inspirit.net.events.MultipartURLLoaderEvent;
 	
 	public class TemplateProxy extends EntityProxy implements ILoadupProxy
 	{
 		public static const NAME:String = "TemplateProxy";
 		public static const SRNAME:String = "TemplateSRProxy";
 		private var _pathToLoad:String;
-		private var urlLoader : URLLoader;
+		private var urlLoader : MultipartURLLoader;
 
 		public function TemplateProxy( )
 		{
@@ -77,28 +83,40 @@ package com.settinghead.wexpression.client.model
 		
 		public function fromFile(b:ByteArray):void{
 			var zipInput:IZipInput = new ZipInputImpl();
-			template = new TemplateVO(null);
-			zipInput.fulfil(template, b);
+			template = zipInput.parse(b);
+		}
+		
+		public function newTemplate():void{
+			template = new TemplateVO();
+			var layer:Layer = new WordLayer("Layer1", template, 800, 600);
+//			template.layers.addItem(new WordLayer("Layer1", template));
+			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED);
 		}
 		
 		public function uploadTemplate():void{
 			var b:ByteArray = toFile();
 			// set up the request & headers for the image upload;
-			var urlRequest : URLRequest = new URLRequest();
-			urlRequest.url = 'templates/u';
-			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
-			urlRequest.method = URLRequestMethod.POST;
-			urlRequest.data = b;
-			urlRequest.requestHeaders.push(header);
+			urlLoader = new MultipartURLLoader();
 			// create the image loader & send the image to the server;
-			urlLoader = new URLLoader();
-			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
-			urlLoader.load( urlRequest );
+			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
+			urlLoader.addFile(b,"my_template.zip");
+			
+			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			
+			urlLoader.load( FlexGlobals.topLevelApplication.parameters.templateUrl,true);
+		}
+		
+		public function dataPrepareComplete(e:Event):void{
+			if(urlLoader.PREPARED)
+				urlLoader.startLoad();
 		}
 		
 		public function uploadComplete(e:Event):void{
-			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED, urlLoader.data);
+			var id:String = new JSONDecoder(urlLoader.loader.data,false).getValue().id;
+			template.id = id;
+			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED, id);
 		}
 	}
 }

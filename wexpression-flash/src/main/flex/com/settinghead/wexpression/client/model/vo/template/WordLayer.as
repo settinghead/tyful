@@ -49,9 +49,12 @@ package com.settinghead.wexpression.client.model.vo.template
 	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
-		public function WordLayer(name:String, template:TemplateVO)
+		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1)
 		{
 			super(name, template);
+			if(width>0 && height>0){
+				this._img = new Bitmap(new BitmapData(width, height));
+			}
 		}
 		
 		private var _img:Bitmap;
@@ -86,8 +89,8 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		
 		public function get thumbnail():BitmapData{			
-			if(this._thumbnail ==null && this.img!=null )
-				this._thumbnail = createThumbnail(this.img.bitmapData);
+			if(this._thumbnail ==null && this.directionBitmap!=null )
+				this._thumbnail = createThumbnail(this.directionBitmap.bitmapData);
 			return this._thumbnail;
 		}
 		
@@ -191,18 +194,18 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public override function get height():Number {
-			return img.height;
+			return directionBitmap.height;
 		}
 		
 		public override function get width():Number {
-			return img.width;
+			return directionBitmap.width;
 		}
 		
 		public function getBounds2D():Rectangle {
 			
 			if (this._bounds == null) {
-				var centerX:Number= img.width / 2;
-				var centerY:Number= img.height / 2;
+				var centerX:Number= directionBitmap.width / 2;
+				var centerY:Number= directionBitmap.height / 2;
 				var radius:Number= Math.sqrt(Math.pow(centerX, 2)
 					+ Math.pow(centerY, 2));
 				var diameter:int= int((radius * 2));
@@ -271,9 +274,22 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		
-		public override function containsPoint(x:Number, y:Number, transform:Boolean):Boolean{
+		public override function containsPoint(x:Number, y:Number, transform:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
+			
+			//a layer above contains this point which covers the current layer
+			if(aboveContainsPoint(x,y,transform,refX,refY,1.0)) return false;
 //			if(x<0 || y<0 || x>width || y>height) return true;
-			return img.hitTestPoint(x,y,true);
+			if(x<0||y<0||x>directionBitmap.width||y>directionBitmap.height)
+				return false;
+			if(!directionBitmap.hitTestPoint(x,y,true)){
+				if(tolerance>=1) return true;
+				else return (ColorMath.dist(color.getPixel32(x,y), 
+						color.getPixel32(refX,refY)) <= tolerance
+						&&
+					ColorMath.dist(direction.getPixel32(x,y), 
+						direction.getPixel32(refX,refY)) <= tolerance);
+			}
+			else return false;
 		}
 		
 		public override function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
@@ -283,7 +299,7 @@ package com.settinghead.wexpression.client.model.vo.template
 				var brightCount:int= 0;
 				
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
-				// TODO: devise better lower bound
+				// TODO: derive better lower bound
 				if (numSamples < 10)
 					numSamples = 10;
 				
@@ -311,20 +327,13 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function translate(tx:Number, ty: Number):void{
-			var mtx: Matrix = img.transform.matrix;
+			var mtx: Matrix = directionBitmap.transform.matrix;
 			mtx.translate(tx,ty);
-			img.transform.matrix = mtx;
+			directionBitmap.transform.matrix = mtx;
 		}
+
 		
-		public function get shape():DisplayObject{
-			return img;
-		}
-		
-		public function get object():DisplayObject{
-			return img;
-		}
-		
-		public function get img():Bitmap{
+		public function get directionBitmap():Bitmap{
 			if(this._img == null){
 				if(path!=null)
 					this.loadLayerFromPNG();
@@ -335,7 +344,15 @@ package com.settinghead.wexpression.client.model.vo.template
 			return _img;
 		}
 		
-		public function set img(bmp:Bitmap):void{
+		public function get direction():BitmapData{
+			return directionBitmap.bitmapData;
+		}
+		
+		public function set direction(d:BitmapData):void{
+			this.directionBitmap = new Bitmap(d);
+		}
+		
+		public function set directionBitmap(bmp:Bitmap):void{
 			this._img = bmp;
 //			var inverseLayer:InverseWordLayer = new InverseWordLayer(this);
 //			this._tree = new BBPolarRootTreeVO(inverseLayer, 0, 0, 
@@ -351,6 +368,14 @@ package com.settinghead.wexpression.client.model.vo.template
 				this._colorSheet = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
 			}
 			return _colorSheet;
+		}
+		
+		public function get color():BitmapData{
+			return colorSheet.bitmapData;
+		}
+		
+		public function set color(d:BitmapData):void{
+			this.colorSheet = new Bitmap(d);
 		}
 		
 		public function get path():String{
@@ -397,16 +422,15 @@ package com.settinghead.wexpression.client.model.vo.template
 		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.process(this._fonter, "fonter");
 			output.process(this._colorer, "colorer");
-			output.putBitmapDataToPNGFile("direction.png", this._img.bitmapData);
-			output.putBitmapDataToPNGFile("color.png", this._colorSheet.bitmapData);
+			output.putBitmapDataToPNGFile("direction.png", this.direction);
+			output.putBitmapDataToPNGFile("color.png", this.color);
 			//			output.process(this._nudger, "nudger");
 			//			output.process(this._angler, "angler");
 			//			output.process(this._placer, "placer");
 		}
 		
 		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{
-			//TODO
-			
+			//TODO	
 		}
 		
 		public override function saveProperties(dict:Object):void{
@@ -414,6 +438,9 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public override function get type():String{
 			return "WordLayer";
+		}
+		public override function set type(t:String):void{
+			//dummy method; do nothing 
 		}
 		
 	}

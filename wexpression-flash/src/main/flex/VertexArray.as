@@ -9,18 +9,22 @@ package
 		
 		public function findNextIndexInArray(index:int, direction:Boolean):int{
 			//TODO		
+			return -1;
 		}
 		
 		public function getXFor(index:int):int{
 			//TODO
+			return -1;
 		}
 		
 		public function getUpperBoundFor(index:int):int{
 			//TODO
+			return -1;
 		}
 		
 		public function getLowerBoundFor(index:int):int{
 			//TODO
+			return -1;
 		}
 		
 		public function insertAt(index:int, lowerBound:int):void{

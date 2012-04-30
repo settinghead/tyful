@@ -12,7 +12,7 @@
     <annotation name="ServiceConfig">
       <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
       <item name="contextRoot">/wexpression</item>
-      <item name="rootUrl">http://localhost:8080/wexpression/</item>
+      <item name="rootUrl">http://localhost:5000/templates/</item>
       <item name="LINKED_FILE"></item>
       <item name="ABSOLUTE_ENDPOINT"></item>
     </annotation>

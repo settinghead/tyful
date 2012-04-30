@@ -141,7 +141,7 @@ package com.settinghead.wexpression.client.model.vo
 				else return false;
 		}
 		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
 //			if(transformed)
 //				return _textField.hitTestPoint(x,y,true);
 //			else{

@@ -15,6 +15,38 @@
 	<mx:Metadata>
 
 	</mx:Metadata>
+	<mx:Style>
+		Button {
+			upSkin:ClassReference('EnhancedButtonSkin');
+			overSkin:ClassReference('EnhancedButtonSkin');
+			downSkin:ClassReference('EnhancedButtonSkin');
+			disabledSkin:ClassReference('EnhancedButtonSkin');
+			selectedUpSkin:ClassReference('EnhancedButtonSkin');
+			selectedOverSkin:ClassReference('EnhancedButtonSkin');
+			selectedDownSkin:ClassReference('EnhancedButtonSkin');
+			selectedDisabledSkin:ClassReference('EnhancedButtonSkin');
+		}
+		
+		.render-button {
+			cornerRadii: 16, 0, 16, 0;
+			borderColors: #006699, #006699;
+			overBorderColors: #003399, #003399;
+			selectedBorderColors: #003399, #003399;
+			borderThickness: 3;
+			fillColors: #FCFFF4, #006699, #0066CC, #00CCFF;
+			fillAlphas: 0.5, 0.5, 0.5, 0.5;
+			fillColorRatios: 0, 85, 170, 255;
+			overFillColors: #FCFFF4, #006699, #0066CC, #00CCFF;
+			overFillAlphas: 0.5, 0.5, 0.5, 0.5;
+			overFillColorRatios: 0, 85, 170, 255;
+			selectedFillColors: #FCFFF4, #006699;
+			selectedFillAlphas: 0.5, 0.5;
+			selectedFillColorRatios: 0, 255;
+			color: #FFFFFF;
+			textRollOverColor: #FFFFFF;
+		}
+
+	</mx:Style>
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>
@@ -30,20 +62,25 @@
 						<s:layout>
 							<s:HorizontalLayout />
 						</s:layout>
-						<mx:ToggleButtonBar id="toggleButtonBar"
-											dataProvider="{ribbonViewStack}" toggleOnClick="true" />						
-						<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
-						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
-						<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" 
+						<mx:LinkBar id="toggleButtonBar"
+											dataProvider="{ribbonViewStack}" />						
+
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" fontSize="20" styleName="render-button" color="#007A0A"
 								  />
 
 					</s:Group>
 					<mx:ViewStack id="ribbonViewStack" height="40" width="1000" visible="{toggleButtonBar.selectedIndex>=0}"
 								  >
+						<mx:HBox borderStyle="solid" label="File">
+							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
+							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
+							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
+						</mx:HBox>
+						<mx:HBox label="Text Direction">
 							<template:DirectionPicker label="Text direction" id="directionPicker"  />
-							<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
-							<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
+						</mx:HBox>
+						<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
+						<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
 					</mx:ViewStack>
 				</s:Group>	
 				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0">
@@ -86,6 +123,7 @@
 			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 			import com.settinghead.wexpression.client.model.vo.template.WordLayer;
 			import com.settinghead.wexpression.client.view.components.template.canvas.TextFlowCanvas;
+			import com.settinghead.wexpression.client.view.components.template.windows.NewTemplateWindow;
 			
 			import flash.display.*;
 			import flash.display.Sprite;
@@ -98,14 +136,12 @@
 			import mx.controls.Alert;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			
 			import org.as3commons.lang.HashArray;
+			import org.peaceoutside.utils.ColorMath;
 			
 			import spark.events.IndexChangeEvent;
-			
-			private var layersMap:HashArray;
-			
-			import org.peaceoutside.utils.ColorMath;
 			
 //			public static const MODE_EDIT:String 	= "modeEdit";
 			
@@ -125,6 +161,9 @@
 			public static const SAVE_TEMPLATE:String = "saveTemplate";
 			public static const OPEN_TEMPLATE:String = "openTemplate";
 			public static const UPLOAD_TEMPLATE:String = "uploadTemplate";
+			public static const CREATE_TEMPLATE:String = "createTemplate";
+			
+			public var newWidth:Number = -1, newHeight:Number = -1;
 			
 			private var _template:TemplateVO;
 			
@@ -168,8 +207,9 @@
 			}
 			
 			[Bindable] public function set template(_template:TemplateVO):void{
+				
 				this._template = _template;
-				this.layersMap = new HashArray("name",false,_template.layers.toArray());
+//				this.layersMap = new HashArray("name",false,_template.layers.toArray());
 			}
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
@@ -253,6 +293,7 @@
 			}
 			
 			private function layers_itemRendererFunc(item:Object):ClassFactory {
+				super.commitProperties();
 				var cla:Class;
 				if(item is WordLayer){
 					cla = TextFlowCanvas;
@@ -262,12 +303,18 @@
 				return renderer;
 			}
 			
-			
-			
-			
 			protected function controlArea_mouseOverHandler(event:MouseEvent):void
 			{
 				Mouse.show();
+			}
+			
+			public function newTemplate():void{
+				var newTemplateDialog:NewTemplateWindow = new NewTemplateWindow();
+				PopUpManager.addPopUp(newTemplateDialog,this,true);
+			}
+			
+			public function createTemplate(e:Event):void{
+				dispatchEvent(new Event(CREATE_TEMPLATE));	
 			}
 			
 		]]>

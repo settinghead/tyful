@@ -8,10 +8,12 @@ package com.settinghead.wexpression.client.model.vo
 		private var _thumb:BitmapData;
 		private var _item_url:String;
 		private var _overlayImageUrl:String;
+		private var _previewUrl:PreviewUrlVO;
 		
-		public function ShopItemVO(url:String)
+		public function ShopItemVO(url:String, u:PreviewUrlVO)
 		{
 			this._item_url = url;
+			this._previewUrl = u;
 		}
 		
 		public function get image():BitmapData{
@@ -23,7 +25,10 @@ package com.settinghead.wexpression.client.model.vo
 		}
 		
 		public function get itemUrl():String{
-			return _item_url;
+			if(_previewUrl.url!=null)
+			 	return _item_url.replace("[preview]", encodeURIComponent(_previewUrl.url));
+			else
+				return _item_url;
 		}
 		
 		public function set image(img:BitmapData):void{

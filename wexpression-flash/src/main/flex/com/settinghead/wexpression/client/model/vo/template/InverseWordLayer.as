@@ -17,9 +17,9 @@ package com.settinghead.wexpression.client.model.vo.template
 			return !_l.contains(x,y,width,height,rotation,transformed);
 		}
 		
-		public function containsPoint(x:Number, y:Number, transformed:Boolean):Boolean
+		public function containsPoint(x:Number, y:Number, transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean
 		{
-			return !_l.containsPoint(x,y,transformed);
+			return !_l.containsPoint(x,y,transformed,refX,refY,tolerance);
 		}
 		
 		public function intersects(x:Number, y:Number, width:Number, height:Number, transformed:Boolean):Boolean

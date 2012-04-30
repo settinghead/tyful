@@ -10,6 +10,8 @@ package com.settinghead.wexpression.client.model.zip
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	
+	import ion.utils.png.PNGDecoder;
+	
 	import mx.collections.ArrayCollection;
 	
 	import nochump.util.zip.ZipEntry;
@@ -24,12 +26,13 @@ package com.settinghead.wexpression.client.model.zip
 		
 		private var file:ZipFile;
 
-		public function fulfil(o:Object, b:ByteArray):void{
+		public function parse(b:ByteArray):TemplateVO{
 			file = new ZipFile(b);
-			var t:TemplateVO = new TemplateVO(null);
+			var t:TemplateVO = instantiateInstanceByPath("") as TemplateVO;
 			for each(var e:ZipEntry in file.entries){
-				process(e, o);
+				process(e, t);
 			}
+			return t;
 		}
 		
 		private function process(e:ZipEntry, root:Object):void{
@@ -51,14 +54,12 @@ package com.settinghead.wexpression.client.model.zip
 		}
 		
 		private function processCurrent(e:ZipEntry, start:int, end:int, parent:Object, grandParent:Object, numericalName:Boolean = false):void{
-			if(start==end || end>=e.name.length) return;
+			if(start==end || end>e.name.length) return;
 			var name:String = e.name.substring(start, end);
 			
-			if(name=="/") return;
+			if(end==e.name.length && name=="/") return;
 			if(name=="properties.json"){
-				var jsonStr:String = readStringFromFile(e);
-				var decoder:JSONDecoder = new JSONDecoder(jsonStr,true, parent);
-				decoder.getValue();
+				
 			}
 			else if(endWith(name, ".png")){
 				parent[name.substr(0,name.length-4)] = readBitmapFromPNGFile(e);
@@ -69,19 +70,25 @@ package com.settinghead.wexpression.client.model.zip
 				//expand to fit capacity
 				while(parent.length < index+1){
 					if(parent is ArrayCollection)
-						ArrayCollection(parent).addItem(null);
+						(parent as ArrayCollection).addItem(null);
 					else if(parent is Vector)
 						parent.push(null);
 					else if(parent is Array)
-						Array(parent).push(null);
+						(parent as Array).push(null);
 				}
 				if(parent[index]==undefined || parent[index]==null){
 					//determine instance type
-					parent[index] = instantiateInstance(e,name,parent,grandParent,start,end);
+					var childName:String = (index+1).toString();
+//					if(grandParent is IZippable)
+//						childName = (grandParent as IZippable).type + childName;
+					parent[index] = instantiateInstance(e,childName,parent,grandParent,start,end);
 				}
 				processCurrent(e, end+1, nextPos(e.name, end), parent[index], parent);
 			}
 			else{
+				if(parent==null){
+					this.hasOwnProperty();
+				}
 				if (parent[name] is Vector || parent[name] is Array || parent[name] is ArrayCollection){
 					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent, true);
 				}
@@ -94,28 +101,35 @@ package com.settinghead.wexpression.client.model.zip
 			}
 		}
 		
-		private function instantiateInstance(e:ZipEntry, name:String, parent:Object, grandParent:Object, start:int, end:int):*{
-			var jsonEntry:ZipEntry = file.getEntry(e.name.substring(0, end) + "/properties.json");
-			var str:String = readStringFromFile(jsonEntry);
+		private function instantiateInstance(e:ZipEntry, name:String, parent:Object, grandParent:Object, start:int, end:int):Object{			
+			return instantiateInstanceByPath(e.name.substring(0, end),name,parent,grandParent);
+		}
+		
+		private function instantiateInstanceByPath(fullPath:String, name:String=null, parent:Object=null, grandParent:Object=null):Object{
+			var str:String = readStringFromFile(file.getEntry(fullPath+ "/properties.json"));
 			var jsonDecoder:JSONDecoder = new JSONDecoder(str,true);
 			var jsonObj:Object = jsonDecoder.getValue();
 			var typeStr:String = jsonObj["type"] as String;
 			var newInstance:* = TypeRegistrar.getObject(typeStr, name, parent, grandParent);
+			
+			//apply all properties
+			var decoder2:JSONDecoder = new JSONDecoder(str,true, newInstance);
 			return newInstance;
 		}
 		
 		private function readBitmapFromPNGFile(e:ZipEntry):BitmapData{
-			var l:Loader = new Loader();
-			var obj:BitmapData;
-			var complete:Boolean = false;
-			l.addEventListener(Event.COMPLETE, function (evt:Event):void{
-				obj = Bitmap(LoaderInfo(evt.target).content).bitmapData;
-				complete = true;
-			}
-			);
-			l.loadBytes(readBytesFromFile(e));
-			while(!complete){}
-			return obj;
+//			var l:Loader = new Loader();
+//			var obj:BitmapData;
+//			var complete:Boolean = false;
+//			l.addEventListener(Event.COMPLETE, function (evt:Event):void{
+//				obj = Bitmap(LoaderInfo(evt.target).content).bitmapData;
+//				complete = true;
+//			}
+//			);
+//			l.loadBytes(readBytesFromFile(e));
+//			while(!complete){}
+//			return obj;
+			return PNGDecoder.decodeImage(file.getInput(e));
 		}
 		
 		

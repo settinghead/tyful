@@ -92,18 +92,19 @@ package com.settinghead.wexpression.client.model.vo.template
 			throw new NotImplementedError();
 		}
 		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean):Boolean{
+		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
 			throw new NotImplementedError();
 		}
 		
-		public function containsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number):Boolean{
+		public function containsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
 			for(var i:int = 0 ;i<points.length;i++){
 				var theta:Number = (points[i] as Array)[0];
 				var d:Number = (points[i] as Array)[1];
 				theta -= rotation;
 				var x:Number = centerX + Math.cos(theta) * d;
 				var y:Number = centerY + Math.sin(theta) * d;
-				if(!containsPoint(x,y,false)) return false;
+				
+				if(!containsPoint(x,y,false, refX,refY, tolerance)) return false;
 			}
 			return true;
 		}
@@ -120,10 +121,18 @@ package com.settinghead.wexpression.client.model.vo.template
 			else return false;
 		}
 		
-		public function aboveContainsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number):Boolean{
+		public function aboveContainsPoint(x:Number, y:Number, transformed:Boolean, refX:Number, refY:Number, tolerance:Number):Boolean {
 			if(above!=null){
-				if(above.containsAllPolarPoints(centerX,centerY,points, rotation)) return true;
-				else return above.aboveContainsAllPolarPoints(centerX,centerY, points, rotation);
+				if(above.containsPoint(x,y, transformed, refX, refY, tolerance)) return true;
+				else return above.aboveContainsPoint(x,y,transformed, refX, refY, tolerance);
+			}
+			else return false;
+		}
+		
+		public function aboveContainsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+			if(above!=null){
+				if(above.containsAllPolarPoints(centerX,centerY,points, rotation,refX,refY,tolerance)) return true;
+				else return above.aboveContainsAllPolarPoints(centerX,centerY, points, rotation, refX,refY, tolerance);
 			}
 			else return false;
 		}
@@ -148,6 +157,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get type():String{
 			throw new NotImplementedError();
+		}
+		
+		public function set type(t:String):void{
+			//dummy method; do nothing 
 		}
 	}
 }

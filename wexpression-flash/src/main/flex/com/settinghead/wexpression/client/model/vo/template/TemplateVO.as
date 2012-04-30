@@ -71,7 +71,9 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _width:Number, _height:Number;
 		private var _previewPNG: ByteArray;
 		public var mixColorDistance:int = 5;
-		public var dilligence:int = 10;
+		public var dilligence:int = 8;
+		public var id:String = null;
+		public var tolerance:Number = 0.2;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -88,6 +90,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get path():String{
 			return _path;
+		}
+		
+		public function set path(p:String):void{
+			this._path = p;
 		}
 		
 		public function get width():Number{
@@ -127,12 +133,14 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function get patchIndex():DensityPatchIndex{
+			if(this._patchIndex==null)
+				this._patchIndex = new DensityPatchIndex(this);
 			return this._patchIndex;
 		}
 		
 		public function get placer():WordPlacer{
 			if(this._placer==null){
-				this._placer = new ShapeConfinedPlacer(this, _patchIndex);
+				this._placer = new ShapeConfinedPlacer(this, patchIndex);
 			}
 			return this._placer;
 		}
@@ -178,7 +186,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function onLoadComplete (event:Event):void
 		{
-			this._patchIndex = new DensityPatchIndex(this);
+//			this._patchIndex = new DensityPatchIndex(this);
 		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
@@ -206,6 +214,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		
 		public function get type():String{
 			return "Template";
+		}
+		
+		public function set type(t:String):void{
+			//dummy method; do nothing 
 		}
 		
 	}

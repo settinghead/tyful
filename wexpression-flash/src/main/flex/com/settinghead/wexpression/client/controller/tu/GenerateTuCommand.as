@@ -1,5 +1,6 @@
 package com.settinghead.wexpression.client.controller.tu
 {
+	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	
@@ -15,10 +16,10 @@ package com.settinghead.wexpression.client.controller.tu
 	public class GenerateTuCommand extends SimpleCommand
 	{
 		override public function execute( note:INotification ):void {
-			var tu:TuVO = note.getBody() as TuVO;
 			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			if(tu==null)
-				 tu = tuProxy.tu;
+			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+
+			var tu:TuVO = tuProxy.tu;
 			tuProxy.template = tu.template;
 			tuProxy.wordList = tu.words;
 			tuProxy.load();

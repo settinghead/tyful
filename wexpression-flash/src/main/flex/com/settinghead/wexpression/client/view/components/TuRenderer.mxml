@@ -48,8 +48,8 @@
 //				patchLayer.graphics.clear();
 				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
 					this.highlightPatch(pi.patch);
-				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
-				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+				//dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+				//dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
 				this._driftDistanceSum += dWord.engineWord.offsetDistance;
 				
 //								patchLayer.patchQueue = patchLayer.patchQueue;
@@ -189,9 +189,13 @@
 			}
 			
 			public function generateImage():void{
-				var bmpData:BitmapData = new BitmapData(mainCanvas.width, mainCanvas.height,true);
+				var ratio:Number = mainCanvas.width/mainCanvas.height;
+				var maxActual:Number = ratio>1?mainCanvas.width:mainCanvas.height;
+				var scale:Number = 1500/maxActual;
+				var bmpData:BitmapData = new BitmapData(mainCanvas.width*scale, mainCanvas.height*scale,true);
+				var scaleM:Matrix = new Matrix(scale,0,0,scale,0,0); 
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
-				bmpData.draw(mainCanvas);
+				bmpData.draw(mainCanvas, scaleM);
 				_tu.generatedImage = bmpData;
 				tu.finishedDisplayWordRendering = true;
 				dispatchEvent(new Event(TU_GENERATED));
@@ -243,24 +247,29 @@
 			
 		]]>
 	</fx:Script>
-	<mx:Canvas id="mainCanvas" top="0" left="0">
-		<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
-		<mx:UIComponent id="wordLayer" top="0" left="0" />
-	</mx:Canvas>
-	<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
-	<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
 	<s:Group>
 		<s:layout>
-			<s:HorizontalLayout />
+			<s:VerticalLayout />
 		</s:layout>
+		<s:Group>
+			<s:layout>
+				<s:HorizontalLayout />
+			</s:layout>
 			<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 			<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
-		<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
-		<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
+			<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+			<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 			<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
+			<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
+		</s:Group>
+		<mx:Canvas id="mainCanvas" top="0" left="0">
+			<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
+			<mx:UIComponent id="wordLayer" top="0" left="0" />
+		</mx:Canvas>
+		<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
+		<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
 		
-		<s:CheckBox label="Auto post to Facebook" selected="@{autoPostToFacebook}" />
 	</s:Group>
-	
+
 	
 </mx:Canvas>

@@ -26,8 +26,8 @@ package com.settinghead.wexpression.client.view
 				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.TU_GENERATED,
 				ApplicationFacade.EDIT_TEMPLATE,
-				ApplicationFacade.TEMPLATE_SAVED
-
+				ApplicationFacade.TEMPLATE_SAVED,
+				
 			];
 		}
 		
@@ -41,6 +41,10 @@ package com.settinghead.wexpression.client.view
 					break;
 				
 				case ApplicationFacade.EDIT_TEMPLATE:
+					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor;
+					applicationComponent.currentState = "withoutShop";
+
+					break;
 				case ApplicationFacade.TEMPLATE_SAVED:
 					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor; 
 					applicationComponent.currentState = "withoutShop";

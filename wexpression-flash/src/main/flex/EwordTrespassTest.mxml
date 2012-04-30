@@ -29,9 +29,9 @@
 			}
 			
 			private function layerLoadFinished(e:Event = null):void{
-				img.width = (template.layers[0] as WordLayer).img.width;
-				img.height = (template.layers[0] as WordLayer).img.height;
-				img.graphics.beginBitmapFill((template.layers[0] as WordLayer).img.bitmapData);
+				img.width = (template.layers[0] as WordLayer).direction.width;
+				img.height = (template.layers[0] as WordLayer).direction.height;
+				img.graphics.beginBitmapFill((template.layers[0] as WordLayer).direction);
 
 				img.graphics.drawRect(0,0, img.width, img.height);
 				img.graphics.endFill();

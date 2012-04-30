@@ -83,7 +83,7 @@ public class EngineWordVO {
 		for(var i:int = 0; i<numSamples;i++){
 			var relativeX:Number= int((Math.random() * shape.width));
 			var relativeY:Number= int((Math.random() * shape.height));
-			if(shape.containsPoint(relativeX, relativeY,false))
+			if(shape.containsPoint(relativeX, relativeY,false,0,0,0))
 			{
 				relativeX -= shape.width/2;
 				relativeY -= shape.height/2;
@@ -158,7 +158,7 @@ public class EngineWordVO {
 			return null;
 	}
 
-	public function trespassed(layer:Layer, rotation:Number):Boolean {
+	public function trespassed(layer:Layer, rotation:Number, tolerance:Number):Boolean {
 		if(layer==null) return false;		
 		var x:Number = (this.currentLocation.getpVector().x - this.shape.textField.width / 2);
 		var y:Number = (this.currentLocation.getpVector().y - this.shape.textField.height / 2);
@@ -171,15 +171,23 @@ public class EngineWordVO {
 //		Assert.isTrue( this.shape.textField.height > 0);
 		
 		if (layer.containsAllPolarPoints(this.currentLocation.getpVector().x ,
-			this.currentLocation.getpVector().y, this.samplePoints, rotation))
+			this.currentLocation.getpVector().y, this.samplePoints, rotation, 
+			this.currentLocation.getpVector().x,
+			this.currentLocation.getpVector().y,
+			tolerance
+		))
 		{
 			return (layer.aboveContainsAllPolarPoints(this.currentLocation.getpVector().x ,
-				this.currentLocation.getpVector().y, this.samplePoints, rotation));
+				this.currentLocation.getpVector().y, this.samplePoints, rotation,
+				this.currentLocation.getpVector().x,
+				this.currentLocation.getpVector().y,
+				tolerance
+			));
 		}
 		
 		if (layer.contains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false))
 	    {
-			return (layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
+			return (!layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
 		}
 		else return true;
 	}

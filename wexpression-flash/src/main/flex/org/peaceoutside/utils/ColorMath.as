@@ -195,5 +195,17 @@ package org.peaceoutside.utils
 			return 0xff000000 | (h << 16) | (s << 8) | bb;
 
 		}
+		
+		//RGB distance between two colors
+		//max return value: 1; min return value: 0
+		public static function dist(c1:uint, c2:uint):Number{
+			var r1:Number = (c1) >> 16 & 0xFF;
+			var g1:Number = (c1) >> 8 & 0xFF;
+			var b1:Number = c1 & 0xFF;
+			var r2:Number = (c2) >> 16 & 0xFF;
+			var g2:Number = (c2) >> 8 & 0xFF;
+			var b2:Number = c2 & 0xFF;
+			return Math.abs(r1-r2)/256/3 + Math.abs(g1-g2)/256/3 + Math.abs(b1-b2)/256/3;
+		}
 	}
 }

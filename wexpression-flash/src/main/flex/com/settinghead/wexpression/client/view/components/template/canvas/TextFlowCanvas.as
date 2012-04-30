@@ -229,7 +229,7 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				colorShape.graphics.lineTo(this.mouseX,this.mouseY);
 				
 				
-				layer.img.bitmapData.draw(shape);
+				layer.direction.draw(shape);
 				bmpDirection.bitmapData.draw(dirShape);
 				layer.colorSheet.bitmapData.draw(colorShape);
 				
@@ -260,12 +260,12 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				
 				for(var i:int=0;i<this.numChildren;i++)
 					this.removeChildAt(0);
-				if((layer as WordLayer).img!=null){
-					layer.img = (layer as WordLayer).img;
+				if((layer as WordLayer).direction!=null){
+					layer.direction = (layer as WordLayer).direction;
 				}
 				else{
-					layer.img = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
-					layer.img.visible = false;
+					layer.direction = new BitmapData(layer.width, layer.height, true, 0xffffff);
+//					layer.direction.visible = false;
 				}
 				
 				
@@ -275,11 +275,11 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				
 				this.width = layer.width;
 				this.height = layer.height;
-				bmpDirection.x = layer.img.x=0; bmpDirection.y = layer.img.y = 0;
+				bmpDirection.x =0; bmpDirection.y = 0;
 				
 				
-				for(var w:Number = 0; w<layer.img.width;w+=a.width){
-					for(var h:Number = 0; h<layer.img.height;h+=a.height){
+				for(var w:Number = 0; w<layer.direction.width;w+=a.width){
+					for(var h:Number = 0; h<layer.direction.height;h+=a.height){
 						var a:BitmapAsset = new SmallA();
 						var m:Matrix = new Matrix();
 						
@@ -307,8 +307,8 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 					}
 				}
 				
-				bmpElement = new BitmapImage();
-				bmpElement.source = layer.img;
+//				bmpElement = new BitmapImage();
+//				bmpElement.source = new Bitmap(layer.direction);
 				colorSheetElement = new BitmapImage();
 				colorSheetElement.source = layer.colorSheet;
 				bmpDirElement = new BitmapImage();

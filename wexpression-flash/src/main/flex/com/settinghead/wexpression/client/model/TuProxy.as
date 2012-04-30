@@ -95,6 +95,9 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private var failureCount:int = 0;
+		
+		private var pendingEword:EngineWordVO = null;
+		
 		public function renderNextDisplayWord(tu:TuVO):void{
 			//TODO
 			var eWord:EngineWordVO = null;
@@ -221,7 +224,7 @@ package com.settinghead.wexpression.client.model
 					// // TODO
 					eWord.getTree().setRotation(angle);
 					//
-					if (eWord.trespassed(candidateLoc.patch.layer, angle))
+					if (eWord.trespassed(candidateLoc.patch.layer, angle, tu.template.tolerance))
 						continue;
 					var loc:PlaceInfo= eWord.getCurrentLocation();
 					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= tu.template.width

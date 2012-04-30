@@ -28,7 +28,7 @@ package com.settinghead.wexpression.client.controller.main
 			var tuProxy:TuProxy = new TuProxy();
 			var shopProxy:ShopProxy = new ShopProxy();
 			var wordListProxy:WordListProxy = new WordListProxy();
-			
+			wordListProxy.load();
 			// register it
 			facade.registerProxy( templateProxy );
 			facade.registerProxy(tuProxy );

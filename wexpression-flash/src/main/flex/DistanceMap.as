@@ -60,11 +60,12 @@ package
 					for(var j:int = 0;j<source.height;j++){
 						if(source.getPixel32(c,j)!=0x00000000) //find transparent pixel
 						{
-							if(j>currentVertice.part
-								currentVertice = stack.removeFirst();
-							var val:uint = (0xff * (computeDist(c,j,currentVertice.x,currentVertice.y) / (source.width))) << 16;
-							if(result.getPixel(c,j)>val)
-								result.setPixel(c,j, val);
+							//TODO
+//							if(j>currentVertice.part
+////								currentVertice = stack.removeFirst();
+////							var val:uint = (0xff * (computeDist(c,j,currentVertice.x,currentVertice.y) / (source.width))) << 16;
+//							if(result.getPixel(c,j)>val)
+//								result.setPixel(c,j, val);
 						}
 					}
 				}

@@ -51,7 +51,7 @@ package com.adobe.serialization.json
 		/** The current token from the tokenizer */
 		private var token:JSONToken;
 		
-		private var root:Object;
+		private var _root:Object;
 		
 		/**
 		 * Constructs a new JSONDecoder to parse a JSON string
@@ -71,14 +71,23 @@ package com.adobe.serialization.json
 			tokenizer = new JSONTokenizer( s, strict );
 			
 			nextToken();
-			value = parseValue();
 			this.root = root;
+
+			value = parseValue();
 			
 			// Make sure the input stream is empty
 			if ( strict && nextToken() != null )
 			{
 				tokenizer.parseError( "Unexpected characters left in input stream" );
 			}
+		}
+		
+		public function set root(r:Object):void{
+			this._root = r;
+		}
+		
+		public function get root():Object{
+			return _root;
 		}
 		
 		/**

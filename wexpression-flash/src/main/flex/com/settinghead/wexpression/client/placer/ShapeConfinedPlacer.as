@@ -25,8 +25,7 @@ public class ShapeConfinedPlacer implements WordPlacer {
 			fieldHeight:int): Vector.<PlaceInfo> {
 
 
-		var patches:Vector.<Patch> = index.findPatchFor(wordImageWidth,
-				wordImageHeight);
+		var patches:Vector.<Patch> = index.findPatchFor(wordImageWidth, wordImageHeight);
 
 		index.lock();
 		var places:Vector.<PlaceInfo> = new Vector.<PlaceInfo>();

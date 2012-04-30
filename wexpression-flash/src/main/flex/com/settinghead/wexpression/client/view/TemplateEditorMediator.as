@@ -52,7 +52,8 @@ package com.settinghead.wexpression.client.view
 		override public function listNotificationInterests():Array {
 			return [ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_LOADED,
-				ApplicationFacade.TEMPLATE_UPLOADED
+				ApplicationFacade.TEMPLATE_UPLOADED,
+				ApplicationFacade.NEW_TEMPLATE
 			];
 		}
 		
@@ -63,6 +64,9 @@ package com.settinghead.wexpression.client.view
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
 					Alert.show(notification.getBody().toString());
+					break;
+				case ApplicationFacade.NEW_TEMPLATE:
+					templateEditor.newTemplate();
 					break;
 			}
 		}
