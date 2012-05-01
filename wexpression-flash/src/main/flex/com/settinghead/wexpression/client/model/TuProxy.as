@@ -169,7 +169,7 @@ package com.settinghead.wexpression.client.model
 
 				}
 				
-				if(getTimer() - startTime > 9000)
+				if(tu.generatedImage==null && getTimer() - startTime > 9000)
 					//timed out; display generate image even if unfinished
 				{
 					facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);

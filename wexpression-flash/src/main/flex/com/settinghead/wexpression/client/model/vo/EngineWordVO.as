@@ -178,7 +178,7 @@ public class EngineWordVO {
 			tolerance
 		))
 		{
-			return (layer.aboveContainsAllPolarPoints(this.currentLocation.getpVector().x ,
+			return (layer.aboveContainsAnyPolarPoints(this.currentLocation.getpVector().x ,
 				this.currentLocation.getpVector().y, this.samplePoints, rotation,
 				this.currentLocation.getpVector().x,
 				this.currentLocation.getpVector().y,
@@ -186,11 +186,11 @@ public class EngineWordVO {
 			));
 		}
 		
-		if (layer.contains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false))
-	    {
-			return (!layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
-		}
-		else return true;
+//		if (layer.contains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false))
+//	    {
+//			return (!layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
+//		}
+		return true;
 	}
 
 	public function getTree():BBPolarRootTreeVO {

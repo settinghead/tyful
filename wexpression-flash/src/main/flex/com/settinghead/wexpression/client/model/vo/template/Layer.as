@@ -109,6 +109,19 @@ package com.settinghead.wexpression.client.model.vo.template
 			return true;
 		}
 		
+		public function containsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+			for(var i:int = 0 ;i<points.length;i++){
+				var theta:Number = (points[i] as Array)[0];
+				var d:Number = (points[i] as Array)[1];
+				theta -= rotation;
+				var x:Number = centerX + Math.cos(theta) * d;
+				var y:Number = centerY + Math.sin(theta) * d;
+				
+				if(containsPoint(x,y,false, refX,refY, tolerance)) return true;
+			}
+			return false;
+		}
+		
 		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
 			throw new NotImplementedError();
 		}
@@ -129,10 +142,10 @@ package com.settinghead.wexpression.client.model.vo.template
 			else return false;
 		}
 		
-		public function aboveContainsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function aboveContainsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
 			if(above!=null){
-				if(above.containsAllPolarPoints(centerX,centerY,points, rotation,refX,refY,tolerance)) return true;
-				else return above.aboveContainsAllPolarPoints(centerX,centerY, points, rotation, refX,refY, tolerance);
+				if(above.containsAnyPolarPoints(centerX,centerY,points, rotation,refX,refY,tolerance)) return true;
+				else return above.aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY, tolerance);
 			}
 			else return false;
 		}
