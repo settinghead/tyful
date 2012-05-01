@@ -5,14 +5,15 @@ package com.settinghead.wexpression.client.view
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.WordListProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
-	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.view.components.TuRenderer;
 	import com.settinghead.wexpression.client.view.components.template.TemplateEditor;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
@@ -53,6 +54,7 @@ package com.settinghead.wexpression.client.view
 			return [ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_LOADED,
 				ApplicationFacade.TEMPLATE_UPLOADED,
+				ApplicationFacade.UPLOAD_TEMPLATE,
 				ApplicationFacade.NEW_TEMPLATE
 			];
 		}
@@ -63,7 +65,10 @@ package com.settinghead.wexpression.client.view
 					templateEditor.template = templateProxy.template;
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
-					Alert.show(notification.getBody().toString());
+					ExternalInterface.call("setTemplateId", notification.getBody().toString());
+					break;
+				case ApplicationFacade.UPLOAD_TEMPLATE:
+					ExternalInterface.call("submitForm");
 					break;
 				case ApplicationFacade.NEW_TEMPLATE:
 					templateEditor.newTemplate();

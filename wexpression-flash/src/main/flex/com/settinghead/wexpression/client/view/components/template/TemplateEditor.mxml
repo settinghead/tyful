@@ -76,9 +76,7 @@
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
 						</mx:HBox>
-						<mx:HBox label="Text Direction">
-							<template:DirectionPicker label="Text direction" id="directionPicker"  />
-						</mx:HBox>
+						<template:DirectionPicker label="Text direction" id="directionPicker" />
 						<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
 						<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
 					</mx:ViewStack>

@@ -60,13 +60,14 @@ package com.settinghead.wexpression.client.density
 //				_lookupMap[p.getX().toString()+", " +p.getY().toString()] = p;
 //				trace(p.getX().toString()+", " +p.getY().toString());
 			}
-			else 
-				trace ("failed to add back to queue, alpha sum: " + p.getAlphaSum().toString());
+			else {
+			}
+			//	trace ("failed to add back to queue, alpha sum: " + p.getAlphaSum().toString());
 		}
 		
 		public function patchAtCoordinate(x:Number, y:Number):Patch{
 			var p:Patch = _lookupMap[x.toString()+", "+y.toString()];
-			trace("lookup patch: " +x.toString()+", "+y.toString());
+			//trace("lookup patch: " +x.toString()+", "+y.toString());
 			return p;
 		}
 		
