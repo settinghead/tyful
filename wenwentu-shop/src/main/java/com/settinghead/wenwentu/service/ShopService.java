@@ -32,7 +32,7 @@ public class ShopService {
 	}
 
 	private static void runShopService() {
-		logger.info("Starting word list service. ");
+		logger.info("Starting shop service. ");
 		try {
 			URI redisURI = new URI(System.getenv("REDISTOGO_URL"));
 			final JedisPool pool = new JedisPool(new JedisPoolConfig(),
@@ -40,28 +40,28 @@ public class ShopService {
 					Protocol.DEFAULT_TIMEOUT, redisURI.getUserInfo().split(":",
 							2)[1]);
 			Jedis jedis = pool.getResource();
+			// set generic shop
+			jedis.set("shop_generic", toJsonStr(ShopPredictor.getGenericShop()));
 
 			try {
 				while (true) {
 					String message;
-					while ((message = jedis.rpop("shop_q")) == null)
+					while ((message = jedis.rpop("q_shop")) == null)
 						Thread.sleep(300);
 					logger.info(message);
 					ObjectMapper mapper = new ObjectMapper();
 					ShopTask task;
 					try {
 						task = mapper.readValue(message, ShopTask.class);
-						List<ShopItem> shop = ShopPredictor.getShop(task.getUserId(), task.getTemplateId());
-						
-							StringWriter sw = new StringWriter();
-							mapper.writeValue(sw, shop);
-							jedis.set(
-									"shop_" + task.getUserId(), sw.toString());
-							logger.info("shop_" + task.getUserId() + "predicted.");
+						List<ShopItem> shop = ShopPredictor.getShop(
+								task.getUserId(), task.getTemplateId());
+						String key = "shop_" + task.getUserId() + "_"
+								+ task.getTemplateId();
+						jedis.set(key, toJsonStr(shop));
+						logger.info(key + "predicted.");
 					} catch (Exception e) {
 						logger.warning(e.getMessage());
 					}
-
 				}
 
 			} catch (InterruptedException e) {
@@ -75,5 +75,16 @@ public class ShopService {
 		} catch (URISyntaxException e) {
 			// URI couldn't be parsed. Handle exception
 		}
+	}
+
+	private static String toJsonStr(List<ShopItem> l) {
+		ObjectMapper mapper = new ObjectMapper();
+		StringWriter sw = new StringWriter();
+		try {
+			mapper.writeValue(sw, l);
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+		}
+		return sw.toString();
 	}
 }

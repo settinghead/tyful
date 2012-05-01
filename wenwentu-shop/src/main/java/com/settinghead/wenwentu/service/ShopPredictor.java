@@ -8,6 +8,10 @@ import com.settinghead.wenwentu.service.model.ShopItem;
 public class ShopPredictor {
 
 	public static List<ShopItem> getShop(int userId, String templateId) {
+		return getGenericShop();
+	}
+	
+	public static List<ShopItem> getGenericShop(){
 		List<ShopItem> result = new ArrayList<ShopItem>();
 
 		ShopItem item1 = new ShopItem();
