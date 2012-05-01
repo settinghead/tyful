@@ -1,7 +1,7 @@
 package com.settinghead.wexpression.client.colorer
 {
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	

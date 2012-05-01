@@ -4,7 +4,8 @@ package com.settinghead.wexpression.client.model
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.vo.PreviewUrlVO;
-	import com.settinghead.wexpression.client.model.vo.ShopItemVO;
+	import com.settinghead.wexpression.client.model.vo.shop.ShopItemVO;
+	import com.settinghead.wexpression.client.model.vo.shop.ShopVO;
 	import com.settinghead.wexpression.client.view.components.shop.ShopItemList;
 	
 	import flash.display.BitmapData;
@@ -39,19 +40,26 @@ package com.settinghead.wexpression.client.model
 		public static const SRNAME:String = "ShopSRProxy";
 		private var urlLoader : MultipartURLLoader;
 		private var _previewUrl:PreviewUrlVO = new PreviewUrlVO();
+		private var _templateProxy:TemplateProxy = null;
 		
 		public function ShopProxy()
 		{
-			super(NAME, new ArrayCollection());
+			super(NAME, null);
 		}
 		
-		public function load() :void{
+		private function get templateProxy():TemplateProxy{
+			if(_templateProxy==null)_templateProxy = 
+				facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+			return _templateProxy;
 		}
+
+		
 		
 		// return data property cast to proper type
 		public function get shop():ArrayCollection
 		{
 			return data as ArrayCollection;
+
 		}
 		
 		// return data property cast to proper type
@@ -66,20 +74,36 @@ package com.settinghead.wexpression.client.model
 			shop.addItem( item );
 		}
 		
-		public function prepareShop(img:BitmapData):void{
-			tmpImg = img;
-			uploadImage(img);
+
+		private var loader : URLLoader;
+		
+		public function load() :void{
+			if(this.shop==null)
+				this.setData(new ArrayCollection());
+			var request : URLRequest = new URLRequest  ( "/shop/?templateId=" + templateProxy.template.id );
+			var urlVariables : URLVariables = new URLVariables ();
+			request.data = urlVariables;
+			request.method = URLRequestMethod.GET;
+			loader = new URLLoader ();
+			loader.addEventListener( Event.COMPLETE, jsonLoaded );
+			loader.load ( request );
 		}
 		
-		public function postPrepareShop(img:BitmapData):void{
+		public function jsonLoaded(e:Event):void{
+			
+			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object) as Array;
+			var shop:ShopVO = new ShopVO(previewUrl, l);
+			this.setData(shop);
+		}
+		
+		public function prepareSampleShop():void{
 
 			this.shop.removeAll();
 
-			var maleTee:ShopItemVO = new ShopItemVO("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]", previewUrl);
+			var maleTee:ShopItemVO =
+				new ShopItemVO("Male Tee",previewUrl, "http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
 
-			maleTee.image = img;
-			var femaleTee:ShopItemVO = new ShopItemVO("http://www.zazzle.com/female", previewUrl);
-			femaleTee.image = img;
+			var femaleTee:ShopItemVO = new ShopItemVO("Female Tee", previewUrl, "http://www.zazzle.com/female");
 			this.addItem(maleTee);
 			this.addItem(femaleTee);
 		}
@@ -87,6 +111,8 @@ package com.settinghead.wexpression.client.model
 		private var tmpImg:BitmapData = null;
 		
 		public function uploadImage(img:BitmapData):void{
+			tmpImg = img;
+
 			var b:ByteArray = PNGEncoder.encode(img);
 			// set up the request & headers for the image upload;
 //			var urlRequest : URLRequest = new URLRequest();
@@ -126,8 +152,6 @@ package com.settinghead.wexpression.client.model
 			var id:String = new JSONDecoder(urlLoader.loader.data,false).getValue().id;
 			//			_previewUrl.url = "http://file.wenwentu.com/r/"+id;
 			_previewUrl.url = FlexGlobals.topLevelApplication.parameters.relayUrl+id;
-
-			postPrepareShop(tmpImg);
 		}
 	}
 }

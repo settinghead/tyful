@@ -2,6 +2,7 @@ package com.settinghead.wexpression.client.view
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.ShopProxy;
+	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.view.components.shop.ShopItemList;
 	
@@ -13,6 +14,7 @@ package com.settinghead.wexpression.client.view
 	public class ShopMediator extends Mediator
 	{
 		private var shopProxy:ShopProxy;
+		private var tuProxy:TuProxy;
 		public static const NAME:String = "ShopMediator";
 
 		public function ShopMediator(viewComponent:Object)
@@ -28,6 +30,7 @@ package com.settinghead.wexpression.client.view
 		override public function onRegister():void
 		{
 			shopProxy = facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
+			tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
 		}
 		
 		override public function listNotificationInterests():Array
@@ -42,7 +45,7 @@ package com.settinghead.wexpression.client.view
 			switch ( note.getName() )
 			{
 				case ApplicationFacade.TU_IMAGE_GENERATED:
-					shopItemList.img =  (note.getBody() as TuVO).generatedImage;
+					shopProxy.uploadImage(tuProxy.tu.generatedImage);
 					shopItemList.list = shopProxy.shop;
 					break;
 			}

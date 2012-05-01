@@ -4,7 +4,7 @@ package com.settinghead.wexpression.client.nudger {
 	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.math.MathUtils;
 	import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	import flash.geom.Point;
 

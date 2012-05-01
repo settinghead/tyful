@@ -5,16 +5,9 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			private var _img:BitmapData;
 			[Bindable] public var list:ArrayCollection;
 
-			public function get img():BitmapData{
-				return _img;
-			}
-			
-			public function set img(_img:BitmapData):void{
-				this._img = _img;
-			}
+		
 			
 			
 			

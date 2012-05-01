@@ -14,11 +14,11 @@ package com.settinghead.wexpression.client.controller.shop
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
-	public class PrepSampleShopCommand extends SimpleCommand
+	public class LoadShopCommand extends SimpleCommand
 	{
 		private  var shopProxy:ShopProxy;
 		
-		public function PrepSampleShopCommand()
+		public function LoadShopCommand()
 		{
 			super();
 		}
@@ -27,7 +27,7 @@ package com.settinghead.wexpression.client.controller.shop
 		{
 			this.shopProxy = facade.retrieveProxy(ShopProxy.NAME) as ShopProxy;
 			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			shopProxy.prepareSampleShop();
+			shopProxy.load();
 		}
 		
 	}

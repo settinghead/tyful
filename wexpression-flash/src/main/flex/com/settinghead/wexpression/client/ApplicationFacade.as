@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client
 {
-	import com.settinghead.wexpression.client.controller.main.PrepSampleShopCommand;
+	import com.settinghead.wexpression.client.controller.shop.PrepSampleShopCommand;
 	import com.settinghead.wexpression.client.controller.main.StartupCommand;
 	import com.settinghead.wexpression.client.controller.template.GenerateTemplatePreviewCommand;
 	import com.settinghead.wexpression.client.controller.template.LoadTemplateCommand;
@@ -62,7 +62,6 @@ package com.settinghead.wexpression.client
 			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (GENERATE_TEMPLATE_PREVIEW, GenerateTemplatePreviewCommand);
 			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
-			registerCommand ( TU_IMAGE_GENERATED, PrepSampleShopCommand);
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 		}
 		

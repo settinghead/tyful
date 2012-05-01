@@ -3,7 +3,7 @@ package com.settinghead.wexpression.client.nudger {
 	import com.settinghead.wexpression.client.angler.WordAngler;
 	import com.settinghead.wexpression.client.density.Patch;
 	import com.settinghead.wexpression.client.math.MathUtils;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
 	

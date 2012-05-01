@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo
+package com.settinghead.wexpression.client.model.vo.wordlist
 {
 	import com.settinghead.wexpression.client.WordComparator;
 	

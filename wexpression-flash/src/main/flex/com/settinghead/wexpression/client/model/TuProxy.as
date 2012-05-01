@@ -15,8 +15,8 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
-	import com.settinghead.wexpression.client.model.vo.WordListVO;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
 	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;

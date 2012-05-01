@@ -1,5 +1,7 @@
-package com.settinghead.wexpression.client.model.vo
+package com.settinghead.wexpression.client.model.vo.shop
 {
+	import com.settinghead.wexpression.client.model.vo.PreviewUrlVO;
+	
 	import flash.display.BitmapData;
 
 	public class ShopItemVO
@@ -9,11 +11,19 @@ package com.settinghead.wexpression.client.model.vo
 		private var _item_url:String;
 		private var _overlayImageUrl:String;
 		private var _previewUrl:PreviewUrlVO;
+		private var _imageUrl:String;
+		private var _description:String;
+		private var _name:String;
 		
-		public function ShopItemVO(url:String, u:PreviewUrlVO)
+		public function ShopItemVO(name:String, u:PreviewUrlVO, 
+								   url:String, imageUrl:String= null, 
+								   description:String = null)
 		{
 			this._item_url = url;
 			this._previewUrl = u;
+			this._description = description;
+			this._name = name;
+			this._imageUrl = imageUrl;
 		}
 		
 		public function get image():BitmapData{

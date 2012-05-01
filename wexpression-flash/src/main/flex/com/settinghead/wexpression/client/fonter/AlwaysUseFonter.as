@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client.fonter
 {
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	public class AlwaysUseFonter implements WordFonter
 	{

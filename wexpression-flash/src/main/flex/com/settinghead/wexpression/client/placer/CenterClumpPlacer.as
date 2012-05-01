@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client.placer
 {
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.math.MathUtils;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	import flash.geom.Point;
 	

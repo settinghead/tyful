@@ -19,6 +19,7 @@ package com.settinghead.wexpression.client.model.vo {
 	import mx.controls.Alert;
 	
 	import org.as3commons.lang.Assert;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier

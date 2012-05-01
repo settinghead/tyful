@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client.nudger {
 	import com.settinghead.wexpression.client.PlaceInfo;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	import flash.geom.Point;
 

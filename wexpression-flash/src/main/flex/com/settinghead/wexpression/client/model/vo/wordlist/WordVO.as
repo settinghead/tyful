@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo {
+package com.settinghead.wexpression.client.model.vo.wordlist {
 
 	import flash.geom.Point;
 	import com.settinghead.wexpression.client.PlaceInfo;

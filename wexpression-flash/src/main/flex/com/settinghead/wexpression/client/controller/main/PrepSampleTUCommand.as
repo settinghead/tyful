@@ -4,7 +4,7 @@ package com.settinghead.wexpression.client.controller.main
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
-	import com.settinghead.wexpression.client.model.vo.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import flash.events.Event;

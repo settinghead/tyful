@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client {
-	import com.settinghead.wexpression.client.model.vo.WordListVO;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	
 	import mx.controls.Alert;
 	

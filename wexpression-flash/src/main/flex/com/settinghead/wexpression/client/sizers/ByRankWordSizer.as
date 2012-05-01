@@ -1,6 +1,6 @@
 package com.settinghead.wexpression.client.sizers
 {
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	import com.settinghead.wexpression.client.math.MathUtils;
 	
 	public class ByRankWordSizer implements WordSizer

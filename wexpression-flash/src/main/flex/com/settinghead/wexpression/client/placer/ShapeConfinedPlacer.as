@@ -2,7 +2,7 @@ package com.settinghead.wexpression.client.placer {
 	import com.settinghead.wexpression.client.PlaceInfo;
 	import com.settinghead.wexpression.client.density.DensityPatchIndex;
 	import com.settinghead.wexpression.client.density.Patch;
-	import com.settinghead.wexpression.client.model.vo.WordVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import flash.geom.Point;

@@ -21,6 +21,8 @@ package com.settinghead.wexpression.client.model.vo
 	import org.as3commons.lang.IIterator;
 	
 	import spark.primitives.BitmapImage;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 
 	public class TuVO
 	{
