@@ -21,6 +21,7 @@ package com.settinghead.wexpression.client.model
 	import flash.system.Security;
 	import flash.system.System;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -76,12 +77,16 @@ package com.settinghead.wexpression.client.model
 		
 
 		private var loader : URLLoader;
-		
+		private var retrieveAttempt:int = 0;
 		public function load() :void{
 			if(this.shop==null)
 				this.setData(new ArrayCollection());
-			var request : URLRequest = new URLRequest  ( "/shop/?templateId=" + templateProxy.template.id );
+			var url:String = (retrieveAttempt>3)?"/shop/generic":"/shop/predict";
+			var request : URLRequest = 
+				new URLRequest  ( url );
 			var urlVariables : URLVariables = new URLVariables ();
+			if(templateProxy.template!=null)
+				urlVariables['templateId']=templateProxy.template.id;
 			request.data = urlVariables;
 			request.method = URLRequestMethod.GET;
 			loader = new URLLoader ();
@@ -90,10 +95,18 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		public function jsonLoaded(e:Event):void{
-			
-			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object) as Array;
-			var shop:ShopVO = new ShopVO(previewUrl, l);
-			this.setData(shop);
+			var obj:Object = new JSONDecoder(loader.data as String,false).getValue();
+			if(obj is Array){
+				var l:Array = (obj as Object) as Array;
+				var shop:ShopVO = new ShopVO(previewUrl, l);
+				this.setData(shop);
+			}
+			else
+				//retry
+			{
+				retrieveAttempt++;
+				setTimeout(load,3000);
+			}
 		}
 		
 		public function prepareSampleShop():void{

@@ -14,6 +14,7 @@ package com.settinghead.wexpression.client.model
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
+	import flash.utils.setTimeout;
 	import flash.xml.XMLDocument;
 	
 	import mx.collections.ArrayCollection;
@@ -59,10 +60,16 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		public function jsonLoaded(e:Event):void{
-
-			var l:Array = (new JSONDecoder(loader.data as String,false).getValue() as Object) as Array;
-			var wordList:WordListVO = new WordListVO(l);
-			this._list = wordList;
+			var obj:Object = new JSONDecoder(loader.data as String,false).getValue();
+			if(obj is Array){
+				var l:Array = (obj as Object) as Array;
+				var wordList:WordListVO = new WordListVO(l);
+				this._list = wordList;
+			}
+			else{
+				//retry
+				setTimeout(load,3000);
+			}
 		}
 	
 		
