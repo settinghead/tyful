@@ -36,6 +36,7 @@ package com.settinghead.wexpression.client
 		public static const TU_GENERATION_LAST_CALL:String	= "tuGenerationLastCall";
 		
 		public static const MODE_EDIT_TEMPLATE:String	= "editTemplate";
+		public static const MODE_SHOW_TEMPLATE:String	= "showTemplate";
 		public static const MODE_RENDER_TU:String	= "renderTu";
 		public static const MODE_NEW_TEMPLATE:String	= "newTemplate";
 		

@@ -17,7 +17,7 @@
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Label text="Make a gift!" left="0" right="0" />
+		<s:Label text="Make a gift with your artwork!" left="0" right="0" width="120" />
 		<s:List dataProvider="{list}" itemRenderer="com.settinghead.wexpression.client.view.components.shop.ShopItemRenderer">
 			<s:layout>
 				<s:VerticalLayout  />

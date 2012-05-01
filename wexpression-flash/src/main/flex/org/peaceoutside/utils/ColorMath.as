@@ -156,6 +156,16 @@ package org.peaceoutside.utils
 				return 0xff000000 | (x << 16) | ( y << 8) | z;
 		}
 		
+		public static function getBrightness(rgb:Number):int{
+			var r:int = (rgb) >> 16 & 0xFF;
+			var g:int = (rgb) >> 8 & 0xFF;
+			var b:int = rgb & 0xFF;
+			var cmax:Number = (r > g) ? r : g;
+			if (b > cmax) cmax = b;
+			
+			return cmax/255;
+		}
+		
 		public static function RGBtoHSB(rgbPixel:Number):int {
 			var r:int = (rgbPixel) >> 16 & 0xFF;
 			var g:int = (rgbPixel) >> 8 & 0xFF;

@@ -38,5 +38,10 @@
 			<type>2</type>
 			<location>/Users/settinghead/wexpression/wenwentu-relay/f/resources/flash</location>
 		</link>
+		<link>
+			<name>bin-release1</name>
+			<type>2</type>
+			<location>/Users/settinghead/wexpression/wenwentu-relay/f</location>
+		</link>
 	</linkedResources>
 </projectDescription>

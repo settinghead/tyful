@@ -3,6 +3,8 @@ package com.settinghead.wexpression.client.model.vo.shop
 	import com.settinghead.wexpression.client.model.vo.PreviewUrlVO;
 	
 	import flash.display.BitmapData;
+	
+	import mx.controls.Alert;
 
 	public class ShopItemVO
 	{
@@ -32,6 +34,18 @@ package com.settinghead.wexpression.client.model.vo.shop
 		
 		public function get thumbnail():BitmapData{
 			return _thumb;
+		}
+		
+		public function get name():String{
+			return _name;
+		}
+		
+		public function get imageUrl():String{
+			return _imageUrl;
+		}
+		
+		public function description():String{
+			return _description;
 		}
 		
 		public function get itemUrl():String{

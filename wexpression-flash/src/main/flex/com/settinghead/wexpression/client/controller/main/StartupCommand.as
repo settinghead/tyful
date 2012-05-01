@@ -36,6 +36,7 @@ package com.settinghead.wexpression.client.controller.main
 			var mode:String = FlexGlobals.topLevelApplication.parameters.mode as String;
 			switch(mode){
 				case ApplicationFacade.MODE_EDIT_TEMPLATE:
+				case ApplicationFacade.MODE_SHOW_TEMPLATE:
 					this.addSubCommand(DownloadTemplateCommand);
 					break;
 				case ApplicationFacade.MODE_RENDER_TU:

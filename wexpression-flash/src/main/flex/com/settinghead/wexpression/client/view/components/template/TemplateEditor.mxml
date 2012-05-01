@@ -16,16 +16,7 @@
 
 	</mx:Metadata>
 	<mx:Style>
-		Button {
-			upSkin:ClassReference('EnhancedButtonSkin');
-			overSkin:ClassReference('EnhancedButtonSkin');
-			downSkin:ClassReference('EnhancedButtonSkin');
-			disabledSkin:ClassReference('EnhancedButtonSkin');
-			selectedUpSkin:ClassReference('EnhancedButtonSkin');
-			selectedOverSkin:ClassReference('EnhancedButtonSkin');
-			selectedDownSkin:ClassReference('EnhancedButtonSkin');
-			selectedDisabledSkin:ClassReference('EnhancedButtonSkin');
-		}
+		
 		
 		.render-button {
 			cornerRadii: 16, 0, 16, 0;
@@ -45,6 +36,12 @@
 			color: #FFFFFF;
 			textRollOverColor: #FFFFFF;
 		}
+		.mainCanvasArea{
+			paddingBottom: 5;
+			paddingTop: 5;
+			paddingLeft: 5;
+			paddingRight: 5;
+		}
 
 	</mx:Style>
 	<mx:states>
@@ -56,7 +53,7 @@
 				</s:layout>
 				<s:Group mouseOver="controlArea_mouseOverHandler(event)" left="0" right="0" top="0" height="60">
 					<s:layout>
-						<s:VerticalLayout />
+						<s:VerticalLayout  />
 					</s:layout>
 					<s:Group>
 						<s:layout>
@@ -65,13 +62,13 @@
 						<mx:LinkBar id="toggleButtonBar"
 											dataProvider="{ribbonViewStack}" />						
 
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render!" fontSize="20" styleName="render-button" color="#007A0A"
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" fontSize="20" styleName="render-button" color="#007A0A"
 								  />
 
 					</s:Group>
-					<mx:ViewStack id="ribbonViewStack" height="40" width="1000" visible="{toggleButtonBar.selectedIndex>=0}"
-								  >
-						<mx:HBox borderStyle="solid" label="File">
+					<mx:ViewStack backgroundColor="#EDEDED" id="ribbonViewStack"  visible="{toggleButtonBar.selectedIndex>=0}"
+					 width="1000" height="45" paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10" selectedIndex="1">
+						<mx:HBox label="File">
 							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
@@ -81,7 +78,7 @@
 						<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
 					</mx:ViewStack>
 				</s:Group>	
-				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0">
+				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0" styleName="mainCanvasArea">
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>
@@ -208,31 +205,15 @@
 				
 				this._template = _template;
 //				this.layersMap = new HashArray("name",false,_template.layers.toArray());
+				this.callLater(drawTransparentBackground);
+
 			}
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
-				populateTemplate();
+
 			}
-			
-			public function populateTemplate():void{
-				if(this.template!=null)
-				{
-					
-//					this.layers.removeAllChildren();
-//
-//					for each(var layer:Layer in this.template.layers){
-//						if(layer is WordLayer){
-//							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
-//							
-//							this.layers.addChild(canvas);
-//						}
-//					}
-					
-					drawTransparentBackground();
-				}
-				
-			}
+
 			
 			protected function btnRender_clickHandler(event:MouseEvent):void
 			{

@@ -23,10 +23,10 @@ package com.settinghead.wexpression.client.controller.main
 		override public function execute( note:INotification ) : void    
 		{
 			var app:WexpressionClient = WexpressionClient( note.getBody() );
+			facade.registerMediator(new ApplicationMediator(app.applicationComponent));	
 			facade.registerMediator( new TemplateEditorMediator( app.applicationComponent.templateEditor ) );
 			facade.registerMediator(new TuMediator(app.applicationComponent.tuRenderer));
 			facade.registerMediator(new ShopMediator(app.applicationComponent.shopItemList));
-			facade.registerMediator(new ApplicationMediator(app.applicationComponent));	
 		}
 	}
 }

@@ -53,7 +53,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		{
 			super(name, template, autoAddAndConnect);
 			if(width>0 && height>0){
-				this._img = new Bitmap(new BitmapData(width, height));
+				this._img = new Bitmap(new BitmapData(width, height,true, 0xccc));
 			}
 		}
 		
@@ -179,10 +179,13 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function getBrightness(x:int, y:int):Number {
-			var colour : int =getHSB(x,y);
-			var b:Number= (colour & 0xFF);
-			b/=255;
-			return b;
+			
+			var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
+			var alpha:uint = rgbPixel>> 24 & 0xFF;
+			if(alpha == 0) {
+				return NaN;
+			}
+			return ColorMath.getBrightness(rgbPixel);
 		}
 		
 		public function getHue(x:int, y:int):Number {
@@ -281,7 +284,9 @@ package com.settinghead.wexpression.client.model.vo.template
 //			if(x<0 || y<0 || x>width || y>height) return true;
 			if(x<0||y<0||x>directionBitmap.width||y>directionBitmap.height)
 				return false;
-			if(!directionBitmap.hitTestPoint(x,y,true)){
+			if(!directionBitmap.hitTestPoint(x,y,true) &&
+				//not transparent
+				((color.getPixel32(x,y) >> 24 &0xff)!=0)){
 				if(tolerance>=1) return true;
 				else return (ColorMath.dist(color.getPixel32(x,y), 
 						color.getPixel32(refX,refY)) <= tolerance

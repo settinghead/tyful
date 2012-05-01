@@ -3,6 +3,8 @@ package com.settinghead.wexpression.client.view
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.view.components.Application;
 	
+	import net.codestore.flex.Mask;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -27,6 +29,10 @@ package com.settinghead.wexpression.client.view
 				ApplicationFacade.TU_IMAGE_GENERATED,
 				ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_SAVED,
+				ApplicationFacade.DOWNLOAD_TEMPLATE,
+				ApplicationFacade.TEMPLATE_LOADED,
+				ApplicationFacade.TEMPLATE_UPLOADED,
+				ApplicationFacade.UPLOAD_TEMPLATE
 				
 			];
 		}
@@ -54,6 +60,17 @@ package com.settinghead.wexpression.client.view
 				case ApplicationFacade.TU_IMAGE_GENERATED:
 					applicationComponent.currentState = "withShop";
 					break;
+				
+				case ApplicationFacade.DOWNLOAD_TEMPLATE:
+					Mask.show("Loading template. ");
+					break;
+				
+				case ApplicationFacade.UPLOAD_TEMPLATE:
+					Mask.show("Saving template. ");
+					break;
+				case ApplicationFacade.TEMPLATE_LOADED:
+				case ApplicationFacade.TEMPLATE_UPLOADED:
+					Mask.close();
 			}
 		}
 		
