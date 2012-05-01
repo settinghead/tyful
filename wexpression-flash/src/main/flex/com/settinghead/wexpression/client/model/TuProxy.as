@@ -102,29 +102,35 @@ package com.settinghead.wexpression.client.model
 			//TODO
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
-			
+			if(pendingEword!=null)
+			{
+				if(tu.indexOffset+tu.currentWordIndex<tu.words.size - 1)
+					tu.indexOffset+=tu.words.size/40;
+				if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
+				{
+					tu.indexOffset = tu.words.size -1;
+				}
+				word = pendingEword.word;
+				pendingEword = null;
+			}
+			else{
 			word = tu.getNextWordAndIncrement();
-
+			}
 			if(word==null) return;
 			eWord = generateEngineWord(word);
 
 			if(eWord!=null){
-				placeWord(eWord);
-
-//				if (eWord.wasSkipped()){
-				while (eWord.wasSkipped()){
-					if(tu.indexOffset+tu.currentWordIndex==tu.words.size - 1)
-						break;
-					tu.indexOffset+=tu.words.size/40;
-					if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
-					{
-						tu.indexOffset = tu.words.size -1;
-						break;
-					}
-					eWord = generateEngineWord(word);
-					placeWord(eWord);
-				}				
-
+				placeWord(eWord);			
+				
+				if(eWord.wasSkipped() &&
+					tu.indexOffset+tu.currentWordIndex<tu.words.size - 1)
+					//store in pending eword and retry a smaller size
+					//in next round
+				{
+					pendingEword = eWord;
+					return;
+				}
+				
 				tu.pushEngineWord(eWord);
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
