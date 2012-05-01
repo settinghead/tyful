@@ -309,7 +309,7 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  _data = new ByteArray();
 			﻿  ﻿  ﻿  _data.endian = Endian.BIG_ENDIAN;
 
-			﻿  ﻿  ﻿  _data = constructVariablesPart(_data);
+			﻿  ﻿  ﻿  //_data = constructVariablesPart(_data);
 
 			﻿  ﻿  ﻿  asyncFilePointer = 0;
 			﻿  ﻿  ﻿  writtenBytes = 0;
@@ -329,7 +329,7 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  var postData:ByteArray = new ByteArray();
 			﻿  ﻿  ﻿  postData.endian = Endian.BIG_ENDIAN;
 
-			﻿  ﻿  ﻿  postData = constructVariablesPart(postData);
+			﻿  ﻿  ﻿  //postData = constructVariablesPart(postData);
 			﻿  ﻿  ﻿  postData = constructFilesPart(postData);
 			
 			﻿  ﻿  ﻿  postData = closeDataObject(postData);
@@ -344,27 +344,27 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  return postData;
 		﻿  ﻿  }
 		
-		﻿  ﻿  private function constructVariablesPart(postData:ByteArray):ByteArray
-		﻿  ﻿  {
-			﻿  ﻿  ﻿  var i:uint;
-			﻿  ﻿  ﻿  var bytes:String;
-			
-			﻿  ﻿  ﻿  for each(var name:String in _variableNames)
-			﻿  ﻿  ﻿  {
-				﻿  ﻿  ﻿  ﻿  postData = BOUNDARY(postData);
-				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-				﻿  ﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="' + name + '"';
-				﻿  ﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-					﻿  ﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-				﻿  ﻿  ﻿  ﻿  }
-				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-				﻿  ﻿  ﻿  ﻿  postData.writeUTFBytes(_variables[name]);
-				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-			﻿  ﻿  ﻿  }
-			
-			﻿  ﻿  ﻿  return postData;
-		﻿  ﻿  }
+//		﻿  ﻿  private function constructVariablesPart(postData:ByteArray):ByteArray
+//		﻿  ﻿  {
+//			﻿  ﻿  ﻿  var i:uint;
+//			﻿  ﻿  ﻿  var bytes:String;
+//			
+//			﻿  ﻿  ﻿  for each(var name:String in _variableNames)
+//			﻿  ﻿  ﻿  {
+//				﻿  ﻿  ﻿  ﻿  postData = BOUNDARY(postData);
+//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//				﻿  ﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="' + name + '"';
+//				﻿  ﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+//					﻿  ﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+//				﻿  ﻿  ﻿  ﻿  }
+//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//				﻿  ﻿  ﻿  ﻿  postData.writeUTFBytes(_variables[name]);
+//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//			﻿  ﻿  ﻿  }
+//			
+//			﻿  ﻿  ﻿  return postData;
+//		﻿  ﻿  }
 		
 		﻿  ﻿  private function constructFilesPart(postData:ByteArray):ByteArray
 		﻿  ﻿  {
@@ -396,19 +396,19 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  var bytes:String;
 			
 			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
-			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Upload"';
-			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-			﻿  ﻿  ﻿  }
-			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-			﻿  ﻿  ﻿  bytes = 'Submit Query';
-			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-			﻿  ﻿  ﻿  }
-			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
+//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Upload"';
+//			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+//				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+//			﻿  ﻿  ﻿  }
+//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+//			﻿  ﻿  ﻿  bytes = 'Submit Query';
+//			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+//				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+//			﻿  ﻿  ﻿  }
+//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
 			
 			﻿  ﻿  ﻿  return postData;
 		﻿  ﻿  }

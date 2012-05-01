@@ -3,6 +3,7 @@ package com.settinghead.wexpression.client.controller.main
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.WordShaper;
 	import com.settinghead.wexpression.client.controller.shop.LoadShopCommand;
+	import com.settinghead.wexpression.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.wexpression.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.wexpression.client.controller.template.NewTemplateCommand;
 	import com.settinghead.wexpression.client.controller.tu.GenerateTuCommand;
@@ -35,7 +36,7 @@ package com.settinghead.wexpression.client.controller.main
 			var mode:String = FlexGlobals.topLevelApplication.parameters.mode as String;
 			switch(mode){
 				case ApplicationFacade.MODE_EDIT_TEMPLATE:
-					this.addSubCommand(LoadTemplateCommand);
+					this.addSubCommand(DownloadTemplateCommand);
 					break;
 				case ApplicationFacade.MODE_RENDER_TU:
 					this.addSubCommand(GenerateTuCommand);

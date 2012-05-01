@@ -4,7 +4,6 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.model.TemplateProxy;
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.WordListProxy;
-	import com.settinghead.wexpression.client.model.business.TemplateDelegate;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
 	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;

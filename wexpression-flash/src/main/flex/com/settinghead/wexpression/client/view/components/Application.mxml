@@ -19,7 +19,7 @@
 
 	<mx:ViewStack id="vwStack" left="0" right="0" top="0" bottom="0"
 				  right.withShop="150">
-		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
 		<template:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" />
+		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
 	</mx:ViewStack>
 </s:Group>

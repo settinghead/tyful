@@ -22,7 +22,7 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				 template  = new TemplateVO(null);
+				 template  = new TemplateVO();
 				var l:WordLayer = new WordLayer("layer0", template);
 				l.path = "templates/heart.png" ;
 				l.loadLayerFromPNG(layerLoadFinished);

@@ -2,7 +2,6 @@ package com.settinghead.wexpression.client.model
 {
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.settinghead.wexpression.client.ApplicationFacade;
-	import com.settinghead.wexpression.client.model.business.WordListDelegate;
 	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
 	

@@ -13,7 +13,7 @@ package com.settinghead.wexpression.client.model.zip
 					return new TemplateVO();
 					break;
 				case "WordLayer":
-					return new WordLayer("layer"+name, grandParent);
+					return new WordLayer("layer"+name, grandParent, -1, -1, false);
 					break;
 				case "InverseWordLayer":
 					return new InverseWordLayer();

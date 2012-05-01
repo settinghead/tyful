@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.model.zip
 {
 	import com.adobe.serialization.json.JSONDecoder;
+	import com.settinghead.wexpression.client.model.vo.template.Layer;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import flash.display.Bitmap;
@@ -32,6 +33,7 @@ package com.settinghead.wexpression.client.model.zip
 			for each(var e:ZipEntry in file.entries){
 				process(e, t);
 			}
+			t.connectLayers();
 			return t;
 		}
 		
@@ -64,25 +66,29 @@ package com.settinghead.wexpression.client.model.zip
 			else if(endWith(name, ".png")){
 				parent[name.substr(0,name.length-4)] = readBitmapFromPNGFile(e);
 			}
-			else if(numericalName)
+			else if(numericalName) //array entry
 			{
 				var index:int = parseInt(name);
-				//expand to fit capacity
-				while(parent.length < index+1){
-					if(parent is ArrayCollection)
-						(parent as ArrayCollection).addItem(null);
-					else if(parent is Vector)
-						parent.push(null);
-					else if(parent is Array)
-						(parent as Array).push(null);
-				}
-				if(parent[index]==undefined || parent[index]==null){
-					//determine instance type
-					var childName:String = (index+1).toString();
-//					if(grandParent is IZippable)
-//						childName = (grandParent as IZippable).type + childName;
-					parent[index] = instantiateInstance(e,childName,parent,grandParent,start,end);
-				}
+				
+					//expand to fit capacity
+					while(parent.length < index+1){
+						if(parent is ArrayCollection)
+							(parent as ArrayCollection).addItem(null);
+						else if(parent is Vector)
+							parent.push(null);
+						else if(parent is Array)
+							(parent as Array).push(null);
+					}
+					
+					if(parent[index]==undefined || parent[index]==null){
+						//determine instance type
+	//					if(grandParent is IZippable)
+	//						childName = (grandParent as IZippable).type + childName;
+						var childName:String = (index+1).toString();
+						var ins:* = instantiateInstance(e,childName,parent,grandParent,start,end);
+						parent[index] = ins;
+					}
+				
 				processCurrent(e, end+1, nextPos(e.name, end), parent[index], parent);
 			}
 			else{

@@ -18,6 +18,7 @@ package com.settinghead.wexpression.client.model
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
 	
@@ -38,6 +39,7 @@ package com.settinghead.wexpression.client.model
 		public static const SRNAME:String = "TemplateSRProxy";
 		private var _pathToLoad:String;
 		private var urlLoader : MultipartURLLoader;
+		public var templateIdToLoad:String = null;
 
 		public function TemplateProxy( )
 		{
@@ -48,18 +50,24 @@ package com.settinghead.wexpression.client.model
 			this._pathToLoad = path;
 			load();
 		}
-		
+		private var loader : URLLoader;
+
 		public function load() :void{
-			if(_pathToLoad!=null){
-				template = new TemplateVO(_pathToLoad);
-				var l:WordLayer = new WordLayer("layer1", template);
-				//TODO: different path for template and layer PNG
-				l.path = _pathToLoad;
-				l.loadLayerFromPNG(templateLoadComplete);
-			}
+				var request : URLRequest
+				= new URLRequest  (FlexGlobals.topLevelApplication.parameters.templateUrl + this.templateIdToLoad);
+				var urlVariables : URLVariables = new URLVariables ();
+				request.data = urlVariables;
+				request.method = URLRequestMethod.GET;
+				loader = new URLLoader ();
+				loader.addEventListener( Event.COMPLETE, fileLoaded );
+				loader.dataFormat = URLLoaderDataFormat.BINARY;
+				loader.load ( request );
 		}
-		
-		private function templateLoadComplete(event:Event):void{	
+	
+		public function fileLoaded(e:Event):void{
+			var obj:Object = loader.data;
+			var b:ByteArray = (obj as Object) as ByteArray;
+			this.fromFile(b);
 			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
 			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 		}
@@ -88,7 +96,7 @@ package com.settinghead.wexpression.client.model
 		
 		public function newTemplate():void{
 			template = new TemplateVO();
-			var layer:Layer = new WordLayer("Layer1", template, 800, 600);
+			var layer:Layer = new WordLayer("layer1", template, 800, 600);
 //			template.layers.addItem(new WordLayer("Layer1", template));
 			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED);
 		}

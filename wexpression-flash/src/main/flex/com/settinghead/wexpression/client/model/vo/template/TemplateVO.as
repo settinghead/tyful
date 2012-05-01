@@ -58,7 +58,6 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number= 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
-		private var _path:String;
 		private var _sizer:WordSizer;
 		private var _fonter:WordFonter;
 		private var _colorer:WordColorer;
@@ -79,21 +78,18 @@ package com.settinghead.wexpression.client.model.vo.template
 		// Frame frame = new Frame("Roseindia.net");
 		private var _layers:ArrayCollection =  new ArrayCollection();
 		
-		public function TemplateVO(path:String = null)
+		public function TemplateVO()
 		{
-			this._path = path;
 		}
 		
 		public function get layers():ArrayCollection{
 			return this._layers;
 		}
-		
-		public function get path():String{
-			return _path;
-		}
-		
-		public function set path(p:String):void{
-			this._path = p;
+
+		public function connectLayers():void{
+			for(var i:int=0;i<layers.length;i++){
+				if(i>0) Layer.connect( (layers[i-1] as Layer),(layers[i] as Layer)); 
+			}
 		}
 		
 		public function get width():Number{
@@ -206,10 +202,10 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function saveProperties(dict:Object):void{
-			dict.path = this._path;
 			dict.width = this._width;
 			dict.height = this._height;
 			dict.dilligence = this.dilligence;
+			dict.tolerance = this.tolerance;
 		}
 		
 		public function get type():String{

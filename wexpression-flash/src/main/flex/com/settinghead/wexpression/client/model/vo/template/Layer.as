@@ -65,15 +65,17 @@ package com.settinghead.wexpression.client.model.vo.template
 			this._name = v;
 		}
 		
-		public function Layer(n:String, template:TemplateVO){
+		public function Layer(n:String, template:TemplateVO, autoAddAndConnect:Boolean = true){
 			this.name = n;
 			this._template = template;
-			if(this._template.layers.length>0)
-			{
-				connect(this, this._template.layers[this._template.layers.length-1] as Layer);
-					
+			if(autoAddAndConnect){
+				if(this._template.layers.length>0)
+				{
+					connect(this, this._template.layers[this._template.layers.length-1] as Layer);
+						
+				}
+				this._template.layers.addItem(this);
 			}
-			this._template.layers.addItem(this);
 		}
 		
 		public function get width():Number{

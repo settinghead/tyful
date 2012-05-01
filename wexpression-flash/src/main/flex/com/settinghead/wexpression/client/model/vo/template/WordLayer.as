@@ -49,9 +49,9 @@ package com.settinghead.wexpression.client.model.vo.template
 	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
-		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1)
+		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1, autoAddAndConnect:Boolean = true)
 		{
-			super(name, template);
+			super(name, template, autoAddAndConnect);
 			if(width>0 && height>0){
 				this._img = new Bitmap(new BitmapData(width, height));
 			}

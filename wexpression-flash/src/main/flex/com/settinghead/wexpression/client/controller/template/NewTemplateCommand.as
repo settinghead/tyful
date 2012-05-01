@@ -2,7 +2,6 @@ package com.settinghead.wexpression.client.controller.template
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
 	import com.settinghead.wexpression.client.model.TemplateProxy;
-	import com.settinghead.wexpression.client.model.business.TemplateDelegate;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	
 	import flash.utils.ByteArray;
