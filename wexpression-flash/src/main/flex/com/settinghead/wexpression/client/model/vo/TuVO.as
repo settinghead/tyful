@@ -105,16 +105,6 @@ package com.settinghead.wexpression.client.model.vo
 			return _words;
 		}
 		
-		private var _finishedDisplayWordRendering:Boolean = false;
-		public function get finishedDisplayWordRendering():Boolean{
-			 return this._finishedDisplayWordRendering;
-		}
-		
-		public function set finishedDisplayWordRendering(f:Boolean):void{
-			this._finishedDisplayWordRendering = f;
-		}
-		
-		
 		public function getNextWordAndIncrement():WordVO{
 			return words.itemAt(++_currentWordIndex % words.size) as WordVO;
 		}

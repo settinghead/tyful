@@ -33,7 +33,7 @@ package com.settinghead.wexpression.client.view
 		override public function listNotificationInterests():Array
 		{
 			return [
-				ApplicationFacade.TU_GENERATED,
+				ApplicationFacade.TU_IMAGE_GENERATED,
 			];
 		}
 		
@@ -41,7 +41,7 @@ package com.settinghead.wexpression.client.view
 		{
 			switch ( note.getName() )
 			{
-				case ApplicationFacade.TU_GENERATED:
+				case ApplicationFacade.TU_IMAGE_GENERATED:
 					shopItemList.img =  (note.getBody() as TuVO).generatedImage;
 					shopItemList.list = shopProxy.shop;
 					break;

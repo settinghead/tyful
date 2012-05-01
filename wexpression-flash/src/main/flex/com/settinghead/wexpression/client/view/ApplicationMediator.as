@@ -24,7 +24,7 @@ package com.settinghead.wexpression.client.view
 		{
 			return [
 				ApplicationFacade.RENDER_TU,
-				ApplicationFacade.TU_GENERATED,
+				ApplicationFacade.TU_IMAGE_GENERATED,
 				ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_SAVED,
 				
@@ -51,7 +51,7 @@ package com.settinghead.wexpression.client.view
 					applicationComponent.parent.stage.focus = applicationComponent.templateEditor; 
 					break;
 				
-				case ApplicationFacade.TU_GENERATED:
+				case ApplicationFacade.TU_IMAGE_GENERATED:
 					applicationComponent.currentState = "withShop";
 					break;
 			}

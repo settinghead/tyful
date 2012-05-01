@@ -32,7 +32,7 @@
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
 			
-			public static const CREAT_NEXT_DISPLAYWORD:String = "createNextDisplayWord";
+			public static const CHECK_CREATE_NEXT_DISPLAYWORD:String = "checkCreateNextDisplayWord";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const TU_GENERATED:String = "tuGenerated";
 			
@@ -175,16 +175,7 @@
 					if(newTu && this.tu!=null){
 						prepareForTu();
 					}
-					if(_tu!=null){
-						if(!_tu.finishedDisplayWordRendering){
-							dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
-						}
-						else{
-							if(_tu.generatedImage==null){
-								generateImage();
-							}
-						}
-					}
+					dispatchEvent(new Event(CHECK_CREATE_NEXT_DISPLAYWORD));
 				}
 			}
 			
@@ -197,7 +188,6 @@
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
 				bmpData.draw(mainCanvas, scaleM);
 				_tu.generatedImage = bmpData;
-				tu.finishedDisplayWordRendering = true;
 				dispatchEvent(new Event(TU_GENERATED));
 			}
 			

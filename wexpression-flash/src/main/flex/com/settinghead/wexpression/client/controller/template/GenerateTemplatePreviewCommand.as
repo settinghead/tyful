@@ -41,7 +41,7 @@ package com.settinghead.wexpression.client.controller.template
 			tuProxy.previewGenerationResponder = this;
 			var tu:TuVO = new TuVO(template,wordListProxy.sampleWordList());
 			tuProxy.tu = tu;
-			sendNotification(ApplicationFacade.GENERATE_TU);
+			sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
 		}
 		
 		public function result(data:Object):void

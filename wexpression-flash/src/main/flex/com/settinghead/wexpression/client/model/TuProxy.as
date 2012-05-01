@@ -33,6 +33,7 @@ package com.settinghead.wexpression.client.model
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -52,11 +53,29 @@ package com.settinghead.wexpression.client.model
 		
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
+		private var _startTime:int;
+		private var _rendering:Boolean = false;
 		
 		public function TuProxy()
 		{
 			super(NAME, new ArrayCollection());
-
+		}
+		
+		public function markStartRendering():void{
+			_rendering = true;
+			_startTime = getTimer();
+		}
+		
+		public function markStopRendering():void{
+			_rendering = false;
+		}
+		
+		public function get rendering():Boolean{
+			return _rendering;
+		}
+		
+		public function get startTime():int{
+			return _startTime;
 		}
 		
 		// return data property cast to proper type
@@ -145,11 +164,18 @@ package com.settinghead.wexpression.client.model
 					if (failureCount > tu.template.dilligence){
 //						tu.skipToLast();
 						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+						markStopRendering();
 					}
 
 				}
-
-				if(tu.finishedDisplayWordRendering && this.previewGenerationResponder!=null){
+				
+				if(getTimer() - startTime > 9000)
+					//timed out; display generate image even if unfinished
+				{
+					facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
+				}
+				
+				if(!rendering && this.previewGenerationResponder!=null){
 					tu.template.previewPNG = PNGEncoder.encode(tu.generatedImage);
 					this.previewGenerationResponder.result(tu.template);
 				}

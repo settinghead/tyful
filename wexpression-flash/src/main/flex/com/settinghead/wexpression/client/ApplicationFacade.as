@@ -17,9 +17,9 @@ package com.settinghead.wexpression.client
 	{
 		public static const STARTUP:String                = "startup";
 		public static const RENDER_TU:String             = "renderTu";
-		public static const TU_GENERATED:String             = "tuGenerated";
+		public static const TU_IMAGE_GENERATED:String             = "tuImageGenerated";
 		public static const EDIT_TEMPLATE:String             = "editTemplate";
-		public static const GENERATE_TU:String			  = "generateTu";
+		public static const GENERATE_TU_IMAGE:String			  = "generateTuImage";
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
 		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
 		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
@@ -61,8 +61,8 @@ package com.settinghead.wexpression.client
 			registerCommand (UPLOAD_TEMPLATE, UploadTemplateCommand);
 			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (GENERATE_TEMPLATE_PREVIEW, GenerateTemplatePreviewCommand);
-			registerCommand (GENERATE_TU, GenerateTuCommand);
-			registerCommand ( TU_GENERATED, PrepSampleShopCommand);
+			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
+			registerCommand ( TU_IMAGE_GENERATED, PrepSampleShopCommand);
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 		}
 		
