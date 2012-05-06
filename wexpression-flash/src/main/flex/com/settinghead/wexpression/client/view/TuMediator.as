@@ -58,6 +58,13 @@ package com.settinghead.wexpression.client.view
 					break;
 				case ApplicationFacade.TU_GENERATION_LAST_CALL:
 					tuRenderer.generateImage();
+					if(tuProxy.generateTemplatePreview){
+						tuProxy.tu.template.preview = tuProxy.tu.generatedImage;
+						tuProxy.generateTemplatePreview = false;
+
+						sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
+						
+					}
 					break;
 				case ApplicationFacade.TU_IMAGE_GENERATED:
 					if(tuRenderer.autoPostToFacebook) tuProxy.postToFacebook();

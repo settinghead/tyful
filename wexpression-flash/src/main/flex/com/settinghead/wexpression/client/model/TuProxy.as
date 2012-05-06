@@ -15,9 +15,9 @@ package com.settinghead.wexpression.client.model
 	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
 	import com.settinghead.wexpression.client.model.vo.TextShapeVO;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
+	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.wordlist.WordVO;
-	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
 	import com.settinghead.wexpression.client.nudger.WordNudger;
 	import com.settinghead.wexpression.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.wexpression.client.placer.WordPlacer;
@@ -55,6 +55,8 @@ package com.settinghead.wexpression.client.model
 		private var _wordList:WordListVO;
 		private var _startTime:int;
 		private var _rendering:Boolean = false;
+		
+		public var generateTemplatePreview:Boolean = false;
 		
 		public function TuProxy()
 		{
@@ -103,15 +105,7 @@ package com.settinghead.wexpression.client.model
 		public function set wordList(wl:WordListVO):void{
 			this._wordList = wl;
 		}
-		
-		private var _previewGenerationResponder:IResponder;
-		public function get previewGenerationResponder():IResponder{
-			return _previewGenerationResponder;
-		}
 
-		public function set previewGenerationResponder(r:IResponder):void{
-			this._previewGenerationResponder = r;
-		}
 		
 		private var failureCount:int = 0;
 		
@@ -161,11 +155,11 @@ package com.settinghead.wexpression.client.model
 					failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > tu.template.dilligence){
+					if (failureCount > tu.template.perseverance){
 //						tu.skipToLast();
 						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+						
 						markStopRendering();
-					}
 
 				}
 				
@@ -174,10 +168,6 @@ package com.settinghead.wexpression.client.model
 				{
 					facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
 				}
-				
-				if(!rendering && this.previewGenerationResponder!=null){
-					tu.template.previewPNG = PNGEncoder.encode(tu.generatedImage);
-					this.previewGenerationResponder.result(tu.template);
 				}
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}
@@ -305,7 +295,7 @@ package com.settinghead.wexpression.client.model
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 5
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 5 * tu.template.diligence;
 				* (1+ Math.random() * 0.4)
 				;
 			//			var area:Number = p.getWidth() * p.getHeight();

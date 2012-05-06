@@ -56,7 +56,7 @@ package com.settinghead.wexpression.client.model.vo.template
 	{
 		private var tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
-		private static const SAMPLE_DISTANCE:Number= 100;
+		private static const SAMPLE_DISTANCE:Number = 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 		private var _sizer:WordSizer;
 		private var _fonter:WordFonter;
@@ -68,9 +68,10 @@ package com.settinghead.wexpression.client.model.vo.template
 //		private var hsbArray:Array;
 		private var _patchIndex:DensityPatchIndex;
 		private var _width:Number, _height:Number;
-		private var _previewPNG: ByteArray;
+		private var _previewPNG: BitmapData;
 		public var mixColorDistance:int = 5;
-		public var dilligence:int = 8;
+		public var perseverance:int = 8;
+		public var diligence:int = 8;
 		public var id:String = null;
 		public var tolerance:Number = 0.2;
 
@@ -120,11 +121,11 @@ package com.settinghead.wexpression.client.model.vo.template
 			_height = v;
 		}
 		
-		public function get previewPNG():ByteArray{
+		public function get preview():BitmapData{
 			return _previewPNG;
 		}
 		
-		public function set previewPNG(p:ByteArray):void{
+		public function set preview(p:BitmapData):void{
 			 _previewPNG = p;
 		}
 		
@@ -186,7 +187,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
-			output.putBytesToFile("preview.png", previewPNG);
+			output.putBitmapDataToPNGFile("preview.png", preview);
 			output.process(this.layers, "layers");
 			output.process(this.fonter, "fonter");
 			output.process(this.sizer, "sizer");
@@ -204,7 +205,8 @@ package com.settinghead.wexpression.client.model.vo.template
 		public function saveProperties(dict:Object):void{
 			dict.width = this._width;
 			dict.height = this._height;
-			dict.dilligence = this.dilligence;
+			dict.perseverance = this.perseverance;
+			dict.diligence = this.diligence;
 			dict.tolerance = this.tolerance;
 		}
 		

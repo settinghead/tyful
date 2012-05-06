@@ -61,7 +61,7 @@ package com.settinghead.wexpression.client.model.vo.template
 		private var _colorSheet:Bitmap;
 		private var _tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
-		public static const SAMPLE_DISTANCE:Number= 100;
+		public static const SAMPLE_DISTANCE:Number= 20;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 		private var _path:String;
 		private var _colorer:WordColorer;

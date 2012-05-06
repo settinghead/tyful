@@ -5,8 +5,8 @@ package com.settinghead.wexpression.client.controller.template
 	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.model.WordListProxy;
 	import com.settinghead.wexpression.client.model.vo.TuVO;
-	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+	import com.settinghead.wexpression.client.model.vo.wordlist.WordListVO;
 	
 	import flash.net.Responder;
 	
@@ -14,45 +14,54 @@ package com.settinghead.wexpression.client.controller.template
 	import mx.managers.CursorManager;
 	import mx.rpc.IResponder;
 	
+	import net.codestore.flex.Mask;
+	
 	import org.as3commons.collections.utils.NullComparator;
 	import org.as3commons.lang.Assert;
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
-	public class GenerateTemplatePreviewCommand extends SimpleCommand implements IResponder
+	public class GenerateTemplatePreviewCommand extends SimpleCommand
 	{
 		
 		private var tuProxy:TuProxy ;
+		private var templateProxy:TemplateProxy ;
 		
 		private var responder:IResponder;
 
 		public function GenerateTemplatePreviewCommand(){
 			super();
-			this.tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
 		}
 		
-		override public function execute( note:INotification ) : void    {
-			this.responder = note.getBody() as IResponder;
-			var template:TemplateVO = note.getBody() as TemplateVO;
-			Assert.notNull(template);
-			tuProxy.setData(template);
-			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
-			tuProxy.previewGenerationResponder = this;
-			var tu:TuVO = new TuVO(template,wordListProxy.sampleWordList());
-			tuProxy.tu = tu;
-			sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
-		}
-		
-		public function result(data:Object):void
+		override public function execute( note:INotification ) : void  
 		{
-			tuProxy.previewGenerationResponder = null;
-			responder.result(data);
+					//this.responder = note.getBody() as IResponder;
+					var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+					var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+					
+					var template:TemplateVO = templateProxy.template;
+					Assert.notNull(template);
+					tuProxy.setData(template);
+					var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
+					//tuProxy.previewGenerationResponder = this;
+					var tu:TuVO = new TuVO(template,wordListProxy.sampleWordList());
+					tuProxy.tu = tu;
+					tuProxy.generateTemplatePreview = true;
+					Mask.show("I am creating a sample artwork for your template so that others can see what your template looks like. Just a moment.");
+					sendNotification(ApplicationFacade.RENDER_TU);
+	
 		}
 		
-		public function fault(info:Object):void
-		{
-			CursorManager.removeBusyCursor();
-			responder.fault(info);
-		}
+//		public function result(data:Object):void
+//		{
+//			tuProxy.previewGenerationResponder = null;
+//			responder.result(data);
+//		}
+//		
+//		public function fault(info:Object):void
+//		{
+//			CursorManager.removeBusyCursor();
+//			responder.fault(info);
+//		}
 	}
 }

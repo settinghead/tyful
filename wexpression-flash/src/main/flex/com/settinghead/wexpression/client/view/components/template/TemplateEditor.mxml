@@ -245,8 +245,10 @@
 				
 				cvnTransparentBackground.width = this.template.width;
 				cvnTransparentBackground.height = this.template.height;
-				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
-				cvnTransparentBackground.graphics.drawRect(0, 0, this.template.width, this.template.height);
+				cvnTransparentBackground.graphics.
+					beginBitmapFill(bmpdTile,null,true,true);
+				cvnTransparentBackground.graphics.drawRect(
+					0, 0, this.template.width, this.template.height);
 				cvnTransparentBackground.graphics.endFill();
 			}
 			
@@ -268,7 +270,8 @@
 			
 			protected function btnAddLayer_clickHandler(event:MouseEvent):void
 			{
-				new WordLayer("layer"+(template.layers.length+1).toString(),template);
+				new WordLayer(
+					"layer"+(template.layers.length+1).toString(),template);
 			}
 			
 			private function layers_itemRendererFunc(item:Object):ClassFactory {
@@ -278,7 +281,8 @@
 					cla = TextFlowCanvas;
 				}
 				var renderer:ClassFactory = new ClassFactory(cla);
-				renderer.properties = {templateEditor: this, depth: template.layers.length};
+				renderer.properties = 
+					{templateEditor: this, depth: template.layers.length};
 				return renderer;
 			}
 			

@@ -68,7 +68,6 @@ package com.settinghead.wexpression.client.view
 					ExternalInterface.call("setTemplateId", notification.getBody().toString());
 					break;
 				case ApplicationFacade.UPLOAD_TEMPLATE:
-					ExternalInterface.call("submitForm");
 					break;
 				case ApplicationFacade.NEW_TEMPLATE:
 					templateEditor.newTemplate();
@@ -100,7 +99,8 @@ package com.settinghead.wexpression.client.view
 		
 		private function saveTemplate( event:Event = null ):void
 		{
-			facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
+			
+				facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
 		}
 		private var ref:FileReference;
 		private function openTemplate(event:Event = null):void{

@@ -15,7 +15,7 @@
 			import spark.components.Button;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
-			private var _thickness:Number = 20;
+			private var _thickness:Number = 55;
 			
 			public static const BUTTON_WIDTH:Number = 30;
 			

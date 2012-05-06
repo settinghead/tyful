@@ -98,8 +98,6 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 						this.drawingState = false;
 		}
 		
-		
-		
 		protected function this_mouseOverHandler(event:MouseEvent):void
 		{
 			Mouse.hide();
@@ -185,6 +183,10 @@ package com.settinghead.wexpression.client.view.components.template.canvas
 				textLayer.graphics.beginBitmapFill(a.bitmapData,m,true, true);
 				textLayer.graphics.drawCircle(0, 0, thickness/2);
 				textLayer.graphics.endFill();
+				
+				while(cursor.numChildren>0)
+					cursor.removeChildAt(0);
+				cursor.graphics.clear();
 				
 				cursor.width = colorLayer.width;
 				cursor.height = colorLayer.height;

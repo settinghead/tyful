@@ -54,24 +54,25 @@ package com.settinghead.wexpression.client.model
 				loader = new URLLoader ();
 				loader.addEventListener( Event.COMPLETE, jsonLoaded );
 				loader.load ( request );
-
 			}
 		}
 		
 		public function jsonLoaded(e:Event):void{
-			var obj:Object = new JSONDecoder(loader.data as String,false).getValue();
-			if(obj is Array){
+			var obj:Object;
+			if(loader.data as String == "pending" ||
+				!((obj = 
+				new JSONDecoder(loader.data as String,false).getValue()) 
+					is Array)
+			){
+				setTimeout(load,3000);
+			}
+			else{
 				var l:Array = (obj as Object) as Array;
 				var wordList:WordListVO = new WordListVO(l);
 				this._list = wordList;
 			}
-			else{
-				//retry
-				setTimeout(load,3000);
-			}
 		}
 	
-		
 		public function get currentWordList():WordListVO{
 			return _list;
 		}
@@ -81,8 +82,8 @@ package com.settinghead.wexpression.client.model
 			for(var i:int=0;i<1000;i++){
 				list.add(new WordVO("Art", Math.random()*5+0.5));
 				list.add(new WordVO("Sample", Math.random()*5+0.5));
-				list.add(new WordVO("Created by Wexpression", Math.random()*5+0.5));
-				list.add(new WordVO("typography", Math.random()*5+0.5));
+				list.add(new WordVO("Wenwentu", Math.random()*5+0.5));
+				list.add(new WordVO("Create your own", Math.random()*5+0.5));
 			}
 			return list;
 		}

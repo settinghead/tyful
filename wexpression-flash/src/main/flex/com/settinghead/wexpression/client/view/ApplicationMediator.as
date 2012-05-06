@@ -1,6 +1,7 @@
 package com.settinghead.wexpression.client.view
 {
 	import com.settinghead.wexpression.client.ApplicationFacade;
+	import com.settinghead.wexpression.client.model.TuProxy;
 	import com.settinghead.wexpression.client.view.components.Application;
 	
 	import net.codestore.flex.Mask;
@@ -11,7 +12,8 @@ package com.settinghead.wexpression.client.view
 	public class ApplicationMediator extends Mediator
 	{
 		public static const NAME:String = "ApplicationMediator";
-
+		private var tuProxy:TuProxy;
+		
 		public function ApplicationMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
@@ -19,7 +21,7 @@ package com.settinghead.wexpression.client.view
 		
 		override public function onRegister():void
 		{
-			
+			this.tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
 		}
 		
 		override public function listNotificationInterests():Array
@@ -32,7 +34,9 @@ package com.settinghead.wexpression.client.view
 				ApplicationFacade.DOWNLOAD_TEMPLATE,
 				ApplicationFacade.TEMPLATE_LOADED,
 				ApplicationFacade.TEMPLATE_UPLOADED,
-				ApplicationFacade.UPLOAD_TEMPLATE
+				ApplicationFacade.UPLOAD_TEMPLATE,
+				ApplicationFacade.GENERATE_TEMPLATE_PREVIEW,
+				ApplicationFacade.TEMPLATE_PREVIEW_GENERATED
 				
 			];
 		}
@@ -65,12 +69,11 @@ package com.settinghead.wexpression.client.view
 					Mask.show("Loading template. ");
 					break;
 				
-				case ApplicationFacade.UPLOAD_TEMPLATE:
-					Mask.show("Saving template. ");
-					break;
 				case ApplicationFacade.TEMPLATE_LOADED:
 				case ApplicationFacade.TEMPLATE_UPLOADED:
+				case ApplicationFacade.TEMPLATE_PREVIEW_GENERATED:
 					Mask.close();
+					break;
 			}
 		}
 		

@@ -64,7 +64,7 @@
 				if(this._colorPattern==null){
 					if(colors.length==0){
 						//if no color, add transparent color
-						var color:MutableUint = new MutableUint(0xffffff);
+						var color:MutableUint = new MutableUint(0x1B94E0);
 						color.addEventListener("UintChanged", colorArrayChange);
 						colors.addItem(color);
 					}

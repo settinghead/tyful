@@ -16,9 +16,9 @@
 			import spark.components.Button;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
-			private var _angle:Number = 0;
+			private var _angle:Number = 0.1;
 			
-			public static const BUTTON_WIDTH:Number = 30;
+			public static const BUTTON_WIDTH:Number = 25;
 			
 			[Bindable(event="AngleChanged")]
 			public function get angle():Number{
