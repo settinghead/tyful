@@ -10,6 +10,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.types.Post;
 import com.restfb.types.User;
+import com.settinghead.wenwentu.service.model.Word;
 
 import cue.lang.Counter;
 import cue.lang.WordIterator;

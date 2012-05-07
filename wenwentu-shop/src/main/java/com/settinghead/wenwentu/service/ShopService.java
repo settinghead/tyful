@@ -40,6 +40,10 @@ public class ShopService {
 					Protocol.DEFAULT_TIMEOUT, redisURI.getUserInfo().split(":",
 							2)[1]);
 			Jedis jedis = pool.getResource();
+			String dbStr = System.getenv("REDISTOGO_DB");
+			if(dbStr!=null){
+				jedis.select(Integer.parseInt(dbStr));
+			}
 			// set generic shop
 			jedis.set("shop_generic", toJsonStr(ShopPredictor.getGenericShop()));
 

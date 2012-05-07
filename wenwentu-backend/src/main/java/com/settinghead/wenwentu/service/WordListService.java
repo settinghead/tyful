@@ -13,6 +13,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.restfb.types.Post;
+import com.settinghead.wenwentu.service.model.Task;
+import com.settinghead.wenwentu.service.model.Word;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -25,7 +27,6 @@ public class WordListService {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7273080441350794168L;
 	static Logger logger = Logger.getLogger(WordListService.class.getName());
 
 	/**
@@ -52,89 +53,61 @@ public class WordListService {
 			public void run() {
 				try {
 					URI redisURI = new URI(System.getenv("REDISTOGO_URL"));
+					
 					final JedisPool pool = new JedisPool(new JedisPoolConfig(),
 							redisURI.getHost(), redisURI.getPort(),
 							Protocol.DEFAULT_TIMEOUT, redisURI.getUserInfo()
 									.split(":", 2)[1]);
+					
 					Jedis jedis = pool.getResource();
-
-					try {
-						JedisPubSub jedissubSub = new JedisPubSub() {
-
-							@Override
-							public void onUnsubscribe(String channel,
-									int subscribedChannels) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onSubscribe(String channel,
-									int subscribedChannels) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onPUnsubscribe(String pattern,
-									int subscribedChannels) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onPSubscribe(String pattern,
-									int subscribedChannels) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onPMessage(String pattern,
-									String channel, String message) {
-								logger.info(message);
-								ObjectMapper mapper = new ObjectMapper();
-								Task task;
-								try {
-									task = mapper
-											.readValue(message, Task.class);
-									Jedis jedis2 = pool.getResource();
-									if (jedis2.get("wl_" + task.getProvider()
-											+ "_") == null) {
-										List<Post> messages = FacebookRetriever
-												.getMessages(task.getUid(),
-														task.getToken());
-										List<Word> wordList = FacebookRetriever
-												.parseWordList(task.getUid(),
-														task.getToken(),
-														messages);
-										StringWriter sw = new StringWriter();
-										mapper.writeValue(sw, wordList);
-										jedis2.set("wl_" + task.getProvider()
-												+ "_" + task.getUid(),
-												sw.toString());
-										logger.info("wl_" + task.getProvider()
-												+ "_" + task.getUid()
-												+ " written to cache.");
-									}
-								} catch (Exception e) {
-									logger.warning(e.getMessage());
-								}
-
-							}
-
-							@Override
-							public void onMessage(String channel, String message) {
-							}
-						};
-						jedis.psubscribe(jedissubSub, "q_facebook");
-
-					} finally {
-						// / ... it's important to return the Jedis instance to
-						// the pool
-						// once you've finished using it
-						pool.returnResource(jedis);
+					String dbStr = System.getenv("REDISTOGO_DB");
+					if(dbStr!=null){
+						jedis.select(Integer.parseInt(dbStr));
 					}
+					while (true) {
+						String message;
+						if ((message = jedis.lpop("q")) != null) {
+							logger.info(message);
+							ObjectMapper mapper = new ObjectMapper();
+							Task task;
+							try {
+								task = mapper.readValue(message, Task.class);
+								Jedis jedis2 = pool.getResource();
+								String oldMessage;
+								if ((oldMessage = jedis2.get("wl_"
+										+ task.getProvider() + "_")) == null
+										|| !oldMessage.equals("pending")) {
+									jedis2.setex("wl_" + task.getProvider()
+											+ "_" + task.getUid(), 600,
+											"pending");
+									List<Post> messages = FacebookRetriever
+											.getMessages(task.getUid(),
+													task.getToken());
+									List<Word> wordList = FacebookRetriever
+											.parseWordList(task.getUid(),
+													task.getToken(), messages);
+									StringWriter sw = new StringWriter();
+									mapper.writeValue(sw, wordList);
+									jedis2.setex("wl_" + task.getProvider()
+											+ "_" + task.getUid(), 14400,
+											sw.toString());
+									logger.info("wl_" + task.getProvider()
+											+ "_" + task.getUid()
+											+ " written to cache.");
+								}
+							} catch (Exception e) {
+								logger.warning(e.getMessage());
+							}
+						}
+
+						try {
+							Thread.sleep(300);
+						} catch (InterruptedException e) {
+							logger.severe(e.getMessage());
+						}
+
+					}
+
 				} catch (URISyntaxException e) {
 					// URI couldn't be parsed. Handle exception
 				}
