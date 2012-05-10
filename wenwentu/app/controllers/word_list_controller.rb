@@ -18,10 +18,15 @@ class WordListController < ApplicationController
   def show
     str = nil
     @l = {}
-    
     if(params[:id]=='recent')
       if session.has_key?('omniauth')
-        str = REDIS.get('wl_'+session[:omniauth].provider+'_'+session[:omniauth].uid) 
+        str = REDIS.get('wl_'+session[:omniauth].provider+'_'+session[:omniauth].uid)
+        if(str=='pending')
+          @l = {:status => 'pending'}
+        else
+          WordListController.push_wordlist_task(session[:omniauth],current_user)
+          @l = {:status => 'requested'}
+        end
       else
         @l = {:error => 'not logged in'}
       end
