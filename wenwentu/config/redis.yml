@@ -10,8 +10,8 @@ test:
 #  namespace: wenwentu_test
 
 production:
-  host: herring.redistogo.com
-  port: 9908
-  password: f2b8629f3024c28a1768d4a661786397
-  
+#  host: herring.redistogo.com
+#  port: 9908
+#  password: f2b8629f3024c28a1768d4a661786397
+ db:  2 
 #  namespace: wenwentu_prod
