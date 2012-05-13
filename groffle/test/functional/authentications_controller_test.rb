@@ -6,7 +6,7 @@ class AuthenticationsControllerTest < ActionController::TestCase
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:facebook] = {
       :provider => 'facebook',
-      :uid => '123545'
+      :uid => '123545',
       :credentials => {}
     }
     OmniAuth.config.add_mock(:facebook, {:uid => '12345'})

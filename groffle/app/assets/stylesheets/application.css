@@ -106,14 +106,14 @@ a {
 
 #logo_bar #logo .main{
 	color: #0559CC;
-	font-size: 22px;
+	font-size: 30px;
 	font-weight: bold;
-	font-family: Verdana;
+	font-family: Lucidatypewriter, monospace;
 	clear: both;
 }
 
 #logo_bar #logo .domain{
-	font-size: 9px;
+	font-size: 14px;
 }
 
 #logo_bar #tagline{
