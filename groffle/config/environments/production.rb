@@ -1,4 +1,4 @@
-Wenwentu::Application.configure do
+Groffle::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -58,11 +58,11 @@ Wenwentu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  config.action_mailer.default_url_options = { :host => 'wenwentu.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'groffle.herokuapp.com' }
   GRAPH_APP_ID = '415282955156503'
   GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
   #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@herring.redistogo.com:9908/'
-  ENV["FLASH_URL"] = 'http://file.wenwentu.com/f/'
-  ENV["RELAY_URL"] = 'http://file.wenwentu.com/r/'
-  ENV["TEMPLATE_URL"] = 'http://file.wenwentu.com/t/'
+  ENV["FLASH_URL"] = 'http://file.groffle.me/f/'
+  ENV["RELAY_URL"] = 'http://file.groffle.me/r/'
+  ENV["TEMPLATE_URL"] = 'http://file.groffle.me/t/'
 end

@@ -4,14 +4,14 @@ default:
 development:
   db: 0
   
-#  namespace: wenwentu_dev
+#  namespace: groffle_dev
 test:
   db: 1
-#  namespace: wenwentu_test
+#  namespace: groffle_test
 
 production:
 #  host: herring.redistogo.com
 #  port: 9908
 #  password: f2b8629f3024c28a1768d4a661786397
  db:  2 
-#  namespace: wenwentu_prod
+#  namespace: groffle_prod

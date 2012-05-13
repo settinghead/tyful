@@ -1,4 +1,4 @@
-Wenwentu::Application.routes.draw do
+Groffle::Application.routes.draw do
   get "shop/show"
 
   resources :authentications
