@@ -1,2 +1,0 @@
-class ImagerelayController < ApplicationController
-end
