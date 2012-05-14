@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-import maui.stemmers.FrenchStemmer;
+//import maui.stemmers.FrenchStemmer;
 import maui.stemmers.PorterStemmer;
 import maui.stemmers.Stemmer;
 import maui.stopwords.Stopwords;
