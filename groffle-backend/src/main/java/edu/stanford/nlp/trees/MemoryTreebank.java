@@ -182,7 +182,8 @@ public final class MemoryTreebank extends Treebank implements FileProcessor, Lis
    *
    * @param file file to load a tree from
    */
-  public void processFile(File file) {
+  @SuppressWarnings("unchecked")
+public void processFile(File file) {
     TreeReader tr = null;
 
     // SRL stuff
