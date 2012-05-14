@@ -9,9 +9,9 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.wexpression.client.model.vo.EngineWordVO;
-			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
-			import com.settinghead.wexpression.client.model.vo.template.WordLayer;
+			import com.settinghead.groffle.client.model.vo.EngineWordVO;
+			import com.settinghead.groffle.client.model.vo.template.TemplateVO;
+			import com.settinghead.groffle.client.model.vo.template.WordLayer;
 			import flash.filters.DropShadowFilter;
 
 			import mx.controls.Alert;

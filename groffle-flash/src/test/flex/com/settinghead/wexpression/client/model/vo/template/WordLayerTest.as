@@ -1,4 +1,4 @@
-package com.settinghead.wexpression.client.model.vo.template
+package com.settinghead.groffle.client.model.vo.template
 {
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
