@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			private var loader:Loader = null; 
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
+				loader.load(new URLRequest("templates/egg.png"));
+
+			}
+			
+			private function loadComplete(e:Event):void{
+				var bmp:Bitmap = loader.content as Bitmap;
+				canvas.width = bmp.bitmapData.width;
+				canvas.height = bmp.bitmapData.height;
+				
+				var map:DistanceMap = new DistanceMap(bmp.bitmapData);
+				var result:BitmapData = map.getDistanceMap();
+				var bmpResult:Bitmap = new Bitmap(result);
+				canvas.addChild(bmpResult);
+
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group>
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
+		<mx:UIComponent id="canvas">
+			
+		</mx:UIComponent>
+	</s:Group>
+</s:Application>

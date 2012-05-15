@@ -1,0 +1,5 @@
+<cross-domain-policy>
+<script/>
+<allow-access-from domain="*" secure="false"/>
+<site-control permitted-cross-domain-policies="master-only"/>
+</cross-domain-policy>
