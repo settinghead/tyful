@@ -3,8 +3,10 @@ package com.settinghead.wenwentu.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
+import java.io.IOException;
 import java.io.StringWriter;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,12 +19,11 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
-public class ShopService {
+public class ShopService extends GroffleService {
 
 	/**
 	 * 
 	 */
-	static Logger logger = Logger.getLogger(ShopService.class.getName());
 
 	/**
 	 * @param args
@@ -34,15 +35,24 @@ public class ShopService {
 	private static void runShopService() {
 		logger.info("Starting shop service. ");
 		try {
-			URI redisURI = new URI(System.getenv("REDISTOGO_URL"));
+			String env = System.getenv("RAILS_ENV");
+			if (env == null)
+				env = "development";
+			Properties props = getPropertiesFromClasspath("redis."
+					+ env + ".properties");
+			URI redisURI = new URI(props.getProperty("REDISTOGO_URL"));
+
 			final JedisPool pool = new JedisPool(new JedisPoolConfig(),
 					redisURI.getHost(), redisURI.getPort(),
-					Protocol.DEFAULT_TIMEOUT, redisURI.getUserInfo().split(":",
-							2)[1]);
+					Protocol.DEFAULT_TIMEOUT,
+					redisURI.getUserInfo() == null ? null : redisURI
+							.getUserInfo().split(":", 2)[1]);
+
 			Jedis jedis = pool.getResource();
-			String dbStr = System.getenv("REDISTOGO_DB");
-			if(dbStr!=null){
+			String dbStr = props.getProperty("REDISTOGO_DB");
+			if (dbStr != null) {
 				jedis.select(Integer.parseInt(dbStr));
+				logger.info("DB: "+dbStr);
 			}
 			// set generic shop
 			jedis.set("shop_generic", toJsonStr(ShopPredictor.getGenericShop()));
@@ -78,6 +88,9 @@ public class ShopService {
 			}
 		} catch (URISyntaxException e) {
 			// URI couldn't be parsed. Handle exception
+		} catch (IOException e) {
+			logger.severe(e.getMessage());
+			System.exit(1);
 		}
 	}
 

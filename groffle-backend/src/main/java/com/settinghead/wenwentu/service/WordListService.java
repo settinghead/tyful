@@ -3,9 +3,12 @@ package com.settinghead.wenwentu.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 
 import org.codehaus.jackson.JsonParseException;
@@ -22,12 +25,9 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.Protocol;
 
-public class WordListService {
+public class WordListService extends GroffleService {
 
-	/**
-	 * 
-	 */
-	static Logger logger = Logger.getLogger(WordListService.class.getName());
+
 
 	/**
 	 * @param args
@@ -45,6 +45,8 @@ public class WordListService {
 		// server.join();
 	}
 
+
+
 	private static void runWordListService() {
 		logger.info("Starting word list service. ");
 		new Thread(new Runnable() {
@@ -52,17 +54,24 @@ public class WordListService {
 			@Override
 			public void run() {
 				try {
-					URI redisURI = new URI(System.getenv("REDISTOGO_URL"));
-					
+					String env = System.getenv("RAILS_ENV");
+					if (env == null)
+						env = "development";
+					Properties props = getPropertiesFromClasspath("redis."
+							+ env + ".properties");
+					URI redisURI = new URI(props.getProperty("REDISTOGO_URL"));
+
 					final JedisPool pool = new JedisPool(new JedisPoolConfig(),
 							redisURI.getHost(), redisURI.getPort(),
-							Protocol.DEFAULT_TIMEOUT, redisURI.getUserInfo()
-									.split(":", 2)[1]);
-					
+							Protocol.DEFAULT_TIMEOUT,
+							redisURI.getUserInfo() == null ? null : redisURI
+									.getUserInfo().split(":", 2)[1]);
+
 					Jedis jedis = pool.getResource();
-					String dbStr = System.getenv("REDISTOGO_DB");
-					if(dbStr!=null){
+					String dbStr = props.getProperty("REDISTOGO_DB");
+					if (dbStr != null) {
 						jedis.select(Integer.parseInt(dbStr));
+						logger.info("DB: "+dbStr);
 					}
 					while (true) {
 						String message;
@@ -110,6 +119,10 @@ public class WordListService {
 
 				} catch (URISyntaxException e) {
 					// URI couldn't be parsed. Handle exception
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					logger.severe(e.getMessage());
+					System.exit(1);
 				}
 			}
 		}).run();
