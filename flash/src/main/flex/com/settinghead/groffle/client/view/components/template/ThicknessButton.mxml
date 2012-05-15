@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true" creationComplete="onCreationCompleteHandler(event)">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[			
+			import mx.collections.ArrayCollection;
+			import mx.core.BitmapAsset;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Label;
+//			private var thumb:Label;
+			private var _thickness:Number;
+			
+			
+			public function get thickness():Number{
+				return _thickness;
+			}
+			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+
+				_thickness = this.data as Number;
+				thumb.graphics.beginFill(0x333333,1.0);
+				thumb.graphics.drawCircle(thumb.width/2, thumb.height/2, thickness/100*thumb.width/2);
+				thumb.graphics.endFill();
+//				addElement(thumb);
+
+//				MonsterDebugger.trace(this,thumb);
+//				MonsterDebugger.trace(this,a.bitmapData);
+			}
+//			
+//			private function nowDraw(event:Event):void{
+//				
+//			}
+			
+		]]>
+	</fx:Script>
+	<s:Label id="thumb" width="30" height="30">
+	</s:Label>
+</s:ItemRenderer>

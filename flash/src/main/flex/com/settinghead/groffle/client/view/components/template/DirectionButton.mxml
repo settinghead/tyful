@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true" creationComplete="onCreationCompleteHandler(event)">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[			
+			import mx.collections.ArrayCollection;
+			import mx.core.BitmapAsset;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Label;
+//			private var thumb:Label;
+			private var _ang:Number;
+			
+			[Embed("A.png")]
+			public static var A:Class;
+			
+			public function get angle():Number{
+				return _ang;
+			}
+			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+
+//				var thumb:Label = new Label();
+//				thumb.width = DirectionPicker.BUTTON_WIDTH;
+//				thumb.height	 = DirectionPicker.BUTTON_WIDTH;
+//				
+				var a:BitmapAsset = new A();
+				_ang = data as Number;
+				var matrix:Matrix = new Matrix();
+				matrix.tx -= a.width/2;
+				matrix.ty -= a.height/2;
+				matrix.rotate(-_ang);
+				matrix.tx += a.width/2;
+				matrix.ty += a.height/2;
+				matrix.scale(DirectionPicker.BUTTON_WIDTH/a.width, DirectionPicker.BUTTON_WIDTH/a.height);
+
+//				a.transform.matrix = matrix;
+				
+				thumb.graphics.beginBitmapFill(a.bitmapData,matrix,false,true);
+				thumb.graphics.drawRect(0,0,thumb.width,thumb.height);
+				thumb.graphics.endFill();
+//				addElement(thumb);
+
+//				MonsterDebugger.trace(this,thumb);
+//				MonsterDebugger.trace(this,a.bitmapData);
+			}
+//			
+//			private function nowDraw(event:Event):void{
+//				
+//			}
+			
+		]]>
+	</fx:Script>
+	<s:Label id="thumb" width="30" height="30">
+	</s:Label>
+</s:ItemRenderer>
