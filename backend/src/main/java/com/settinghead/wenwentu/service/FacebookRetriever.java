@@ -2,12 +2,14 @@ package com.settinghead.wenwentu.service;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
+import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 import com.settinghead.wenwentu.service.model.Word;
@@ -87,17 +89,36 @@ public class FacebookRetriever {
 		// allWords.note(p.getName(), maxFreq - 2);
 		// }
 
-		// personalize by adding your name
-		int nameFreq = allWords.getCount(allWords.getMostFrequent(1).get(0)) + 3;
-		String name = me.getFirstName();
-		// System.out.println(name+", "+nameFreq);
-		allWords.note(name, nameFreq);
-		for (String word : allWords.keySet())
-			result.add(new Word(word, allWords.getCount(word)));
+		if (allWords.getTotalItemCount() > 0) {
+			// personalize by adding your name
+			int nameFreq = allWords
+					.getCount(allWords.getMostFrequent(1).get(0)) + 3;
+			String name = me.getFirstName();
+			// System.out.println(name+", "+nameFreq);
+			allWords.note(name, nameFreq);
+			for (String word : allWords.keySet())
+				result.add(new Word(word, allWords.getCount(word)));
+		}
 		return result;
 	}
 
 	private static String avoidNull(String s) {
 		return s == null ? "" : s;
+	}
+
+	public static Collection<? extends Word> getLikes(String uid, String token) {
+		FacebookClient client = new DefaultFacebookClient(token);
+		ArrayList<Word> result = new ArrayList<Word>();
+		Connection<Page> myLikes = client.fetchConnection("me/likes",
+				Page.class);
+		int count = 0;
+		outer: for (List<Page> myFeedConnectionPage : myLikes)
+			for (Page page : myFeedConnectionPage) {
+				result.add(new Word(page.getName(), 1));
+				if (count++ > 500)
+					break outer;
+			}
+
+		return result;
 	}
 }

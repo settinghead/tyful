@@ -100,6 +100,10 @@ public class WordListService extends GroffleService {
 									List<Word> wordList = FacebookRetriever
 											.parseWordList(task.getUid(),
 													task.getToken(), messages);
+									if(wordList.size()<100){
+										//use likes to fill in space
+										wordList.addAll(FacebookRetriever.getLikes(task.getUid(), task.getToken()));
+									}
 									StringWriter sw = new StringWriter();
 									mapper.writeValue(sw, wordList);
 									jedis.setex("wl_" + task.getProvider()
@@ -111,6 +115,7 @@ public class WordListService extends GroffleService {
 								}
 							} catch (Exception e) {
 								logger.warning(e.getMessage());
+								e.printStackTrace();
 							}
 						}
 
