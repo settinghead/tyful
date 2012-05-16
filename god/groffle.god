@@ -2,7 +2,7 @@ ENV['RAILS_ENV'] = 'development' if !ENV['RAILS_ENV']
 puts ENV['RAILS_ENV']
 
 if ENV['RAILS_ENV']=='production'
-  basedir = '/var/lib/jenkins/jobs/groffle-rails/workspace'
+  basedir = '/var/lib/jenkins/jobs/groffle-build/workspace'
 else
   basedir = '/Users/settinghead/groffle'
 end
