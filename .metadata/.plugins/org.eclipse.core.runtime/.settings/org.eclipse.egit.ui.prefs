@@ -1,0 +1,2 @@
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>flash now can be compiled with Maven</message>\n<message>different fb app for dev and production environment&\#x0A;</message>\n<message>additional flex swf lib that was previously omitted</message>\n<message>mysql hibernate persistent storage</message>\n<message>auto post generated image to facebook</message>\n<message>template save/upload to zip file impl</message>\n</messages>
+eclipse.preferences.version=1

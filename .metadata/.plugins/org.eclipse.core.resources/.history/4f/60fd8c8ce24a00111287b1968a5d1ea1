@@ -1,0 +1,10 @@
+package com.settinghead.wexpression.business
+
+class WordListService {
+
+    static transactional = true
+
+    def serviceMethod() {
+
+    }
+}

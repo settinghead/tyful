@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.settinghead.wexpression.dto;
+
+/**
+ * @author settinghead
+ *
+ */
+class WordListItem {
+
+}

@@ -1,0 +1,18 @@
+package com.settinghead.wenwentu.client.model
+{
+	import com.settinghead.wenwentu.client.model.vo.TemplateVO;
+	import com.settinghead.wenwentu.client.model.vo.TuVO;
+	import com.settinghead.wenwentu.client.model.vo.WordListVO;
+	
+	import org.puremvc.as3.patterns.proxy.Proxy;
+	
+	public class TuProxy extends Proxy
+	{
+		public static const NAME:String = "TuProxy";
+
+		public function TuProxy(data:Object = null)
+		{
+			super(NAME, data);
+		}
+	}
+}

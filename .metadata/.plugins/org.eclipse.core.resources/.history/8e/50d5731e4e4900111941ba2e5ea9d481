@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services-config>
+	<service id="message-service" class="flex.messaging.services.MessageService">
+		<adapters>
+			<adapter-definition id="actionscript"
+				class="flex.messaging.services.messaging.adapters.ActionScriptAdapter"
+				default="true" />
+			<adapter-definition id="jms"
+				class="flex.messaging.services.messaging.adapters.JMSAdapter" />
+		</adapters>
+
+		<default-channels>
+			<channel ref="my-amf" />
+		</default-channels>
+
+		<destination id="word-list-feed">
+			<!-- Destination specific channel configuration can be defined if needed 
+				<channels> <channel ref="my-streaming-amf"/> </channels> -->
+			<channels>
+				<channel ref="my-amf" />
+			</channels>
+		</destination>
+
+	</service>
+</services-config>

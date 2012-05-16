@@ -1,0 +1,10 @@
+archive/
+keys/
+*.class
+.DS_STORE
+flash/target
+frontend/target
+backend/target
+.metadata/
+.hibernateSynchronizer/
+.fxpTemp/

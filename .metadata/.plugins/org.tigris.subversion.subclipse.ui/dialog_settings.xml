@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="561" key="passwordStores.size.y"/>
+	<item value="541" key="passwordStores.size.x"/>
+	<item value="85" key="passwordStores.location.y"/>
+	<item value="450" key="passwordStores.location.x"/>
+	<section name="NewLocationWizard">
+		<list key="ConfigurationWizardMainPage.STORE_URL_ID">
+			<item value="http://open-to-china.com:8091/svn/wexpression2/trunk"/>
+			<item value=""/>
+		</list>
+	</section>
+</section>

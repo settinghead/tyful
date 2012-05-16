@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.ui.views">
+      <category
+            id="com.amazonaws.eclipse.ec2.category"
+            name="Amazon EC2">
+      </category>
+      <view
+            category="com.amazonaws.eclipse.ec2.category"
+            class="com.amazonaws.eclipse.ec2.ui.amis.AmiBrowserView"
+            icon="icons/ami_icon.png"
+            id="com.amazonaws.eclipse.ec2.ui.views.AmiBrowserView"
+            name="EC2 AMIs">
+      </view>
+      <view
+            category="com.amazonaws.eclipse.ec2.category"
+            class="com.amazonaws.eclipse.ec2.ui.views.instances.InstanceView"
+            icon="icons/server.png"
+            id="com.amazonaws.eclipse.ec2.ui.views.InstanceView"
+            name="EC2 Instances">
+      </view>
+      <view
+            category="com.amazonaws.eclipse.ec2.category"
+            class="com.amazonaws.eclipse.ec2.ui.ebs.ElasticBlockStorageView"
+            icon="icons/harddisk.png"
+            id="com.amazonaws.eclipse.ec2.ui.views.ElasticBlockStorageView"
+            name="EC2 Elastic Block Storage">
+      </view>
+      <view
+            allowMultiple="false"
+            category="com.amazonaws.eclipse.ec2.category"
+            class="com.amazonaws.eclipse.ec2.ui.securitygroups.SecurityGroupView"
+            icon="icons/shield1.png"
+            id="com.amazonaws.eclipse.ec2.views.SecurityGroupView"
+            name="EC2 Security Groups">
+      </view>
+   </extension>
+
+    <extension point="org.eclipse.ui.preferencePages">
+       <page
+             class="com.amazonaws.eclipse.ec2.preferences.Ec2PreferencePage"
+             id="com.amazonaws.eclipse.ec2.preferences.Ec2PreferencePage"
+             name="AWS Toolkit">
+       </page>
+       <page
+             category="com.amazonaws.eclipse.ec2.preferences.Ec2PreferencePage"
+             class="com.amazonaws.eclipse.ec2.preferences.KeyPairsPreferencePage"
+             id="com.amazonaws.eclipse.ec2.preferences.KeyPairsPreferencePage"
+             name="Key Pairs">
+       </page>
+       <page
+             category="com.amazonaws.eclipse.ec2.preferences.Ec2PreferencePage"
+             class="com.amazonaws.eclipse.ec2.preferences.RegionsPreferencePage"
+             id="com.amazonaws.eclipse.ec2.preferences.RegionsPreferencePage"
+             name="Regions">
+       </page>
+       <page
+             category="com.amazonaws.eclipse.ec2.preferences.Ec2PreferencePage"
+             class="com.amazonaws.eclipse.ec2.preferences.ExternalToolsPreferencePage"
+             id="com.amazonaws.eclipse.ec2.preferences.ExternalToolsPreferencePage"
+             name="External Tools">
+       </page>
+    </extension>
+    
+    <extension
+          point="org.eclipse.core.runtime.preferences">
+       <initializer
+             class="com.amazonaws.eclipse.ec2.preferences.PreferenceInitializer">
+       </initializer>
+    </extension>
+    
+    <extension point="org.eclipse.ui.intro.configExtension">
+       <configExtension
+             configId="org.eclipse.ui.intro.universalConfig"
+             content="intro/intro.xml">
+       </configExtension>
+    </extension>
+
+    <extension point="org.eclipse.help.toc">
+       <toc file="toc.xml" primary="true"/>
+       <toc file="tocconcepts.xml"/>
+       <toc file="tocgettingstarted.xml"/>
+       <toc file="toctasks.xml"/>
+    </extension>
+
+    <extension point="org.eclipse.help.contexts">
+       <contexts file="helpContexts.xml"/>
+    </extension>
+    
+
+   <!--                               -->
+   <!-- Web Tools Platform Extensions -->
+   <!--                               -->
+   
+   <extension
+         point="org.eclipse.wst.server.core.serverTypes">
+         <serverType id="com.amazonaws.eclipse.wtp.servers.tomcatCluster"
+			name="Amazon EC2 Tomcat v6.0 Cluster"
+			description="A cluster of Tomcat v6.0 hosts running in Amazon's EC2 infrastructure."
+			supportsRemoteHosts="true"
+			runtime="true"
+			initialState="stopped"
+			hasConfiguration="true"
+			launchConfigId="com.amazonaws.eclipse.wtp.launchConfigurationType"
+			runtimeTypeId="org.eclipse.jst.server.tomcat.runtime.60"
+			class="com.amazonaws.eclipse.wtp.tomcat.TomcatElasticCluster"
+			behaviourClass="com.amazonaws.eclipse.wtp.tomcat.TomcatClusterBehavior"
+			startBeforePublish="true"
+			stopTimeout="400000"
+			startTimeout="500000"/>
+   </extension>
+ 
+   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+
+     <!-- 
+          The ID for this launch configuration type should really be:
+          com.amazonaws.eclipse.wtp.tomcat.launchConfigurationType
+          
+          Changing it would break existing users though.
+     --> 
+     <launchConfigurationType
+        id="com.amazonaws.eclipse.wtp.launchConfigurationType"
+        name="Apache Tomcat Cluster in Amazon EC2"
+        delegate="com.amazonaws.eclipse.wtp.Ec2LaunchConfigurationDelegate"
+        modes="run, debug"
+        sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+        sourcePathComputerId="org.eclipse.jst.server.tomcat.core.sourcePathComputer"/>
+   </extension>
+   
+   <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+       <launchConfigurationTypeImage
+             configTypeID="com.amazonaws.eclipse.wtp.launchConfigurationType"
+             icon="icons/server.png"
+             id="com.amazonaws.eclipse.wtp.tomcat.launchConfigurationTypeImage">
+       </launchConfigurationTypeImage>
+    </extension>
+   
+   <extension point="org.eclipse.wst.server.ui.serverImages">
+      <image
+            icon="icons/server.png"
+            id="com.amazonaws.eclipse.wtp.tomcat.serverImage"
+            typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster">
+      </image>
+   </extension>
+
+   <extension point="org.eclipse.wst.server.core.launchableAdapters">
+      <launchableAdapter
+            class="com.amazonaws.eclipse.wtp.Ec2LaunchableAdapter"
+            id="com.amazonaws.eclipse.wtp.tomcat.launchableAdapter"
+            typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster">
+      </launchableAdapter>
+   </extension>
+      
+   <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="com.amazonaws.eclipse.wtp.LaunchConfigurationTabGroup"
+            id="com.amazonaws.eclipse.wtp.tomcat.LaunchConfigurationTabGroup"
+            type="com.amazonaws.eclipse.wtp.launchConfigurationType">
+      </launchConfigurationTabGroup>
+   </extension>
+   
+   <extension point="org.eclipse.wst.server.ui.editorPageSections">
+      <section
+         id="com.amazonaws.eclipse.wtp.ui.ClusterEditorSection"
+         order="0"
+         insertionId="org.eclipse.wst.server.editor.overview.left"
+         typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster"
+         class="com.amazonaws.eclipse.wtp.ClusterEditorSection"/>
+      <section
+         id="com.amazonaws.eclipse.wtp.tomcat.ui.PortEditorSection"
+         order="1"
+         insertionId="org.eclipse.wst.server.editor.overview.right"
+         typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster"
+         class="com.amazonaws.eclipse.wtp.tomcat.ServerPortEditor"/>
+      <section
+         id="com.amazonaws.eclipse.wtp.tomcat.ui.MimeTypeEditorSection"
+         order="2"
+         insertionId="org.eclipse.wst.server.editor.overview.right"
+         typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster"
+         class="com.amazonaws.eclipse.wtp.tomcat.ServerMimeTypeEditor"/>
+   </extension>
+   
+    <extension point="org.eclipse.wst.server.ui.wizardFragments">
+       <fragment
+             class="com.amazonaws.eclipse.wtp.WizardFragment"
+             id="com.amazonaws.eclipse.wtp.tomcat.clusterWizardFragment"
+             typeIds="com.amazonaws.eclipse.wtp.servers.tomcatCluster">
+       </fragment>
+    </extension>
+    
+</plugin>

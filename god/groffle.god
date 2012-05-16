@@ -4,7 +4,7 @@ puts ENV['RAILS_ENV']
 if ENV['RAILS_ENV']=='production'
   basedir = '/var/lib/jenkins/jobs/groffle-rails/workspace'
 else
-  basedir = '/Users/settinghead/wexpression'
+  basedir = '/Users/settinghead/groffle'
 end
 
 God.watch do |w|
@@ -16,21 +16,21 @@ end
 
 God.watch do |w|
   w.name = "groffle-file"
-  w.dir = basedir+"/groffle-relay"
+  w.dir = basedir+"/fileserver"
   w.start = "node web.js"
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-wordlist"
-  w.dir = basedir+"/groffle-backend"
+  w.dir = basedir+"/backend"
   w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.WordListService"
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-shop"
-  w.dir = basedir+"/groffle-backend"
+  w.dir = basedir+"/backend"
   w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.ShopService"
   w.keepalive
 end

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"  
+		   mouseDown="textFlowCanvas_mouseDownHandler(event)" 
+		   mouseUp="textFlowCanvas_mouseUpHandler(event)" 
+		   mouseMove="textFlowCanvas_mouseMoveHandler(event)" 
+		   creationComplete="textFlowCanvas_creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.settinghead.wexpression.client.model.vo.template.WordLayer;
+			public function WordCanvas(l:WordLayer = null){
+				this.layer = layer;
+			}
+			
+			private var oldMouseX:Number, oldMouseY:Number;
+			private var drawingState:Boolean = false;
+			private var layer:WordLayer;
+			
+
+			protected function textFlowCanvas_mouseDownHandler(event:MouseEvent):void
+			{
+				this.drawingState = true;
+				oldMouseX = (event.target as Canvas).mouseX;
+				oldMouseY = (event.target as Canvas).mouseY;
+			}
+			
+			
+			protected function textFlowCanvas_mouseUpHandler(event:MouseEvent):void
+			{
+				this.drawingState = false;
+				
+			}
+			
+			[Embed("SmallA.png")]
+			public static var SmallA:Class;
+			protected function textFlowCanvas_mouseMoveHandler(event:MouseEvent):void
+			{
+				if(drawingState){
+					var shape:Shape = new Shape();
+					var dirShape:Shape = new Shape();
+					var color:uint = ColorMath.HSLToRGB(directionPicker.angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
+					shape.graphics.lineStyle(thicknessPicker.
+						thickness,color
+						,1);
+					var a:BitmapAsset = new SmallA();
+					var m:Matrix = a.transform.matrix;
+					m.rotate(-directionPicker.angle);
+					dirShape.graphics.lineStyle(thicknessPicker.
+						thickness,0,0.7,true);
+					dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+					shape.graphics.moveTo(oldMouseX, oldMouseY);
+					dirShape.graphics.moveTo(oldMouseX, oldMouseY);
+					shape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
+					dirShape.graphics.lineTo(textFlowCanvas.mouseX,textFlowCanvas.mouseY);
+					
+					
+					bmp.bitmapData.draw(shape);
+					bmpDirection.bitmapData.draw(dirShape);
+					
+					oldMouseX = textFlowCanvas.mouseX;
+					oldMouseY = textFlowCanvas.mouseY;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+</mx:Canvas>

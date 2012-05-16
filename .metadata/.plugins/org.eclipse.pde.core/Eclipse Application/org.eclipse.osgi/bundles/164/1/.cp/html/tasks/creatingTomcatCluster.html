@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Creating a Tomcat Cluster in EC2</title>
+</head>
+<body>
+
+<h1>Creating a Tomcat Cluster in EC2</h1>
+
+<p>
+Before you can deploy a Java web application to a cluster of Tomcat
+servers running in EC2, you'll need to create your cluster.  You can
+do this in a few different places in the Eclipse Web Tools Platform (WTP),
+but the easiest is to open the <a href="javascript:executeCommand(%22org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.wst.server.ui.ServersView)%22)">
+WTP Servers view</a> and right-click to
+bring up the context menu.  From there you should see a menu item
+to create a new server.  
+
+<p>
+<img src="../images/newServerContextMenu.png"/>
+
+<br/><br/>
+<h3>Select the Amazon EC2 Tomcat Cluster server type</h3>
+
+<p>
+On the first page of the WTP new server wizard, you'll want to select
+the Amazon Tomcat v6.0 Cluster in EC2 server type.  You'll probably 
+also want to specify the host name as EC2 and give your cluster a
+meaningful name to keep things organized.
+
+<p>
+<img src="../images/newServerWizardSelectServerType.png"/>
+
+<h3>Configure Amazon EC2 options</h3>
+
+<p>
+After you select the Amazon Tomcat v6.0 Cluster in EC2 server type
+you should see a number of EC2 specific options on the second page
+of the new server wizard.  This page allows you to configure how your
+cluster will run in EC2.  You can select how many hosts you want
+your application to run on.  If you select more than one host, the
+AWS Toolkit for Eclipse will also create a load balancing proxy to
+sit in front of all of your Tomcat servers and help distribute load.
+If you haven't created any key pairs or security groups, you can do
+so directly from this page by right-clicking on each table to bring
+up the context menu.  You can also optionally create a new Elastic IP
+or select an existing Elastic IP to attach to the endpoint of your
+cluster. 
+
+<p>
+<img src="../images/newServerWizardEc2Options.png"/>
+
+<h3>Select projects</h3>
+
+<p>
+The next page of the WTP new server wizard allows you to select which
+projects in your workspace you want to include in this new cluster.
+Select any projects you want to include and finish the wizard.
+
+<p>
+Now you should see your new EC2 Tomcat cluster in the WTP servers view,
+ready to be started, and then run your application.
+
+</body>
+</html>

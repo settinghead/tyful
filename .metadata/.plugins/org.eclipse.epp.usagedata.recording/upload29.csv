@@ -1,0 +1,226 @@
+what,kind,bundleId,bundleVersion,description,time
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318360727173
+executed,command,org.eclipse.wst.sse.ui,1.3.1.v201108191312,"org.eclipse.wst.sse.ui.format.document",1318360727453
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318360727846
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318360733262
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360750231
+started,bundle,org.maven.ide.eclipse.launching,0.12.1.20110112-1712,"org.maven.ide.eclipse.launching",1318360756009
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360756494
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360759954
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360760370
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360763814
+error,log,,,"GlassFish: error ",1318360780159
+error,log,,,"Wrong user name or password.",1318360780161
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360780192
+opened,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360780647
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360780713
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360780730
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360780967
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360783059
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360783988
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360784170
+activated,editor,org.maven.ide.eclipse.editor,0.12.1.20110112-1712,"org.maven.ide.eclipse.editor.MavenPomEditor",1318360786724
+closed,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360786724
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360788473
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360790888
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360793423
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360793650
+started,bundle,org.eclipse.jst.server.preview.adapter,1.1.100.v20100308,"org.eclipse.jst.server.preview.adapter",1318360794856
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360797069
+opened,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360801882
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360801922
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318360804256
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360817861
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360820725
+started,bundle,com.adobe.model.core,4.5.304901.v20110217,"com.adobe.model.core",1318360821842
+started,bundle,org.eclipse.ui.externaltools,3.2.0.v20110506,"org.eclipse.ui.externaltools",1318360822513
+started,bundle,org.eclipse.core.externaltools,1.0.100.v20110506,"org.eclipse.core.externaltools",1318360822545
+started,bundle,org.eclipse.wst.common.modulecore.ui,1.0.101.v201108231700,"org.eclipse.wst.common.modulecore.ui",1318360824516
+started,bundle,org.eclipse.jst.common.ui,1.0.100.v201105030440,"org.eclipse.jst.common.ui",1318360824609
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360859329
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.properties",1318360859408
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318360866398
+opened,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318360875564
+activated,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318360875623
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318360875857
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.publish",1318360878589
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360882437
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318360888794
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360890167
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360891385
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360891981
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360893922
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318360895302
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360897516
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318360903352
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318360905901
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.run",1318360908508
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318360909726
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360921403
+activated,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318360921506
+closed,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318360921506
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360924035
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318360924513
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318360931154
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360964319
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360981693
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360983545
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318360983772
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318360986312
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360989030
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318360990030
+executed,command,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.project.cleanAction",1318360990116
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318360992272
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318360999222
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.selectAll",1318361004188
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318361009317
+activated,editor,org.maven.ide.eclipse.editor,0.12.1.20110112-1712,"org.maven.ide.eclipse.editor.MavenPomEditor",1318361009784
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361011933
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.findReplace",1318361011990
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361013476
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016100
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016102
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016103
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016104
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016105
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016106
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016107
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016108
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016109
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016111
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016112
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016113
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016114
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361016114
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318361016125
+executed,command,org.eclipse.wst.sse.ui,1.3.1.v201108191312,"org.eclipse.wst.sse.ui.format.document",1318361016565
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318361016840
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318361019140
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361028401
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361060029
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318361061426
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361069006
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361069263
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361109878
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361111233
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361113344
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361230697
+activated,editor,org.maven.ide.eclipse.editor,0.12.1.20110112-1712,"org.maven.ide.eclipse.editor.MavenPomEditor",1318361234367
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361235551
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.findReplace",1318361235643
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361240310
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361242936
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245066
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245069
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245070
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245071
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245072
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245073
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245075
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245077
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245079
+error,log,,,"A structured model client, org.maven.ide.components.pom.translators.ListAdapter@6835f2 threw following exception during adapter notification (ADD )",1318361245081
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318361245094
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318361248117
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318361250247
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318361255114
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318361255538
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318361255736
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361258857
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361259212
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318361262143
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318361266216
+opened,editor,org.eclipse.wst.html.ui,1.0.601.v201108152113,"org.eclipse.wst.html.core.htmlsource.source",1318361267695
+activated,editor,org.eclipse.wst.html.ui,1.0.601.v201108152113,"org.eclipse.wst.html.core.htmlsource.source",1318361267812
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318361279167
+closed,editor,org.eclipse.wst.html.ui,1.0.601.v201108152113,"org.eclipse.wst.html.core.htmlsource.source",1318361279167
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318361281192
+opened,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318361282657
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318361282795
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318361299621
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318361305737
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361308800
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318361311996
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361319724
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.run",1318361325063
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318361326627
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361328683
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318361328915
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361329424
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318361330503
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361346376
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318361348276
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361363923
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361364152
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318361364271
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361365829
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361390430
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361405892
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318361406084
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361409322
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361410845
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361412291
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.run",1318361416776
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318361417580
+error,log,,,"GlassFish: error ",1318361423923
+error,log,,,"Wrong user name or password.",1318361423927
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361423965
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361426751
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318361429116
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318361435908
+opened,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318361449929
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318361449981
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.AllMarkersView",1318361453385
+started,bundle,org.eclipse.datatools.connectivity.ui,1.2.1.v201010211430,"org.eclipse.datatools.connectivity.ui",1318361455176
+started,bundle,org.eclipse.datatools.connectivity.ui.dse,1.1.4.v201004270430,"org.eclipse.datatools.connectivity.ui.dse",1318361455176
+started,bundle,org.eclipse.datatools.enablement.ingres.ui,1.0.0.v201105270214,"org.eclipse.datatools.enablement.ingres.ui",1318361455194
+started,bundle,org.eclipse.datatools.connectivity.sqm.core,1.2.3.v201109022323,"org.eclipse.datatools.connectivity.sqm.core",1318361455485
+started,bundle,org.eclipse.datatools.connectivity.sqm.core.ui,1.2.0.v201002281800,"org.eclipse.datatools.connectivity.sqm.core.ui",1318361455491
+started,bundle,org.eclipse.datatools.connectivity.sqm.server.ui,1.1.100.v201009280455,"org.eclipse.datatools.connectivity.sqm.server.ui",1318361455518
+started,bundle,org.eclipse.datatools.enablement.ingres,1.0.0.v200906111150,"org.eclipse.datatools.enablement.ingres",1318361455553
+started,bundle,org.eclipse.datatools.enablement.sybase,1.0.1.v200906020900,"org.eclipse.datatools.enablement.sybase",1318361455571
+started,bundle,org.eclipse.datatools.modelbase.sql,1.0.4.v201002250945,"org.eclipse.datatools.modelbase.sql",1318361455654
+opened,view,org.eclipse.datatools.connectivity.ui.dse,1.1.4.v201004270430,"org.eclipse.datatools.connectivity.DataSourceExplorerNavigator",1318361455757
+activated,view,org.eclipse.datatools.connectivity.ui.dse,1.1.4.v201004270430,"org.eclipse.datatools.connectivity.DataSourceExplorerNavigator",1318361455783
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361456603
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361459677
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361461366
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.delete",1318361461448
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361466096
+started,bundle,com.springsource.sts.server.tc.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.server.tc.ui",1318361466336
+started,bundle,org.eclipse.jst.server.generic.ui,1.0.505.v20100428,"org.eclipse.jst.server.generic.ui",1318361474841
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361500437
+error,log,,,"GlassFish: error ",1318361502901
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.run",1318361504641
+error,log,,,"GlassFish: error ",1318361504649
+error,log,,,"The Eclipse plugin cannot communicate with the GlassFish server, status is :CREDENTIAL_ERROR",1318361504650
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361504712
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361508305
+opened,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318361509732
+activated,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318361509776
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318361511888
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361513478
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.run",1318361513634
+error,log,,,"GlassFish: error ",1318361513641
+error,log,,,"The Eclipse plugin cannot communicate with the GlassFish server, status is :CREDENTIAL_ERROR",1318361513641
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361513679
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361515926
+activated,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318361516997
+activated,editor,org.eclipse.ui.browser,3.3.100.v20110426,"org.eclipse.ui.browser.editor",1318361517110
+closed,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318361517111
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361519643
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361521313
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361522266
+error,log,,,"GlassFish: error ",1318361522681
+error,log,,,"The Eclipse plugin cannot communicate with the GlassFish server, status is :CREDENTIAL_ERROR",1318361522683
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361522719
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361529595
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361530907
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361583080
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361585696
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318361587929
+activated,editor,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.editor",1318361589371
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318361597430
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318361600576
+activated,view,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.ui.ServersView",1318361605888
+executed,command,org.eclipse.wst.server.ui,1.1.306.v20110823_1704,"org.eclipse.wst.server.stop",1318361608925

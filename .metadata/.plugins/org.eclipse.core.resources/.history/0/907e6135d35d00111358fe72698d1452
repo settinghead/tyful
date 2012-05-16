@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"  initialize="group1_initializeHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.events.CollectionEvent;
+			import mx.events.FlexEvent;
+			
+			import org.as3commons.collections.utils.NullComparator;
+			private var _colors:ArrayList = new ArrayList();
+			
+			[Bindable(event="ColorChanged")]
+			public function get colors():ArrayList{
+				return _colors;
+			}
+			
+			public function set colors(c:ArrayList):void{
+				_colors = c;
+				dispatchEvent(new Event("ColorChanged"));
+			}
+			
+			protected function group1_initializeHandler(event:FlexEvent):void
+			{
+				colors.addEventListener(CollectionEvent.COLLECTION_CHANGE, colorArrayChange);
+			}
+			
+			private function colorArrayChange(event:Event):void{
+				this._colorPattern = null;
+				dispatchEvent(new Event("ColorChanged"));
+			}
+			
+			protected function btnAddColor_clickHandler(event:MouseEvent):void
+			{
+				var color:uint;
+				if(colors.length>0) color = colors.getItemAt(colors.length-1) as int;
+				else color = 0xffffff;
+				colors.addItem(0xaaaaaa);
+			}
+			
+			protected function btnRemoveColor_clickHandler(event:MouseEvent):void
+			{
+				if(colorList.selectedIndex>=0)
+					colors.removeItemAt(colorList.selectedIndex);
+			}
+			
+			private var _colorPattern:BitmapData;
+			
+			[Bindable(event="ColorChanged")]
+			public function get colorPattern():BitmapData{
+				if(this._colorPattern==null){
+					if(colors.length==0){
+						//if no color, add transparent color
+						colors.addItem(0);
+					}
+					
+					_colorPattern = new BitmapData(colors.length * 3 ,3,true,0);
+//					_colorPattern = new BitmapData(colors.length,1,true,0);
+
+					var s:Sprite = new Sprite();
+					for(var i:int =0; i<colors.length;i++){
+						_colorPattern.setPixel32(i+1,1,colors.getItemAt(0) as uint);
+						s.graphics.lineStyle(1,colors.getItemAt(0) as uint,1);
+						s.graphics.beginFill(colors.getItemAt(0) as uint,1.0);
+						s.graphics.drawRect(i*3,0,3,3);
+						s.graphics.endFill();
+					}
+					_colorPattern.draw(s);
+				}
+				return _colorPattern;
+			}
+		]]>
+	</fx:Script>
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		<s:Label text="Brush with a mixture of these colors: " />
+		<s:List id="colorList" dataProvider="{colors}" itemRenderer="com.settinghead.wexpression.client.view.components.template.ColorButton"
+				  includeInLayout="true" autoLayout="true">
+			<s:layout>
+				<s:HorizontalLayout />
+			</s:layout>
+		</s:List>
+		<s:Button label="+" id="btnAddColor" click="btnAddColor_clickHandler(event)"  includeInLayout="true" width="30"/>
+		<s:Button label="-" enabled="{colorList.selectedIndex>=0}" id="btnRemoveColor" click="btnRemoveColor_clickHandler(event)"  includeInLayout="true" width="30"/>
+
+	</s:Group>
+	
+</mx:Canvas>

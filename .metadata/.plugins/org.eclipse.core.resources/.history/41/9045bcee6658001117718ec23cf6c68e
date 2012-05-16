@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="wexpression">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="flex-messaging-core.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-core/flex-messaging-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="flex-rds-server.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-rds-server/flex-rds-server">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cfgatewayadapter.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/cfgatewayadapter/cfgatewayadapter">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-codec-1.3.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-codec-1.3/commons-codec-1.3">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="flex-messaging-proxy.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-proxy/flex-messaging-proxy">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-httpclient-3.0.1.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-httpclient-3.0.1/commons-httpclient-3.0.1">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="flex-messaging-opt.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-opt/flex-messaging-opt">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="flex-messaging-common.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-common/flex-messaging-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="flex-messaging-remoting.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/flex-messaging-remoting/flex-messaging-remoting">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-logging.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/commons-logging/commons-logging">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cue.language.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cue.language/cue.language">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="wexpression"/>
+        <property name="java-output-path" value="/wexpression/build/classes"/>
+    </wb-module>
+</project-modules>

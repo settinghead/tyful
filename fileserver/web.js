@@ -209,7 +209,7 @@ var express = require('express'),
 	
 		app.get('/f/(*)', function(req,res){
 			console.log('Getting file '+req.params[0]);
-			fs.readFile('f/'+req.params[0], "binary", function(err, file) {
+			fs.readFile('../static/'+req.params[0], "binary", function(err, file) {
 			      if(err) {        
 			        res.writeHead(500, {"Content-Type": "text/plain"});
 			        res.write(err + "\n");

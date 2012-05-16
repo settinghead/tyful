@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="wexpression-flash|FacebookFriendService|getFacebookFriends">
+		<item value="true" key="SaveInput"/>
+		<list key="ArgumentsArray">
+			<item value="Enter Value"/>
+			<item value="Enter Value"/>
+			<item value=""/>
+		</list>
+	</section>
+</section>

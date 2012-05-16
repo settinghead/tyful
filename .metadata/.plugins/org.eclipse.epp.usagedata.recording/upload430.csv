@@ -1,0 +1,201 @@
+what,kind,bundleId,bundleVersion,description,time
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320779915467
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320779917894
+closed,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320779917894
+activated,perspective,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.JavaPerspective",1320779926798
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320779933150
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1320779933220
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320779935278
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1320779951060
+activated,perspective,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugPerspective",1320779957652
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1320779983374
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320779988715
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320779990465
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1320780008162
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320780017909
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1320780031512
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780045262
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780047276
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780047940
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780048412
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320780049624
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1320780126146
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1320780128922
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1320780130070
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1320780148921
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1320780149259
+error,log,,,"com.springsource.sts.groovy.debug.core.GroovyDebugProvider.isAlwaysInteretingLaunch()Z",1320780149529
+error,log,,,"An internal error occurred during: ""JDI Event Dispatch"".",1320780149532
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780149944
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780151723
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1320780157302
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1320780157595
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1320780158817
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Terminate",1320780158947
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780167329
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320780168969
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1320780169133
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1320780170175
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780170280
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780173579
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780174724
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780175797
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780176757
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1320780177673
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780183434
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780201253
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780205673
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1320780229602
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1320780231851
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1320780232000
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1320780234842
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Terminate",1320780237330
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving values from array.",1320780237451
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237452
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237452
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237452
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237453
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237454
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237454
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237471
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237472
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237472
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237473
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237474
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237475
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237475
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237476
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237476
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237477
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237477
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237477
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237478
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237478
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237478
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237479
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237479
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237480
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237480
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237481
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237481
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237482
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237482
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237482
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237484
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237484
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237485
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237485
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237486
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237486
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237487
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237487
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237489
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237490
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237491
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237491
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237492
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237492
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237493
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237493
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237493
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237494
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237494
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237495
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237495
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237495
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237496
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237496
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237497
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237497
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237498
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237498
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237499
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237499
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237499
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237500
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237500
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237501
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237501
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237502
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237502
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237503
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237503
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237504
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237504
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237504
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237505
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237505
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237506
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237506
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237507
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237507
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237508
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237508
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237508
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237509
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237509
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237511
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237511
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237512
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237512
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237513
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237514
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237515
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237516
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237516
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237517
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237517
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237518
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237518
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237519
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237519
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237519
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237520
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237520
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237521
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237522
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237522
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237523
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237523
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237523
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237524
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237535
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237536
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237536
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237536
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237537
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237537
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237538
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237539
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237539
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237540
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237540
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237540
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237541
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237542
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237542
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237543
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237543
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237545
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237546
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237547
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237547
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237547
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237548
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237548
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237549
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237550
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237550
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237551
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237551
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237551
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237552
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237553
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237553
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237554
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237554
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237554
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237555
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237555
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237556
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1320780237556

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Key Pairs</title>
+</head>
+<body>
+
+<h1>Key Pairs</h1>
+
+<p>
+Amazon EC2 key pairs allow you to access your EC2 instances securely without relying
+on passwords in the <a href="amis.html">Amazon Machine Images (AMIs)</a> you launch.
+
+<p>
+Key pairs consist of a public key and a private key.  Amazon holds onto the public
+key portion for you, but only you have the private key.
+When you launch an Amazon EC2 instance, you select a key pair
+to launch that instance with, and only people with the private key for that key pair
+are able be log into the new instance.
+
+<p>
+The AWS Toolkit for Eclipse will attempt to locate the private key files for your 
+Amazon EC2 key pairs by looking in the ".ec2" directory in your home directory and
+looking for a file named after the key pair and ending with a ".pem" extension.
+
+<p>
+You can manage your Amazon EC2 key pairs from the
+<a href="javascript:executeCommand(%22org.eclipse.ui.window.preferences(preferencePageId=com.amazonaws.eclipse.ec2.preferences.KeyPairsPreferencePage)%22)">
+key pairs preference page</a> in the AWS Toolkit preferences.
+
+</body>
+</html>

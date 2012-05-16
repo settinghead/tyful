@@ -1,0 +1,16 @@
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Import;
+
+package com.settinghead.wexpression.business
+
+import com.settinghead.wexpression.dto.WordListItem
+import com.settinghead.wexpression.Word
+import org.springframework.flex.remoting.RemotingInclude
+import org.springframework.flex.remoting.RemotingDestination
+
+class WordListService {
+
+	static transactional = true
+
+	def serviceMethod() {
+	}
+}

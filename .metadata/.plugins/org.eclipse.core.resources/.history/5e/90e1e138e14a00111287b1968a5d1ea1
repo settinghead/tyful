@@ -1,0 +1,7 @@
+package com.settinghead.wexpression
+
+class Word {
+
+    static constraints = {
+    }
+}

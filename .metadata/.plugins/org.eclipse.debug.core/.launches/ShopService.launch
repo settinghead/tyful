@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/wenwentu-shop/src/main/java/com/settinghead/wenwentu/service/ShopService.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="PORT" value="8099"/>
+<mapEntry key="REDISTOGO_DB" value="0"/>
+<mapEntry key="REDISTOGO_URL" value="redis://settinghead:0@localhost:6379"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.settinghead.wenwentu.service.ShopService"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wenwentu-shop"/>
+</launchConfiguration>

@@ -1,0 +1,8 @@
+package com.settinghead.wexpression.services
+
+class HelloService {
+
+    def serviceMethod() {
+
+    }
+}

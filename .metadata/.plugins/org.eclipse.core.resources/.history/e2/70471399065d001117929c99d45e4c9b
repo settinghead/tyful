@@ -1,0 +1,33 @@
+package com.settinghead.wexpression.client.view.components
+{
+	import flash.display.Graphics;
+	import flash.display.Sprite;
+	
+	import mx.controls.listClasses.IListItemRenderer;
+	
+	import spark.components.SkinnableDataContainer;
+	import spark.layouts.BasicLayout;
+	
+	public class LayerStack extends SkinnableDataContainer
+	{
+		public function LayerStack()
+		{
+			super();
+			this.layout = new BasicLayout();
+		}
+		
+		override protected function drawSelectionIndicator(indicator:Sprite, x:Number, 
+														   y:Number, width:Number, height:Number, color:uint, 
+														   itemRenderer:IListItemRenderer):void
+		{
+//			var g:Graphics = Sprite(indicator).graphics;
+//			g.clear();
+//			g.beginFill(color);
+//			g.drawCircle(width / 2, width / 2, width / 2);
+//			g.endFill();
+//			
+//			indicator.x = x;
+//			indicator.y = y;
+		}
+	}
+}

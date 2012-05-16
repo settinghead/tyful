@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts"> 
+	<topic label="Amazon EC2"  href="html/concepts/ec2.html"> 
+		<topic label="Amazon Machine Images (AMIs)" href="html/concepts/amis.html" /> 
+		<topic label="Instances"             href="html/concepts/instances.html" /> 
+		<topic label="Security Groups"       href="html/concepts/securityGroups.html" /> 
+		<topic label="Elastic Block Storage" href="html/concepts/ebs.html" /> 
+		<topic label="Key Pairs"             href="html/concepts/keyPairs.html" /> 
+		<topic label="Elastic IPs"           href="html/concepts/elasticIps.html" /> 
+		<topic label="Regions"               href="html/concepts/regions.html" /> 
+	</topic>
+</toc>

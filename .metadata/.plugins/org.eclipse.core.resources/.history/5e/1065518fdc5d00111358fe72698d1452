@@ -1,0 +1,18 @@
+package com.settinghead.wexpression.client.colorer
+{
+	import com.settinghead.wexpression.client.model.vo.EngineWordVO;
+	
+	public class ColorSheetColorer implements WordColorer
+	{
+		private var otherwise:WordColorer = new TwoHuesRandomSatsColorer();
+		public function ColorSheetColorer()
+		{
+			
+		}
+		
+		public function colorFor(word:EngineWordVO):uint
+		{
+			return 0;
+		}
+	}
+}

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ PureMVC AS3 Demo - Flex Employee Admin 
+ Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+-->
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:client="com.settinghead.wexpression.client.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.wexpression.client.view.components.template.*" xmlns:canvas="com.settinghead.wexpression.client.view.components.template.canvas.*"
+	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.wexpression.client.view.components.*"
+	 keyDown="editor_keyDownHandler(event)" >
+	
+	<!-- Events dispatched by this View Component -->
+	<mx:Metadata>
+
+	</mx:Metadata>
+	<mx:states>
+		<mx:State name="TextFlowMouseDown"/>
+	
+		
+	</mx:states>
+			<s:Group>
+				<s:layout>
+					<s:VerticalLayout />
+				</s:layout>
+				<s:Group>
+					<s:layout>
+						<s:VerticalLayout />
+					</s:layout>
+					<template:DirectionPicker id="directionPicker"  />
+					<template:ThicknessPicker id="thicknessPicker"  />
+					<s:Group>
+						<s:layout>
+							<s:HorizontalLayout />
+						</s:layout>
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Render" />
+						<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save to Cloud" />
+					</s:Group>
+				</s:Group>	
+				<s:Group id="mainCanvasArea">
+					<s:layout>
+						<s:HorizontalLayout />
+					</s:layout>
+					<s:Group id="layerNavigation">
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<s:Button id="btnShowAllLayers" label="All" />
+							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
+									dataProvider="{template.layers}" 
+									itemRenderer="com.settinghead.wexpression.client.view.components.template.canvas.LayerButton"
+									>
+								<s:layout>
+									<s:VerticalLayout />
+								</s:layout>
+							</s:List>
+						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
+					</s:Group>
+					<s:Group>
+						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
+						<components:LayerStack id="layers" dataProvider="{template.layers}" 
+												  itemRendererFunction="layers_itemRendererFunc" >
+							
+						</components:LayerStack>
+						
+					</s:Group>
+				</s:Group>
+			</s:Group>
+	
+				
+			<template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" />
+			
+			
+
+		<!--s:NavigatorContent label="Background">
+			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
+		</s:NavigatorContent-->
+	<mx:Script>
+		<![CDATA[
+			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.template.Layer;
+			import com.settinghead.wexpression.client.model.vo.template.TemplateVO;
+			import com.settinghead.wexpression.client.model.vo.template.WordLayer;
+			import com.settinghead.wexpression.client.view.components.template.canvas.TextFlowCanvas;
+			
+			import flash.display.*;
+			import flash.display.Sprite;
+			import flash.events.*;
+			import flash.events.MouseEvent;
+			import flash.net.*;
+			import flash.utils.ByteArray;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.controls.Alert;
+			import mx.core.BitmapAsset;
+			import mx.events.FlexEvent;
+			
+			import org.as3commons.lang.HashArray;
+			
+			import spark.events.IndexChangeEvent;
+			
+			private var layersMap:HashArray;
+			
+			import org.peaceoutside.utils.ColorMath;
+			
+//			public static const MODE_EDIT:String 	= "modeEdit";
+			
+//			[Bindable] public var mode:String;
+//			
+//			public function setTemplate( template:TemplateVO, mode:String ):void
+//			{
+//				this.mode = mode;
+//				this.template = template;
+//			}
+			// ------- Constants -------
+			// Display states
+			private static const LOAD:uint = 0;
+			private static const PROGRESS:uint = 1;
+			
+			public static const RENDER_TU:String = "renderTu";
+			public static const SAVE_TEMPLATE:String = "saveTemplate";
+			
+			private var _template:TemplateVO;
+			
+			private var _loadFile:FileReference;
+			private var jagFileRefSave:FileReference = new FileReference();
+			private var loader:Loader = new Loader();
+			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
+		
+
+			// ------- Child controls -------
+			// Common view/containers
+			private var _imageContainer:Sprite;
+			private var _currentViewContainer:Sprite;
+			
+
+//			protected function btnUpload_clickHandler(event:MouseEvent):void
+//			{
+//				jagFileRefSave.browse([imagesFilter]);
+//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+//			}
+//			
+//			
+//			private function onClickSave(e:MouseEvent):void{    
+//				jagFileRefSave.browse([imagesFilter]);
+//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+//			}        
+//			private function selectedFile(e:Event):void{
+//				jagFileRefSave.load();
+//				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
+//			}
+//			private function loaded(e:Event):void{
+//				var rawBytes:ByteArray = jagFileRefSave.data;
+//				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
+//				loader.loadBytes(rawBytes);
+//			}
+//			private function getBitmapData(e:Event):void{
+//				backgroundLayer.addChild(loader);
+//			}
+			
+			public function get template():TemplateVO{
+				return _template;
+			}
+			
+			[Bindable] public function set template(_template:TemplateVO):void{
+				this._template = _template;
+				this.layersMap = new HashArray("name",false,_template.layers.toArray());
+			}
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				populateTemplate();
+			}
+			
+			private function populateTemplate():void{
+				if(this.template!=null)
+				{
+					
+//					this.layers.removeAllElements();
+
+//					for each(var layer:Layer in this.template.layers){
+//						if(layer is WordLayer){
+//							var canvas:TextFlowCanvas  = new TextFlowCanvas(layer as WordLayer);
+//							
+//
+//							this.layers.addChild(canvas);
+//						}
+//					}
+					
+					drawTransparentBackground();
+				}
+				
+			}
+			
+			protected function btnRender_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(RENDER_TU));	
+			}
+			
+			protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(SAVE_TEMPLATE));	
+
+			}
+			
+			protected function drawTransparentBackground():void
+			{
+				var bmpdTile:BitmapData  = new BitmapData(30,30);
+				var spriteTile:Sprite = new Sprite();
+				spriteTile.graphics.beginFill(0xeeeeee, 1.0);
+				spriteTile.graphics.drawRect(0,0,15,15);
+				spriteTile.graphics.drawRect(15,15,30,30);
+				spriteTile.graphics.endFill();
+				bmpdTile.draw(spriteTile);
+				
+				cvnTransparentBackground.width = this.template.width;
+				cvnTransparentBackground.height = this.template.height;
+				cvnTransparentBackground.graphics.beginBitmapFill(bmpdTile,null,true,true);
+				cvnTransparentBackground.graphics.drawRect(0, 0, this.template.width, this.template.height);
+				cvnTransparentBackground.graphics.endFill();
+			}
+			
+			protected function editor_keyDownHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.Z){
+					this.thicknessPicker.thickness += 1;
+				}
+				else if (event.keyCode == Keyboard.X){
+					this.thicknessPicker.thickness -= 1;
+				}
+				else if (event.keyCode == Keyboard.S){
+					this.directionPicker.angle -= 0.05;
+				}
+				else if (event.keyCode == Keyboard.A){
+					this.directionPicker.angle += 0.05;
+				}
+			}
+			
+			protected function btnAddLayer_clickHandler(event:MouseEvent):void
+			{
+				new WordLayer("layer"+(template.layers.length+1).toString(),template);
+			}
+			
+			private function layers_itemRendererFunc(item:Object):ClassFactory {
+				var cla:Class;
+				if(item is WordLayer){
+					cla = TextFlowCanvas;
+				}
+				var renderer:ClassFactory = new ClassFactory(cla);
+				renderer.properties = {templateEditor: this, depth: template.layers.length};
+				return renderer;
+			}
+			
+			
+			
+			
+		]]>
+	</mx:Script>
+	
+
+</mx:Canvas>

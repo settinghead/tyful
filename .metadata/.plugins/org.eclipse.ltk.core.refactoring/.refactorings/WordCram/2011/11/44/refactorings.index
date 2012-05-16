@@ -1,0 +1,25 @@
+1320146079831	Encapsulate field 'x'
+1320146086708	Encapsulate field 'y'
+1320146092775	Encapsulate field 'img'
+1320146098464	Encapsulate field 'width'
+1320146288361	Encapsulate field 'averageAlpha'
+1320150149917	Encapsulate field 'img'
+1320150154807	Encapsulate field 'index'
+1320155222063	Encapsulate field 'pVector'
+1320155227689	Encapsulate field 'returnedObj'
+1320160269049	Copy compilation unit
+1320207942697	Encapsulate field 'height'
+1320209004201	Encapsulate field 'parent'
+1320209082713	Encapsulate field 'children'
+1320209149765	Encapsulate field 'childrenMarker'
+1320273760157	Encapsulate field 'area'
+1320274667275	Encapsulate field 'myLevel'
+1320277974498	Rename field 'alphaSum'
+1320280375487	Rename method 'markForParent'
+1320390156252	Copy compilation unit
+1320490411707	Copy compilation unit
+1320572692759	Rename local variable 'r1'
+1320572702924	Rename local variable 'r2'
+1320572710415	Rename local variable 'd1'
+1320572717485	Rename local variable 'd2'
+1320589697290	Copy compilation unit

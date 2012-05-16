@@ -1,0 +1,26 @@
+package com.settinghead.wenwentu.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.settinghead.wenwentu.service.model.ShopItem;
+
+public class ShopPredictor {
+
+	public static List<ShopItem> getShop(int user_id) {
+		 List<ShopItem> result = new ArrayList<ShopItem>();
+		 
+		 ShopItem item1 = new ShopItem();
+		 item1.setName("Standard Tee");
+		 item1.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
+		 item1.setImageUrl("http://file.wenwentu.com/f/shop/standardtee.jpeg");
+		 result.add(item1);
+		 
+		 ShopItem item2 = new ShopItem();
+		 item1.setName("Mug");
+		 item1.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
+		 item1.setImageUrl("http://file.wenwentu.com/f/shop/standardtee.jpeg");
+		 result.add(item1);
+	}
+
+}

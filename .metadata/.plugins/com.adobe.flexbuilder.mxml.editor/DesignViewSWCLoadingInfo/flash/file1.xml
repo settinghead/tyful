@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<ListDetails label="SWC Loading Details" projectName="flash">
+
+
+<LoadedSetList label="LoadedSet List">
+
+
+<LoadingSet label="LoadingSet1:">
+
+
+<item  label="as3commons-bytecode-1.0.swc-443072495" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-bytecode-1.0.swc-443072495/library.swf"/>
+
+
+<item  label="as3commons-collections-1.3.2.swc935256297" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-collections-1.3.2.swc935256297/library.swf"/>
+
+
+<item  label="as3commons-concurrency-1.0-RC1.swc207375673" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-concurrency-1.0-RC1.swc207375673/library.swf"/>
+
+
+<item  label="as3commons-lang-0.3.5.swc1001700385" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-lang-0.3.5.swc1001700385/library.swf"/>
+
+
+<item  label="as3commons-logging-2.7.swc-1790557375" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-logging-2.7.swc-1790557375/library.swf"/>
+
+
+<item  label="as3commons-reflect-1.5.swc-1767285735" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-reflect-1.5.swc-1767285735/library.swf"/>
+
+
+<item  label="fiber.swc146692201" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber.swc146692201/library.swf"/>
+
+
+<item  label="fiber_rb.swc-2007349215" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber_rb.swc-2007349215/library.swf"/>
+
+
+<item  label="fzip.swc-1813619487" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fzip.swc-1813619487/library.swf"/>
+
+
+<item  label="GraphAPI_Web_1_8_1.swc-1895868935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/GraphAPI_Web_1_8_1.swc-1895868935/library.swf"/>
+
+
+<item  label="MonsterDebugger.swc-1253595935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/MonsterDebugger.swc-1253595935/library.swf"/>
+
+
+<item  label="playerfds.swc-90744663" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/playerfds.swc-90744663/library.swf"/>
+
+
+<item  label="serializers.swc1436190225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/serializers.swc1436190225/library.swf"/>
+
+
+<item  label="spring-actionscript-cairngorm-1.1.swc-969954511" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-cairngorm-1.1.swc-969954511/library.swf"/>
+
+
+<item  label="spring-actionscript-core-1.1.swc-1480598119" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-core-1.1.swc-1480598119/library.swf"/>
+
+
+<item  label="spring-actionscript-puremvc-standard-1.1.swc-899654943" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-puremvc-standard-1.1.swc-899654943/library.swf"/>
+
+
+<item  label="spring-actionscript-test-1.1.swc1493658929" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-test-1.1.swc1493658929/library.swf"/>
+
+
+<item  label="SVGRendererFlex_r84.swc1471108225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/SVGRendererFlex_r84.swc1471108225/library.swf"/>
+
+
+</LoadingSet>
+
+
+<LoadingSet label="LoadingSet2:">
+
+
+<item  label="as3commons-collections-1.3.2.swc935256297" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-collections-1.3.2.swc935256297/library.swf"/>
+
+
+<item  label="as3commons-concurrency-1.0-RC1.swc207375673" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-concurrency-1.0-RC1.swc207375673/library.swf"/>
+
+
+<item  label="as3commons-lang-0.3.5.swc1001700385" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-lang-0.3.5.swc1001700385/library.swf"/>
+
+
+<item  label="as3commons-logging-2.7.swc-1790557375" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-logging-2.7.swc-1790557375/library.swf"/>
+
+
+<item  label="as3commons-reflect-1.5.swc-1767285735" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-reflect-1.5.swc-1767285735/library.swf"/>
+
+
+<item  label="fiber.swc146692201" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber.swc146692201/library.swf"/>
+
+
+<item  label="fiber_rb.swc-2007349215" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber_rb.swc-2007349215/library.swf"/>
+
+
+<item  label="fzip.swc-1813619487" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fzip.swc-1813619487/library.swf"/>
+
+
+<item  label="GraphAPI_Web_1_8_1.swc-1895868935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/GraphAPI_Web_1_8_1.swc-1895868935/library.swf"/>
+
+
+<item  label="MonsterDebugger.swc-1253595935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/MonsterDebugger.swc-1253595935/library.swf"/>
+
+
+<item  label="playerfds.swc-90744663" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/playerfds.swc-90744663/library.swf"/>
+
+
+<item  label="serializers.swc1436190225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/serializers.swc1436190225/library.swf"/>
+
+
+<item  label="spring-actionscript-cairngorm-1.1.swc-969954511" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-cairngorm-1.1.swc-969954511/library.swf"/>
+
+
+<item  label="spring-actionscript-core-1.1.swc-1480598119" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-core-1.1.swc-1480598119/library.swf"/>
+
+
+<item  label="spring-actionscript-puremvc-standard-1.1.swc-899654943" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-puremvc-standard-1.1.swc-899654943/library.swf"/>
+
+
+<item  label="spring-actionscript-test-1.1.swc1493658929" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-test-1.1.swc1493658929/library.swf"/>
+
+
+<item  label="SVGRendererFlex_r84.swc1471108225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/SVGRendererFlex_r84.swc1471108225/library.swf"/>
+
+
+</LoadingSet>
+
+
+<LoadingSet label="LoadingSet3:">
+
+
+<item  label="as3commons-collections-1.3.2.swc935256297" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-collections-1.3.2.swc935256297/library.swf"/>
+
+
+<item  label="as3commons-concurrency-1.0-RC1.swc207375673" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-concurrency-1.0-RC1.swc207375673/library.swf"/>
+
+
+<item  label="as3commons-lang-0.3.5.swc1001700385" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-lang-0.3.5.swc1001700385/library.swf"/>
+
+
+<item  label="as3commons-reflect-1.5.swc-1767285735" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-reflect-1.5.swc-1767285735/library.swf"/>
+
+
+<item  label="fiber.swc146692201" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber.swc146692201/library.swf"/>
+
+
+<item  label="fiber_rb.swc-2007349215" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber_rb.swc-2007349215/library.swf"/>
+
+
+<item  label="fzip.swc-1813619487" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fzip.swc-1813619487/library.swf"/>
+
+
+<item  label="GraphAPI_Web_1_8_1.swc-1895868935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/GraphAPI_Web_1_8_1.swc-1895868935/library.swf"/>
+
+
+<item  label="MonsterDebugger.swc-1253595935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/MonsterDebugger.swc-1253595935/library.swf"/>
+
+
+<item  label="playerfds.swc-90744663" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/playerfds.swc-90744663/library.swf"/>
+
+
+<item  label="serializers.swc1436190225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/serializers.swc1436190225/library.swf"/>
+
+
+<item  label="spring-actionscript-cairngorm-1.1.swc-969954511" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-cairngorm-1.1.swc-969954511/library.swf"/>
+
+
+<item  label="spring-actionscript-core-1.1.swc-1480598119" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-core-1.1.swc-1480598119/library.swf"/>
+
+
+<item  label="spring-actionscript-puremvc-standard-1.1.swc-899654943" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-puremvc-standard-1.1.swc-899654943/library.swf"/>
+
+
+<item  label="spring-actionscript-test-1.1.swc1493658929" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-test-1.1.swc1493658929/library.swf"/>
+
+
+<item  label="SVGRendererFlex_r84.swc1471108225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/SVGRendererFlex_r84.swc1471108225/library.swf"/>
+
+
+</LoadingSet>
+
+
+<LoadingSet label="LoadingSet4:">
+
+
+<item  label="as3commons-collections-1.3.2.swc935256297" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-collections-1.3.2.swc935256297/library.swf"/>
+
+
+<item  label="as3commons-concurrency-1.0-RC1.swc207375673" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-concurrency-1.0-RC1.swc207375673/library.swf"/>
+
+
+<item  label="as3commons-lang-0.3.5.swc1001700385" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-lang-0.3.5.swc1001700385/library.swf"/>
+
+
+<item  label="as3commons-reflect-1.5.swc-1767285735" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-reflect-1.5.swc-1767285735/library.swf"/>
+
+
+<item  label="fiber.swc146692201" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber.swc146692201/library.swf"/>
+
+
+<item  label="fiber_rb.swc-2007349215" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber_rb.swc-2007349215/library.swf"/>
+
+
+<item  label="fzip.swc-1813619487" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fzip.swc-1813619487/library.swf"/>
+
+
+<item  label="GraphAPI_Web_1_8_1.swc-1895868935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/GraphAPI_Web_1_8_1.swc-1895868935/library.swf"/>
+
+
+<item  label="MonsterDebugger.swc-1253595935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/MonsterDebugger.swc-1253595935/library.swf"/>
+
+
+<item  label="playerfds.swc-90744663" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/playerfds.swc-90744663/library.swf"/>
+
+
+<item  label="serializers.swc1436190225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/serializers.swc1436190225/library.swf"/>
+
+
+<item  label="spring-actionscript-core-1.1.swc-1480598119" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-core-1.1.swc-1480598119/library.swf"/>
+
+
+<item  label="spring-actionscript-puremvc-standard-1.1.swc-899654943" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-puremvc-standard-1.1.swc-899654943/library.swf"/>
+
+
+<item  label="spring-actionscript-test-1.1.swc1493658929" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-test-1.1.swc1493658929/library.swf"/>
+
+
+<item  label="SVGRendererFlex_r84.swc1471108225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/SVGRendererFlex_r84.swc1471108225/library.swf"/>
+
+
+</LoadingSet>
+
+
+<LoadingSet label="LoadingSet5:">
+
+
+<item  label="as3commons-collections-1.3.2.swc935256297" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-collections-1.3.2.swc935256297/library.swf"/>
+
+
+<item  label="as3commons-concurrency-1.0-RC1.swc207375673" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-concurrency-1.0-RC1.swc207375673/library.swf"/>
+
+
+<item  label="as3commons-lang-0.3.5.swc1001700385" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-lang-0.3.5.swc1001700385/library.swf"/>
+
+
+<item  label="as3commons-reflect-1.5.swc-1767285735" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-reflect-1.5.swc-1767285735/library.swf"/>
+
+
+<item  label="fiber.swc146692201" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber.swc146692201/library.swf"/>
+
+
+<item  label="fiber_rb.swc-2007349215" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fiber_rb.swc-2007349215/library.swf"/>
+
+
+<item  label="fzip.swc-1813619487" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/fzip.swc-1813619487/library.swf"/>
+
+
+<item  label="GraphAPI_Web_1_8_1.swc-1895868935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/GraphAPI_Web_1_8_1.swc-1895868935/library.swf"/>
+
+
+<item  label="MonsterDebugger.swc-1253595935" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/MonsterDebugger.swc-1253595935/library.swf"/>
+
+
+<item  label="playerfds.swc-90744663" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/playerfds.swc-90744663/library.swf"/>
+
+
+<item  label="serializers.swc1436190225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/serializers.swc1436190225/library.swf"/>
+
+
+<item  label="spring-actionscript-core-1.1.swc-1480598119" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-core-1.1.swc-1480598119/library.swf"/>
+
+
+<item  label="spring-actionscript-test-1.1.swc1493658929" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-test-1.1.swc1493658929/library.swf"/>
+
+
+<item  label="SVGRendererFlex_r84.swc1471108225" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/SVGRendererFlex_r84.swc1471108225/library.swf"/>
+
+
+</LoadingSet>
+
+
+</LoadedSetList>
+
+
+<RemovedSetList label="RemovedSet List">
+
+
+<RemovedSet label="RemovedSet1:">
+
+
+<item  label="No Item present in this set"/>
+
+
+</RemovedSet>
+
+
+<RemovedSet label="RemovedSet2:">
+
+
+<item  label="as3commons-bytecode-1.0.swc-443072495" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-bytecode-1.0.swc-443072495/library.swf"/>
+
+
+</RemovedSet>
+
+
+<RemovedSet label="RemovedSet3:">
+
+
+<item  label="as3commons-bytecode-1.0.swc-443072495" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-bytecode-1.0.swc-443072495/library.swf"/>
+
+
+<item  label="as3commons-logging-2.7.swc-1790557375" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-logging-2.7.swc-1790557375/library.swf"/>
+
+
+</RemovedSet>
+
+
+<RemovedSet label="RemovedSet4:">
+
+
+<item  label="as3commons-bytecode-1.0.swc-443072495" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-bytecode-1.0.swc-443072495/library.swf"/>
+
+
+<item  label="as3commons-logging-2.7.swc-1790557375" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-logging-2.7.swc-1790557375/library.swf"/>
+
+
+<item  label="spring-actionscript-cairngorm-1.1.swc-969954511" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-cairngorm-1.1.swc-969954511/library.swf"/>
+
+
+</RemovedSet>
+
+
+<RemovedSet label="RemovedSet5:">
+
+
+<item  label="as3commons-bytecode-1.0.swc-443072495" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-bytecode-1.0.swc-443072495/library.swf"/>
+
+
+<item  label="as3commons-logging-2.7.swc-1790557375" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/as3commons-logging-2.7.swc-1790557375/library.swf"/>
+
+
+<item  label="spring-actionscript-cairngorm-1.1.swc-969954511" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-cairngorm-1.1.swc-969954511/library.swf"/>
+
+
+<item  label="spring-actionscript-puremvc-standard-1.1.swc-899654943" path="/Users/settinghead/groffle/.metadata/.plugins/com.adobe.flexbuilder.codemodel/SwcCache/spring-actionscript-puremvc-standard-1.1.swc-899654943/library.swf"/>
+
+
+</RemovedSet>
+
+
+</RemovedSetList>
+
+
+</ListDetails>
+
+

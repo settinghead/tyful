@@ -1,0 +1,276 @@
+what,kind,bundleId,bundleVersion,description,time
+error,log,,,"cannot Deploy wexpression",1318364837205
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364867711
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.undo",1318364887191
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.undo",1318364903726
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318364916042
+executed,command,org.eclipse.wst.sse.ui,1.3.1.v201108191312,"org.eclipse.wst.sse.ui.format.document",1318364916754
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364921168
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364923469
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364924255
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364928005
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318364935861
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318364937223
+error,log,,,"An internal error occurred during: ""Initialize Beans Graph 'root-context.xml'"".",1318364937699
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364939028
+error,log,,,"GlassFish: deploy is failing=",1318364945356
+error,log,,,"cannot Deploy wexpression",1318364945378
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364956357
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318364959800
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364961094
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364967697
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364971810
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364973224
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364973324
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364973761
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318364973772
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318364973923
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.core.resources"".",1318364973925
+error,log,,,"Errors occurred during the build.",1318364974119
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364974441
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364981292
+error,log,,,"GlassFish: deploy is failing=",1318364983154
+error,log,,,"cannot Deploy wexpression",1318364983155
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364983264
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318364988417
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318364990264
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1318365001722
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365014521
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365015906
+opened,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365016412
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365016493
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365020229
+opened,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365020732
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365020794
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365028332
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365028683
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365042149
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365054892
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365055676
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318365055720
+error,log,,,"GlassFish: deploy is failing=",1318365062934
+error,log,,,"cannot Deploy wexpression",1318365062938
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365063102
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365073631
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365076383
+opened,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318365077710
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318365077778
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365080301
+error,log,,,"GlassFish: deploy is failing=",1318365087959
+error,log,,,"cannot Deploy wexpression",1318365087960
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365088092
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365090922
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365098785
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365100291
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365100493
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365114111
+started,bundle,com.adobe.flexbuilder.flexunit,4.5.1.313231,"com.adobe.flexbuilder.flexunit",1318365119965
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365120846
+started,bundle,com.adobe.flexbuilder.codemodel,4.5.1.313231,"com.adobe.flexbuilder.codemodel",1318365121123
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365122838
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365123039
+error,log,,,"GlassFish: deploy is failing=",1318365126173
+error,log,,,"cannot Deploy wexpression",1318365126179
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365126331
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365136637
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318365139866
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365141653
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365142570
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365150183
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365150977
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365158934
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365280212
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365285661
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365323463
+executed,command,org.eclipse.ui.workbench.texteditor,3.7.0.v20110505-0800,"org.eclipse.ui.edit.text.goto.lineStart",1318365338148
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365344097
+error,log,,,"GlassFish: deploy is failing=",1318365351934
+error,log,,,"cannot Deploy wexpression",1318365351936
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365352127
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365367569
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365369328
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365369558
+executed,command,org.eclipse.ui.workbench.texteditor,3.7.0.v20110505-0800,"org.eclipse.ui.edit.text.goto.lineStart",1318365371393
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365372560
+error,log,,,"GlassFish: deploy is failing=",1318365383499
+error,log,,,"cannot Deploy wexpression",1318365383558
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365383645
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365401989
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365404350
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365404588
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365407137
+started,bundle,org.eclipse.rse.services,3.2.100.v201102281950,"org.eclipse.rse.services",1318365411571
+started,bundle,org.eclipse.rse.core,3.2.0.v201105311250,"org.eclipse.rse.core",1318365411631
+started,bundle,org.eclipse.rse.ui,3.2.0.v201105311250,"org.eclipse.rse.ui",1318365411830
+started,bundle,org.eclipse.rse.subsystems.files.core,3.2.100.v201105021534,"org.eclipse.rse.subsystems.files.core",1318365411836
+started,bundle,org.eclipse.rse.files.ui,3.2.0.v201105021534,"org.eclipse.rse.files.ui",1318365411837
+started,bundle,org.eclipse.rse.subsystems.files.local,2.1.200.v201101042155,"org.eclipse.rse.subsystems.files.local",1318365411838
+started,bundle,org.eclipse.rse.subsystems.shells.core,3.1.200.v201105311250,"org.eclipse.rse.subsystems.shells.core",1318365411866
+started,bundle,org.eclipse.rse.subsystems.shells.local,2.1.300.v201101042155,"org.eclipse.rse.subsystems.shells.local",1318365411868
+started,bundle,org.eclipse.rse.connectorservice.local,2.1.300.v201101042155,"org.eclipse.rse.connectorservice.local",1318365411945
+started,bundle,org.eclipse.rse.services.local,2.1.300.v201105311250,"org.eclipse.rse.services.local",1318365411965
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365412217
+opened,view,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.views.SearchView",1318365418754
+activated,view,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.views.SearchView",1318365418785
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365419042
+executed,command,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.openSearchDialog",1318365419139
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365439804
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365440705
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.findReplace",1318365440758
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365441565
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365443193
+activated,view,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.views.SearchView",1318365453289
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365453442
+executed,command,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.openSearchDialog",1318365453575
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365456010
+closed,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365477528
+opened,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365477705
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365477790
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318365490744
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318365494966
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365496614
+activated,view,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.views.SearchView",1318365499901
+opened,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365501672
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365502659
+error,log,,,"GlassFish: deploy is failing=",1318365508411
+error,log,,,"cannot Deploy wexpression",1318365508435
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365508569
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365511522
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318365515642
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365517065
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318365517252
+activated,view,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search.ui.views.SearchView",1318365526849
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.refresh",1318365526988
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.refresh",1318365528739
+error,log,,,"GlassFish: deploy is failing=",1318365528784
+error,log,,,"cannot Deploy wexpression",1318365528806
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365529130
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365530890
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365541258
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365543782
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.springframework.ide.eclipse.core"".",1318365543924
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365550261
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365555000
+error,log,,,"GlassFish: deploy is failing=",1318365555234
+error,log,,,"cannot Deploy wexpression",1318365555235
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365555392
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365575148
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365579163
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365580753
+executed,command,org.eclipse.wst.sse.ui,1.3.1.v201108191312,"org.eclipse.wst.sse.ui.format.document",1318365593307
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365593664
+error,log,,,"GlassFish: deploy is failing=",1318365606740
+error,log,,,"cannot Deploy wexpression",1318365606741
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365606918
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365617067
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365619818
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365620998
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365622363
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365622605
+executed,command,org.eclipse.wst.sse.ui,1.3.1.v201108191312,"org.eclipse.wst.sse.ui.format.document",1318365652017
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365652728
+error,log,,,"GlassFish: deploy is failing=",1318365663896
+error,log,,,"cannot Deploy wexpression",1318365663898
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365664125
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365683562
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365694512
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365694797
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.cut",1318365701493
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365701880
+error,log,,,"GlassFish: deploy is failing=",1318365713641
+error,log,,,"cannot Deploy wexpression",1318365713642
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365713815
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365719252
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365753268
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365756207
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365758902
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365871565
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318365877869
+executed,command,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.edit.text.java.format",1318365879762
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365880208
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365882540
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365884696
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365885114
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365887625
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365888021
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365893833
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365899056
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365901381
+error,log,,,"GlassFish: deploy is failing=",1318365904388
+error,log,,,"cannot Deploy wexpression",1318365904399
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365904618
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365914355
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365928350
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365931757
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365939617
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365951057
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365952193
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365953405
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365955411
+error,log,,,"GlassFish: deploy is failing=",1318365965129
+error,log,,,"cannot Deploy wexpression",1318365965130
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365965183
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318365965610
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365965649
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365968681
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365974042
+error,log,,,"GlassFish: deploy is failing=",1318365979916
+error,log,,,"cannot Deploy wexpression",1318365979918
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365980088
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365981793
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318365981832
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318365982886
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318365983290
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365987306
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365988089
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318365993946
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366008184
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318366019777
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318366020669
+started,bundle,org.eclipse.jdt.junit,3.7.0.v20110505-0800,"org.eclipse.jdt.junit",1318366027592
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366031477
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366035894
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318366042474
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318366043737
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366047871
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366048147
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366049334
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366066786
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318366073837
+activated,view,org.eclipse.ui.navigator.resources,3.4.300.I20110421-1800,"org.eclipse.ui.navigator.ProjectExplorer",1318366106503
+started,bundle,org.maven.ide.eclipse.launching,0.12.1.20110112-1712,"org.maven.ide.eclipse.launching",1318366109603
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366110504
+started,bundle,org.eclipse.wst.jsdt.debug.rhino.ui,1.0.0.v201103232243,"org.eclipse.wst.jsdt.debug.rhino.ui",1318366110778
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366111931
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366112601
+started,bundle,org.eclipse.jst.server.preview.adapter,1.1.100.v20100308,"org.eclipse.jst.server.preview.adapter",1318366112843
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366124245
+activated,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318366128516
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318366133988
+closed,editor,org.eclipse.wst.xml.ui,1.1.201.v201108151912,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1318366133988
+started,bundle,org.eclipse.mylyn.ide.ui,3.4.0.v20100608-0100-e3x,"org.eclipse.mylyn.ide.ui",1318366158203
+started,bundle,org.eclipse.jpt.jaxb.ui,1.1.0.v201105180000,"org.eclipse.jpt.jaxb.ui",1318366158255
+started,bundle,org.eclipse.jst.ws.jaxws.ui,1.0.100.v201104032053,"org.eclipse.jst.ws.jaxws.ui",1318366158292
+started,bundle,org.eclipse.pde.api.tools,1.0.300.v20110523-1600,"org.eclipse.pde.api.tools",1318366158373
+started,bundle,org.eclipse.pde.api.tools.ui,1.0.300.v20110523-1600,"org.eclipse.pde.api.tools.ui",1318366158376
+started,bundle,org.eclipse.jpt.jaxb.core,1.0.0.v201105240000,"org.eclipse.jpt.jaxb.core",1318366158716
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1318366159090
+executed,command,org.eclipse.ui.workbench.texteditor,3.7.0.v20110505-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1318366206179
+executed,command,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.edit.text.java.format",1318366217416
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318366217871
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318366222004
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318366224553
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318366227245
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318366229864
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318366231115
+error,log,,,"GlassFish: deploy is failing=",1318366233498
+error,log,,,"cannot Deploy wexpression",1318366233499
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366234049
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366236064
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1318366240642
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1318366252415
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1318366253761
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1318366254395
+activated,editor,com.springsource.sts.config.ui,2.7.2.201109131000-RELEASE,"com.springsource.sts.config.ui.editors.SpringConfigEditor",1318366256026
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1318366258687
+error,log,,,"GlassFish: deploy is failing=",1318366267502

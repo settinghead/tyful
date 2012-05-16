@@ -13,8 +13,8 @@
 	<property name="main.src.loc" location="${basedir}/src/main/flex" />
 	<property name="test.src.loc" location="${basedir}/src/test/flex" />
 	<property name="lib.loc" location="${basedir}/libs" />
-	<property name="output.loc" location="${basedir}/target" />
-	<property name="bin.loc" location="${output.loc}/bin" />
+	<property name="output.loc" location="${basedir}/../static/client/target" />
+	<property name="bin.loc" location="${output.loc}/../static/client" />
 	<property name="report.loc" location="${output.loc}/report" />
 
 	<!-- Setup Flex and FlexUnit ant tasks -->

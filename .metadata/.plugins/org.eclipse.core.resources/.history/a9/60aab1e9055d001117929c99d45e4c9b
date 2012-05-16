@@ -1,0 +1,12 @@
+package com.settinghead.wexpression.client.view.components
+{
+	import spark.components.SkinnableDataContainer;
+	
+	public class LayerStack extends SkinnableDataContainer
+	{
+		public function LayerStack()
+		{
+			super();
+		}
+	}
+}

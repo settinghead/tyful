@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+pathvariable.DOCUMENTS=/Users/settinghead/groffle
+pathvariable.GRAILS_ROOT=/Users/settinghead/.grails
+pathvariable.fiber=/Users/settinghead/wexpression${DCD_FIBER_LOCATION}/fiber.swc
+pathvariable.fiber_rb=/Users/settinghead/wexpression${DCD_FIBER_LOCALE_LOCATION}/fiber_rb.swc
+pathvariable.playerfds=/Users/settinghead/wexpression${DCD_FIBER_LOCATION}/playerfds.swc
+refresh.enabled=true
+version=1

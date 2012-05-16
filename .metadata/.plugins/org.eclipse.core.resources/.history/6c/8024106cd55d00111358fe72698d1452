@@ -1,0 +1,29 @@
+package com.settinghead.wexpression.client.view.components.template.canvas
+{
+	import flash.events.IEventDispatcher;
+	import flash.utils.Proxy;
+
+	dynamic public class MutableUint extends Proxy implements IEventDispatcher
+	{
+		protected var strings:Object;
+		protected var eventDispatcher:EventDispatcher;
+
+		public function MutableUint(v:uint = 0)
+		{
+			this._value = v;
+			eventDispatcher = new EventDispatcher(this);
+		}
+		
+		private var _value:uint;
+		
+		[Bindable(event="UintChanged")]
+		public function get v():uint{
+			return _value;
+		}
+		
+		public function set v(val:uint):void{
+			this._value = val;
+			
+		}
+	}
+}

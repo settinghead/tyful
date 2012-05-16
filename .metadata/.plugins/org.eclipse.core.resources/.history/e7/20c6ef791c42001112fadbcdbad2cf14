@@ -1,0 +1,5 @@
+#Wed Jan 18 16:36:24 EST 2012
+//org.springframework.ide.eclipse.beans.core.default.version.http\://cxf.apache.org/transports/http-jetty/configuration=
+//org.springframework.ide.eclipse.beans.core.default.version.http\://www.springframework.org/schema/context=
+eclipse.preferences.version=1
+org.springframework.ide.eclipse.beans.core.enable.project.preferences=false

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Opening a Shell to an EC2 Instance</title>
+</head>
+<body>
+
+<h1>Opening a Shell to an EC2 Instance</h1>
+
+<p>
+Once you have an EC2 instance running, you'll probably want to open a remote
+shell to it sooner or later.  From the <a href="javascript:executeCommand(%22org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=com.amazonaws.eclipse.ec2.ui.views.InstanceView)%22)">
+EC2 Instances view</a>, just right-click
+the running instance you want to connect to, and select "Open shell" from
+the context menu.  
+
+<p>
+<img src="../images/openShellContextMenu.png"/>
+
+<h3>Private keys</h3>
+
+<p>
+In order to open a remote shell, you'll need the private key
+from the key pair that launched the instance you selected.  You can quickly
+tell if you have the private key for an instances key pair by the icon displayed
+in the key pair column of the EC2 Instances view.
+
+<h3>SSH clients</h3>
+
+<p>
+You'll also need an SSH client before you can open
+a remote shell to an EC2 instance.  If you're running on Linux or Mac, you
+should have everything you need already set up.  If you're on Windows, you'll
+need to make sure you have the PuTTY and PuTTYgen programs installed.  If
+you don't, you can <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">
+download them for free</a>.  The first time you use a 
+key pair in PuTTY, the AWS Toolkit will also launch PuTTYgen so that you can
+convert the key pair to the format PuTTY understands.  After you've done that
+once for your key pair, you won't have to do it again.  
+
+<p>
+If you're having problems getting your SSH client to open correctly, you can
+check out the 
+<a href="javascript:executeCommand(%22org.eclipse.ui.window.preferences(preferencePageId=com.amazonaws.eclipse.ec2.preferences.ExternalToolsPreferencePage)%22)">
+External Tools preference page</a> for the AWS Toolkit.  Here you can 
+fine tune how your SSH client is invoked and specify any additional options.
+
+</body>
+</html>

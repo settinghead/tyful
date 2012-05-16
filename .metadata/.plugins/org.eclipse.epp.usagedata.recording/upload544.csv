@@ -1,0 +1,251 @@
+what,kind,bundleId,bundleVersion,description,time
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279176773
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279178788
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279180544
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279182808
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279184644
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279185200
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279185235
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279185314
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279185366
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279185393
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279187279
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Terminate",1321279189145
+activated,perspective,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.JavaPerspective",1321279192005
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279192071
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279199951
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279201095
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279203503
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279203563
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279207208
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279209028
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279209554
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.toggle.comment",1321279215221
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.toggle.comment",1321279219659
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321279222722
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279243677
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279243727
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279243831
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279243882
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279243910
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279245975
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321279251102
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279256496
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279265672
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321279272763
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279287639
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279287956
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279288344
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279288393
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279288492
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279288551
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279288591
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279290672
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279293000
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279293301
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279297542
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279299122
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279301263
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279303392
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279309713
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279310954
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279311004
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279311097
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279311150
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279311180
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279312525
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279316889
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279334909
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279334962
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279334997
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279335010
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279337346
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321279346559
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279351159
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279360109
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279363845
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279365049
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279371514
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279371583
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279371628
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279371664
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279376404
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279380860
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279381161
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279386943
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279387298
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279403281
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279415234
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279418133
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279418375
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279419766
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279420010
+activated,view,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.PackageExplorer",1321279421513
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279421766
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279424500
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279430626
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279431346
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279436876
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279436937
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279453578
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279456500
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279470470
+activated,perspective,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugPerspective",1321279476930
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279477201
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279482225
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279482315
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279483293
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279484561
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279485574
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279486544
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279495543
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279497954
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279499127
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279520855
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279524426
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279525356
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279525420
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279535736
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279536469
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279555201
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279555920
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279584264
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279589328
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279589431
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279591036
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279592063
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279593504
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279595247
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279595446
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279596758
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279596858
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279605381
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279605415
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279605501
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279605549
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279605578
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279607283
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321279609558
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279635041
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279658153
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279660144
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279660225
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279663170
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321279663241
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279664713
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279664807
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321279669829
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279672367
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279672401
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279672493
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279672537
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321279672564
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279674404
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279687635
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279711267
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321279713439
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321279719007
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321279722542
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321279742055
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279809729
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279849672
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279849731
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279861215
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279862582
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279863662
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279863721
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279867832
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279873244
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279874068
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321279880376
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321279905877
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321279923323
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279936107
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321279936941
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279938735
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279938802
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279941982
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321279945661
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279949562
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279956491
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321279960020
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279975688
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279975747
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279979457
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279981236
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321279981301
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321279984431
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321280022157
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1321280023595
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321280024872
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321280026303
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280034368
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280036676
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280036837
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321280038876
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280040233
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280046773
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280046811
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280049671
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280051343
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280051751
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280051977
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280052211
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280054854
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280056183
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280057854
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280059160
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321280061662
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280062013
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321280088745
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280088879
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321280091301
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280092760
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Terminate",1321280093521
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280097050
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280103021
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280105536
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321280105663
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280106852
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321280106963
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280108871
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321280108995
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280109997
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321280110112
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280113919
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321280114034
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280115466
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321280115578
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280122888
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280122924
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280123014
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280123062
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321280123092
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280124409
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321280126543
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280157752
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321280195194
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321280198893
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280249649
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280250236
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321280250300
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280259285
+started,bundle,com.aptana.workbench,3.0.0.1312303461,"com.aptana.workbench",1321280267008
+started,bundle,com.aptana.index.core,3.0.0.1316797991,"com.aptana.index.core",1321280267105
+started,bundle,com.aptana.editor.common,3.0.3.1319164560,"com.aptana.editor.common",1321280267111
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280271282
+activated,view,org.eclipse.search,3.6.0.v20100520-0800,"org.eclipse.search.ui.views.SearchView",1321280272085
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.search.references.in.project",1321280272177
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280276102
+activated,view,org.eclipse.search,3.6.0.v20100520-0800,"org.eclipse.search.ui.views.SearchView",1321280279901
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280283433
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280289879
+activated,view,org.eclipse.search,3.6.0.v20100520-0800,"org.eclipse.search.ui.views.SearchView",1321280290683
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.search.references.in.project",1321280290699
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280293041
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321280307077
+activated,view,org.eclipse.search,3.6.0.v20100520-0800,"org.eclipse.search.ui.views.SearchView",1321280307899
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.search.references.in.project",1321280307915
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321280311086
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321280383032
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321280385319

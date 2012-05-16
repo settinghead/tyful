@@ -1,0 +1,276 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.codehaus.groovy.eclipse.codeassist.completion,2.5.2.xx-20110918-1400-e36,"org.codehaus.groovy.eclipse.codeassist.completion",1321221839800
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221881710
+opened,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321221881905
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321221882050
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321221882108
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221892142
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321221892278
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321221907676
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221912362
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221912850
+error,log,,,"Unhandled event loop exception",1321221913665
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221927637
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221927668
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221927734
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221927777
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221927814
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221928066
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221928929
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221929209
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321221938423
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321221940181
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321221940392
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221958556
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221958585
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221958642
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221958692
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221958745
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221960506
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321221964648
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321221972195
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321221982316
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221987320
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221988318
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221989635
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221990094
+error,log,,,"Unhandled event loop exception",1321221990230
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221998984
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321221999009
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221999071
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221999116
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321221999157
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222016917
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222025268
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222025630
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222041373
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222041407
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222041484
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222041553
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222041608
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222043837
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222046098
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222066322
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222066347
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222066406
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222066447
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222066492
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222068182
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222086241
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222093132
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222093277
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222093327
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222102010
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222106559
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222107103
+error,log,,,"Unhandled event loop exception",1321222107240
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222119926
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222119957
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222120022
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222120069
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222120111
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222122036
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321222129655
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1321222132321
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222136878
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222137137
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.paste",1321222139972
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222147146
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222151052
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222151245
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222152650
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222163650
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222163681
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222163740
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222163792
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222163841
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222165403
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321222169041
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222170576
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222171433
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321222171482
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222173993
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222180496
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222180519
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222180571
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222180605
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222180644
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222182624
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.cut",1321222218650
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222219559
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222220297
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222229220
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222229487
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222243681
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222243705
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222243989
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222244053
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222244369
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222245644
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222253476
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222286547
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321222294944
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222298015
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.findReplace",1321222298072
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222299832
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222304455
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222312158
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222317654
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222317693
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222317729
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222317761
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222332529
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222346068
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222352025
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222359220
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222367419
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222367789
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222373197
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222386341
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222386371
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222386426
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222386475
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222386506
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222388222
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222418926
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222420688
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222431766
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222431790
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222431850
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222431888
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222431922
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222433394
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.cut",1321222465053
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222467598
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222467811
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222480677
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222480701
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222480770
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222480807
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222480841
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222481107
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222481958
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222482233
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222490336
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222490937
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222491402
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222492005
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222492986
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222493423
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222494058
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222494478
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222513622
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222520633
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222521110
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222521469
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222521919
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222522266
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222522664
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222523089
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321222529015
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222530284
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222536217
+opened,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222536448
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222536537
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222536543
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222540882
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222541371
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222551210
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222551447
+error,log,,,"Unhandled event loop exception",1321222551577
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222579070
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222580493
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222590315
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222590583
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222593112
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222602274
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222602564
+error,log,,,"Unhandled event loop exception",1321222602700
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222607211
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222607238
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222607300
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222607350
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222607393
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222607695
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222608368
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222608705
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222627756
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222627932
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222627937
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222669531
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222669733
+error,log,,,"Unhandled event loop exception",1321222669825
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321222694471
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222695340
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222695772
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222706393
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222719142
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222719177
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222719238
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222719273
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222719309
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222720899
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321222722904
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222731765
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222732112
+activated,view,org.eclipse.ui.navigator.resources,3.4.202.M20101124-0800,"org.eclipse.ui.navigator.ProjectExplorer",1321222738770
+started,bundle,org.eclipse.mylyn.resources.ui,3.4.1.v20100909-0100-e3x,"org.eclipse.mylyn.resources.ui",1321222738813
+opened,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222742837
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222743040
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222753747
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222753858
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222753862
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222756153
+closed,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222756154
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222760838
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222760866
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222760930
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222761003
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222761041
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222762135
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222768099
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321222768358
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222774746
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222780998
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222781362
+error,log,,,"Unhandled event loop exception",1321222781602
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222791129
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222798336
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222799488
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222799980
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222800470
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222808450
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222827228
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222827254
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222827318
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222827369
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222827410
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222828411
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.cut",1321222843203
+executed,command,org.eclipse.ui.workbench.texteditor,3.6.1.r361_v20100714-0800,"org.eclipse.ui.edit.text.goto.lineEnd",1321222843914
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222845716
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222845959
+activated,view,org.eclipse.ui.navigator.resources,3.4.202.M20101124-0800,"org.eclipse.ui.navigator.ProjectExplorer",1321222849149
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222851037
+activated,view,org.eclipse.ui.navigator.resources,3.4.202.M20101124-0800,"org.eclipse.ui.navigator.ProjectExplorer",1321222851728
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222852117
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222862780
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222862817
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222862916
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222862981
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1321222863033
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222863339
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222864189
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222865627
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222867054
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222867355
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321222870005
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.undo",1321222871630
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222874173
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.format",1321222876109
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1321222882394
+activated,view,org.eclipse.ui.navigator.resources,3.4.202.M20101124-0800,"org.eclipse.ui.navigator.ProjectExplorer",1321222885558
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222885900
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222889063
+closed,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321222889063
+activated,view,org.eclipse.ui.navigator.resources,3.4.202.M20101124-0800,"org.eclipse.ui.navigator.ProjectExplorer",1321222890555

@@ -1,0 +1,151 @@
+what,kind,bundleId,bundleVersion,description,time
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321156139595
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321156141036
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321156142788
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321156145907
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321156147761
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321156149073
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321156149546
+opened,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321156150849
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321156150996
+executed,command,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.edit.text.java.open.editor",1321156151058
+executed,command,,,"AUTOGEN:::org.eclipse.jdt.debug.CompilationUnitEditor.BreakpointRulerActions/org.eclipse.jdt.debug.ui.actions.ManageBreakpointRulerAction",1321156157870
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.DebugView",1321156160009
+executed,command,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.commands.Resume",1321156160113
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321156163750
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321156193655
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.edit.copy",1321156245456
+activated,view,org.eclipse.debug.ui,3.6.3.v20101201_r362,"org.eclipse.debug.ui.VariableView",1321156276128
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321156302229
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1321156303026
+activated,editor,org.eclipse.jdt.ui,3.6.1.r361_v20100825-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1321156305031
+activated,view,org.eclipse.ui.console,3.5.0.v20100526,"org.eclipse.ui.console.ConsoleView",1321156307144
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine occurred while retrieving array length.",1321156307319
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307320
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307323
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307328
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307331
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307331
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307332
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307333
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307337
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307339
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307340
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307340
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307341
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307343
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307344
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307344
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307345
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307345
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307346
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307346
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307346
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307348
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307348
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307349
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307349
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307351
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307352
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307352
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307352
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307353
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307353
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307355
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307355
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307356
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307357
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307358
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307360
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307361
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307361
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307362
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307362
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307363
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307363
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307364
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307365
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307365
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307366
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307366
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307368
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307369
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307370
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307370
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307371
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307371
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307372
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307373
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307375
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307377
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307378
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307379
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307380
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307380
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307381
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307381
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307382
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307383
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307383
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307384
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307384
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307385
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307386
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307386
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307386
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307387
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307389
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307391
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307391
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307391
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307392
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307392
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307392
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307393
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307394
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307394
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307395
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307395
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307395
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307396
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307396
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307396
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307397
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307397
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307397
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307398
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307398
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307399
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307399
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307410
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307410
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307411
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307411
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307411
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307412
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307412
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307413
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307413
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307414
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307415
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307415
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307415
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307416
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307416
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307416
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307417
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307417
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307417
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307418
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307418
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307419
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307419
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307420
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307420
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307420
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307421
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307422
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307423
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307425
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307425
+error,log,,,"com.sun.jdi.VMDisconnectedException: Got com.sun.jdi.connect.spi.ClosedConnectionException from Virtual Machine occurred while retrieving array length.",1321156307425

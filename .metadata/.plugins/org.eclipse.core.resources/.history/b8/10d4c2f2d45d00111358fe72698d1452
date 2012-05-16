@@ -1,0 +1,20 @@
+package com.settinghead.wexpression.client.view.components.template.canvas
+{
+	public class MutableUint
+	{
+		[Bindable]
+		public function MutableUint(v:uint = 0)
+		{
+			this._value = v;
+		}
+		
+		private var _value:uint;
+		public function get v():uint{
+			return _value;
+		}
+		
+		public function set v(val:uint):void{
+			this._value = val;
+		}
+	}
+}

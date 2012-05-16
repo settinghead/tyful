@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:services="services.*"
+			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			protected function list_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllWordsResult.token = wordListService.getAllWords();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getAllWordsResult"/>
+		<services:WordListService id="wordListService"
+								  fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+								  showBusyCursor="true"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="list" x="93" y="56" width="380" height="347"
+			creationComplete="list_creationCompleteHandler(event)" labelField="word">
+		<s:AsyncListView list="{getAllWordsResult.lastResult}"/>
+	</s:List>
+</s:Application>

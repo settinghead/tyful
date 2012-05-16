@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.settinghead.wexpression.services;
+
+/**
+ * @author settinghead
+ *
+ */
+public class Hello {
+
+}

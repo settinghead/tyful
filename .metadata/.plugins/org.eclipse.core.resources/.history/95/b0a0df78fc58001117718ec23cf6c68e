@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ PureMVC AS3 Demo - Flex Employee Admin 
+ Copyright (c) 2007-10 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+-->
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 enterFrame="onEnterFrameHandler(event)" creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" xmlns:template="com.settinghead.wexpression.client.view.components.template.*"
+		 >
+	
+	<mx:states>
+		<s:State name="rendering" />
+		<s:State name="renderingPreview" />
+		<s:State name="renderFinished" />
+		<s:State name="renderPreviewFinished" />
+	</mx:states>
+	<!-- Events dispatched by this View Component -->
+	<fx:Metadata>
+	</fx:Metadata>
+
+	<fx:Script>
+		<![CDATA[
+			import com.demonsters.debugger.MonsterDebugger;
+			import com.settinghead.wexpression.client.PlaceInfo;
+			import com.settinghead.wexpression.client.density.Patch;
+			import com.settinghead.wexpression.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.wexpression.client.model.vo.DisplayWordListVO;
+			import com.settinghead.wexpression.client.model.vo.DisplayWordVO;
+			import com.settinghead.wexpression.client.model.vo.TuVO;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.graphics.codec.PNGEncoder;
+			
+			import org.as3commons.collections.framework.IIterator;
+			import org.as3commons.lang.Assert;
+			
+			public static const CREAT_NEXT_DISPLAYWORD:String = "createNextDisplayWord";
+			public static const EDIT_TEMPLATE:String = "editTemplate";
+			public static const PUBLISH_TEMPLATE:String = "publishTemplate";
+			public static const TU_GENERATED:String = "tuGenerated";
+			
+			[Bindable] private var _driftDistanceSum:Number = 0;
+			
+			private var _tu:TuVO;
+			
+			public function slapWord(dWord:DisplayWordVO):void{
+				this.wordLayer.addChild(dWord);
+				this._tu.dWords.addItem(dWord);
+				if(patchLayer.visible) 
+					patchLayer.graphics.clear();
+//				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
+//					this.highlightPatch(pi.patch);
+				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+				this._driftDistanceSum += dWord.engineWord.offsetDistance;
+				if(patchLayer.visible) 
+								patchLayer.patchQueue = patchLayer.patchQueue;
+
+			}
+			
+			protected function btnEditTemplate_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(EDIT_TEMPLATE));
+			}
+			
+			protected function btnSaveAsPng_clickHandler(event:MouseEvent):void{
+				generateImage();
+				var encoder:PNGEncoder = new PNGEncoder();
+				var bild:ByteArray = encoder.encode(_tu.generatedImage);
+				var file:FileReference = new FileReference();
+				file.save(bild, "tu.png");
+			}
+			
+			protected function btnForceFinish_clickHandler(event:MouseEvent):void{
+				finishRendering();
+			}
+			
+			protected function btnPublishTemplate_clickHandler(event:MouseEvent):void{
+				dispatchEvent(new Event(PUBLISH_TEMPLATE));
+
+			}
+			
+			public function wordMouseOver(e:MouseEvent):void{
+				if(patchLayer.visible) {
+					patchLayer.graphics.clear();
+					for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
+						this.highlightPatch(pi.patch);
+				}
+				if(treeLayer.visible)
+				{
+					var dWord:DisplayWordVO = e.target as DisplayWordVO;
+					dWord.visible = false;
+					drawTree(dWord.engineWord.bbTree);
+				}
+			}
+			
+			public function wordMouseOut(e:MouseEvent):void{
+				if(treeLayer.visible){
+					var dWord:DisplayWordVO = e.target as DisplayWordVO;
+					dWord.visible = true;
+				}
+			}
+			
+			public function highlightPatch(patch:Patch):void{
+				patchLayer.graphics.beginFill(0xCCCCCC,0.5);
+				patchLayer.graphics.drawRect(patch.getX(), patch.getY(), patch.getWidth(), patch.getHeight());
+				patchLayer.graphics.endFill();
+			}
+			
+			private function drawTree(tree:BBPolarTreeVO):void{
+				treeLayer.graphics.clear();
+				treeLayer.graphics.lineStyle(1,0x111111,1.0);
+				drawLeaves(tree);
+			}
+			
+			private function drawLeaves(tree:BBPolarTreeVO):void {
+				if (tree.isLeaf()) {
+					drawBounds(tree);
+				} else {
+					for (var i:int= 0; i < tree.getKids().length; i++) {
+						drawLeaves(tree.getKids()[i]);
+					}
+				}
+			}
+			
+			private function drawBounds(tree:BBPolarTreeVO):void {
+				var x1:int, x2:int, x3:int, x4:int, y1:int, y2:int, y3:int, y4:int;
+				x1 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR1(true))));
+				y1 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR1(true))));
+				x2 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR2(true))));
+				y2 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR2(true))));
+				x3 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR1(true))));
+				y3 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR1(true))));
+				x4 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR2(true))));
+				y4 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR2(true))));
+				
+				var r:Number= tree.getR2(true) - tree.getR1(true);
+				if (r < 0)
+					r = BBPolarTreeVO.TWO_PI + r;
+				Assert.isTrue(r < BBPolarTreeVO.PI);
+				
+				drawArc(tree.getRootX(),
+					tree.getRootY(), tree.d2,
+					tree.getR1(true), tree.getR2(true), 1);
+				drawArc(tree.getRootX(),
+					tree.getRootY(), tree.d1,
+					tree.getR1(true), tree.getR2(true), 1);
+				treeLayer.graphics.moveTo(x1,y1);
+				treeLayer.graphics.lineTo(x3,y3);
+				treeLayer.graphics.moveTo(x2,y2);
+				treeLayer.graphics.lineTo(x4,y4);
+			}
+			
+			private function drawArc(center_x:Number,center_y:Number,
+									radius:Number,angle_from:Number,angle_to:Number,precision:Number):void {
+				var angle_diff:Number=angle_to-angle_from;
+				var steps:Number=Math.round(angle_diff*precision);
+				if(steps==0) steps = 1;
+				var angle:Number=angle_from;
+				var px:Number=center_x+radius*Math.cos(angle);
+				var py:Number=center_y-radius*Math.sin(angle);
+				treeLayer.graphics.moveTo(px,py);
+				for (var i:int=1; i<=steps; i++) {
+					angle=angle_from+angle_diff/steps*i;
+					treeLayer.graphics.lineTo(center_x+radius*Math.cos(angle),center_y-radius*Math.sin(angle));
+				}
+			}
+			
+			protected function onEnterFrameHandler(event:Event):void
+			{
+				if(this.visible){
+					if(_tu!=null && !_tu.finishedDisplayWordRendering){
+						dispatchEvent(new Event(CREAT_NEXT_DISPLAYWORD));
+					}
+
+					if(_tu!=null && (_tu.finishedDisplayWordRendering)){
+						finishRendering();
+						
+					}
+					
+				}
+			}
+			
+			public function finishRendering():void{
+				generateImage();
+				if(this.currentState == "rendering")
+					this.currentState = "renderFinished";
+				else if(this.currentState == "renderingPreview")
+					this.currentState = "renderPreviewFinished";
+				dispatchEvent(new Event(TU_GENERATED));
+			}
+			
+			public function generateImage():void{
+				var bmpData:BitmapData = new BitmapData(mainCanvas.width, mainCanvas.height,true);
+				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
+				bmpData.draw(mainCanvas);
+				_tu.generatedImage = bmpData;
+			}
+			
+			public function get tu():TuVO{
+				return _tu;
+			}
+			
+			private var newTu:Boolean = false;
+			
+			[Bindable] public function set tu(_tu:TuVO):void{
+				this._tu = _tu;
+				newTu = true;
+			}
+			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+				if(newTu && this.tu!=null){
+					prepareForTu();
+				}
+			}
+			
+			private function prepareForTu():void{
+				while(this.backgroundLayer.numChildren>0) 
+					this.backgroundLayer.removeChildAt(0);
+				while(this.wordLayer.numChildren>0)
+					this.wordLayer.removeChildAt(0);				
+//				this.width = _tu.width;
+//				this.height = _tu.height;
+				this.mainCanvas.width = _tu.width;
+				this.mainCanvas.height = _tu.height;
+				if(_tu.backgroundImage!=null)
+					this.backgroundLayer.addChild(_tu.backgroundImage);
+				for each(var displayWord:DisplayWordVO in _tu.dWords)
+					this.slapWord(displayWord);
+					
+				if(patchLayer.visible)
+					patchLayer.patchQueue=this._tu.template.patchIndex.map.getQueue(3);
+
+				newTu = false;
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="false" />
+
+	<mx:Canvas id="mainCanvas" top="0" bottom="0" left="0" right="0">
+		<mx:UIComponent id="backgroundLayer" top="0" bottom="0" left="0" right="0" visible="true"/>
+		<mx:UIComponent id="wordLayer" top="0" left="0" />
+	</mx:Canvas>
+	<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
+
+	<mx:ControlBar visible.rendering="true" includeInLayout.rendering="true" visible="false" includeInLayout="false">
+		<s:Label text="Rendering in process, please wait..." />
+		<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+		<s:Button click="btnForceFinish_clickHandler(event)" label = "It looks just right. Finish!" />
+	</mx:ControlBar>
+	
+	<mx:ControlBar visible.renderingPreview="true" includeInLayout.renderingPreview="true" visible="false" includeInLayout="false">
+		<s:Label id="lblRenderingPreviewNotice" text="We are generating a cover image for your template, please wait..." />
+		<s:Button click="btnForceFinish_clickHandler(event)" label = "It looks about right. Finish!" />
+	</mx:ControlBar>
+	
+	<mx:ControlBar visible.renderFinished="true" includeInLayout.renderFinished="true" visible="false" includeInLayout="false">
+		<s:Button click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+		<s:Button click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
+	</mx:ControlBar>
+	
+	<mx:ControlBar visible.renderPreviewFinished="true" includeInLayout.renderPreviewFinished="true" visible="false" includeInLayout="false">
+		<s:Label text="Finished! Now click publish to upload it to public gallery, or make other adjustments before publishing." />
+		<s:Button id="btnPublish" click="btnPublishTemplate_clickHandler(event)" label = "Publish my template to gallery" />
+		<s:Button click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+	</mx:ControlBar>
+	
+</mx:Canvas>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="Apache Tomcat v7.0" key="com.adobe.flexbuilder.project.ui.last.java.runtime"/>
+	<item value="/Users/settinghead/wexpression/wexpression/src/main/webapp/" key="com.adobe.flexbuilder.project.ui.last.jsp.webroot"/>
+	<item value="http://localhost:8080/wexpression/" key="com.adobe.flexbuilder.project.ui.last.jsp.url"/>
+	<item value="http://localhost:5000/templates/" key="com.adobe.flexbuilder.project.ui.last.php.url"/>
+	<item value="/Users/settinghead/groffle/static/client" key="com.adobe.flexbuilder.project.ui.last.php.webroot"/>
+	<item value="false" key="com.adobe.flexbuilder.project.ui.last.usewtp"/>
+	<item value="4" key="com.adobe.flexbuilder.project.ui.last.server.type"/>
+	<item value="false" key="com.adobe.flexbuilder.project.ui.last.flexserver.usedefaults"/>
+	<item value="/Users/settinghead/wexpression/wexpression/WebContent" key="com.adobe.flexbuilder.project.ui.last.flexserver.location"/>
+	<item value="WebContent" key="com.adobe.flexbuilder.project.ui.last.java.contentfolder"/>
+	<item value="/wexpression" key="com.adobe.flexbuilder.project.ui.last.flexserver.contextroot"/>
+	<item value="1269311000000" key="com.adobe.flexbuilder.project.ui.last.java.flexwartime"/>
+	<item value="http://localhost:8080/wexpression" key="com.adobe.flexbuilder.project.ui.last.flexserver.url"/>
+	<item value="true" key="com.adobe.flexbuilder.project.ui.use.default.location"/>
+	<item value="true" key="com.adobe.flexbuilder.project.ui.last.apptype"/>
+	<item value="/Users/settinghead/wexpression" key="com.adobe.flexbuilder.project.ui.last.project.parent"/>
+	<item value="true" key="com.adobe.flexbuilder.project.ui.last.java.uselcds"/>
+	<item value="true" key="com.adobe.flexbuilder.project.ui.last.useremoteobject"/>
+	<item value="" key="com.adobe.flexbuilder.project.ui.last.java.javasrc"/>
+	<item value="/Users/settinghead/wexpression/blazeds.war" key="com.adobe.flexbuilder.project.ui.last.java.flexwar"/>
+	<section name="com.adobe.flexbuilder.help.ModulesPropertyPage">
+		<item value="125" key="outputSWFColumnWidth"/>
+		<item value="0" key="sortColumnIndex"/>
+		<item value="225" key="moduleColumnWidth"/>
+		<item value="true" key="sortColumnAscending"/>
+		<item value="125" key="optimizeColumnWidth"/>
+	</section>
+	<section name="ADD_MODULE_DIALOG_SECTION">
+		<item value="609" key="DIALOG_WIDTH"/>
+		<item value="250" key="DIALOG_Y_ORIGIN"/>
+		<item value="105" key="DIALOG_X_ORIGIN"/>
+		<item value="243" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="com.adobe.flexbuilder.help.FlexUnitTestCaseClassWizard">
+		<item value="true" key="USE_TESTCASE_FU4VERSION"/>
+	</section>
+</section>

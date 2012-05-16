@@ -1,0 +1,19 @@
+
+Dec 13, 2011 22:15:19.54 NEW SESSION
+Dec 13, 2011 22:15:19.54 Running global cleanup code from study base classes.
+Dec 13, 2011 22:19:53.01 2011-12-13 22:19:53.007 firefox-bin[15733:60b] -_scrollPhase is deprecated for NSScrollWheel. Please use -momentumPhase.
+Dec 13, 2011 22:19:53.01 2011-12-13 22:19:53.008 firefox-bin[15733:60b] -_continuousScroll is deprecated for NSScrollWheel. Please use -hasPreciseScrollingDeltas.
+Dec 13, 2011 22:19:53.01 2011-12-13 22:19:53.009 firefox-bin[15733:60b] -deviceDeltaY is deprecated for NSScrollWheel. Please use -scrollingDeltaY.
+Dec 13, 2011 22:19:53.01 2011-12-13 22:19:53.010 firefox-bin[15733:60b] -deviceDeltaX is deprecated for NSScrollWheel. Please use -scrollingDeltaX.
+Dec 14, 2011 05:04:31.41 DVFreeThread - CFMachPortCreateWithPort hack = 0x2178840, fPowerNotifyPort= 0x2178820
+Dec 14, 2011 05:04:35.42 DVFreeThread - CFMachPortCreateWithPort hack = 0x443400, fPowerNotifyPort= 0x4432d0
+Dec 14, 2011 05:05:11.11 DVFreeThread - CFMachPortCreateWithPort hack = 0x379850, fPowerNotifyPort= 0x361e40
+Dec 14, 2011 05:05:17.09 DVFreeThread - CFMachPortCreateWithPort hack = 0x12ae70, fPowerNotifyPort= 0x129dd0
+Dec 14, 2011 05:05:30.55 DVFreeThread - CFMachPortCreateWithPort hack = 0x422d50, fPowerNotifyPort= 0x422d30
+
+Dec 29, 2011 11:33:37.05 NEW SESSION
+Dec 29, 2011 11:33:37.06 Running global cleanup code from study base classes.
+Dec 29, 2011 11:34:08.94 2011-12-29 11:34:08.940 firefox-bin[85233:60b] -_scrollPhase is deprecated for NSScrollWheel. Please use -momentumPhase.
+Dec 29, 2011 11:34:08.94 2011-12-29 11:34:08.942 firefox-bin[85233:60b] -_continuousScroll is deprecated for NSScrollWheel. Please use -hasPreciseScrollingDeltas.
+Dec 29, 2011 11:34:08.94 2011-12-29 11:34:08.942 firefox-bin[85233:60b] -deviceDeltaY is deprecated for NSScrollWheel. Please use -scrollingDeltaY.
+Dec 29, 2011 11:34:08.94 2011-12-29 11:34:08.944 firefox-bin[85233:60b] -deviceDeltaX is deprecated for NSScrollWheel. Please use -scrollingDeltaX.

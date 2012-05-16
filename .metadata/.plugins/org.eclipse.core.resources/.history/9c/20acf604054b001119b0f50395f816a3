@@ -1,0 +1,12 @@
+package com.settinghead.wexpression.services;
+
+import org.springframework.flex.remoting.RemotingDestination;
+import org.springframework.flex.remoting.RemotingInclude;
+
+@RemotingDestination
+class HelloService {
+	@RemotingInclude
+	public String getSomeString() {
+		return "Peanut Butter is Awesome";
+	}
+}

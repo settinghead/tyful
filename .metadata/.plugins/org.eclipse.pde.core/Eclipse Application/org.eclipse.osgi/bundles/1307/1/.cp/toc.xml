@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<toc label="Spring Documentation">
+	<anchor id="spring_additions" />
+	<!-- insert link to Spring IDE Wiki -->
+	<topic label="Spring IDE - Documentation"
+		href="http://springide.org">
+		<topic label="Getting started" href="http://springide.org/project/wiki/SpringideGuide" />
+		<topic label="Beans Support" href="http://springide.org/doc/BEANS" />
+		<topic label="AOP Support" href="http://springide.org/doc/AOP" />
+		<topic label="Web Flow Support" href="http://springide.org/doc/SWF" />
+	</topic>
+	<anchor id="additions" />
+</toc>
