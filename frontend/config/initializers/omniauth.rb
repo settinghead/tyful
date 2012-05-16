@@ -7,4 +7,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   else
     provider :facebook, GRAPH_APP_ID, GRAPH_SECRET, {:scope => fb_permissions}
   end
+  
 end
