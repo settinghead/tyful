@@ -19,10 +19,6 @@ server {
 	
 	access_log  /var/log/nginx/localhost.access.log;
 
-	location / {
-		proxy_pass http://frontend;
-	}
-
 	location /f/ {
                 proxy_pass http://fileserver;
         }
