@@ -8,3 +8,4 @@ backend/target
 .metadata/
 .hibernateSynchronizer/
 .fxpTemp/
+static/client/GroffleClient.swf

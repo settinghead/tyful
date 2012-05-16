@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
 import java.io.FileNotFoundException;
@@ -18,6 +19,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.restfb.types.Post;
 import com.settinghead.wenwentu.service.model.Task;
 import com.settinghead.wenwentu.service.model.Word;
+import com.settinghead.wenwentu.service.model.WordListStatus;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -27,13 +29,13 @@ import redis.clients.jedis.Protocol;
 
 public class WordListService extends GroffleService {
 
-
-
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		runWordListService();
+
+		for (int i = 0; i < 20; i++)
+			runWordListService();
 
 		// Server server = new Server(Integer.valueOf(System.getenv("PORT")));
 		// ServletContextHandler context = new ServletContextHandler(
@@ -44,8 +46,6 @@ public class WordListService extends GroffleService {
 		// server.start();
 		// server.join();
 	}
-
-
 
 	private static void runWordListService() {
 		logger.info("Starting word list service. ");
@@ -71,7 +71,7 @@ public class WordListService extends GroffleService {
 					String dbStr = props.getProperty("REDISTOGO_DB");
 					if (dbStr != null) {
 						jedis.select(Integer.parseInt(dbStr));
-						logger.info("DB: "+dbStr);
+						logger.info("DB: " + dbStr);
 					}
 					while (true) {
 						String message;
@@ -82,13 +82,21 @@ public class WordListService extends GroffleService {
 							try {
 								task = mapper.readValue(message, Task.class);
 								Jedis jedis2 = pool.getResource();
-								String oldMessage;
-								if ((oldMessage = jedis2.get("wl_"
-										+ task.getProvider() + "_")) == null
-										|| !oldMessage.equals("pending")) {
+								String oldMessageStr = jedis2.get("wl_"
+										+ task.getProvider() + "_");
+								WordListStatus status = null;
+								try {
+									status = mapper.readValue(oldMessageStr,
+											WordListStatus.class);
+								} catch (Exception ex) {
+								}
+
+								if (oldMessageStr == null
+										|| (status != null && status
+												.getStatus().equals("pending"))) {
 									jedis2.setex("wl_" + task.getProvider()
 											+ "_" + task.getUid(), 600,
-											"{status:'pending'}");
+											"{\"status\":\"pending\"}");
 									List<Post> messages = FacebookRetriever
 											.getMessages(task.getUid(),
 													task.getToken());
@@ -125,6 +133,6 @@ public class WordListService extends GroffleService {
 					System.exit(1);
 				}
 			}
-		}).run();
+		}).start();
 	}
 }

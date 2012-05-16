@@ -21,8 +21,8 @@ class WordListController < ApplicationController
     if(params[:id]=='recent')
       if session.has_key?('omniauth')
         str = REDIS.get('wl_'+session[:omniauth].provider+'_'+session[:omniauth].uid)
-        if(str=='pending')
-          @l = {:status => 'pending'}
+        if(str)
+          @l = ActiveSupport::JSON.decode(str)
         else
           WordListController.push_wordlist_task(session[:omniauth],current_user)
           @l = {:status => 'requested'}
@@ -33,7 +33,6 @@ class WordListController < ApplicationController
     else
       str = REDIS.get('wl_'+params[:id])
     end
-    @l = ActiveSupport::JSON.decode(str) if str
     respond_to do |format|
       format.html { render json: @l }
       format.json { render json: @l }
