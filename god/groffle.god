@@ -24,14 +24,14 @@ end
 God.watch do |w|
   w.name = "groffle-wordlist"
   w.dir = basedir+"/backend"
-  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.WordListService"
+  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms200M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.WordListService"
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-shop"
   w.dir = basedir+"/backend"
-  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.ShopService"
+  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms200M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.ShopService"
   w.keepalive
 end
 
