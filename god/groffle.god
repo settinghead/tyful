@@ -9,7 +9,7 @@ end
 
 God.watch do |w|
   w.name = "groffle-rails"
-  w.dir = basedir+"/groffle"
+  w.dir = basedir+"/frontend"
   w.start = "rails server thin -p 3000 -e "+ENV['RAILS_ENV']
   w.keepalive
 end
