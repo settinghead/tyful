@@ -62,7 +62,7 @@ Groffle::Application.configure do
   GRAPH_APP_ID = '415282955156503'
   GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
   #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@localhost:9908/'
-  ENV["FLASH_URL"] = 'http://www.groffle.me/f/'
+  ENV["FLASH_URL"] = 'http://www.groffle.me/f/client/'
   ENV["RELAY_URL"] = 'http://www.groffle.me/r/'
   ENV["TEMPLATE_URL"] = 'http://www.groffle.me/t/'
 end
