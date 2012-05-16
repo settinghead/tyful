@@ -81,8 +81,7 @@ public class WordListService extends GroffleService {
 							Task task;
 							try {
 								task = mapper.readValue(message, Task.class);
-								Jedis jedis2 = pool.getResource();
-								String oldMessageStr = jedis2.get("wl_"
+								String oldMessageStr = jedis.get("wl_"
 										+ task.getProvider() + "_");
 								WordListStatus status = null;
 								try {
@@ -91,10 +90,8 @@ public class WordListService extends GroffleService {
 								} catch (Exception ex) {
 								}
 
-								if (oldMessageStr == null
-										|| (status != null && status
-												.getStatus().equals("pending"))) {
-									jedis2.setex("wl_" + task.getProvider()
+								if (oldMessageStr == null) {
+									jedis.setex("wl_" + task.getProvider()
 											+ "_" + task.getUid(), 600,
 											"{\"status\":\"pending\"}");
 									List<Post> messages = FacebookRetriever
@@ -105,7 +102,7 @@ public class WordListService extends GroffleService {
 													task.getToken(), messages);
 									StringWriter sw = new StringWriter();
 									mapper.writeValue(sw, wordList);
-									jedis2.setex("wl_" + task.getProvider()
+									jedis.setex("wl_" + task.getProvider()
 											+ "_" + task.getUid(), 14400,
 											sw.toString());
 									logger.info("wl_" + task.getProvider()
