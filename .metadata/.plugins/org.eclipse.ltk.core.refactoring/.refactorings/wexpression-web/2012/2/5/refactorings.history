@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;FacebookPosts.java&apos; to &apos;wexpression/src/com.settinghead.wexpression.data&apos;&#x0A;- Original project: &apos;wexpression-web&apos;&#x0A;- Destination element: &apos;wexpression/src/com.settinghead.wexpression.data&apos;&#x0A;- Original element: &apos;FacebookPosts.java&apos;" description="Copy file" destination="=wexpression/src&lt;com.settinghead.wexpression.data" element1="src/main/java/com/settinghead/wexpression/data/FacebookPosts.java" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1328209466853" units="0" version="1.0"/>
-</session>

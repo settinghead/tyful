@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename package &apos;com.settinghead.wexpression&apos; to &apos;com.settinghead.wenwentu&apos;&#x0A;- Original project: &apos;wexpression-web&apos;&#x0A;- Original element: &apos;wexpression-web/src/main/java/com.settinghead.wexpression&apos;&#x0A;- Renamed element: &apos;wexpression-web/src/main/java/com.settinghead.wenwentu&apos;&#x0A;- Update references to refactored element&#x0A;- Update fully qualified names in &apos;*&apos; files&#x0A;- Update textual occurrences in comments and strings&#x0A;- Rename subpackages of the package" description="Rename package &apos;com.settinghead.wexpression&apos;" flags="589830" hierarchical="true" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java&lt;com.settinghead.wexpression" name="com.settinghead.wenwentu" patterns="*" qualified="true" references="true" stamp="1324364976833" textual="true" version="1.0"/>
-</session>

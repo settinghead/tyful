@@ -1,8 +1,0 @@
-package com.settinghead.wexpression.client.model.vo.template
-{
-	[Bindable]
-	public class WordLayer extends Layer
-	{
-		
-	}
-}

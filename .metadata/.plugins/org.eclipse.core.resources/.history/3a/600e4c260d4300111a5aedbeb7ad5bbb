@@ -1,7 +1,0 @@
-package wexpression.backend
-
-class Word {
-
-    static constraints = {
-    }
-}

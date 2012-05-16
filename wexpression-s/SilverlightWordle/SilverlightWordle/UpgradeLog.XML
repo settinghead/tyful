@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
-<Properties><Property Name="Solution" Value="SilverlightWordle">
-</Property><Property Name="Solution File" Value="\\psf\Home\Downloads\SilverlightWordle\SilverlightWordle\SilverlightWordle.sln">
-</Property><Property Name="Date" Value="Wednesday, March 28, 2012">
-</Property><Property Name="Time" Value="3:20:48 AM">
-</Property></Properties><Event ErrorLevel="0" Project="SilverlightWordle" Source="SilverlightWordle.csproj" Description="Project converted successfully">
-</Event><Event ErrorLevel="3" Project="SilverlightWordle" Source="SilverlightWordle.csproj" Description="Converted">
-</Event><Event ErrorLevel="0" Project="SilverlightWordle" Source="SilverlightWordle.csproj" Description="Scan complete: Upgrade not required for project files.">
-</Event></UpgradeLog>

@@ -1,1 +1,0 @@
-worker:    java -cp target/*:target/classes/:target/dependency/* com.settinghead.wenwentu.service.WordListService

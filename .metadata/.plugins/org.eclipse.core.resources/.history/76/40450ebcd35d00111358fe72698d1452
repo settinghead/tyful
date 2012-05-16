@@ -1,9 +1,0 @@
-package com.settinghead.wexpression.client.view.components.template.canvas
-{
-	public class MutableUint
-	{
-		public function MutableUint()
-		{
-		}
-	}
-}

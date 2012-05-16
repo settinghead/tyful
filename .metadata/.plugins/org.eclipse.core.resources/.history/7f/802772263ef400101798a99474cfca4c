@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="wexpression">
-        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/" source-path="/bin-debug"/>
-        <property name="context-root" value="wexpression"/>
-        <property name="java-output-path" value="WebContent/WEB-INF/classes"/>
-    </wb-module>
-</project-modules>
