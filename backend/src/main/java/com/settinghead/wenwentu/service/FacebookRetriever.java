@@ -71,7 +71,7 @@ public class FacebookRetriever {
 			for (String word : new WordIterator(sb.toString())) {
 				word = word.trim();
 				if (word.length() > 0 && !StopWords.English.isStopWord(word)
-						&& word.matches("[a-zA-z0-9\\-]*"))
+						&& word.matches("[a-zA-Z0-9\\-]*"))
 					words.note(word);
 			}
 
