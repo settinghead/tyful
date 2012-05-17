@@ -1,9 +1,8 @@
-package com.settinghead.wenwentu.service;
+package com.settinghead.wenwentu.service.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.settinghead.wenwentu.service.model.ShopItem;
 
 public class ShopPredictor {
 

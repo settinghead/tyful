@@ -7,10 +7,15 @@ class ShopController < ApplicationController
       key = 'shop_'+ShopController.c_null(userId).to_s+'_'+ShopController.c_null(params[:templateId]);
 
       str = REDIS.get(key)
-    end
-    @l = {}
-    @l = ActiveSupport::JSON.decode(str) if str
-    
+      @l = {}
+      
+      if(str)
+        @l = ActiveSupport::JSON.decode(str)
+      else
+        ShopController.push_shop_predict_task(current_user,Template.find(params[:templateId]))
+        @l = {:status => 'requested'}
+      end
+    end    
     respond_to do |format|
       format.html {render json: @l }
       format.json { render json: @l }
@@ -23,7 +28,7 @@ class ShopController < ApplicationController
     templateId = template ? template.id : nil
     task = {:userId => c_null(userId), 
       :templateId => c_null(templateId)}
-    REDIS.lpush("q_shop", ActiveSupport::JSON.encode(task))
+    REDIS.lpush("shoptask_q", ActiveSupport::JSON.encode(task))
   end
   
   def self.c_null(value)

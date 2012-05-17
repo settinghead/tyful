@@ -45,6 +45,6 @@ class WordListController < ApplicationController
       :token => omniauth['credentials']['token'],
       :uid => omniauth['uid'],
       :user_id => user.id}
-    REDIS.lpush("q", ActiveSupport::JSON.encode(task))
+    REDIS.lpush("wordlisttask_q", ActiveSupport::JSON.encode(task))
   end
 end
