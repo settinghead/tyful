@@ -94,6 +94,8 @@ public class FacebookRetriever {
 			int nameFreq = allWords
 					.getCount(allWords.getMostFrequent(1).get(0)) + 3;
 			String name = me.getFirstName();
+			if (name.length() < 6)
+				name += " " + me.getLastName();
 			// System.out.println(name+", "+nameFreq);
 			allWords.note(name, nameFreq);
 			for (String word : allWords.keySet())
