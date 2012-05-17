@@ -288,9 +288,10 @@ package com.settinghead.groffle.client.model.vo.template
 				//not transparent
 				((color.getPixel32(x,y) >> 24 &0xff)!=0)){
 				if(tolerance>=1) return true;
-				else return (ColorMath.dist(color.getPixel32(x,y), 
-						color.getPixel32(refX,refY)) <= tolerance
-						&&
+				else return (
+					//ColorMath.dist(color.getPixel32(x,y), 
+					//	color.getPixel32(refX,refY)) <= tolerance
+					//	&&
 					ColorMath.dist(direction.getPixel32(x,y), 
 						direction.getPixel32(refX,refY)) <= tolerance);
 			}

@@ -64,9 +64,12 @@
 				if(this._colorPattern==null){
 					if(colors.length==0){
 						//if no color, add transparent color
-						var color:MutableUint = new MutableUint(0x1B94E0);
-						color.addEventListener("UintChanged", colorArrayChange);
-						colors.addItem(color);
+						var color1:MutableUint = new MutableUint(0x1B94E0);
+						color1.addEventListener("UintChanged", colorArrayChange);
+						var color2:MutableUint = new MutableUint(0xFFB800);
+						color2.addEventListener("UintChanged", colorArrayChange);
+						colors.addItem(color1);
+						colors.addItem(color2);
 					}
 					
 					_colorPattern = new BitmapData(colors.length * mixColorDistance , colors.length * mixColorDistance,true,0);
