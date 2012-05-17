@@ -114,7 +114,7 @@ public class FacebookRetriever {
 		int count = 0;
 		outer: for (List<Page> myFeedConnectionPage : myLikes)
 			for (Page page : myFeedConnectionPage) {
-				if (page.getName().matches("[a-zA-Z0-9\\- \\.]+"))
+				if (page.getName().matches("[a-zA-Z0-9\\- \\.,;]+"))
 					result.add(new Word(page.getName(), 1));
 				if (count++ > 500)
 					break outer;

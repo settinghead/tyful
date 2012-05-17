@@ -1,1 +1,2 @@
-client/GroffleClient.swf
+client/*
+!client/swfobject.js

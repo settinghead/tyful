@@ -3,6 +3,7 @@ package com.settinghead.groffle.client.model.vo.wordlist
 	import com.settinghead.groffle.client.WordComparator;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	
 	import org.as3commons.collections.SortedList;
 	import org.as3commons.collections.framework.IComparator;

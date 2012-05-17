@@ -117,8 +117,11 @@ package com.settinghead.groffle.client.model
 			var word:WordVO = null;
 			if(pendingEword!=null)
 			{
-				if(tu.indexOffset+tu.currentWordIndex<tu.words.size - 1)
-					tu.indexOffset+=tu.words.size/40;
+				if(tu.indexOffset+tu.currentWordIndex<tu.words.size - 1){
+					var incr:int = tu.words.size/40;
+					if(incr==0) incr = 1;
+					tu.indexOffset+=incr;
+				}
 				if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
 				{
 					tu.indexOffset = tu.words.size -1;
