@@ -71,7 +71,7 @@ public class FacebookRetriever {
 			for (String word : new WordIterator(sb.toString())) {
 				word = word.trim();
 				if (word.length() > 0 && !StopWords.English.isStopWord(word)
-						&& word.matches("[a-zA-Z0-9\\-]*"))
+						&& word.matches("[a-zA-Z0-9\\- \\.]+"))
 					words.note(word);
 			}
 
@@ -114,7 +114,8 @@ public class FacebookRetriever {
 		int count = 0;
 		outer: for (List<Page> myFeedConnectionPage : myLikes)
 			for (Page page : myFeedConnectionPage) {
-				result.add(new Word(page.getName(), 1));
+				if (page.getName().matches("[a-zA-Z0-9\\- \\.]+"))
+					result.add(new Word(page.getName(), 1));
 				if (count++ > 500)
 					break outer;
 			}
