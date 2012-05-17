@@ -12,7 +12,9 @@ class ShopController < ApplicationController
       if(str)
         @l = ActiveSupport::JSON.decode(str)
       else
-        ShopController.push_shop_predict_task(current_user,Template.find(params[:templateId]))
+        template = nil
+        template = Template.find(params[:templateId]) if params[:templateId]
+        ShopController.push_shop_predict_task(current_user,template)
         @l = {:status => 'requested'}
       end
     end    
