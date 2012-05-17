@@ -10,7 +10,7 @@ package com.settinghead.groffle.client.model.vo.wordlist {
 		public var weight:Number;
 	
 		public function WordVO(word:String = null, weight:Number = 1) {
-			this.word = word;
+			this.word = word.replace( /[^(\x20-\x7F)]*/,"");
 			this.weight = weight;
 		}	
 	}
