@@ -1,7 +1,9 @@
 var express = require('express'),
     fs = require('fs'), node_uuid = require('node-uuid'), 
 	URL = require('url'), redis = require("redis"),
-	knox = require('knox');
+	knox = require('knox'), sys=require('sys');
+	var exec = require('child_process').exec;
+	
 	
 	var s3client = knox.createClient({
 	    key: 'AKIAICJYKXXF7EZ5A5IQ'
@@ -67,29 +69,57 @@ var express = require('express'),
 	      }
 	  });
 
-	  req.on('end', function() {
+	  req.on('end', function() {		  
 	    // removing footer '\r\n'--boundary--\r\n' = (boundary.length + 8)
 	    body = body.slice(0, body.length - (boundary.length + 8))
 	    console.log('final file size: ' + body.length);
 		var id = node_uuid.v4();
+		
+		/******Extract preview file******/
+		//create directory
+		fs.mkdir('/tmp/' + id,0777, function(e){
+	  	    fs.writeFile('/tmp/' +id +'/' + id +".zip", body, 'binary', function(){
+	  	    	//unzip
+				exec('unzip /tmp/'+id+'/'+id+'.zip /preview.png -d /tmp/'+id+'/', function(){
+					fs.readFile('/tmp/'+id+'/preview.png', function (err, data) {
+					  if (err) throw err;
+  				      var req4 = s3client.put(id+'.png', {
+  						'Content-Length': data.length,
+  						 'Content-Type': 'application/octet-stream',
+  					      'x-amz-acl': 'private'
+  					  });
+  					  req4.on('response', function(res4){
+  					    if (200 == res4.statusCode) {
+  					      console.log('saved to %s', req4.url);
+  					    }
+  					  });
+  					  req4.end(data);
+					});
+				});
+	  	    });	
+		});
+  	    
+		
 		//client.set(id, body);
-	    var req = s3client.put(id+'.zip', {
+	    var req3 = s3client.put(id+'.zip', {
 			'Content-Length': body.length,
 			 'Content-Type': 'application/octet-stream',
 		      'x-amz-acl': 'private'
 		  });
-		  req.on('response', function(res){
+		  req3.on('response', function(res){
 		    if (200 == res.statusCode) {
-		      console.log('saved to %s', req.url);
+		      console.log('saved to %s', req3.url);
 		    }
 		  });
-		  req.end(new Buffer(body, 'binary'));
+		  req3.end(new Buffer(body, 'binary'));
 	    res.send(JSON.stringify({"id":id}));
 	  })
 	});
-	
+
+	//template repository
 	app.get('/t/:id', function(req, res){
 		var count = 0;
+		console.log('Retrieving s3 file '+req.params.id+'.zip');
 		s3client.get(req.params.id+'.zip').on('response', function(res3){
 		  console.log(res3.statusCode);
 		  console.log(res3.headers);
@@ -104,6 +134,25 @@ var express = require('express'),
 		  });
 		}).end();
 	});
+	
+	//template preview
+	app.get('/tp/:id', function(req, res){
+		var count = 0;
+		s3client.get(req.params.id).on('response', function(res3){
+		  console.log(res3.statusCode);
+		  console.log(res3.headers);
+		  res3.setEncoding('binary');
+		  res3.on('data', function(chunk){
+			      res.write(chunk, "binary");
+				  count+=chunk.length;
+		  });
+		  res3.on('end', function(){
+			  console.log('File size: ' + count);
+		  	  res.end();
+		  });
+		}).end();
+	});
+	
 	
 	app.post('/r', function(req, res){
 	  var body = [];
@@ -157,9 +206,10 @@ var express = require('express'),
 	    console.log('final file size: ' + body.length);
 		var id = node_uuid.v4();
 		//client.set(id, body);
-	    fs.writeFileSync('/tmp/' + id +".png", body, 'binary');
+	    fs.writeFile('/tmp/' + id +".png", body, 'binary', function(){
+		    res.send(JSON.stringify({"id":id}));
+	    });
 	    console.log('done');
-	    res.send(JSON.stringify({"id":id}));
 	  })
 	});  
 

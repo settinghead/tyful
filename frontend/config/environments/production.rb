@@ -65,5 +65,6 @@ Groffle::Application.configure do
   ENV["FLASH_URL"] = 'http://www.groffle.me/f/client/'
   ENV["RELAY_URL"] = 'http://www.groffle.me/r/'
   ENV["TEMPLATE_URL"] = 'http://www.groffle.me/t/'
+  ENV["TEMPLATE_PREVIEW_URL"] = 'http://www.groffle.me/tp/'
   OmniAuth.config.full_host = 'http://www.groffle.me'
 end

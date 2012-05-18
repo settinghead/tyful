@@ -180,15 +180,22 @@
 			}
 			
 			public function generateImage():void{
+				
+				_tu.generatedImage = canvasImage(1500);
+
+				dispatchEvent(new Event(TU_GENERATED));
+				
+			}
+			
+			public function canvasImage(size:int):BitmapData{
 				var ratio:Number = mainCanvas.width/mainCanvas.height;
 				var maxActual:Number = ratio>1?mainCanvas.width:mainCanvas.height;
-				var scale:Number = 1500/maxActual;
+				var scale:Number = size/maxActual;
 				var bmpData:BitmapData = new BitmapData(mainCanvas.width*scale, mainCanvas.height*scale,true);
 				var scaleM:Matrix = new Matrix(scale,0,0,scale,0,0); 
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
 				bmpData.draw(mainCanvas, scaleM);
-				_tu.generatedImage = bmpData;
-				dispatchEvent(new Event(TU_GENERATED));
+				return bmpData;
 			}
 			
 			public function get tu():TuVO{

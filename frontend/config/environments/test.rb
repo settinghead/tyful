@@ -42,5 +42,6 @@ Groffle::Application.configure do
   ENV["FLASH_URL"] = 'http://localhost:5000/f/client/'
   ENV["RELAY_URL"] = 'http://localhost:5000/r/'
   ENV["TEMPLATE_URL"] = 'http://localhost:5000/t/'
+  ENV["TEMPLATE_PREVIEW_URL"] = 'http://localhost:5000/tp/'
   
 end

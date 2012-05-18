@@ -59,11 +59,14 @@ package com.settinghead.groffle.client.view
 				case ApplicationFacade.TU_GENERATION_LAST_CALL:
 					tuRenderer.generateImage();
 					if(tuProxy.generateTemplatePreview){
-						tuProxy.tu.template.preview = tuProxy.tu.generatedImage;
+						tuProxy.tu.template.preview = tuRenderer.canvasImage(400);
 						tuProxy.generateTemplatePreview = false;
 
 						sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
 						
+					}
+					else if(tuRenderer.tu.template.preview==null){
+						tuProxy.tu.template.preview = tuRenderer.canvasImage(400);
 					}
 					break;
 				case ApplicationFacade.TU_IMAGE_GENERATED:

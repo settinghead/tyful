@@ -34,6 +34,7 @@ Groffle::Application.configure do
   #ENV["REDISTOGO_URL"] = 'redis://localhost:6379' 
   ENV['FLASH_URL'] = 'http://localhost:5000/f/client/'
   ENV['TEMPLATE_URL'] = 'http://localhost:5000/t/'
+  ENV["TEMPLATE_PREVIEW_URL"] = 'http://localhost:5000/tp/'
   ENV['RELAY_URL'] = 'http://localhost:5000/r/'
   
 end
