@@ -29,6 +29,10 @@ server {
 	location /t/ {
 		proxy_pass http://fileserver;
 	}
+	
+	location /tp/ {
+		proxy_pass http://fileserver;
+	}
 
 	location / {
 		proxy_pass http://frontend;
