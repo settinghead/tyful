@@ -1,6 +1,6 @@
 
 <h1>Listing templates</h1>
-<%= link_to 'Create New Template', new_template_path %>
+<%= link_to 'Create New Template', new_template_path, {:class=>'create-button'} %>
 
 <div class="masonry-container">
 	<% @templates.each do |template| %>
