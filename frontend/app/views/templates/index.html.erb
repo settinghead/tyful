@@ -1,12 +1,16 @@
+
 <h1>Listing templates</h1>
 <%= link_to 'Create New Template', new_template_path %>
 
-<ul>
+<div class="masonry-container">
 	<% @templates.each do |template| %>
-	<li>
-		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png'), template) %>
-		<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
-	</li>
+	<div class="item">
+		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '"'+template.name+'"', template) %>
+		
+		<div class="tools">
+			<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
+		</div>
+	</div>
 	<% end %>
-</ul>
+</div>
 
