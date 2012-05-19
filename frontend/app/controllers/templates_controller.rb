@@ -1,4 +1,7 @@
 class TemplatesController < ApplicationController
+  
+  impressionist :actions=>[:show,:edit], :unique => [:impressionable_type, :impressionable_id, :session_hash]
+  
   # GET /templates
   # GET /templates.json
   def index
