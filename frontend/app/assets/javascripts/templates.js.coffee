@@ -12,5 +12,12 @@ window.submitForm = () ->
 $('.masonry-container').imagesLoaded = () ->
   $container.masonry({
     itemSelector : '.item',
-    columnWidth : 260
+    columnWidth : 240,
+    isAnimated: true,
+    animationOptions: {
+      duration: 750,
+      easing: 'linear',
+      queue: false
+    }
+	
   });
