@@ -53,6 +53,7 @@ class TemplatesController < ApplicationController
     @template = Template.new(params[:template])
 
     respond_to do |format|
+      @template.user = current_user
       if @template.save
         format.html { redirect_to @template, notice: 'Template was successfully created.' }
         format.json { render json: @template, status: :created, location: @template }

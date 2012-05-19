@@ -6,7 +6,7 @@
 	<% @templates.each do |template| %>
 	<div class="item">
 		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '"'+template.name+'"', template) %>
-		
+		by <%= link_to(template.user)%>
 		<div class="tools">
 			<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
 		</div>
