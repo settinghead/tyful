@@ -8,6 +8,7 @@
 			   xmlns:client="com.settinghead.groffle.client.*"
 			    left="0" right="0" top="0"  bottom="0"
 			   >
+	<fx:Style source="GroffleClient.css"/>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -33,7 +34,7 @@
 							  mouseOver="text1_mouseOverHandler(event)"
 							  mouseOut="text1_mouseOutHandler(event)"
 							  >
-		<mx:Text text="Wenwentu" fontFamily="Verdana" fontSize="22" fontStyle="normal" color="#0559CC" mouseEnabled="false"
+		<mx:Text text="Groffle" fontFamily="Verdana" fontSize="22" fontStyle="normal" color="#0559CC" mouseEnabled="false"
 				 />
 		<!--mx:Label fontWeight="bold" text="Create your own typography artwork."/-->
 	</mx:ApplicationControlBar>
