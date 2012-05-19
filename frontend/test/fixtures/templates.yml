@@ -3,7 +3,11 @@
 one:
   name: MyString
   description: MyText
+  uuid: bab72b40-a1e3-11e1-b3dd-0800200c9a66
 
 two:
   name: MyString
   description: MyText
+  uuid: b70805f0-a1e3-11e1-b3dd-0800200c9a66
+
+

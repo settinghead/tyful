@@ -1,5 +1,7 @@
 one:
   user: one
+  provider: facebook
 
 two:
   user: one
+  provider: twitter
