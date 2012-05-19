@@ -63,7 +63,7 @@ package com.settinghead.groffle.client.model.vo.template
 		private var _bounds:Rectangle= null;
 		public static const SAMPLE_DISTANCE:Number= 20;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
-		private var _path:String;
+//		private var _path:String;
 		private var _colorer:WordColorer;
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
@@ -341,11 +341,11 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function get directionBitmap():Bitmap{
 			if(this._img == null){
-				if(path!=null)
-					this.loadLayerFromPNG();
-				else{
+//				if(path!=null)
+//					this.loadLayerFromPNG();
+//				else{
 					this._img = new Bitmap(new BitmapData(this._template.width, this._template.height,true, 0));
-				}
+//				}
 			}
 			return _img;
 		}
@@ -384,13 +384,13 @@ package com.settinghead.groffle.client.model.vo.template
 			this.colorSheet = new Bitmap(d);
 		}
 		
-		public function get path():String{
-			return this._path;
-		}
-		
-		public function set path(p:String):void{
-			this._path = p;
-		}
+//		public function get path():String{
+//			return this._path;
+//		}
+//		
+//		public function set path(p:String):void{
+//			this._path = p;
+//		}
 
 		
 		public function get nudger():WordNudger{
@@ -408,15 +408,15 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		
-		public function loadLayerFromPNG(callback:Function = null):void{
-			var my_loader:Loader = new Loader();
-			
-			my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-			if(callback!=null)
-				my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, callback);
-			
-			my_loader.load(new URLRequest(this._path));
-		}
+//		public function loadLayerFromPNG(callback:Function = null):void{
+//			var my_loader:Loader = new Loader();
+//			
+//			my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+//			if(callback!=null)
+//				my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, callback);
+//			
+//			my_loader.load(new URLRequest(this._path));
+//		}
 		
 		private function onLoadComplete (event:Event):void
 		{

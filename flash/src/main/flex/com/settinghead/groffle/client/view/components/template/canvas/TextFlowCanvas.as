@@ -296,7 +296,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
 						for(var ox:Number = 0; ox<a.width;ox++)
 							for(var oy:Number = 0; oy<a.height;oy++){
-								if(layer.getBrightness(ox+w,oy+h)>0){
+								if(layer.containsPoint(ox+w,oy+h,false,-1,-1,1)){
 									dirShape.graphics.moveTo(ox, oy);
 									dirShape.graphics.lineTo(ox,oy+1);
 								}
