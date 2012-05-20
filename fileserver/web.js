@@ -12,6 +12,7 @@ var express = require('express'),
 	});
 	
     app = express.createServer();
+	app.enable('view cache');
 
 //url = URL.parse("redis://redistogo:15ccf727b1849df6b901821393510e82@drum.redistogo.com:9724/");
 //var client = redis.createClient(url.port, url.hostname);

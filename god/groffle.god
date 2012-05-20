@@ -17,7 +17,7 @@ end
 God.watch do |w|
   w.name = "groffle-file"
   w.dir = basedir+"/fileserver"
-  w.start = "node web.js"
+  w.start = "NODE_ENV="+ ENV['RAILS_ENV'] +" node web.js"
   w.keepalive
 end
 
