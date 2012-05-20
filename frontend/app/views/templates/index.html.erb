@@ -4,13 +4,17 @@
 
 <div class="masonry-container">
 	<% @templates.each do |template| %>
-	<div class="item">
+	<%=div_for template, :class=>'item' do%>
 		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '"'+template.name+'"', template) %>
 		by <%= link_to(template.user)%>
 		<div class="tools">
+			<span class="like-count"><%=template.likes.size%>&nbsp;
+				<%= link_to_unless  ((not current_user) || (current_user.voted_for? template)), 'Like', {:action=>'like', :controller=>'templates', :id=>template.id},:remote=>true do
+				link_to_if current_user, 'Unlike', {:action=>'unlike', :controller=>'templates', :id=>template.id},:remote=>true
+			end%>
 			<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
 		</div>
-	</div>
+	<%end%>
 	<% end %>
 </div>
 

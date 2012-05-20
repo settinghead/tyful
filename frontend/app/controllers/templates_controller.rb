@@ -5,8 +5,8 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.all
-
+    
+    @templates = Template.find(:all, :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'', :order => 'count(votes.id)', :group => 'templates.id')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @templates }
@@ -24,6 +24,27 @@ class TemplatesController < ApplicationController
       # format.json { render json: @template }
     end
   end
+  
+  def like
+    @template = Template.find(params[:id])
+    @template.liked_by current_user
+    respond_to do |format|
+      format.js do
+        render 'like.js'
+      end
+    end
+  end
+  
+  def unlike
+    @template = Template.find(params[:id])
+    current_user.unvote_for @template
+    respond_to do |format|
+      format.js do
+        render 'like.js'
+      end
+    end
+  end
+  
 
   # GET /templates/new
   # GET /templates/new.json
