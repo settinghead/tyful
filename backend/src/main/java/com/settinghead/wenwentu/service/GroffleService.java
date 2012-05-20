@@ -51,13 +51,14 @@ public class GroffleService<T extends Task> {
 							redisURI.getUserInfo() == null ? null : redisURI
 									.getUserInfo().split(":", 2)[1]);
 
-					Jedis jedis = pool.getResource();
-					String dbStr = props.getProperty("REDISTOGO_DB");
-					if (dbStr != null) {
-						jedis.select(Integer.parseInt(dbStr));
-						logger.info("DB: " + dbStr);
-					}
+					
 					while (true) {
+						Jedis jedis = pool.getResource();
+						String dbStr = props.getProperty("REDISTOGO_DB");
+						if (dbStr != null) {
+							jedis.select(Integer.parseInt(dbStr));
+							logger.info("DB: " + dbStr);
+						}
 						String message;
 						if ((message = jedis.lpop(taskType.getSimpleName()
 								.toLowerCase() + "_q")) != null) {
@@ -91,7 +92,7 @@ public class GroffleService<T extends Task> {
 						} catch (InterruptedException e) {
 							logger.severe(e.getMessage());
 						}
-
+						pool.returnResource(jedis);
 					}
 
 				} catch (URISyntaxException e) {
