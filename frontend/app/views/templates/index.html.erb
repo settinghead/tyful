@@ -8,13 +8,11 @@
 		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '"'+template.name+'"', template) %>
 		by <%= link_to(template.user)%>
 		<div class="tools">
-			<span class="like-count"><%=template.likes.size%>&nbsp;
-				<%= link_to_unless  ((not current_user) || (current_user.voted_for? template)), 'Like', {:action=>'like', :controller=>'templates', :id=>template.id},:remote=>true do
-				link_to_if current_user, 'Unlike', {:action=>'unlike', :controller=>'templates', :id=>template.id},:remote=>true
-			end%>
+				<div class="emote">
+					<%=render(:partial => 'templates/emote', :layout => false, :object=>template, :as=>:template)%>
+				</div>
 			<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
 		</div>
 	<%end%>
 	<% end %>
 </div>
-

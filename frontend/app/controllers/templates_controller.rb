@@ -6,7 +6,7 @@ class TemplatesController < ApplicationController
   # GET /templates.json
   def index
     
-    @templates = Template.find(:all, :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'', :order => 'count(votes.id)', :group => 'templates.id')
+    @templates = Template.find(:all, :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'', :order => 'count(votes.id) DESC', :group => 'templates.id')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @templates }
@@ -30,7 +30,7 @@ class TemplatesController < ApplicationController
     @template.liked_by current_user
     respond_to do |format|
       format.js do
-        render 'like.js'
+        render 'emote.js'
       end
     end
   end
@@ -40,7 +40,7 @@ class TemplatesController < ApplicationController
     current_user.unvote_for @template
     respond_to do |format|
       format.js do
-        render 'like.js'
+        render 'emote.js'
       end
     end
   end
