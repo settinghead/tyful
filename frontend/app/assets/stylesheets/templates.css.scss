@@ -34,8 +34,36 @@
   }
 }
 
-.emote{
-  display: inline;
+.template{
+  a{
+    text-decoration: none;	
+  }
+  h3{
+    display: inline;
+	font-size: 18px;
+  }
+  .author{
+    clear: left;
+  }
+  .emote{
+    margin: 5px;
+   .like-count{
+     font-size: 18px;
+	 padding-left: 22px;
+	 background-image: image-url("like_icon.png");
+	 background-position: 0% 50%;
+	 background-repeat: no-repeat;
+    }
+	font-size: 18px;
+	a{
+	  background-color: #eee;
+	  border-style: solid;
+	  border-width: 1px;
+	  border-color: #ccc;
+	  border-radius: 5px;
+	  padding: 3px;
+	}
+  }
 }
 
 .create-button {

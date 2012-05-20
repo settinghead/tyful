@@ -1,4 +1,6 @@
 <span class="like-count"><%=template.likes.size%></span>&nbsp;
+<%if current_user%>
 <%= link_to_unless  ((not current_user) || (current_user.voted_for? template)), 'Like', {:action=>'like', :controller=>'templates', :id=>template.id},:remote=>true do
   link_to_if current_user, 'Unlike', {:action=>'unlike', :controller=>'templates', :id=>template.id},:remote=>true
 end%>
+<%end%>

@@ -1,17 +1,17 @@
 
 <h1>Listing templates</h1>
-<%= link_to 'Create Your Own Template (It\'s fun!)', new_template_path, {:class=>'create-button'} %>
+<p>Pick a template, or <%= link_to 'Create Your Own Template', new_template_path, {:class=>'create-button'} %> (It's easy and fun!)</p>
 
 <div class="masonry-container">
 	<% @templates.each do |template| %>
 	<%=div_for template, :class=>'item' do%>
-		<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '"'+template.name+'"', template) %>
-		by <%= link_to(template.user)%>
+	<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '<h3>"'.html_safe+template.name+'"</h3>'.html_safe, template) %>
+	by <%= link_to(template.user)%>
+	 <div class="emote">
+		<%=render(:partial => 'templates/emote', :layout => false, :object=>template, :as=>:template)%>
+	</div>
 		<div class="tools">
-				<div class="emote">
-					<%=render(:partial => 'templates/emote', :layout => false, :object=>template, :as=>:template)%>
-				</div>
-			<%= link_to 'Destroy', template, confirm: 'Are you sure?', method: :delete %>
+			<%= link_to 'X', template, confirm: 'Are you sure you want to delete this template?', method: :delete %>
 		</div>
 	<%end%>
 	<% end %>
