@@ -12,8 +12,8 @@ var express = require('express'),
 	});
 	
     app = express.createServer();
-	app.enable('view cache');
-
+	app.use(express.static(__dirname + '/../static'));
+	
 //url = URL.parse("redis://redistogo:15ccf727b1849df6b901821393510e82@drum.redistogo.com:9724/");
 //var client = redis.createClient(url.port, url.hostname);
 //client.auth(url.auth.substr(url.auth.indexOf(":")+1), function(){
@@ -258,20 +258,20 @@ var express = require('express'),
 			});
 		});
 	
-		app.get('/f/(*)', function(req,res){
-			console.log('Getting file '+req.params[0]);
-			fs.readFile('../static/'+req.params[0], "binary", function(err, file) {
-			      if(err) {        
-			        res.writeHead(500, {"Content-Type": "text/plain"});
-			        res.write(err + "\n");
-			        res.end();
-			        return;
-			      }
-				res.writeHead(200);
-				      res.write(file, "binary");
-				      res.end();
-				});
-			});
+		// app.get('/f/(*)', function(req,res){
+		// 			console.log('Getting file '+req.params[0]);
+		// 			fs.readFile(__dirname+'/../static/'+req.params[0], "binary", function(err, file) {
+		// 			      if(err) {        
+		// 			        res.writeHead(500, {"Content-Type": "text/plain"});
+		// 			        res.write(err + "\n");
+		// 			        res.end();
+		// 			        return;
+		// 			      }
+		// 				res.writeHead(200);
+		// 				      res.write(file, "binary");
+		// 				      res.end();
+		// 				});
+		// 			});
 		
 	console.log("Port: "+process.env.PORT);
 	var port = process.env.PORT || 5000;
