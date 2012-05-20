@@ -6,7 +6,12 @@ Groffle::Application.routes.draw do
   resources :shop
   resources :artworks
 
-  resources :templates
+  resources :templates do
+    member do
+      get 'like'
+      get 'unlike'
+    end
+  end
 
   devise_for :users, :controllers => {:registrations => 'registrations'}
   
