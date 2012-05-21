@@ -10,14 +10,13 @@ window.submitForm = () ->
 	$('form').submit()
 
 $('.masonry-container').imagesLoaded = () ->
-  $container.masonry({
+  $container.isotope({
     itemSelector : '.item',
-    columnWidth : 240,
-    isAnimated: true,
+    animationEngine : 'best-available',
+    layoutMode : 'masonry',
     animationOptions: {
-      duration: 750,
-      easing: 'linear',
-      queue: false
+        duration: 750,
+        easing: 'linear',
+        queue: false
     }
-	
   });

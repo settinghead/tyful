@@ -10,3 +10,4 @@
 //= require_tree .
 //= require uservoice.js
 //= require ga.js
+//= require jquery.isotope.min.js
