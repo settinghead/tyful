@@ -7,28 +7,45 @@
   height: 100%;
 }
 
-#modal{
-  display: none;
-}
+  #modal{
+    display: none;
+  }
 
-.masonry-container{
+  .masonry-container{
   .item {
-    margin: 5px;
-    padding: 5px;
-    background: #D8D5D2;
-    font-size: 11px;
+  .inner{
+    font-size: 10px;
     line-height: 1.4em;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+	width: 200px;
+	background-color: #fff;
+
 	.tools{
 	    float: right;
 	}
     img{
-	  max-width: 220px;
+	  max-width: 200px;
 	}
-    width: 220px;
+	}
   }
+  
+  .box .inner
+  {
+  	padding: 20px;
+  	background-color: #fff;
+  	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
+  	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
+  	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .box
+  {
+	margin: 10px;
+  	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  } 
+
+  
 }
 
 .template{
@@ -44,6 +61,7 @@
   }
   .emote{
     margin: 5px;
+	margin-top: 15px;
    .like-count{
      font-size: 18px;
 	 padding-left: 22px;

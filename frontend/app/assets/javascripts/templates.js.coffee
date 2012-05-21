@@ -8,12 +8,14 @@ window.setTemplateId = (id) ->
 	$('#template_uuid').val(id)
 window.submitForm = () ->
 	$('form').submit()
+onLayoutFn = ($elems, instance) ->
 
 
 $(document).ready ->
   $('.masonry-container').imagesLoaded ->
-    iso_options = {itemSelector : ".item", animationEngine : "best-available"}
+    iso_options = {itemSelector : ".item", onLayout:onLayoutFn}
     $('.masonry-container').isotope(iso_options);
+
 
 
 

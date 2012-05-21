@@ -1,10 +1,11 @@
 
 <h1>Listing templates</h1>
-<p>Pick a template, or <%= link_to 'Create Your Own Template', new_template_path, {:class=>'create-button'} %> (It's easy and fun!)</p>
+<p>Pick a template, or <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> (It's easy and fun!)</p>
 
 <div class="masonry-container">
 	<% @templates.each do |template| %>
-	<%=div_for template, :class=>'item' do%>
+	<%=div_for template, :class=>'item box' do%>
+	<div class="inner">	
 	<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '<h3>"'.html_safe+template.name+'"</h3>'.html_safe, template) %>
 	by <%= link_to(template.user)%>
 		<div class="tools">
@@ -13,6 +14,7 @@
 
 	 <div class="emote">
 		<%=render(:partial => 'templates/emote', :layout => false, :object=>template, :as=>:template)%>
+	</div>
 	</div>
 	<%end%>
 	<% end %>

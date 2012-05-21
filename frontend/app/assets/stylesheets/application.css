@@ -150,7 +150,7 @@ a {
   color: #CCC;
   background-color: #777;
   -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
+  -moz-border-radiuskit-border-radius: 6px;
 }
 
 .authentication img {
