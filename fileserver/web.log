@@ -1,0 +1,115 @@
+Port: undefined
+Retrieving s3 file 4092aa16-692c-470a-8196-fe500ce31b20.zip
+200
+{ 'x-amz-id-2': 'PRgBSX14Jx96UR3H8NiiuJj0jNtgFLhJPYheBt7drwlO5IYhuXQW5vHrwl0RqODV',
+  'x-amz-request-id': '88FE3AAE81683787',
+  date: 'Sun, 20 May 2012 21:13:13 GMT',
+  'last-modified': 'Fri, 18 May 2012 06:39:21 GMT',
+  etag: '"67085aabf910f287c335977ad272b840"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '106274',
+  server: 'AmazonS3' }
+File size: 106274
+Retrieving s3 file 4092aa16-692c-470a-8196-fe500ce31b20.zip
+200
+{ 'x-amz-id-2': '7iJ3n/vaPpe7BbKocYdEkLAz1xlWTCbvuHEWsepNRCeI+b4kLb8tu6IWvaVVTcZd',
+  'x-amz-request-id': '9D5DDA8E59A6B81D',
+  date: 'Sun, 20 May 2012 21:13:23 GMT',
+  'last-modified': 'Fri, 18 May 2012 06:39:21 GMT',
+  etag: '"67085aabf910f287c335977ad272b840"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '106274',
+  server: 'AmazonS3' }
+File size: 106274
+content-type: multipart/form-data; boundary=quyxsqfylaykmqvhkbtgciuvnxaynjpk
+boundary: quyxsqfylaykmqvhkbtgciuvnxaynjpk
+content-length: 210441
+received data length: 63486
+header length: 150
+header: 
+--quyxsqfylaykmqvhkbtgciuvnxaynjpk
+Content-Disposition: form-data; name="Filedata"; filename="upload.png"
+Content-Type: application/octet-stream
+
+
+filename: upload.png
+header done
+actual file size: 63336
+received data length: 65536
+actual file size: 128872
+received data length: 65536
+actual file size: 194408
+received data length: 15883
+actual file size: 210291
+final file size: 210251
+done
+content-type: multipart/form-data; boundary=pcxtjxwjpuxnbgnerotlvxxvgrlvponi
+boundary: pcxtjxwjpuxnbgnerotlvxxvgrlvponi
+content-length: 242172
+received data length: 32768
+header length: 150
+header: 
+--pcxtjxwjpuxnbgnerotlvxxvgrlvponi
+Content-Disposition: form-data; name="Filedata"; filename="upload.png"
+Content-Type: application/octet-stream
+
+
+filename: upload.png
+header done
+actual file size: 32618
+received data length: 65536
+actual file size: 98154
+received data length: 65536
+actual file size: 163690
+received data length: 65536
+actual file size: 229226
+received data length: 12796
+actual file size: 242022
+final file size: 241982
+done
+200
+{ 'x-amz-id-2': 'j+6MIDzaVa4HV3JXI1Pbtq6kdRVvsnx1cnjwWxkkCqlL+f9mIo0gie5Vz3CEeaix',
+  'x-amz-request-id': '82F1392FF37F6BB1',
+  date: 'Sun, 20 May 2012 22:41:28 GMT',
+  'last-modified': 'Fri, 18 May 2012 06:47:28 GMT',
+  etag: '"52094ef2dbe42aff796a660e1d5724b2"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '55723',
+  server: 'AmazonS3' }
+200
+{ 'x-amz-id-2': '+unAeZkcZADVOkZQKVeR9hcB0mmsI6J4ujxgoQu4xvu9FpvDGtK/LoNvwugHClel',
+  'x-amz-request-id': 'F5C8F5AE86CD7046',
+  date: 'Sun, 20 May 2012 22:41:28 GMT',
+  'last-modified': 'Fri, 18 May 2012 06:39:21 GMT',
+  etag: '"41a5ee29523ef2c2ee6568ec79b696ba"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '36852',
+  server: 'AmazonS3' }
+200
+{ 'x-amz-id-2': 'C+EGBGP+PaODkZa25CChxlg6iNmTtTW1PNQxzMnDCFN+TukR/oxOWhOCdQei/8F1',
+  'x-amz-request-id': '02F80FFC39512A71',
+  date: 'Sun, 20 May 2012 22:41:28 GMT',
+  'last-modified': 'Sun, 20 May 2012 07:09:20 GMT',
+  etag: '"da98c3602a31fabb7ab88b6af946c81f"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '22228',
+  server: 'AmazonS3' }
+200
+{ 'x-amz-id-2': '4z4MeYUhfdxGMGhilJLDuITREdZ1R/LNCxh8eGXtptXUEQK9kgivLBh6NRBa+DMz',
+  'x-amz-request-id': 'DB98B6C17430ECC4',
+  date: 'Sun, 20 May 2012 22:41:28 GMT',
+  'last-modified': 'Sat, 19 May 2012 00:04:07 GMT',
+  etag: '"a640683c2c7f9637156133f243369049"',
+  'accept-ranges': 'bytes',
+  'content-type': 'application/octet-stream',
+  'content-length': '29332',
+  server: 'AmazonS3' }
+File size: 29332
+File size: 22228
+File size: 55723
+File size: 36852

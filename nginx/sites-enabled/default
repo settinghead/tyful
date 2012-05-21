@@ -33,6 +33,10 @@ server {
 	location /tp/ {
 		proxy_pass http://fileserver;
 	}
+	
+	location /assets/ {
+	    root   /var/www/assets;
+	}
 
 	location / {
 		proxy_pass http://frontend;
