@@ -2,7 +2,10 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				autoDrawBackground="true" creationComplete="onCreationCompleteHandler(event)">
+				autoDrawBackground="true" 
+				creationComplete="onCreationCompleteHandler(event)"
+			 dataChange="onCreationCompleteHandler(event)"
+				>
 	<fx:Declarations>
 		
 	</fx:Declarations>
@@ -23,7 +26,7 @@
 			
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
-
+				thumb.graphics.clear();
 				_thickness = this.data as Number;
 				thumb.graphics.beginFill(0x333333,1.0);
 				thumb.graphics.drawCircle(thumb.width/2, thumb.height/2, thickness/100*thumb.width/2);

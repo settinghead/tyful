@@ -52,13 +52,15 @@
 		]]>
 	</fx:Script>
 	<fx:Binding source="buttonList.selectedItem as Number" destination="angle" />
-	<s:List id="buttonList"
-			itemRenderer="com.settinghead.groffle.client.view.components.template.DirectionButton"
-			dataProvider="{buttonArray}">
+	<s:DropDownList id="buttonList" 
+					itemRenderer="com.settinghead.groffle.client.view.components.template.DirectionButton"
+				 skinClass="com.settinghead.groffle.client.view.components.template.DirectionDropDownSkin"
+					dataProvider="{buttonArray}">
 		<s:layout>
-			<s:HorizontalLayout  />
+			<s:TileLayout />
 		</s:layout>
-	</s:List>
+		</s:DropDownList>
+
 	
 
 	</mx:Canvas>

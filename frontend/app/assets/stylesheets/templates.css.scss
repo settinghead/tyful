@@ -52,9 +52,14 @@
   a{
     text-decoration: none;	
   }
+  a:hover{
+    background-color: transparent;
+	color: #333;
+  }
+
   h3{
     display: inline;
-	font-size: 18px;
+	font-size: 15px;
   }
   .author{
     clear: left;

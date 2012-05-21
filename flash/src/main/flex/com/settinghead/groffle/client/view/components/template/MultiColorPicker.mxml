@@ -96,7 +96,6 @@
 		<s:layout>
 			<s:HorizontalLayout />
 		</s:layout>
-		<s:Label text="Brush with a mixture of these colors: " />
 		<s:List id="colorList" dataProvider="{colors}" itemRenderer="com.settinghead.groffle.client.view.components.template.ColorButton"
 				  includeInLayout="true" autoLayout="true">
 			<s:layout>

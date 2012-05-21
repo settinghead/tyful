@@ -51,9 +51,9 @@
 				<s:layout>
 					<s:VerticalLayout />
 				</s:layout>
-				<s:Group mouseOver="controlArea_mouseOverHandler(event)" left="0" right="0" top="0" height="60">
+				<s:Group mouseOver="controlArea_mouseOverHandler(event)" left="0" right="0" top="0" height="80">
 					<s:layout>
-						<s:VerticalLayout  />
+						<s:VerticalLayout  verticalAlign="middle" />
 					</s:layout>
 					<s:Group>
 						<s:layout>
@@ -73,12 +73,19 @@
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
 						</mx:HBox>
-						<template:DirectionPicker label="Text direction" id="directionPicker" />
-						<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
-						<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
+						<mx:HBox label="Draw">
+							<mx:Label text="Angle: " />
+							<template:DirectionPicker label="Text direction" id="directionPicker" />
+							<mx:Label text="Thickness: " />
+							<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
+							<s:Label text="Colors: " />
+
+							<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
+						</mx:HBox>
+						
 					</mx:ViewStack>
 				</s:Group>	
-				<s:Group id="mainCanvasArea" top="60" bottom="0" left="0" right="0" styleName="mainCanvasArea">
+				<s:Group id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>

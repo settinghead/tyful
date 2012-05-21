@@ -53,11 +53,11 @@
 		]]>
 	</fx:Script>
 	<fx:Binding source="buttonList.selectedItem as Number" destination="thickness" />
-	<s:List id="buttonList"
+	<s:DropDownList id="buttonList"
 			itemRenderer="com.settinghead.groffle.client.view.components.template.ThicknessButton"
-			dataProvider="{buttonArray}">
+			dataProvider="{buttonArray}" skinClass="com.settinghead.groffle.client.view.components.template.ThicknessButtonSkin">
 		<s:layout>
-			<s:HorizontalLayout  />
+			<s:TileLayout  />
 		</s:layout>
-	</s:List>
+	</s:DropDownList>
 </mx:Canvas>
