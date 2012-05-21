@@ -75,7 +75,10 @@ class TemplatesController < ApplicationController
   # POST /templates.json
   def create
     @template = Template.new(params[:template])
-
+    if(params[:nickname]) 
+      current_user.nickname = params[:nickname]
+      current_user.save
+    end
     respond_to do |format|
       @template.user = current_user
       if @template.save

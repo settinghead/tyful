@@ -3,20 +3,25 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 //= require jquery.masonry.min
 //= require jquery.imagesloaded.min
+//= require jquery.isotope.min.js
 
 window.setTemplateId = (id) -> 
 	$('#template_uuid').val(id)
 window.submitForm = () ->
 	$('form').submit()
 
-$('.masonry-container').imagesLoaded = () ->
-  $container.isotope({
-    itemSelector : '.item',
-    animationEngine : 'best-available',
-    layoutMode : 'masonry',
-    animationOptions: {
-        duration: 750,
-        easing: 'linear',
-        queue: false
-    }
-  });
+document.ready = () ->
+	$('.masonry-container').isotope({
+	    itemSelector : '.item',
+	    animationEngine : 'best-available',
+	    animationOptions: {
+	        duration: 750,
+	        easing: 'linear',
+	        queue: false
+	    }
+	});
+
+
+#$('.masonry-container').imagesLoaded = () ->
+
+	
