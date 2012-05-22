@@ -45,7 +45,7 @@
 
 	</mx:Style>
 	
-	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" visible="false" />
+	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" includeInLayout="false" />
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>
@@ -303,7 +303,7 @@
 			public function newTemplate():void{
 				newTemplateDialog.newWidth = TemplateVO.DEFAULT_WIDTH;
 				newTemplateDialog.newHeight = TemplateVO.DEFAULT_HEIGHT;
-
+				newTemplateDialog.visible = true;
 				PopUpManager.addPopUp(newTemplateDialog,this,true);
 				PopUpManager.centerPopUp(newTemplateDialog);
 			}
