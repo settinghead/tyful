@@ -15,7 +15,7 @@
 			import spark.components.Button;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
-			private var _thickness:Number = 55;
+			private var _thickness:Number;
 			
 			public static const BUTTON_WIDTH:Number = 30;
 			
@@ -32,7 +32,7 @@
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
 				generateButtons();
-				thickness = 40;
+				this.thickness = 40;
 			}
 			
 			private function generateButtons():void{
@@ -52,8 +52,8 @@
 			
 		]]>
 	</fx:Script>
-	<fx:Binding source="buttonList.selectedItem as Number" destination="thickness" />
 	<s:DropDownList id="buttonList"
+					 selectedItem="@{thickness}"
 			itemRenderer="com.settinghead.groffle.client.view.components.template.ThicknessButton"
 			dataProvider="{buttonArray}" skinClass="com.settinghead.groffle.client.view.components.template.ThicknessButtonSkin">
 		<s:layout>

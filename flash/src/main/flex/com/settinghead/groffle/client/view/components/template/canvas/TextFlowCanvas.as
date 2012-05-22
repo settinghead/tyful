@@ -49,9 +49,9 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		private var _templateEditor:TemplateEditor;
 		public function set templateEditor(v:TemplateEditor):void{
 			this._templateEditor = v;
-			BindingUtils.bindProperty(this, "thickness", _templateEditor.thicknessPicker, "thickness");
-			BindingUtils.bindProperty(this, "angle", _templateEditor.directionPicker, "angle");
-			BindingUtils.bindProperty(this, "colorPattern", _templateEditor.colorPicker, "colorPattern");
+			BindingUtils.bindProperty(this, "thickness", _templateEditor, "thickness");
+			BindingUtils.bindProperty(this, "angle", _templateEditor, "angle");
+			BindingUtils.bindProperty(this, "colorPattern", _templateEditor, "colorPattern");
 			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");			
 		}
 		
