@@ -97,7 +97,8 @@
 	classname="secureSWF.ant.ProtectTask" />
 	  <target name="protect" depends="compile">
 	    <protect outputPath="${secure.loc}">
-	      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
+		      <fileset dir="${bin.loc}" includes="**.swf"/>
+		      <fileset dir="${bin.loc}" includes="**.swc"/>
 	      <!--rule filter="com.data.**" rename="false"/-->
 	      <!--literalString value="sEc.R3t"/-->
 	      <!--domainName value="groffle.me"/-->
@@ -112,8 +113,8 @@
 	</target>
 	
 	<target name="publish" depends="copy-insecure">
-	    <copy todir="${export.loc}" overwrite="true">
+	    <!--copy todir="${export.loc}" overwrite="true">
 		    <fileset dir="${secure.loc}"/>
-		</copy>
+		</copy-->
 	</target>
 </project>
