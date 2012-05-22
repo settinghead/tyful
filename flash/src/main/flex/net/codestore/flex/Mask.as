@@ -12,7 +12,9 @@ package net.codestore.flex
 	{
 		
 		private static var _mask:Mask;
-		
+		public static function get shown():Boolean{
+			return (_mask!=null);
+		}
 		private var _message:String;
 		
 		public function Mask()
@@ -21,7 +23,7 @@ package net.codestore.flex
 		}
 		
 		public static function show(message:String, parent:Sprite=null):Mask{
-			
+			if(shown) close();
 			_mask = new Mask();
 			_mask._message = message;
 			PopUpManager.addPopUp(_mask, parent||Sprite(FlexGlobals.topLevelApplication), true);
@@ -33,6 +35,7 @@ package net.codestore.flex
 		
 		public static function close():void {
 			PopUpManager.removePopUp(_mask);
+			_mask = null;
 		}
 		
 		override protected function createChildren():void
