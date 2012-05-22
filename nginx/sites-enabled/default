@@ -13,11 +13,12 @@ upstream fileserver {
 	server localhost:5000;
 }
 
+server { listen 80; server_name groffle.me; rewrite ^/(.*) http://www.groffle.me permanent; }
+
 server {
 	listen   80 default;
-	server_name  localhost;
-	proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:8m max_size=500m inactive=300m;
-	proxy_temp_path /var/www/cache/tmp;
+	server_name  www.groffle.me;
+
 	
 	access_log  /var/log/nginx/localhost.access.log;
 
