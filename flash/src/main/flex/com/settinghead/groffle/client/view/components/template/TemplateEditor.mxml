@@ -14,7 +14,9 @@
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
 		[Event(name="createTemplate", type="com.settinghead.groffle.client.view.components.template.CreateTemplateEvent")]
+		
 	</mx:Metadata>
+
 	<mx:Style>
 		
 		
@@ -45,7 +47,6 @@
 
 	</mx:Style>
 	
-	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" includeInLayout="false" />
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>
@@ -175,7 +176,7 @@
 			private var jagFileRefSave:FileReference = new FileReference();
 			private var loader:Loader = new Loader();
 			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
-		
+			private var newTemplateDialog:NewTemplateWindow;
 
 			// ------- Child controls -------
 			// Common view/containers
@@ -220,7 +221,8 @@
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
-
+				this.newTemplateDialog = new NewTemplateWindow();
+				this.newTemplateDialog.addEventListener(NewTemplateWindow.CREATE_TEMPLATE, createTemplate);
 			}
 
 			

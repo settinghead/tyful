@@ -19,7 +19,7 @@
 			public var newWidth:int;
 			[Bindable]
 			public var newHeight:int;
-			public const CREATE_TEMPLATE:String="createTemplate";
+			public static const CREATE_TEMPLATE:String="createTemplate";
 			
 			// Handle the close button and Cancel button.
 			private function handleCloseEvent():void {
