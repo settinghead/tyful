@@ -94,11 +94,12 @@ package com.settinghead.groffle.client.model
 			template = zipInput.parse(b);
 		}
 		
-		public function newTemplate():void{
+		public function newTemplate(width:int, height:int):void{
 			template = new TemplateVO();
-			var layer:Layer = new WordLayer("layer1", template, 800, 600);
+
+			var layer:Layer = new WordLayer("layer1", template, width, height);
 //			template.layers.addItem(new WordLayer("Layer1", template));
-			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED);
+			facade.sendNotification(ApplicationFacade.TEMPLATE_CREATED);
 		}
 		
 		public function uploadTemplate():void{

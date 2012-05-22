@@ -5,7 +5,18 @@
 		 xmlns:components="com.settinghead.groffle.client.view.components.*"
 		 xmlns:template="com.settinghead.groffle.client.view.components.template.*"
 		 xmlns:shop="com.settinghead.groffle.client.view.components.shop.*"
-		 left="0" right="0" top="0" bottom="0" currentState="withoutShop">
+		 left="0" right="0" top="0" bottom="0" currentState="withoutShop" creationComplete="group1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				
+			}
+			
+		]]>
+	</fx:Script>
 	<s:states>
 		<s:State name="withShop"/>
 		<s:State name="withoutShop"/>

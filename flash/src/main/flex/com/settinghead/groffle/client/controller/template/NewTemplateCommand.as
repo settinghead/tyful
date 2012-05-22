@@ -17,8 +17,6 @@ package com.settinghead.groffle.client.controller.template
 	{
 		override public function execute( note:INotification ) : void    {
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
-			templateProxy.newTemplate();
-			sendNotification(ApplicationFacade.EDIT_TEMPLATE);
 		}
 	}
 }

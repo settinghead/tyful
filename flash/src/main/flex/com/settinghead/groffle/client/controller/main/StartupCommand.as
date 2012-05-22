@@ -33,20 +33,8 @@ package com.settinghead.groffle.client.controller.main
 			this.addSubCommand( PrepModelCommand );
 			this.addSubCommand( PrepViewCommand );
 			this.addSubCommand( LoadShopCommand);
-			var mode:String = FlexGlobals.topLevelApplication.parameters.mode as String;
-			switch(mode){
-				case ApplicationFacade.MODE_EDIT_TEMPLATE:
-				case ApplicationFacade.MODE_SHOW_TEMPLATE:
-					this.addSubCommand(DownloadTemplateCommand);
-					break;
-				case ApplicationFacade.MODE_RENDER_TU:
-					this.addSubCommand(GenerateTuCommand);
-					break;
-				case ApplicationFacade.MODE_NEW_TEMPLATE:
-					this.addSubCommand(NewTemplateCommand);
-					break;
-				break;
-			}
+			this.addSubCommand( InitCommand);
+			
 		}
 	}
 }

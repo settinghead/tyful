@@ -54,6 +54,10 @@ package com.settinghead.groffle.client.model.vo.template
 	[Bindable]
 	public class TemplateVO implements IZippable
 	{
+		public static const DEFAULT_WIDTH:int = 800;
+		public static const DEFAULT_HEIGHT:int = 600;
+		
+		
 		private var tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number = 100;

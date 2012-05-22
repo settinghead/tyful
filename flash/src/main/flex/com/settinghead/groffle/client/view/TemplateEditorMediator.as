@@ -8,6 +8,7 @@ package com.settinghead.groffle.client.view
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.groffle.client.view.components.TuRenderer;
+	import com.settinghead.groffle.client.view.components.template.CreateTemplateEvent;
 	import com.settinghead.groffle.client.view.components.template.TemplateEditor;
 	
 	import flash.display.Sprite;
@@ -45,6 +46,7 @@ package com.settinghead.groffle.client.view
 			templateEditor.addEventListener(TemplateEditor.SAVE_TEMPLATE, saveTemplate);
 			templateEditor.addEventListener(TemplateEditor.OPEN_TEMPLATE, openTemplate);
 			templateEditor.addEventListener(TemplateEditor.UPLOAD_TEMPLATE, uploadTemplate);
+			templateEditor.addEventListener(TemplateEditor.CREATE_TEMPLATE, createTemplate);
 			templateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 		}
 		
@@ -53,6 +55,7 @@ package com.settinghead.groffle.client.view
 		override public function listNotificationInterests():Array {
 			return [ApplicationFacade.EDIT_TEMPLATE,
 				ApplicationFacade.TEMPLATE_LOADED,
+				ApplicationFacade.TEMPLATE_CREATED,				
 				ApplicationFacade.TEMPLATE_UPLOADED,
 				ApplicationFacade.UPLOAD_TEMPLATE,
 				ApplicationFacade.NEW_TEMPLATE
@@ -62,6 +65,7 @@ package com.settinghead.groffle.client.view
 		override public function handleNotification(notification:INotification):void {
 			switch (notification.getName()) {
 				case ApplicationFacade.TEMPLATE_LOADED:
+				case ApplicationFacade.TEMPLATE_CREATED:
 					templateEditor.template = templateProxy.template;
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
@@ -99,9 +103,14 @@ package com.settinghead.groffle.client.view
 		
 		private function saveTemplate( event:Event = null ):void
 		{
-			
 				facade.sendNotification(ApplicationFacade.SAVE_TEMPLATE, templateEditor.template);
 		}
+		
+		private function createTemplate(event:CreateTemplateEvent):void{
+
+			templateProxy.newTemplate(event.width, event.height);
+		}
+		
 		private var ref:FileReference;
 		private function openTemplate(event:Event = null):void{
 			ref = new FileReference();
@@ -117,7 +126,8 @@ package com.settinghead.groffle.client.view
 		
 		private function openTemplateCompleteHandler(e:Event):void{ // file loaded
 			var ba:ByteArray=ref.data;
-			facade.sendNotification(ApplicationFacade.LOAD_TEMPLATE, ba);		}
+			facade.sendNotification(ApplicationFacade.LOAD_TEMPLATE, ba);
+		}
 		
 		private function uploadTemplate( event:Event = null ):void
 		{

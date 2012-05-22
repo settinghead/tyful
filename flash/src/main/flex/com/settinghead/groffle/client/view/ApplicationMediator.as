@@ -33,6 +33,7 @@ package com.settinghead.groffle.client.view
 				ApplicationFacade.TEMPLATE_SAVED,
 				ApplicationFacade.DOWNLOAD_TEMPLATE,
 				ApplicationFacade.TEMPLATE_LOADED,
+				ApplicationFacade.TEMPLATE_CREATED,
 				ApplicationFacade.TEMPLATE_UPLOADED,
 				ApplicationFacade.UPLOAD_TEMPLATE,
 				ApplicationFacade.GENERATE_TEMPLATE_PREVIEW,
@@ -51,6 +52,7 @@ package com.settinghead.groffle.client.view
 					break;
 				
 				case ApplicationFacade.EDIT_TEMPLATE:
+				case ApplicationFacade.TEMPLATE_CREATED:
 					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor;
 					applicationComponent.currentState = "withoutShop";
 
@@ -72,6 +74,7 @@ package com.settinghead.groffle.client.view
 				case ApplicationFacade.TEMPLATE_LOADED:
 				case ApplicationFacade.TEMPLATE_UPLOADED:
 				case ApplicationFacade.TEMPLATE_PREVIEW_GENERATED:
+				case ApplicationFacade.TU_IMAGE_GENERATED:
 					Mask.close();
 					break;
 			}

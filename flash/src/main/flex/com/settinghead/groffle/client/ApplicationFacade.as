@@ -3,6 +3,7 @@ package com.settinghead.groffle.client
 	import com.settinghead.groffle.client.GroffleClient;
 	import com.settinghead.groffle.client.controller.main.StartupCommand;
 	import com.settinghead.groffle.client.controller.shop.PrepSampleShopCommand;
+	import com.settinghead.groffle.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.GenerateTemplatePreviewCommand;
 	import com.settinghead.groffle.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.NewTemplateCommand;
@@ -29,6 +30,7 @@ package com.settinghead.groffle.client
 		public static const LOAD_TEMPLATE:String			= "loadTemplate";
 		public static const NEW_TEMPLATE:String			= "newTemplate";
 		public static const TEMPLATE_SAVED:String			= "templateSaved";
+		public static const TEMPLATE_CREATED:String         = "tempalteCreated";
 		public static const TEMPLATE_UPLOADED:String			= "templateUploaded";
 		public static const SAVE_TEMPLATE:String			= "saveTemplate";
 		public static const UPLOAD_TEMPLATE:String			= "uploadTemplate";
@@ -58,7 +60,7 @@ package com.settinghead.groffle.client
 		{
 			super.initializeController();            
 			registerCommand( STARTUP, StartupCommand );	
-			registerCommand (DOWNLOAD_TEMPLATE, LoadTemplateCommand);
+			registerCommand (DOWNLOAD_TEMPLATE, DownloadTemplateCommand);
 			registerCommand (SAVE_TEMPLATE, SaveTemplateCommand);
 			registerCommand (UPLOAD_TEMPLATE, UploadTemplateCommand);
 			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);

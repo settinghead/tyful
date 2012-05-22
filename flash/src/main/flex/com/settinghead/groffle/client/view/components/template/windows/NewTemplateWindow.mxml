@@ -3,19 +3,23 @@
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   close="handleCloseEvent();">
+			   close="handleCloseEvent();" title="Create a new template">
+	<fx:Metadata>
+		[Event(name="createTemplate", type="com.settinghead.groffle.client.view.components.template.CreateTemplateEvent")]
+	</fx:Metadata>
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
-	
 	<fx:Script>
 		<![CDATA[
-			import mx.managers.PopUpManager;
+			import com.settinghead.groffle.client.view.components.template.CreateTemplateEvent;
 			
-			[bindable]
+			import mx.managers.PopUpManager;
+			[Bindable]
 			public var newWidth:int;
-			[bindable]
+			[Bindable]
 			public var newHeight:int;
+			public const CREATE_TEMPLATE:String="createTemplate";
 			
 			// Handle the close button and Cancel button.
 			private function handleCloseEvent():void {
@@ -24,8 +28,7 @@
 			
 			// Handle the OK button.
 			private function createTemplate():void {
-				// Check credentials (not shown) then remove pop up.
-				
+				this.dispatchEvent(new CreateTemplateEvent(CREATE_TEMPLATE,widthStepper.value, heightStepper.value));
 				PopUpManager.removePopUp(this);
 			}
 		]]>
@@ -33,10 +36,10 @@
 	
 	<s:Form>
 		<s:FormItem label="Width">
-			<s:NumericStepper id="widthStepper" value="{newWidth}"/>
+			<s:NumericStepper id="widthStepper" value="@{newWidth}" maximum="10000" minimum="10"/>
 		</s:FormItem>
 		<s:FormItem label="Height">
-			<s:NumericStepper id="heightStepper" value="{newHeight}"/>
+			<s:NumericStepper id="heightStepper" value="@{newHeight}" maximum="10000" minimum="10"/>
 		</s:FormItem>
 	</s:Form>
 	<s:HGroup> 

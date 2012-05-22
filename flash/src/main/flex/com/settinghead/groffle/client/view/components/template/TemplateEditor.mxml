@@ -9,11 +9,11 @@
 	xmlns:client="com.settinghead.groffle.client.*" 
 	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.groffle.client.view.components.template.*" xmlns:canvas="com.settinghead.groffle.client.view.components.template.canvas.*"
 	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.groffle.client.view.components.*"
-	 keyDown="editor_keyDownHandler(event)" >
+	 keyDown="editor_keyDownHandler(event)" xmlns:windows="com.settinghead.groffle.client.view.components.template.windows.*" >
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
-
+		[Event(name="createTemplate", type="com.settinghead.groffle.client.view.components.template.CreateTemplateEvent")]
 	</mx:Metadata>
 	<mx:Style>
 		
@@ -44,6 +44,8 @@
 		}
 
 	</mx:Style>
+	
+	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" />
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>
@@ -64,7 +66,7 @@
 
 						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" fontSize="20" styleName="render-button" color="#007A0A"
 								  />
-
+						<s:Label text="&lt;&lt;-- When you are done, click this button to create your word cloud." />
 					</s:Group>
 					<mx:ViewStack backgroundColor="#EDEDED" id="ribbonViewStack"  visible="{toggleButtonBar.selectedIndex>=0}"
 					 width="1000" height="45" paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10" selectedIndex="1">
@@ -158,7 +160,7 @@
 			// Display states
 			private static const LOAD:uint = 0;
 			private static const PROGRESS:uint = 1;
-			
+
 			public static const RENDER_TU:String = "renderTu";
 			public static const SAVE_TEMPLATE:String = "saveTemplate";
 			public static const OPEN_TEMPLATE:String = "openTemplate";
@@ -299,13 +301,18 @@
 			}
 			
 			public function newTemplate():void{
-				var newTemplateDialog:NewTemplateWindow = new NewTemplateWindow();
+				newTemplateDialog.newWidth = TemplateVO.DEFAULT_WIDTH;
+				newTemplateDialog.newHeight = TemplateVO.DEFAULT_HEIGHT;
+
 				PopUpManager.addPopUp(newTemplateDialog,this,true);
+				PopUpManager.centerPopUp(newTemplateDialog);
 			}
 			
-			public function createTemplate(e:Event):void{
-				dispatchEvent(new Event(CREATE_TEMPLATE));	
+			public function createTemplate(e:CreateTemplateEvent):void{
+				dispatchEvent(new CreateTemplateEvent(TemplateEditor.CREATE_TEMPLATE, e.width, e.height));	
 			}
+			
+
 			
 		]]>
 	</mx:Script>
