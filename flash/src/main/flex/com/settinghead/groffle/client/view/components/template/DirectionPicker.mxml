@@ -51,8 +51,8 @@
 			
 		]]>
 	</fx:Script>
+	<fx:Binding source="buttonList.selectedItem as Number" destination="angle" />
 	<s:DropDownList id="buttonList" 
-					 selectedItem="@{angle}"
 					itemRenderer="com.settinghead.groffle.client.view.components.template.DirectionButton"
 				 skinClass="com.settinghead.groffle.client.view.components.template.DirectionDropDownSkin"
 					dataProvider="{buttonArray}">

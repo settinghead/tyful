@@ -77,6 +77,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public var perseverance:int = 8;
 		public var diligence:int = 8;
 		public var id:String = null;
+		public var uuid:String = null;
 		public var tolerance:Number = 0.2;
 
 		// Applet applet = new Applet();

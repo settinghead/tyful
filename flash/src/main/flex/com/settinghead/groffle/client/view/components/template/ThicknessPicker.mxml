@@ -8,24 +8,25 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
 			import spark.components.Button;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
-			private var _thickness:Number;
+			private var _thickness:int;
 			
 			public static const BUTTON_WIDTH:Number = 30;
 			
 			[Bindable(event="ThicknessChanged")]
-			public function get thickness():Number{
+			public function get thickness():int{
 				return _thickness;
 			}
 			
-			public function set thickness(t:Number):void{
+			public function set thickness(t:int):void{
 				this._thickness = t;
+
 				dispatchEvent(new Event("ThicknessChanged"));
 			}
 			
@@ -52,8 +53,9 @@
 			
 		]]>
 	</fx:Script>
+	<fx:Binding source="buttonList.selectedItem as int" destination="thickness" />
+
 	<s:DropDownList id="buttonList"
-					 selectedItem="@{thickness}"
 			itemRenderer="com.settinghead.groffle.client.view.components.template.ThicknessButton"
 			dataProvider="{buttonArray}" skinClass="com.settinghead.groffle.client.view.components.template.ThicknessButtonSkin">
 		<s:layout>

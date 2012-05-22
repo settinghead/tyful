@@ -13,7 +13,8 @@
 <%
 swfRandomizer = UUIDTools::UUID.random_create().to_s
 flash_vars = {:mode=>@mode, 
-	:templateId=>@template.uuid,
+	:templateUuid=>@template.uuid,
+	:templateId=>@template.id,
 	:relayUrl=>ERB::Util.url_encode(ENV["RELAY_URL"]),
 	:templateUrl=>ERB::Util.url_encode(ENV["TEMPLATE_URL"])
 	}

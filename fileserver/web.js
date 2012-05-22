@@ -113,7 +113,7 @@ var express = require('express'),
 		    }
 		  });
 		  req3.end(new Buffer(body, 'binary'));
-	    res.send(JSON.stringify({"id":id}));
+	    res.send(JSON.stringify({"uuid":id}));
 	  })
 	});
 

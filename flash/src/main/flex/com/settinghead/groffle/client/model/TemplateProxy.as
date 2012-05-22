@@ -78,6 +78,8 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function set template(t:TemplateVO):void{
+			if(t.id==null) t.id = FlexGlobals.topLevelApplication.parameters.templateId as String;
+
 			this.setData(t);
 		}
 		
@@ -123,9 +125,9 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function uploadComplete(e:Event):void{
-			var id:String = new JSONDecoder(urlLoader.loader.data,false).getValue().id;
-			template.id = id;
-			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED, id);
+			var uuid:String = new JSONDecoder(urlLoader.loader.data,false).getValue().uuid;
+			template.uuid = uuid;
+			sendNotification(ApplicationFacade.TEMPLATE_UPLOADED, uuid);
 		}
 	}
 }

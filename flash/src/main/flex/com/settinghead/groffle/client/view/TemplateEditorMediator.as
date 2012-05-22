@@ -69,7 +69,7 @@ package com.settinghead.groffle.client.view
 					templateEditor.template = templateProxy.template;
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
-					ExternalInterface.call("setTemplateId", notification.getBody().toString());
+					ExternalInterface.call("setTemplateUuid", notification.getBody().toString());
 					break;
 				case ApplicationFacade.UPLOAD_TEMPLATE:
 					break;
