@@ -87,7 +87,26 @@
 						</mx:HBox>
 						
 					</mx:ViewStack>
-				</s:Group>	
+				</s:Group>
+				<s:Group>
+					<s:layout>
+						<s:HorizontalLayout />
+					</s:layout>
+					<s:Group id="paintToolBar">
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<mx:ToggleButtonBar
+							direction="vertical"
+							 itemClick="drawingToolBar_itemClickHandler(event)"
+							toggleOnClick="true" id="drawingToolBar">
+							<mx:dataProvider>
+								<mx:String>BR</mx:String>
+								<mx:String>ER</mx:String>
+							</mx:dataProvider>
+						</mx:ToggleButtonBar>
+						
+					</s:Group>
 				<s:Group id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
 					<s:layout>
 						<s:HorizontalLayout />
@@ -117,6 +136,7 @@
 						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
 					</s:Group>
 				</s:Group>
+				</s:Group>
 			</s:Group>
 		<!--s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
@@ -141,6 +161,7 @@
 			import mx.controls.Alert;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
 			import mx.managers.PopUpManager;
 			
 			import org.as3commons.lang.HashArray;
@@ -282,7 +303,7 @@
 			protected function btnAddLayer_clickHandler(event:MouseEvent):void
 			{
 				new WordLayer(
-					"layer"+(template.layers.length+1).toString(),template);
+					"Layer"+(template.layers.length+1).toString(),template);
 			}
 			
 			private function layers_itemRendererFunc(item:Object):ClassFactory {
@@ -315,6 +336,12 @@
 			}
 			
 
+			
+			protected function drawingToolBar_itemClickHandler(event:ItemClickEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
 			
 		]]>
 	</mx:Script>
