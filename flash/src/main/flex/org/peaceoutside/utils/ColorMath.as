@@ -67,7 +67,7 @@ package org.peaceoutside.utils
 			return (r << 16) | (g << 8) | b;
 		}
 		
-		public static function HSLtoRGB(a:Number=1,hue:Number=0,saturation:Number=0.5,lightness:Number=1):uint{
+		public static function HSLtoRGB(hue:Number=0,saturation:Number=0.5,lightness:Number=0.5,a:Number=1):uint{
 			a = Math.max(0,Math.min(1,a));
 			saturation = Math.max(0,Math.min(1,saturation));
 			lightness = Math.max(0,Math.min(1,lightness));

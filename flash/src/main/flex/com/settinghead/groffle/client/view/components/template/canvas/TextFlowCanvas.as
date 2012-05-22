@@ -214,7 +214,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
 				var colorShape:Shape = new Shape();
-				var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI,0.5,0.5);
+				var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
 				shape.graphics.lineStyle(thickness, dirColor, 1);
 				colorShape.graphics.lineStyle(thickness,0,1,true);
 				dirShape.graphics.lineStyle(thickness,0,0.5,true);

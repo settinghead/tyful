@@ -4,6 +4,8 @@ package com.settinghead.groffle.client.view
 	import com.settinghead.groffle.client.model.TuProxy;
 	import com.settinghead.groffle.client.view.components.Application;
 	
+	import mx.controls.Alert;
+	
 	import net.codestore.flex.Mask;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -76,6 +78,7 @@ package com.settinghead.groffle.client.view
 				case ApplicationFacade.TEMPLATE_PREVIEW_GENERATED:
 				case ApplicationFacade.TU_IMAGE_GENERATED:
 					Mask.close();
+					Alert.show("mask closed");
 					break;
 			}
 		}
