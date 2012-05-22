@@ -101,8 +101,12 @@
 							 itemClick="drawingToolBar_itemClickHandler(event)"
 							toggleOnClick="true" id="drawingToolBar">
 							<mx:dataProvider>
-								<mx:String>BR</mx:String>
-								<mx:String>ER</mx:String>
+								<mx:Object label="Brush" 
+										   icon="@Embed(source='brush.png')" />
+								<mx:Object label="Fill" 
+										   icon="@Embed(source='fill.png')"/>
+								<mx:Object label="Erase" 
+										   icon="@Embed(source='eraser.png')"/>
 							</mx:dataProvider>
 						</mx:ToggleButtonBar>
 						
@@ -188,6 +192,20 @@
 			public static const OPEN_TEMPLATE:String = "openTemplate";
 			public static const UPLOAD_TEMPLATE:String = "uploadTemplate";
 			public static const CREATE_TEMPLATE:String = "createTemplate";
+			
+			[Embed(source="brush.png")]
+			public var brushIcon:Class;
+			[Embed(source="eraser.png")]
+			public var eraserIcon:Class;
+			[Embed(source="fill.png")]
+			public var fillIcon:Class;
+			
+			private var brushIconObj:Object = {icon:brushIcon};
+			private var eraserIconObj:Object = {icon:eraserIcon};
+			private var fillIconObj:Object = {icon:fillIcon};
+			
+			[Bindable]
+			public var drawingButtons :Array  = [brushIconObj, fillIconObj, eraserIconObj];
 			
 			public var newWidth:Number = -1, newHeight:Number = -1;
 			
