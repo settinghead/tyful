@@ -45,7 +45,7 @@
 
 	</mx:Style>
 	
-	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" />
+	<windows:NewTemplateWindow id="newTemplateDialog" createTemplate="createTemplate(event)" visible="false" />
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>

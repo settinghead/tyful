@@ -1,0 +1,214 @@
+[2161] 22 May 00:18:44 # Warning: no config file specified, using the default config. In order to specify a config file use 'redis-server /path/to/redis.conf'
+[2161] 22 May 00:18:44 * Server started, Redis version 2.2.11
+[2161] 22 May 00:18:44 * The server is now ready to accept connections on port 6379
+[2161] 22 May 00:18:44 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:18:53 # Warning: no config file specified, using the default config. In order to specify a config file use 'redis-server /path/to/redis.conf'
+[2165] 22 May 00:18:53 * Server started, Redis version 2.2.11
+[2165] 22 May 00:18:53 * The server is now ready to accept connections on port 6379
+[2165] 22 May 00:18:53 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52985
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52986
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52987
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52988
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52989
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52990
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52991
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52992
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52993
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52994
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52995
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52996
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52997
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52998
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:52999
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:53000
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:53001
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:53002
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:53003
+[2165] 22 May 00:18:56 - Accepted 127.0.0.1:53004
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:57 - Client closed connection
+[2165] 22 May 00:18:58 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:03 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:08 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:13 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53008
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53009
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53010
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53011
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53012
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53013
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53015
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53016
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53018
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53019
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53020
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53021
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53022
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53023
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53024
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53025
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53026
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53027
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53028
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53029
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53030
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53031
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53032
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53033
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53034
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53035
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53036
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53037
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53038
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53039
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53040
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53041
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53042
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53043
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53044
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53045
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53046
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53047
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53048
+[2165] 22 May 00:19:15 - Accepted 127.0.0.1:53049
+[2165] 22 May 00:19:18 - 40 clients connected (0 slaves), 1265744 bytes in use
+[2165] 22 May 00:19:23 - 40 clients connected (0 slaves), 1265744 bytes in use
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:25 - Client closed connection
+[2165] 22 May 00:19:28 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:33 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:38 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:43 - 0 clients connected (0 slaves), 922064 bytes in use
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53058
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53059
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53060
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53061
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53062
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53063
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53064
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53065
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53066
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53067
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53068
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53069
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53070
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53071
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53072
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53073
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53074
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53075
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53076
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53077
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53078
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53079
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53080
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53081
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53082
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53083
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53084
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53085
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53086
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53087
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53088
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53089
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53090
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53091
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53092
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53093
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53094
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53095
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53096
+[2165] 22 May 00:19:47 - Accepted 127.0.0.1:53097
+[2165] 22 May 00:19:48 - 40 clients connected (0 slaves), 1265744 bytes in use
+[2165] 22 May 00:19:53 - 40 clients connected (0 slaves), 1265744 bytes in use
+[2165] 22 May 00:19:57 - Accepted 127.0.0.1:53098
+[2165] 22 May 00:19:58 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:03 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:08 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:13 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:18 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:23 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:28 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:34 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:39 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:44 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:49 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:54 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:20:59 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:04 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:09 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:14 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:19 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:24 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:29 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:34 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:39 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:44 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:49 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:54 - 41 clients connected (0 slaves), 1274320 bytes in use
+[2165] 22 May 00:21:59 - 41 clients connected (0 slaves), 1274480 bytes in use
+[2165] 22 May 00:22:04 - 41 clients connected (0 slaves), 1274480 bytes in use
+[2165] 22 May 00:22:09 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:14 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:19 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:24 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:29 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:34 - 41 clients connected (0 slaves), 1274464 bytes in use
+[2165] 22 May 00:22:39 - 41 clients connected (0 slaves), 1274464 bytes in use
