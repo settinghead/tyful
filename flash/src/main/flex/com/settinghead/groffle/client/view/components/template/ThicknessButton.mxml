@@ -43,6 +43,12 @@
 			
 		]]>
 	</fx:Script>
+	<s:Group>
+		<s:layout>
+		<s:HorizontalLayout verticalAlign="middle" />
+	</s:layout>
 	<s:Label id="thumb" width="30" height="30">
 	</s:Label>
+	<s:Label id="number" text="{data as int}" />
+	</s:Group>
 </s:ItemRenderer>

@@ -76,15 +76,25 @@
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" />
 						</mx:HBox>
-						<mx:HBox label="Draw">
-							<mx:Label text="Angle: " />
-							<template:DirectionPicker label="Text direction" id="directionPicker" />
-							<mx:Label text="Thickness: " />
-							<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
-							<s:Label text="Colors: " />
-
-							<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
-						</mx:HBox>
+							<mx:ViewStack label="Drawing" id="drawingOptionsViewStack" visible="{drawingToolBar.selectedIndex >=0}" selectedIndex="{drawingToolBar.selectedIndex}"
+										  left="0" top="0" right="0" bottom="0" width="1000" height="45">
+								<mx:HBox label="Brush">
+									<mx:Label text="Angle: " />
+									<template:DirectionPicker label="Text direction" id="directionPicker" />
+									<mx:Label text="Thickness: " />
+									<template:ThicknessPicker label="Brush size" id="thicknessPicker"  />
+									<s:Label text="Colors: " />
+									<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
+								</mx:HBox>
+								<mx:HBox label="Fill">
+									<mx:Label text="Work in progress. Please check back soon." />
+								</mx:HBox>
+								<mx:HBox label="Erase">
+									<mx:Label text="Thickness: " />
+									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  />
+								</mx:HBox>
+							</mx:ViewStack>
+							
 						
 					</mx:ViewStack>
 				</s:Group>
@@ -99,7 +109,9 @@
 						<mx:ToggleButtonBar
 							direction="vertical"
 							 itemClick="drawingToolBar_itemClickHandler(event)"
-							toggleOnClick="true" id="drawingToolBar">
+							toggleOnClick="true" id="drawingToolBar"
+							 selectedIndex="1"
+							>
 							<mx:dataProvider>
 								<mx:Object label="Brush" 
 										   icon="@Embed(source='brush.png')" />

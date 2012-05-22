@@ -4,6 +4,11 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				autoDrawBackground="true" creationComplete="onCreationCompleteHandler(event)"
 				 dataChange="onCreationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		
 	</fx:Declarations>
@@ -19,7 +24,6 @@
 			
 			[Embed("A.png")]
 			public static var A:Class;
-			
 			public function get angle():Number{
 				return _ang;
 			}
@@ -59,6 +63,13 @@
 			
 		]]>
 	</fx:Script>
-	<s:Label id="thumb" width="30" height="30">
-	</s:Label>
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout  verticalAlign="middle" />
+		</s:layout>
+		<s:Label id="thumb" width="30" height="30">
+		</s:Label>
+		<s:Label id="number" text="{int((360 - (data as Number)/BBPolarTreeVO.TWO_PI * 360)%360)}&#176;" />
+	</s:Group>
+
 </s:ItemRenderer>
