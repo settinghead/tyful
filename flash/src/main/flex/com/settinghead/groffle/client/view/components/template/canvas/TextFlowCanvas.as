@@ -17,6 +17,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import flash.text.TextField;
 	import flash.ui.Mouse;
 	
+	import flashx.textLayout.elements.BreakElement;
+	
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
@@ -53,6 +55,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			BindingUtils.bindProperty(this, "angle", _templateEditor, "angle");
 			BindingUtils.bindProperty(this, "colorPattern", _templateEditor, "colorPattern");
 			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");	
+			BindingUtils.bindProperty(this, "currentDrawingTool", _templateEditor, "currentDrawingTool");	
 		}
 		
 		public function get templateEditor():TemplateEditor{
@@ -65,6 +68,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		private var bmpElement:BitmapImage;
 		private var bmpDirElement:BitmapImage;
 		private var colorSheetElement:BitmapImage;
+		private var _currentDrawingTool:int;
 		
 		protected function this_mouseDownHandler(event:MouseEvent):void
 		{
@@ -88,18 +92,19 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		protected function this_mouseOutHandler(event:MouseEvent):void
 		{
-			//			Mouse.show();
-			//			this.drawingState = false;
+			Mouse.show();
+			//this.drawingState = false;
 		}
 		
 		protected function this_focusOutHandler(event:MouseEvent):void
 		{
-						Mouse.hide();
-						this.drawingState = false;
+			if(this.cursor!=null)this.cursor.visible = false;
+			this.drawingState = false;
 		}
 		
 		protected function this_mouseOverHandler(event:MouseEvent):void
 		{
+
 			Mouse.hide();
 		}
 		
@@ -138,15 +143,24 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			rebuildCursor();
 		}
 		
+		public function get currentDrawingTool():int{
+			return _currentDrawingTool;
+		}
+		public function set currentDrawingTool(v:int):void{
+			_currentDrawingTool = v;
+			rebuildCursor();
+		}
+		
 		public function set currentLayer(l:Layer):void{
 			this._isCurrentLayer = (l==this.layer);
 			this.mouseEnabled=_isCurrentLayer;
 			if(_isCurrentLayer){
 				this.alpha = 1;
+				if(this.cursor!=null)this.cursor.visible=true;
 			}
 			else{
 				this.alpha = 0.5;
-				Mouse.hide();
+				if(this.cursor!=null)this.cursor.visible = false;
 			}
 
 		}
@@ -159,44 +173,63 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		private function rebuildCursor():void{
 			if(cursor!=null){
-				var a:BitmapAsset = new SmallA();
+				switch(currentDrawingTool){
+					case TemplateEditor.BRUSH:
+						var colorLayer:UIComponent = new UIComponent();
+						colorLayer.graphics.clear();
+						colorLayer.x = 0;
+						colorLayer.y = 0;
+						colorLayer.width = thickness;
+						colorLayer.height = thickness;
+						colorLayer.graphics.lineBitmapStyle(colorPattern,null,true,true);
+						colorLayer.graphics.beginBitmapFill(colorPattern,null,true,true);
+						colorLayer.graphics.drawCircle(0, 0, thickness/2);
+						colorLayer.graphics.endFill();
+						var a:BitmapAsset = new SmallA();
 
-				var colorLayer:UIComponent = new UIComponent();
-				colorLayer.graphics.clear();
-				colorLayer.x = 0;
-				colorLayer.y = 0;
-				colorLayer.width = thickness;
-				colorLayer.height = thickness;
-				colorLayer.graphics.lineBitmapStyle(colorPattern,null,true,true);
-				colorLayer.graphics.beginBitmapFill(colorPattern,null,true,true);
-				colorLayer.graphics.drawCircle(0, 0, thickness/2);
-				colorLayer.graphics.endFill();
+						var textLayer:UIComponent = new UIComponent();
+						textLayer.graphics.clear();
+						var m:Matrix = a.transform.matrix;
+						m.tx -= a.width/2;
+						m.ty -= a.height/2;
+						m.rotate(-angle);
+						m.tx += a.width/2;
+						m.ty += a.height/2;
+						textLayer.width = thickness;
+						textLayer.height = thickness;
+						textLayer.x = 0;
+						textLayer.y = 0;
+						textLayer.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+						textLayer.graphics.beginBitmapFill(a.bitmapData,m,true, true);
+						textLayer.graphics.drawCircle(0, 0, thickness/2);
+						textLayer.graphics.endFill();
+						
+						while(cursor.numChildren>0)
+							cursor.removeChildAt(0);
+						cursor.graphics.clear();
+						
+						cursor.width = colorLayer.width;
+						cursor.height = colorLayer.height;
+						cursor.addChild(colorLayer);
+						cursor.addChild(textLayer);
+						break;
+					case TemplateEditor.FILL:
+						break;
+					case TemplateEditor.ERASE:
+						var blankLayer:UIComponent = new UIComponent();
+						blankLayer.graphics.clear();
+						blankLayer.x = 0;
+						blankLayer.y = 0;
+						blankLayer.width = thickness;
+						blankLayer.height = thickness;
+						blankLayer.graphics.beginFill(0xffffff,1);
+						blankLayer.graphics.drawCircle(0, 0, thickness/2);
+						blankLayer.graphics.endFill();
+						cursor.addChild(blankLayer);
+						break;
+				}
+
 				
-				var textLayer:UIComponent = new UIComponent();
-				textLayer.graphics.clear();
-				var m:Matrix = a.transform.matrix;
-				m.tx -= a.width/2;
-				m.ty -= a.height/2;
-				m.rotate(-angle);
-				m.tx += a.width/2;
-				m.ty += a.height/2;
-				textLayer.width = thickness;
-				textLayer.height = thickness;
-				textLayer.x = 0;
-				textLayer.y = 0;
-				textLayer.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-				textLayer.graphics.beginBitmapFill(a.bitmapData,m,true, true);
-				textLayer.graphics.drawCircle(0, 0, thickness/2);
-				textLayer.graphics.endFill();
-				
-				while(cursor.numChildren>0)
-					cursor.removeChildAt(0);
-				cursor.graphics.clear();
-				
-				cursor.width = colorLayer.width;
-				cursor.height = colorLayer.height;
-				cursor.addChild(colorLayer);
-				cursor.addChild(textLayer);
 			}
 		}
 		
@@ -219,26 +252,47 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
 				var colorShape:Shape = new Shape();
-				var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
-				shape.graphics.lineStyle(thickness, dirColor, 1);
-				colorShape.graphics.lineStyle(thickness,0,1,true);
-				dirShape.graphics.lineStyle(thickness,0,0.5,true);
-				colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
-				var a:BitmapAsset = new SmallA();
-				var m:Matrix = a.transform.matrix;
-				m.rotate(-angle);
-				dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-				shape.graphics.moveTo(oldMouseX, oldMouseY);
-				dirShape.graphics.moveTo(oldMouseX, oldMouseY);
-				colorShape.graphics.moveTo(oldMouseX, oldMouseY);
-				shape.graphics.lineTo(this.mouseX,this.mouseY);
-				dirShape.graphics.lineTo(this.mouseX,this.mouseY);
-				colorShape.graphics.lineTo(this.mouseX,this.mouseY);
+				switch(currentDrawingTool){
+					case TemplateEditor.BRUSH:
+						var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
+						shape.graphics.lineStyle(thickness, dirColor, 1);
+						colorShape.graphics.lineStyle(thickness,0,1,true);
+						dirShape.graphics.lineStyle(thickness,0,0.5,true);
+						colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
+						var a:BitmapAsset = new SmallA();
+						var m:Matrix = a.transform.matrix;
+						m.rotate(-angle);
+						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+						shape.graphics.moveTo(oldMouseX, oldMouseY);
+						dirShape.graphics.moveTo(oldMouseX, oldMouseY);
+						colorShape.graphics.moveTo(oldMouseX, oldMouseY);
+						shape.graphics.lineTo(this.mouseX,this.mouseY);
+						dirShape.graphics.lineTo(this.mouseX,this.mouseY);
+						colorShape.graphics.lineTo(this.mouseX,this.mouseY);
+						layer.direction.draw(shape);
+						bmpDirection.bitmapData.draw(dirShape);
+						layer.colorSheet.bitmapData.draw(colorShape);
+						break;
+					case TemplateEditor.FILL:
+						break;
+					case TemplateEditor.ERASE:
+						shape.graphics.lineStyle(thickness, 0xff0000, 1);
+						colorShape.graphics.lineStyle(thickness, 0xff0000, 1);
+						dirShape.graphics.lineStyle(thickness, 0xff0000, 1);
+						shape.graphics.moveTo(oldMouseX, oldMouseY);
+						dirShape.graphics.moveTo(oldMouseX, oldMouseY);
+						colorShape.graphics.moveTo(oldMouseX, oldMouseY);
+						shape.graphics.lineTo(this.mouseX,this.mouseY);
+						dirShape.graphics.lineTo(this.mouseX,this.mouseY);
+						colorShape.graphics.lineTo(this.mouseX,this.mouseY);
+						layer.direction.draw(shape,null,null,BlendMode.ERASE);
+						bmpDirection.bitmapData.draw(dirShape,null,null,BlendMode.ERASE);
+						layer.colorSheet.bitmapData.draw(colorShape,null,null,BlendMode.ERASE);
+						break;
+				}
 				
 				
-				layer.direction.draw(shape);
-				bmpDirection.bitmapData.draw(dirShape);
-				layer.colorSheet.bitmapData.draw(colorShape);
+
 				
 				oldMouseX = this.mouseX;
 				oldMouseY = this.mouseY;
