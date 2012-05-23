@@ -713,7 +713,7 @@ Please contact me at afoucal@free.fr.
 		<mx:TextArea id="notificationTextArea" htmlText="{text}" minWidth="220" width="100%" wordWrap="true"
 			selectable="false" focusEnabled="false" focusThickness="0"
 			verticalScrollPolicy="off" horizontalScrollPolicy="off"
-			backgroundAlpha="0" borderThickness="0" />
+			 />
 	</mx:HBox>
 	
 </grad:GradientCanvas>

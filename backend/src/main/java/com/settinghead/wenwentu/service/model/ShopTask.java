@@ -5,13 +5,13 @@ import java.util.List;
 
 public class ShopTask extends Task {
 
-	private int userId;
+	private String userId;
 	private String templateId;
 
 	/**
 	 * @return the userId
 	 */
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
@@ -19,7 +19,7 @@ public class ShopTask extends Task {
 	 * @param userId
 	 *            the userId to set
 	 */
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

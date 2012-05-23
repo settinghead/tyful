@@ -57,7 +57,7 @@ public class GroffleService<T extends Task> {
 						String dbStr = props.getProperty("REDISTOGO_DB");
 						if (dbStr != null) {
 							jedis.select(Integer.parseInt(dbStr));
-							logger.info("DB: " + dbStr);
+							//logger.info("DB: " + dbStr);
 						}
 						String message;
 						if ((message = jedis.lpop(taskType.getSimpleName()

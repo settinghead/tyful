@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ShopPredictor {
 
-	public static List<ShopItem> getShop(int userId, String templateId) {
+	public static List<ShopItem> getShop(String userId, String templateId) {
 		return getGenericShop();
 	}
 	
