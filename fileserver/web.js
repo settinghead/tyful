@@ -1,6 +1,6 @@
-var express = require('express'),
+var express = require('express'),    form = require('connect-form'),
     fs = require('fs'), node_uuid = require('node-uuid'), 
-	URL = require('url'), redis = require("redis"),
+	URL = require('url'), redis = require("redis"),    util = require('util'),
 	knox = require('knox'), sys=require('sys');
 	var exec = require('child_process').exec;
 	
@@ -11,7 +11,7 @@ var express = require('express'),
 	  , bucket: 'wwt_templates'
 	});
 	
-    app = express.createServer();
+    app = express.createServer(  form({keepExtensions: true}));
 	app.use(express.static(__dirname + '/../static'));
 	
 //url = URL.parse("redis://redistogo:15ccf727b1849df6b901821393510e82@drum.redistogo.com:9724/");
@@ -19,102 +19,164 @@ var express = require('express'),
 //client.auth(url.auth.substr(url.auth.indexOf(":")+1), function(){
 	
 	app.get('/t', function(req, res){
-		res.header("Content-Type", "text/html");
-	  res.send('<h1>t</h1><form method="post" action="/t" enctype="multipart/form-data">'
-	           + '<p>Image: <input type="file" name="test" /></p>'
-	           + '<p><input type="submit" value="Upload" /></p>'
-	           + '</orm>');
-	});
+				res.header("Content-Type", "text/html");
+			  res.send('<h1>t</h1><form method="post" action="/t" enctype="multipart/form-data">'
+			           + '<p>Image: <input type="file" name="test" /></p>'
+			           + '<p><input type="submit" value="Upload" /></p>'
+			           + '</orm>');
+			});
 	
 	app.post('/t', function(req, res){
-	  var body = [];
-	  var header = '';
-	  var content_type = req.headers['content-type'];
-	  var boundary = (content_type.split('; ').length<2)?"":content_type.split('; ')[1].split('=')[1];
-	  var content_length = parseInt(req.headers['content-length']);
-	  var headerFlag = true;
-	  var filename = 'dummy.bin';
-	  var filenameRegexp = /filename="(.*)"/m;
-	  console.log('content-type: ' + content_type);
-	  console.log('boundary: ' + boundary);
-	  console.log('content-length: ' + content_length);
-
-	  req.on('data', function(raw) {
-	    console.log('received data length: ' + raw.length);
-	    var i = 0;
-	    while (i < raw.length)
-	      if (headerFlag) {
-	        var chars = raw.slice(i, i+4).toString();
-	        if (chars === '\r\n\r\n') {
-	          headerFlag = false;
-	          header = raw.slice(0, i+4).toString();
-	          console.log('header length: ' + header.length);
-	          i = i + 4;
-	          // get the filename
-	          var result = filenameRegexp.exec(header);
-	          if (result[1]) {
-	            filename = result[1];
-	          }
-	          console.log('filename: ' + filename);
-	          console.log('header done');
-	        }
-	        else {
-	          i += 1;
-	        }
-	      }
-	      else { 
-	        // parsing body including footer
-	        body += raw.toString('binary', i, raw.length);
-	        i = raw.length;
-	        console.log('actual file size: ' + body.length);
-	      }
-	  });
-
-	  req.on('end', function() {		  
-	    // removing footer '\r\n'--boundary--\r\n' = (boundary.length + 8)
-	    body = body.slice(0, body.length - (boundary.length + 8))
-	    console.log('final file size: ' + body.length);
-		var id = node_uuid.v4();
-		
-		/******Extract preview file******/
-		//create directory
-		fs.mkdir('/tmp/' + id,0777, function(e){
-	  	    fs.writeFile('/tmp/' +id +'/' + id +".zip", body, 'binary', function(){
-	  	    	//unzip
-				exec('unzip /tmp/'+id+'/'+id+'.zip /preview.png -d /tmp/'+id+'/', function(){
-					fs.readFile('/tmp/'+id+'/preview.png', function (err, data) {
-					  if (err) throw err;
-  				      var req4 = s3client.put(id+'.png', {
-  						'Content-Length': data.length,
-  						 'Content-Type': 'application/octet-stream',
-  					      'x-amz-acl': 'private'
-  					  });
-  					  req4.on('response', function(res4){
-  					    if (200 == res4.statusCode) {
-  					      console.log('saved to %s', req4.url);
-  					    }
-  					  });
-  					  req4.end(data);
+		req.form.complete(function(err, fields, files) {
+		    if(err) {
+		      next(err);
+		    } else {
+				var uuid;
+				if(fields.templateUuid){
+					//TODO: check token
+					uuid = fields.templateUuid;
+				}
+				else{
+					uuid =  node_uuid.v4();
+				}
+				console.log(uuid);
+				fs.mkdir('/tmp/' + uuid,0777, function(e){
+					ins = fs.createReadStream(files.template.path);
+					ous = fs.createWriteStream('/tmp/' +uuid +'/' + uuid +".zip");
+					util.pump(ins, ous, function(err) {
+						if(err) {
+				    		next(err);
+						} else {
+							exec('unzip /tmp/'+uuid+'/'+uuid+'.zip /preview.png -d /tmp/'+uuid+'/', function(){
+						          fs.readFile('/tmp/'+uuid+'/preview.png', function (err, data) {
+								      if (err) throw err;
+				   				      var req4 = s3client.put(uuid+'.png', {
+    			   					  'Content-Length': data.length,
+								      'Content-Type': 'application/octet-stream',
+									  'x-amz-acl': 'private'
+				   					  });
+				   					  req4.on('response', function(res4){
+				   					    if (200 == res4.statusCode) {
+				   					      console.log('saved to %s', req4.url);
+				   					    }
+				   					  });
+				   					  req4.end(data);
+		    	 				   });
+							 });
+						}
+						
+						//client.set(id, body);
+						fs.readFile('/tmp/' +uuid +'/' + uuid +".zip", function(err, buf){
+					  	    var req3 = s3client.put(uuid+'.zip', {
+						  			'Content-Length': buf.length,
+						  			 'Content-Type': 'application/octet-stream',
+						  		      'x-amz-acl': 'private'
+						  		  });
+						  req3.on('response', function(res3){
+						    if (200 == res.statusCode) {
+						      console.log('saved to %s', req3.url);
+  					  	      res.send(JSON.stringify({"uuid":uuid}));
+						    }
+							else{
+								res.send(JSON.stringify({"error":res.statusCode}));
+							}
+						  });
+						  req3.end(buf);
 					});
 				});
-	  	    });	
+		    });
+		}
 		});
-  	    
+
 		
-		//client.set(id, body);
-	    var req3 = s3client.put(id+'.zip', {
-			'Content-Length': body.length,
-			 'Content-Type': 'application/octet-stream',
-		      'x-amz-acl': 'private'
-		  });
-		  req3.on('response', function(res){
-		    if (200 == res.statusCode) {
-		      console.log('saved to %s', req3.url);
-		    }
-		  });
-		  req3.end(new Buffer(body, 'binary'));
-	    res.send(JSON.stringify({"uuid":id}));
-	  })
+	  // var body = [];
+	  // 	  var header = '';
+	  // 	  var content_type = req.headers['content-type'];
+	  // 	  var boundary = (content_type.split('; ').length<2)?"":content_type.split('; ')[1].split('=')[1];
+	  // 	  var content_length = parseInt(req.headers['content-length']);
+	  // 	  var headerFlag = true;
+	  // 	  var filename = 'dummy.bin';
+	  // 	  var filenameRegexp = /filename="(.*)"/m;
+	  // 	  console.log('content-type: ' + content_type);
+	  // 	  console.log('boundary: ' + boundary);
+	  // 	  console.log('content-length: ' + content_length);
+	  // 
+	  // 	  req.on('data', function(raw) {
+	  // 	    console.log('received data length: ' + raw.length);
+	  // 	    var i = 0;
+	  // 	    while (i < raw.length)
+	  // 	      if (headerFlag) {
+	  // 	        var chars = raw.slice(i, i+4).toString();
+	  // 	        if (chars === '\r\n\r\n') {
+	  // 	          headerFlag = false;
+	  // 	          header = raw.slice(0, i+4).toString();
+	  // 	          console.log('header length: ' + header.length);
+	  // 	          i = i + 4;
+	  // 	          // get the filename
+	  // 	          var result = filenameRegexp.exec(header);
+	  // 	          if (result[1]) {
+	  // 	            filename = result[1];
+	  // 	          }
+	  // 	          console.log('filename: ' + filename);
+	  // 	          console.log('header done');
+	  // 	        }
+	  // 	        else {
+	  // 	          i += 1;
+	  // 	        }
+	  // 	      }
+	  // 	      else { 
+	  // 	        // parsing body including footer
+	  // 	        body += raw.toString('binary', i, raw.length);
+	  // 	        i = raw.length;
+	  // 	        console.log('actual file size: ' + body.length);
+	  // 	      }
+	  // 	  });
+	  // 
+	  // 	  req.on('end', function() {		  
+	  // 	    // removing footer '\r\n'--boundary--\r\n' = (boundary.length + 8)
+	  // 	    body = body.slice(0, body.length - (boundary.length + 8))
+	  // 	    console.log('final file size: ' + body.length);
+	  // 		var id = node_uuid.v4();
+	  // 		
+	  // 		/******Extract preview file******/
+	  // 		//create directory
+	  // 		fs.mkdir('/tmp/' + id,0777, function(e){
+	  // 	  	    fs.writeFile('/tmp/' +id +'/' + id +".zip", body, 'binary', function(){
+	  // 	  	    	//unzip
+	  // 				exec('unzip /tmp/'+id+'/'+id+'.zip /preview.png -d /tmp/'+id+'/', function(){
+	  // 					fs.readFile('/tmp/'+id+'/preview.png', function (err, data) {
+	  // 					  if (err) throw err;
+	  //  				      var req4 = s3client.put(id+'.png', {
+	  //  						'Content-Length': data.length,
+	  //  						 'Content-Type': 'application/octet-stream',
+	  //  					      'x-amz-acl': 'private'
+	  //  					  });
+	  //  					  req4.on('response', function(res4){
+	  //  					    if (200 == res4.statusCode) {
+	  //  					      console.log('saved to %s', req4.url);
+	  //  					    }
+	  //  					  });
+	  //  					  req4.end(data);
+	  // 					});
+	  // 				});
+	  // 	  	    });	
+	  // 		});
+	  //  	    
+	  // 		
+	  // 		//client.set(id, body);
+	  // 	    var req3 = s3client.put(id+'.zip', {
+	  // 			'Content-Length': body.length,
+	  // 			 'Content-Type': 'application/octet-stream',
+	  // 		      'x-amz-acl': 'private'
+	  // 		  });
+	  // 		  req3.on('response', function(res){
+	  // 		    if (200 == res.statusCode) {
+	  // 		      console.log('saved to %s', req3.url);
+	  // 		    }
+	  // 		  });
+	  // 		  req3.end(new Buffer(body, 'binary'));
+	  // 	    res.send(JSON.stringify({"uuid":id}));
+	  // 	  })
 	});
 
 	//template repository

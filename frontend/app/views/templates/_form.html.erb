@@ -17,7 +17,8 @@ flash_vars = {:mode=>@mode,
 	:templateUuid=>@template.uuid,
 	:templateId=>@template.id,
 	:relayUrl=>ERB::Util.url_encode(ENV["RELAY_URL"]),
-	:templateUrl=>ERB::Util.url_encode(ENV["TEMPLATE_URL"])
+	:templateUrl=>ERB::Util.url_encode(ENV["TEMPLATE_URL"]),
+	:token=>@token
 	}
 
 %>

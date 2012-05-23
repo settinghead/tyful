@@ -112,7 +112,10 @@ package com.settinghead.groffle.client.model
 			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
-			urlLoader.addFile(b,"my_template.zip");
+			urlLoader.addVariable("token", FlexGlobals.topLevelApplication.parameters.token);
+			urlLoader.addVariable("templateUuid", FlexGlobals.topLevelApplication.parameters.templateUuid);
+			urlLoader.addFile(b,"my_template.zip",'template');
+
 			
 			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			

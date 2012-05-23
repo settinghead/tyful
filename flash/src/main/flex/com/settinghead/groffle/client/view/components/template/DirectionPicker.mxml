@@ -37,7 +37,7 @@
 			
 			private function generateButtons():void{
 //				var numButtons:int = this.width/BUTTON_WIDTH;
-				var numButtons:int = 25;
+				var numButtons:int = 30;
 
 				for(var i:int=0;i<numButtons;i++){
 					var ang:Number = BBPolarTreeVO.TWO_PI - BBPolarTreeVO.TWO_PI/numButtons*i;

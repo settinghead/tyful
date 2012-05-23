@@ -1,26 +1,23 @@
 package ru.inspirit.net
 {
 	﻿  import flash.errors.IllegalOperationError;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.HTTPStatusEvent;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
-	import flash.net.URLRequestMethod;
-	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
-	import flash.utils.Endian;
-	import flash.utils.clearInterval;
-	import flash.utils.setTimeout;
-	
-	import mx.controls.Alert;
-	
-	import ru.inspirit.net.events.MultipartURLLoaderEvent;
+	﻿  import flash.events.Event;
+	﻿  import flash.events.EventDispatcher;
+	﻿  import flash.events.HTTPStatusEvent;
+	﻿  import flash.events.IOErrorEvent;
+	﻿  import flash.events.ProgressEvent;
+	﻿  import flash.events.SecurityErrorEvent;
+	﻿  import flash.net.URLLoader;
+	﻿  import flash.net.URLLoaderDataFormat;
+	﻿  import flash.net.URLRequest;
+	﻿  import flash.net.URLRequestHeader;
+	﻿  import flash.net.URLRequestMethod;
+	﻿  import flash.utils.ByteArray;
+	﻿  import flash.utils.Dictionary;
+	﻿  import flash.utils.Endian;
+	﻿  import flash.utils.setTimeout;
+	﻿  import flash.utils.clearInterval;
+	﻿  import ru.inspirit.net.events.MultipartURLLoaderEvent;
 	
 	 ﻿  /**
 	 ﻿   * Multipart URL Loader
@@ -103,19 +100,17 @@ package ru.inspirit.net
 		﻿  ﻿  public function load(path:String, async:Boolean = false):void
 		﻿  ﻿  {
 			﻿  ﻿  ﻿  if (path == null || path == '') throw new IllegalOperationError('You cant load without specifing PATH');
-
+			
 			﻿  ﻿  ﻿  _path = path;
 			﻿  ﻿  ﻿  _async = async;
 			
 			﻿  ﻿  ﻿  if (_async) {
 				﻿  ﻿  ﻿  ﻿  if(!_prepared){
-
 					﻿  ﻿  ﻿  ﻿  ﻿  constructPostDataAsync();
 				﻿  ﻿  ﻿  ﻿  } else {
 					﻿  ﻿  ﻿  ﻿  ﻿  doSend();
 				﻿  ﻿  ﻿  ﻿  }
 			﻿  ﻿  ﻿  } else {
-
 				﻿  ﻿  ﻿  ﻿  _data = constructPostData();
 				﻿  ﻿  ﻿  ﻿  doSend();
 			﻿  ﻿  ﻿  }
@@ -283,7 +278,6 @@ package ru.inspirit.net
 		
 		﻿  ﻿  private function doSend():void
 		﻿  ﻿  {
-
 			﻿  ﻿  ﻿  var urlRequest:URLRequest = new URLRequest();
 			﻿  ﻿  ﻿  urlRequest.url = _path;
 			﻿  ﻿  ﻿  //urlRequest.contentType = 'multipart/form-data; boundary=' + getBoundary();
@@ -296,7 +290,7 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  {
 				﻿  ﻿  ﻿  ﻿  urlRequest.requestHeaders = urlRequest.requestHeaders.concat(requestHeaders);
 			﻿  ﻿  ﻿  }
-
+			
 			﻿  ﻿  ﻿  addListener();
 			
 			﻿  ﻿  ﻿  _loader.load(urlRequest);
@@ -308,14 +302,13 @@ package ru.inspirit.net
 			
 			﻿  ﻿  ﻿  _data = new ByteArray();
 			﻿  ﻿  ﻿  _data.endian = Endian.BIG_ENDIAN;
-
-			﻿  ﻿  ﻿  //_data = constructVariablesPart(_data);
-
+			
+			﻿  ﻿  ﻿  _data = constructVariablesPart(_data);
+			
 			﻿  ﻿  ﻿  asyncFilePointer = 0;
 			﻿  ﻿  ﻿  writtenBytes = 0;
 			﻿  ﻿  ﻿  _prepared = false;
 			﻿  ﻿  ﻿  if (_fileNames.length) {
-
 				﻿  ﻿  ﻿  ﻿  nextAsyncLoop();
 			﻿  ﻿  ﻿  } else {
 				﻿  ﻿  ﻿  ﻿  _data = closeDataObject(_data);
@@ -328,8 +321,8 @@ package ru.inspirit.net
 		﻿  ﻿  {
 			﻿  ﻿  ﻿  var postData:ByteArray = new ByteArray();
 			﻿  ﻿  ﻿  postData.endian = Endian.BIG_ENDIAN;
-
-			﻿  ﻿  ﻿  //postData = constructVariablesPart(postData);
+			
+			﻿  ﻿  ﻿  postData = constructVariablesPart(postData);
 			﻿  ﻿  ﻿  postData = constructFilesPart(postData);
 			
 			﻿  ﻿  ﻿  postData = closeDataObject(postData);
@@ -344,27 +337,27 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  return postData;
 		﻿  ﻿  }
 		
-//		﻿  ﻿  private function constructVariablesPart(postData:ByteArray):ByteArray
-//		﻿  ﻿  {
-//			﻿  ﻿  ﻿  var i:uint;
-//			﻿  ﻿  ﻿  var bytes:String;
-//			
-//			﻿  ﻿  ﻿  for each(var name:String in _variableNames)
-//			﻿  ﻿  ﻿  {
-//				﻿  ﻿  ﻿  ﻿  postData = BOUNDARY(postData);
-//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//				﻿  ﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="' + name + '"';
-//				﻿  ﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-//					﻿  ﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-//				﻿  ﻿  ﻿  ﻿  }
-//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//				﻿  ﻿  ﻿  ﻿  postData.writeUTFBytes(_variables[name]);
-//				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  }
-//			
-//			﻿  ﻿  ﻿  return postData;
-//		﻿  ﻿  }
+		﻿  ﻿  private function constructVariablesPart(postData:ByteArray):ByteArray
+		﻿  ﻿  {
+			﻿  ﻿  ﻿  var i:uint;
+			﻿  ﻿  ﻿  var bytes:String;
+			
+			﻿  ﻿  ﻿  for each(var name:String in _variableNames)
+			﻿  ﻿  ﻿  {
+				﻿  ﻿  ﻿  ﻿  postData = BOUNDARY(postData);
+				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+				﻿  ﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="' + name + '"';
+				﻿  ﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+					﻿  ﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+				﻿  ﻿  ﻿  ﻿  }
+				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+				﻿  ﻿  ﻿  ﻿  postData.writeUTFBytes(_variables[name]);
+				﻿  ﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  }
+			
+			﻿  ﻿  ﻿  return postData;
+		﻿  ﻿  }
 		
 		﻿  ﻿  private function constructFilesPart(postData:ByteArray):ByteArray
 		﻿  ﻿  {
@@ -396,19 +389,19 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  var bytes:String;
 			
 			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Upload"';
-//			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-//				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-//			﻿  ﻿  ﻿  }
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  bytes = 'Submit Query';
-//			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-//				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-//			﻿  ﻿  ﻿  }
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Upload"';
+			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+			﻿  ﻿  ﻿  }
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  bytes = 'Submit Query';
+			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+			﻿  ﻿  ﻿  }
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
 			
 			﻿  ﻿  ﻿  return postData;
 		﻿  ﻿  }
@@ -418,17 +411,17 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  var i:uint;
 			﻿  ﻿  ﻿  var bytes:String;
 			
-//			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Filename"';
-//			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
-//				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
-//			﻿  ﻿  ﻿  }
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			﻿  ﻿  ﻿  postData.writeUTFBytes(part.fileName);
-//			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
-//			
+			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="Filename"';
+			﻿  ﻿  ﻿  for ( i = 0; i < bytes.length; i++ ) {
+				﻿  ﻿  ﻿  ﻿  postData.writeByte( bytes.charCodeAt(i) );
+			﻿  ﻿  ﻿  }
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			﻿  ﻿  ﻿  postData.writeUTFBytes(part.fileName);
+			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
+			
 			﻿  ﻿  ﻿  postData = BOUNDARY(postData);
 			﻿  ﻿  ﻿  postData = LINEBREAK(postData);
 			﻿  ﻿  ﻿  bytes = 'Content-Disposition: form-data; name="' + part.dataField + '"; filename="';
@@ -534,7 +527,7 @@ package ru.inspirit.net
 			﻿  ﻿  ﻿  var fp:FilePart;
 			
 			﻿  ﻿  ﻿  if (asyncFilePointer < _fileNames.length) {
-
+				
 				﻿  ﻿  ﻿  ﻿  fp = _files[_fileNames[asyncFilePointer]] as FilePart;
 				﻿  ﻿  ﻿  ﻿  _data = getFilePartHeader(_data, fp);
 				
@@ -550,7 +543,6 @@ package ru.inspirit.net
 				﻿  ﻿  ﻿  ﻿  dispatchEvent( new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_PROGRESS, totalFilesSize, totalFilesSize) );
 				﻿  ﻿  ﻿  ﻿  dispatchEvent( new MultipartURLLoaderEvent(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE) );
 			﻿  ﻿  ﻿  }
-
 		﻿  ﻿  }
 		
 		﻿  ﻿  private function writeChunkLoop(dest:ByteArray, data:ByteArray, p:uint = 0):void
