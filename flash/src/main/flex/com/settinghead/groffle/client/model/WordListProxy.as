@@ -1,6 +1,7 @@
 package com.settinghead.groffle.client.model
 {
 	import com.adobe.serialization.json.JSONDecoder;
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
@@ -58,18 +59,19 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function jsonLoaded(e:Event):void{
-			var obj:Object;
-			if(
-				!((obj = 
-				new JSONDecoder(loader.data as String,false).getValue()) 
-					is Array || obj.status=="pending" 
-					|| obj.status=="requested")
+
+			var obj:Object =
+				new JSONDecoder(loader.data as String,false).getValue();
+			if( obj.status=="pending" 
+					|| obj.status=="requested"
 			){
 				setTimeout(load,3000);
 			}
 			else if(obj.error !=null )
 			{
-				Alert.show(obj.error as String);
+				
+				Notification.show(obj.error as String,"Reminder");
+				this._list = sampleWordList();
 			}
 			else{
 				var l:Array = (obj as Object) as Array;

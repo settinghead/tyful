@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/1.5">
+
+	<id>com.adobe.purr</id>
+	<filename>PurrTest</filename>
+	<name>PurrTest</name>
+	<version>1</version>
+	<description>A test for the Purr notification library.</description>
+	<copyright>Copyright © 2007 Adobe Systems Incorporated. All rights reserved.</copyright>
+
+	<initialWindow>
+		<content>[This value will be overwritten by Flex Builder in the output app.xml]</content>
+		<title>Purr Test</title>
+		<systemChrome>standard</systemChrome>
+		<transparent>false</transparent>
+		<visible>true</visible>
+	</initialWindow>
+
+	<!-- The subpath of the standard default installation location to use. Optional. -->
+	<installFolder>AIR Examples</installFolder>
+
+	<!-- The subpath of the Windows Start/Programs menu to use. Optional. -->
+	<programMenuFolder>AIR Examples</programMenuFolder>
+
+</application>

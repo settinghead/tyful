@@ -28,7 +28,7 @@ class WordListController < ApplicationController
           @l = {:status => 'requested'}
         end
       else
-        @l = {:error => 'not logged in'}
+        @l = {:error => 'You need to log in to Facebook in order to create your personalized word cloud. Groffle will use a sample word list for now.'}
       end
     else
       str = REDIS.get('wl_'+params[:id])
