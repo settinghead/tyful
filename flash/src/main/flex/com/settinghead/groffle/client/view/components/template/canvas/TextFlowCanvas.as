@@ -52,7 +52,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			BindingUtils.bindProperty(this, "thickness", _templateEditor, "thickness");
 			BindingUtils.bindProperty(this, "angle", _templateEditor, "angle");
 			BindingUtils.bindProperty(this, "colorPattern", _templateEditor, "colorPattern");
-			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");			
+			BindingUtils.bindProperty(this, "currentLayer", _templateEditor.layerButtons, "selectedItem");	
 		}
 		
 		public function get templateEditor():TemplateEditor{
@@ -113,16 +113,21 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			return _angle;
 		}
 		public function set angle(a:Number):void{
-			this._angle = a;
-			rebuildCursor();
+			if(this._angle!=a){
+				this._angle = a;
+				rebuildCursor();
+			}
 		}
 		[Bindable]
 		public function get thickness():Number{
 			return _thickness;
 		}
 		public function set thickness(t:Number):void{
-			this._thickness = t;
-			rebuildCursor();
+			if(this._thickness!=t)
+			{
+				this._thickness = t;
+				rebuildCursor();
+			}
 		}
 		[Bindable]
 		public function get colorPattern():BitmapData{
@@ -242,8 +247,10 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		protected function this_creationCompleteHandler(event:FlexEvent):void
 		{
+			this._templateEditor.initColors();
 			populateLayer();
 			initCursor();
+			this.colorPattern = _templateEditor.colorPattern;
 			rebuildCursor();
 		}
 		
@@ -271,8 +278,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				}
 				
 				
-				bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0xffffff));
-				bmpDirection.alpha = 0.8;
+				bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0x00ffffff));
 
 				
 				this.width = layer.width;
@@ -315,7 +321,6 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				colorSheetElement.source = layer.colorSheet;
 				bmpDirElement = new BitmapImage();
 				bmpDirElement.source = bmpDirection;
-				bmpDirElement.alpha = 0.5;
 				
 //				this.addElement(bmpElement);
 				this.addElement(colorSheetElement);

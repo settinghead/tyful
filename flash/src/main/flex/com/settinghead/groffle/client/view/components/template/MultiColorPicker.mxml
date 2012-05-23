@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx"  initialize="group1_initializeHandler(event)">
+		   xmlns:mx="library://ns.adobe.com/flex/mx"  initialize="group1_initializeHandler(event)"
+		   >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -21,6 +22,8 @@
 			
 			[Bindable]
 			public var mixColorDistance:int;
+			
+			public var colorInitialized:Boolean = false;
 			
 			[Bindable(event="ColorChanged")]
 			public function get colors():ArrayList{
@@ -62,17 +65,11 @@
 			[Bindable(event="ColorChanged")]
 			public function get colorPattern():BitmapData{
 				if(this._colorPattern==null){
-					if(colors.length==0){
-						//if no color, add transparent color
-						var color1:MutableUint = new MutableUint(0x1B94E0);
-						color1.addEventListener("UintChanged", colorArrayChange);
-						var color2:MutableUint = new MutableUint(0xFF962E);
-						color2.addEventListener("UintChanged", colorArrayChange);
-						colors.addItem(color1);
-						colors.addItem(color2);
-					}
-					
+					if(colors.length>0)
 					_colorPattern = new BitmapData(colors.length * mixColorDistance , colors.length * mixColorDistance,true,0);
+					else
+						_colorPattern = new BitmapData(1 ,1,false, 0x000000);
+
 //					_colorPattern = new BitmapData(colors.length,1,true,0);
 
 					var s:Sprite = new Sprite();
@@ -90,6 +87,19 @@
 				}
 				return _colorPattern;
 			}
+			
+			public function initColors():void{
+				if(!colorInitialized){
+					//if no color, add transparent color
+					var color1:MutableUint = new MutableUint(0x1B94E0);
+					color1.addEventListener("UintChanged", colorArrayChange);
+					var color2:MutableUint = new MutableUint(0xFF962E);
+					color2.addEventListener("UintChanged", colorArrayChange);
+					colors.addAll(new ArrayList([color1, color2]));
+					colorInitialized = true;
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<s:Group>

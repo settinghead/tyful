@@ -87,9 +87,9 @@
 									<s:Label text="Colors: " />
 									<template:MultiColorPicker label="Text color" id="colorPicker" mixColorDistance="{template.mixColorDistance}" />
 								</mx:HBox>
-								<mx:HBox label="Fill">
+								<!--mx:HBox label="Fill">
 									<mx:Label text="Fill tool is a work in progress. Please check back soon." />
-								</mx:HBox>
+								</mx:HBox-->
 								<mx:HBox label="Erase">
 									<mx:Label text="Thickness: " />
 									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  />
@@ -116,8 +116,8 @@
 							<mx:dataProvider>
 								<mx:Object label="Brush" 
 										   icon="@Embed(source='brush.png')" />
-								<mx:Object label="Fill" 
-										   icon="@Embed(source='fill.png')"/>
+								<!--mx:Object label="Fill" 
+										   icon="@Embed(source='fill.png')" /-->
 								<mx:Object label="Erase" 
 										   icon="@Embed(source='eraser.png')"/>
 							</mx:dataProvider>
@@ -227,9 +227,8 @@
 			[Bindable]
 			public var angle:Number;
 			
-			public function get colorPattern():BitmapData{
-				return this.colorPicker.colorPattern;
-			}
+			[Bindable]
+			public var colorPattern:BitmapData;
 			
 			private var _template:TemplateVO;
 			
@@ -284,6 +283,7 @@
 			{
 				this.newTemplateDialog = new NewTemplateWindow();
 				this.newTemplateDialog.addEventListener(NewTemplateWindow.CREATE_TEMPLATE, createTemplate);
+				BindingUtils.bindProperty(this, "colorPattern", this.colorPicker, "colorPattern");
 			}
 
 			
@@ -355,7 +355,12 @@
 				var renderer:ClassFactory = new ClassFactory(cla);
 				renderer.properties = 
 					{templateEditor: this, depth: template.layers.length};
+				var tfc:TextFlowCanvas;
 				return renderer;
+			}
+			
+			public function initColors():void{
+				colorPicker.initColors();
 			}
 			
 			protected function controlArea_mouseOverHandler(event:MouseEvent):void
