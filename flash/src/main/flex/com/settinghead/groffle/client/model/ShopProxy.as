@@ -142,7 +142,7 @@ package com.settinghead.groffle.client.model
 			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
-			urlLoader.addFile(b,"upload.png");
+			urlLoader.addFile(b,"upload.png","image");
 			
 			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 	
