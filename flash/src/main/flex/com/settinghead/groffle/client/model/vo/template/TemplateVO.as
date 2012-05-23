@@ -88,6 +88,7 @@ package com.settinghead.groffle.client.model.vo.template
 		{
 		}
 		
+		
 		public function get layers():ArrayCollection{
 			return this._layers;
 		}
@@ -135,9 +136,15 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		public function get patchIndex():DensityPatchIndex{
-			if(this._patchIndex==null)
-				this._patchIndex = new DensityPatchIndex(this);
+			if(this._patchIndex==null){
+				this.generatePatchIndex();
+			}
 			return this._patchIndex;
+		}
+		
+		public function generatePatchIndex():void{
+			this._patchIndex = new DensityPatchIndex(this);
+
 		}
 		
 		public function get placer():WordPlacer{

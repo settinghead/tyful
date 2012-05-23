@@ -94,6 +94,7 @@ package com.settinghead.groffle.client.model
 		
 		public function load() :void{
 			var tu:TuVO = new TuVO(_template, _wordList);
+			_template.generatePatchIndex();
 			this.setData(tu);
 
 		}
