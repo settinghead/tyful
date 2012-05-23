@@ -3,6 +3,7 @@ package net.codestore.flex
 	import flash.display.Sprite;
 	
 	import mx.containers.Box;
+	import mx.controls.Label;
 	import mx.controls.ProgressBar;
 	import mx.core.Application;
 	import mx.core.FlexGlobals;
@@ -41,13 +42,13 @@ package net.codestore.flex
 		override protected function createChildren():void
 		{
 			super.createChildren();
-			
 			var pb:ProgressBar = new ProgressBar();
 			
 			pb.label = _message||"Just a second...";
-			pb.indeterminate = true;
+//			pb.indeterminate = true;
 			pb.labelPlacement= 'center';
-			pb.setStyle('barColor', uint(0xAEAEAE));
+			pb.setStyle('barColor', uint(0xADCDFF));
+//			pb.setStyle('indeterminateMoveInterval', 9999999999);
 			pb.height = 26;
 			
 			addChild(pb);				
