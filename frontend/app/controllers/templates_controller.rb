@@ -18,6 +18,7 @@ class TemplatesController < ApplicationController
   def show
     @mode = "showTemplate"
     @template = Template.find(params[:id])
+    @token = "1" if current_user && @template.user && current_user.id == @template.user.id
     ShopController.push_shop_predict_task(current_user,@template)
     respond_to do |format|
       format.html # show.html.erb
@@ -62,6 +63,8 @@ class TemplatesController < ApplicationController
   # GET /templates/1/edit
   def edit
     @template = Template.find(params[:id])
+    @token = "1" if current_user && @template.user && current_user.id == @template.user.id
+    
     ShopController.push_shop_predict_task(current_user,@template)
     
     @mode = 'editTemplate'
