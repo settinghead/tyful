@@ -48,7 +48,7 @@ var express = require('express'),
 						if(err) {
 				    		next(err);
 						} else {
-							exec('unzip /tmp/'+uuid+'/'+uuid+'.zip /preview.png -d /tmp/'+uuid+'/', function(){
+							exec('unzip -o /tmp/'+uuid+'/'+uuid+'.zip /preview.png -d /tmp/'+uuid+'/', function(){
 						          fs.readFile('/tmp/'+uuid+'/preview.png', function (err, data) {
 								      if (err) throw err;
 				   				      var req4 = s3client.put(uuid+'.png', {

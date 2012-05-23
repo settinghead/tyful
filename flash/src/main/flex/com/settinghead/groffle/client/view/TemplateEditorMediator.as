@@ -134,6 +134,7 @@ package com.settinghead.groffle.client.view
 		
 		private function uploadTemplate( event:Event = null ):void
 		{
+
 			facade.sendNotification(ApplicationFacade.UPLOAD_TEMPLATE, templateEditor.template);
 		}
 	

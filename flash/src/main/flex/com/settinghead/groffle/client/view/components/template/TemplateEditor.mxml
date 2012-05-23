@@ -78,6 +78,7 @@
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" 
 									   enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0}"
 									  />
+							<s:CheckBox id="chkRerenderThumbnail" label="Rerender thumbnail preview" />
 						</mx:HBox>
 							<mx:ViewStack label="Drawing" id="drawingOptionsViewStack" visible="{drawingToolBar.selectedIndex >=0}" selectedIndex="@{drawingToolBar.selectedIndex}"
 										  left="0" top="0" right="0" bottom="0" width="1000" height="45" change="drawingOptionsViewStack_changeHandler(event)">
@@ -324,6 +325,8 @@
 			}
 			protected function btnUploadTemplate_clickHandler(event:MouseEvent):void
 			{
+				if(chkRerenderThumbnail.selected)
+					template.preview = null;
 				dispatchEvent(new Event(UPLOAD_TEMPLATE));	
 			}
 			
