@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.view
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.TemplateProxy;
 	import com.settinghead.groffle.client.model.TuProxy;
@@ -70,6 +71,8 @@ package com.settinghead.groffle.client.view
 					break;
 				case ApplicationFacade.TEMPLATE_UPLOADED:
 					ExternalInterface.call("setTemplateUuid", notification.getBody().toString());
+					Notification.show("Template saved to Groffle.");
+
 					break;
 				case ApplicationFacade.UPLOAD_TEMPLATE:
 					break;

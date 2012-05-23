@@ -20,52 +20,52 @@ package org.peaceoutside.utils
 			return ColorMath.HLS_VECTOR[color];
 		}
 		
-		public static function HSLToRGB(h:Number,s:Number,l:Number):int{
-			var r:Number;
-			var g:Number;
-			var b:Number;
-			var v:Number = l <= 0.5 ? l * (1 + s) : l + s - l * s;
-			
-			if (v <= 0)
-			{
-				return(0);
-			}
-			else
-			{
-				var m:Number;
-				var sv:Number;
-				var sextant:int;
-				var fract:Number;
-				var vsf:Number;
-				var mid1:Number;
-				var mid2:Number;
-				
-				m = l + l - v;
-				sv = (v - m) / v;
-				h *= 6;
-				sextant = h;
-				fract = h - sextant;
-				vsf = v * sv * fract;
-				mid1 = m + vsf;
-				mid2 = v - vsf;
-				
-				switch(sextant)
-				{
-					case 1: r = mid2; g = v; b = m; break;
-					case 2: r = m; g = v; b = mid1; break;
-					case 3: r = m; g = mid2; b = v; break;
-					case 4: r = mid1; g = m; b = v; break;
-					case 5: r = v; g = m; b = mid2; break;
-					default: r = v; g = mid1; b = m; break;
-				}
-			}
-			
-			r *= 0xFF;
-			g *= 0xFF;
-			b *= 0xFF;
-			
-			return (r << 16) | (g << 8) | b;
-		}
+//		public static function HSLToRGB(h:Number,s:Number,l:Number):int{
+//			var r:Number;
+//			var g:Number;
+//			var b:Number;
+//			var v:Number = l <= 0.5 ? l * (1 + s) : l + s - l * s;
+//			
+//			if (v <= 0)
+//			{
+//				return(0);
+//			}
+//			else
+//			{
+//				var m:Number;
+//				var sv:Number;
+//				var sextant:int;
+//				var fract:Number;
+//				var vsf:Number;
+//				var mid1:Number;
+//				var mid2:Number;
+//				
+//				m = l + l - v;
+//				sv = (v - m) / v;
+//				h *= 6;
+//				sextant = h;
+//				fract = h - sextant;
+//				vsf = v * sv * fract;
+//				mid1 = m + vsf;
+//				mid2 = v - vsf;
+//				
+//				switch(sextant)
+//				{
+//					case 1: r = mid2; g = v; b = m; break;
+//					case 2: r = m; g = v; b = mid1; break;
+//					case 3: r = m; g = mid2; b = v; break;
+//					case 4: r = mid1; g = m; b = v; break;
+//					case 5: r = v; g = m; b = mid2; break;
+//					default: r = v; g = mid1; b = m; break;
+//				}
+//			}
+//			
+//			r *= 0xFF;
+//			g *= 0xFF;
+//			b *= 0xFF;
+//			
+//			return (r << 16) | (g << 8) | b;
+//		}
 		
 		public static function HSLtoRGB(hue:Number=0,saturation:Number=0.5,lightness:Number=0.5,a:Number=1):uint{
 			a = Math.max(0,Math.min(1,a));
@@ -206,9 +206,45 @@ package org.peaceoutside.utils
 
 		}
 		
+		public static function getHue(rgbPixel:Number):int {
+			var r:int = (rgbPixel) >> 16 & 0xFF;
+			var g:int = (rgbPixel) >> 8 & 0xFF;
+			var b:int = rgbPixel & 0xFF;
+			var hue:Number, saturation:Number;
+			
+			var cmax:Number = (r > g) ? r : g;
+			if (b > cmax) cmax = b;
+			var cmin:Number = (r < g) ? r : g;
+			if (b < cmin) cmin = b;
+			
+			if (cmax != 0)
+				saturation = (cmax - cmin) / cmax;
+			else
+				saturation = 0;
+			if (saturation == 0)
+				hue = 0;
+			else {
+				var redc:Number = ( (cmax - r)) / ((cmax - cmin));
+				var greenc:Number = ( (cmax - g)) / ((cmax - cmin));
+				var bluec:Number = ((cmax - b)) / ((cmax - cmin));
+				if (r == cmax)
+					hue = bluec - greenc;
+				else if (g == cmax)
+					hue = 2.0 + redc - bluec;
+				else
+					hue = 4.0 + greenc - redc;
+				hue = hue / 6.0;
+				if (hue < 0)
+					hue = hue + 1.0;
+			}
+			
+			return hue;
+			
+		}
+		
 		//RGB distance between two colors
 		//max return value: 1; min return value: 0
-		public static function dist(c1:uint, c2:uint):Number{
+		public static function distRGB(c1:uint, c2:uint):Number{
 			var r1:Number = (c1) >> 16 & 0xFF;
 			var g1:Number = (c1) >> 8 & 0xFF;
 			var b1:Number = c1 & 0xFF;
@@ -216,6 +252,14 @@ package org.peaceoutside.utils
 			var g2:Number = (c2) >> 8 & 0xFF;
 			var b2:Number = c2 & 0xFF;
 			return Math.abs(r1-r2)/256/3 + Math.abs(g1-g2)/256/3 + Math.abs(b1-b2)/256/3;
+		}
+		
+		public static function distHue(c1:uint, c2:uint):Number{
+			var h1:Number = getHue(c1);
+			var h2:Number = getHue(c2);
+			var diff:Number= Math.abs(h1-h2);
+			if(diff>0.5) diff = 1-diff;
+			return diff;
 		}
 	}
 }

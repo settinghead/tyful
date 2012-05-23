@@ -134,9 +134,9 @@ Please contact me at afoucal@free.fr.
 			
 			import mx.core.Application;
 			import mx.core.UIComponent;
+			import mx.effects.easing.*;
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
-			import mx.effects.easing.*;
 			
 			use namespace mx_internal;
 			
@@ -468,6 +468,7 @@ Please contact me at afoucal@free.fr.
 										 duration:Number = 20000,
 										 position:String = null,
 										 iconClass:Class = null,
+										 refocusObj:Sprite = null,
 										 stackable:Boolean = true,
 										 notificationParent:Sprite = null,
 										 filtersArray:Array = null):Notification
@@ -506,7 +507,8 @@ Please contact me at afoucal@free.fr.
 				// And finally add the Notification
 				PopUpManager.addPopUp( notification, notification.notificationParent, false );
 				NotificationStackManager.getInstance().add(notification);
-				
+				if(refocusObj!=null)
+					Application.application.stage.focus = refocusObj;
 				return notification;
 			}
 			

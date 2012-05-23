@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.view.components.template.canvas
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
@@ -14,6 +15,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.ui.Mouse;
 	
@@ -22,6 +24,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import mx.binding.utils.BindingUtils;
 	import mx.containers.Canvas;
 	import mx.controls.Alert;
+	import mx.core.Application;
 	import mx.core.BitmapAsset;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
@@ -69,6 +72,10 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		private var bmpDirElement:BitmapImage;
 		private var colorSheetElement:BitmapImage;
 		private var _currentDrawingTool:int;
+		private var brushRegion:Array = [Number.POSITIVE_INFINITY,Number.POSITIVE_INFINITY,Number.NEGATIVE_INFINITY,Number.NEGATIVE_INFINITY];
+		private var a:BitmapAsset = new SmallA();
+		
+		private static var HintShowed:Boolean = false;
 		
 		protected function this_mouseDownHandler(event:MouseEvent):void
 		{
@@ -76,6 +83,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				this.drawingState = true;
 				oldMouseX = this.mouseX;
 				oldMouseY = this.mouseY;
+				stage.focus = this;
+
 			}
 		}
 		
@@ -85,18 +94,41 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		protected function this_mouseUpHandler(event:MouseEvent):void
 		{
+			
 			if(isCurrentLayer){
 				this.drawingState = false;
+				if(this.currentDrawingTool==TemplateEditor.BRUSH){
+					//redraw direciton map so it's more readable
+//					Alert.show(this.brushRegion[0].toString()+", "+
+//						this.brushRegion[1].toString()+", "+
+//						this.brushRegion[2].toString()+", "+
+//						this.brushRegion[3].toString());
+					redrawDireciton(brushRegion[0],brushRegion[1],brushRegion[2],brushRegion[3]);
+					resetDrawingRegion();
+				}
+				
+				if(!HintShowed){
+				    Notification.show("Use 'A' and 'S' on the keyboard to rotate text direction for the bursh, and use 'Z' and X' to increase or decrease bruth thickness."
+					,"Brush Hint",20000,null,null,this);
+					HintShowed = true;
+				}
+				
 			}
+			
 		}
 		
 		protected function this_mouseOutHandler(event:MouseEvent):void
 		{
+//			if(this.drawingState && this.currentDrawingTool==TemplateEditor.BRUSH){
+//				//redraw direciton map so it's more readable
+//				redrawDireciton(brushRegion[0],brushRegion[1],brushRegion[2],brushRegion[3]);
+//				resetDrawingRegion();
+//			}
 			Mouse.show();
 			//this.drawingState = false;
 		}
 		
-		protected function this_focusOutHandler(event:MouseEvent):void
+		protected function this_focusOutHandler(event:FocusEvent):void
 		{
 			if(this.cursor!=null)this.cursor.visible = false;
 			this.drawingState = false;
@@ -185,7 +217,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 						colorLayer.graphics.beginBitmapFill(colorPattern,null,true,true);
 						colorLayer.graphics.drawCircle(0, 0, thickness/2);
 						colorLayer.graphics.endFill();
-						var a:BitmapAsset = new SmallA();
+						//var a:BitmapAsset = new SmallA();
 
 						var textLayer:UIComponent = new UIComponent();
 						textLayer.graphics.clear();
@@ -254,12 +286,15 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				var colorShape:Shape = new Shape();
 				switch(currentDrawingTool){
 					case TemplateEditor.BRUSH:
+						//update drawing state
+						updateDrawingRegion();
+						
 						var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
 						shape.graphics.lineStyle(thickness, dirColor, 1);
 						colorShape.graphics.lineStyle(thickness,0,1,true);
 						dirShape.graphics.lineStyle(thickness,0,0.5,true);
 						colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
-						var a:BitmapAsset = new SmallA();
+//						var a:BitmapAsset = new SmallA();
 						var m:Matrix = a.transform.matrix;
 						m.rotate(-angle);
 						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
@@ -306,6 +341,9 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			initCursor();
 			this.colorPattern = _templateEditor.colorPattern;
 			rebuildCursor();
+			if(isCurrentLayer)
+				stage.focus = this;
+
 		}
 		
 		private function initCursor():void{
@@ -339,35 +377,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				this.height = layer.height;
 				bmpDirection.x =0; bmpDirection.y = 0;
 				
+				redrawDireciton(0,0,layer.direction.width,layer.direction.height);
 				
-				for(var w:Number = 0; w<layer.direction.width;w+=a.width){
-					for(var h:Number = 0; h<layer.direction.height;h+=a.height){
-						var a:BitmapAsset = new SmallA();
-						var m:Matrix = new Matrix();
-						
-						var angle:Number = layer.getHue(w+a.width/2, h+a.height/2)*BBPolarTreeVO.TWO_PI;
-						m.tx -= a.width/2;
-						m.ty -= a.height/2;
-						m.rotate(-angle);
-						m.tx += a.width/2;
-						m.ty += a.height/2;
-						var dirShape:Shape = new Shape();
-						dirShape.graphics.lineStyle(1,0,0.3,false);
-						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-						for(var ox:Number = 0; ox<a.width;ox++)
-							for(var oy:Number = 0; oy<a.height;oy++){
-								if(layer.containsPoint(ox+w,oy+h,false,-1,-1,1)){
-									dirShape.graphics.moveTo(ox, oy);
-									dirShape.graphics.lineTo(ox,oy+1);
-								}
-							}
-						m = new Matrix();
-						m.tx += w;
-						m.ty += h;
-						bmpDirection.bitmapData.draw(dirShape,m);
-
-					}
-				}
 				
 //				bmpElement = new BitmapImage();
 //				bmpElement.source = new Bitmap(layer.direction);
@@ -383,6 +394,64 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			}
 		}
 		
+		private function redrawDireciton(xs:Number,ys:Number,xe:Number,ye:Number):void{
+			
+			//expand the region a little to align with global grid lines
+			xs = xs - xs%a.width; if(xs<0) xs = 0;
+			ys = ys - ys%a.height; if(ys<0) ys =0;
+			xe = xe + xe%a.width; if (xe>=layer.width) xe = layer.width-1;
+			ye = ye + ye%a.height; if(ye>=layer.height) ye = layer.height-1;
+			var dirErase:Shape = new Shape();
+			dirErase.graphics.lineStyle(1,0xff0000);
+			dirErase.graphics.beginFill(0xff0000,1);
+			dirErase.graphics.drawRect(xs,ys,xe-xs,ye-ys);
+			dirErase.graphics.endFill();
+			bmpDirection.bitmapData.draw(dirErase,new Matrix(),null,BlendMode.ERASE);
+		
+			for(var w:Number = xs; w<xe;w+=a.width){
+				for(var h:Number = ys; h<ye;h+=a.height){
+					var m:Matrix = new Matrix();
 
+					var angle:Number = layer.getHue(w+a.width/2, h+a.height/2)*BBPolarTreeVO.TWO_PI;
+					m.tx -= a.width/2;
+					m.ty -= a.height/2;
+					m.rotate(-angle);
+					m.tx += a.width/2;
+					m.ty += a.height/2;
+					var dirShape:Shape = new Shape();
+					dirShape.graphics.lineStyle(1,0,0.3,false);
+					dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+					for(var ox:Number = 0; ox<a.width;ox++)
+						for(var oy:Number = 0; oy<a.height;oy++){
+							if(layer.containsPoint(ox+w,oy+h,false,-1,-1,1)){
+								dirShape.graphics.moveTo(ox, oy);
+								dirShape.graphics.lineTo(ox,oy+1);
+							}
+						}
+					m = new Matrix();
+					m.tx += w;
+					m.ty += h;
+					bmpDirection.bitmapData.draw(dirShape,m);
+				}
+			}
+		}
+		
+		private function resetDrawingRegion():void{
+			this.brushRegion[0]=this.brushRegion[1]=Number.POSITIVE_INFINITY;		
+			this.brushRegion[2]=this.brushRegion[3]=Number.NEGATIVE_INFINITY;
+		}
+		
+		private function updateDrawingRegion():void{
+			var x1:Number = this.mouseX-thickness/2;
+			var y1:Number = this.mouseY-thickness/2;
+			var x2:Number = this.mouseX+thickness/2;
+			var y2:Number = this.mouseY+thickness/2;
+			if(x1<0) x1=0; if(y1<0) y1=0; if(x2>=layer.width) x2=layer.width-1; if(y2>=layer.height) y2=layer.height-1;
+			if(x1<this.brushRegion[0]) this.brushRegion[0] = x1;
+			if(y1<this.brushRegion[1]) this.brushRegion[1] = y1;
+			if(x2>this.brushRegion[2]) this.brushRegion[2] = x2;
+			if(y2>this.brushRegion[3]) this.brushRegion[3] = y2;
+		}
+		
 	}
 }

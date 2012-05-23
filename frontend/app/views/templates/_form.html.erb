@@ -11,8 +11,11 @@
   <% end %>
 
 <%
-#swfRandomizer = UUIDTools::UUID.random_create().to_s
-swfRandomizer = `cat #{Rails.root}/../static/f/client/version.txt`
+if(Rails.env.production?)
+	swfRandomizer = `cat #{Rails.root}/../static/f/client/version.txt`
+else
+	swfRandomizer = UUIDTools::UUID.random_create().to_s
+end
 flash_vars = {:mode=>@mode, 
 	:templateUuid=>@template.uuid,
 	:templateId=>@template.id,

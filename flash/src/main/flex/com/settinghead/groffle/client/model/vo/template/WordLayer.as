@@ -292,7 +292,7 @@ package com.settinghead.groffle.client.model.vo.template
 					//ColorMath.dist(color.getPixel32(x,y), 
 					//	color.getPixel32(refX,refY)) <= tolerance
 					//	&&
-					ColorMath.dist(direction.getPixel32(x,y), 
+					ColorMath.distHue(direction.getPixel32(x,y), 
 						direction.getPixel32(refX,refY)) <= tolerance);
 			}
 			else return false;

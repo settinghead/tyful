@@ -27,7 +27,7 @@ package com.settinghead.groffle.client.colorer
 			var val:Number= prng.nextIntRange(50, 200);
 			
 			
-			return ColorMath.HSLToRGB(hue/256, sat/256, val/256);
+			return ColorMath.HSLtoRGB(hue/256, sat/256, val/256);
 		}
 	}
 }
