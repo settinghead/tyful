@@ -24,13 +24,11 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<shop:ShopItemList id="shopItemList"
-					   visible.withoutShop="false"
-					   visible.withShop="true" top="0" right="0" width="150" bottom="0" />
+	<components:MainArea id="mainArea" left="0" top="0" bottom="0" />		
+		<shop:ShopItemList id="shopItemList"
+						   visible.withoutShop="false" includeInLayout.withoutShop="false" includeInLayout.withShop="true"
+						   visible.withShop="true" top="0" width="150" left="{mainArea.left+mainArea.tuRenderer.left+mainArea.tuRenderer.width}" />
 
-	<mx:ViewStack id="vwStack" left="0" right="0" top="0" bottom="0"
-				  right.withShop="150">
-		<template:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0" />
-		<components:TuRenderer id="tuRenderer" left="0" right="0" top="0" bottom="0" />
-	</mx:ViewStack>
+	
+	
 </s:Group>

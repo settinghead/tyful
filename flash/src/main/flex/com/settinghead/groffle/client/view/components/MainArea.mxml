@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:template="com.settinghead.groffle.client.view.components.template.*" xmlns:components="com.settinghead.groffle.client.view.components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:states>
+		<s:State name="edit" />
+		<s:State name = "render" />
+	</s:states>
+		<template:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0"
+								 visible.edit="true" visible="false" includeInLayout="false" includeInLayout.edit="true" />
+		<components:TuRenderer id="tuRenderer" left="0" top="0" bottom="0" right="0" 
+							   visible.render="true" visible="false" includeInLayout="false" includeInLayout.render="true"
+							   />
+</s:Group>

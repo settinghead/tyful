@@ -49,20 +49,20 @@ package com.settinghead.groffle.client.view
 			switch ( note.getName() )
 			{		
 				case ApplicationFacade.RENDER_TU:
-					hideAll();
-					applicationComponent.vwStack.selectedChild = applicationComponent.tuRenderer; 
+//					hideAll();
+					applicationComponent.mainArea.currentState="render";
 					break;
 				
 				case ApplicationFacade.EDIT_TEMPLATE:
 				case ApplicationFacade.TEMPLATE_CREATED:
-					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor;
+					applicationComponent.mainArea.currentState="edit";
 					applicationComponent.currentState = "withoutShop";
 
 					break;
 				case ApplicationFacade.TEMPLATE_SAVED:
-					applicationComponent.vwStack.selectedChild = applicationComponent.templateEditor; 
+					applicationComponent.mainArea.currentState="edit";
 					applicationComponent.currentState = "withoutShop";
-					applicationComponent.parent.stage.focus = applicationComponent.templateEditor; 
+					applicationComponent.parent.stage.focus = applicationComponent.mainArea.templateEditor; 
 					break;
 				
 				case ApplicationFacade.TU_IMAGE_GENERATED:
@@ -82,10 +82,10 @@ package com.settinghead.groffle.client.view
 			}
 		}
 		
-		private function hideAll():void{
-			applicationComponent.tuRenderer.visible = false;
-			applicationComponent.templateEditor.visible = false;
-		}
+//		private function hideAll():void{
+//			applicationComponent.mainArea.tuRenderer.visible = false;
+//			applicationComponent.mainArea.templateEditor.visible = false;
+//		}
 		
 		private function get applicationComponent ():Application
 		{

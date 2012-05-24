@@ -131,15 +131,18 @@
 					<s:layout>
 						<s:HorizontalLayout />
 					</s:layout>
-					<s:Scroller>
-					<s:Group left="0" right="100" top="0" bottom="0">
-						<mx:UIComponent id="cvnTransparentBackground" visible="true" />
-						<components:LayerStack id="layers" dataProvider="{template.layers}" 
-												  itemRendererFunction="layers_itemRendererFunc"  >
-						</components:LayerStack>
-						<!--template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" /-->
-					</s:Group>
+					<s:Scroller left="0" right="0" top="0" bottom="0">
+						<s:Group>
+		
+								<mx:UIComponent id="cvnTransparentBackground" visible="true" />
+								<components:LayerStack id="layers" dataProvider="{template.layers}" 
+													   itemRendererFunction="layers_itemRendererFunc"  >
+								</components:LayerStack>
+								<!--template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" /-->
+						</s:Group>
 					</s:Scroller>
+
+					
 					<s:Group id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" top="0" bottom="0" width="100" right="0">
 						<s:layout>
 							<s:VerticalLayout />

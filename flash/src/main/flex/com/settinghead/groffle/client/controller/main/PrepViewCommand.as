@@ -24,8 +24,8 @@ package com.settinghead.groffle.client.controller.main
 		{
 			var app:GroffleClient = GroffleClient( note.getBody() );
 			facade.registerMediator(new ApplicationMediator(app.applicationComponent));	
-			facade.registerMediator( new TemplateEditorMediator( app.applicationComponent.templateEditor ) );
-			facade.registerMediator(new TuMediator(app.applicationComponent.tuRenderer));
+			facade.registerMediator( new TemplateEditorMediator( app.applicationComponent.mainArea.templateEditor ) );
+			facade.registerMediator(new TuMediator(app.applicationComponent.mainArea.tuRenderer));
 			facade.registerMediator(new ShopMediator(app.applicationComponent.shopItemList));
 		}
 	}
