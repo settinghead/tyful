@@ -1,8 +1,0 @@
-#!/bin/sh
-cd `dirname $0`
-if [ -n "$JAVA_HOME" ]; then
-  $JAVA_HOME/bin/java -Xmx512m -jar ./secureSWF.jar $*
-else
-  java -Xmx512m -jar ./secureSWF.jar $*
-fi
-cd $OLDPWD

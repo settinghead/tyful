@@ -88,11 +88,14 @@ a {
 }
 
 #logo_bar{
+	background-color: #ffffff;
 	float: left;
 	margin-right: 30px;
-	margin-bottom: 10px;
-	padding: 5px;
-    text-align: right;
+	margin-left: 10px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	padding: 2px;
+    text-align: center;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	border-width: 1px;
@@ -103,9 +106,11 @@ a {
 	box-shadow: 3px 3px 3px gray;
 }
 
+
 #logo_bar #logo .main{
 	color: #0559CC;
-	font-size: 30px;
+	font-size: 25px;
+	line-height: 23px;
 	font-weight: bold;
 	font-family: Lucidatypewriter, monospace;
 	clear: both;
@@ -116,7 +121,7 @@ a {
 }
 
 #logo_bar #tagline{
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .authentications {

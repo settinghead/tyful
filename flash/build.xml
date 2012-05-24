@@ -94,17 +94,21 @@
 		</zip>
 	</target>
 	
-	<taskdef name="protect" classpath="secureSWF/secureSWF.jar"
-	classname="secureSWF.ant.ProtectTask" />
+	<!--taskdef name="protect" classpath="secureSWF/secureSWF.jar"
+	classname="secureSWF.ant.ProtectTask" /-->
 	  <target name="protect" depends="compile">
-	    <protect outputPath="${secure.loc}">
-		      <fileset dir="${bin.loc}" includes="**.swf"/>
-		      <fileset dir="${bin.loc}" includes="**.swc"/>
+	    <!-- <protect outputPath="${secure.loc}"> -->
+		      <!-- <fileset dir="${bin.loc}" includes="**.swf"/> -->
+		      <!-- <fileset dir="${bin.loc}" includes="**.swc"/> -->
 	      <!--rule filter="com.data.**" rename="false"/-->
 	      <!--literalString value="sEc.R3t"/-->
-	      <!--domainName value="groffle.me"/-->
+	      <!-- <domainName value="groffle.me" /> -->
 	      <!--domainName value="www.groffle.me"/-->
-	</protect>
+	<!-- </protect> -->
+	<exec executable="secureSWF/secureSWF">
+	    <arg value="${bin.loc}/GroffleClient.swf"/>
+	    <arg value="${secore.loc}"/>
+	  </exec>
 	  </target>
 	
 	<target name="copy-insecure" depends="compile">
