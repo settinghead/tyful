@@ -30,8 +30,8 @@ public class FacebookRetriever {
 		ArrayList<Post> messages = new ArrayList<Post>();
 
 		FacebookClient client = new DefaultFacebookClient(token);
-		Connection<Post> myFeed = client
-				.fetchConnection("me/posts", Post.class);
+		Connection<Post> myFeed = client.fetchConnection("me/statuses",
+				Post.class);
 		int count = 0;
 		outer: for (List<Post> myFeedConnectionPage : myFeed)
 			for (Post post : myFeedConnectionPage) {
@@ -41,6 +41,26 @@ public class FacebookRetriever {
 			}
 
 		return messages;
+	}
+
+	private static void addWords(String source, Counter<String> allWords, int factor) {
+		if (source != null) {
+			final Counter<String> words = new Counter<String>();
+
+			for (String word : new WordIterator(source)) {
+				word = word.trim();
+				if (word.length() > 0 && !StopWords.English.isStopWord(word)
+						&& word.matches("[a-zA-Z0-9\\- \\.]+"))
+					words.note(word);
+			}
+
+			for (String word : words.keyList()) {
+				int count = words.getCount(word);
+				if (count > 3)
+					count = 3;
+				allWords.note(word, count * factor);
+			}
+		}
 	}
 
 	public static List<Word> parseWordList(String uid, String token,
@@ -66,21 +86,7 @@ public class FacebookRetriever {
 			// sb.append(comment.getMessage()).append(". ");
 			// }
 
-			final Counter<String> words = new Counter<String>();
-
-			for (String word : new WordIterator(sb.toString())) {
-				word = word.trim();
-				if (word.length() > 0 && !StopWords.English.isStopWord(word)
-						&& word.matches("[a-zA-Z0-9\\- \\.]+"))
-					words.note(word);
-			}
-
-			for (String word : words.keyList()) {
-				int count = words.getCount(word);
-				if (count > 3)
-					count = 3;
-				allWords.note(word, count);
-			}
+			addWords(sb.toString(), allWords,1);
 		}
 
 		// int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
@@ -89,18 +95,28 @@ public class FacebookRetriever {
 		// allWords.note(p.getName(), maxFreq - 2);
 		// }
 
+		addWords(me.getAbout(), allWords, 4);
+		addWords(me.getHometownName(), allWords, 3);
+		addWords(me.getBio(), allWords, 3);
+		if(me.getLocation()!=null)
+			addWords(me.getLocation().getName(), allWords, 2);
+		addWords(me.getPolitical(), allWords, 3);
+
+		int nameFreq;
 		if (allWords.getTotalItemCount() > 0) {
 			// personalize by adding your name
-			int nameFreq = allWords
-					.getCount(allWords.getMostFrequent(1).get(0)) + 3;
-			String name = me.getFirstName();
-			if (name.length() < 6)
-				name += " " + me.getLastName();
-			// System.out.println(name+", "+nameFreq);
-			allWords.note(name, nameFreq);
-			for (String word : allWords.keySet())
-				result.add(new Word(word, allWords.getCount(word)));
-		}
+			nameFreq = allWords.getCount(allWords.getMostFrequent(1).get(0)) + 3;
+		} else
+			nameFreq = 999;
+
+		String name = me.getFirstName();
+		if (name.length() < 6)
+			name += " " + me.getLastName();
+		// System.out.println(name+", "+nameFreq);
+		allWords.note(name, nameFreq);
+
+		for (String word : allWords.keySet())
+			result.add(new Word(word, allWords.getCount(word)));
 		return result;
 	}
 
