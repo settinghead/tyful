@@ -64,6 +64,7 @@ GEM
       httpclient (>= 2.2.0.2)
       rack-oauth2 (>= 0.14.4)
       tzinfo
+    friendly_id (4.0.6)
     hashie (1.2.0)
     hike (1.2.1)
     httpauth (0.1)
@@ -81,6 +82,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     metaclass (0.0.1)
+    metamagic (1.0.0)
     mime-types (1.18)
     mocha (0.11.3)
       metaclass (~> 0.0.1)
@@ -191,8 +193,10 @@ DEPENDENCIES
   devise
   factory_girl_rails
   fb_graph
+  friendly_id
   impressionist
   jquery-rails
+  metamagic
   mocha
   newrelic_rpm
   nifty-generators

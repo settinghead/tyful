@@ -11,7 +11,7 @@
   <% end %>
 
 <%
-if(Rails.env.production?)
+if(RAILS_ENV=='production')
 	swfRandomizer = `cat #{Rails.root}/../static/f/client/version.txt`
 else
 	swfRandomizer = UUIDTools::UUID.random_create().to_s
