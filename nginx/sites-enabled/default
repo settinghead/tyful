@@ -17,7 +17,15 @@ server { listen 80; server_name groffle.me; rewrite ^/(.*) http://www.groffle.me
 server {
        listen         80;
        server_name    www.groffle.me;
-       rewrite        ^ https://$server_name$request_uri? permanent;
+	   
+	   location = /r/ {
+           proxy_pass http://fileserver;
+	   }
+	   
+	   location / {
+           rewrite        ^ https://$server_name$request_uri? permanent;
+	   }
+	   
 }
 
 server {
@@ -32,10 +40,10 @@ server {
 	location /f/ {
                 proxy_pass http://fileserver;
         }
-
-	location /r/ {
-                proxy_pass http://fileserver;
-        }
+	# 
+	# location /r/ {
+	#                 proxy_pass http://fileserver;
+	#         }
 	location /t/ {
 		proxy_pass http://fileserver;
 	}
