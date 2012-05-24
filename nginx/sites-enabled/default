@@ -14,12 +14,19 @@ upstream fileserver {
 }
 
 server { listen 80; server_name groffle.me; rewrite ^/(.*) http://www.groffle.me permanent; }
+server {
+       listen         80;
+       server_name    www.groffle.me;
+       rewrite        ^ https://$server_name$request_uri? permanent;
+}
 
 server {
-	listen   80 default;
-	server_name  www.groffle.me;
-
+	listen   443;
+	ssl on;
+	ssl_certificate /etc/ssl/sslchain.crt;
+	ssl_certificate_key /etc/ssl/server.key;
 	
+	server_name  www.groffle.me;
 	access_log  /var/log/nginx/localhost.access.log;
 
 	location /f/ {
