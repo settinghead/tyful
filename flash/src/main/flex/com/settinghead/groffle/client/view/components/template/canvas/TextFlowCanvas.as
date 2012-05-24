@@ -351,7 +351,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			cursor.depth = 999;
 			cursor.graphics.clear();
 			
-			cursor.blendMode = BlendMode.HARDLIGHT;
+			//cursor.blendMode = BlendMode.HARDLIGHT;
+			cursor.alpha = 0.9;
 			this.addElement(cursor);
 		}
 		

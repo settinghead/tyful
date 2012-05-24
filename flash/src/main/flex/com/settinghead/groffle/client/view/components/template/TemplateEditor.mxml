@@ -76,7 +76,7 @@
 							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
 							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" 
-									   enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0}"
+									   enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 									  />
 							<s:CheckBox id="chkRerenderThumbnail" label="Rerender thumbnail preview" />
 						</mx:HBox>
@@ -164,6 +164,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.notifications.Notification;
+			import com.settinghead.groffle.client.ApplicationFacade;
 			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
 			import com.settinghead.groffle.client.model.vo.template.Layer;
 			import com.settinghead.groffle.client.model.vo.template.TemplateVO;
