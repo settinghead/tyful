@@ -4,8 +4,8 @@
 //= require jquery.imagesloaded.min
 //= require jquery.isotope.min.js
 
-window.setTemplateId = (id) -> 
-	$('#template_uuid').val(id)
+window.setTemplateUuid = (uuid) -> 
+	$('#template_uuid').val(uuid)
 window.submitForm = () ->
 	$('form').submit()
 onLayoutFn = ($elems, instance) ->
