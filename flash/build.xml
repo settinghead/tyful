@@ -107,7 +107,7 @@
 	</protect>
 	  </target>
 	
-	<target name="copy-insecure" depends="protect">
+	<target name="copy-insecure" depends="compile">
 	    <copy todir="${export.loc}">
 		    <fileset dir="${bin.loc}"/>
 		</copy>
