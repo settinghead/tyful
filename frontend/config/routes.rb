@@ -5,7 +5,12 @@ Groffle::Application.routes.draw do
   resources :word_list
   resources :shop
   resources :artworks
-
+  resources :fb_canvas do
+    member do
+      post 'index'
+    end
+  end
+  
   resources :templates do
     member do
       get 'like'
