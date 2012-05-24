@@ -133,9 +133,9 @@
 	        </replace>
 	    </target>
 	
-	<target name="publish" depends="copy-insecure, versionInfo">
-	    <!--copy todir="${export.loc}" overwrite="true">
+	<target name="publish" depends="compile, protect, copy-insecure, versionInfo">
+	    <copy todir="${export.loc}" overwrite="true">
 		    <fileset dir="${secure.loc}"/>
-		</copy-->
+		</copy>
 	</target>
 </project>
