@@ -13,7 +13,7 @@ onLayoutFn = ($elems, instance) ->
 
 $(document).ready ->
   $('.masonry-container').imagesLoaded ->
-    iso_options = {itemSelector : ".item", onLayout:onLayoutFn}
+    iso_options = { itemSelector : ".item", onLayout:onLayoutFn}
     $('.masonry-container').isotope(iso_options);
 
 
