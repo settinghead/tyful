@@ -3,7 +3,7 @@
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" 
 			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   close="handleCloseEvent();" title="Create a new template">
+			   close="handleCloseEvent();" title="Create a new template" creationComplete="titlewindow1_creationCompleteHandler(event)">
 	<fx:Metadata>
 		[Event(name="createTemplate", type="com.settinghead.groffle.client.view.components.template.CreateTemplateEvent")]
 	</fx:Metadata>
@@ -14,6 +14,7 @@
 		<![CDATA[
 			import com.settinghead.groffle.client.view.components.template.CreateTemplateEvent;
 			
+			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			[Bindable]
 			public var newWidth:int;
@@ -31,9 +32,17 @@
 				this.dispatchEvent(new CreateTemplateEvent(CREATE_TEMPLATE,widthStepper.value, heightStepper.value));
 				PopUpManager.removePopUp(this);
 			}
+			
+			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				closeButton.visible = false;
+				
+			}
+			
 		]]>
 	</fx:Script>
-	
+	<s:Button id="btnClose" enabled="false" visible="false" includeInLayout="false" />
+	<s:VGroup verticalAlign="middle" horizontalAlign="center">
 	<s:Form>
 		<s:FormItem label="Width">
 			<s:NumericStepper id="widthStepper" value="@{newWidth}" maximum="10000" minimum="10"/>
@@ -45,5 +54,7 @@
 	<s:HGroup> 
 		<s:Button label="Create Template"
 				  click="createTemplate();" /> 
-	</s:HGroup> 
+	</s:HGroup> 		
+	</s:VGroup>
+
 </s:TitleWindow>

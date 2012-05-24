@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519220952) do
+ActiveRecord::Schema.define(:version => 20120524035012) do
 
   create_table "artworks", :force => true do |t|
     t.string   "name"
@@ -59,7 +59,10 @@ ActiveRecord::Schema.define(:version => 20120519220952) do
     t.datetime "updated_at"
     t.string   "uuid"
     t.integer  "user_id"
+    t.string   "slug"
   end
+
+  add_index "templates", ["slug"], :name => "index_templates_on_slug", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

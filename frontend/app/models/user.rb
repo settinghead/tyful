@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   has_many :authentications
   has_many :templates
-  has_friendly_id :nickname,
-                   :approximate_ascii => true
+  extend FriendlyId
+  
+  friendly_id :nickname
   acts_as_voter
   
   # Include default devise modules. Others available are:
