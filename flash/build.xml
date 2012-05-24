@@ -94,8 +94,8 @@
 		</zip>
 	</target>
 	
-	<!--taskdef name="protect" classpath="secureSWF/secureSWF.jar"
-	classname="secureSWF.ant.ProtectTask" /-->
+	<taskdef name="protect" classpath="secureSWF/secureSWF.jar"
+	classname="secureSWF.ant.ProtectTask" />
 	  <target name="protect" depends="compile">
 	    <protect outputPath="${secure.loc}">
 		      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
