@@ -36,5 +36,5 @@ Groffle::Application.configure do
   ENV['TEMPLATE_URL'] = 'http://localhost:5000/t/'
   ENV["TEMPLATE_PREVIEW_URL"] = 'http://localhost:5000/tp/'
   ENV['RELAY_URL'] = 'http://localhost:5000/r/'
-  
+  ENV['FB_APP_ID'] = '295922833823667'
 end

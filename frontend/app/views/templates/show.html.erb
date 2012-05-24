@@ -1,3 +1,16 @@
+<%
+content_for :head do%>
+<%=global_meta_tags :title        => @template.name, \
+    :type         => 'typography artwork', \
+    :site_name    => 'Groffle', \
+    :image        =>  ENV['TEMPLATE_PREVIEW_URL']+@template.uuid+'.png', \
+    :app_id      =>  ENV['FB_APP_ID'], \
+    :description  => @template.description
+	%>
+<%end
+%>
+
+
 <h1>Template "<%=@template.name%>"</h1>
 
 <%= render 'form' %>

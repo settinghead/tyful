@@ -23,6 +23,8 @@ gem 'acts_as_votable'
 gem 'newrelic_rpm'
 gem 'metamagic'
 gem 'friendly_id'
+gem 'open-meta-tags', :require => 'open_meta_tags'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
