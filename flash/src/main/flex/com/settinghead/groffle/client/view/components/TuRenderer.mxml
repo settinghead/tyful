@@ -252,6 +252,7 @@
 			<s:layout>
 				<s:HorizontalLayout />
 			</s:layout>
+			<s:Label width="170" />
 			<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 			<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
 			<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />

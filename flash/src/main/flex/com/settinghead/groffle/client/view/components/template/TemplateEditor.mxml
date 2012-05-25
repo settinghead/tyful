@@ -59,10 +59,12 @@
 					<s:layout>
 						<s:VerticalLayout  verticalAlign="middle" />
 					</s:layout>
+
 					<s:Group>
 						<s:layout>
 							<s:HorizontalLayout />
 						</s:layout>
+						<s:Label width="170" />
 						<mx:LinkBar id="toggleButtonBar"
 											dataProvider="{ribbonViewStack}" />						
 
@@ -98,7 +100,9 @@
 									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  />
 								</mx:HBox>
 							</mx:ViewStack>
+						<mx:HBox label="Help">
 							
+						</mx:HBox>
 						
 					</mx:ViewStack>
 				</s:Group>

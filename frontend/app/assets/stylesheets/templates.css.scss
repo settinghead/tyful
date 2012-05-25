@@ -1,6 +1,11 @@
 // Place all the styles related to the templates controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+*= require isotope
+*/
+
+
 #container {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -53,7 +58,6 @@ h1{
   	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 	width: 220px;
-	
   } 
 
   
@@ -120,9 +124,9 @@ h1{
 	display:inline-block;
 	color:#ffffff;
 	font-family:arial;
-	font-size:16px;
+	font-size:15px;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:2px 20px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #528009;
 }.create-button:hover {

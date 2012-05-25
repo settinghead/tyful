@@ -198,19 +198,7 @@ package com.settinghead.groffle.client.model
 					failureCount = 0;
 					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
-				}
-				else{
-					failureCount ++;
 					
-					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > tu.template.perseverance){
-//						tu.skipToLast();
-						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
-						
-						markStopRendering();
-
-					}
-				
 					if(_startTime>0)
 						//timed out; display generate image even if unfinished
 					{
@@ -222,9 +210,22 @@ package com.settinghead.groffle.client.model
 					else{
 						if(++snapshotTicker==SNAPSHOT_INTERVAL){
 							facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
-
+							
 							snapshotTicker = 0;
 						}
+					}
+					
+				}
+				else{
+					failureCount ++;
+					
+					//5 consecutive failures. Put rendering to an end.
+					if (failureCount > tu.template.perseverance){
+//						tu.skipToLast();
+						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+						
+						markStopRendering();
+
 					}
 				}
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
