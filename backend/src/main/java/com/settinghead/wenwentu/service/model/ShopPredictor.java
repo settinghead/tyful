@@ -10,22 +10,25 @@ public class ShopPredictor {
 		return getGenericShop();
 	}
 	
+	private static final String IMAGE_URL_PREFIX = "https://www.groffle.me/f/shop/";
+	
 	public static List<ShopItem> getGenericShop(){
 		List<ShopItem> result = new ArrayList<ShopItem>();
 
-		ShopItem item1 = new ShopItem();
-		item1.setName("Male Tee");
-		item1.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
-		item1.setImageUrl("http://file.wenwentu.com/f/shop/standardtee.jpeg");
-		result.add(item1);
-		
-		ShopItem item2 = new ShopItem();
-		item2.setName("Coffee Mug");
-		item2.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
-		item2.setImageUrl("http://file.wenwentu.com/f/shop/coffeemug.jpeg");
-		result.add(item2);
+		result.add(zazzleProduct("Male T-Shirt", "235647948106072294","standardtee.jpeg"));
+		result.add(zazzleProduct("Iphone 4 Case", "176148784658126770","iphone4case.png"));
+		result.add(zazzleProduct("Coffee Mug", "168748918263067029","coffeemug.jpeg"));
+		result.add(zazzleProduct("Women's T-Shirt", "235250899573207988","femaletee.jpeg"));
 		
 		return result;
+	}
+	
+	private static ShopItem zazzleProduct(String name, String prod_id, String imageFileName){
+		ShopItem item3 = new ShopItem();
+		item3.setName(name);
+		item3.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd="+prod_id+"&fwd=ProductPage&ed=true&tc=&ic=&coverimage=[preview]");
+		item3.setImageUrl(IMAGE_URL_PREFIX+imageFileName);
+		return item3;
 	}
 
 }

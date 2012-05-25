@@ -54,16 +54,11 @@
 			<artifactId>trove</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.wikipedia-miner</groupId>
 			<artifactId>wikipedia-miner</artifactId>
 			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.wikipedia-miner</groupId>
-			<artifactId>wikipedia-miner</artifactId>
-			<version>1.1</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.weka</groupId>
 			<artifactId>weka</artifactId>
@@ -94,10 +89,10 @@
 	</dependencies>
 
 	<repositories>
-		<repository>
+<!-- 		<repository>
 			<id>openjena</id>
 			<url>http://openjena.org/repo/</url>
-		</repository>
+		</repository> -->
 		<repository>
 			<id>opennlp.sf.net</id>
 			<url>http://opennlp.sourceforge.net/maven2</url>
