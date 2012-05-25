@@ -52,6 +52,6 @@ public class ShopTask extends Task {
 
 	@Override
 	public int getExpiration() {
-		return 86400;
+		return 14400;
 	}
 }

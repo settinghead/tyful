@@ -11,9 +11,7 @@ public class WordListService {
 
 		GroffleService<WordListTask> service = new GroffleService<WordListTask>(
 				WordListTask.class);
-		for (int i = 0; i < 20; i++)
-			service.runSingleServiceThread();
-
+		service.run(20);
 	}
 
 }

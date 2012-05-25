@@ -14,8 +14,7 @@ public class ShopService {
 	public static void main(String[] args) {
 		GroffleService<ShopTask> service = new GroffleService<ShopTask>(
 				ShopTask.class);
-		for (int i = 0; i < 20; i++)
-			service.runSingleServiceThread();
+			service.run(20);
 	}
 
 }

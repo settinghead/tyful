@@ -87,7 +87,7 @@ public class FacebookRetriever {
 			// sb.append(comment.getMessage()).append(". ");
 			// }
 
-			addWords(sb.toString(), allWords, 1);
+			addWords(sb.toString(), allWords, 2);
 		}
 
 		// int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
@@ -96,12 +96,12 @@ public class FacebookRetriever {
 		// allWords.note(p.getName(), maxFreq - 2);
 		// }
 
-		addWords(me.getAbout(), allWords, 4);
-		addWords(me.getHometownName(), allWords, 3);
-		addWords(me.getBio(), allWords, 3);
+		addWords(me.getAbout(), allWords, 8);
+		addWords(me.getHometownName(), allWords, 6);
+		addWords(me.getBio(), allWords, 6);
 		if (me.getLocation() != null)
-			addWords(me.getLocation().getName(), allWords, 2);
-		addWords(me.getPolitical(), allWords, 3);
+			addWords(me.getLocation().getName(), allWords, 4);
+		addWords(me.getPolitical(), allWords, 6);
 
 		int nameFreq;
 		if (allWords.getTotalItemCount() > 0) {
@@ -135,10 +135,11 @@ public class FacebookRetriever {
 		outer: for (List<Page> myFeedConnectionPage : myLikes)
 			for (Page page : myFeedConnectionPage) {
 				if (page.getName().matches("[a-zA-Z0-9\\- \\.,;]+")) {
-					if (page.getName() != null && page.getName().length() < 20)
-						allWords.note(page.getName());
-					else
+					if (page.getName() != null && page.getName().length() < 20) {
+						allWords.note(page.getName(), 2);
 						addWords(page.getName(), allWords, 1);
+					} else
+						addWords(page.getName(), allWords, 2);
 				}
 				if (count++ > 500)
 					break outer;
@@ -148,15 +149,14 @@ public class FacebookRetriever {
 	}
 
 	public static List<Word> getWordsForUser(String uid, String token) {
-		List<Post> messages = FacebookRetriever.getMessages(uid,
-				token);
-		List<Word> wordList = FacebookRetriever.parseWordList(uid,
-				token, messages);
+		List<Post> messages = FacebookRetriever.getMessages(uid, token);
+		List<Word> wordList = FacebookRetriever.parseWordList(uid, token,
+				messages);
 		if (wordList.size() < 100) {
 			// use likes to fill in space
 			Counter<String> likeWords = getLikes(uid, token);
-			for(String key:likeWords.keySet())
-				wordList.add(new Word(key,likeWords.getCount(key)));
+			for (String key : likeWords.keySet())
+				wordList.add(new Word(key, likeWords.getCount(key)));
 		}
 		return wordList;
 	}

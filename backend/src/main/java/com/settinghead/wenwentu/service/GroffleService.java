@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,12 +27,20 @@ import com.settinghead.wenwentu.service.model.WordListTask;
 public class GroffleService<T extends Task> {
 	protected Logger logger = Logger.getLogger(this.getClass().getName());
 	private Class<T> taskType;
+	private boolean SIGTERM = false;
+	private AtomicInteger activeThreadCount = new AtomicInteger();
 
 	public GroffleService(Class<T> taskType) {
 		this.taskType = taskType;
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				SIGTERM = true;
+			}
+		}));
 	}
 
-	public void runSingleServiceThread() {
+	private void runSingleServiceThread() {
 		logger.info("Starting word list service. ");
 		new Thread(new Runnable() {
 
@@ -50,14 +59,13 @@ public class GroffleService<T extends Task> {
 							Protocol.DEFAULT_TIMEOUT,
 							redisURI.getUserInfo() == null ? null : redisURI
 									.getUserInfo().split(":", 2)[1]);
-
-					
-					while (true) {
+					activeThreadCount.incrementAndGet();
+					while (!SIGTERM) {
 						Jedis jedis = pool.getResource();
 						String dbStr = props.getProperty("REDISTOGO_DB");
 						if (dbStr != null) {
 							jedis.select(Integer.parseInt(dbStr));
-							//logger.info("DB: " + dbStr);
+							// logger.info("DB: " + dbStr);
 						}
 						String message;
 						if ((message = jedis.lpop(taskType.getSimpleName()
@@ -94,6 +102,7 @@ public class GroffleService<T extends Task> {
 						}
 						pool.returnResource(jedis);
 					}
+					activeThreadCount.decrementAndGet();
 
 				} catch (URISyntaxException e) {
 					logger.severe(e.getMessage());
@@ -104,6 +113,10 @@ public class GroffleService<T extends Task> {
 				}
 			}
 		}).start();
+	}
+
+	public boolean stillActive() {
+		return (!SIGTERM || activeThreadCount.get() > 0);
 	}
 
 	protected static Properties getPropertiesFromClasspath(String propFileName)
@@ -121,6 +134,13 @@ public class GroffleService<T extends Task> {
 		props.load(inputStream);
 
 		return props;
+	}
+
+	public void run(int numThreads) {
+		for (int i = 0; i < numThreads; i++)
+			this.runSingleServiceThread();	
+		while(stillActive());
+		System.exit(0);
 	}
 
 }
