@@ -37,20 +37,22 @@ h1{
   
   .box .inner
   {
-  	padding: 20px;
+  	padding: 10px;
   	background-color: #fff;
-  	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
-  	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
-  	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.1);
+  	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+  	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+  	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   .box
   {
-	margin: 10px;
+	margin: 5px;
+	margin-top: 10px;
+	margin-bottom: 5px;
   	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	width: 240px;
+	width: 220px;
 	
   } 
 

@@ -109,17 +109,17 @@ package com.settinghead.groffle.client.model
 			}
 		}
 		
-		public function prepareSampleShop():void{
-
-			this.shop.removeAll();
-
-			var maleTee:ShopItemVO =
-				new ShopItemVO("Male Tee",previewUrl, "http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
-
-			var femaleTee:ShopItemVO = new ShopItemVO("Female Tee", previewUrl, "http://www.zazzle.com/female");
-			this.addItem(maleTee);
-			this.addItem(femaleTee);
-		}
+//		public function prepareSampleShop():void{
+//
+//			this.shop.removeAll();
+//
+//			var maleTee:ShopItemVO =
+//				new ShopItemVO("Male Tee",previewUrl, "http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd=235647948106072294&fwd=ProductPage&ed=true&tc=&ic=&standardtee=[preview]");
+//
+//			var femaleTee:ShopItemVO = new ShopItemVO("Female Tee", previewUrl, "http://www.zazzle.com/female");
+//			this.addItem(maleTee);
+//			this.addItem(femaleTee);
+//		}
 		
 		private var tmpImg:BitmapData = null;
 		
