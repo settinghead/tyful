@@ -68,5 +68,6 @@ Groffle::Application.configure do
   ENV["TEMPLATE_PREVIEW_URL"] = 'https://www.groffle.me/tp/'
   ENV['FB_APP_ID'] = '415282955156503'
   
+  
   OmniAuth.config.full_host = 'https://www.groffle.me'
 end
