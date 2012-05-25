@@ -60,5 +60,9 @@ public interface WordSizer {
 	 * @return the size to render the Word
 	 */
 	function sizeFor(word:WordVO, wordRank:int, wordCount:int):Number ;
+	function switchToNextSize():Boolean;
+	function currentSize():Number;
+	function reset():void;
+	function hasNextSize():Boolean;
 }
 }

@@ -1,6 +1,7 @@
 package com.settinghead.groffle.client.model
 {
 	import com.adobe.images.PNGEncoder;
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.PlaceInfo;
 	import com.settinghead.groffle.client.RenderOptions;
@@ -62,7 +63,7 @@ package com.settinghead.groffle.client.model
 		public var generateTemplatePreview:Boolean = false;
 		private var _currentWordIndex:int = -1;
 		private var totalAttemptedWords:int =0;
-		private var indexOffset:int=0;
+//		private var indexOffset:int=0;
 		private var snapshotTicker:int=0;
 
 		public function TuProxy()
@@ -97,10 +98,13 @@ package com.settinghead.groffle.client.model
 		
 		public override function setData(data:Object):void{
 			super.setData(data);
-			resetCurrentWordIndex();
-			indexOffset=0;
-			retryWords = new Vector.<WordVO>();
-			totalAttemptedWords = 0;
+			if(tu!=null){
+				resetCurrentWordIndex();
+//			indexOffset=0;
+				retryWords = new Vector.<WordVO>();
+				totalAttemptedWords = 0;
+				tu.template.sizer.reset();
+			}
 		}
 		
 		public function getNextWordAndIncrement():WordVO{
@@ -153,18 +157,8 @@ package com.settinghead.groffle.client.model
 			//TODO
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
-			if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE 
-				&&indexOffset+totalAttemptedWords<tu.words.size - 1){
-				var incr:int = tu.words.size/40;
-				if(incr==0) incr = 1;
-				indexOffset+=incr;
-				if(indexOffset+totalAttemptedWords>tu.words.size)
-				{
-					indexOffset = tu.words.size -1;
-				}
-				numRetries=0;
-			}
-			    word = getNextWordAndIncrement();
+			
+			word = getNextWordAndIncrement();
 			if(word==null) return;
 			eWord = generateEngineWord(word);
 
@@ -172,19 +166,30 @@ package com.settinghead.groffle.client.model
 				placeWord(eWord);			
 				
 				if(eWord.wasSkipped()){
-					if(
-					indexOffset+totalAttemptedWords<tu.words.size - 1)
+					if(tu.template.sizer.hasNextSize())
 					//store in pending eword and retry a smaller size
 					//in next round
 					{
 						if(totalAttemptedWords>0){
 							retryWords.push(eWord.word);
+							failureCount++;
 							numRetries++;
 						}
 						else
 							//first word. instruct the next round to immediately reduce size
 							numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
-
+						if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE ){
+							//				&&indexOffset+totalAttemptedWords<tu.words.size - 1){
+							//				var incr:int = tu.words.size/40;
+							//				if(incr==0) incr = 1;
+							//				indexOffset+=incr;
+							//				if(indexOffset+totalAttemptedWords>tu.words.size)
+							//				{
+							//					indexOffset = tu.words.size -1;
+							//				}
+							tu.template.sizer.switchToNextSize();
+							numRetries=0;
+						}
 						return;
 
 					}
@@ -210,8 +215,9 @@ package com.settinghead.groffle.client.model
 					else{
 						if(++snapshotTicker==SNAPSHOT_INTERVAL){
 							facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
-							
+//							Notification.show("Snapshot generated.");
 							snapshotTicker = 0;
+							
 						}
 					}
 					
@@ -233,12 +239,17 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var newIndex:int = totalAttemptedWords+indexOffset<tu.words.size?
-				totalAttemptedWords + indexOffset:tu.words.size;
+			var newIndex:int = totalAttemptedWords
+//				+indexOffset
+				<tu.words.size?
+				totalAttemptedWords
+//				+ indexOffset
+				:tu.words.size;
 			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , tu.words.size);
 			
 			var wordFont:String= tu.template.fonter.fontFor(word);
-			var wordSize:Number= tu.template.sizer.sizeFor(word,newIndex,tu.words.size);
+			var wordSize:Number= tu.template.sizer.currentSize();
+			//.sizeFor(word,newIndex,tu.words.size);
 			//			var wordAngle:Number= template.angler.angleFor(eWord);
 			
 			var shape:TextShapeVO= WordShaper.makeShape(word.word, wordSize, wordFont, 0);
