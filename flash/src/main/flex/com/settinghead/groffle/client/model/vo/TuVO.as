@@ -41,10 +41,8 @@ package com.settinghead.groffle.client.model.vo
 		
 		private static const SOLID_COLOR:String = "solidColor";
 		private static const BACKGROUND_IMAGE:String = "backgroundImage";
-		private var _currentWordIndex:int = -1;
 		private var _eWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
 
-		public var indexOffset:int=0;
 
 		
 		public function TuVO(template:TemplateVO, words:WordListVO){
@@ -107,13 +105,7 @@ package com.settinghead.groffle.client.model.vo
 			return _words;
 		}
 		
-		public function getNextWordAndIncrement():WordVO{
-			return words.itemAt(++_currentWordIndex % words.size) as WordVO;
-		}
 		
-		public function get currentWordIndex():int{
-			return _currentWordIndex;
-		}
 		
 		
 		public function get failedLast():Boolean{

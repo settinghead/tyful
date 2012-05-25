@@ -50,14 +50,18 @@ package com.settinghead.groffle.client.model
 	{
 		public static const NAME:String = "TuProxy";
 		public static const SRNAME:String = "TuSRProxy";
+		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 3;
 		
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
 		private var _startTime:int;
 		private var _rendering:Boolean = false;
+		private var numRetries:int = 0;
 		
 		public var generateTemplatePreview:Boolean = false;
-		
+		private var _currentWordIndex:int = -1;
+		private var indexOffset:int=0;
+
 		public function TuProxy()
 		{
 			super(NAME, new ArrayCollection());
@@ -89,8 +93,23 @@ package com.settinghead.groffle.client.model
 		public function set tu(tu:TuVO):void
 		{
 			this.setData(tu);
+			_currentWordIndex = -1;
+			indexOffset=0;
+			retryWords = new Vector.<WordVO>();
 		}
 		
+		public function getNextWordAndIncrement():WordVO{
+			if(tu.eWords.length==0)
+				return tu.words.itemAt(0);
+			if(_currentWordIndex==tu.words.size-1 && retryWords.length>0)
+				return retryWords.pop(); 
+			else 
+				return tu.words.itemAt(++_currentWordIndex % tu.words.size) as WordVO;
+		}
+		
+		public function get currentWordIndex():int{
+			return _currentWordIndex;
+		}
 		
 		public function load() :void{
 			var tu:TuVO = new TuVO(_template, _wordList);
@@ -110,42 +129,42 @@ package com.settinghead.groffle.client.model
 		
 		private var failureCount:int = 0;
 		
-		private var pendingEword:EngineWordVO = null;
+		private var retryWords:Vector.<WordVO> = new Vector.<WordVO>();
 		
 		public function renderNextDisplayWord(tu:TuVO):void{
 			//TODO
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
-			if(pendingEword!=null)
-			{
-				if(tu.indexOffset+tu.currentWordIndex<tu.words.size - 1){
-					var incr:int = tu.words.size/40;
-					if(incr==0) incr = 1;
-					tu.indexOffset+=incr;
-				}
-				if(tu.indexOffset+tu.currentWordIndex>tu.words.size)
+			if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE 
+				&&indexOffset+currentWordIndex<tu.words.size - 1){
+				var incr:int = tu.words.size/40;
+				if(incr==0) incr = 1;
+				indexOffset+=incr;
+				if(indexOffset+currentWordIndex>tu.words.size)
 				{
-					tu.indexOffset = tu.words.size -1;
+					indexOffset = tu.words.size -1;
 				}
-				word = pendingEword.word;
-				pendingEword = null;
+				numRetries=0;
 			}
-			else{
-			word = tu.getNextWordAndIncrement();
-			}
+			    word = getNextWordAndIncrement();
 			if(word==null) return;
 			eWord = generateEngineWord(word);
 
 			if(eWord!=null){
 				placeWord(eWord);			
 				
-				if(eWord.wasSkipped() &&
-					tu.indexOffset+tu.currentWordIndex<tu.words.size - 1)
+				if(eWord.wasSkipped()){
+					if(
+					indexOffset+currentWordIndex<tu.words.size - 1)
 					//store in pending eword and retry a smaller size
 					//in next round
-				{
-					pendingEword = eWord;
-					return;
+					{
+						if(numRetries<MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE){
+							retryWords.push(eWord.word);
+							numRetries++;
+							return;
+						}
+					}
 				}
 				
 				tu.pushEngineWord(eWord);
@@ -178,8 +197,8 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var newIndex:int = tu.currentWordIndex+tu.indexOffset<tu.words.size?
-				tu.currentWordIndex + tu.indexOffset:tu.words.size;
+			var newIndex:int = currentWordIndex+indexOffset<tu.words.size?
+				currentWordIndex + indexOffset:tu.words.size;
 			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , tu.words.size);
 			
 			var wordFont:String= tu.template.fonter.fontFor(word);
@@ -265,7 +284,7 @@ package com.settinghead.groffle.client.model
 					var foundOverlap:Boolean= false;
 					
 					//					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
-					for (var i:int= 0; !foundOverlap && i < tu.currentWordIndex; i++) {
+					for (var i:int= 0; !foundOverlap && i < tu.eWords.length; i++) {
 						//						var otherWord:EngineWordVO= neighboringEWords[i];
 						var otherWord:EngineWordVO = tu.eWords[i];
 						if (otherWord.wasSkipped()) continue; //can't overlap with skipped word
