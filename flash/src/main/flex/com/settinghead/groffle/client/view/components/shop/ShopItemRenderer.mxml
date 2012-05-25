@@ -6,15 +6,23 @@
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.groffle.client.model.vo.shop.ShopItemVO;
+			[Embed(source="Blue-Arrow.png")]
+			[Bindable]
+			public var blueArrow:Class;
+
 			public function get item():ShopItemVO{
 				return data as ShopItemVO;
 			}
 		]]>
 	</fx:Script>
 	<s:VGroup horizontalAlign="center">
-		<mx:Image id="itemImage" 
-				  source="{(data as ShopItemVO).imageUrl}" width="120" height="120" scaleContent="true" click="navigateToURL(new URLRequest((data as ShopItemVO).itemUrl), '_blank')" useHandCursor="true"/> 
-		
+		<s:Group>
+			<mx:Image id="itemImage" 
+					  source="{(data as ShopItemVO).imageUrl}" width="120" height="120" scaleContent="true" click="navigateToURL(new URLRequest((data as ShopItemVO).itemUrl), '_blank')" useHandCursor="true"/> 
+			<s:Image source="{blueArrow}" alpha="0.5" left="-5" top="10" />
+
+		</s:Group>
+	
 		<mx:LinkButton id="btnShopLink" label="{(data as ShopItemVO).name}" click="navigateToURL(new URLRequest((data as ShopItemVO).itemUrl), '_blank')"  /> 
 		
 	</s:VGroup>
