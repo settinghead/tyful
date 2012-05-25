@@ -50,7 +50,7 @@ package com.settinghead.groffle.client.model
 	{
 		public static const NAME:String = "TuProxy";
 		public static const SRNAME:String = "TuSRProxy";
-		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 3;
+		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 2;
 		private static const SNAPSHOT_INTERVAL:int = 12;
 		
 		private var _template:TemplateVO;
@@ -61,6 +61,7 @@ package com.settinghead.groffle.client.model
 		
 		public var generateTemplatePreview:Boolean = false;
 		private var _currentWordIndex:int = -1;
+		private var totalAttemptedWords:int =0;
 		private var indexOffset:int=0;
 		private var snapshotTicker:int=0;
 
@@ -92,7 +93,7 @@ package com.settinghead.groffle.client.model
 		public function set tu(tu:TuVO):void
 		{
 			this.setData(tu);
-			_currentWordIndex = -1;
+			resetCurrentWordIndex();
 			indexOffset=0;
 			retryWords = new Vector.<WordVO>();
 		}
@@ -100,17 +101,27 @@ package com.settinghead.groffle.client.model
 		public function getNextWordAndIncrement():WordVO{
 			if(tu.eWords.length==0)
 			{
-				if(_currentWordIndex==0) _currentWordIndex++;
+				if(currentWordIndex==0) incrCurrentWordIndexAndGet();
 				return tu.words.itemAt(0);
 			}
-			if(_currentWordIndex==tu.words.size-1 && retryWords.length>0)
+			if(currentWordIndex==tu.words.size-1 && retryWords.length>0)
 				return retryWords.pop(); 
 			else 
-				return tu.words.itemAt(++_currentWordIndex % tu.words.size) as WordVO;
+				return tu.words.itemAt(incrCurrentWordIndexAndGet() % tu.words.size) as WordVO;
 		}
 		
-		public function get currentWordIndex():int{
+		private function get currentWordIndex():int{
 			return _currentWordIndex;
+		}
+		
+		private function incrCurrentWordIndexAndGet():int{
+			_currentWordIndex++;
+			totalAttemptedWords ++;
+			return _currentWordIndex;
+		}
+		
+		private function resetCurrentWordIndex():void{
+			_currentWordIndex = -1;
 		}
 		
 		public function load() :void{
@@ -138,11 +149,11 @@ package com.settinghead.groffle.client.model
 			var eWord:EngineWordVO = null;
 			var word:WordVO = null;
 			if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE 
-				&&indexOffset+currentWordIndex<tu.words.size - 1){
+				&&indexOffset+totalAttemptedWords<tu.words.size - 1){
 				var incr:int = tu.words.size/40;
 				if(incr==0) incr = 1;
 				indexOffset+=incr;
-				if(indexOffset+currentWordIndex>tu.words.size)
+				if(indexOffset+totalAttemptedWords>tu.words.size)
 				{
 					indexOffset = tu.words.size -1;
 				}
@@ -157,11 +168,11 @@ package com.settinghead.groffle.client.model
 				
 				if(eWord.wasSkipped()){
 					if(
-					indexOffset+currentWordIndex<tu.words.size - 1)
+					indexOffset+totalAttemptedWords<tu.words.size - 1)
 					//store in pending eword and retry a smaller size
 					//in next round
 					{
-						if(tu.eWords.length>0){
+						if(totalAttemptedWords>0){
 							retryWords.push(eWord.word);
 							numRetries++;
 						}
@@ -198,7 +209,7 @@ package com.settinghead.groffle.client.model
 					if(_startTime>0)
 						//timed out; display generate image even if unfinished
 					{
-						if(tu.generatedImage==null && getTimer() - _startTime > 9000){
+						if(tu.generatedImage==null && getTimer() - _startTime > 10000){
 							facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
 							_startTime = -1;
 						}
@@ -216,8 +227,8 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function generateEngineWord(word:WordVO):EngineWordVO{
-			var newIndex:int = currentWordIndex+indexOffset<tu.words.size?
-				currentWordIndex + indexOffset:tu.words.size;
+			var newIndex:int = totalAttemptedWords+indexOffset<tu.words.size?
+				totalAttemptedWords + indexOffset:tu.words.size;
 			var eWord:EngineWordVO= new EngineWordVO(word, newIndex , tu.words.size);
 			
 			var wordFont:String= tu.template.fonter.fontFor(word);
