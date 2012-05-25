@@ -92,10 +92,15 @@ package com.settinghead.groffle.client.model
 		
 		public function set tu(tu:TuVO):void
 		{
-			this.setData(tu);
+			setData(tu);
+		}
+		
+		public override function setData(data:Object):void{
+			super.setData(data);
 			resetCurrentWordIndex();
 			indexOffset=0;
 			retryWords = new Vector.<WordVO>();
+			totalAttemptedWords = 0;
 		}
 		
 		public function getNextWordAndIncrement():WordVO{
