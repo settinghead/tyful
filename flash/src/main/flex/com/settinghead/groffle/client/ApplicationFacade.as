@@ -66,7 +66,7 @@ package com.settinghead.groffle.client
 			registerCommand (LOAD_TEMPLATE, LoadTemplateCommand);
 			registerCommand (GENERATE_TEMPLATE_PREVIEW, GenerateTemplatePreviewCommand);
 			registerCommand (TEMPLATE_PREVIEW_GENERATED, UploadTemplateCommand);
-			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
+//			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 		}
 		

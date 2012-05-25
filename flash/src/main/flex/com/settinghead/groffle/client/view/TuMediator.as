@@ -40,7 +40,7 @@ package com.settinghead.groffle.client.view
 				ApplicationFacade.DISPLAYWORD_CREATED,
 				ApplicationFacade.TU_GENERATION_LAST_CALL,
 				ApplicationFacade.TU_IMAGE_GENERATED,
-				ApplicationFacade.GENERATE_TU_IMAGE
+				ApplicationFacade.GENERATE_TU_IMAGE,
 			];
 		}
 		

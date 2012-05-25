@@ -51,6 +51,7 @@ package com.settinghead.groffle.client.model
 		public static const NAME:String = "TuProxy";
 		public static const SRNAME:String = "TuSRProxy";
 		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 3;
+		private static const SNAPSHOT_INTERVAL:int = 12;
 		
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
@@ -61,6 +62,7 @@ package com.settinghead.groffle.client.model
 		public var generateTemplatePreview:Boolean = false;
 		private var _currentWordIndex:int = -1;
 		private var indexOffset:int=0;
+		private var snapshotTicker:int=0;
 
 		public function TuProxy()
 		{
@@ -79,10 +81,7 @@ package com.settinghead.groffle.client.model
 		public function get rendering():Boolean{
 			return _rendering;
 		}
-		
-		public function get startTime():int{
-			return _startTime;
-		}
+
 		
 		// return data property cast to proper type
 		public function get tu():TuVO
@@ -100,7 +99,10 @@ package com.settinghead.groffle.client.model
 		
 		public function getNextWordAndIncrement():WordVO{
 			if(tu.eWords.length==0)
+			{
+				if(_currentWordIndex==0) _currentWordIndex++;
 				return tu.words.itemAt(0);
+			}
 			if(_currentWordIndex==tu.words.size-1 && retryWords.length>0)
 				return retryWords.pop(); 
 			else 
@@ -159,15 +161,22 @@ package com.settinghead.groffle.client.model
 					//store in pending eword and retry a smaller size
 					//in next round
 					{
-						if(numRetries<MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE){
+						if(tu.eWords.length>0){
 							retryWords.push(eWord.word);
 							numRetries++;
-							return;
 						}
+						else
+							//first word. instruct the next round to immediately reduce size
+							numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
+
+						return;
+
 					}
 				}
 				
 				tu.pushEngineWord(eWord);
+
+				
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
 					failureCount = 0;
@@ -184,13 +193,23 @@ package com.settinghead.groffle.client.model
 						
 						markStopRendering();
 
-				}
+					}
 				
-				if(tu.generatedImage==null && getTimer() - startTime > 9000)
-					//timed out; display generate image even if unfinished
-				{
-					facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
-				}
+					if(_startTime>0)
+						//timed out; display generate image even if unfinished
+					{
+						if(tu.generatedImage==null && getTimer() - _startTime > 9000){
+							facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
+							_startTime = -1;
+						}
+					}
+					else{
+						if(++snapshotTicker==SNAPSHOT_INTERVAL){
+							facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
+
+							snapshotTicker = 0;
+						}
+					}
 				}
 				sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}

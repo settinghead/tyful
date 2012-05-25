@@ -1,7 +1,8 @@
 package com.settinghead.groffle.client.model.vo.wordlist {
 
-	import flash.geom.Point;
 	import com.settinghead.groffle.client.PlaceInfo;
+	
+	import flash.geom.Point;
 
 	[Bindable]
 	[RemoteClass(alias="com.settinghead.wexpression.server.model.Word")]
@@ -13,5 +14,9 @@ package com.settinghead.groffle.client.model.vo.wordlist {
 			this.word = word;
 			this.weight = weight;
 		}	
+		
+		public function clone():WordVO{
+			return new WordVO(word, weight);
+		}
 	}
 }
