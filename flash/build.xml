@@ -98,7 +98,7 @@
 	classname="secureSWF.ant.ProtectTask" />
 	  <target name="protect" depends="compile">
 	  <!-- <target name="protect"> -->
-	    <protect outputPath="${secure.loc}" renameIdentifiers="false">
+	    <protect outputPath="${secure.loc}" renameIdentifiers="false" keyFilePath="${basedir}/secureSWF/key.data">
 		      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
 		      <!-- <fileset dir="${bin.loc}" includes="**.swc"/> -->
 		    <rule filter="com.settinghead.groffle.client.*" rename="true" />
