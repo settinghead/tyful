@@ -139,7 +139,13 @@ public class GroffleService<T extends Task> {
 	public void run(int numThreads) {
 		for (int i = 0; i < numThreads; i++)
 			this.runSingleServiceThread();	
-		while(stillActive());
+		while(stillActive())
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				logger.severe(e.getMessage());
+				System.exit(1);
+			}
 		System.exit(0);
 	}
 
