@@ -43,7 +43,8 @@ public class FacebookRetriever {
 		return messages;
 	}
 
-	private static void addWords(String source, Counter<String> allWords, int factor) {
+	private static void addWords(String source, Counter<String> allWords,
+			int factor) {
 		if (source != null) {
 			final Counter<String> words = new Counter<String>();
 
@@ -86,7 +87,7 @@ public class FacebookRetriever {
 			// sb.append(comment.getMessage()).append(". ");
 			// }
 
-			addWords(sb.toString(), allWords,1);
+			addWords(sb.toString(), allWords, 1);
 		}
 
 		// int maxFreq = allWords.getCount(allWords.getMostFrequent(1).get(0));
@@ -98,7 +99,7 @@ public class FacebookRetriever {
 		addWords(me.getAbout(), allWords, 4);
 		addWords(me.getHometownName(), allWords, 3);
 		addWords(me.getBio(), allWords, 3);
-		if(me.getLocation()!=null)
+		if (me.getLocation() != null)
 			addWords(me.getLocation().getName(), allWords, 2);
 		addWords(me.getPolitical(), allWords, 3);
 
@@ -124,20 +125,39 @@ public class FacebookRetriever {
 		return s == null ? "" : s;
 	}
 
-	public static Collection<? extends Word> getLikes(String uid, String token) {
+	public static Counter<String> getLikes(String uid, String token) {
+		final Counter<String> allWords = new Counter<String>();
+
 		FacebookClient client = new DefaultFacebookClient(token);
-		ArrayList<Word> result = new ArrayList<Word>();
 		Connection<Page> myLikes = client.fetchConnection("me/likes",
 				Page.class);
 		int count = 0;
 		outer: for (List<Page> myFeedConnectionPage : myLikes)
 			for (Page page : myFeedConnectionPage) {
-				if (page.getName().matches("[a-zA-Z0-9\\- \\.,;]+"))
-					result.add(new Word(page.getName(), 1));
+				if (page.getName().matches("[a-zA-Z0-9\\- \\.,;]+")) {
+					if (page.getName() != null && page.getName().length() < 20)
+						allWords.note(page.getName());
+					else
+						addWords(page.getName(), allWords, 1);
+				}
 				if (count++ > 500)
 					break outer;
 			}
 
-		return result;
+		return allWords;
+	}
+
+	public static List<Word> getWordsForUser(String uid, String token) {
+		List<Post> messages = FacebookRetriever.getMessages(uid,
+				token);
+		List<Word> wordList = FacebookRetriever.parseWordList(uid,
+				token, messages);
+		if (wordList.size() < 100) {
+			// use likes to fill in space
+			Counter<String> likeWords = getLikes(uid, token);
+			for(String key:likeWords.keySet())
+				wordList.add(new Word(key,likeWords.getCount(key)));
+		}
+		return wordList;
 	}
 }

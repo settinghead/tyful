@@ -54,11 +54,8 @@
 			<artifactId>trove</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>org.wikipedia-miner</groupId>
-			<artifactId>wikipedia-miner</artifactId>
-			<version>1.1</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.wikipedia-miner</groupId> <artifactId>wikipedia-miner</artifactId> 
+			<version>1.1</version> </dependency> -->
 		<dependency>
 			<groupId>org.weka</groupId>
 			<artifactId>weka</artifactId>
@@ -85,14 +82,16 @@
 			<artifactId>lucene-core</artifactId>
 			<version>3.4.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
-<!-- 		<repository>
-			<id>openjena</id>
-			<url>http://openjena.org/repo/</url>
-		</repository> -->
+		<!-- <repository> <id>openjena</id> <url>http://openjena.org/repo/</url> 
+			</repository> -->
 		<repository>
 			<id>opennlp.sf.net</id>
 			<url>http://opennlp.sourceforge.net/maven2</url>
