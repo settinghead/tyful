@@ -22,6 +22,8 @@ package com.settinghead.groffle.client
 			var p2:WordVO = item2;
 			
 			var r:int= _numComparator.compare(p1.weight, p2.weight);
+			if(r==0)
+				r = _numComparator.compare(p2.word.length, p1.word.length);
 			return r;
 			
 		}
