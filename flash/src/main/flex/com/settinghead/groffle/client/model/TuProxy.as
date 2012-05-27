@@ -30,6 +30,7 @@ package com.settinghead.groffle.client.model
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
@@ -38,6 +39,7 @@ package com.settinghead.groffle.client.model
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.rpc.IResponder;
 	
 	import org.as3commons.collections.Set;
@@ -46,6 +48,9 @@ package com.settinghead.groffle.client.model
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
+	
+	import ru.inspirit.net.MultipartURLLoader;
+	import ru.inspirit.net.events.MultipartURLLoaderEvent;
 	
 	public class TuProxy extends EntityProxy implements ILoadupProxy
 	{
@@ -379,25 +384,28 @@ package com.settinghead.groffle.client.model
 			eWord.wasSkippedBecause(reason);
 		}
 		
-		private var urlLoader : URLLoader;
-
+		private var urlLoader : MultipartURLLoader;
 		public function postToFacebook():void{
 			var b:ByteArray = PNGEncoder.encode(tu.generatedImage);
 			// set up the request & headers for the image upload;
-			var urlRequest : URLRequest = new URLRequest();
-			urlRequest.url = 'facebook/publish_photo';
-			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
-			urlRequest.method = URLRequestMethod.POST;
-			urlRequest.data = b;
-			urlRequest.requestHeaders.push(header);
-			// create the image loader & send the image to the server;
-			urlLoader = new URLLoader();
-			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
+			urlLoader = new MultipartURLLoader();
+			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
 			urlLoader.addEventListener(Event.COMPLETE, photoPostComplete);
-			urlLoader.load( urlRequest );	
+
+			urlLoader.addVariable("token", FlexGlobals.topLevelApplication.parameters.token);
+			urlLoader.addFile(b,"artwork.png",'image');
+			urlLoader.load( FlexGlobals.topLevelApplication.parameters.facebookUploadUrl,true);
+
+		}
+		
+		public function dataPrepareComplete(e:Event):void{
+			if(urlLoader.PREPARED)
+				urlLoader.startLoad();
 		}
 		
 		public function photoPostComplete(e:Event):void{
+			Notification.show("Your artwork has been shared with your friends on Facebook.");
 		}
 	}
 }

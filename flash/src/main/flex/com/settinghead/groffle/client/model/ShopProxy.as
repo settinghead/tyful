@@ -124,7 +124,7 @@ package com.settinghead.groffle.client.model
 		private var tmpImg:BitmapData = null;
 		
 		public function uploadImage(img:BitmapData):void{
-			_previewUrl.url = null;
+			//_previewUrl.url = null;
 			tmpImg = img;
 
 			var b:ByteArray = PNGEncoder.encode(img);

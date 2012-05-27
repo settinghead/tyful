@@ -69,7 +69,7 @@
 											dataProvider="{ribbonViewStack}" />						
 
 						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" fontSize="20" styleName="render-button" color="#007A0A"
-								  />
+								  toolTip="When you are done, click this button to create your word cloud." />
 						<s:Label text="&lt;&lt;-- When you are done, click this button to create your word cloud." />
 					</s:Group>
 					<mx:ViewStack backgroundColor="#EDEDED" id="ribbonViewStack"  visible="{toggleButtonBar.selectedIndex>=0}"

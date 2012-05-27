@@ -35,7 +35,7 @@
 			public static const CHECK_CREATE_NEXT_DISPLAYWORD:String = "checkCreateNextDisplayWord";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const TU_GENERATED:String = "tuGenerated";
-			public static const EFFECTIVE_MARGIN:int = 20;
+			public static const EFFECTIVE_MARGIN:int = 35;
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;

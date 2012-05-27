@@ -23,6 +23,7 @@ gem 'acts_as_votable'
 gem 'newrelic_rpm'
 gem 'metamagic'
 gem 'friendly_id'
+gem "cancan"
 gem 'open-meta-tags', :require => 'open_meta_tags'
 
 
