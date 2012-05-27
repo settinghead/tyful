@@ -124,6 +124,7 @@ package com.settinghead.groffle.client.model
 		private var tmpImg:BitmapData = null;
 		
 		public function uploadImage(img:BitmapData):void{
+			_previewUrl.url = null;
 			tmpImg = img;
 
 			var b:ByteArray = PNGEncoder.encode(img);
@@ -160,11 +161,10 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function uploadComplete(e:Event):void{
-
-
 			var id:String = new JSONDecoder(urlLoader.loader.data,false).getValue().id;
 			//			_previewUrl.url = "http://file.wenwentu.com/r/"+id;
 			_previewUrl.url = FlexGlobals.topLevelApplication.parameters.relayUrl+id;
+			facade.sendNotification(ApplicationFacade.SHOW_SHOP);
 		}
 	}
 }

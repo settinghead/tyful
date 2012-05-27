@@ -37,6 +37,8 @@ package com.settinghead.groffle.client
 		public static const GENERATE_TEMPLATE_PREVIEW:String = "generateTemplatePreview";
 		public static const TEMPLATE_PREVIEW_GENERATED:String= "templatePreviewGenerated";
 		public static const TU_GENERATION_LAST_CALL:String	= "tuGenerationLastCall";
+		public static const SHOW_SHOP:String				= "showShop";
+//		public static const PROCESS_SHOP_CLICK:String		= "processShopClick";
 		
 		public static const MODE_EDIT_TEMPLATE:String	= "editTemplate";
 		public static const MODE_SHOW_TEMPLATE:String	= "showTemplate";

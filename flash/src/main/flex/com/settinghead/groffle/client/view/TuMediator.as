@@ -104,6 +104,7 @@ package com.settinghead.groffle.client.view
 			
 		}
 		
+		
 		private function editTemplate( event:Event = null ):void
 		{
 			sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);

@@ -39,7 +39,8 @@ package com.settinghead.groffle.client.view
 				ApplicationFacade.TEMPLATE_UPLOADED,
 				ApplicationFacade.UPLOAD_TEMPLATE,
 				ApplicationFacade.GENERATE_TEMPLATE_PREVIEW,
-				ApplicationFacade.TEMPLATE_PREVIEW_GENERATED
+				ApplicationFacade.TEMPLATE_PREVIEW_GENERATED,
+				ApplicationFacade.SHOW_SHOP
 				
 			];
 		}
@@ -65,7 +66,7 @@ package com.settinghead.groffle.client.view
 					applicationComponent.parent.stage.focus = applicationComponent.mainArea.templateEditor; 
 					break;
 				
-				case ApplicationFacade.TU_IMAGE_GENERATED:
+				case ApplicationFacade.SHOW_SHOP:
 					applicationComponent.currentState = "withShop";
 					break;
 				

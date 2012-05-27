@@ -52,7 +52,7 @@ package com.settinghead.groffle.client.model
 		public static const NAME:String = "TuProxy";
 		public static const SRNAME:String = "TuSRProxy";
 		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 2;
-		private static const SNAPSHOT_INTERVAL:int = 12;
+		private static const SNAPSHOT_INTERVAL:int = 15;
 		
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
@@ -228,7 +228,8 @@ package com.settinghead.groffle.client.model
 					//5 consecutive failures. Put rendering to an end.
 					if (failureCount > tu.template.perseverance){
 //						tu.skipToLast();
-						sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+						facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+
 						
 						markStopRendering();
 

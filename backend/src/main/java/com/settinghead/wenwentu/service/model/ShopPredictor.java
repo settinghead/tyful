@@ -27,7 +27,7 @@ public class ShopPredictor {
 		ShopItem item3 = new ShopItem();
 		item3.setName(name);
 		item3.setUrl("http://www.zazzle.com/api/create/at-238390271796358057?rf=238390271796358057&ax=Linkover&pd="
-				+prod_id+"&fwd=ProductPage&ed=true&tc=&ic=&coverimage=[preview]&coverimage2=[preview]");
+				+prod_id+"&fwd=designtool&ed=true&tc=&ic=&coverimage=[preview]&coverimage2=[preview]");
 		item3.setImageUrl(IMAGE_URL_PREFIX+imageFileName);
 		return item3;
 	}
