@@ -44,6 +44,7 @@ package com.settinghead.groffle.client.model.vo.template
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
+	import mx.controls.Alert;
 	import mx.utils.HSBColor;
 	
 	import org.as3commons.bytecode.util.Assertions;
@@ -52,7 +53,7 @@ package com.settinghead.groffle.client.model.vo.template
 	
 	
 	[Bindable]
-	public class TemplateVO implements IZippable
+	public class TemplateVO implements IZippable, IWithEffectiveBorder
 	{
 		public static const DEFAULT_WIDTH:int = 800;
 		public static const DEFAULT_HEIGHT:int = 600;
@@ -79,6 +80,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public var id:String = null;
 		public var uuid:String = null;
 		public var tolerance:Number = 0.2;
+		private var _effectiveBorder:TwoPointBorder = null;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -144,7 +146,29 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function generatePatchIndex():void{
 			this._patchIndex = new DensityPatchIndex(this);
+		}
+		
+		public function generateEffectiveBorder():void{
+			this._effectiveBorder = new TwoPointBorder();
+			for each(var l:Layer in layers){
+				l.generateEffectiveBorder();
+				 var rect:TwoPointBorder = l.effectiveBorder;
+				 if(rect.x1 < this._effectiveBorder.x1)
+					 this._effectiveBorder.x1 = rect.x1;
+				 if(rect.y1 < this._effectiveBorder.y1)
+					 this._effectiveBorder.y1 = rect.y1;
+				 if(rect.x2 > this._effectiveBorder.x2)
+					 this._effectiveBorder.x2 = rect.x2;
+				 if(rect.y2 > this._effectiveBorder.y2)
+					 this._effectiveBorder.y2 = rect.y2;
 
+			}
+		}
+		
+		public function get effectiveBorder():TwoPointBorder{
+			if(this._effectiveBorder==null)
+				generateEffectiveBorder();
+				return this._effectiveBorder;
 		}
 		
 		public function get placer():WordPlacer{
@@ -193,10 +217,10 @@ package com.settinghead.groffle.client.model.vo.template
 			return this._renderOptions;
 		}
 		
-		public function onLoadComplete (event:Event):void
-		{
-//			this._patchIndex = new DensityPatchIndex(this);
-		}
+//		public function onLoadComplete (event:Event):void
+//		{
+////			this._patchIndex = new DensityPatchIndex(this);
+//		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.putBitmapDataToPNGFile("preview.png", preview);

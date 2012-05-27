@@ -239,7 +239,6 @@ package com.settinghead.groffle.client.model.vo.template
 					
 					if(rotation!=0){
 					
-	//					Alert.show(rotation.toString());
 						if(relativeX==0) relativeX = 0.001;
 						relativeX = (relativeX - width/2);
 						relativeY = (relativeY - height/2);
@@ -418,12 +417,12 @@ package com.settinghead.groffle.client.model.vo.template
 //			my_loader.load(new URLRequest(this._path));
 //		}
 		
-		private function onLoadComplete (event:Event):void
-		{
-			this._img = new Bitmap(event.target.content.bitmapData);
-//			this.hsbArray = new Array(this._img.width);
-			this._template.onLoadComplete(event);
-		}
+//		private function onLoadComplete (event:Event):void
+//		{
+//			this._img = new Bitmap(event.target.content.bitmapData);
+////			this.hsbArray = new Array(this._img.width);
+//			this._template.onLoadComplete(event);
+//		}
 		
 		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.process(this._fonter, "fonter");
@@ -433,6 +432,26 @@ package com.settinghead.groffle.client.model.vo.template
 			//			output.process(this._nudger, "nudger");
 			//			output.process(this._angler, "angler");
 			//			output.process(this._placer, "placer");
+		}
+
+		
+		public override function generateEffectiveBorder():void{
+			this._effectiveBorder = new TwoPointBorder();
+			for(var i:int=0;i<this.direction.width;i++){
+				for (var j:int=0; j<this.direction.height;j++){
+					if(this.containsPoint(i,j,false,-1,-1,1)){
+						if(i<_effectiveBorder.x1)
+							_effectiveBorder.x1 = i;
+						if(j<_effectiveBorder.y1){
+							_effectiveBorder.y1 = j;
+						}
+						if(i>_effectiveBorder.x2)
+							_effectiveBorder.x2 = i;
+						if(j>_effectiveBorder.y2)
+							_effectiveBorder.y2 = j;
+					}
+				}
+			}
 		}
 		
 		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{

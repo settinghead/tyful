@@ -35,6 +35,8 @@
 			public static const CHECK_CREATE_NEXT_DISPLAYWORD:String = "checkCreateNextDisplayWord";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const TU_GENERATED:String = "tuGenerated";
+			public static const EFFECTIVE_MARGIN:int = 20;
+
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
 			[Bindable] public var autoPostToFacebook:Boolean = false;
@@ -192,9 +194,12 @@
 				var maxActual:Number = ratio>1?mainCanvas.width:mainCanvas.height;
 				var scale:Number = size/maxActual;
 				var bmpData:BitmapData = new BitmapData(mainCanvas.width*scale, mainCanvas.height*scale,true);
-				var scaleM:Matrix = new Matrix(scale,0,0,scale,0,0); 
+				//crop to effective border
+				var scaleM:Matrix = new Matrix(scale,0,0,scale,
+					-tu.template.effectiveBorder.x1*scale+EFFECTIVE_MARGIN,-tu.template.effectiveBorder.y1*scale+EFFECTIVE_MARGIN); 
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
-				bmpData.draw(mainCanvas, scaleM);
+				bmpData.draw(mainCanvas, scaleM,null,null,new Rectangle(0,0,
+					tu.template.effectiveBorder.width*scale+EFFECTIVE_MARGIN, tu.template.effectiveBorder.height*scale+EFFECTIVE_MARGIN));
 				return bmpData;
 			}
 			
@@ -223,8 +228,13 @@
 					this.wordLayer.removeChildAt(0);				
 //				this.width = _tu.width;
 //				this.height = _tu.height;
-				this.mainCanvas.width = _tu.width;
-				this.mainCanvas.height = _tu.height;
+				_tu.template.generateEffectiveBorder();
+				
+				//adjust for effective border
+				this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
+				this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
+				 this.mainCanvas.left = -_tu.template.effectiveBorder.x1+EFFECTIVE_MARGIN;
+				 this.mainCanvas.top = -_tu.template.effectiveBorder.y1+EFFECTIVE_MARGIN;
 				if(_tu.backgroundImage!=null)
 					this.backgroundLayer.addChild(_tu.backgroundImage);
 				for each(var displayWord:DisplayWordVO in _tu.dWords)
@@ -265,7 +275,7 @@
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 				<mx:UIComponent id="wordLayer" top="0" left="0" />
 			</mx:Canvas>
-			<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="true" />
+			<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
 			<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
 		</s:Group>
 

@@ -49,13 +49,15 @@ package com.settinghead.groffle.client.model.vo.template
 	
 	
 	[Bindable]
-	public class Layer implements IImageShape, IZippable
+	public class Layer implements IImageShape, IZippable, IWithEffectiveBorder
 	{
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;
 		private var _name:String;
 		public var above:Layer;
 		public var below:Layer;
+		protected var _effectiveBorder:TwoPointBorder = null;
+
 		
 		public function get name():String{
 			return _name;
@@ -168,6 +170,17 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function saveProperties(dict:Object):void{
 			throw new NotImplementedError();
+		}
+		
+		public function generateEffectiveBorder():void{
+			throw new NotImplementedError();
+
+		}
+		
+		public function get effectiveBorder():TwoPointBorder{
+			if(this._effectiveBorder==null)
+				generateEffectiveBorder();
+			return this._effectiveBorder;
 		}
 		
 		public function get type():String{
