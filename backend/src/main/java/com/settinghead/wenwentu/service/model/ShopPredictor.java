@@ -17,8 +17,8 @@ public class ShopPredictor {
 
 		result.add(zazzleProduct("Men's T-Shirt", "235575712596686313","standardtee.jpeg"));
 		result.add(zazzleProduct("Women's T-Shirt", "235517485025602924","femaletee.jpeg"));
-		result.add(zazzleProduct("Coffee Mug", "168505418196472183","coffeemug.jpeg"));
-		result.add(zazzleProduct("Iphone 4 Case", "176148784658126770","iphone4case.png"));
+		result.add(zazzleProduct("Coffee Mug", "168032355816708750","coffeemug.jpeg"));
+		result.add(zazzleProduct("Iphone 4 Case", "176594061325731500","iphone4case.png"));
 		
 		return result;
 	}
