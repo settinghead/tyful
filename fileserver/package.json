@@ -11,6 +11,7 @@
 	"redis" : "0.7.2",
 	"knox" : "0.0.9",
 	"formidable" : ">0.0.0",
-	"coffee-script" : ">0.0.0"
+	"coffee-script" : ">0.0.0",
+	"pg" : ">0.0.0"
   }
 }

@@ -5,7 +5,9 @@ var express = require('express'),
 	URL = require('url'), redis = require("redis"),    util = require('util'),
 	knox = require('knox'), sys=require('sys');
 	var exec = require('child_process').exec;
-	
+
+	var pg = require('pg'); 
+	var config = require('./config');
 	
 	var s3client = knox.createClient({
 	    key: 'AKIAICJYKXXF7EZ5A5IQ'
@@ -16,8 +18,7 @@ var express = require('express'),
     app = express.createServer();
 	app.use(express.static(__dirname + '/../static'));
 		
-console.log(require('./config').redis_db);
-var redisUrl = URL.parse(require('./config').redis_db);
+var redisUrl = URL.parse(config.redis_db);
 var redisClient = redis.createClient(redisUrl.port, redisUrl.hostname);
 if(redisUrl.auth){
 	redisClient.auth(redisUrl.auth.substr(redisUrl.auth.indexOf(":")+1), startServices());
@@ -47,58 +48,18 @@ function startServices(){
 		    } else {
 				var uuid;
 				if(fields.templateUuid){
-					//TODO: check token
 					uuid = fields.templateUuid;
+					validate_token(fields.userId, fields.templateId, uuid, fields.token, function(validated){
+						if(!validated) res.send(JSON.stringify({"error":"Authentication token does not match."}));
+						saveTemplate(uuid, req, res, files);
+					});
 				}
 				else{
 					uuid =  node_uuid.v4();
+					saveTemplate(uuid, req, res, files);
 				}
 				console.log(uuid);
-				fs.mkdir('/tmp/' + uuid,0777, function(e){
-					ins = fs.createReadStream(files.template.path);
-					ous = fs.createWriteStream('/tmp/' +uuid +'/' + uuid +".zip");
-					util.pump(ins, ous, function(err) {
-						if(err) {
-				    		next(err);
-						} else {
-							exec('unzip -o /tmp/'+uuid+'/'+uuid+'.zip /preview.png -d /tmp/'+uuid+'/', function(){
-						          fs.readFile('/tmp/'+uuid+'/preview.png', function (err, data) {
-								      if (err) throw err;
-				   				      var req4 = s3client.put(uuid+'.png', {
-    			   					  'Content-Length': data.length,
-								      'Content-Type': 'application/octet-stream',
-									  'x-amz-acl': 'private'
-				   					  });
-				   					  req4.on('response', function(res4){
-				   					    if (200 == res4.statusCode) {
-				   					      console.log('saved to %s', req4.url);
-				   					    }
-				   					  });
-				   					  req4.end(data);
-		    	 				   });
-							 });
-						
-						//client.set(id, body);
-						fs.readFile('/tmp/' +uuid +'/' + uuid +".zip", function(err, buf){
-					  	    var req3 = s3client.put(uuid+'.zip', {
-						  			'Content-Length': buf.length,
-						  			 'Content-Type': 'application/octet-stream',
-						  		      'x-amz-acl': 'private'
-						  		  });
-						  req3.on('response', function(res3){
-						    if (200 == res.statusCode) {
-						      console.log('saved to %s', req3.url);
-  					  	      res.send(JSON.stringify({"uuid":uuid}));
-						    }
-							else{
-								res.send(JSON.stringify({"error":res.statusCode}));
-							}
-						  });
-						  req3.end(buf);
-					   });
-				   }
-				});
-		    });
+
 		}
 		});
 	});
@@ -199,9 +160,85 @@ function startServices(){
 
 }
 
-function validate_token(user_id, token, callback){
-	var realToken = redisClient.get("token_"+user_id, function (err, reply) {
-		var validated = reply.toString()==token;
-		callback(validated);
+function saveTemplate(uuid, req, res, files){
+	fs.mkdir('/tmp/' + uuid,0777, function(e){
+		ins = fs.createReadStream(files.template.path);
+		ous = fs.createWriteStream('/tmp/' +uuid +'/' + uuid +".zip");
+		util.pump(ins, ous, function(err) {
+			if(err) {
+	    		next(err);
+			} else {
+				exec('unzip -o /tmp/'+uuid+'/'+uuid+'.zip /preview.png -d /tmp/'+uuid+'/', function(){
+			          fs.readFile('/tmp/'+uuid+'/preview.png', function (err, data) {
+					      if (err) throw err;
+	   				      var req4 = s3client.put(uuid+'.png', {
+	   					  'Content-Length': data.length,
+					      'Content-Type': 'application/octet-stream',
+						  'x-amz-acl': 'private'
+	   					  });
+	   					  req4.on('response', function(res4){
+	   					    if (200 == res4.statusCode) {
+	   					      console.log('saved to %s', req4.url);
+	   					    }
+	   					  });
+	   					  req4.end(data);
+	 				   });
+				 });
+						
+			//client.set(id, body);
+			fs.readFile('/tmp/' +uuid +'/' + uuid +".zip", function(err, buf){
+		  	    var req3 = s3client.put(uuid+'.zip', {
+			  			'Content-Length': buf.length,
+			  			 'Content-Type': 'application/octet-stream',
+			  		      'x-amz-acl': 'private'
+			  		  });
+			  req3.on('response', function(res3){
+			    if (200 == res.statusCode) {
+			      console.log('saved to %s', req3.url);
+		  	      res.send(JSON.stringify({"uuid":uuid}));
+			    }
+				else{
+					res.send(JSON.stringify({"error":res.statusCode}));
+				}
+			  });
+			  req3.end(buf);
+		   });
+	   }
+	});
+});
+	
+}
+
+function validate_token(user_id, template_id, template_Uuid, token, callback){
+	var key;
+	if(template_id) key = "token_"+template_Uuid;
+	else key = "token_"+user_id;
+	redisClient.get(key, function (err, reply) {
+		if(!reply){
+			// go to database to retrieve token
+			var validated = false;
+			pg.connect(config.pg_db, function(err, client) {
+				var queryStr;
+				if(template_id){
+					queryStr = "SELECT token from users inner join templates on templates.user_id=users.id"
+					+" where templates.id="+template_id+" and users.id="+user_id + " and templates.uuid='"+template_Uuid+"'";
+				}
+				else{
+					queryString = "SELECT token from users where id="+user_id;
+				}
+			  client.query(queryString, function(err, result) {
+				  if(result.rows.length==0) validated = false;
+				  else{
+					  if(result.rows[0].token==token) validated = true;
+					  else validated = false;
+				  }
+	  		      callback(validated); 
+			  });
+			});
+		}
+		else{
+			validated = (reply.toString()==token);
+		    callback(validated);
+		}
     });
 }

@@ -52,6 +52,7 @@ class TemplatesController < ApplicationController
 
     
     ShopController.push_shop_predict_task(current_user,@template)
+    REDIS.set("token_#{@template.uuid}", current_user.token);
     respond_to do |format|
       format.html # show.html.erb
       # format.json { render json: @template }

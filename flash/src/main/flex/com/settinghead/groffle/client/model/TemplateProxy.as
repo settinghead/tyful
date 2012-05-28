@@ -113,6 +113,8 @@ package com.settinghead.groffle.client.model
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
 			urlLoader.addVariable("token", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token));
+			urlLoader.addVariable("templateId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId));
+			urlLoader.addVariable("userId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.userId));
 			urlLoader.addVariable("templateUuid", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUuid));
 			urlLoader.addFile(b,"my_template.zip",'template');
 
