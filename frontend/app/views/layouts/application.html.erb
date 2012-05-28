@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 	  <% flash.each do |name, msg| %>
-	  window.notify("<%=msg%>","<%=title%>");
+	  window.notify("<%=msg%>", "Notice");
       <% end %>
   });
 	
@@ -34,7 +34,7 @@
 		<div id="left-blank">&nbsp;</div>
 		<div id="user_nav">
 		  <% if user_signed_in? %>
-		    Hello <%= current_user.nickname || current_user.email %>!
+		    Hello <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!
 		    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 		  <% else %>
 		    <%= link_to "Sign up", new_user_session_path %> or <%= link_to "sign in", new_user_session_path %>

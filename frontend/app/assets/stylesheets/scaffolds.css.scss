@@ -211,6 +211,12 @@ div {
   float: right;
   margin-bottom: 10px;
   display: inline;
+  #artist_name{
+  	padding-left: 17px;
+	background-image: image-url("beret.png");
+	background-position: 0 -2;
+	background-repeat: no-repeat;
+  }
 }
 
 #logo_bar{
