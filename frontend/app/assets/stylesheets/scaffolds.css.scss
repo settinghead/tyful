@@ -232,33 +232,34 @@ div {
     text-align: center;
 	border-radius: 5px;
 	border-width: 1px;
-	border-style: dashed;
-	border-color:gray;
+	border-style: double;
+	border-color:#E08B1B;
 	z-index: 99999;
 	-moz-border-radius: 5px;
 	-moz-box-shadow: 3px 5px 3px gray;
 	-webkit-box-shadow: 3px 3px 3px gray;
 	box-shadow: 3px 3px 3px gray;
+	#logo .main{
+		color: #E08B1B;
+		font-size: 25px;
+		line-height: 23px;
+		font-weight: bold;
+		font-family: monospace;
+		clear: both;
+	}
+
+	#logo .domain{
+		font-size: 14px;
+	}
+
+	#tagline{
+		font-size: 9px;
+	}
 
 }
 
 
-#logo_bar #logo .main{
-	color: #0559CC;
-	font-size: 25px;
-	line-height: 23px;
-	font-weight: bold;
-	font-family: Lucidatypewriter, monospace;
-	clear: both;
-}
 
-#logo_bar #logo .domain{
-	font-size: 14px;
-}
-
-#logo_bar #tagline{
-	font-size: 9px;
-}
 
 .authentications {
   margin-bottom: 30px;

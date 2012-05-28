@@ -1,16 +1,15 @@
 class TemplatesController < ApplicationController
   
   impressionist :actions=>[:show,:edit], :unique => [:impressionable_type, :impressionable_id, :session_hash]
-  before_filter :retrieve_token
   
   def retrieve_token
-    @token = current_user.token if current_user
+    @token = current_user.token if (current_user && @template && @template.user && current_user.id == @template.user.id)
   end
+
   
   # GET /templates
   # GET /templates.json
   def index
-    
     @templates = Template.find(:all, :conditions => ['private=?', false], :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'',
      :order => 'count(votes.id) DESC', :group => 'templates.id')
     respond_to do |format|
@@ -45,14 +44,11 @@ class TemplatesController < ApplicationController
   # GET /templates/1
   # GET /templates/1.json
   def show
-    
     @mode = "showTemplate"
     @template = Template.find(params[:id])
-    @token = "1" if current_user && @template.user && current_user.id == @template.user.id
-
-    
+    retrieve_token
     ShopController.push_shop_predict_task(current_user,@template)
-    REDIS.set("token_#{@template.uuid}", current_user.token);
+    REDIS.set("token_#{@template.uuid}", current_user.token) if current_user;
     respond_to do |format|
       format.html # show.html.erb
       # format.json { render json: @template }
@@ -84,6 +80,7 @@ class TemplatesController < ApplicationController
   # GET /templates/new.json
   def new
     @template = Template.new
+    retrieve_token
     @mode = 'newTemplate'
     ShopController.push_shop_predict_task(current_user,@template)
     
@@ -98,8 +95,7 @@ class TemplatesController < ApplicationController
     
     @template = Template.find(params[:id])
     authorize! :manage, @template
-    @token = "1" if current_user && @template.user && current_user.id == @template.user.id
-    
+    retrieve_token
     ShopController.push_shop_predict_task(current_user,@template)
     
     @mode = 'editTemplate'

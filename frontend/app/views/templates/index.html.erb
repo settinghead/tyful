@@ -1,5 +1,5 @@
 <%content_for :header do%>
-<div class="instructional">Pick a template below, or <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %>. (It's easy and fun!)</div>
+<div class="instructional">Pick one, or <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> (It's super simple and shockingly fun!)</div>
 <%end%>
 <div class="masonry-container">
 	<% @templates.each do |template| %>
