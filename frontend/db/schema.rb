@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527232321) do
+ActiveRecord::Schema.define(:version => 20120528055405) do
 
   create_table "artworks", :force => true do |t|
     t.string   "name"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20120527232321) do
     t.integer  "fb_user_uid",                           :default => 0
     t.string   "fb_access_token"
     t.string   "nickname"
+    t.string   "token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

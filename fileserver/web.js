@@ -20,13 +20,17 @@ console.log(require('./config').redis_db);
 var redisUrl = URL.parse(require('./config').redis_db);
 var redisClient = redis.createClient(redisUrl.port, redisUrl.hostname);
 if(redisUrl.auth){
-	redisClient.auth(redisUrl.auth.substr(redisUrl.auth.indexOf(":")+1), startServices);
+	redisClient.auth(redisUrl.auth.substr(redisUrl.auth.indexOf(":")+1), startServices());
 }
 else{
 	startServices();
 }
 
-function startServices(){	
+function startServices(){
+	//select correct redis db
+	if(redisUrl.path)
+		redisClient.select(redisUrl.path[0]=='/'?redisUrl.path.substr(1):redisUrl.path);
+		
 	app.get('/t', function(req, res){
 				res.header("Content-Type", "text/html");
 			  res.send('<h1>t</h1><form method="post" action="/t" enctype="multipart/form-data">'
@@ -193,4 +197,11 @@ function startServices(){
 	var port = process.env.PORT || 5000;
 	app.listen(port);
 
+}
+
+function validate_token(user_id, token, callback){
+	var realToken = redisClient.get("token_"+user_id, function (err, reply) {
+		var validated = reply.toString()==token;
+		callback(validated);
+    });
 }

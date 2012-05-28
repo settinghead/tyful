@@ -1,6 +1,11 @@
 class TemplatesController < ApplicationController
   
   impressionist :actions=>[:show,:edit], :unique => [:impressionable_type, :impressionable_id, :session_hash]
+  before_filter :retrieve_token
+  
+  def retrieve_token
+    @token = current_user.token if current_user
+  end
   
   # GET /templates
   # GET /templates.json

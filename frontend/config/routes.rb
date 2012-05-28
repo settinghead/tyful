@@ -1,4 +1,6 @@
 Groffle::Application.routes.draw do
+  get "fb/post_photo"
+
   get "shop/show"
 
   resources :authentications

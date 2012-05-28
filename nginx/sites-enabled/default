@@ -49,10 +49,6 @@ server {
 		proxy_pass http://fileserver;
 	}
 	
-	location /fbupload/{
-		proxy_pass http://fileserver;
-	}
-	
 	location /tp/ {
 		proxy_pass http://fileserver;
         proxy_cache my-cache;

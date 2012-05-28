@@ -7,6 +7,10 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.hoverIntent
+//= require jquery.purr
+//= require notifications.js
+
 //= require_tree .
 //= require uservoice.js
 //= require ga.js

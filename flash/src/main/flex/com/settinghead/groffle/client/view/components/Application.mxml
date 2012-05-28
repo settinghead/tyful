@@ -25,7 +25,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:VGroup>
-		<s:Label height="35" />
+		<s:Label height="30" />
 		<components:MainArea id="mainArea" left="0" top="0" bottom="0" />		
 
 	</s:VGroup>

@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   
   friendly_id :nickname
   acts_as_voter
+  acts_as_taggable
+  acts_as_taggable_on :tags
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -12,7 +14,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :nickname
   def apply_omniauth(omniauth)
     if email.blank?
       self.email = omniauth['info']['email'] if omniauth['info'] && omniauth['info']['email']

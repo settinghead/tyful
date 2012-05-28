@@ -8,14 +8,26 @@
  
     <%= stylesheet_link_tag "application" %>
 	<%= stylesheet_link_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" %>
+	
 	<%= favicon_link_tag %>
 	<%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+	  <% flash.each do |name, msg| %>
+	  window.notify("<%=msg%>","<%=title%>");
+      <% end %>
+  });
+	
+	</script>
   </head>
   <body>
 	<div id ="logo_bar">
+		<%=link_to root_path do%>
 		<div id="logo"><span class="main">Groffle</span><span class="domain">.me</span></div>
+		<%end%>
 		<span id="tagline">Create your own typography art.</span>
 	</div>
 	<div id="header">
@@ -29,20 +41,17 @@
 		  <% end %>
 		</div>
 		<div id="main_menu">
-			Templates: 
   		<ul>
-  			<li><%=link_to "My", :controller=> "templates", :action=>"my"%></li>
+  			<li><%=link_to "My", :controller=> "/templates", :action=>"my"%></li>
 			
-  			<li><%=link_to "Popular", :controller=> "templates", :action=>"index"%></li>
-  			<li class="last"><%=link_to "Newest", :controller=> "templates", :action=>"newest"%></li>
+  			<li><%=link_to "Popular", :controller=> "/templates", :action=>"index"%></li>
+  			<li class="last"><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
  					
   			<%if current_user%>
   			<%end%>
   		</ul>
 		</div>
-	    <% flash.each do |name, msg| %>
-	      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-	    <% end %>
+	   
         <%= content_tag :h1, yield(:title) if show_title? %>
 			
 		<%=yield(:header)%>

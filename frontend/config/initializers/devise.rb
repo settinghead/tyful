@@ -208,4 +208,14 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+  
+  Warden::Manager.after_authentication do |user, auth, opts|
+    # generate user token if it's not present
+    unless user.token?
+      user.token = rand(36**128).to_s(36)
+      user.save
+    end
+    REDIS.set("token_#{user.id}", user.token)
+    
+  end
 end

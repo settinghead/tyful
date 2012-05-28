@@ -375,7 +375,7 @@ Please contact me at afoucal@free.fr.
 						
 					case NOTIFICATION_POSITION_TOP_RIGHT:
 						x = notificationParent.x + notificationParent.width - hg - width;
-						y = notificationParent.y + (vg + height) * factor - height;
+						y = notificationParent.y + 35 + (vg + height) * factor - height;
 						if ( (y + height) > notificationParent.height )
 						{
 							factor = prepareStack();
