@@ -17,7 +17,7 @@ package com.settinghead.groffle.client.controller.template
 			var templateProxy:TemplateProxy =
 				facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 			templateProxy.templateIdToLoad = 
-				FlexGlobals.topLevelApplication.parameters.templateUuid as String;
+				decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUuid) as String;
 			templateProxy.load();
 		}
 		

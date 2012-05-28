@@ -14,39 +14,42 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="container">
-		<div id ="logo_bar">
-			<div id="logo"><span class="main">Groffle</span><span class="domain">.me</span></div>
-			<span id="tagline">Create your own typography art.</span>
+	<div id ="logo_bar">
+		<div id="logo"><span class="main">Groffle</span><span class="domain">.me</span></div>
+		<span id="tagline">Create your own typography art.</span>
+	</div>
+	<div id="header">
+		<div id="left-blank">&nbsp;</div>
+		<div id="user_nav">
+		  <% if user_signed_in? %>
+		    Hello <%= current_user.nickname || current_user.email %>!
+		    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+		  <% else %>
+		    <%= link_to "Sign up", new_user_session_path %> or <%= link_to "sign in", new_user_session_path %>
+		  <% end %>
 		</div>
-		<div id="header">
-
-			<div id="user_nav">
-			  <% if user_signed_in? %>
-			    Hello <%= current_user.nickname || current_user.email %>!
-			    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-			  <% else %>
-			    <%= link_to "Sign up", new_user_session_path %> or <%= link_to "sign in", new_user_session_path %>
-			  <% end %>
-			</div>
-	  		<ul id="main_menu">
-	  			<li><%=link_to "Popular", :controller=> "templates", :action=>"index"%></li>
-					
-	  			<%if current_user%>
-	  			<li><%=link_to "My", :controller=> "templates", :action=>"my"%></li>
-	  			<%end%>
-	  		</ul>
+		<div id="main_menu">
+			Templates: 
+  		<ul>
+  			<li><%=link_to "My", :controller=> "templates", :action=>"my"%></li>
 			
-		    <% flash.each do |name, msg| %>
-		      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-		    <% end %>
-	        <%= content_tag :h1, yield(:title) if show_title? %>
-			
-			<%=yield(:header)%>
+  			<li><%=link_to "Popular", :controller=> "templates", :action=>"index"%></li>
+  			<li class="last"><%=link_to "Newest", :controller=> "templates", :action=>"newest"%></li>
+ 					
+  			<%if current_user%>
+  			<%end%>
+  		</ul>
 		</div>
-
+	    <% flash.each do |name, msg| %>
+	      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+	    <% end %>
+        <%= content_tag :h1, yield(:title) if show_title? %>
+			
+		<%=yield(:header)%>
+	</div>
 	  
-	  
+    <div id="container">	
+		<div id="top-spacer">&nbsp;</div>
       <%= yield %>
     </div>
   </body>

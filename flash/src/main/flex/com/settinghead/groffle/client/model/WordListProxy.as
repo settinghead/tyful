@@ -47,7 +47,7 @@ package com.settinghead.groffle.client.model
 		public function load() :void{
 			if(this._list==null){
 				
-				//var wordListId:String = FlexGlobals.topLevelApplication.parameters.wordListId as String;
+				//var wordListId:String = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.wordListId) as String;
 				var request : URLRequest = new URLRequest  ( "/word_list/recent" );
 				var urlVariables : URLVariables = new URLVariables ();
 				request.data = urlVariables;

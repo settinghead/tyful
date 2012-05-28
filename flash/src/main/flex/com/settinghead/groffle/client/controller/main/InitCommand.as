@@ -11,7 +11,7 @@ package com.settinghead.groffle.client.controller.main
 	{
 		public function InitCommand()
 		{
-			var mode:String = FlexGlobals.topLevelApplication.parameters.mode as String;
+			var mode:String = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode) as String;
 			switch(mode){
 				case ApplicationFacade.MODE_EDIT_TEMPLATE:
 				case ApplicationFacade.MODE_SHOW_TEMPLATE:

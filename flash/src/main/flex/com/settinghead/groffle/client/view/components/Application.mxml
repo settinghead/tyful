@@ -24,10 +24,14 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<components:MainArea id="mainArea" left="0" top="0" bottom="0" />		
+	<s:VGroup>
+		<s:Label height="35" />
+		<components:MainArea id="mainArea" left="0" top="0" bottom="0" />		
+
+	</s:VGroup>
 		<shop:ShopItemList id="shopItemList"
 						   visible.withoutShop="false" includeInLayout.withoutShop="false" includeInLayout.withShop="true"
-						   visible.withShop="true" top="0" width="150" 
+						   visible.withShop="true" top="35" width="150" 
 						   left="{mainArea.width>parent.width-shopItemList.width?parent.width-shopItemList.width:mainArea.left+mainArea.tuRenderer.left+mainArea.tuRenderer.width+30}" />
 
 	

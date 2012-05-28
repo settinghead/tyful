@@ -78,9 +78,9 @@
 							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
 							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template to file..." />
 							<mx:HBox 
-								enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
-								visible="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
-								includeInLayout="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								enabled="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								visible="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								includeInLayout="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 								>
 								<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" 
 										  />

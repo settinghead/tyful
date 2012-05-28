@@ -23,6 +23,18 @@ class TemplatesController < ApplicationController
       format.json { render json: @templates }
     end
   end
+
+  def newest
+    @templates =  Template.find(:all, :conditions => ['private=?', false],
+     :order => 'created_at DESC')
+    respond_to do |format|
+      format.html do 
+        render 'index'
+      end
+      format.json { render json: @templates }
+    end
+  end
+
   
 
   # GET /templates/1

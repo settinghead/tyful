@@ -2,6 +2,7 @@ package com.settinghead.groffle.client.model
 {
 	import com.adobe.images.PNGEncoder;
 	import com.adobe.serialization.json.JSONDecoder;
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.vo.PreviewUrlVO;
 	import com.settinghead.groffle.client.model.vo.shop.ShopItemVO;
@@ -144,10 +145,8 @@ package com.settinghead.groffle.client.model
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
 			urlLoader.addFile(b,"upload.png","image");
-			
 			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-	
-			urlLoader.load( FlexGlobals.topLevelApplication.parameters.relayUrl,true);
+			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.relayUrl),true);
 //			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, uploadError);
 //			urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, uploadError);
 		}
@@ -163,7 +162,7 @@ package com.settinghead.groffle.client.model
 		public function uploadComplete(e:Event):void{
 			var id:String = new JSONDecoder(urlLoader.loader.data,false).getValue().id;
 			//			_previewUrl.url = "http://file.wenwentu.com/r/"+id;
-			_previewUrl.url = FlexGlobals.topLevelApplication.parameters.relayUrl+id;
+			_previewUrl.url = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.relayUrl)+id;
 			facade.sendNotification(ApplicationFacade.SHOW_SHOP);
 		}
 	}

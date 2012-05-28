@@ -19,12 +19,12 @@
 			
 			protected function text1_mouseOverHandler(event:MouseEvent):void
 			{
-				(event.target as ApplicationControlBar).alpha = 0.3;
+//				(event.target as ApplicationControlBar).alpha = 0.3;
 			}
 			
 			protected function text1_mouseOutHandler(event:MouseEvent):void
 			{
-				(event.target as ApplicationControlBar).alpha = 0.8;
+//				(event.target as ApplicationControlBar).alpha = 0.8;
 			}
 			
 		]]>

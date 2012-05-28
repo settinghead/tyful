@@ -11,6 +11,7 @@ Groffle::Application.routes.draw do
     end
   end
   match '/templates/my/' => 'templates#my'
+  match '/templates/newest/' => 'templates#newest'
   
   resources :templates do
     member do

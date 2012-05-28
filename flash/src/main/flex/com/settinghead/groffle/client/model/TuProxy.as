@@ -393,9 +393,9 @@ package com.settinghead.groffle.client.model
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
 			urlLoader.addEventListener(Event.COMPLETE, photoPostComplete);
 
-			urlLoader.addVariable("token", FlexGlobals.topLevelApplication.parameters.token);
+			urlLoader.addVariable("token", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token));
 			urlLoader.addFile(b,"artwork.png",'image');
-			urlLoader.load( FlexGlobals.topLevelApplication.parameters.facebookUploadUrl,true);
+			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.facebookUploadUrl),true);
 
 		}
 		

@@ -54,7 +54,7 @@ package com.settinghead.groffle.client.model
 
 		public function load() :void{
 				var request : URLRequest
-				= new URLRequest  (FlexGlobals.topLevelApplication.parameters.templateUrl + this.templateIdToLoad);
+				= new URLRequest  (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUrl) + this.templateIdToLoad);
 				var urlVariables : URLVariables = new URLVariables ();
 				request.data = urlVariables;
 				request.method = URLRequestMethod.GET;
@@ -78,7 +78,7 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function set template(t:TemplateVO):void{
-			if(t.id==null) t.id = FlexGlobals.topLevelApplication.parameters.templateId as String;
+			if(t.id==null) t.id = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId) as String;
 
 			this.setData(t);
 		}
@@ -112,14 +112,14 @@ package com.settinghead.groffle.client.model
 			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			urlLoader.addEventListener(Event.COMPLETE, uploadComplete);
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
-			urlLoader.addVariable("token", FlexGlobals.topLevelApplication.parameters.token);
-			urlLoader.addVariable("templateUuid", FlexGlobals.topLevelApplication.parameters.templateUuid);
+			urlLoader.addVariable("token", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token));
+			urlLoader.addVariable("templateUuid", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUuid));
 			urlLoader.addFile(b,"my_template.zip",'template');
 
 			
 			//			urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 			
-			urlLoader.load( FlexGlobals.topLevelApplication.parameters.templateUrl,true);
+			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUrl),true);
 		}
 		
 		public function dataPrepareComplete(e:Event):void{

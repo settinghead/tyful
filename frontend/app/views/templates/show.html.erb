@@ -11,7 +11,7 @@ content_for :head do%>
 %>
 
 <%content_for :header do%>
-<h1>Template "<%=@template.name%>"</h1>
+Template <h1>"<%=@template.name%>"</h1> by <%=link_to @template.user%>
 <%end%>
 <%= render 'form' %>
 

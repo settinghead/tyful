@@ -21,45 +21,60 @@ flash_vars = {:mode=>@mode,
 	:templateId=>@template.id,
 	:relayUrl=>ERB::Util.url_encode(ENV["RELAY_URL"]),
 	:templateUrl=>ERB::Util.url_encode(ENV["TEMPLATE_URL"]),
+	:facebookPostUrl => ERB::Util.url_encode(ENV["FACEBOOK_POST_URL"]),
 	:token=>@token
 	}
 
 %>
+<%if can? :manage, @template%>
+<script type="text/javascript">
+window.onbeforeunload = function(){
+	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
+	  e = e || window.event;
+	  // For IE and Firefox
+	  if (e) {
+	    e.returnValue = message;
+	  }
+
+	  // For Safari
+	  return message;}
+</script>
+<%end%>
 <script type="text/javascript"
 	src="<%=ENV['FLASH_URL']+'swfobject.js'%>"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	// For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
-	var swfVersionStr = "10.2.0";
-	// To use express install, set to playerProductInstall.swf, otherwise the empty string. 
-	var xiSwfUrlStr = "playerProductInstall.swf";
-	var flashvars = {};
-	<%flash_vars.each do |k,v|%>
-	flashvars.<%=k.to_s%> = "<%=v.to_s%>";
-	<%end%>
-	var params = {};
-	params.quality = "high";
-	params.bgcolor = "#ffffff";
-	params.allowscriptaccess = "sameDomain";
-	params.allowfullscreen = "true";
-	params.wmode = 'opaque';
-	var attributes = {};
-	attributes.id = "Main";
-	attributes.name = "Main";
-	attributes.align = "middle";
-	swfobject.embedSWF(
-			"<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>",
-			"flashContent", "100%", "100%", swfVersionStr, xiSwfUrlStr,
-			flashvars, params, attributes);
-	// JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
-	swfobject.createCSS("#flashContent", "display:block;text-align:left;");	
-});
+// $(document).ready(function(){
+// 	// For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+// 	var swfVersionStr = "10.2.0";
+// 	// To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+// 	var xiSwfUrlStr = "playerProductInstall.swf";
+// 	var flashvars = {};
+// 	<%flash_vars.each do |k,v|%>
+// 	flashvars.<%=k.to_s%> = "<%=v.to_s%>";
+// 	<%end%>
+// 	var params = {};
+// 	params.quality = "high";
+// 	params.bgcolor = "#ffffff";
+// 	params.allowscriptaccess = "sameDomain";
+// 	params.allowfullscreen = "true";
+// 	params.wmode = 'opaque';
+// 	var attributes = {};
+// 	attributes.id = "Main";
+// 	attributes.name = "Main";
+// 	attributes.align = "middle";
+// 	swfobject.embedSWF(
+// 			"<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>",
+// 			"flashContent", "100%", "100%", swfVersionStr, xiSwfUrlStr,
+// 			flashvars, params, attributes);
+// 	// JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+// 	swfobject.createCSS("#flashContent", "display:block;text-align:left;");	
+// });
 </script>
 <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
              JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
              when JavaScript is disabled.
         -->
-<div id="flashContent">
+<!-- <div id="flashContent">
 	<p>To view this page ensure that Adobe Flash Player version 10.2.0
 		or greater is installed.</p>
 	<script type="text/javascript">
@@ -68,10 +83,10 @@ $(document).ready(function(){
 		document
 				.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
                                 + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>");
-	</script>
+	</script> -->
 </div>
 
-<noscript>
+<!-- <noscript> -->
 	<div id="noscriptFlashWrapper">
 	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 		width="100%" height="100%" id="Main" name="Main">
@@ -83,7 +98,7 @@ $(document).ready(function(){
 		<param name="allowFullScreen" value="true" />
 		<param name="wmode" value="opaque">
 		<param name="FlashVars"
-			value="<%=flash_vars.to_query.html_safe%>" />
+			value="<%=flash_vars.to_query%>" />
 		<!--[if !IE]>-->
 		<object type="application/x-shockwave-flash"
 			data="<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>"
@@ -93,7 +108,7 @@ $(document).ready(function(){
 			<param name="allowScriptAccess" value="sameDomain" />
 			<param name="allowFullScreen" value="true" />
 			<param name="FlashVars"
-				value="<%=flash_vars.to_query.html_safe%>" />
+				value="<%=flash_vars.to_query%>" />
 			<param name="wmode" value="opaque">
 			
 			<!--<![endif]-->
@@ -110,7 +125,7 @@ $(document).ready(function(){
 		<!--<![endif]-->
 	</object>
 	</div>
-</noscript>
+<!-- </noscript> -->
 <%if can? :manage, @template %>
 <div id="modal">
 	<%= form_for(@template,:remote => true) do |f| %>
