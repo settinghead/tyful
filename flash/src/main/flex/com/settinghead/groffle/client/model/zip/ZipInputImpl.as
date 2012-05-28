@@ -85,7 +85,7 @@ package com.settinghead.groffle.client.model.zip
 	//					if(grandParent is IZippable)
 	//						childName = (grandParent as IZippable).type + childName;
 						var childName:String = (index+1).toString();
-						var ins:* = instantiateInstance(e,childName,parent,grandParent,start,end);
+						var ins:* = instantiateInstance(e,childName,parent,grandParent,index,start,end);
 						parent[index] = ins;
 					}
 				
@@ -100,23 +100,23 @@ package com.settinghead.groffle.client.model.zip
 				}
 				else{
 					if(parent[name]==null||parent[name]==undefined){
-						parent[name] = instantiateInstance(e,name,parent,grandParent,start,end);
+						parent[name] = instantiateInstance(e,name,parent,grandParent,-1,start,end);
 					}
 					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent);
 				}
 			}
 		}
 		
-		private function instantiateInstance(e:ZipEntry, name:String, parent:Object, grandParent:Object, start:int, end:int):Object{			
-			return instantiateInstanceByPath(e.name.substring(0, end),name,parent,grandParent);
+		private function instantiateInstance(e:ZipEntry, name:String, parent:Object, grandParent:Object, index:int, start:int, end:int):Object{			
+			return instantiateInstanceByPath(e.name.substring(0, end),name,parent,grandParent,index);
 		}
 		
-		private function instantiateInstanceByPath(fullPath:String, name:String=null, parent:Object=null, grandParent:Object=null):Object{
+		private function instantiateInstanceByPath(fullPath:String, name:String=null, parent:Object=null, grandParent:Object=null,index:int=-1):Object{
 			var str:String = readStringFromFile(file.getEntry(fullPath+ "/properties.json"));
 			var jsonDecoder:JSONDecoder = new JSONDecoder(str,true);
 			var jsonObj:Object = jsonDecoder.getValue();
 			var typeStr:String = jsonObj["type"] as String;
-			var newInstance:* = TypeRegistrar.getObject(typeStr, name, parent, grandParent);
+			var newInstance:* = TypeRegistrar.getObject(typeStr, name, index, parent, grandParent);
 			
 			//apply all properties
 			var decoder2:JSONDecoder = new JSONDecoder(str,true, newInstance);

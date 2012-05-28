@@ -67,14 +67,27 @@ package com.settinghead.groffle.client.model.vo.template
 			this._name = v;
 		}
 		
-		public function Layer(n:String, template:TemplateVO, autoAddAndConnect:Boolean = true){
+		public function Layer(n:String, template:TemplateVO, index:int = -1, autoAddAndConnect:Boolean = true){
 			this.name = n;
 			this._template = template;
 			if(autoAddAndConnect){
-				if(this._template.layers.length>0)
-				{
-					connect(this, this._template.layers[this._template.layers.length-1] as Layer);
-						
+				if(index<0){
+					if(this._template.layers.length>0)
+					{
+						connect(this, this._template.layers[this._template.layers.length-1] as Layer);
+							
+					}
+				}
+				else{
+					if(index>0&&this._template.layers.length>=index && this._template.layers[index-1]!=null)
+					{
+						connect(this, this._template.layers[index-1] as Layer);	
+					}
+					if(index<this._template.layers.length-1&&this._template.layers[index+1]!=null)
+					{
+						connect(this._template.layers[index+1] as Layer,this);	
+					}
+					
 				}
 				this._template.layers.addItem(this);
 			}

@@ -86,12 +86,14 @@ package com.settinghead.groffle.client.view
 		private function checkCreateNextDisplayWord( event:Event = null ):void
 		{	
 			if(tuRenderer.tu!=null){
-				if(tuProxy.rendering){
+				if(tuProxy.failureCount<tuProxy.tu.template.perseverance){
 					if(!waitingForWord){
 						waitingForWord = true;
 						var count:int = 0;
 						while(tuProxy.rendering && ++count<2) 
 							tuProxy.renderNextDisplayWord(tuRenderer.tu);
+						tuRenderer.perseveranceMeter.setProgress(tuProxy.failureCount, tuProxy.tu.template.perseverance);
+
 						waitingForWord = false;
 					}				
 				}

@@ -49,9 +49,9 @@ package com.settinghead.groffle.client.model.vo.template
 	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
-		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1, autoAddAndConnect:Boolean = true)
+		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1, index:int=-1, autoAddAndConnect:Boolean = true)
 		{
-			super(name, template, autoAddAndConnect);
+			super(name, template, index,autoAddAndConnect);
 			if(width>0 && height>0){
 				this._img = new Bitmap(new BitmapData(width, height,true, 0xccc));
 			}

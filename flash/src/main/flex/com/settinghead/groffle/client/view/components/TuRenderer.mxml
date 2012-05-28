@@ -63,6 +63,11 @@
 				dispatchEvent(new Event(EDIT_TEMPLATE));
 			}
 			
+			protected function btnMoreWords_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(EDIT_TEMPLATE));
+			}
+			
 			protected function btnSaveAsPng_clickHandler(event:MouseEvent):void{
 				generateImage();
 				var encoder:PNGEncoder = new PNGEncoder();
@@ -260,18 +265,30 @@
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Group depth="1">
-			<s:layout>
-				<s:HorizontalLayout />
-			</s:layout>
-			<s:Label width="170" />
-			<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
-			<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
-			<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
-			<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
-			<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
-			<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
-		</s:Group>
+		<s:VGroup>
+			<s:Group depth="1">
+				<s:layout>
+					<s:HorizontalLayout />
+				</s:layout>
+				<s:Label width="170" />
+				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+				<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
+				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
+				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
+				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
+			</s:Group>
+			<s:HGroup>
+				<s:Label text="Chance to finish"  />
+				<s:Group>
+					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" width="{perseveranceSlider.value*5}" />
+					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250" />	
+				</s:Group>
+				<s:Button id="btnMoreWords" label="More words" enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" click="perseveranceSlider.value+=10;" />
+			</s:HGroup>
+
+		</s:VGroup>
+
 		<s:Group depth="2">
 			<mx:Canvas id="mainCanvas" top="0" left="0">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>

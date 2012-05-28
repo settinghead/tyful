@@ -75,7 +75,7 @@ package com.settinghead.groffle.client.model.vo.template
 		private var _width:Number, _height:Number;
 		private var _previewPNG: BitmapData;
 		public var mixColorDistance:int = 5;
-		public var perseverance:int = 8;
+		public var perseverance:int = 9;
 		public var diligence:int = 8;
 		public var id:String = null;
 		public var uuid:String = null;

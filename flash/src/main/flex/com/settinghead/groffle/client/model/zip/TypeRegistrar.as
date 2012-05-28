@@ -7,13 +7,13 @@ package com.settinghead.groffle.client.model.zip
 
 	public class TypeRegistrar
 	{
-		public static function getObject(type:String, name:String = null, parent:* = null, grandParent:* = null):*{
+		public static function getObject(type:String, name:String = null, index:int=-1, parent:* = null, grandParent:* = null):*{
 			switch(type){
 				case "Template":
 					return new TemplateVO();
 					break;
 				case "WordLayer":
-					return new WordLayer("layer"+name, grandParent, -1, -1, false);
+					return new WordLayer("layer"+name, grandParent, -1, -1,index, false);
 					break;
 				case "InverseWordLayer":
 					return new InverseWordLayer();

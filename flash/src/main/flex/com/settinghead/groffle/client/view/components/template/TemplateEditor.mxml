@@ -70,13 +70,20 @@
 
 						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" fontSize="20" styleName="render-button" color="#007A0A"
 								  toolTip="When you are done, click this button to create your word cloud." />
-						<s:Label text="&lt;&lt;-- When you are done, click this button to create your word cloud." />
+						<mx:HBox 
+							enabled="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+							visible="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+							includeInLayout="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+							>
+							<s:Button click="btnUploadTemplate_clickHandler(event)" label="Publish template to gallery" 
+									 toolTip="Publish your artwork so that other people can use it to create, like and share their own word cloud."  />
+						</mx:HBox>
 					</s:Group>
 					<mx:ViewStack backgroundColor="#EDEDED" id="ribbonViewStack"  visible="{toggleButtonBar.selectedIndex>=0}"
 					 width="1000" height="45" paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10" selectedIndex="1">
 						<mx:HBox label="File">
 							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
-							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template to file..." />
+							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Publish template to file..." />
 							<mx:HBox 
 								enabled="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 								visible="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"

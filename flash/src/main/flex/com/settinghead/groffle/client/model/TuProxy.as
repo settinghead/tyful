@@ -154,7 +154,11 @@ package com.settinghead.groffle.client.model
 		}
 
 		
-		private var failureCount:int = 0;
+		private var _failureCount:int = 0;
+		
+		public function get failureCount():int{
+			return _failureCount;
+		}
 		
 		private var retryWords:Vector.<WordVO> = new Vector.<WordVO>();
 		
@@ -177,7 +181,16 @@ package com.settinghead.groffle.client.model
 					{
 						if(totalAttemptedWords>0){
 							retryWords.push(eWord.word);
-							failureCount++;
+//							_failureCount++;
+//							//5 consecutive failures. Put rendering to an end.
+//							if (failureCount > tu.template.perseverance){
+//								//						tu.skipToLast();
+//								facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+//								
+//								
+//								markStopRendering();
+//								
+//							}
 							numRetries++;
 						}
 						else
@@ -205,7 +218,7 @@ package com.settinghead.groffle.client.model
 				
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
-					failureCount = 0;
+					_failureCount = 0;
 					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
 					
@@ -228,7 +241,7 @@ package com.settinghead.groffle.client.model
 					
 				}
 				else{
-					failureCount ++;
+					_failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
 					if (failureCount > tu.template.perseverance){
