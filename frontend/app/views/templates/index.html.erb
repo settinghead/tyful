@@ -8,7 +8,9 @@
 	<%= link_to(image_tag(ENV['TEMPLATE_PREVIEW_URL']+template.uuid+'.png')+ '<h3>"'.html_safe+template.name+'"</h3>'.html_safe, template) %>
 	by <%= link_to(template.user)%>
 		<div class="tools">
+			<% if can? :manage, template %>
 			<%= link_to 'X', template, confirm: 'Are you sure you want to delete this template?', method: :delete %>
+			<% end %>
 		</div>
 
 	 <div class="emote">

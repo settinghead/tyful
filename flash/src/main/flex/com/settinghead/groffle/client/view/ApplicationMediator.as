@@ -77,7 +77,7 @@ package com.settinghead.groffle.client.view
 				case ApplicationFacade.TEMPLATE_LOADED:
 				case ApplicationFacade.TEMPLATE_UPLOADED:
 				case ApplicationFacade.TEMPLATE_PREVIEW_GENERATED:
-				case ApplicationFacade.TU_IMAGE_GENERATED:
+//				case ApplicationFacade.TU_IMAGE_GENERATED:
 					Mask.close();
 					break;
 			}

@@ -57,7 +57,8 @@ package com.settinghead.groffle.client.view
 			switch ( note.getName() )
 			{
 				case ApplicationFacade.TU_IMAGE_GENERATED:
-					shopProxy.uploadImage(tuProxy.tu.generatedImage);
+					if(!tuProxy.generateTemplatePreview)
+						shopProxy.uploadImage(tuProxy.tu.generatedImage);
 					shopItemList.list = shopProxy.shop;
 					break;
 			}

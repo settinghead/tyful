@@ -20,6 +20,7 @@
 			<span id="tagline">Create your own typography art.</span>
 		</div>
 		<div id="header">
+
 			<div id="user_nav">
 			  <% if user_signed_in? %>
 			    Hello <%= current_user.nickname || current_user.email %>!
@@ -28,12 +29,23 @@
 			    <%= link_to "Sign up", new_user_session_path %> or <%= link_to "sign in", new_user_session_path %>
 			  <% end %>
 			</div>
+	  		<ul id="main_menu">
+	  			<li><%=link_to "Popular", :controller=> "templates", :action=>"index"%></li>
+					
+	  			<%if current_user%>
+	  			<li><%=link_to "My", :controller=> "templates", :action=>"my"%></li>
+	  			<%end%>
+	  		</ul>
+			
 		    <% flash.each do |name, msg| %>
 		      <%= content_tag :div, msg, :id => "flash_#{name}" %>
 		    <% end %>
 	        <%= content_tag :h1, yield(:title) if show_title? %>
+			
 			<%=yield(:header)%>
 		</div>
+
+	  
 	  
       <%= yield %>
     </div>

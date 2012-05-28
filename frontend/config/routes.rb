@@ -10,13 +10,16 @@ Groffle::Application.routes.draw do
       post 'index'
     end
   end
+  match '/templates/my/' => 'templates#my'
   
   resources :templates do
     member do
       get 'like'
       get 'unlike'
-    end
+    end    
   end
+  
+  
 
   devise_for :users, :controllers => {:registrations => 'registrations'}
   

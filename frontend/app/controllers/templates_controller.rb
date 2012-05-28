@@ -6,12 +6,24 @@ class TemplatesController < ApplicationController
   # GET /templates.json
   def index
     
-    @templates = Template.find(:all, :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'', :order => 'count(votes.id) DESC', :group => 'templates.id')
+    @templates = Template.find(:all, :conditions => ['private=?', false], :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'',
+     :order => 'count(votes.id) DESC', :group => 'templates.id')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @templates }
     end
   end
+  
+  def my
+    @templates = Template.find_all_by_user_id(current_user.id)
+    respond_to do |format|
+      format.html do 
+        render 'index'
+      end
+      format.json { render json: @templates }
+    end
+  end
+  
 
   # GET /templates/1
   # GET /templates/1.json
@@ -65,7 +77,9 @@ class TemplatesController < ApplicationController
 
   # GET /templates/1/edit
   def edit
+    
     @template = Template.find(params[:id])
+    authorize! :manage, @template
     @token = "1" if current_user && @template.user && current_user.id == @template.user.id
     
     ShopController.push_shop_predict_task(current_user,@template)
@@ -103,6 +117,7 @@ class TemplatesController < ApplicationController
   # PUT /templates/1.json
   def update
     @template = Template.find(params[:id])
+    authorize! :manage, @template
 
     respond_to do |format|
       if @template.update_attributes(params[:template])
@@ -120,6 +135,8 @@ class TemplatesController < ApplicationController
   # DELETE /templates/1.json
   def destroy
     @template = Template.find(params[:id])
+    authorize! :manage, @template
+    
     @template.destroy
 
     respond_to do |format|

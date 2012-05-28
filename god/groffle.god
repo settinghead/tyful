@@ -18,7 +18,7 @@ God.watch do |w|
   w.name = "groffle-file"
   w.dir = basedir+"/fileserver"
   w.start = "NODE_ENV=" + ENV['RAILS_ENV'] +" node web.js >> web.log"
-  w.stop  = "killall node"
+  w.stop  = "killall -9 node"
   w.keepalive
 end
 

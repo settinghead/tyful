@@ -27,7 +27,8 @@
 	<components:MainArea id="mainArea" left="0" top="0" bottom="0" />		
 		<shop:ShopItemList id="shopItemList"
 						   visible.withoutShop="false" includeInLayout.withoutShop="false" includeInLayout.withShop="true"
-						   visible.withShop="true" top="0" width="150" left="{mainArea.left+mainArea.tuRenderer.left+mainArea.tuRenderer.width}" />
+						   visible.withShop="true" top="0" width="150" 
+						   left="{mainArea.width>parent.width-shopItemList.width?parent.width-shopItemList.width:mainArea.left+mainArea.tuRenderer.left+mainArea.tuRenderer.width+30}" />
 
 	
 	

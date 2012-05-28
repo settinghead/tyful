@@ -60,10 +60,10 @@ package com.settinghead.groffle.client.view
 					tuRenderer.generateImage();
 					if(tuProxy.generateTemplatePreview){
 						tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
-						tuProxy.generateTemplatePreview = false;
 
 						sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
-						
+						tuProxy.generateTemplatePreview = false;
+
 					}
 					else if(tuRenderer.tu.template.preview==null){
 						tuProxy.tu.template.preview = tuRenderer.canvasImage(300);

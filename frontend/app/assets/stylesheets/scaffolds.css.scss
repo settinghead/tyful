@@ -102,6 +102,20 @@ div {
     margin-left: 170px;
 }
 
+#main_menu{
+    display: inline;
+	float:right;
+    display: inline;
+    list-style: none;
+	li{
+	  display: inline;
+	}
+	margin: 0px;
+	padding: 0px;
+	margin-right: 10px;
+}
+
+
 #flash_notice {
   background-color: #CFC;
   border: solid 1px #6C6;
@@ -148,6 +162,7 @@ div {
 #user_nav {
   float: right;
   margin-bottom: 10px;
+  display: inline;
 }
 
 #logo_bar{

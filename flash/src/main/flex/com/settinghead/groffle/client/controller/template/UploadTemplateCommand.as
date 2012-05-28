@@ -41,9 +41,10 @@ package com.settinghead.groffle.client.controller.template
 			}
 			else{
 				Mask.show("Saving template...");
-				ExternalInterface.call("submitForm");
 				templateProxy.uploadTemplate();
 			}
+			ExternalInterface.call("submitForm");
+
 		}
 		
 		

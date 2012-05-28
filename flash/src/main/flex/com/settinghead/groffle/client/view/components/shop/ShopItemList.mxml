@@ -29,12 +29,12 @@
 			<s:VerticalLayout />
 		</s:layout>
 		<s:Label text="Make a gift with your artwork!" left="0" right="0" width="120" />
-		<s:List dataProvider="{list}" id="listControl"
-				itemRenderer="com.settinghead.groffle.client.view.components.shop.ShopItemRenderer"
+		<s:DataGroup dataProvider="{list}" id="listControl"
+				itemRenderer="com.settinghead.groffle.client.view.components.shop.ShopItemRenderer" 
 				>
 			<s:layout>
 				<s:VerticalLayout  />
 			</s:layout>
-		</s:List>
+		</s:DataGroup>
 	</s:Group>
 </s:Group>

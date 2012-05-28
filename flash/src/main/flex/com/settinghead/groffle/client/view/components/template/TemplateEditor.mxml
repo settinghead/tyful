@@ -76,11 +76,17 @@
 					 width="1000" height="45" paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10" selectedIndex="1">
 						<mx:HBox label="File">
 							<s:Button id="btnOpenTemplate" click="btnOpenTemplate_clickHandler(event)" label="Open template file" />
-							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template as..." />
-							<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" 
-									   enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
-									  />
-							<s:CheckBox id="chkRerenderThumbnail" label="Rerender thumbnail preview" />
+							<s:Button id="btnSaveTemplate" click="btnSaveTemplate_clickHandler(event)" label="Save template to file..." />
+							<mx:HBox 
+								enabled="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								visible="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								includeInLayout="{FlexGlobals.topLevelApplication.parameters.token.length>0 || (FlexGlobals.topLevelApplication.parameters.mode as String) == ApplicationFacade.MODE_NEW_TEMPLATE}"
+								>
+								<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save template (to cloud)" 
+										  />
+								<s:CheckBox id="chkRerenderThumbnail" label="Rerender thumbnail preview" />								
+							</mx:HBox>
+
 						</mx:HBox>
 							<mx:ViewStack label="Drawing" id="drawingOptionsViewStack" visible="{drawingToolBar.selectedIndex >=0}" selectedIndex="@{drawingToolBar.selectedIndex}"
 										  left="0" top="0" right="0" bottom="0" width="1000" height="45" change="drawingOptionsViewStack_changeHandler(event)">

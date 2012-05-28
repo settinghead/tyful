@@ -1,7 +1,9 @@
 <%if(@template.save)%>
 alert('Template successfully saved.');
 $('#modal').dialog('close');
+window.editing = false;
 	
 <%else%>
 $('#modal').dialog({title:'Saving template', width: 500});
+window.editing = true;
 <%end%>

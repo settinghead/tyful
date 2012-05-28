@@ -3,11 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 //= require jquery.imagesloaded.min
 //= require jquery.isotope.min.js
+window.editing = false;
 
 window.setTemplateUuid = (uuid) -> 
 	$('#template_uuid').val(uuid)
 window.submitForm = () ->
-	$('form').submit()
+  if(!window.editing)
+    $('form').submit()
+	
 onLayoutFn = ($elems, instance) ->
 
 
