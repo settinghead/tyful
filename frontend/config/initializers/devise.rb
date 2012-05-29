@@ -216,6 +216,7 @@ Devise.setup do |config|
       user.save
     end
     REDIS.set("token_#{user.id}", user.token)
-    
+    REDIS.set("fbtoken_#{user.id}", auth['credentials']['token'])
+    WordListController.push_wordlist_task(auth, user)
   end
 end

@@ -217,7 +217,7 @@
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
     <s:Label id="labelDisplay" left="10" right="10" top="2" bottom="2" horizontalCenter="0"
 			 maxDisplayedLines="1" textAlign="center" verticalAlign="middle" verticalCenter="1"
-			 color.up="#146000" fontSize.up="21">
+			 color.up="#146000" fontSize="21">
     </s:Label>
     
 </s:SparkButtonSkin>

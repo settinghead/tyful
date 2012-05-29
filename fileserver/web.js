@@ -124,6 +124,43 @@ function startServices(){
 		});
 	});  
 
+	app.post('/fbupload/', function(req, res){
+		var form = new formidable.IncomingForm();
+		form.parse(req, function(err, fields, files) {
+		    if(err) {
+		      next(err);
+		    } else {
+				validate_token(fields.userId,null,null,fields.token,function(validated){
+					if(validated){
+						var uuid =  node_uuid.v4();
+						console.log(uuid);
+						ins = fs.createReadStream(files.image.path);
+						ous = fs.createWriteStream('/tmp/' + uuid +".png");
+						util.pump(ins, ous, function(err) {
+							if(err) {
+					    		 res.send(JSON.stringify({"error":err}));
+							} else {
+								console.log("saved to "+'/tmp/' + uuid +".png");
+								redisClient.get('fbtoken_'+fields.userId, function (err, reply) {
+									if(!reply){
+										
+									}
+									else{
+	   								 res.send(JSON.stringify({"status":"success"}));
+									 
+									}
+								}
+							}
+						});
+					}
+					else{
+					 res.send(JSON.stringify({"error":"Authentication token mismatch."}));
+					}
+				});
+			}
+		});
+	});  
+
 
 	app.get('/r/:id', function(req, res){
 	

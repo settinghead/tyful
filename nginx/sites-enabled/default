@@ -45,9 +45,15 @@ server {
 	location /r/ {
            rewrite ^ http://$server_name$request_uri? permanent;
 	}
+	
 	location /t/ {
 		proxy_pass http://fileserver;
 	}
+	
+	location /fbupload/ {
+		proxy_pass http://fileserver;
+	}
+	
 	
 	location /tp/ {
 		proxy_pass http://fileserver;
