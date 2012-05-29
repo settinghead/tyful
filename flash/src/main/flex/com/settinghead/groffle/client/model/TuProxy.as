@@ -62,7 +62,6 @@ package com.settinghead.groffle.client.model
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
 		private var _startTime:int;
-		private var _rendering:Boolean = false;
 		private var numRetries:int = 0;
 		
 		public var generateTemplatePreview:Boolean = false;
@@ -77,17 +76,14 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function markStartRendering():void{
-			_rendering = true;
+			_failureCount = 0;
 			_startTime = getTimer();
 		}
 		
 		public function markStopRendering():void{
-			_rendering = false;
+			_failureCount = tu.template.perseverance;
 		}
-		
-		public function get rendering():Boolean{
-			return _rendering;
-		}
+
 
 		
 		// return data property cast to proper type

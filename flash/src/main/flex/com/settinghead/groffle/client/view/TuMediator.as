@@ -90,7 +90,7 @@ package com.settinghead.groffle.client.view
 					if(!waitingForWord){
 						waitingForWord = true;
 						var count:int = 0;
-						while(tuProxy.rendering && ++count<2) 
+						while(tuProxy.failureCount<tuProxy.tu.template.perseverance && ++count<2) 
 							tuProxy.renderNextDisplayWord(tuRenderer.tu);
 						tuRenderer.perseveranceMeter.setProgress(tuProxy.failureCount, tuProxy.tu.template.perseverance);
 
