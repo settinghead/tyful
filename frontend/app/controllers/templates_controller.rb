@@ -50,7 +50,7 @@ class TemplatesController < ApplicationController
     @template = Template.find(params[:id])
     retrieve_token
     ShopController.push_shop_predict_task(current_user,@template)
-    REDIS.set("token_#{@template.uuid}", @template.user.token) if current_user;
+    REDIS.set("token_#{@template.uuid}", @template.user.token) if @template && @template.user;
     respond_to do |format|
       format.html # show.html.erb
       # format.json { render json: @template }
