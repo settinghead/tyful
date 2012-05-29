@@ -283,9 +283,11 @@
 				<s:Label text="Chance to finish"  />
 				<s:Group>
 					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" width="{perseveranceSlider.value*5}" />
-					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250" />	
+					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250"  />	
 				</s:Group>
-				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Working...':'Squeeze in more words'}" enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" click="perseveranceSlider.value+=10;" />
+				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Squeeze in more words':'Working...'}"
+						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" 
+						  click="perseveranceSlider.value+=10;" />
 			</s:HGroup>
 
 		</s:VGroup>
