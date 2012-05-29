@@ -34,7 +34,6 @@ a {
   }
   &:hover {
     color: #444;
-    background-color: #000; 
   }
   img{
   	border: none;
@@ -209,7 +208,6 @@ div {
 
 #user_nav {
   float: right;
-  margin-bottom: 10px;
   display: inline;
   #artist_name{
   	padding-left: 10px;
@@ -217,6 +215,19 @@ div {
 	background-position: left top;
 	padding-top: 4px;
 	background-repeat: no-repeat;
+  }
+  .sign-in-fb{
+      display: inline;
+      padding-left: 32px;
+	  padding-top: 0px;
+	  padding-bottom: 10px;
+	  padding-right: 10px;
+	  background-image: image-url("facebook_32.png");
+  	  background-position: left top;
+  	  background-repeat: no-repeat;
+	  margin: auto;
+	  height: 32px;
+	  vertical-align: center;
   }
 }
 

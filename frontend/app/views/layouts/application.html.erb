@@ -37,7 +37,12 @@
 		    Bonjour <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!
 		    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 		  <% else %>
-		    <%= link_to "Sign up", new_user_session_path %> or <%= link_to "sign in", new_user_session_path %>
+		    <%= link_to '/auth/facebook' do%> 
+  		  <div class="sign-in-fb">
+			Sign up or sign in	      
+		  </div>
+
+			<%end%>
 		  <% end %>
 		</div>
 		<div id="main_menu">

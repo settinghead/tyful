@@ -10,14 +10,14 @@ end
 God.watch do |w|
   w.name = "groffle-rails"
   w.dir = basedir+"/frontend"
-  w.start = "rails server thin -p 3000 -e "+ENV['RAILS_ENV']
+  w.start = "RAILS_ENV="+ ENV['RAILS_ENV'] +" rails server thin -p 3000 -e "+ENV['RAILS_ENV']
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-file"
   w.dir = basedir+"/fileserver"
-  w.start = "NODE_ENV=" + ENV['RAILS_ENV'] +" node web.js >> web.log"
+  w.start = "NODE_ENV=" + ENV['RAILS_ENV'] +" node web.js"
   w.stop  = "killall -9 node"
   w.keepalive
 end
