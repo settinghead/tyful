@@ -14,6 +14,7 @@ import com.restfb.types.Album;
 import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
+	private static final Object INTRO_STR = "I just created my Groffle typography artwork for my Facebook statuses at http://www.groffle.me .";
 	private String userId;
 	private String fbToken;
 	private String fbUid;
@@ -38,7 +39,7 @@ public class FbUploadTask extends Task {
 				Album.class);
 		outer: for (List<Album> albums : myAlbums) {
 			for (Album album : albums) {
-				if (album.getName().toLowerCase().equals("groffle")) {
+				if (album.getName().startsWith("Groffle")) {
 					albumId = album.getId();
 					break outer;
 				}
@@ -55,7 +56,7 @@ public class FbUploadTask extends Task {
 							Parameter.with("name", "Groffle"),
 							Parameter
 									.with("description",
-											"Create your own typography artwork with simple doodles at http://www.groffle.me"));
+											INTRO_STR));
 			albumId = albumconnection.getId();
 		}
 		FacebookType publishPhotoResponse = null;
@@ -65,7 +66,7 @@ public class FbUploadTask extends Task {
 					.publish(albumId + "/photos", FacebookType.class,
 							BinaryAttachment.with("cat.png",
 									new FileInputStream(file)), Parameter.with(
-									"message", this.getTitle()));
+									"message", this.getTitle()+" "+INTRO_STR));
 		} catch (FileNotFoundException e) {
 			logger.warning(e.getMessage());
 		}
