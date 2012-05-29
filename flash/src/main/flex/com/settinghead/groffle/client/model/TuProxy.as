@@ -57,7 +57,7 @@ package com.settinghead.groffle.client.model
 		public static const NAME:String = "TuProxy";
 		public static const SRNAME:String = "TuSRProxy";
 		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 2;
-		private static const SNAPSHOT_INTERVAL:int = 15;
+		private static const SNAPSHOT_INTERVAL:int = 22;
 		
 		private var _template:TemplateVO;
 		private var _wordList:WordListVO;
