@@ -3,7 +3,9 @@ class TemplatesController < ApplicationController
   impressionist :actions=>[:show,:edit], :unique => [:impressionable_type, :impressionable_id, :session_hash]
   
   def retrieve_token
-    @token = current_user.token if (current_user && @template && @template.user && current_user.id == @template.user.id)
+    @token = current_user.token if current_user
+    @fbToken =  session[:omniauth]['credentials']['token'] if session[:omniauth] && session[:omniauth]['credentials']
+    @fbUid = session[:omniauth]['uid'] if session[:omniauth]
   end
 
   
@@ -48,7 +50,7 @@ class TemplatesController < ApplicationController
     @template = Template.find(params[:id])
     retrieve_token
     ShopController.push_shop_predict_task(current_user,@template)
-    REDIS.set("token_#{@template.uuid}", current_user.token) if current_user;
+    REDIS.set("token_#{@template.uuid}", @template.user.token) if current_user;
     respond_to do |format|
       format.html # show.html.erb
       # format.json { render json: @template }

@@ -39,7 +39,7 @@
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
-			[Bindable] public var autoPostToFacebook:Boolean = false;
+			[Bindable] public var autoPostToFacebook:Boolean = true;
 
 			
 			private var _tu:TuVO;
@@ -280,7 +280,7 @@
 				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
 			</s:Group>
 			<s:HGroup>
-				<s:Label text="Chance to finish"  />
+				<s:Label text="Fill perseverance"  />
 				<s:Group>
 					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" width="{perseveranceSlider.value*5}" />
 					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250"  />	

@@ -240,7 +240,7 @@ package com.settinghead.groffle.client.model
 					_failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount > tu.template.perseverance){
+					if (failureCount >= tu.template.perseverance){
 //						tu.skipToLast();
 						facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 
@@ -401,8 +401,12 @@ package com.settinghead.groffle.client.model
 			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			urlLoader.addEventListener(MultipartURLLoaderEvent.DATA_PREPARE_COMPLETE, dataPrepareComplete);
 			urlLoader.addEventListener(Event.COMPLETE, photoPostComplete);
-
 			urlLoader.addVariable("token", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token));
+			urlLoader.addVariable("userId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.userId));
+			urlLoader.addVariable("fbToken", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.fbToken));
+			urlLoader.addVariable("fbUid", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.fbUid));
+			urlLoader.addVariable("title", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateTitle));
+			urlLoader.addVariable("templateId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId));
 			urlLoader.addFile(b,"artwork.png",'image');
 			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.facebookUploadUrl),true);
 

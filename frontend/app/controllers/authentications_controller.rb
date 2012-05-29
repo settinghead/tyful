@@ -10,12 +10,12 @@ class AuthenticationsController < ApplicationController
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
       flash[:notice] = "You have successfully signed in to Groffle."
-      # WordListController.push_wordlist_task(omniauth, authentication.user)
+      post_authentication_work(authentication.user,omniauth)
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
       flash[:notice] = "You are now connected to Facebook."
-      # WordListController.push_wordlist_task(omniauth, current_user)
+      post_authentication_work(current_user,omniauth)
       redirect_to authentications_url
     else
       user = User.new
@@ -23,7 +23,7 @@ class AuthenticationsController < ApplicationController
       if user.save
         flash[:notice] = "You have successfully signed in to Groffle."
         sign_in_and_redirect(:user, user)
-        # WordListController.push_wordlist_task(omniauth, user)
+        post_authentication_work(user,omniauth)
       else
         redirect_to new_user_registration_url
       end
@@ -43,6 +43,21 @@ class AuthenticationsController < ApplicationController
   # and http://www.arailsdemo.com/posts/44
   def handle_unverified_request
     true
+  end
+  
+  private
+  def post_authentication_work(user, omniauth)
+    # generate user token if it's not present
+    unless user.token?
+      user.token = rand(36**128).to_s(36)
+      user.save
+    end
+    
+    REDIS.set("token_#{user.id}", user.token)
+    #REDIS.set("fbtoken_#{user.id}", omniauth['credentials']['token'])
+
+    WordListController.push_wordlist_task(omniauth, user)
+    
   end
   
 end

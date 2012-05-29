@@ -22,8 +22,11 @@ flash_vars = {:mode=>@mode,
 	:userId=>(current_user ? current_user.id : nil),
 	:relayUrl=>ERB::Util.url_encode(ENV["RELAY_URL"]),
 	:templateUrl=>ERB::Util.url_encode(ENV["TEMPLATE_URL"]),
-	:facebookPostUrl => ERB::Util.url_encode(ENV["FACEBOOK_POST_URL"]),
-	:token=>@token
+	:facebookUploadUrl => ERB::Util.url_encode(ENV["FACEBOOK_UPLOAD_URL"]),
+	:token=>@token,
+	:fbToken=>@fbToken,
+	:fbUid=>@fbUid,
+	:templateName=>@template.name
 	}
 
 %>

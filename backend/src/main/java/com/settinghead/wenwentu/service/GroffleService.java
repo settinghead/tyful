@@ -3,10 +3,8 @@ package com.settinghead.wenwentu.service;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
@@ -18,11 +16,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
-import com.restfb.types.Post;
 import com.settinghead.wenwentu.service.model.Task;
-import com.settinghead.wenwentu.service.model.Word;
-import com.settinghead.wenwentu.service.model.WordListStatus;
-import com.settinghead.wenwentu.service.model.WordListTask;
 
 public class GroffleService<T extends Task> {
 	protected Logger logger = Logger.getLogger(this.getClass().getName());
@@ -41,7 +35,7 @@ public class GroffleService<T extends Task> {
 	}
 
 	private void runSingleServiceThread() {
-		logger.info("Starting word list service. ");
+		logger.info("Starting " + taskType.getSimpleName() + " service. ");
 		new Thread(new Runnable() {
 
 			@Override
@@ -83,9 +77,17 @@ public class GroffleService<T extends Task> {
 									jedis.setex(key, 600,
 											"{\"status\":\"pending\"}");
 									String result = task.perform();
-									jedis.setex(key, task.getExpiration(),
-											result);
-									logger.info(key + " written to cache.");
+									if (key != null) {
+
+										if (task.getExpiration() > 0)
+											jedis.setex(key,
+													task.getExpiration(),
+													result);
+										else
+											jedis.set(key, result);
+
+										logger.info(key + " written to cache.");
+									}
 								}
 							} catch (Exception e) {
 								logger.warning(e.getMessage());
@@ -138,8 +140,8 @@ public class GroffleService<T extends Task> {
 
 	public void run(int numThreads) {
 		for (int i = 0; i < numThreads; i++)
-			this.runSingleServiceThread();	
-		while(stillActive())
+			this.runSingleServiceThread();
+		while (stillActive())
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {

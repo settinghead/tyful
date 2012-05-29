@@ -209,14 +209,7 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
   
-  Warden::Manager.after_authentication do |user, auth, opts|
-    # generate user token if it's not present
-    unless user.token?
-      user.token = rand(36**128).to_s(36)
-      user.save
-    end
-    REDIS.set("token_#{user.id}", user.token)
-    REDIS.set("fbtoken_#{user.id}", auth['credentials']['token'])
-    WordListController.push_wordlist_task(auth, user)
+  Warden::Manager.after_set_user do |user, auth, opts|
+
   end
 end

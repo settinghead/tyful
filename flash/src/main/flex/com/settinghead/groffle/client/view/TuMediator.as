@@ -58,6 +58,7 @@ package com.settinghead.groffle.client.view
 					break;
 				case ApplicationFacade.TU_GENERATION_LAST_CALL:
 					tuRenderer.generateImage();
+
 					if(tuProxy.generateTemplatePreview){
 						tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
 
@@ -65,12 +66,20 @@ package com.settinghead.groffle.client.view
 						tuProxy.generateTemplatePreview = false;
 
 					}
-					else if(tuRenderer.tu.template.preview==null){
-						tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
+					else{
+						if(tuRenderer.tu.template.preview==null){
+							tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
+
+						}
+						if(tuRenderer.autoPostToFacebook) 
+						{
+							tuProxy.postToFacebook();
+							tuRenderer.autoPostToFacebook = false;
+						}
+
 					}
 					break;
 				case ApplicationFacade.TU_IMAGE_GENERATED:
-					if(tuRenderer.autoPostToFacebook) tuProxy.postToFacebook();
 					break;
 				case ApplicationFacade.GENERATE_TU_IMAGE:
 					tuRenderer.generateImage();

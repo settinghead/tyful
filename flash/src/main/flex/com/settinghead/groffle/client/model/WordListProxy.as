@@ -86,7 +86,7 @@ package com.settinghead.groffle.client.model
 
 		public function sampleWordList():WordListVO{
 			var list:WordListVO = new WordListVO([
-					new WordVO("Artwork", Math.random()*5+0.5),
+					new WordVO("Groffle", Math.random()*5+0.5),
 					new WordVO("Sample", Math.random()*5+0.5),
 					new WordVO("Create your own!", Math.random()*5+0.5)
 			]);

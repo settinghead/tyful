@@ -133,23 +133,29 @@ function startServices(){
 				validate_token(fields.userId,null,null,fields.token,function(validated){
 					if(validated){
 						var uuid =  node_uuid.v4();
-						console.log(uuid);
 						ins = fs.createReadStream(files.image.path);
 						ous = fs.createWriteStream('/tmp/' + uuid +".png");
 						util.pump(ins, ous, function(err) {
 							if(err) {
 					    		 res.send(JSON.stringify({"error":err}));
+		 						console.log(err);
+								 
 							} else {
-								console.log("saved to "+'/tmp/' + uuid +".png");
-								redisClient.get('fbtoken_'+fields.userId, function (err, reply) {
-									if(!reply){
-										
-									}
-									else{
-	   								 res.send(JSON.stringify({"status":"success"}));
-									 
-									}
-								}
+								console.log("saved to "+'/tmp/' + uuid +".png for fb upload.");
+								var task = {
+									"fbToken":fields.fbToken,
+									"fbUid":fields.fbUid,
+									"userId":fields.userId,
+									"imagePath":'/tmp/' + uuid +".png",
+									"templateId":fields.templateId,
+									"title": (fields.title?fields.title:"")
+								};
+								console.log("About to push task to fb upload queue.");
+								console.log(JSON.stringify(task));
+								
+								redisClient.lpush("fbuploadtask_q",JSON.stringify(task), function(err,reply){
+									
+								});
 							}
 						});
 					}
@@ -244,13 +250,17 @@ function saveTemplate(uuid, req, res, files){
 	});
 });
 	
-}
+} //end function startService
+
 
 function validate_token(user_id, template_id, template_Uuid, token, callback){
 	var key;
 	if(template_id) key = "token_"+template_Uuid;
 	else key = "token_"+user_id;
 	redisClient.get(key, function (err, reply) {
+		if(err){
+			console.log(err);
+		}
 		if(!reply){
 			// go to database to retrieve token
 			var validated = false;
@@ -264,17 +274,25 @@ function validate_token(user_id, template_id, template_Uuid, token, callback){
 					queryString = "SELECT token from users where id="+user_id;
 				}
 			  client.query(queryString, function(err, result) {
+				  if(err){
+					  console.log(err);
+				  }
+				  else{
 				  if(result.rows.length==0) validated = false;
 				  else{
 					  if(result.rows[0].token==token) validated = true;
 					  else validated = false;
 				  }
+				  console.log('validating user: '+ user_id +': '+validated);
 	  		      callback(validated); 
+			  	  }
 			  });
 			});
 		}
 		else{
 			validated = (reply.toString()==token);
+  		  console.log(reply.toString()+":"+token);
+			
 		    callback(validated);
 		}
     });
