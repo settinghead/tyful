@@ -91,9 +91,9 @@
 			public function initColors():void{
 				if(!colorInitialized){
 					//if no color, add transparent color
-					var color1:MutableUint = new MutableUint(0x1B94E0);
+					var color1:MutableUint = new MutableUint(0xFF6600);
 					color1.addEventListener("UintChanged", colorArrayChange);
-					var color2:MutableUint = new MutableUint(0xFF962E);
+					var color2:MutableUint = new MutableUint(0x0066CC);
 					color2.addEventListener("UintChanged", colorArrayChange);
 					colors.addAll(new ArrayList([color1, color2]));
 					colorInitialized = true;

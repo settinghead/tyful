@@ -274,7 +274,6 @@
 				<s:Label width="170" />
 				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 				<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
-				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
 				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
@@ -288,6 +287,8 @@
 				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Squeeze in more words':'Working...'}"
 						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" 
 						  click="perseveranceSlider.value+=10;" />
+				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
+
 			</s:HGroup>
 
 		</s:VGroup>
