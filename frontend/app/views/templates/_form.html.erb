@@ -91,13 +91,14 @@ window.onbeforeunload = function(){
 </div>
 -->
 <script tyle="text/javascript">
-$(document).ready(function(){
-	$('#Main').css("padding-top", "35px");
-	$('#Main').height($(window).height()-35);
-	$('#ieMain').css("padding-top", "35px");
-	$('#ieMain').height($(window).height()-35);
-
-});
+window.resizeFlash = function (){
+	$('#Main').css("padding-top", $('#header').outerHeight()+"px");
+	$('#Main').height($(window).height()-$('#header').outerHeight());
+	$('#ieMain').css("padding-top", $('#header').outerHeight()+"px");
+	$('#ieMain').height($(window).height()-$('#header').outerHeight());
+}
+$(document).ready(window.resizeFlash);
+$(window).resize(window.resizeFlash);
 </script>
 <!-- <noscript> -->
 	<div id="noscriptFlashWrapper">
