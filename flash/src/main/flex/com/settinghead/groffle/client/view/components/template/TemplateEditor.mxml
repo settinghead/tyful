@@ -51,19 +51,9 @@
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
 	</mx:states>
-			<s:Group left="0" right="0" top="0" bottom="0">
-				<s:layout>
-					<s:VerticalLayout />
-				</s:layout>
-				<s:Group mouseOver="controlArea_mouseOverHandler(event)" left="0" right="0" top="0" height="80">
-					<s:layout>
-						<s:VerticalLayout  verticalAlign="middle" />
-					</s:layout>
-
-					<s:Group>
-						<s:layout>
-							<s:HorizontalLayout />
-						</s:layout>
+			<s:VGroup left="0" top="0" width="100%" height="100%">
+				<s:VGroup mouseOver="controlArea_mouseOverHandler(event)" left="0" top="0" height="80" width="100%">
+					<s:HGroup>
 						<s:Label width="170" />
 						<mx:LinkBar id="toggleButtonBar"
 											dataProvider="{ribbonViewStack}" />						
@@ -78,7 +68,7 @@
 							<s:Button click="btnUploadTemplate_clickHandler(event)" label="Save/share your template"
 									  toolTip="Show off your artistic talent by sharing your template with others."/>
 						</mx:HBox>
-					</s:Group>
+					</s:HGroup>
 					<mx:ViewStack backgroundColor="#EDEDED" id="ribbonViewStack"  visible="{toggleButtonBar.selectedIndex>=0}"
 					 width="1000" height="45" paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10" selectedIndex="1">
 						<mx:HBox label="File">
@@ -118,15 +108,10 @@
 						</mx:HBox>
 						
 					</mx:ViewStack>
-				</s:Group>
-				<s:Group>
-					<s:layout>
-						<s:HorizontalLayout />
-					</s:layout>
-					<s:Group id="paintToolBar">
-						<s:layout>
-							<s:VerticalLayout />
-						</s:layout>
+				</s:VGroup>
+				<s:HGroup left="0" right="0" maxHeight="{stage.height-80}" id="aaa">
+
+					<s:VGroup id="paintToolBar">
 						<mx:ToggleButtonBar
 							direction="vertical"
 							 itemClick="drawingToolBar_itemClickHandler(event)"
@@ -143,27 +128,18 @@
 							</mx:dataProvider>
 						</mx:ToggleButtonBar>
 						
-					</s:Group>
-				<s:Group id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
-					<s:layout>
-						<s:HorizontalLayout />
-					</s:layout>
-					<s:Scroller left="0" right="0" top="0" bottom="0">
-						<s:Group>
-		
-								<mx:UIComponent id="cvnTransparentBackground" visible="true" />
-								<components:LayerStack id="layers" dataProvider="{template.layers}" 
-													   itemRendererFunction="layers_itemRendererFunc"  >
-								</components:LayerStack>
-								<!--template:PatchLayer id="patchLayer"  top="100" bottom="0" left="0" right="0" visible="true" /-->
-						</s:Group>
-					</s:Scroller>
+					</s:VGroup>
+				<s:HGroup id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
+					<mx:Canvas top="0" bottom="0" left="0" right="0">
+							<mx:UIComponent id="cvnTransparentBackground" visible="true" />
+							<components:LayerStack id="layers" dataProvider="{template.layers}" width="{template.width}" height="{template.height}"
+												   itemRendererFunction="layers_itemRendererFunc"  >
+							</components:LayerStack>
+							<!--template:PatchLayer id="patchLayer" visible="true" /-->
+					</mx:Canvas>
 
 					
-					<s:Group id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" top="0" bottom="0" width="100" right="0">
-						<s:layout>
-							<s:VerticalLayout />
-						</s:layout>
+					<s:VGroup id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" top="0" bottom="0" width="100" right="0">
 						<s:Button id="btnShowAllLayers" label="All" />
 						<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
 								dataProvider="{template.layers}" 
@@ -174,10 +150,10 @@
 							</s:layout>
 						</s:List>
 						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
-					</s:Group>
-				</s:Group>
-				</s:Group>
-			</s:Group>
+					</s:VGroup>
+				</s:HGroup>
+				</s:HGroup>
+			</s:VGroup>
 		<!--s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
 		</s:NavigatorContent-->

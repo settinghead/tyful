@@ -262,22 +262,16 @@
 			
 		]]>
 	</fx:Script>
-	<s:Group>
-		<s:layout>
-			<s:VerticalLayout />
-		</s:layout>
-		<s:VGroup>
-			<s:Group depth="1">
-				<s:layout>
-					<s:HorizontalLayout />
-				</s:layout>
+	<s:VGroup width="100%" height="100%">
+		<s:VGroup horizontalAlign="center" top="0" left="0" right="0">
+			<s:HGroup depth="1">
 				<s:Label width="170" />
 				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
 				<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
 				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
-			</s:Group>
+			</s:HGroup>
 			<s:HGroup>
 				<s:Label text="Fill perseverance"  />
 				<s:Group>
@@ -288,13 +282,16 @@
 						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" 
 						  click="perseveranceSlider.value+=10;" />
 				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" />
-
+				
 			</s:HGroup>
-
+			
 		</s:VGroup>
 
-		<s:Group depth="2">
-			<mx:Canvas id="mainCanvas" top="0" left="0">
+		<s:Group depth="2" top="0" left="0" right="0" bottom="0">
+			<s:layout>
+				<s:BasicLayout />
+			</s:layout>
+			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 				<mx:UIComponent id="wordLayer" top="0" left="0" />
 			</mx:Canvas>
@@ -302,7 +299,7 @@
 			<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
 		</s:Group>
 
-	</s:Group>
+	</s:VGroup>
 
 	
 </mx:Canvas>

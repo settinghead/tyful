@@ -9,9 +9,10 @@
 		<s:State name="edit" />
 		<s:State name = "render" />
 	</s:states>
-		<template:TemplateEditor id="templateEditor" left="0" right="0" top="0" bottom="0"
+		<template:TemplateEditor id="templateEditor" left="0" top="0" width="100%" height="100%"
 								 visible.edit="true" visible="false" includeInLayout="false" includeInLayout.edit="true" />
-		<components:TuRenderer id="tuRenderer" left="0" top="0" bottom="0" right="0" 
+		<components:TuRenderer id="tuRenderer" left="0" top="0" width="100%" height="100%"
 							   visible.render="true" visible="false" includeInLayout="false" includeInLayout.render="true"
-							   />
+							   />		
+
 </s:Group>
