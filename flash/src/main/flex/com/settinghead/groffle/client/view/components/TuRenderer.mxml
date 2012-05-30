@@ -48,14 +48,35 @@
 				this.wordLayer.addChild(dWord);
 				this._tu.dWords.addItem(dWord);
 //				patchLayer.graphics.clear();
-				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
-					this.highlightPatch(pi.patch);
-				//dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
-				//dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+//				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
+//					this.highlightPatch(pi.patch);
+//				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+//				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+					dWord.useHandCursor= true;
+					dWord.buttonMode = true;
+					dWord.mouseChildren = true;
+					dWord.addEventListener(MouseEvent.CLICK, wordClick);
+
 				this._driftDistanceSum += dWord.engineWord.offsetDistance;
 				
 //								patchLayer.patchQueue = patchLayer.patchQueue;
 
+			}
+			
+			private function wordClick(e:MouseEvent):void{
+				var dWord:DisplayWordVO = e.target as DisplayWordVO;
+				if(dWord!=null && 
+					dWord.engineWord!=null && dWord.engineWord.word!=null && 
+					dWord.engineWord.word.occurences!=null 
+					&& dWord.engineWord.word.occurences.length>0){
+					if(dWord.engineWord.word.occurences[0].link!=null)
+						navigateToURL(new URLRequest(
+							(dWord.engineWord.word.occurences[0].link
+								as String)), '_blank');
+					    navigateToURL(new URLRequest(
+							"http://www.facebook.com/"+(dWord.engineWord.word.occurences[0].id
+						 as String)), '_blank');
+				}
 			}
 			
 			protected function btnEditTemplate_clickHandler(event:MouseEvent):void

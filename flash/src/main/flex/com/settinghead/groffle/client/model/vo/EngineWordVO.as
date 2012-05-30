@@ -6,8 +6,10 @@ package com.settinghead.groffle.client.model.vo {
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	import com.settinghead.groffle.client.placer.WordPlacer;
 	
+	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -19,7 +21,6 @@ package com.settinghead.groffle.client.model.vo {
 	import mx.controls.Alert;
 	
 	import org.as3commons.lang.Assert;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -292,7 +293,6 @@ public class EngineWordVO {
 	public function rendition(c:uint):DisplayWordVO{
 		
 		var s:DisplayWordVO = new DisplayWordVO(this);
-			
 			this.shape.textField.textColor = c;
 			s.addChild(this.shape.textField);
 			

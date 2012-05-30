@@ -1,8 +1,11 @@
 package com.settinghead.wenwentu.service.model;
 
+import java.util.ArrayList;
+
 public class Word {
 	private String word;
 	private int weight;
+	private ArrayList<Occurence> occurences;
 
 	/**
 	 * @return the word
@@ -12,9 +15,10 @@ public class Word {
 
 	}
 
-	public Word(String word, int weight) {
+	public Word(String word, int weight, ArrayList<Occurence> occurences) {
 		this.setWord(word);
 		this.setWeight(weight);
+		this.setOccurences(occurences);
 	}
 
 	public String getWord() {
@@ -42,5 +46,19 @@ public class Word {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+	/**
+	 * @return the occurences
+	 */
+	public ArrayList<Occurence> getOccurences() {
+		return occurences;
+	}
+
+	/**
+	 * @param occurences the occurences to set
+	 */
+	public void setOccurences(ArrayList<Occurence> occurences) {
+		this.occurences = occurences;
 	}
 }

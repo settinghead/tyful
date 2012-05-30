@@ -36,7 +36,8 @@
 	<s:VGroup horizontalAlign="center">
 		<s:Group>
 			<mx:Image id="itemImage" 
-					  source="{(data as ShopItemVO).imageUrl}" width="120" height="120" scaleContent="true" click="itemImage_clickHandler(event)" useHandCursor="true"/> 
+					  source="{(data as ShopItemVO).imageUrl}" width="120" height="120" scaleContent="true" click="itemImage_clickHandler(event)" 
+					  useHandCursor="true" buttonMode="true" mouseChildren="false"/> 
 			<s:Image source="{blueArrow}" alpha="0.5" left="-5" top="10" />
 
 		</s:Group>

@@ -85,7 +85,8 @@ public class WordListTask extends Task {
 	@Override
 	public String perform() {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Word> wordList = FacebookRetriever.getWordsForUser(this.getUid(), this.getToken());
+		FacebookRetriever retriever = new FacebookRetriever();
+		List<Word> wordList = retriever.getWordsForUser(this.getUid(), this.getToken());
 		
 		StringWriter sw = new StringWriter();
 		try {

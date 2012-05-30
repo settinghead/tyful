@@ -17,7 +17,7 @@ package com.settinghead.groffle.client.model.vo.wordlist
 			super(new WordComparator());
 			if(array!=null){
 				for(var i:int = 0; i<array.length; i++){
-					this.add(new WordVO(array[i].word,array[i].weight));
+					this.add(new WordVO(array[i].word,array[i].weight, array[i].occurences));
 				}
 			}
 			

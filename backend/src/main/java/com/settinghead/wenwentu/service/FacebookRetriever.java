@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -15,6 +16,7 @@ import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 import com.restfb.types.Post.Privacy;
+import com.settinghead.wenwentu.service.model.Occurence;
 import com.settinghead.wenwentu.service.model.Word;
 
 import cue.lang.Counter;
@@ -29,7 +31,7 @@ public class FacebookRetriever {
 				.defaultCharset());
 	}
 
-	public static List<Post> getMessages(String uid, String token) {
+	public List<Post> getMessages(String uid, String token) {
 		ArrayList<Post> messages = new ArrayList<Post>();
 
 		FacebookClient client = new DefaultFacebookClient(token);
@@ -46,8 +48,8 @@ public class FacebookRetriever {
 		return messages;
 	}
 
-	private static void addWords(String source, Counter<String> allWords,
-			int factor) {
+	private void addWords(String source, Counter<String> allWords, int factor,
+			Occurence occurence) {
 		if (source != null) {
 			final Counter<String> words = new Counter<String>();
 
@@ -63,17 +65,27 @@ public class FacebookRetriever {
 				if (count > 3)
 					count = 3;
 				allWords.note(word, count * factor);
+				pushToOccurenceMap(word, occurence);
 			}
 		}
 	}
 
-	private static long differenceInDays(Date d1, Date d2) {
+	private void pushToOccurenceMap(String key, Occurence occurence) {
+		ArrayList<Occurence> v;
+		if ((v = occurMap.get(key)) == null) {
+			// first timer; create new arraylist
+			occurMap.put(key, v = new ArrayList<Occurence>());
+		}
+
+		v.add(occurence);
+	}
+
+	private long differenceInDays(Date d1, Date d2) {
 		long diff = d1.getTime() - d2.getTime();
 		return (diff / (1000 * 60 * 60 * 24)) + 1;
 	}
 
-	public static List<Word> parseWordList(String uid, String token,
-			List<Post> posts) {
+	public List<Word> parseWordList(String uid, String token, List<Post> posts) {
 		FacebookClient facebookClient = new DefaultFacebookClient(token);
 		User me = facebookClient.fetchObject("me", User.class);
 
@@ -114,7 +126,8 @@ public class FacebookRetriever {
 						sb.toString(),
 						allWords,
 						5 + (int) (differenceInDays(post.getCreatedTime(),
-								earliest) * 30 / span));
+								earliest) * 30 / span),
+						new Occurence(post.getId(), "post", post.getLink()));
 			}
 		}
 
@@ -124,12 +137,17 @@ public class FacebookRetriever {
 		// allWords.note(p.getName(), maxFreq - 2);
 		// }
 
-		addWords(me.getAbout(), allWords, 80);
-		addWords(me.getHometownName(), allWords, 60);
-		addWords(me.getBio(), allWords, 60);
+		addWords(me.getAbout(), allWords, 80, new Occurence(me.getId(),
+				"about", me.getLink()));
+		addWords(me.getHometownName(), allWords, 60,
+				new Occurence(me.getHometownName(), "hometown", me.getLink()));
+		addWords(me.getBio(), allWords, 60,
+				new Occurence(me.getId(), "bio", me.getLink()));
 		if (me.getLocation() != null)
-			addWords(me.getLocation().getName(), allWords, 40);
-		addWords(me.getPolitical(), allWords, 60);
+			addWords(me.getLocation().getName(), allWords, 40, new Occurence(me
+					.getLocation().getId(), "location", me.getLink()));
+		addWords(me.getPolitical(), allWords, 60, new Occurence(me.getId(),
+				"political", me.getLink()));
 
 		int nameFreq;
 		if (allWords.getTotalItemCount() > 0) {
@@ -145,15 +163,16 @@ public class FacebookRetriever {
 		allWords.note(name, nameFreq);
 
 		for (String word : allWords.keySet())
-			result.add(new Word(word, allWords.getCount(word)));
+			result.add(new Word(word, allWords.getCount(word), occurMap
+					.get(word)));
 		return result;
 	}
 
-	private static String avoidNull(String s) {
+	private String avoidNull(String s) {
 		return s == null ? "" : s;
 	}
 
-	public static Counter<String> getLikes(String uid, String token) {
+	public Counter<String> getLikes(String uid, String token) {
 		final Counter<String> allWords = new Counter<String>();
 
 		FacebookClient client = new DefaultFacebookClient(token);
@@ -165,9 +184,11 @@ public class FacebookRetriever {
 				if (page.getName().matches("[a-zA-Z0-9\\- \\.,;]+")) {
 					if (page.getName() != null && page.getName().length() < 20) {
 						allWords.note(page.getName(), 2);
-						addWords(page.getName(), allWords, 10);
+						addWords(page.getName(), allWords, 10, new Occurence(
+								page.getId(), "page", page.getLink()));
 					} else
-						addWords(page.getName(), allWords, 20);
+						addWords(page.getName(), allWords, 20, new Occurence(
+								page.getId(), "page", page.getLink()));
 				}
 				if (count++ > 500)
 					break outer;
@@ -176,15 +197,17 @@ public class FacebookRetriever {
 		return allWords;
 	}
 
-	public static List<Word> getWordsForUser(String uid, String token) {
-		List<Post> messages = FacebookRetriever.getMessages(uid, token);
-		List<Word> wordList = FacebookRetriever.parseWordList(uid, token,
-				messages);
+	private HashMap<String, ArrayList<Occurence>> occurMap = new HashMap<String, ArrayList<Occurence>>();
+
+	public List<Word> getWordsForUser(String uid, String token) {
+		List<Post> messages = getMessages(uid, token);
+		List<Word> wordList = parseWordList(uid, token, messages);
 		if (wordList.size() < 100) {
 			// use likes to fill in space
 			Counter<String> likeWords = getLikes(uid, token);
 			for (String key : likeWords.keySet())
-				wordList.add(new Word(key, likeWords.getCount(key)));
+				wordList.add(new Word(key, likeWords.getCount(key), occurMap
+						.get(key)));
 		}
 		return wordList;
 	}
