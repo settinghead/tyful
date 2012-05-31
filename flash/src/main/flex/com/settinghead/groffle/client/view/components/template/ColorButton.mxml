@@ -3,6 +3,64 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				autoDrawBackground="false">
-	<mx:ColorPicker selectedColor="@{data.v}" />
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ListCollectionView;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			import org.sepy.controls.SColorPicker;
+			import org.sepy.events.SPickerEvent;
+			
+			private function openPicker(event:MouseEvent):void
+			{
+				picker.close();
+				var pickerpanel:SColorPicker = new SColorPicker();
+				pickerpanel.selectedColor = picker.selectedColor;
+				pickerpanel.title = "Select Color";
+				
+				// display the 'x' close button
+				pickerpanel.showCloseButton = true;
+				
+				// show the 'Add swatch' button
+				pickerpanel.add_swatch = true;
+				
+				// enable the stage color picker
+				pickerpanel.picker_enabled = true;
+				
+				pickerpanel.addEventListener(CloseEvent.CLOSE, function(event:CloseEvent):void {
+					PopUpManager.removePopUp(IFlexDisplayObject(event.target)); } );
+				pickerpanel.addEventListener(SPickerEvent.CHANGING,   pickerevent_handler);
+				pickerpanel.addEventListener(SPickerEvent.SWATCH_ADD, pickerevent_handler);
+				pickerpanel.addEventListener(Event.CHANGE, pickerevent_handler);
+				
+				PopUpManager.addPopUp(pickerpanel, picker,false);
+				PopUpManager.centerPopUp(pickerpanel);
+			}
+			
+			private function pickerevent_handler(event:Event):void
+			{
+				if(event.type == SPickerEvent.CHANGING)
+				{
+					// color in the Advanced picker panel il changing
+				} else if(event.type == SPickerEvent.SWATCH_ADD)
+				{
+					// clicked the add swatch button
+					var color:uint = SPickerEvent(event).value;
+					PopUpManager.removePopUp(IFlexDisplayObject(event.target));
+					ListCollectionView(picker.dataProvider).addItem(color);					
+				} else 
+				{
+					// selected new color
+					picker.selectedColor = SColorPicker(event.target).selectedColor;
+					PopUpManager.removePopUp(IFlexDisplayObject(event.target));
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:ColorPicker 
+		selectedColor="@{data.v}" click="openPicker(event)" id="picker"  />
 	
 </s:ItemRenderer>
