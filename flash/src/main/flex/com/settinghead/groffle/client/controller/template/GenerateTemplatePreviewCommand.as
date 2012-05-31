@@ -43,7 +43,7 @@ package com.settinghead.groffle.client.controller.template
 					Assert.notNull(template);
 					var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
 					//tuProxy.previewGenerationResponder = this;
-					tuProxy.wordList = wordListProxy.sampleWordList();
+					wordListProxy.sampleWordList();
 					tuProxy.load();
 					tuProxy.generateTemplatePreview = true;
 					Mask.show("I am creating a sample artwork for your template so that others can see what your template looks like. Just a moment.");

@@ -95,9 +95,6 @@ package com.settinghead.groffle.client.view
 		private function renderTu( event:Event = null ):void
 		{
 			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
-			tuProxy.template =  templateEditor.template;
-			tuProxy.wordList = wordListProxy.currentWordList;
 			tuProxy.load();
 			
 			facade.sendNotification(ApplicationFacade.RENDER_TU);

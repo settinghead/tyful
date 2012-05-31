@@ -33,14 +33,10 @@
 	</s:transitions>
 
 
-	<s:VGroup horizontalAlign="center" top="0" left="0" height="100%">
-		<components:MainArea id="mainArea" height="100%" />		
-
-	</s:VGroup>
-
+		<components:MainArea id="mainArea" height="100%" />
 		<shop:ShopItemList id="shopItemList"
 						   visible.withoutShop="false" includeInLayout.withoutShop="false" includeInLayout.withShop="true"
-						   visible.withShop="true" top="35" width="150" 
-						   left="{mainArea.right>parent.width-shopItemList.width?parent.width-shopItemList.width:mainArea.left+mainArea.tuRenderer.left+mainArea.tuRenderer.width+30}" />
+						   visible.withShop="true" top="10" 
+						   left="{mainArea.right>parent.width-shopItemList.width?parent.width-shopItemList.width:mainArea.getLayoutBoundsX()+mainArea.tuRenderer.left+mainArea.tuRenderer.getLayoutBoundsWidth()+60}" />
 	
 </s:Group>

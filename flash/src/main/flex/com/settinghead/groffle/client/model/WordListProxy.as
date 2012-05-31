@@ -71,7 +71,7 @@ package com.settinghead.groffle.client.model
 			{
 				
 				Notification.show(obj.error as String,"Reminder");
-				this._list = sampleWordList();
+				sampleWordList();
 			}
 			else{
 				var l:Array = (obj as Object) as Array;
@@ -84,13 +84,12 @@ package com.settinghead.groffle.client.model
 			return _list;
 		}
 
-		public function sampleWordList():WordListVO{
-			var list:WordListVO = new WordListVO([
+		public function sampleWordList():void{
+			this._list = new WordListVO([
 					new WordVO("Groffle", Math.random()*5+0.5),
 					new WordVO("Sample", Math.random()*5+0.5),
 					new WordVO("Create your own!", Math.random()*5+0.5)
 			]);
-			return list;
 		}
 	}
 }

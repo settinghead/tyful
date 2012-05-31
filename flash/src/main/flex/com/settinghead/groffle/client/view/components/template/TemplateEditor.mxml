@@ -109,7 +109,7 @@
 						
 					</mx:ViewStack>
 				</s:VGroup>
-				<s:HGroup left="0" right="0" maxHeight="{stage.height-80}" id="aaa">
+				<s:HGroup left="0" right="0">
 
 					<s:VGroup id="paintToolBar">
 						<mx:ToggleButtonBar

@@ -65,22 +65,20 @@ package com.settinghead.groffle.client.model
 		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 2;
 		private static const SNAPSHOT_INTERVAL:int = 22;
 		
-		private var _template:TemplateVO;
-		private var _wordList:WordListVO;
-
 //		private var indexOffset:int=0;
-		private var _failureCount:int = 0;
 		
 		private var renderProcess:RenderTuProcess;
 		private var gThread:GreenThread;
 		
 		private var imageGenerator:ITuImageGenerator;
-
+		
 		public function TuProxy()
 		{
 			super(NAME, new ArrayCollection());
 			this.imageGenerator = FlexGlobals.topLevelApplication["tuImageGenerator"];
 		}
+		
+
 		
 		public function get generateTemplatePreview():Boolean{
 			return renderProcess.generateTemplatePreview;
@@ -91,8 +89,25 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function startRender():void{
+			if(gThread)
+				gThread.close(true);
+			var processes:Vector.<IRunnable> = new Vector.<IRunnable>();
+			processes.push(renderProcess);
+			gThread = new GreenThread(processes,(FlexGlobals.topLevelApplication.stage as Stage).frameRate*2, 0.9);
+			gThread.addEventListener( GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler );
 			gThread.open();
+
 		}
+		
+		public function stopRender():void{
+			if(gThread!=null){
+				gThread.close(false);
+				gThread.removeEventListener(GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler);
+				gThread = null;
+			}
+		}
+		
+		
 		
 		// return data property cast to proper type
 		public function get tu():TuVO
@@ -109,11 +124,9 @@ package com.settinghead.groffle.client.model
 		public override function setData(data:Object):void{
 			super.setData(data);
 			if(tu!=null){
+				if(gThread)
+					gThread.close(true);
 				renderProcess = new RenderTuProcess(facade, tu, imageGenerator);
-				var processes:Vector.<IRunnable> = new Vector.<IRunnable>();
-				processes.push(renderProcess);
-				gThread = new GreenThread(processes,(FlexGlobals.topLevelApplication.stage as Stage).frameRate);
-				gThread.addEventListener( GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler );
 			}
 		}
 		
@@ -124,24 +137,20 @@ package com.settinghead.groffle.client.model
 
 		
 		public function load() :void{
-			var tu:TuVO = new TuVO(_template, _wordList);
-			_template.generatePatchIndex();
+			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
+
+			var tu:TuVO = new TuVO(templateProxy.template, wordListProxy.currentWordList);
+			templateProxy.template.generatePatchIndex();
 			this.setData(tu);
 
 		}
 		
-		public function set template(t:TemplateVO):void{
-			this._template = t;
-		}
-		
-		public function set wordList(wl:WordListVO):void{
-			this._wordList = wl;
-		}
 
 		
 		
 		public function get failureCount():int{
-			return _failureCount;
+			return renderProcess!=null?renderProcess.failureCount:0;
 		}
 		
 		public function generateImage():void{

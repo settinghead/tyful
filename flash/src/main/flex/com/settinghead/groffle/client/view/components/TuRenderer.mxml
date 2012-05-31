@@ -206,6 +206,8 @@
 					if(newTu && this.tu!=null){
 						prepareForTu();
 					}
+					if(this.perseveranceSlider.value>this.perseveranceMeter.value)
+						dispatchEvent(new Event(UPDATE_PROGRESS));
 				}
 
 			}
@@ -226,6 +228,10 @@
 				bmpData.draw(mainCanvas, scaleM,null,null,new Rectangle(0,0,
 					(tu.template.effectiveBorder.width+actualMargin)*scale, (tu.template.effectiveBorder.height+actualMargin)*scale));
 				return bmpData;
+			}
+			
+			public function get rendering():Boolean{
+				return this.visible;
 			}
 			
 			public function get tu():TuVO{
@@ -306,6 +312,7 @@
 						  click="perseveranceSlider.value+=10;" />
 				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" 
 						  visible="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
+						  includeInLayout="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
 						  />
 				
 			</s:HGroup>

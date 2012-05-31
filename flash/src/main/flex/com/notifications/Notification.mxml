@@ -122,7 +122,6 @@ Please contact me at afoucal@free.fr.
 		
 	<mx:Script>
 		<![CDATA[
-			
 			import com.gradientcomponents.GradientCanvas;
 			import com.notifications.NotificationStackManager;
 			
@@ -133,6 +132,8 @@ Please contact me at afoucal@free.fr.
 			import flash.utils.Timer;
 			
 			import mx.core.Application;
+			import mx.core.FlexBitmap;
+			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.effects.easing.*;
 			import mx.events.CloseEvent;
@@ -289,7 +290,7 @@ Please contact me at afoucal@free.fr.
 			{
 				// Check and set the notificationParent
 				if (!notificationParent)
-					notificationParent = Sprite(Application.application); 
+					notificationParent = Sprite(FlexGlobals.topLevelApplication); 
 
 				// Check and set the gaps betwen the Notification and the borders of the parent
 				var hg:Number = getStyle( 'horizontalGap' );
@@ -476,7 +477,7 @@ Please contact me at afoucal@free.fr.
 				var notification:Notification = new Notification();	
 
 				if (!notificationParent)
-					notification.notificationParent = Sprite(Application.application); 
+					notification.notificationParent = Sprite(FlexGlobals.topLevelApplication); 
 				else
 					notification.notificationParent = notificationParent;
 				
@@ -508,7 +509,7 @@ Please contact me at afoucal@free.fr.
 				PopUpManager.addPopUp( notification, notification.notificationParent, false );
 				NotificationStackManager.getInstance().add(notification);
 				if(refocusObj!=null)
-					Application.application.stage.focus = refocusObj;
+					FlexGlobals.topLevelApplication.stage.focus = refocusObj;
 				return notification;
 			}
 			

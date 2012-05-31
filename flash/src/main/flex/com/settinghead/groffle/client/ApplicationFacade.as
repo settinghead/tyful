@@ -9,7 +9,7 @@ package com.settinghead.groffle.client
 	import com.settinghead.groffle.client.controller.template.NewTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.SaveTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.UploadTemplateCommand;
-	import com.settinghead.groffle.client.controller.tu.GenerateTuCommand;
+	import com.settinghead.groffle.client.controller.tu.RenderTuCommand;
 	
 	import flash.display.LoaderInfo;
 	
@@ -70,6 +70,7 @@ package com.settinghead.groffle.client
 			registerCommand (TEMPLATE_PREVIEW_GENERATED, UploadTemplateCommand);
 //			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
+			registerCommand ( RENDER_TU, RenderTuCommand);
 		}
 		
 		/**

@@ -6,7 +6,6 @@ package com.settinghead.groffle.client.controller.main
 	import com.settinghead.groffle.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.NewTemplateCommand;
-	import com.settinghead.groffle.client.controller.tu.GenerateTuCommand;
 	import com.settinghead.groffle.client.model.TuProxy;
 	import com.settinghead.groffle.client.model.vo.TuVO;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;

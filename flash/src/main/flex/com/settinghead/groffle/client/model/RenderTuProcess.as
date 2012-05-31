@@ -91,7 +91,10 @@ package com.settinghead.groffle.client.model
 		
 		override public function run() : void
 		{
-			currentStep();
+			if(_startTime==0)
+				_startTime = getTimer();
+			if(generator.rendering) 
+				currentStep();
 		}
 
 		

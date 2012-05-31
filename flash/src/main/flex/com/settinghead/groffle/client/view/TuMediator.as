@@ -46,7 +46,6 @@ package com.settinghead.groffle.client.view
 			{
 				case ApplicationFacade.RENDER_TU:
 					tuRenderer.tu =  tuProxy.tu;
-					tuProxy.startRender();
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)

@@ -4057,7 +4057,8 @@ public class Wiki implements Serializable
      *  the list of urls (instance of <tt>java.net.URL</tt>)
      *  @since 0.06
      */
-    public ArrayList[] linksearch(String pattern) throws IOException
+    @SuppressWarnings("rawtypes")
+	public ArrayList[] linksearch(String pattern) throws IOException
     {
         return linksearch(pattern, ALL_NAMESPACES, "http");
     }
@@ -4078,7 +4079,8 @@ public class Wiki implements Serializable
      *  the list of urls (instance of <tt>java.net.URL</tt>)
      *  @since 0.06
      */
-    public ArrayList[] linksearch(String pattern, int namespace) throws IOException
+    @SuppressWarnings("rawtypes")
+	public ArrayList[] linksearch(String pattern, int namespace) throws IOException
     {
         return linksearch(pattern, namespace, "http");
     }
@@ -4101,7 +4103,8 @@ public class Wiki implements Serializable
      *  the list of urls (instance of <tt>java.net.URL</tt>)
      *  @since 0.24
      */
-    public ArrayList[] linksearch(String pattern, int namespace, String protocol) throws IOException
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public ArrayList[] linksearch(String pattern, int namespace, String protocol) throws IOException
     {
         // FIXME: Change return type to ArrayList<Object[]> or Object[][]
         // First index refers to item number, linksearch()[x][0] = page title
@@ -6564,7 +6567,8 @@ public class Wiki implements Serializable
      *  @throws ClassNotFoundException if we can't recognize the input
      *  @since 0.10
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+    @SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         String z = (String)in.readObject();
         user = new User(z);
