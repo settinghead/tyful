@@ -1,14 +1,10 @@
 package com.settinghead.wenwentu.service.model;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.restfb.types.Post;
 import com.settinghead.wenwentu.service.FacebookRetriever;
 
 public class WordListTask extends Task {

@@ -4,7 +4,7 @@ package com.settinghead.groffle.client.colorer
 	
 	public class ColorSheetColorer implements WordColorer
 	{
-		private var otherwise:WordColorer = new TwoHuesRandomSatsColorer();
+//		private var otherwise:WordColorer = new TwoHuesRandomSatsColorer();
 		public function ColorSheetColorer()
 		{
 			
@@ -15,8 +15,8 @@ package com.settinghead.groffle.client.colorer
 			var color:uint = 
 				eWord.getCurrentLocation().patch.layer.colorSheet.bitmapData.getPixel(
 					eWord.getCurrentLocation().getpVector().x, eWord.getCurrentLocation().getpVector().y);
-			if(color>0) return color;
-			else return otherwise.colorFor(eWord);
+			return color;
+//			else return otherwise.colorFor(eWord);
 		}
 	}
 }
