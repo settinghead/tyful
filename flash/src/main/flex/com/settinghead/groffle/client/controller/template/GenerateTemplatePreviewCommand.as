@@ -41,11 +41,10 @@ package com.settinghead.groffle.client.controller.template
 					
 					var template:TemplateVO = templateProxy.template;
 					Assert.notNull(template);
-					tuProxy.setData(template);
 					var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
 					//tuProxy.previewGenerationResponder = this;
-					var tu:TuVO = new TuVO(template,wordListProxy.sampleWordList());
-					tuProxy.tu = tu;
+					tuProxy.wordList = wordListProxy.sampleWordList();
+					tuProxy.load();
 					tuProxy.generateTemplatePreview = true;
 					Mask.show("I am creating a sample artwork for your template so that others can see what your template looks like. Just a moment.");
 					sendNotification(ApplicationFacade.RENDER_TU);

@@ -25,20 +25,20 @@ end
 God.watch do |w|
   w.name = "groffle-wordlist"
   w.dir = basedir+"/backend"
-  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms100M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.WordListService"
+  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms64M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.WordListService"
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-shop"
   w.dir = basedir+"/backend"
-  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms100M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.ShopService"
+  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms64M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.ShopService"
   w.keepalive
 end
 
 God.watch do |w|
   w.name = "groffle-photos"
   w.dir = basedir+"/backend"
-  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms100M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.FbUploadService"
+  w.start = "RAILS_ENV="+ENV['RAILS_ENV']+" java -Xms64M -Xmx2G -cp target/*:targeclasses/:target/dependency/* com.settinghead.wenwentu.service.FbUploadService"
   w.keepalive
 end

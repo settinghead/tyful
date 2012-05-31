@@ -14,7 +14,9 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.settinghead.groffle.client.model.ITuImageGenerator;
 			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
+			public var tuImageGenerator:ITuImageGenerator;
 			
 			protected function text1_mouseOverHandler(event:MouseEvent):void
 			{

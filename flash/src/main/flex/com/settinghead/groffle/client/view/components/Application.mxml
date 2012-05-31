@@ -26,11 +26,12 @@
 	</fx:Declarations>
 	<s:transitions>
 		<s:Transition>
-			<s:AnimateTransitionShader target="{shopItemList}" duration="800" 
+			<s:AnimateTransitionShader target="{shopItemList}" duration="400" 
 									   shaderByteCode="@Embed(source='HexCells.pbj', 
 									   mimeType='application/octet-stream')" />
 		</s:Transition>
 	</s:transitions>
+
 
 	<s:VGroup horizontalAlign="center" top="0" left="0" height="100%">
 		<components:MainArea id="mainArea" height="100%" />		

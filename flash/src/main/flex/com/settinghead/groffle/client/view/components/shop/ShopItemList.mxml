@@ -24,17 +24,24 @@
 			
 		]]>
 	</fx:Script>
-	<s:Group left="0" right="0">
-		<s:layout>
+	<s:filters>
+		<s:DropShadowFilter 
+			blurX="10" blurY="10" 
+			alpha="0.32" 
+			distance="5" 
+			angle="90"                 
+			/>
+	</s:filters>
+	<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Label text="Make a gift with your artwork!" left="0" right="0" width="120" />
-		<s:DataGroup dataProvider="{list}" id="listControl"
+		<s:Label text="Make a gift with your artwork" left="0" right="0" width="120" />
+		<s:DataGroup dataProvider="{list}" id="listControl" 
 				itemRenderer="com.settinghead.groffle.client.view.components.shop.ShopItemRenderer" 
+				width="100%" height="100%"
 				>
 			<s:layout>
-				<s:VerticalLayout  />
+				<s:VerticalLayout clipAndEnableScrolling="true"  />
 			</s:layout>
 		</s:DataGroup>
-	</s:Group>
 </s:Group>

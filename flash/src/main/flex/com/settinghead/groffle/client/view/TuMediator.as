@@ -22,9 +22,8 @@ package com.settinghead.groffle.client.view
 		public function TuMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
-			tuRenderer.addEventListener(TuRenderer.CHECK_CREATE_NEXT_DISPLAYWORD, checkCreateNextDisplayWord);
+			tuRenderer.addEventListener(TuRenderer.UPDATE_PROGRESS, updateProgress);
 			tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
-			tuRenderer.addEventListener(TuRenderer.TU_GENERATED, tuGenerated);
 
 		}
 		
@@ -38,9 +37,6 @@ package com.settinghead.groffle.client.view
 			return [
 				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.DISPLAYWORD_CREATED,
-				ApplicationFacade.TU_GENERATION_LAST_CALL,
-				ApplicationFacade.TU_IMAGE_GENERATED,
-				ApplicationFacade.GENERATE_TU_IMAGE,
 			];
 		}
 		
@@ -50,39 +46,19 @@ package com.settinghead.groffle.client.view
 			{
 				case ApplicationFacade.RENDER_TU:
 					tuRenderer.tu =  tuProxy.tu;
-					tuProxy.markStartRendering();
+					tuProxy.startRender();
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)
 						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
 					break;
-				case ApplicationFacade.TU_GENERATION_LAST_CALL:
-					tuRenderer.generateImage();
-
-					if(tuProxy.generateTemplatePreview){
-						tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
-
-						sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
-						tuProxy.generateTemplatePreview = false;
-
+				case ApplicationFacade.TU_GENERATION_LAST_CALL:					
+					//TODO
+					if(tuRenderer.autoPostToFacebook) 
+					{
+						tuProxy.postToFacebook();
+						tuRenderer.autoPostToFacebook = false;
 					}
-					else{
-						if(tuRenderer.tu.template.preview==null){
-							tuProxy.tu.template.preview = tuRenderer.canvasImage(300);
-
-						}
-						if(tuRenderer.autoPostToFacebook) 
-						{
-							tuProxy.postToFacebook();
-							tuRenderer.autoPostToFacebook = false;
-						}
-
-					}
-					break;
-				case ApplicationFacade.TU_IMAGE_GENERATED:
-					break;
-				case ApplicationFacade.GENERATE_TU_IMAGE:
-					tuRenderer.generateImage();
 					break;
 			}
 		}
@@ -92,26 +68,9 @@ package com.settinghead.groffle.client.view
 			return viewComponent as TuRenderer;
 		}
 		
-		private function checkCreateNextDisplayWord( event:Event = null ):void
+		private function updateProgress( event:Event = null ):void
 		{	
-			if(tuRenderer.tu!=null){
-				if(tuProxy.failureCount<tuProxy.tu.template.perseverance){
-					if(!waitingForWord){
-						waitingForWord = true;
-						var count:int = 0;
-						while(tuProxy.failureCount<tuProxy.tu.template.perseverance && ++count<2) 
-							tuProxy.renderNextDisplayWord(tuRenderer.tu);
-						tuRenderer.perseveranceMeter.setProgress(tuProxy.failureCount, tuProxy.tu.template.perseverance);
-
-						waitingForWord = false;
-					}				
-				}
-				else{
-					if(tuRenderer.tu.generatedImage==null){
-						facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
-					}
-				}
-			}
+			tuRenderer.perseveranceMeter.setProgress(tuProxy.failureCount, tuProxy.tu.template.perseverance);
 			
 		}
 		
@@ -119,12 +78,6 @@ package com.settinghead.groffle.client.view
 		private function editTemplate( event:Event = null ):void
 		{
 			sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);
-		}
-		
-		private function tuGenerated( event: Event = null ):void{
-			//finished rendering; dispatch TU_GENERATED event
-			tuProxy.tu = tuRenderer.tu;
-			sendNotification(ApplicationFacade.TU_IMAGE_GENERATED, tuRenderer.tu);
 		}
 	}
 }

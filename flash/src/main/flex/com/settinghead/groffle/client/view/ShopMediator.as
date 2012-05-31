@@ -68,7 +68,7 @@ package com.settinghead.groffle.client.view
 		private function processShopClick(e:ShopClickEvent):void{ // file loaded
 			this.currentItem = e.item;
 			if(tuProxy.tu.generatedImage==null)
-				facade.sendNotification(ApplicationFacade.GENERATE_TU_IMAGE);
+				tuProxy.generateImage();
 			pendingShopClick = true;
 			setTimeout(checkOpenUrl, 200);
 
