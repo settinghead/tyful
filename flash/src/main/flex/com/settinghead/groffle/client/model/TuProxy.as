@@ -69,6 +69,7 @@ package com.settinghead.groffle.client.model
 		private var totalAttemptedWords:int =0;
 //		private var indexOffset:int=0;
 		private var snapshotTicker:int=0;
+		private var _failureCount:int = 0;
 
 		public function TuProxy()
 		{
@@ -150,7 +151,6 @@ package com.settinghead.groffle.client.model
 		}
 
 		
-		private var _failureCount:int = 0;
 		
 		public function get failureCount():int{
 			return _failureCount;

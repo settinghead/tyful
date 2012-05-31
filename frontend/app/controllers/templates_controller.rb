@@ -3,7 +3,7 @@ class TemplatesController < ApplicationController
   impressionist :actions=>[:show,:edit], :unique => [:impressionable_type, :impressionable_id, :session_hash]
   
   def retrieve_token
-    @token = current_user.token if current_user
+    @token = current_user.token if current_user && @template && @template.user && @template.user.id==current_user.id
     @fbToken =  session[:omniauth]['credentials']['token'] if session[:omniauth] && session[:omniauth]['credentials']
     @fbUid = session[:omniauth]['uid'] if session[:omniauth]
   end

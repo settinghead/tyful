@@ -130,8 +130,8 @@ function startServices(){
 		    if(err) {
 		      next(err);
 		    } else {
-				validate_token(fields.userId,null,null,fields.token,function(validated){
-					if(validated){
+				// validate_token(fields.userId,null,null,fields.token,function(validated){
+					// if(validated){
 						var uuid =  node_uuid.v4();
 						ins = fs.createReadStream(files.image.path);
 						ous = fs.createWriteStream('/tmp/' + uuid +".png");
@@ -158,11 +158,11 @@ function startServices(){
 								});
 							}
 						});
-					}
-					else{
-					 res.send(JSON.stringify({"error":"Authentication token mismatch."}));
-					}
-				});
+					// }
+					// else{
+					 // res.send(JSON.stringify({"error":"Authentication token mismatch."}));
+					// }
+				// });
 			}
 		});
 	});  

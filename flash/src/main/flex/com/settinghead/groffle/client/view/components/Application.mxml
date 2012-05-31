@@ -24,7 +24,13 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-
+	<s:transitions>
+		<s:Transition>
+			<s:AnimateTransitionShader target="{shopItemList}" duration="800" 
+									   shaderByteCode="@Embed(source='HexCells.pbj', 
+									   mimeType='application/octet-stream')" />
+		</s:Transition>
+	</s:transitions>
 
 	<s:VGroup horizontalAlign="center" top="0" left="0" height="100%">
 		<components:MainArea id="mainArea" height="100%" />		

@@ -9,6 +9,13 @@
 		<s:State name="edit" />
 		<s:State name = "render" />
 	</s:states>
+	<s:transitions>
+		<s:Transition fromState="render" toState="edit">
+			<s:AnimateTransitionShader target="{this}" duration="600" 
+									   shaderByteCode="@Embed(source='Twist.pbj', 
+									   mimeType='application/octet-stream')" />
+		</s:Transition>
+	</s:transitions>
 		<template:TemplateEditor id="templateEditor" left="0" top="0" width="100%" height="100%"
 								 visible.edit="true" visible="false" includeInLayout="false" includeInLayout.edit="true" />
 		<components:TuRenderer id="tuRenderer" left="0" top="0" width="100%" height="100%"
