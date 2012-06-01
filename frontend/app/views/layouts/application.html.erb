@@ -40,7 +40,7 @@
 	<div id="header">
 		<div id="user_nav">
 		  <% if user_signed_in? %>
-		    Bonjour <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!
+		    Hi <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!
 		    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 		  <% else %>
 		    <%= link_to '/auth/facebook' do%> 

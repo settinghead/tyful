@@ -322,7 +322,7 @@
 				this.drawingToolBar.selectedIndex  = BRUSH;
 				
 				
-					var s:String = "You are currently editing an artwork tempalte.\nClick this button to create your artwork with words gathered from your Facebook timeline and profile."
+					var s:String = "You are currently editing an artwork tempalte.\nClick this button to create your personalized artwork with information from your Facebook timeline and profile."
 					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
 					myTip.setStyle("backgroundColor",0xFFCC00);
 					
