@@ -3,7 +3,7 @@ body {
   font-size: 13px;
   margin: 0;
   padding: 0;
-  font-family: Verdana, Helvetica, Arial;
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
   font-size: 12px;
 }
 
@@ -57,9 +57,6 @@ div {
 }
 
 #container {
-  #top-spacer{
-    height: 30px;
-  }
   margin: 0 auto;
   background-color: #FFF;
   height: 80%;
@@ -104,8 +101,9 @@ div {
 
 #header{
 	#left-blank{
-	    margin-left: 170px;
+	    width: 170px;
 		display: inline;
+		height: 100%;
 	}
     position:fixed;
 	background-color: #eee;
@@ -202,8 +200,40 @@ div {
   margin: 0;
 }
 
+#header-middle{
+  position: fixed;
+  text-align: center;
+
+  left: 180px;
+  right:380px;
+    font-size: 13px;
+    top: 0px;
+    background-color: #D1F1FF;
+    padding: 2px;
+    text-shadow: #fff 1px 1px 4px;
+  background-image: linear-gradient(bottom, rgb(173,228,255) 18%, rgb(232,247,255) 70%);
+  background-image: -o-linear-gradient(bottom, rgb(173,228,255) 18%, rgb(232,247,255) 70%);
+  background-image: -moz-linear-gradient(bottom, rgb(173,228,255) 18%, rgb(232,247,255) 70%);
+  background-image: -webkit-linear-gradient(bottom, rgb(173,228,255) 18%, rgb(232,247,255) 70%);
+  background-image: -ms-linear-gradient(bottom, rgb(173,228,255) 18%, rgb(232,247,255) 70%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	right bottom,
+  	right top,
+  	color-stop(0.18, rgb(173,228,255)),
+  	color-stop(0.7, rgb(232,247,255))
+  );
+
+  background-origin: padding-box;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  
+}
 .instructional{
-  display: inline;
+
 }
 
 #user_nav {

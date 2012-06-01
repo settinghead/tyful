@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
     
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
-      flash[:notice] = "You have successfully signed in to Groffle."
+      #flash[:notice] = "You have successfully signed in to Groffle."
       post_authentication_work(authentication.user,omniauth)
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
@@ -21,7 +21,7 @@ class AuthenticationsController < ApplicationController
       user = User.new
       user.apply_omniauth(omniauth)
       if user.save
-        flash[:notice] = "You have successfully signed in to Groffle."
+        #flash[:notice] = "You have successfully signed in to Groffle."
         sign_in_and_redirect(:user, user)
         post_authentication_work(user,omniauth)
       else

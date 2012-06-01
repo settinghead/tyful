@@ -1,5 +1,6 @@
 <%content_for :header do%>
-<div class="instructional">Pick one, or <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> (It's super simple and shockingly fun!)</div>
+<div class="instructional">To create your Groffle artwork, pick a tempalte from the gallary below.
+	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> <br /> (It's super simple and shockingly fun!)</div>
 <%end%>
 <div class="masonry-container">
 	<% @templates.each do |template| %>

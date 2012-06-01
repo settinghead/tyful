@@ -10,7 +10,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.groffle.client.view.components.template.*" xmlns:canvas="com.settinghead.groffle.client.view.components.template.canvas.*"
 	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.groffle.client.view.components.*"
 	 keyDown="editor_keyDownHandler(event)"
-	 xmlns:windows="com.settinghead.groffle.client.view.components.template.windows.*" >
+	 xmlns:windows="com.settinghead.groffle.client.view.components.template.windows.*" click="canvas1_clickHandler(event)" >
 	
 	<!-- Events dispatched by this View Component -->
 	<mx:Metadata>
@@ -20,7 +20,19 @@
 
 	<mx:Style>
 		
-		
+		.errorTip {
+			color: #000000;
+			fontSize: 9;
+			fontWeight: "bold";
+			shadowColor: #000000;
+			borderColor: #FFCC00;
+			borderStyle: "errorTipRight";
+			paddingBottom: 4;
+			paddingLeft: 4;
+			paddingRight: 4;
+			paddingTop: 4;
+			backgroundColor: #FFCC00;
+		}
 		.render-button {
 			cornerRadii: 16, 0, 16, 0;
 			borderColors: #006699, #006699;
@@ -60,6 +72,7 @@
 
 						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" 
 								  toolTip="When you are done, click this button to create your word cloud." skinClass="com.settinghead.groffle.client.view.components.template.CreateButtonSkin" />
+						
 						<mx:HBox 
 							enabled="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 							visible="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
@@ -181,12 +194,14 @@
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.controls.Button;
+			import mx.controls.ToolTip;
 			import mx.core.BitmapAsset;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.events.IndexChangedEvent;
 			import mx.events.ItemClickEvent;
 			import mx.managers.PopUpManager;
+			import mx.managers.ToolTipManager;
 			
 			import org.as3commons.lang.HashArray;
 			import org.peaceoutside.utils.ColorMath;
@@ -292,7 +307,8 @@
 				this.callLater(drawTransparentBackground);
 
 			}
-			
+			public var myTip:ToolTip;
+
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				//disable fill button (not yet implemented)
@@ -304,8 +320,18 @@
 				
 				//select brush after creation complete in order to show growl tips
 				this.drawingToolBar.selectedIndex  = BRUSH;
+				
+				
+					var s:String = "You are editing an artwork tempalte.\n When you are ready, click this button to create your artwork with actual words gathered from your Facebook timeline and profile."
+					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
+					myTip.setStyle("backgroundColor",0xFFCC00);
+					
 			}
-
+			protected function canvas1_clickHandler(event:MouseEvent):void
+			{
+				ToolTipManager.destroyToolTip(myTip);
+				
+			}
 			
 			protected function btnRender_clickHandler(event:MouseEvent):void
 			{
@@ -422,6 +448,8 @@
 						break;
 				}
 			}
+			
+	
 			
 		]]>
 	</mx:Script>

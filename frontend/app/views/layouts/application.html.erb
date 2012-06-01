@@ -31,7 +31,6 @@
 		<span id="tagline">Create your own typography art.</span>
 	</div>
 	<div id="header">
-		<div id="left-blank">&nbsp;</div>
 		<div id="user_nav">
 		  <% if user_signed_in? %>
 		    Bonjour <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!
@@ -52,18 +51,18 @@
   			<li><%=link_to "Popular", :controller=> "/templates", :action=>"index"%></li>
   			<li class="last"><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
  					
-  			<%if current_user%>
+  			<%if current_user %>
   			<%end%>
   		</ul>
 		</div>
 	   
         <%= content_tag :h1, yield(:title) if show_title? %>
-			
+		<div id="header-middle">
 		<%=yield(:header)%>
+		</div>
 	</div>
 	  
     <div id="container">	
-		<div id="top-spacer">&nbsp;</div>
       <%= yield %>
     </div>
   </body>
