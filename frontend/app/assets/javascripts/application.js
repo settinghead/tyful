@@ -15,13 +15,17 @@
 //= require uservoice.js
 //= require ga.js
 
-window.resizeFlash = function (){
+window.resizeStuff = function (){
+	$('#header-middle').width($(window).width-$('#logo_bar').outerWidth()-$('#user_nav').outerWidth()-$('#main_menu').outerWidth());
+	
 	var amount = $('#header').outerHeight()>$('#header-middle').outerHeight()
 		?$('#header').outerHeight():$('#header-middle').outerHeight();
 	$('#container').css("padding-top",amount+"px");
 	$('#container').height($(window).height()-amount);
 	$('#container').css("padding-top", amount+"px");
 	$('#container').height($(window).height()-amount);
+	
+	
 }
-$(document).ready(window.resizeFlash);
-$(window).resize(window.resizeFlash);
+$(document).ready(window.resizeStuff);
+$(window).resize(window.resizeStuff);

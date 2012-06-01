@@ -1,0 +1,15 @@
+one:
+  fbid: MyString
+  message: MyText
+  time_posted: 2012-06-01 01:52:33
+  link: MyString
+  type: 
+  category: MyString
+
+two:
+  fbid: MyString
+  message: MyText
+  time_posted: 2012-06-01 01:52:33
+  link: MyString
+  type: 
+  category: MyString
