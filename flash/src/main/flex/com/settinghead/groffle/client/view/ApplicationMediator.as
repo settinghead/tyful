@@ -66,7 +66,8 @@ package com.settinghead.groffle.client.view
 					break;
 				
 				case ApplicationFacade.SHOW_SHOP:
-					applicationComponent.currentState = "withShop";
+					if((applicationComponent as Application).mainArea.tuRenderer.visible)
+						applicationComponent.currentState = "withShop";
 					break;
 				
 				case ApplicationFacade.DOWNLOAD_TEMPLATE:
