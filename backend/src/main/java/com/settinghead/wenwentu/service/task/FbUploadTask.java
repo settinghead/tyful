@@ -14,7 +14,7 @@ import com.restfb.types.Album;
 import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
-	private static final Object INTRO_STR = "I just created my Groffle typography artwork for my Facebook profile at http://www.groffle.me .";
+	private static final Object INTRO_STR = "I created my Groffle typography artwork for my Facebook profile at http://www.groffle.me .";
 	private String userId;
 	private String fbToken;
 	private String fbUid;
@@ -62,7 +62,7 @@ public class FbUploadTask extends Task {
 		FacebookType publishPhotoResponse = null;
 		try {
 			String title = this.getTitle();
-			if(title==null) title = "";
+			if(title==null || title.equals("null")) title = "";
 			publishPhotoResponse = client
 					.publish(albumId + "/photos", FacebookType.class,
 							BinaryAttachment.with("cat.png",
