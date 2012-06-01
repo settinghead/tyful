@@ -12,6 +12,9 @@ upstream frontend {
 upstream fileserver {
 	server localhost:5000;
 }
+upstream ci {
+	server localhost:8080;
+}
 
 server { listen 80; server_name groffle.me; rewrite ^/(.*) http://www.groffle.me permanent; }
 server {
@@ -28,6 +31,7 @@ server {
            }
 	   
 }
+
 
 server {
 	listen   443;
@@ -104,6 +108,15 @@ server {
 		#deny  all;
 	#}
 }
+
+server {
+	listen 80;
+	server_name laika.groffle.me;
+	location / {
+		proxy_pass http://ci;
+	}
+}
+
 
 
 # another virtual host using mix of IP-, name-, and port-based configuration
