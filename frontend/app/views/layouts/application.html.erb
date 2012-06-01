@@ -15,6 +15,13 @@
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
 	
+	<script type="text/javascript"> 
+	if (self.location.href!=top.location.href)
+	 {
+		 top.location.href="<%=request.url%>"; 
+	 }
+  </script>
+	
 	<script type="text/javascript">
 	$(document).ready(function(){
 	  <% flash.each do |name, msg| %>
