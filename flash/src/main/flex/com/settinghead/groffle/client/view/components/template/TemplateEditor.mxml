@@ -330,7 +330,10 @@
 			}
 			protected function canvas1_clickHandler(event:MouseEvent):void
 			{
+				if(myTip.visible){
 					ToolTipManager.destroyToolTip(myTip);
+					myTip.visible = false;
+				}
 				
 			}
 			
