@@ -34,6 +34,7 @@ package com.settinghead.groffle.client.controller.tu
 			else{
 				Mask.close();
 				var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+				tuProxy.load();
 				tuProxy.startRender();
 			}
 

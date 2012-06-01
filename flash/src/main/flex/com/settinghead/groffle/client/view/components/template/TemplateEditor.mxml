@@ -22,16 +22,16 @@
 		
 		.errorTip {
 			color: #000000;
-			fontSize: 9;
+			fontSize: 12;
 			fontWeight: "bold";
 			shadowColor: #000000;
-			borderColor: #FFCC00;
+			borderColor: #B9FF73;
 			borderStyle: "errorTipRight";
 			paddingBottom: 4;
 			paddingLeft: 4;
 			paddingRight: 4;
 			paddingTop: 4;
-			backgroundColor: #FFCC00;
+			backgroundColor: #B9FF73;
 		}
 		.render-button {
 			cornerRadii: 16, 0, 16, 0;

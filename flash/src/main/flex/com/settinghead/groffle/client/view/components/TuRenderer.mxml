@@ -35,6 +35,8 @@
 			
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
+			import flash.filters.GlowFilter;
+			
 			
 			public static const UPDATE_PROGRESS:String = "updateProgress";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
@@ -53,11 +55,11 @@
 //				patchLayer.graphics.clear();
 //				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
 //					this.highlightPatch(pi.patch);
-//				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
-//				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
+				dWord.addEventListener(MouseEvent.ROLL_OVER,wordMouseOver);
+				dWord.addEventListener(MouseEvent.ROLL_OUT,wordMouseOut);
 					dWord.useHandCursor= true;
 					dWord.buttonMode = true;
-					dWord.mouseChildren = true;
+//					dWord.mouseChildren = true;
 					dWord.addEventListener(MouseEvent.CLICK, wordClick);
 
 				this._driftDistanceSum += dWord.engineWord.offsetDistance;
@@ -77,8 +79,8 @@
 							(dWord.engineWord.word.occurences[0].link
 								as String)), '_blank');
 					    navigateToURL(new URLRequest(
-							"http://www.facebook.com/"+(dWord.engineWord.word.occurences[0].id
-						 as String)), '_blank');
+							"http://www.facebook.com/"+
+							(dWord.engineWord.word.occurences[0].id as String).replace('_','/posts/')), '_blank');
 				}
 			}
 			
@@ -107,12 +109,15 @@
 			
 			public function wordMouseOver(e:MouseEvent):void{
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
+				dWord.filters = [new GlowFilter(dWord.textField.textColor,0.3,
+					dWord.textField.textHeight/5,dWord.textField.textHeight/5,
+					dWord.textField.textHeight/16,1,false)];
 //				patchLayer.graphics.clear();
-				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
-					this.highlightPatch(pi.patch);
-				dWord.visible = false;
-				drawTree(dWord.engineWord.bbTree);
-				drawSamplePoints(dWord.engineWord);
+//				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
+//					this.highlightPatch(pi.patch);
+//				dWord.visible = false;
+//				drawTree(dWord.engineWord.bbTree);
+//				drawSamplePoints(dWord.engineWord);
 			}
 			
 			private function drawSamplePoints(ew:EngineWordVO):void{
@@ -132,7 +137,8 @@
 			
 			public function wordMouseOut(e:MouseEvent):void{
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
-				dWord.visible = true;
+				dWord.filters=[];
+//				dWord.visible = true;
 			}
 			
 			public function highlightPatch(patch:Patch):void{

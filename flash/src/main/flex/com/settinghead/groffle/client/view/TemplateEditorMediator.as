@@ -95,7 +95,6 @@ package com.settinghead.groffle.client.view
 		private function renderTu( event:Event = null ):void
 		{
 			var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			tuProxy.load();
 			
 			facade.sendNotification(ApplicationFacade.RENDER_TU);
 

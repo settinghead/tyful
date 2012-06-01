@@ -9,3 +9,4 @@ backend/target
 .hibernateSynchronizer/
 .fxpTemp/
 static/client/GroffleClient.swf
+log/

@@ -294,8 +294,8 @@ public class EngineWordVO {
 		
 		var s:DisplayWordVO = new DisplayWordVO(this);
 			this.shape.textField.textColor = c;
-			s.addChild(this.shape.textField);
-			
+			s.textField = this.shape.textField;
+			this.shape.textField.mouseEnabled = false;
 			var w:Number = s.width;
 			var h:Number = s.height;
 			s.x = this.shape.centerX-w/2;
