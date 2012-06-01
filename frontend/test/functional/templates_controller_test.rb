@@ -5,6 +5,8 @@ class TemplatesControllerTest < ActionController::TestCase
 
   setup do
     @template = templates(:one)
+    sign_in users(:one)
+    
   end
 
   test "should get index" do
