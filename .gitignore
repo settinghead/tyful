@@ -10,3 +10,11 @@ backend/target
 .fxpTemp/
 static/client/GroffleClient.swf
 log/
+
+log/file-development.log
+
+log/file-development.log
+
+log/shop-development.log
+
+log/rails-development.log
