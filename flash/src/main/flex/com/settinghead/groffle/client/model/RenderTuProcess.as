@@ -184,7 +184,6 @@ package com.settinghead.groffle.client.model
 					{
 						if(tu.generatedImage==null && getTimer() - _startTime > 10000){
 							tuProxy.generateImage();
-							facade.sendNotification(ApplicationFacade.TU_IMAGE_GENERATED);
 							_startTime = -1;
 						}
 					}
@@ -192,7 +191,6 @@ package com.settinghead.groffle.client.model
 						if(++snapshotTicker==SNAPSHOT_INTERVAL){
 							tuProxy.generateImage();
 							//							Notification.show("Snapshot generated.");
-							facade.sendNotification(ApplicationFacade.TU_IMAGE_GENERATED);
 
 							snapshotTicker = 0;
 							
@@ -207,6 +205,8 @@ package com.settinghead.groffle.client.model
 					if (failureCount >= tu.template.perseverance){
 						//						tu.skipToLast();
 						tuProxy.generateImage();
+						facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+
 						if(generateTemplatePreview){
 							tu.template.preview = generator.canvasImage(300);
 							

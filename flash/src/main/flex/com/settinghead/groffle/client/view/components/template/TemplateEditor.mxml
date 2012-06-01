@@ -70,7 +70,7 @@
 						<mx:LinkBar id="toggleButtonBar"
 											dataProvider="{ribbonViewStack}" />						
 
-						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create!" 
+						<s:Button id="btnRender" click="btnRender_clickHandler(event)" label="Create artwork!" 
 								  toolTip="When you are done, click this button to create your word cloud." skinClass="com.settinghead.groffle.client.view.components.template.CreateButtonSkin" />
 						
 						<mx:HBox 
