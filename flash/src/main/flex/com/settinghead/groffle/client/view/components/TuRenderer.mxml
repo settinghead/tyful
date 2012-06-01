@@ -301,7 +301,7 @@
 		<s:VGroup horizontalAlign="center" top="0" left="0" right="0">
 			<s:HGroup depth="1">
 				<s:Label width="170" />
-				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" />
+				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" fontSize="18" color="#005DF2" />
 				<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->

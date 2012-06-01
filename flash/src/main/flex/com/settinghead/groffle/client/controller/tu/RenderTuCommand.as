@@ -1,5 +1,7 @@
 package com.settinghead.groffle.client.controller.tu
 {
+	import com.settinghead.groffle.client.ApplicationFacade;
+	import com.settinghead.groffle.client.model.TemplateProxy;
 	import com.settinghead.groffle.client.model.TuProxy;
 	import com.settinghead.groffle.client.model.WordListProxy;
 	
@@ -21,16 +23,30 @@ package com.settinghead.groffle.client.controller.tu
 			this.waitForWordList();
 		}
 		
+
 		private function waitForWordList():void{
 			
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
-			
-			if(wordListProxy.currentWordList==null){
+			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
+			if(templateProxy.template==null){
+				if(!templateProxy.loading)
+					facade.sendNotification(ApplicationFacade.DOWNLOAD_TEMPLATE);
+				if(!Mask.shown){
+					Mask.show("Loading template. Just a moment.");
+				}
+				setTimeout(function():void{
+					facade.sendNotification(ApplicationFacade.RENDER_TU);
+				}
+					, 200);	
+			}
+			else if(wordListProxy.currentWordList==null){
 				if(!Mask.shown){
 					Mask.show("Analyzing your Facebook profile and status data. Just a moment.");
 				}
-				setTimeout(waitForWordList, 200);
-			}
+				setTimeout(function():void{
+					facade.sendNotification(ApplicationFacade.RENDER_TU);
+				}
+					, 200);				}
 			else{
 				Mask.close();
 				var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;

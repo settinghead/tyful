@@ -40,6 +40,7 @@ package com.settinghead.groffle.client.model
 		private var _pathToLoad:String;
 		private var urlLoader : MultipartURLLoader;
 		public var templateIdToLoad:String = null;
+		public var loading:Boolean = false;
 
 		public function TemplateProxy( )
 		{
@@ -53,6 +54,7 @@ package com.settinghead.groffle.client.model
 		private var loader : URLLoader;
 
 		public function load() :void{
+			loading = true;
 				var request : URLRequest
 				= new URLRequest  (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUrl) + this.templateIdToLoad);
 				var urlVariables : URLVariables = new URLVariables ();
@@ -68,8 +70,9 @@ package com.settinghead.groffle.client.model
 			var obj:Object = loader.data;
 			var b:ByteArray = (obj as Object) as ByteArray;
 			this.fromFile(b);
+			loading = false;
 			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
-			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
+//			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 		}
 		
 		

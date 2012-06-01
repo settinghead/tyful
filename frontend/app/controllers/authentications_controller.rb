@@ -22,8 +22,9 @@ class AuthenticationsController < ApplicationController
       user.apply_omniauth(omniauth)
       if user.save
         #flash[:notice] = "You have successfully signed in to Groffle."
-        sign_in_and_redirect(:user, user)
         post_authentication_work(user,omniauth)
+        
+        sign_in_and_redirect(:user, user)
       else
         redirect_to new_user_registration_url
       end
