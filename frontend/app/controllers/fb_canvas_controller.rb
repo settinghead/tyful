@@ -5,5 +5,8 @@ class FbCanvasController < ApplicationController
   def create
     redirect_to "/auth/facebook?signed_request=#{params['signed_request']}&state=canvas"
   end
+  def show
+  end
+
   
 end

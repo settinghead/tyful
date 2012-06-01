@@ -9,6 +9,11 @@ Groffle::Application.routes.draw do
   resources :word_list
   resources :shop
   resources :artworks
+  match '/facebook/invite/' => 'facebook#invite'
+  
+  
+  resources :facebook
+  
   resources :fb_canvas do
     member do
       post 'index'

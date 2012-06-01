@@ -10,6 +10,7 @@
 	<%= stylesheet_link_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" %>
 	
 	<%= favicon_link_tag %>
+	<%= javascript_include_tag "http://connect.facebook.net/en_US/all.js"%>
 	<%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
@@ -20,6 +21,12 @@
 	  window.notify("<%=msg%>", "Notice");
       <% end %>
   });
+  
+  FB.init({
+  	appId: <%=ENV['FB_APP_ID']%>, cookie: true,
+  	status: true, xfbml: true
+  });
+  
 	
 	</script>
   </head>
@@ -49,8 +56,8 @@
   			<li><%=link_to "My", :controller=> "/templates", :action=>"my"%></li>
 			
   			<li><%=link_to "Popular", :controller=> "/templates", :action=>"index"%></li>
-  			<li class="last"><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
- 					
+  			<li><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
+ 			<li class="last"><%=link_to "Invite", {:controller => "/facebook", :action=>"invite"}, :remote=> true%></li>		
   			<%if current_user %>
   			<%end%>
   		</ul>

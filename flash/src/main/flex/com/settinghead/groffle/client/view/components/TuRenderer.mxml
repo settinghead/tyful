@@ -308,10 +308,11 @@
 				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
 			</s:HGroup>
 			<s:HGroup>
-				<s:Label text="Fill perseverance"  />
+				<s:Label text="Squeeze perseverance"  />
 				<s:Group>
 					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" width="{perseveranceSlider.value*5}" />
-					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250"  />	
+					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250" 
+							 toolTip="This bar sets the number of words in a row Groffle fails to squeeze in before it stops running."	/>	
 				</s:Group>
 				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Squeeze in more words':'Working...'}"
 						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" 
@@ -319,6 +320,7 @@
 				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" 
 						  visible="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
 						  includeInLayout="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
+						   toolTip="Click this button to ask Groffle to stop squeezing in more words."
 						  />
 				
 			</s:HGroup>

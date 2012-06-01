@@ -51,7 +51,7 @@ package com.settinghead.groffle.client.view
 					if(note.getBody()!=null)
 						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
 					break;
-				case ApplicationFacade.TU_GENERATION_LAST_CALL:					
+				case ApplicationFacade.TU_IMAGE_GENERATED:					
 					//TODO
 					if(tuRenderer.autoPostToFacebook) 
 					{

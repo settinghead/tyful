@@ -10,7 +10,7 @@
 //= require jquery.hoverIntent
 //= require jquery.purr
 //= require notifications.js
-
+//= require facebook
 //= require_tree .
 //= require uservoice.js
 //= require ga.js
