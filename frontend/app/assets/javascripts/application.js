@@ -16,7 +16,8 @@
 //= require ga.js
 
 window.resizeStuff = function (){
-	$('#header-middle').width($(window).width-$('#logo_bar').outerWidth()-$('#user_nav').outerWidth()-$('#main_menu').outerWidth());
+	$('#header-middle').css('right',
+	    $('#user_nav').outerWidth()+$('#main_menu').outerWidth()+30+"px");
 	
 	var amount = $('#header').outerHeight()>$('#header-middle').outerHeight()
 		?$('#header').outerHeight():$('#header-middle').outerHeight();
