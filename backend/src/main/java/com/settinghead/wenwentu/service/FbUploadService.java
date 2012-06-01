@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.service;
 
-import com.settinghead.wenwentu.service.model.FbUploadTask;
+import com.settinghead.wenwentu.service.task.FbUploadTask;
 
 public class FbUploadService {
 

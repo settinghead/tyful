@@ -16,7 +16,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
-import com.settinghead.wenwentu.service.model.Task;
+import com.settinghead.wenwentu.service.task.Task;
 
 public class GroffleService<T extends Task> {
 	protected Logger logger = Logger.getLogger(this.getClass().getName());

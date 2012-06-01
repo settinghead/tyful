@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.service;
 
-import com.settinghead.wenwentu.service.model.WordListTask;
+import com.settinghead.wenwentu.service.task.WordListTask;
 
 public class WordListService {
 

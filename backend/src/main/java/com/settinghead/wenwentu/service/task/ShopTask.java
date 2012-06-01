@@ -1,6 +1,9 @@
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.wenwentu.service.task;
 
 import java.util.List;
+
+import com.settinghead.wenwentu.service.model.ShopItem;
+import com.settinghead.wenwentu.service.model.ShopPredictor;
 
 
 public class ShopTask extends Task {

@@ -1,6 +1,6 @@
 package com.settinghead.wenwentu.service;
 
-import com.settinghead.wenwentu.service.model.ShopTask;
+import com.settinghead.wenwentu.service.task.ShopTask;
 
 public class ShopService {
 

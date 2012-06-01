@@ -1,10 +1,12 @@
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.wenwentu.service.task;
 
 import java.io.StringWriter;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.codehaus.jackson.map.ObjectMapper;
+
+import com.settinghead.wenwentu.service.model.ShopItem;
 
 public abstract class Task {
 	protected Logger logger = Logger.getLogger(this.getClass().getName());
