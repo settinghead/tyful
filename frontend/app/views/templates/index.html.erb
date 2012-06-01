@@ -1,6 +1,8 @@
 <%content_for :header do%>
-<div class="instructional">Start by picking a tempalte from Grofle's public gallery.
-	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> <br /> (It's super simple and shockingly fun!)</div>
+<div class="instructional">
+	Groffle analyses words you used in your Facebook profile and timeline and transforms them into typography artworks. <br />
+	Give it a try by picking a tempalte from Grofle's public gallery.
+	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> <br /> (It's simple, intuitive and fun!)</div>
 <%end%>
 <div class="masonry-container">
 	<% @templates.each do |template| %>
