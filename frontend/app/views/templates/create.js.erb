@@ -1,9 +1,16 @@
 <%if(@template.save)%>
-alert('Template successfully saved.');
+alert('Template successfully published.');
 $('#modal').dialog('close');
 window.editing = false;
 
 <%else%>
-$('#modal').dialog({title:'Saving template', width: 500});
-window.editing = true;
+if($('#new_template #template_name').val().length>0){
+	$('#modal').dialog('close');
+	
+	setTimeout(function(){$('#new_template').submit();},2000);
+}
+else {
+	$('#modal').dialog({title:'Saving template', width: 500});
+	window.editing = true;
+}
 <%end%>

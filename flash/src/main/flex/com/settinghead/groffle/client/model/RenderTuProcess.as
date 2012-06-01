@@ -64,7 +64,6 @@ package com.settinghead.groffle.client.model
 		private var snapshotTicker:int=0;
 		private var _currentWordIndex:int = -1;
 		private var totalAttemptedWords:int = 0;
-		public var generateTemplatePreview:Boolean = false;
 		private var generator:ITuImageGenerator;
 		
 		private var tuProxy:TuProxy;
@@ -207,13 +206,13 @@ package com.settinghead.groffle.client.model
 						tuProxy.generateImage();
 						facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 
-						if(generateTemplatePreview){
+						if(tuProxy.generateTemplatePreview){
 							tu.template.preview = generator.canvasImage(300);
 							
 							facade.sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
-							
 						}
 						else{
+
 							if(tu.template.preview==null){
 								tu.template.preview = generator.canvasImage(300);
 								

@@ -352,7 +352,7 @@
 			}
 			protected function btnUploadTemplate_clickHandler(event:MouseEvent):void
 			{
-				if(chkRerenderThumbnail.selected)
+				if(chkRerenderThumbnail && chkRerenderThumbnail.selected)
 					template.preview = null;
 				dispatchEvent(new Event(UPLOAD_TEMPLATE));	
 			}

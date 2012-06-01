@@ -78,14 +78,14 @@ package com.settinghead.groffle.client.model
 			this.imageGenerator = FlexGlobals.topLevelApplication["tuImageGenerator"];
 		}
 		
-
+		private var _generateTemplatePreview:Boolean = false;
 		
 		public function get generateTemplatePreview():Boolean{
-			return renderProcess.generateTemplatePreview;
+			return _generateTemplatePreview;
 		}
 		
 		public function set generateTemplatePreview(v:Boolean):void{
-			renderProcess.generateTemplatePreview = v;
+			_generateTemplatePreview = v;
 		}
 		
 		public function startRender():void{
@@ -175,6 +175,8 @@ package com.settinghead.groffle.client.model
 			urlLoader.addVariable("templateId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId));
 			urlLoader.addFile(b,"artwork.png",'image');
 			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.facebookUploadUrl),true);
+			Notification.show("Your artwork has been shared with your friends on Facebook.");
+
 
 		}
 		
@@ -184,7 +186,6 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function photoPostComplete(e:Event):void{
-			Notification.show("Your artwork has been shared with your friends on Facebook.");
 		}
 	}
 }
