@@ -86,14 +86,19 @@ class TemplatesController < ApplicationController
   # GET /templates/new
   # GET /templates/new.json
   def new
-    @template = Template.new
-    retrieve_token
-    @mode = 'newTemplate'
-    ShopController.push_shop_predict_task(current_user,@template)
+    if !current_user
+      session["user_return_to"]=request.url
+      redirect_to '/auth/facebook/'
+    else
+      @template = Template.new
+      retrieve_token
+      @mode = 'newTemplate'
+      ShopController.push_shop_predict_task(current_user,@template)
     
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @template }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @template }
+      end
     end
   end
 
