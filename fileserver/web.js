@@ -5,6 +5,8 @@ var express = require('express'),
 	URL = require('url'), redis = require("redis"),    util = require('util'),
 	knox = require('knox'), sys=require('sys');
 	var exec = require('child_process').exec;
+	var im = require('imagemagick');
+
 
 	var pg = require('pg'); 
 	var config = require('./config');
@@ -40,7 +42,7 @@ function startServices(){
 			           + '</orm>');
 			});
 	
-	app.post('/t', function(req, res){
+	app.post('/t/', function(req, res){
 		var form = new formidable.IncomingForm();
 		form.parse(req, function(err, fields, files) {
 		    if(err) {
@@ -86,23 +88,28 @@ function startServices(){
 	//template preview
 	app.get('/tp/:id', function(req, res){
 		var count = 0;
-		s3client.get(req.params.id).on('response', function(res3){
-		  console.log(res3.statusCode);
-		  console.log(res3.headers);
-		  res3.setEncoding('binary');
-		  res3.on('data', function(chunk){
-			      res.write(chunk, "binary");
-				  count+=chunk.length;
-		  });
-		  res3.on('end', function(){
-			  console.log('File size: ' + count);
-		  	  res.end();
-		  });
-		}).end();
+		try{
+			s3client.get(req.params.id).on('response', function(res3){
+			  console.log(res3.statusCode);
+			  console.log(res3.headers);
+			  res3.setEncoding('binary');
+			  res3.on('data', function(chunk){
+				      res.write(chunk, "binary");
+					  count+=chunk.length;
+			  });
+			  res3.on('end', function(){
+				  console.log('File size: ' + count);
+			  	  res.end();
+			  });
+			}).end();
+		}
+		catch(e){
+			console.log(e);
+		}
 	});
 	
 	
-	app.post('/r', function(req, res){
+	app.post('/r/', function(req, res){
 		var form = new formidable.IncomingForm();
 		form.parse(req, function(err, fields, files) {
 		    if(err) {
