@@ -80,6 +80,7 @@ server {
 
 	location / {
 		proxy_pass http://frontend;
+	    proxy_set_header Host $host;
 	}
 
 	#error_page  404  /404.html;
@@ -119,6 +120,7 @@ server {
 	server_name ci.laika.groffle.me;
 	location / {
 		proxy_pass http://ci;
+	    proxy_set_header Host $host;
 	}
 }
 
@@ -127,6 +129,7 @@ server {
 	server_name pg.laika.groffle.me;
 	location / {
 		proxy_pass http://phppgadmin;
+	    proxy_set_header Host $host;
 	}
 }
 
