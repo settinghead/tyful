@@ -36,7 +36,7 @@
 		<components:MainArea id="mainArea" height="100%" />
 		<shop:ShopItemList id="shopItemList"
 						   visible.withoutShop="false" includeInLayout.withoutShop="false" includeInLayout.withShop="true"
-						   visible.withShop="true" top="10" 
-						   left="{mainArea.right>parent.width-shopItemList.width?parent.width-shopItemList.width:mainArea.getLayoutBoundsX()+mainArea.tuRenderer.left+mainArea.tuRenderer.getLayoutBoundsWidth()+60}" />
+						   visible.withShop="true" top="10" bottom="10"
+						   left="{mainArea.right>parent.width-shopItemList.width?parent.width-150:mainArea.getLayoutBoundsX()+mainArea.tuRenderer.left+mainArea.tuRenderer.getLayoutBoundsWidth()+60}" />
 	
 </s:Group>

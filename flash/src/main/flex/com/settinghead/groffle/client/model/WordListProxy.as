@@ -46,7 +46,6 @@ package com.settinghead.groffle.client.model
 		private var loader : URLLoader;
 		public function load() :void{
 			if(this._list==null){
-				
 				//var wordListId:String = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.wordListId) as String;
 				var request : URLRequest = new URLRequest  ( "/word_list/recent" );
 				var urlVariables : URLVariables = new URLVariables ();
@@ -65,7 +64,8 @@ package com.settinghead.groffle.client.model
 			if( obj.status=="pending" 
 					|| obj.status=="requested"
 			){
-				setTimeout(load,3000);
+
+				setTimeout(load,2000);
 			}
 			else if(obj.error !=null )
 			{
@@ -77,6 +77,7 @@ package com.settinghead.groffle.client.model
 				var l:Array = (obj as Object) as Array;
 				var wordList:WordListVO = new WordListVO(l);
 				this._list = wordList;
+
 			}
 		}
 	
