@@ -101,7 +101,7 @@ package com.settinghead.groffle.client.model
 		override public function runAndManage( allocation:int ) : void
 		{
 			var start:int = getTimer();
-			while(tu!=null && !_failureCount<tu.template.perseverance && getTimer() - start < allocation )
+			while(tu!=null && _failureCount<tu.template.perseverance && getTimer() - start < allocation )
 			{
 				currentStep();
 			}

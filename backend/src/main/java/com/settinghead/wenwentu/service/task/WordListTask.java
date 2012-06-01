@@ -95,6 +95,7 @@ public class WordListTask extends Task {
 
 	@Override
 	public int getExpiration() {
-		return 14400;
+		//expires in 24 hours
+		return 86400;
 	}
 }
