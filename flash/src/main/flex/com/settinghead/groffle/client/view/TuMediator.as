@@ -37,6 +37,7 @@ package com.settinghead.groffle.client.view
 			return [
 				ApplicationFacade.RENDER_TU,
 				ApplicationFacade.DISPLAYWORD_CREATED,
+				ApplicationFacade.TU_IMAGE_GENERATED
 			];
 		}
 		
