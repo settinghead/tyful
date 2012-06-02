@@ -214,11 +214,12 @@ package com.settinghead.groffle.client.model
 							facade.sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
 						}
 						else{
-
-							if(tu.template.preview==null){
-								tu.template.preview = generator.canvasImage(300);
-								
-							}
+							//desperate measure: fill in whatever is available as preview
+							// warning: may violate user privacy
+//							if(tu.template.preview==null){
+//								tu.template.preview = generator.canvasImage(300);
+//								
+//							}
 						}
 					}
 				}
