@@ -161,6 +161,8 @@ package com.settinghead.groffle.client.model
 		
 		private var urlLoader : MultipartURLLoader;
 		public function postToFacebook():void{
+			if(tu.generatedImage==null)
+				tu.generatedImage = imageGenerator.canvasImage(1500);
 			var b:ByteArray = PNGEncoder.encode(tu.generatedImage);
 			// set up the request & headers for the image upload;
 			urlLoader = new MultipartURLLoader();

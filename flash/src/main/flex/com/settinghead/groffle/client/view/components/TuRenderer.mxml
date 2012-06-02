@@ -28,6 +28,8 @@
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
 			
+			import flash.filters.GlowFilter;
+			
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
@@ -35,11 +37,11 @@
 			
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
-			import flash.filters.GlowFilter;
 			
 			
 			public static const UPDATE_PROGRESS:String = "updateProgress";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
+			public static const POST_TO_FACEBOOK:String = "postToFacebook";
 			public static const EFFECTIVE_MARGIN:int = 5;
 
 			
@@ -295,6 +297,11 @@
 				FlexGlobals.topLevelApplication["tuImageGenerator"] = this;
 			}
 			
+			protected function btnPostToFacebook_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(POST_TO_FACEBOOK));
+			}
+			
 		]]>
 	</fx:Script>
 	<s:VGroup width="100%" height="100%">
@@ -305,7 +312,8 @@
 				<s:Button id="btnSaveAsPng" click="btnSaveAsPng_clickHandler(event)" label = "Save image..." />
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
-				<s:CheckBox label="Post to Facebook" selected="@{autoPostToFacebook}" />
+				<s:Button id="btnPostToFacebook" label="Post to Facebook" click="btnPostToFacebook_clickHandler(event)" />
+				<s:CheckBox label="Auto post when finished" selected="@{autoPostToFacebook}" />
 			</s:HGroup>
 			<s:HGroup>
 				<s:Label text="Squeeze perseverance"  />

@@ -9,6 +9,7 @@ package com.settinghead.groffle.client
 	import com.settinghead.groffle.client.controller.template.NewTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.SaveTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.UploadTemplateCommand;
+	import com.settinghead.groffle.client.controller.tu.PostToFacebookCommand;
 	import com.settinghead.groffle.client.controller.tu.RenderTuCommand;
 	
 	import flash.display.LoaderInfo;
@@ -38,6 +39,7 @@ package com.settinghead.groffle.client
 		public static const TEMPLATE_PREVIEW_GENERATED:String= "templatePreviewGenerated";
 		public static const TU_GENERATION_LAST_CALL:String	= "tuGenerationLastCall";
 		public static const SHOW_SHOP:String				= "showShop";
+		public static const POST_TO_FACEBOOK:String				= "postToFacebook";
 //		public static const PROCESS_SHOP_CLICK:String		= "processShopClick";
 		
 		public static const MODE_EDIT_TEMPLATE:String	= "editTemplate";
@@ -71,6 +73,7 @@ package com.settinghead.groffle.client
 //			registerCommand (GENERATE_TU_IMAGE, GenerateTuCommand);
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 			registerCommand ( RENDER_TU, RenderTuCommand);
+			registerCommand (POST_TO_FACEBOOK, PostToFacebookCommand);
 		}
 		
 		/**

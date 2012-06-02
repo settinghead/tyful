@@ -24,6 +24,7 @@ package com.settinghead.groffle.client.view
 			super(NAME, viewComponent);
 			tuRenderer.addEventListener(TuRenderer.UPDATE_PROGRESS, updateProgress);
 			tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
+			tuRenderer.addEventListener(TuRenderer.POST_TO_FACEBOOK, postToFacebook);
 
 		}
 		
@@ -56,7 +57,7 @@ package com.settinghead.groffle.client.view
 					//TODO
 					if(tuRenderer.autoPostToFacebook) 
 					{
-						tuProxy.postToFacebook();
+						sendNotification(ApplicationFacade.POST_TO_FACEBOOK);
 						tuRenderer.autoPostToFacebook = false;
 					}
 					break;
@@ -78,6 +79,11 @@ package com.settinghead.groffle.client.view
 		private function editTemplate( event:Event = null ):void
 		{
 			sendNotification(ApplicationFacade.EDIT_TEMPLATE, tuRenderer.tu.template);
+		}
+		
+		private function postToFacebook( event:Event = null ):void
+		{
+			sendNotification(ApplicationFacade.POST_TO_FACEBOOK);
 		}
 	}
 }
