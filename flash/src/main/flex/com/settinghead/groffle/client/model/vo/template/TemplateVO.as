@@ -97,7 +97,7 @@ package com.settinghead.groffle.client.model.vo.template
 
 		public function connectLayers():void{
 			for(var i:int=0;i<layers.length;i++){
-				if(i>0) Layer.connect( (layers[i-1] as Layer),(layers[i] as Layer)); 
+				if(i>0) Layer.connect( (layers[i] as Layer),(layers[i-1] as Layer)); 
 			}
 		}
 		

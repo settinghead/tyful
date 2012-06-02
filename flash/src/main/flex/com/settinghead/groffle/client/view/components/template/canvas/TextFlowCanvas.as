@@ -396,7 +396,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		}
 		
 		private function redrawDireciton(xs:Number,ys:Number,xe:Number,ye:Number):void{
-			
+//			var str:String = "";
 			//expand the region a little to align with global grid lines
 			xs = xs - xs%a.width; if(xs<0) xs = 0;
 			ys = ys - ys%a.height; if(ys<0) ys =0;
@@ -414,6 +414,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 					var m:Matrix = new Matrix();
 
 					var angle:Number = layer.getHue(w+a.width/2, h+a.height/2)*BBPolarTreeVO.TWO_PI;
+//					str = str+" "+angle.toString();
 					m.tx -= a.width/2;
 					m.ty -= a.height/2;
 					m.rotate(-angle);
@@ -432,9 +433,12 @@ package com.settinghead.groffle.client.view.components.template.canvas
 					m = new Matrix();
 					m.tx += w;
 					m.ty += h;
+//					dirShape.x = w;
+//					dirShape.y = h;
 					bmpDirection.bitmapData.draw(dirShape,m);
 				}
 			}
+
 		}
 		
 		private function resetDrawingRegion():void{
