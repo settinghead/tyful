@@ -4,6 +4,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import com.settinghead.wenwentu.service.FacebookRetriever;
 import com.settinghead.wenwentu.service.model.Word;
@@ -82,20 +83,23 @@ public class WordListTask extends Task {
 	@Override
 	public String perform() {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
+
 		FacebookRetriever retriever = new FacebookRetriever();
-		List<Word> wordList = retriever.getWordsForUser(this.getUid(), this.getToken());
-		
+		List<Word> wordList = retriever.getWordsForUser(this.getUid(),
+				this.getToken());
+
 		StringWriter sw = new StringWriter();
 		try {
 			mapper.writeValue(sw, wordList);
-		} catch (Exception e){
+		} catch (Exception e) {
 		}
 		return sw.toString();
 	}
 
 	@Override
 	public int getExpiration() {
-		//expires in 24 hours
+		// expires in 24 hours
 		return 86400;
 	}
 }
