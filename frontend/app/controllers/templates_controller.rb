@@ -52,7 +52,7 @@ class TemplatesController < ApplicationController
   # GET /templates/1
   # GET /templates/1.json
   def show
-    if !current_user
+    if not request.user_agent.match("facebook") and not current_user
       session["user_return_to"]=request.url
       redirect_to '/auth/facebook/'
     else
@@ -60,7 +60,7 @@ class TemplatesController < ApplicationController
       @template = Template.find(params[:id])
       retrieve_token
       ShopController.push_shop_predict_task(current_user,@template)
-      REDIS.set("token_#{@template.uuid}", @template.user.token) if @template && @template.user;
+      REDIS.set("token_#{@template.uuid}", @template.user.token) if current_user && @template && @template.user;
       respond_to do |format|
         format.html # show.html.erb
         # format.json { render json: @template }
