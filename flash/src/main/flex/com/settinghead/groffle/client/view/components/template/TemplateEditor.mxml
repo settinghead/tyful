@@ -78,7 +78,7 @@
 							visible="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 							includeInLayout="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 							>
-							<s:Button click="btnUploadTemplate_clickHandler(event)" label="Save/share your template"
+							<s:Button click="btnUploadTemplate_clickHandler(event)" label="Save &amp; Publish to Gallery"
 									  toolTip="Show off your artistic talent by sharing your template with others."/>
 						</mx:HBox>
 					</s:HGroup>
@@ -322,7 +322,7 @@
 				this.drawingToolBar.selectedIndex  = BRUSH;
 				
 				
-					var s:String = "You are currently editing an artwork tempalte.\nFirst, draw something on the canvas. \nThen click this button to create your personalized artwork with information from your Facebook timeline and profile."
+					var s:String = "You are in editing mode.\Draw something on the canvas. \nThen click this button to create your personalized artwork with words from your Facebook profile and timeline."
 					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
 					myTip.setStyle("backgroundColor",0xFFCC00);
 					BindingUtils.bindProperty(myTip, "visible", this,"visible");

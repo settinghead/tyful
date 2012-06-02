@@ -1,26 +1,34 @@
 
 <%content_for :head do%>
 	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#see-gallery').click(function(){
+	        $('html,body').animate({scrollTop: $(".masonry-container").offset().top-$('#header-middle').outerHeight()},'slow');
+		});
+		
+	});
+
+	</script>
 <%end%>
 
 
 <%content_for :header do%>
 <div class="instructional">
 
-	Groffle analyses words from your Facebook profile and timeline and presents them as typography artworks. <br />
-	Give it a try by picking a tempalte from Grofle's public gallery below.
-	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> <br /> (It's simple, intuitive and fun!)</div>
+	Groffle analyzes words from your Facebook profile and transforms them into typography artworks. <br />
+	Wanna give a try? Simply pick a template from the gallery below.
+	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> (It's simple, intuitive and fun!)</div>
 <%end%>
 
 <%if @show_intro %>
 	<div id="intro-image" class="polaroid">
-		  <p>The Intro</p>
-		<%=image_tag 'groffle-intro.png'%>
-	</div>
+		  <p><a id="see-gallery" href="#">Okay. Now show me the gallery.</a></p>
+		<%=image_tag 'groffle-intro.png'%>		
+	</div>	
 <%end%>
 
 <div class="masonry-container">
-
 	<% @templates.each do |template| %>
 	<%=div_for template, :class=>'item box' do%>
 	<div class="inner">	
