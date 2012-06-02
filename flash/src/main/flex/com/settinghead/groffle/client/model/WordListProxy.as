@@ -81,6 +81,7 @@ package com.settinghead.groffle.client.model
 			}
 		}
 	
+		
 		public function get currentWordList():WordListVO{
 			return _list;
 		}
