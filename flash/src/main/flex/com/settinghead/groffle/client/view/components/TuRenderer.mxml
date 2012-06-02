@@ -20,6 +20,7 @@
 
 	<fx:Script>
 		<![CDATA[
+			import com.settinghead.groffle.client.ApplicationFacade;
 			import com.settinghead.groffle.client.PlaceInfo;
 			import com.settinghead.groffle.client.density.Patch;
 			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
@@ -27,6 +28,8 @@
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
+			
+			import de.aggro.utils.CookieUtil;
 			
 			import flash.filters.GlowFilter;
 			
@@ -46,8 +49,14 @@
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
-			[Bindable] public var autoPostToFacebook:Boolean = true;
+			
+			[Bindable]public function get autoPostToFacebook():Boolean{
+				return chkAutoPostToFacebook.selected;
+			}
 
+			public function set autoPostToFacebook(v:Boolean):void{
+				chkAutoPostToFacebook.selected = v;
+			}
 			
 			private var _tu:TuVO;
 			
@@ -255,6 +264,18 @@
 			
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
+				if(CookieUtil.getCookie("autoPostToFacebook")!=null){
+					autoPostToFacebook = CookieUtil.getCookie("autoPostToFacebook")=="true"?true:false;
+				}
+				else{
+					var mode:String = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode) as String;
+
+					if(mode!=ApplicationFacade.MODE_NEW_TEMPLATE)
+						autoPostToFacebook = true;
+					else
+						autoPostToFacebook = false;	
+				}
+				
 				if(newTu && this.tu!=null){
 					prepareForTu();
 				}
@@ -302,6 +323,11 @@
 				dispatchEvent(new Event(POST_TO_FACEBOOK));
 			}
 			
+			protected function chkAutoPostToFacebook_clickHandler(event:MouseEvent):void
+			{
+				CookieUtil.setCookie("autoPostToFacebook", chkAutoPostToFacebook.selected,30);
+			}
+			
 		]]>
 	</fx:Script>
 	<s:VGroup width="100%" height="100%">
@@ -313,7 +339,7 @@
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
 				<s:Button id="btnPostToFacebook" label="Post to Facebook" click="btnPostToFacebook_clickHandler(event)" />
-				<s:CheckBox label="Auto post when finished" selected="@{autoPostToFacebook}" />
+				<s:CheckBox label="Auto post when finished" selected="true" id="chkAutoPostToFacebook" click="chkAutoPostToFacebook_clickHandler(event)" />
 			</s:HGroup>
 			<s:HGroup>
 				<s:Label text="Squeeze perseverance"  />

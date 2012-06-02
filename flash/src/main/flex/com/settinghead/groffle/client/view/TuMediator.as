@@ -6,9 +6,13 @@ package com.settinghead.groffle.client.view
 	import com.settinghead.groffle.client.model.vo.TuVO;
 	import com.settinghead.groffle.client.view.components.TuRenderer;
 	
+	import de.aggro.utils.CookieUtil;
+	
 	import flash.events.Event;
+	import flash.net.SharedObject;
 	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
