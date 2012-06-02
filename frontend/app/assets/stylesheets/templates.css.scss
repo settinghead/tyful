@@ -11,6 +11,32 @@
   margin-bottom: 0px;
   height: 100%;
 }
+	body, #container{
+		background-color: #aaa;
+	}
+	.polaroid {
+	  position: relative;
+	  width: 220px;
+	  margin: 20px;
+	}
+
+	.polaroid img {
+	  border: 10px solid #fff;
+	  border-bottom: 45px solid #fff;
+	  -webkit-box-shadow: 3px 3px 3px #777;
+	     -moz-box-shadow: 3px 3px 3px #777;
+	          box-shadow: 3px 3px 3px #777;
+	}
+
+	.polaroid p {
+	  position: absolute;
+	  text-align: center;
+	  width: 100%;
+	  bottom: 0px;
+	  font: 400 18px/1 'Kaushan Script', cursive;
+	  color: #888;
+	}
+
 
 #intro-image{
   margin: auto;
@@ -28,10 +54,9 @@ h1{
 
   .masonry-container{
   .item {
-
+  text-align: center;
   .inner{
     font-size: 10px;
-    line-height: 1.4em;
 	width: 200px;
 	background-color: #fff;
 
@@ -89,8 +114,8 @@ h1{
   }
 
   h3{
-    display: inline;
-	font-size: 15px;
+    display: block;
+	font-size: 16px;
   }
   .author{
     clear: left;

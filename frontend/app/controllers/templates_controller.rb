@@ -12,12 +12,8 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.find(:all, :conditions => ['private=?', false], :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'',
-     :order => 'count(votes.id) DESC', :group => 'templates.id')
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @templates }
-    end
+     @show_intro = true
+     popular
   end
   
   def my
@@ -40,9 +36,19 @@ class TemplatesController < ApplicationController
       format.json { render json: @templates }
     end
   end
-
   
-
+  def popular
+    @templates = Template.find(:all, :conditions => ['private=?', false], :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'',
+     :order => 'count(votes.id) DESC', :group => 'templates.id')
+    
+    respond_to do |format|
+      format.html do
+        render 'index'
+      end
+      format.json { render json: @templates }
+    end
+  end
+  
   # GET /templates/1
   # GET /templates/1.json
   def show
