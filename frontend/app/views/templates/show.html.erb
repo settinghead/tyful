@@ -13,6 +13,20 @@ global_meta_tags :title        => @template.name, \
 end
 %>
 
+<script type="text/javascript">
+FB.Event.subscribe('edge.create',
+    function(response) {
+		$.ajax({url: '<%=url_for :controller=>"/templates", :action=>"like"%>'});
+    }
+);
+
+FB.Event.subscribe('edge.remove',
+    function(response) {
+		$.ajax({url: '<%=url_for :controller=>"/templates", :action=>"unlike"%>'});
+    }
+);
+
+</script>
 <%content_for :header do%>
 Template <h1>"<%=@template.name%>"</h1> by <%=link_to @template.user%> 
 	<div class="emote">
