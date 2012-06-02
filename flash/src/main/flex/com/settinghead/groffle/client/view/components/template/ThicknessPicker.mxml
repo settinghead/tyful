@@ -16,7 +16,8 @@
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
 			private var _thickness:int;
-			
+			private var numButtons:int = 25;
+
 			public static const BUTTON_WIDTH:Number = 30;
 			
 			[Bindable(event="ThicknessChanged")]
@@ -38,7 +39,6 @@
 			
 			private function generateButtons():void{
 //				var numButtons:int = this.width/BUTTON_WIDTH;
-				var numButtons:int = 25;
 
 				for(var i:int=0;i<numButtons;i++){
 					var thickness:Number = 100/numButtons*i;

@@ -178,21 +178,23 @@ package com.settinghead.groffle.client.model
 					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
 					
-					if(_startTime>0)
-						//timed out; display generate image even if unfinished
-					{
-						if(tu.generatedImage==null && getTimer() - _startTime > 10000){
-							tuProxy.generateImage();
-							_startTime = -1;
+					if(!tuProxy.generateTemplatePreview){
+						if(_startTime>0)
+							//timed out; display generate image even if unfinished
+						{
+							if(tu.generatedImage==null && getTimer() - _startTime > 10000){
+								tuProxy.generateImage();
+								_startTime = -1;
+							}
 						}
-					}
-					else{
-						if(++snapshotTicker==SNAPSHOT_INTERVAL){
-							tuProxy.generateImage();
-							//							Notification.show("Snapshot generated.");
-
-							snapshotTicker = 0;
-							
+						else{
+							if(++snapshotTicker==SNAPSHOT_INTERVAL){
+								tuProxy.generateImage();
+								//							Notification.show("Snapshot generated.");
+								
+								snapshotTicker = 0;
+								
+							}
 						}
 					}
 					

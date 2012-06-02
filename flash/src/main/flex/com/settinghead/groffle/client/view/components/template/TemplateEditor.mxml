@@ -113,7 +113,7 @@
 								</mx:HBox>
 								<mx:HBox label="Erase">
 									<mx:Label text="Thickness: " />
-									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  />
+									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  thickness="@{this.thickness}"  />
 								</mx:HBox>
 							</mx:ViewStack>
 						<mx:HBox label="Help">
