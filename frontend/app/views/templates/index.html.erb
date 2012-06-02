@@ -1,3 +1,34 @@
+
+<%content_for :head do%>
+	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+	<style>
+	
+	.polaroid {
+	  position: relative;
+	  width: 220px;
+	  margin: 20px;
+	}
+
+	.polaroid img {
+	  border: 10px solid #fff;
+	  border-bottom: 45px solid #fff;
+	  -webkit-box-shadow: 3px 3px 3px #777;
+	     -moz-box-shadow: 3px 3px 3px #777;
+	          box-shadow: 3px 3px 3px #777;
+	}
+
+	.polaroid p {
+	  position: absolute;
+	  text-align: center;
+	  width: 100%;
+	  bottom: 0px;
+	  font: 400 18px/1 'Kaushan Script', cursive;
+	  color: #888;
+	}
+	</style>
+<%end%>
+
+
 <%content_for :header do%>
 <div class="instructional">
 
@@ -6,7 +37,8 @@
 	<br /> Or, if you feel creative, <%= link_to 'Draw Your Own Template', new_template_path, {:class=>'create-button'} %> <br /> (It's simple, intuitive and fun!)</div>
 <%end%>
 
-	<div id="intro-image">
+	<div id="intro-image" class="box">
+		  <p>The Intro</p>
 		<%=image_tag 'groffle-intro.png'%>
 	</div>
 
