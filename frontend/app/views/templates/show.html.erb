@@ -1,14 +1,16 @@
 <%
-content_for :head do%>
-<%=global_meta_tags :title        => @template.name, \
+
+set_meta_tags :title => @template.name
+set_meta_tags :description => @template.description + " Create cool typography artwork with Groffle."
+
+content_for :head do
+global_meta_tags :title        => @template.name, \
     :type         => 'groffle:groffle_artwork', \
     :site_name    => 'Groffle', \
     :image        =>  ENV['TEMPLATE_PREVIEW_URL']+@template.uuid+'.png', \
     :app_id      =>  ENV['FB_APP_ID'], \
-    :description  => @template.description
-	%>
-
-<%end
+    :description  => @template.description	
+end
 %>
 
 <%content_for :header do%>

@@ -89,6 +89,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta-tags (1.2.6)
+      actionpack
     metaclass (0.0.1)
     metamagic (1.0.0)
     mime-types (1.18)
@@ -211,6 +213,7 @@ DEPENDENCIES
   friendly_id
   impressionist
   jquery-rails
+  meta-tags
   metamagic
   mocha
   newrelic_rpm
