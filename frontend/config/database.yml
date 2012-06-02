@@ -9,7 +9,7 @@ development:
    database: groffle_dev
    pool: 5
    username: groffle_user
-   password: 0
+   password: 0e4,swa=apu3ru
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -20,7 +20,7 @@ test:
   encoding: unicode
   pool: 5
   username: groffle_user
-  password: 0
+  password: 0e4,swa=apu3ru
 
 production:
   adapter: postgresql

@@ -19,10 +19,10 @@ if currentEnv not in ['production', 'staging']
   exports.server.ip = '0.0.0.0'
 if currentEnv in ['production']
   exports.redis_db = "redis://localhost:6379/2"
-  exports.pg_db = "tcp://groffle_user:0@localhost/groffle_prod"
+  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_prod"
 else if currentEnv in ['test']
   exports.redis_db = "redis://localhost:6379/1"
-  exports.pg_db = "tcp://groffle_user:0@localhost/groffle_test"
+  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_test"
 else
   exports.redis_db = "redis://localhost:6379/0"
   exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_dev"
