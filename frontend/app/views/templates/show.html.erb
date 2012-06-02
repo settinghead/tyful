@@ -7,12 +7,24 @@ content_for :head do%>
     :app_id      =>  ENV['FB_APP_ID'], \
     :description  => @template.description
 	%>
+
 <%end
 %>
 
 <%content_for :header do%>
-Template <h1>"<%=@template.name%>"</h1> by <%=link_to @template.user%>
+Template <h1>"<%=@template.name%>"</h1> by <%=link_to @template.user%> 
+	<div class="emote">
+		<div class="fb-like" data-send="true" data-layout="button_count" data-width="100" data-show-faces="false" data-font="lucida grande"></div>
+	</div>
 <%end%>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=<%=ENV['FB_APP_ID']%>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <%= render 'form' %>
 
 <%= link_to 'Back', templates_path %>

@@ -122,9 +122,12 @@ h1{
   .author{
     clear: left;
   }
+}
+
   .emote{
     margin: 5px;
 	margin-top: 15px;
+	display: inline;
    .like-count{
      font-size: 18px;
 	 padding-left: 22px;
@@ -141,8 +144,11 @@ h1{
 	  border-radius: 5px;
 	  padding: 3px;
 	}
+	.fb-like{
+	  display: inline;
+	}
   }
-}
+
 
 .create-button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
