@@ -89,7 +89,9 @@ package com.settinghead.groffle.client.model
 			this._list = new WordListVO([
 					new WordVO("Groffle", Math.random()*5+0.5),
 					new WordVO("Sample", Math.random()*5+0.5),
-					new WordVO("wow", Math.random()*5+0.5),
+					new WordVO("fun", Math.random()*5+0.5),
+					new WordVO("creative", Math.random()*5+0.5),
+					new WordVO("art", Math.random()*5+0.5),
 					new WordVO("Create your own!", Math.random()*5+0.5)
 			]);
 		}
