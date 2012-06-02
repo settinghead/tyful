@@ -133,6 +133,8 @@ $(document).ready(function(){
 <%if can? :manage, @template %>
 <div id="modal">
 	<%= form_for(@template,:remote => true) do |f| %>
+	  <%= f.error_messages %>
+	
 	<div class="field">
 	<%if (current_user && (not current_user.nickname)) %>
 	

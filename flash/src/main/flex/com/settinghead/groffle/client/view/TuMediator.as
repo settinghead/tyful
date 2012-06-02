@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.view
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.TuProxy;
 	import com.settinghead.groffle.client.model.vo.DisplayWordVO;
@@ -52,6 +53,7 @@ package com.settinghead.groffle.client.view
 			{
 				case ApplicationFacade.RENDER_TU:
 					tuRenderer.tu =  tuProxy.tu;
+
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)
@@ -64,6 +66,10 @@ package com.settinghead.groffle.client.view
 						sendNotification(ApplicationFacade.POST_TO_FACEBOOK);
 						tuRenderer.autoPostToFacebook = false;
 					}
+					
+					if(!tuProxy.generateTemplatePreview)
+						Notification.show("Click on words to check out they come from.","Hint",10000,
+							Notification.NOTIFICATION_POSITION_BOTTOM_LEFT);
 					break;
 			}
 		}

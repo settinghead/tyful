@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.controller.tu
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.TemplateProxy;
 	import com.settinghead.groffle.client.model.TuProxy;
@@ -49,9 +50,12 @@ package com.settinghead.groffle.client.controller.tu
 					, 200);				}
 			else{
 				Mask.close();
+
 				var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+
 				tuProxy.load();
 				tuProxy.startRender();
+
 			}
 
 		}

@@ -198,7 +198,7 @@ Please contact me at afoucal@free.fr.
 			/**
 			 * The default distance betwen the top or botom side of the parent and the Notification
 			 */
-			public static const NOTIFICATION_DEFAULT_VERTICALGAP:int = 10;
+			public static const NOTIFICATION_DEFAULT_VERTICALGAP:int = 20;
 			
 			/**
 			 * The default distance betwen the Notification borders and its content
