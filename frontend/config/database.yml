@@ -26,5 +26,5 @@ production:
   adapter: postgresql
   database: groffle_prod
   username: groffle_user
-  password: 0
+  password: 0e4,swa=apu3ru
   pool: 5

@@ -25,5 +25,5 @@ else if currentEnv in ['test']
   exports.pg_db = "tcp://groffle_user:0@localhost/groffle_test"
 else
   exports.redis_db = "redis://localhost:6379/0"
-  exports.pg_db = "tcp://groffle_user:0@localhost/groffle_dev"
+  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_dev"
   
