@@ -30,6 +30,9 @@ server {
                if ($request_uri ~* ^/r/)
                {
                    proxy_pass http://fileserver;
+		           proxy_cache my-cache;
+		           proxy_cache_valid  200 302  10m;
+		           proxy_cache_valid  404      1m;
                    break;
                }
                rewrite ^ https://$server_name$request_uri? permanent;
@@ -60,6 +63,9 @@ server {
 	
 	location /t/ {
 		proxy_pass http://fileserver;
+        proxy_cache my-cache;
+        proxy_cache_valid  200 302  10m;
+        proxy_cache_valid  404      1m;
 	}
 	
 	location /fbupload/ {
