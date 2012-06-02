@@ -33,14 +33,6 @@ function startServices(){
 	//select correct redis db
 	if(redisUrl.path)
 		redisClient.select(redisUrl.path[0]=='/'?redisUrl.path.substr(1):redisUrl.path);
-		
-	app.get('/t', function(req, res){
-				res.header("Content-Type", "text/html");
-			  res.send('<h1>t</h1><form method="post" action="/t" enctype="multipart/form-data">'
-			           + '<p>Image: <input type="file" name="test" /></p>'
-			           + '<p><input type="submit" value="Upload" /></p>'
-			           + '</orm>');
-			});
 	
 	app.post('/t/', function(req, res){
 		var form = new formidable.IncomingForm();
