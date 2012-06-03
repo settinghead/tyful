@@ -7,7 +7,6 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.colorer.TwoHuesRandomSatsColorer;
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
-	import com.settinghead.groffle.client.fonter.AlwaysUseFonter;
 	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.vo.IImageShape;
@@ -412,6 +411,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public function get angler():WordAngler{
 			if(this._angler==null){
 				this._angler = new ShapeConfinedAngler(this, new MostlyHorizAngler());
+//				this._angler = new MostlyHorizAngler();
 			}
 			return this._angler;
 		}

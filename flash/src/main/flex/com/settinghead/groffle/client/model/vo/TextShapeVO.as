@@ -49,15 +49,40 @@ package com.settinghead.groffle.client.model.vo
 	 */
 	public class TextShapeVO implements IImageShape
 	{
-		[Embed(source="Vera.ttf", fontFamily="vera", mimeType='application/x-font',
+//		[Embed(source="Vera.ttf", fontFamily="vera", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const Vera: Class;
+//		
+//		[Embed(source="pokoljaro-kRB.ttf", fontFamily="pokoljaro", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const Pokoljaro: Class;
+//		[Embed(source="coolvetica rg.ttf", fontFamily="coolvetica rg", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const CoolveticaRg: Class;
+//
+//		[Embed(source="coolvetica rg.ttf", fontFamily="coolvetica rg", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const CoolveticaRg: Class;
+		[Embed(source="konstellation3/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Vera: Class;
+		public static const Panefresco500: Class;
+		[Embed(source="konstellation3/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const PermanentMarker: Class;
+		[Embed(source="konstellation3/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Romeral: Class;
+
+		[Embed(source="konstellation1/communist.ttf", fontFamily="communist", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Communist: Class;
+		[Embed(source="konstellation1/judson.ttf", fontFamily="judson", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Judson: Class;
+		[Embed(source="konstellation1/komika-axis.ttf", fontFamily="komika-axis", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const KomikaAxis: Class;
 		
-		[Embed(source="pokoljaro-kRB.ttf", fontFamily="pokoljaro", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Pokoljaro: Class;
-
-
 		
 		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
 

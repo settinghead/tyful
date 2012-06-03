@@ -230,14 +230,15 @@
 				<s:CheckBox id="cb_edges" label="Show Edges" change="render(event)"  />
 				<s:CheckBox id="cb_invert" label="Invert" change="render(event)" />				
 			</s:HGroup>
-			<s:HGroup width="100%" horizontalAlign="center">
-				<s:Button label="Import"
-						  click="insertImage();" />
-				<s:Button label="Cancel"
-						  click="PopUpManager.removePopUp(this);" />
-				
-			</s:HGroup>
+			
 		</s:VGroup>
+		<s:HGroup width="100%" horizontalAlign="center">
+			<s:Button label="Import"
+					  click="insertImage();" />
+			<s:Button label="Cancel"
+					  click="PopUpManager.removePopUp(this);" />
+			
+		</s:HGroup>
 	</s:VGroup>
 	
 </mx:TitleWindow>

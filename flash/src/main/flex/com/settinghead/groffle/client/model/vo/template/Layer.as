@@ -8,7 +8,6 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.colorer.TwoHuesRandomSatsColorer;
 	import com.settinghead.groffle.client.colorer.WordColorer;
-	import com.settinghead.groffle.client.fonter.AlwaysUseFonter;
 	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.vo.IImageShape;

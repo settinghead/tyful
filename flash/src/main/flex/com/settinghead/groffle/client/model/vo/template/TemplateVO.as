@@ -3,6 +3,7 @@ package com.settinghead.groffle.client.model.vo.template
 
 	import com.settinghead.groffle.client.RenderOptions;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
+	import com.settinghead.groffle.client.angler.PickFromAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.colorer.ColorSheetColorer;
@@ -10,6 +11,8 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
 	import com.settinghead.groffle.client.fonter.AlwaysUseFonter;
+	import com.settinghead.groffle.client.fonter.PickFromFonter;
+	import com.settinghead.groffle.client.fonter.RandomSetFonter;
 	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.vo.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.vo.IImageShape;
@@ -192,8 +195,8 @@ package com.settinghead.groffle.client.model.vo.template
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
 				var max:int = this.width>this.height?this.width:this.height;
-				var min:int = max/130;
-				if(min<5) min = 5;
+				var min:int = max/140;
+				if(min<3) min = 3;
 				this._sizer = new ByWeightSizer(min,100);
 				
 			}
@@ -202,7 +205,7 @@ package com.settinghead.groffle.client.model.vo.template
 
 		public function get fonter():WordFonter{
 			if(this._fonter==null){
-				this._fonter = new AlwaysUseFonter("Vera");
+				this._fonter = new RandomSetFonter();
 			}
 			return this._fonter;
 		}
