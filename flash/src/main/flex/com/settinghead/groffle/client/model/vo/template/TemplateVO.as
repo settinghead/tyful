@@ -101,6 +101,16 @@ package com.settinghead.groffle.client.model.vo.template
 			}
 		}
 		
+		public function removeLayerAt(index:int):void{
+			if(index>0)
+				(layers[index-1] as Layer).above = null;
+			if(index<layers.length-1)
+				(layers[index+1] as Layer).below = null;
+			if(index>0 && index<layers.length-1)
+					Layer.connect(layers[index+1],layers[index-1]);
+			layers.removeItemAt(index);
+		}
+		
 		public function get width():Number{
 			if(isNaN(_width)){
 				var maxWidth:Number = 0;
@@ -180,7 +190,7 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(8,100);
+				this._sizer = new ByWeightSizer(7,100);
 			}
 			return this._sizer;
 		}

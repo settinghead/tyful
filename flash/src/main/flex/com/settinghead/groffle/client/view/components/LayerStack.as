@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.view.components
 {
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	
@@ -21,6 +22,7 @@ package com.settinghead.groffle.client.view.components
 			while(this.numChildren>0)
 				this.removeChildAt(0);
 		}
+
 			
 	}
 }

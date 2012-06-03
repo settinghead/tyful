@@ -67,6 +67,9 @@ package com.settinghead.groffle.client.model.vo.template
 		private var _colorer:WordColorer;
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
+		
+		public var transparentColor:int = Number.NaN;
+		
 //		private var hsbArray:Array;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -283,9 +286,11 @@ package com.settinghead.groffle.client.model.vo.template
 //			if(x<0 || y<0 || x>width || y>height) return true;
 			if(x<0||y<0||x>directionBitmap.width||y>directionBitmap.height)
 				return false;
-			if(!directionBitmap.hitTestPoint(x,y,true) &&
-				//not transparent
-				((color.getPixel32(x,y) >> 24 &0xff)!=0)){
+			if((direction.getPixel32(x,y) >> 24 &0xff)!=0 
+//				&&
+//				//not transparent
+//				((color.getPixel32(x,y) >> 24 &0xff)!=0 )
+			){
 				if(tolerance>=1) return true;
 				else return (
 					//ColorMath.dist(color.getPixel32(x,y), 
@@ -427,6 +432,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.process(this._fonter, "fonter");
 			output.process(this._colorer, "colorer");
+
 			output.putBitmapDataToPNGFile("direction.png", this.direction);
 			output.putBitmapDataToPNGFile("color.png", this.color);
 			//			output.process(this._nudger, "nudger");
@@ -459,6 +465,7 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		public override function saveProperties(dict:Object):void{
+			dict["transparentColor"] = transparentColor;
 		}
 		
 		public override function get type():String{

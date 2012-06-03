@@ -345,7 +345,7 @@
 				<s:Label text="Squeeze perseverance"  />
 				<s:Group>
 					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" width="{perseveranceSlider.value*5}" />
-					<mx:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250" 
+					<s:HSlider id="perseveranceSlider" minimum="0" maximum="50" value="@{tu.template.perseverance}" width="250" stepSize="1"
 							 toolTip="This bar sets the number of words in a row Groffle fails to squeeze in before it stops running."	/>	
 				</s:Group>
 				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Squeeze in more words':'Working...'}"

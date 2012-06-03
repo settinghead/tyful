@@ -62,6 +62,336 @@
 	
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
+		<mx:Script>
+			<![CDATA[
+				import com.notifications.Notification;
+				import com.settinghead.groffle.client.ApplicationFacade;
+				import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+				import com.settinghead.groffle.client.model.vo.template.Layer;
+				import com.settinghead.groffle.client.model.vo.template.TemplateVO;
+				import com.settinghead.groffle.client.model.vo.template.WordLayer;
+				import com.settinghead.groffle.client.view.components.template.canvas.TextFlowCanvas;
+				import com.settinghead.groffle.client.view.components.template.windows.ImportImageDialog;
+				import com.settinghead.groffle.client.view.components.template.windows.NewTemplateWindow;
+				
+				import flash.display.*;
+				import flash.display.Sprite;
+				import flash.events.*;
+				import flash.events.MouseEvent;
+				import flash.net.*;
+				import flash.utils.ByteArray;
+				
+				import flashx.textLayout.elements.BreakElement;
+				
+				import mx.binding.utils.BindingUtils;
+				import mx.collections.ArrayList;
+				import mx.controls.Alert;
+				import mx.controls.Button;
+				import mx.controls.ToolTip;
+				import mx.core.BitmapAsset;
+				import mx.core.FlexGlobals;
+				import mx.events.FlexEvent;
+				import mx.events.IndexChangedEvent;
+				import mx.events.ItemClickEvent;
+				import mx.managers.PopUpManager;
+				import mx.managers.ToolTipManager;
+				
+				import org.as3commons.lang.HashArray;
+				import org.peaceoutside.utils.ColorMath;
+				
+				import spark.events.IndexChangeEvent;
+				
+				//			public static const MODE_EDIT:String 	= "modeEdit";
+				
+				//			[Bindable] public var mode:String;
+				//			
+				//			public function setTemplate( template:TemplateVO, mode:String ):void
+				//			{
+				//				this.mode = mode;
+				//				this.template = template;
+				//			}
+				// ------- Constants -------
+				// Display states
+				private static const LOAD:uint = 0;
+				private static const PROGRESS:uint = 1;
+				
+				public static const RENDER_TU:String = "renderTu";
+				public static const SAVE_TEMPLATE:String = "saveTemplate";
+				public static const OPEN_TEMPLATE:String = "openTemplate";
+				public static const UPLOAD_TEMPLATE:String = "uploadTemplate";
+				public static const CREATE_TEMPLATE:String = "createTemplate";
+				
+				public static const BRUSH:int = 0;
+				public static const FILL:int = 1;
+				//			public static const PHOTO:int = 2;
+				public static const ERASE:int = 2;
+				
+				public static const FILE:int = 0;
+				public static const DRAWING:int = 1;
+				public static const HELP:int = 2;
+				[Bindable]
+				public var currentDrawingTool:int = BRUSH;
+				
+				private var mType:int;
+				[Embed(source='white_to_transparent.pbj', mimeType='application/octet-stream')]
+				private static const WhiteToTransparentKernel:Class;
+				
+				public var newWidth:Number = -1, newHeight:Number = -1;
+				[Bindable]
+				public var thickness:int = 40;
+				[Bindable]
+				public var angle:Number;
+				
+				[Bindable]
+				public var colorPattern:BitmapData;
+				
+				private var _template:TemplateVO;
+				
+				private var _loadFile:FileReference;
+				private var jagFileRefSave:FileReference = new FileReference();
+				private var loader:Loader = new Loader();
+				private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
+				private var newTemplateDialog:NewTemplateWindow;
+				private var importImageDialog:ImportImageDialog;
+				
+				// ------- Child controls -------
+				// Common view/containers
+				private var _imageContainer:Sprite;
+				private var _currentViewContainer:Sprite;
+				
+				//			protected function btnUpload_clickHandler(event:MouseEvent):void
+				//			{
+				//				jagFileRefSave.browse([imagesFilter]);
+				//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+				//			}
+				//			
+				//			
+				//			private function onClickSave(e:MouseEvent):void{    
+				//				jagFileRefSave.browse([imagesFilter]);
+				//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
+				//			}        
+				//			private function selectedFile(e:Event):void{
+				//				jagFileRefSave.load();
+				//				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
+				//			}
+				//			private function loaded(e:Event):void{
+				//				var rawBytes:ByteArray = jagFileRefSave.data;
+				//				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
+				//				loader.loadBytes(rawBytes);
+				//			}
+				//			private function getBitmapData(e:Event):void{
+				//				backgroundLayer.addChild(loader);
+				//			}
+				
+				public function get template():TemplateVO{
+					return _template;
+				}
+				
+				[Bindable] public function set template(_template:TemplateVO):void{
+					
+					this._template = _template;
+					//				this.layersMap = new HashArray("name",false,_template.layers.toArray());
+					this.callLater(drawTransparentBackground);
+					
+				}
+				public var myTip:ToolTip;
+				
+				protected function creationCompleteHandler(event:FlexEvent):void
+				{
+					//disable fill button (not yet implemented)
+					(this.drawingToolBar.getChildAt(TemplateEditor.FILL) as mx.controls.Button).enabled = false;
+					
+					this.newTemplateDialog = new NewTemplateWindow();
+					this.newTemplateDialog.addEventListener(NewTemplateWindow.CREATE_TEMPLATE, createTemplate);
+					
+					
+					this.importImageDialog = new ImportImageDialog();
+					this.importImageDialog.addEventListener(ImportImageDialog.INSERT_IMAGE, importImage);
+					
+					BindingUtils.bindProperty(this, "colorPattern", this.colorPicker, "colorPattern");
+					BindingUtils.bindProperty(this,"currentDrawingTool", this.drawingToolBar, "selectedIndex");
+					
+					//select brush after creation complete in order to show growl tips
+					this.drawingToolBar.selectedIndex  = BRUSH;
+					
+					
+					var s:String = "You are in editing mode.\Draw something on the canvas. \nThen click this button to create your personalized artwork with words from your Facebook profile and timeline."
+					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
+					myTip.setStyle("backgroundColor",0xFFCC00);
+					BindingUtils.bindProperty(myTip, "visible", this,"visible");
+					
+				}
+				protected function canvas1_clickHandler(event:MouseEvent):void
+				{
+					if(myTip.visible){
+						ToolTipManager.destroyToolTip(myTip);
+						myTip.visible = false;
+					}
+					
+				}
+				
+				protected function btnRender_clickHandler(event:MouseEvent):void
+				{
+					dispatchEvent(new Event(RENDER_TU));	
+				}
+				
+				protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
+				{
+					dispatchEvent(new Event(SAVE_TEMPLATE));	
+				}
+				protected function btnOpenTemplate_clickHandler(event:MouseEvent):void
+				{
+					dispatchEvent(new Event(OPEN_TEMPLATE));	
+				}
+				protected function btnUploadTemplate_clickHandler(event:MouseEvent):void
+				{
+					if(chkRerenderThumbnail && chkRerenderThumbnail.selected)
+						template.preview = null;
+					dispatchEvent(new Event(UPLOAD_TEMPLATE));	
+				}
+				
+				protected function drawTransparentBackground():void
+				{
+					var bmpdTile:BitmapData  = new BitmapData(30,30);
+					var spriteTile:Sprite = new Sprite();
+					spriteTile.graphics.beginFill(0xeeeeee, 1.0);
+					spriteTile.graphics.drawRect(0,0,15,15);
+					spriteTile.graphics.drawRect(15,15,30,30);
+					spriteTile.graphics.endFill();
+					bmpdTile.draw(spriteTile);
+					
+					cvnTransparentBackground.width = this.template.width;
+					cvnTransparentBackground.height = this.template.height;
+					cvnTransparentBackground.graphics.
+						beginBitmapFill(bmpdTile,null,true,true);
+					cvnTransparentBackground.graphics.drawRect(
+						0, 0, this.template.width, this.template.height);
+					cvnTransparentBackground.graphics.endFill();
+				}
+				
+				protected function editor_keyDownHandler(event:KeyboardEvent):void
+				{
+					if (event.keyCode == Keyboard.Z){
+						this.thickness += 1;
+					}
+					else if (event.keyCode == Keyboard.X){
+						this.thickness -= 1;
+					}
+					else if (event.keyCode == Keyboard.S){
+						this.angle -= 0.05;
+					}
+					else if (event.keyCode == Keyboard.A){
+						this.angle += 0.05;
+					}
+				}
+				
+				protected function btnAddLayer_clickHandler(event:MouseEvent):void
+				{
+					new WordLayer(
+						"Layer"+(template.layers.length+1).toString(),template);
+				}
+				
+				protected function btnAddImageLayer_clickHandler(event:MouseEvent):void
+				{
+					PopUpManager.addPopUp(importImageDialog,this,true);
+					PopUpManager.centerPopUp(importImageDialog);					
+				}
+				
+				protected function btnRemoveLayer_clickHandler(event:MouseEvent):void
+				{
+					if(layerButtons.selectedIndex>=0){
+						template.removeLayerAt(layerButtons.selectedIndex);
+					}
+				}
+				
+				private function layers_itemRendererFunc(item:Object):ClassFactory {
+					super.commitProperties();
+					var cla:Class;
+					if(item is WordLayer){
+						cla = TextFlowCanvas;
+					}
+					var renderer:ClassFactory = new ClassFactory(cla);
+					renderer.properties = 
+						{templateEditor: this, depth: template.layers.length};
+					var tfc:TextFlowCanvas;
+					return renderer;
+				}
+				
+				public function initColors():void{
+					colorPicker.initColors();
+				}
+				
+				protected function controlArea_mouseOverHandler(event:MouseEvent):void
+				{
+					Mouse.show();
+				}
+				
+				public function newTemplate():void{
+					newTemplateDialog.newWidth = TemplateVO.DEFAULT_WIDTH;
+					newTemplateDialog.newHeight = TemplateVO.DEFAULT_HEIGHT;
+					newTemplateDialog.visible = true;
+					PopUpManager.addPopUp(newTemplateDialog,this,true);
+					PopUpManager.centerPopUp(newTemplateDialog);
+				}
+				
+				public function createTemplate(e:CreateTemplateEvent):void{
+					dispatchEvent(new CreateTemplateEvent(TemplateEditor.CREATE_TEMPLATE, e.width, e.height));	
+				}
+				
+				public function importImage(e:Event):void{
+					var layer:WordLayer = new WordLayer(
+						"Layer"+(template.layers.length+1).toString(),template);
+					layer.transparentColor = 0xFFFFFFFF;
+					//				var shader:Shader = new Shader(); 
+					//				shader.byteCode = new WhiteToTransparentKernel(); 
+					//				var source:Bitmap = new Bitmap(importImageDialog.direction);
+					//				source.blendShader = shader;
+					
+					var colorToReplace:uint = 0xFFFFFFFF;
+					var newColor:uint = 0x00000000;
+					var maskToUse:uint = 0xffffffff;
+					
+					//				layer.direction.draw(importImageDialog.direction,null,null);
+					var p:Point = new Point(0,0);
+					
+					layer.direction.threshold(importImageDialog.direction,
+						new Rectangle(0,0,importImageDialog.direction.width,
+							importImageDialog.direction.height),
+						p,"==",colorToReplace,newColor,maskToUse,true);
+					
+					layer.color.draw(importImageDialog.colorSheet);
+					layer.color.threshold(layer.direction,
+						new Rectangle(0,0,layer.direction.width,layer.direction.height),
+						p,"==",0,0,maskToUse,false);				
+				}
+				
+				protected function drawingToolBar_itemClickHandler(event:ItemClickEvent):void
+				{
+					
+				}
+				
+				protected function drawingOptionsViewStack_changeHandler(event:IndexChangedEvent):void
+				{
+					if(event.newIndex>=0)
+						toggleButtonBar.selectedIndex = DRAWING;
+					switch(event.newIndex){
+						case BRUSH:
+							
+							break;
+						case FILL:
+							break;
+						//					case PHOTO:
+						//
+						//						break;					
+						case ERASE:
+							break;
+					}
+				}
+				
+				
+				
+			]]>
+		</mx:Script>
 	</mx:states>
 			<s:VGroup left="0" top="0" width="100%" height="100%">
 				<s:VGroup mouseOver="controlArea_mouseOverHandler(event)" left="0" top="0" height="80" width="100%">
@@ -111,6 +441,10 @@
 								<mx:HBox label="Fill">
 									<mx:Label text="Fill tool is a work in progress. Please check back soon." />
 								</mx:HBox>
+								<!--mx:HBox label="Photo">
+									<mx:Button id="btnPhoto" click="btnPhoto_clickHandler(event)" />
+								</mx:HBox-->
+								
 								<mx:HBox label="Erase">
 									<mx:Label text="Thickness: " />
 									<template:ThicknessPicker label="Brush size" id="eraseThicknessPicker"  thickness="@{this.thickness}"  />
@@ -129,13 +463,15 @@
 							direction="vertical"
 							 itemClick="drawingToolBar_itemClickHandler(event)"
 							toggleOnClick="false" id="drawingToolBar"
-							 selectedIndex="2" 
+							 selectedIndex="{ERASE}" 
 							>
 							<mx:dataProvider>
 								<mx:Object label="Brush" 
 										   icon="@Embed(source='brush.png')" />
 								<mx:Object label="Fill" 
 										   icon="@Embed(source='fill.png')" />
+								<!--mx:Object label="Photo" 
+										   icon="@Embed(source='photo.png')" /-->
 								<mx:Object label="Erase" 
 										   icon="@Embed(source='eraser.png')"/>
 							</mx:dataProvider>
@@ -162,7 +498,13 @@
 								<s:VerticalLayout />
 							</s:layout>
 						</s:List>
-						<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
+						<s:VGroup>
+							<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
+							<s:Button id="btnRemoveLayer" label="-" click="btnRemoveLayer_clickHandler(event)" />
+							<s:Button id="btnAddImageLayer" label="+ Photo" 
+									   click="btnAddImageLayer_clickHandler(event)" 
+									  icon="@Embed(source='photo.png')" />
+						</s:VGroup>
 					</s:VGroup>
 				</s:HGroup>
 				</s:HGroup>
@@ -170,293 +512,7 @@
 		<!--s:NavigatorContent label="Background">
 			<s:Button label="Upload a photo..." id="btnUpload" click="btnUpload_clickHandler(event)"/>
 		</s:NavigatorContent-->
-	<mx:Script>
-		<![CDATA[
-			import com.notifications.Notification;
-			import com.settinghead.groffle.client.ApplicationFacade;
-			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
-			import com.settinghead.groffle.client.model.vo.template.Layer;
-			import com.settinghead.groffle.client.model.vo.template.TemplateVO;
-			import com.settinghead.groffle.client.model.vo.template.WordLayer;
-			import com.settinghead.groffle.client.view.components.template.canvas.TextFlowCanvas;
-			import com.settinghead.groffle.client.view.components.template.windows.NewTemplateWindow;
-			
-			import flash.display.*;
-			import flash.display.Sprite;
-			import flash.events.*;
-			import flash.events.MouseEvent;
-			import flash.net.*;
-			import flash.utils.ByteArray;
-			
-			import flashx.textLayout.elements.BreakElement;
-			
-			import mx.binding.utils.BindingUtils;
-			import mx.collections.ArrayList;
-			import mx.controls.Alert;
-			import mx.controls.Button;
-			import mx.controls.ToolTip;
-			import mx.core.BitmapAsset;
-			import mx.core.FlexGlobals;
-			import mx.events.FlexEvent;
-			import mx.events.IndexChangedEvent;
-			import mx.events.ItemClickEvent;
-			import mx.managers.PopUpManager;
-			import mx.managers.ToolTipManager;
-			
-			import org.as3commons.lang.HashArray;
-			import org.peaceoutside.utils.ColorMath;
-			
-			import spark.events.IndexChangeEvent;
-			
-//			public static const MODE_EDIT:String 	= "modeEdit";
-			
-//			[Bindable] public var mode:String;
-//			
-//			public function setTemplate( template:TemplateVO, mode:String ):void
-//			{
-//				this.mode = mode;
-//				this.template = template;
-//			}
-			// ------- Constants -------
-			// Display states
-			private static const LOAD:uint = 0;
-			private static const PROGRESS:uint = 1;
 
-			public static const RENDER_TU:String = "renderTu";
-			public static const SAVE_TEMPLATE:String = "saveTemplate";
-			public static const OPEN_TEMPLATE:String = "openTemplate";
-			public static const UPLOAD_TEMPLATE:String = "uploadTemplate";
-			public static const CREATE_TEMPLATE:String = "createTemplate";
-			
-			public static const BRUSH:int = 0;
-			public static const FILL:int = 1;
-			public static const ERASE:int = 2;
-			[Bindable]
-			public var currentDrawingTool:int = BRUSH;
-			
-			private var mType:int;
-			
-			[Embed(source="brush.png")]
-			public var brushIcon:Class;
-			[Embed(source="eraser.png")]
-			public var eraserIcon:Class;
-			[Embed(source="fill.png")]
-			public var fillIcon:Class;
-			
-			private var brushIconObj:Object = {icon:brushIcon};
-			private var eraserIconObj:Object = {icon:eraserIcon};
-			private var fillIconObj:Object = {icon:fillIcon};
-			
-			[Bindable]
-			public var drawingButtons :Array  = [brushIconObj, fillIconObj, eraserIconObj];
-			
-			public var newWidth:Number = -1, newHeight:Number = -1;
-			[Bindable]
-			public var thickness:int = 40;
-			[Bindable]
-			public var angle:Number;
-			
-			[Bindable]
-			public var colorPattern:BitmapData;
-			
-			private var _template:TemplateVO;
-			
-			private var _loadFile:FileReference;
-			private var jagFileRefSave:FileReference = new FileReference();
-			private var loader:Loader = new Loader();
-			private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
-			private var newTemplateDialog:NewTemplateWindow;
-
-			// ------- Child controls -------
-			// Common view/containers
-			private var _imageContainer:Sprite;
-			private var _currentViewContainer:Sprite;
-			
-//			protected function btnUpload_clickHandler(event:MouseEvent):void
-//			{
-//				jagFileRefSave.browse([imagesFilter]);
-//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-//			}
-//			
-//			
-//			private function onClickSave(e:MouseEvent):void{    
-//				jagFileRefSave.browse([imagesFilter]);
-//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-//			}        
-//			private function selectedFile(e:Event):void{
-//				jagFileRefSave.load();
-//				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
-//			}
-//			private function loaded(e:Event):void{
-//				var rawBytes:ByteArray = jagFileRefSave.data;
-//				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
-//				loader.loadBytes(rawBytes);
-//			}
-//			private function getBitmapData(e:Event):void{
-//				backgroundLayer.addChild(loader);
-//			}
-			
-			public function get template():TemplateVO{
-				return _template;
-			}
-			
-			[Bindable] public function set template(_template:TemplateVO):void{
-				
-				this._template = _template;
-//				this.layersMap = new HashArray("name",false,_template.layers.toArray());
-				this.callLater(drawTransparentBackground);
-
-			}
-			public var myTip:ToolTip;
-
-			protected function creationCompleteHandler(event:FlexEvent):void
-			{
-				//disable fill button (not yet implemented)
-				(this.drawingToolBar.getChildAt(TemplateEditor.FILL) as mx.controls.Button).enabled = false;
-				this.newTemplateDialog = new NewTemplateWindow();
-				this.newTemplateDialog.addEventListener(NewTemplateWindow.CREATE_TEMPLATE, createTemplate);
-				BindingUtils.bindProperty(this, "colorPattern", this.colorPicker, "colorPattern");
-				BindingUtils.bindProperty(this,"currentDrawingTool", this.drawingToolBar, "selectedIndex");
-				
-				//select brush after creation complete in order to show growl tips
-				this.drawingToolBar.selectedIndex  = BRUSH;
-				
-				
-					var s:String = "You are in editing mode.\Draw something on the canvas. \nThen click this button to create your personalized artwork with words from your Facebook profile and timeline."
-					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
-					myTip.setStyle("backgroundColor",0xFFCC00);
-					BindingUtils.bindProperty(myTip, "visible", this,"visible");
-					
-			}
-			protected function canvas1_clickHandler(event:MouseEvent):void
-			{
-				if(myTip.visible){
-					ToolTipManager.destroyToolTip(myTip);
-					myTip.visible = false;
-				}
-				
-			}
-			
-			protected function btnRender_clickHandler(event:MouseEvent):void
-			{
-				dispatchEvent(new Event(RENDER_TU));	
-			}
-			
-			protected function btnSaveTemplate_clickHandler(event:MouseEvent):void
-			{
-				dispatchEvent(new Event(SAVE_TEMPLATE));	
-			}
-			protected function btnOpenTemplate_clickHandler(event:MouseEvent):void
-			{
-				dispatchEvent(new Event(OPEN_TEMPLATE));	
-			}
-			protected function btnUploadTemplate_clickHandler(event:MouseEvent):void
-			{
-				if(chkRerenderThumbnail && chkRerenderThumbnail.selected)
-					template.preview = null;
-				dispatchEvent(new Event(UPLOAD_TEMPLATE));	
-			}
-			
-			protected function drawTransparentBackground():void
-			{
-				var bmpdTile:BitmapData  = new BitmapData(30,30);
-				var spriteTile:Sprite = new Sprite();
-				spriteTile.graphics.beginFill(0xeeeeee, 1.0);
-				spriteTile.graphics.drawRect(0,0,15,15);
-				spriteTile.graphics.drawRect(15,15,30,30);
-				spriteTile.graphics.endFill();
-				bmpdTile.draw(spriteTile);
-				
-				cvnTransparentBackground.width = this.template.width;
-				cvnTransparentBackground.height = this.template.height;
-				cvnTransparentBackground.graphics.
-					beginBitmapFill(bmpdTile,null,true,true);
-				cvnTransparentBackground.graphics.drawRect(
-					0, 0, this.template.width, this.template.height);
-				cvnTransparentBackground.graphics.endFill();
-			}
-			
-			protected function editor_keyDownHandler(event:KeyboardEvent):void
-			{
-				if (event.keyCode == Keyboard.Z){
-					this.thickness += 1;
-				}
-				else if (event.keyCode == Keyboard.X){
-					this.thickness -= 1;
-				}
-				else if (event.keyCode == Keyboard.S){
-					this.angle -= 0.05;
-				}
-				else if (event.keyCode == Keyboard.A){
-					this.angle += 0.05;
-				}
-			}
-			
-			protected function btnAddLayer_clickHandler(event:MouseEvent):void
-			{
-				new WordLayer(
-					"Layer"+(template.layers.length+1).toString(),template);
-			}
-			
-			private function layers_itemRendererFunc(item:Object):ClassFactory {
-				super.commitProperties();
-				var cla:Class;
-				if(item is WordLayer){
-					cla = TextFlowCanvas;
-				}
-				var renderer:ClassFactory = new ClassFactory(cla);
-				renderer.properties = 
-					{templateEditor: this, depth: template.layers.length};
-				var tfc:TextFlowCanvas;
-				return renderer;
-			}
-			
-			public function initColors():void{
-				colorPicker.initColors();
-			}
-			
-			protected function controlArea_mouseOverHandler(event:MouseEvent):void
-			{
-				Mouse.show();
-			}
-			
-			public function newTemplate():void{
-				newTemplateDialog.newWidth = TemplateVO.DEFAULT_WIDTH;
-				newTemplateDialog.newHeight = TemplateVO.DEFAULT_HEIGHT;
-				newTemplateDialog.visible = true;
-				PopUpManager.addPopUp(newTemplateDialog,this,true);
-				PopUpManager.centerPopUp(newTemplateDialog);
-			}
-			
-			public function createTemplate(e:CreateTemplateEvent):void{
-				dispatchEvent(new CreateTemplateEvent(TemplateEditor.CREATE_TEMPLATE, e.width, e.height));	
-			}
-			
-
-			
-			protected function drawingToolBar_itemClickHandler(event:ItemClickEvent):void
-			{
-				// TODO Auto-generated method stub
-				
-			}
-
-			protected function drawingOptionsViewStack_changeHandler(event:IndexChangedEvent):void
-			{
-				switch(event.newIndex){
-					case BRUSH:
-						
-						break;
-					case FILL:
-						break;
-					case ERASE:
-						break;
-				}
-			}
-			
-	
-			
-		]]>
-	</mx:Script>
 	
 
 </mx:Canvas>

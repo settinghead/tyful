@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				title="Import from a photo" creationComplete="titlewindow1_creationCompleteHandler(event)" >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import __AS3__.vec.Vector;
+			
+			import com.adobe.viewsource.ViewSource;
+			import com.quasimondo.bitmapdata.ThresholdBitmap;
+			import com.quasimondo.filters.AdaptiveThresholdFilter;
+			
+			import flash.display.*;
+			import flash.events.Event;
+			import flash.geom.Rectangle;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			import mx.managers.PopUpManager;
+			
+			import org.generalrelativity.thread.util.ThreadUtil;
+			
+			import spark.components.CheckBox;
+			import spark.components.HSlider;
+			import spark.components.Label;
+			import spark.components.RadioButton;
+			
+			private var adaptiveThresholdFilter:AdaptiveThresholdFilter;
+			private var histogramMap:BitmapData;
+			private var tempHistogramMap:BitmapData;	
+	
+			public static const INSERT_IMAGE:String="insertImage";
+			private var thresholdMap:ThresholdBitmap;
+
+			public function get direction():BitmapData{
+				return tbm.bitmapData;
+			}
+			
+			public function get colorSheet():BitmapData{
+				return cbm.bitmapData;
+			}
+			
+			import net.hires.debug.Stats;
+			protected function init():void
+			{
+				histogramMap = new BitmapData( 256, 100, false, 0 ); 
+				tempHistogramMap = histogramMap.clone();
+				
+//				camera = new CameraBitmap( 320, 240,25 );
+				thresholdMap = new ThresholdBitmap( cbm.bitmapData );
+				thresholdMap.mode = ThresholdBitmap.ADAPTIVE;
+				
+				tbm.source = thresholdMap;				
+				
+				hbm.source = histogramMap;
+
+				
+//				//Stats object by Mr.Doob
+//				var stats:Stats = new Stats();
+//				
+//				addChild(stats);
+			}
+			
+			private function render(event:Event = null):void
+			{
+				thresholdMap.smooth = smoothSlider.value;
+				
+				thresholdMap.adaptiveTolerance = toleranceSlider.value;
+				thresholdMap.thresholdValue = thresholdSlider.value;
+				thresholdMap.adaptiveRadius = blurSlider.value;
+				
+				thresholdMap.applyDespeckle = cb_despeckle.selected;
+				thresholdMap.applyEdges = cb_edges.selected;
+				thresholdMap.invert = cb_invert.selected;
+				
+				thresholdMap.render();
+				
+				thresholdSlider.value = thresholdMap.thresholdValue;
+				
+				var histo:Vector.<Vector.<Number>> ;
+				histo = cbm.bitmapData.histogram(cbm.bitmapData.rect);
+				
+				var hRect:Rectangle = histogramMap.rect;
+				histogramMap.fillRect( hRect, 0 );
+				
+				var j:int, i:int;
+				var maxValue:Number, value:Number;
+				var channel:Vector.<Number>;
+				
+				hRect.width = 1;
+				
+				for (var c:int = 0; c < 3; c++) {
+					
+					channel = histo[c];
+					maxValue =0.0;
+					i = 256;
+					while ( i > 0 ) {
+						value = channel[--i];
+						if ( value > maxValue )  maxValue = value;
+					}
+					tempHistogramMap.fillRect( histogramMap.rect, 0 );
+					
+					if ( thresholdMap.mode != ThresholdBitmap.ADAPTIVE )
+					{
+						hRect.x = thresholdSlider.value;
+						hRect.y = 0;
+						hRect.height = 100;
+						tempHistogramMap.fillRect( hRect, 0xffffffff );
+					}
+					
+					for ( i=0; i<256; i++) {
+						hRect.x = i;
+						hRect.height = 100 * channel[i] / maxValue;
+						hRect.y = 100 - hRect.height;
+						tempHistogramMap.fillRect( hRect, i );
+					}
+					histogramMap.copyChannel( tempHistogramMap, tempHistogramMap.rect, tempHistogramMap.rect.topLeft, 4, 1 << c );
+					
+					
+				}
+				PopUpManager.centerPopUp(this);
+
+			}
+			
+			private function changeMode( event:ItemClickEvent ):void
+			{
+				
+				thresholdMap.mode = event.label;
+				render();
+			}
+
+			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+//				init();	
+			}
+			
+			private function insertImage():void{
+				dispatchEvent(new Event(INSERT_IMAGE));
+				PopUpManager.removePopUp(this);
+
+			}
+			private var ref:FileReference;
+			protected function btnBrowsePhoto_clickHandler(event:MouseEvent):void
+			{
+				ref = new FileReference();
+				var imageFileTypes:FileFilter = new FileFilter("Image file (*.png;*.jpg;*.jpeg;*.gif)", "*.png;*.jpg;*.jpeg;*.gif");
+				ref.browse([imageFileTypes]);
+				ref.addEventListener(Event.SELECT,openImageFileSelectedHandler);
+			}
+			private function openImageFileSelectedHandler(e:Event):void{ // file loaded
+				ref.addEventListener(Event.COMPLETE,openImageCompleteHandler);
+				ref.load();
+			}
+			
+			private function openImageCompleteHandler(e:Event):void{ // file loaded
+				var ba:ByteArray=ref.data;
+				cbm.source = ba;
+			
+			}
+			
+			protected function cbm_completeHandler(event:Event):void
+			{
+				
+				init();
+				render();				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		
+		<s:RadioButtonGroup id="mode" 
+							itemClick="changeMode(event);"/>
+	</fx:Declarations>
+
+	<!--s:VGroup>
+		<s:Image id="img" source="@Embed(source='taylor_swift.jpg')"/> 
+	</s:VGroup-->
+	<s:VGroup>
+		<s:HGroup>
+			<s:VGroup maxWidth="160">
+				<s:Button id="btnBrowsePhoto" label="Load from file..." click="btnBrowsePhoto_clickHandler(event)" />
+				<s:BitmapImage id="cbm" maxHeight="150" scaleMode="letterbox" complete="cbm_completeHandler(event)" /> 
+				<s:BitmapImage id="hbm" bottom="0" left="0" alpha="0.5" maxWidth="150" />
+			</s:VGroup>
+			<s:BitmapImage id="tbm" maxWidth="{stage.width-200}" maxHeight="{stage.height-200}" scaleMode="letterbox"/> 
+			
+		</s:HGroup>
+		<s:VGroup id="gpControls" width="100%" horizontalAlign="center"
+				  visible="{cbm.source!=null}" includeInLayout="{gpControls.visible}"
+				 >
+			
+			<s:HGroup width="100%">
+				<s:RadioButton id="rb_fixed" label="{ThresholdBitmap.FIXED}" group="{mode}" />
+				<s:RadioButton id="rb_otsu" label="{ThresholdBitmap.OTSU}"  group="{mode}" />
+				<s:RadioButton id="rb_entropy" label="{ThresholdBitmap.ENTROPY}" group="{mode}" />
+				<s:RadioButton id="rb_moment" label="Moment" group="{mode}" />
+				<s:RadioButton id="rb_discrimintant" label="{ThresholdBitmap.DISCRIMINANT}" group="{mode}" />
+				<s:RadioButton id="rb_adaptive" label="{ThresholdBitmap.ADAPTIVE}" group="{mode}" selected="true" />				
+			</s:HGroup>
+
+			<s:TileGroup width="100%">
+				<s:HGroup>
+					<s:Label text="Threshold" />
+					<s:HSlider change="render(event)" id="thresholdSlider" minimum="0" maximum="255" value="127" width="200"/>
+				</s:HGroup>
+				
+				<s:HGroup>
+					<s:Label text="Tolerance" />
+					<s:HSlider change="render(event)" id="toleranceSlider" minimum="0" maximum="255" value="50" width="200"/>
+				</s:HGroup>
+				
+				<s:HGroup>
+					<s:Label text="Radius" />
+					<s:HSlider change="render(event)" id="blurSlider" minimum="0" maximum="255" value="32" width="200" />
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label text="Smoothing" />
+					<s:HSlider change="render(event)" id="smoothSlider" minimum="0" maximum="16" value="0" width="200" />
+				</s:HGroup>				
+			</s:TileGroup>
+
+			<s:HGroup>
+				<s:CheckBox id="cb_despeckle" label="Despeckle" change="render(event)" />
+				<s:CheckBox id="cb_edges" label="Show Edges" change="render(event)"  />
+				<s:CheckBox id="cb_invert" label="Invert" change="render(event)" />				
+			</s:HGroup>
+			<s:HGroup width="100%" horizontalAlign="center">
+				<s:Button label="Import"
+						  click="insertImage();" />
+				<s:Button label="Cancel"
+						  click="PopUpManager.removePopUp(this);" />
+				
+			</s:HGroup>
+		</s:VGroup>
+	</s:VGroup>
+	
+</mx:TitleWindow>

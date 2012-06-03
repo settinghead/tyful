@@ -79,6 +79,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		protected function this_mouseDownHandler(event:MouseEvent):void
 		{
+//			Alert.show(layer.direction.getPixel32(mouseX,mouseY).toString());
 			if(isCurrentLayer){
 				this.drawingState = true;
 				oldMouseX = this.mouseX;
@@ -88,7 +89,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			}
 		}
 		
-		private function get layer():WordLayer{
+		public function get layer():WordLayer{
 			return data as WordLayer;
 		}
 		

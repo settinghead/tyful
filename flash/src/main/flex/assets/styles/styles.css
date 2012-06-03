@@ -3,7 +3,6 @@
 	titleStyleName: myTitleStyle;
 	messageStyleName: myMessageStyle;
 	backgroundStyleName: notificationBackground;
-	closeButtonIcon: Embed('/assets/bullet_purple.png');
 	paddingTop: 5;
 	paddingBottom: 5;
 	paddingLeft: 5;
