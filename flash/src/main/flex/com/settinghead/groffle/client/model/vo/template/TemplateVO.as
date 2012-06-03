@@ -196,7 +196,7 @@ package com.settinghead.groffle.client.model.vo.template
 			if(this._sizer==null){
 				var max:int = this.width>this.height?this.width:this.height;
 				var min:int = max/140;
-				if(min<6) min = 6;
+				if(min<7) min = 7;
 				this._sizer = new ByWeightSizer(min,100);
 				
 			}
