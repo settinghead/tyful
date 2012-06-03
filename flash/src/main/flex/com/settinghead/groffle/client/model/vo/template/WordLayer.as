@@ -54,6 +54,11 @@ package com.settinghead.groffle.client.model.vo.template
 			super(name, template, index,autoAddAndConnect);
 			if(width>0 && height>0){
 				this._img = new Bitmap(new BitmapData(width, height,true, 0xccc));
+				this._template.width = Number.NaN;
+				this._template.height = Number.NaN;
+				this._template.width;
+				this._template.height;
+
 			}
 		}
 		

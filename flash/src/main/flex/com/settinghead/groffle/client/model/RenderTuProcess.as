@@ -55,6 +55,7 @@ package com.settinghead.groffle.client.model
 	{
 		private static const MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE:int = 2;
 		private static const SNAPSHOT_INTERVAL:int = 22;
+		private var lastSnapShotAt:int = 0;
 		private var tu:TuVO;
 		private var wordList:WordListVO;
 		private var numRetries:int = 0;
@@ -188,11 +189,12 @@ package com.settinghead.groffle.client.model
 							}
 						}
 						else{
-							if(++snapshotTicker==SNAPSHOT_INTERVAL){
+							if(++snapshotTicker>=SNAPSHOT_INTERVAL && getTimer()-lastSnapShotAt > 10000){
 								tuProxy.generateImage();
 								//							Notification.show("Snapshot generated.");
 								
 								snapshotTicker = 0;
+								lastSnapShotAt = getTimer();
 								
 							}
 						}

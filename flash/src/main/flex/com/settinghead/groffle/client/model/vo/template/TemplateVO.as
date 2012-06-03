@@ -100,6 +100,7 @@ package com.settinghead.groffle.client.model.vo.template
 				if(i>0) Layer.connect( (layers[i] as Layer),(layers[i-1] as Layer)); 
 			}
 		}
+
 		
 		public function removeLayerAt(index:int):void{
 			if(index>0)
@@ -190,7 +191,11 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
-				this._sizer = new ByWeightSizer(7,100);
+				var max:int = this.width>this.height?this.width:this.height;
+				var min:int = max/130;
+				if(min<5) min = 5;
+				this._sizer = new ByWeightSizer(min,100);
+				
 			}
 			return this._sizer;
 		}

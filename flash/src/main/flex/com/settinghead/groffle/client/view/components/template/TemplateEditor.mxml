@@ -340,7 +340,7 @@
 				
 				public function importImage(e:Event):void{
 					var layer:WordLayer = new WordLayer(
-						"Layer"+(template.layers.length+1).toString(),template);
+						"Layer"+(template.layers.length+1).toString(),template,importImageDialog.direction.width, importImageDialog.direction.height);
 					layer.transparentColor = 0xFFFFFFFF;
 					//				var shader:Shader = new Shader(); 
 					//				shader.byteCode = new WhiteToTransparentKernel(); 
