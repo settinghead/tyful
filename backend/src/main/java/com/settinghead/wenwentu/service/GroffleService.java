@@ -9,6 +9,7 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import redis.clients.jedis.Jedis;
@@ -108,7 +109,8 @@ public class GroffleService<T extends Task> {
 						} catch (Exception e) 
 						//catch all exceptions
 						{
-							logger.warning(e.getMessage());
+							logger.warning(ExceptionUtils.getMessage(e));
+							logger.warning(ExceptionUtils.getFullStackTrace(e));
 						}
 					}
 					activeThreadCount.decrementAndGet();
