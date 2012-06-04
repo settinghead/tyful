@@ -1,9 +1,9 @@
 package com.settinghead.groffle.client.model.vo
 {	
-	import com.settinghead.groffle.client.PlaceInfo;
-	import com.settinghead.groffle.client.RenderOptions;
-	import com.settinghead.groffle.client.WordShaper;
-	import com.settinghead.groffle.client.WordSorterAndScaler;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordSorterAndScaler;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.fonter.WordFonter;

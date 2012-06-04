@@ -1,5 +1,5 @@
 package com.settinghead.groffle.client.placer {
-	import com.settinghead.groffle.client.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;

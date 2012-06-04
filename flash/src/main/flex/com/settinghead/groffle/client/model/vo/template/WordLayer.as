@@ -1,6 +1,5 @@
 package com.settinghead.groffle.client.model.vo.template
 {
-	import com.settinghead.groffle.client.RenderOptions;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
@@ -8,7 +7,7 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
 	import com.settinghead.groffle.client.fonter.WordFonter;
-	import com.settinghead.groffle.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.vo.IImageShape;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;

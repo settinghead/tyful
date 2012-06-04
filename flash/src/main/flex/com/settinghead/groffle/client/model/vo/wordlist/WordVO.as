@@ -1,6 +1,6 @@
 package com.settinghead.groffle.client.model.vo.wordlist {
 
-	import com.settinghead.groffle.client.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	
 	import flash.geom.Point;
 

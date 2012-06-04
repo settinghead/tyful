@@ -6,7 +6,7 @@
 				 dataChange="onCreationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

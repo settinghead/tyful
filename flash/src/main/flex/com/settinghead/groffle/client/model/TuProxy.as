@@ -3,9 +3,9 @@ package com.settinghead.groffle.client.model
 	import com.adobe.images.PNGEncoder;
 	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
-	import com.settinghead.groffle.client.PlaceInfo;
-	import com.settinghead.groffle.client.RenderOptions;
-	import com.settinghead.groffle.client.WordShaper;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
@@ -57,6 +57,7 @@ package com.settinghead.groffle.client.model
 	
 	import ru.inspirit.net.MultipartURLLoader;
 	import ru.inspirit.net.events.MultipartURLLoaderEvent;
+	import com.settinghead.groffle.client.model.algo.RenderTuProcess;
 	
 	public class TuProxy extends EntityProxy implements ILoadupProxy
 	{

@@ -96,12 +96,24 @@
 	
 	<taskdef name="protect" classpath="secureSWF/secureSWF.jar"
 	classname="secureSWF.ant.ProtectTask" />
-	  <target name="protect" depends="compile">
+	  <target name="protect">
 	  <!-- <target name="protect"> -->
-	    <protect outputPath="${secure.loc}" renameIdentifiers="false" keyFilePath="${basedir}/secureSWF/key.data">
+	    <protect outputPath="${secure.loc}" renameIdentifiers="true" keyFilePath="${basedir}/secureSWF/key.data">
 		      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
 		      <!-- <fileset dir="${bin.loc}" includes="**.swc"/> -->
-		    <rule filter="com.settinghead.groffle.client.*" rename="true" />
+			<rule filter="com.settinghead.groffle.client.*" rename="false" />
+		    <rule filter="com.settinghead.groffle.client.angler.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.colorer.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.model.vo.algo.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.model.zip.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.model.proxy.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.nudger.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.placer.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.sizers.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.view.components.template.*" rename="false" />
+		    <rule filter="com.settinghead.groffle.client.view.components.template.canvas.*" rename="false" />
+		    <rule filter="com.settinghead.groffle.client.view.components.template.canvas.assets.*" rename="false" />
+
 	      <!--literalString value="sEc.R3t"/-->
 	      <domainName value="groffle.me" />
 	      <domainName value="www.groffle.me"/>
@@ -119,13 +131,13 @@
 		</copy>
 	</target> -->
 	
-	<target name="copy-insecure" depends="compile">
+	<target name="copy-insecure">
 	    <copy todir="${export.loc}">
 		    <fileset dir="${bin.loc}"/>
 		</copy>
 	</target>
 	
-	<target name="versionInfo" depends="compile" >
+	<target name="versionInfo">
 	        <propertyfile
 	            file="version.properties" comment="Build version info">
 	            <entry key="buildDate" type="date" value="now"/>
@@ -145,9 +157,16 @@
 	        </replace>
 	    </target>
 	
-	<target name="publish" depends="compile, protect, copy-insecure, versionInfo">
-	    <copy todir="${export.loc}" overwrite="true">
-		    <fileset dir="${secure.loc}"/>
-		</copy>
+	<target name="copy-secure">
+		<copy todir="${export.loc}" overwrite="true">
+				    <fileset dir="${secure.loc}"/>
+				</copy>
 	</target>
+	
+	<target name="publish" depends="compile, copy-insecure, protect, versionInfo, copy-secure">
+	</target>
+	
+	<target name="secure-only" depends="copy-insecure, protect, versionInfo, copy-secure">
+	</target>
+		
 </project>

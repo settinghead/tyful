@@ -1,6 +1,6 @@
 package com.settinghead.groffle.client.placer
 {
-	import com.settinghead.groffle.client.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.math.MathUtils;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	

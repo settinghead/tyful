@@ -1,7 +1,7 @@
 package com.settinghead.groffle.client.controller.main
 {
 	import com.settinghead.groffle.client.ApplicationFacade;
-	import com.settinghead.groffle.client.WordShaper;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.controller.shop.LoadShopCommand;
 	import com.settinghead.groffle.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.groffle.client.controller.template.LoadTemplateCommand;

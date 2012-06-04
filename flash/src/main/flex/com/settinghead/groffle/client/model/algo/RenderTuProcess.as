@@ -1,11 +1,11 @@
-package com.settinghead.groffle.client.model
+package com.settinghead.groffle.client.model.algo
 {
 	import com.adobe.images.PNGEncoder;
 	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
-	import com.settinghead.groffle.client.PlaceInfo;
-	import com.settinghead.groffle.client.RenderOptions;
-	import com.settinghead.groffle.client.WordShaper;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
@@ -50,6 +50,8 @@ package com.settinghead.groffle.client.model
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
+	import com.settinghead.groffle.client.model.ITuImageGenerator;
+	import com.settinghead.groffle.client.model.TuProxy;
 	
 	public class RenderTuProcess extends AbstractProcess
 	{

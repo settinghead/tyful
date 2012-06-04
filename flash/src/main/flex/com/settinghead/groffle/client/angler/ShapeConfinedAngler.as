@@ -2,7 +2,7 @@
  * 
  */
 package com.settinghead.groffle.client.angler {
-	import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.EngineWordVO;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;

@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.vo
+package com.settinghead.groffle.client.model.algo.tree
 {
 	internal final class SplitType
 	{

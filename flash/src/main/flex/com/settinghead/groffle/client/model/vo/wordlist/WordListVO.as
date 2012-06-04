@@ -1,6 +1,5 @@
 package com.settinghead.groffle.client.model.vo.wordlist
 {
-	import com.settinghead.groffle.client.WordComparator;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;

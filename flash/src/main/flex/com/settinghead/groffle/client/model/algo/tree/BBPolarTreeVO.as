@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.vo {
+package com.settinghead.groffle.client.model.algo.tree {
 	
 	
 	/*
@@ -18,12 +18,13 @@ package com.settinghead.groffle.client.model.vo {
 	*/
 	
 	import com.settinghead.groffle.client.NotImplementedError;
-	import com.settinghead.groffle.client.model.vo.BBPolarChildTreeVO;
-	import com.settinghead.groffle.client.model.vo.BBPolarRootTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarChildTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	
 	import mx.controls.Alert;
 	
 	import org.as3commons.lang.Assert;
+	import com.settinghead.groffle.client.model.vo.IImageShape;
 	
 	public class BBPolarTreeVO {
 		

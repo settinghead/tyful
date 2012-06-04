@@ -8,7 +8,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;

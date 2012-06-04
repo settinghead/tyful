@@ -42,6 +42,6 @@
 		<!--mx:Label fontWeight="bold" text="Create your own typography artwork."/-->
 	</mx:ApplicationControlBar>
 
-	<debugger:MonsterDebuggerFlex id="monsterDebugger"/>
+	<!--debugger:MonsterDebuggerFlex id="monsterDebugger"/-->
 
 </s:Application>

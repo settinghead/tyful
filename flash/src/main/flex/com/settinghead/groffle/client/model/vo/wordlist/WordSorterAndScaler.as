@@ -1,6 +1,4 @@
-package com.settinghead.groffle.client {
-	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
+package com.settinghead.groffle.client.model.vo.wordlist {
 	
 	import mx.controls.Alert;
 	

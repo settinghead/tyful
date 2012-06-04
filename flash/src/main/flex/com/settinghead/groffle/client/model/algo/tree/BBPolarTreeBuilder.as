@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.vo {
+package com.settinghead.groffle.client.model.algo.tree {
 /*
  Copyright 2010 Daniel Bernier
 
@@ -21,8 +21,9 @@ package com.settinghead.groffle.client.model.vo {
 	import flash.geom.Rectangle;
 	
 	import org.as3commons.lang.Assert;
+	import com.settinghead.groffle.client.model.vo.IImageShape;
 
-internal class BBPolarTreeBuilder {
+public class BBPolarTreeBuilder {
 
 	private static const STOP_COMPUTE_TREE_THRESHOLD:Number = 20;
 

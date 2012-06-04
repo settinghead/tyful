@@ -21,9 +21,9 @@
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.groffle.client.ApplicationFacade;
-			import com.settinghead.groffle.client.PlaceInfo;
+			import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 			import com.settinghead.groffle.client.density.Patch;
-			import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordListVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;

@@ -1,6 +1,6 @@
 package com.settinghead.groffle.client.angler
 {
-	import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 
 	public class MostlyHorizAngler extends PickFromAngler
 	{

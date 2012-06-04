@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client {
+package com.settinghead.groffle.client.model.vo.template {
 
 public class RenderOptions {
 	public var maxAttemptsToPlaceWord:int= -1; // default: based on Word weight

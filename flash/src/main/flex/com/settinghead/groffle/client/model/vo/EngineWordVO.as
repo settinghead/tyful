@@ -1,6 +1,6 @@
 package com.settinghead.groffle.client.model.vo {
-	import com.settinghead.groffle.client.PlaceInfo;
-	import com.settinghead.groffle.client.WordShaper;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
@@ -21,6 +21,8 @@ package com.settinghead.groffle.client.model.vo {
 	import mx.controls.Alert;
 	
 	import org.as3commons.lang.Assert;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeBuilder;
 
 /*
  Copyright 2010 Daniel Bernier

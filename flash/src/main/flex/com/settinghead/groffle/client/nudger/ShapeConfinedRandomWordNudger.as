@@ -1,5 +1,5 @@
 package com.settinghead.groffle.client.nudger {
-	import com.settinghead.groffle.client.PlaceInfo;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.math.MathUtils;

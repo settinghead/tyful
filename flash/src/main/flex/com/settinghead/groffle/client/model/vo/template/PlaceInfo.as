@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client
+package com.settinghead.groffle.client.model.vo.template
 {
 	import com.settinghead.groffle.client.density.Patch;
 	

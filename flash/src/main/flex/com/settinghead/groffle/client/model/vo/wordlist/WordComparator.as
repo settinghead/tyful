@@ -1,9 +1,8 @@
-package com.settinghead.groffle.client
+package com.settinghead.groffle.client.model.vo.wordlist
 {
 	import org.as3commons.collections.framework.IComparator;
 	import org.as3commons.collections.utils.NumericComparator;
 	import org.as3commons.collections.utils.UncomparableType;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
 	public class WordComparator implements IComparator
 	{

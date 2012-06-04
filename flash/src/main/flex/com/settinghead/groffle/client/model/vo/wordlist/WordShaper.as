@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client
+package com.settinghead.groffle.client.model.vo.wordlist
 {
 	import flash.geom.Matrix;
 	import flash.geom.Point;

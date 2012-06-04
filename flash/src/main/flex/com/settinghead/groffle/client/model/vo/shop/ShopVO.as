@@ -1,6 +1,6 @@
 package com.settinghead.groffle.client.model.vo.shop
 {
-	import com.settinghead.groffle.client.WordComparator;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordComparator;
 	import com.settinghead.groffle.client.model.vo.PreviewUrlVO;
 	
 	import mx.collections.ArrayCollection;

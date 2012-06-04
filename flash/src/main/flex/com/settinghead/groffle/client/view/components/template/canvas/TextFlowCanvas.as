@@ -1,7 +1,7 @@
 package com.settinghead.groffle.client.view.components.template.canvas
 {
 	import com.notifications.Notification;
-	import com.settinghead.groffle.client.model.vo.BBPolarTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
 	import com.settinghead.groffle.client.view.components.template.TemplateEditor;
@@ -34,6 +34,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import spark.components.BorderContainer;
 	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
+	import com.settinghead.groffle.client.view.components.template.canvas.assets.Assets;
 	
 	public class TextFlowCanvas extends ItemRenderer
 	{
@@ -73,7 +74,10 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		private var colorSheetElement:BitmapImage;
 		private var _currentDrawingTool:int;
 		private var brushRegion:Array = [Number.POSITIVE_INFINITY,Number.POSITIVE_INFINITY,Number.NEGATIVE_INFINITY,Number.NEGATIVE_INFINITY];
-		private var a:BitmapAsset = new SmallA();
+		
+	
+		
+		private var a:BitmapAsset = Assets.getSmallA();
 		
 		private static var HintShowed:Boolean = false;
 		
@@ -265,9 +269,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				
 			}
 		}
+
 		
-		[Embed("SmallA.png")]
-		public static var SmallA:Class;
 		protected function this_mouseMoveHandler(event:MouseEvent):void
 		{
 			if(this.mouseX>0 && this.mouseX<this.width && this.mouseY > 0 && this.mouseY < this.height){
@@ -290,24 +293,34 @@ package com.settinghead.groffle.client.view.components.template.canvas
 						//update drawing state
 						updateDrawingRegion();
 						
-						var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
-						shape.graphics.lineStyle(thickness, dirColor, 1);
-						colorShape.graphics.lineStyle(thickness,0,1,true);
-						dirShape.graphics.lineStyle(thickness,0,0.5,true);
-						colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
-//						var a:BitmapAsset = new SmallA();
-						var m:Matrix = a.transform.matrix;
-						m.rotate(-angle);
-						dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-						shape.graphics.moveTo(oldMouseX, oldMouseY);
-						dirShape.graphics.moveTo(oldMouseX, oldMouseY);
-						colorShape.graphics.moveTo(oldMouseX, oldMouseY);
-						shape.graphics.lineTo(this.mouseX,this.mouseY);
-						dirShape.graphics.lineTo(this.mouseX,this.mouseY);
-						colorShape.graphics.lineTo(this.mouseX,this.mouseY);
-						layer.direction.draw(shape);
-						bmpDirection.bitmapData.draw(dirShape);
-						layer.colorSheet.bitmapData.draw(colorShape);
+						var blendMode:String = templateEditor.chkLockBoundary.selected?
+							BlendMode.SHADER :BlendMode.NORMAL;
+						
+						if(templateEditor.chkDrawAngle.selected){
+							var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
+							shape.graphics.lineStyle(thickness, dirColor, 1);
+							dirShape.graphics.lineStyle(thickness,0,0.5,true);
+	//						var a:BitmapAsset = new SmallA();
+							var m:Matrix = a.transform.matrix;
+							m.rotate(-angle);
+							dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+							shape.graphics.moveTo(oldMouseX, oldMouseY);
+							dirShape.graphics.moveTo(oldMouseX, oldMouseY);
+							shape.graphics.lineTo(this.mouseX,this.mouseY);
+							dirShape.graphics.lineTo(this.mouseX,this.mouseY);
+							
+							layer.direction.draw(shape,null,null,blendMode);
+							bmpDirection.bitmapData.draw(dirShape,null,null,blendMode);
+							
+						}
+						if(templateEditor.chkDrawColor.selected){
+							colorShape.graphics.lineStyle(thickness,0,1,true);
+							colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
+							colorShape.graphics.moveTo(oldMouseX, oldMouseY);
+							colorShape.graphics.lineTo(this.mouseX,this.mouseY);
+							layer.colorSheet.bitmapData.draw(colorShape,null,null,blendMode);
+						}
+						
 						break;
 					case TemplateEditor.FILL:
 						break;
