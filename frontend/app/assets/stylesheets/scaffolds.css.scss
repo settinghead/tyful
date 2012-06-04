@@ -125,12 +125,13 @@ div {
 	
 }
 
-
+.fb-like{
+display: inline;
+}
 #main_menu{
-    display: inline;
 	float:right;
     display: inline;
-	
+	padding-bottom: 5px;
 	ul{
 	  padding-left: 0px;
       list-style: none;
@@ -200,6 +201,11 @@ div {
   margin: 0;
 }
 
+#header-right{
+text-align: right;
+float: right;
+}
+
 #header-middle{
   position: fixed;
   text-align: center;
@@ -237,8 +243,6 @@ div {
 }
 
 #user_nav {
-  float: right;
-  display: inline;
   #artist_name{
   	padding-left: 10px;
 	background-image: image-url("beret.png");
@@ -297,6 +301,7 @@ div {
 	#tagline{
 		font-size: 9px;
 	}
+
 
 }
 

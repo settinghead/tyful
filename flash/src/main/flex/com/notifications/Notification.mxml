@@ -19,6 +19,7 @@ Please contact me at afoucal@free.fr.
 
 <grad:GradientCanvas xmlns:mx="http://www.adobe.com/2006/mxml"
 					 xmlns:grad="com.gradientcomponents.*"
+					 
 					 focusEnabled="false" 
 					 creationComplete="completed();" styleName="notification" >
 
@@ -245,6 +246,11 @@ Please contact me at afoucal@free.fr.
 			 */
 			public var stackable:Boolean = true;
 			
+			private var _bitmapData:BitmapData;
+			
+			public function set bitmapData(v:BitmapData):void{
+				this._bitmapData = v;
+			}
 			
 			/*
 			 * The time used to control the duration of the Notification
@@ -260,7 +266,7 @@ Please contact me at afoucal@free.fr.
 			 *
 			 *  @default null
 			 */			
-			public var iconClass:Class;
+
 			
 			
 			/**
@@ -466,9 +472,9 @@ Please contact me at afoucal@free.fr.
 			 * @return 	A reference to the Notification control. 
 			 */
 			public static function show( text:String = '', title:String = '',
+										 bmp:BitmapData = null,
 										 duration:Number = 20000,
 										 position:String = null,
-										 iconClass:Class = null,
 										 refocusObj:Sprite = null,
 										 stackable:Boolean = true,
 										 notificationParent:Sprite = null,
@@ -495,9 +501,9 @@ Please contact me at afoucal@free.fr.
 				// Set other properties
 				notification.text = text;
 				notification.title = title;
-				notification.iconClass = iconClass;
 				notification.duration = duration - NOTIFICATION_DEFAULT_CLOSE_EFFECT_DURATION;
 				notification.stackable = stackable;
+				notification.bitmapData = bmp;
 				
 				// If no filter is specified, the default DropShadowFilter is applied
 				if ( filtersArray == null )
@@ -554,6 +560,15 @@ Please contact me at afoucal@free.fr.
 					// Launch the timer
 					_elapseTime.addEventListener(TimerEvent.TIMER_COMPLETE, closeHandler);
 					_elapseTime.start();
+				}
+				
+				if(_bitmapData!=null){
+					notificationIconClass.width = _bitmapData.width;
+					notificationIconClass.height = _bitmapData.height;
+					notificationIconClass.graphics.beginBitmapFill(_bitmapData);
+					notificationIconClass.graphics.drawRect(0,0,_bitmapData.width, _bitmapData.height);
+					notificationIconClass.graphics.endFill();
+
 				}
 			}
 			
@@ -712,7 +727,7 @@ Please contact me at afoucal@free.fr.
 	
 	<mx:HBox id="messageBox" y="{titleBar.height+5}" width="100%" height="100%"
 		horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		<mx:Image id="notificationIconClass" source="{iconClass}" />
+		<mx:Canvas id="notificationIconClass" />
 		<mx:TextArea id="notificationTextArea" htmlText="{text}" minWidth="220" width="100%" wordWrap="true"
 			selectable="false" focusEnabled="false" focusThickness="0"
 			verticalScrollPolicy="off" horizontalScrollPolicy="off"

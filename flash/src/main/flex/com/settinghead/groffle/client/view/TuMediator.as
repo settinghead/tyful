@@ -68,7 +68,7 @@ package com.settinghead.groffle.client.view
 					}
 					
 					if(!tuProxy.generateTemplatePreview)
-						Notification.show("Click on words to check out where they come from.","Hint",10000,
+						Notification.show("Click on words to check out where they come from.","Hint",null,10000,
 							Notification.NOTIFICATION_POSITION_BOTTOM_LEFT);
 					break;
 			}

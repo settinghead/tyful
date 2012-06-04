@@ -178,7 +178,7 @@ package com.settinghead.groffle.client.model
 			urlLoader.addVariable("templateId", decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId));
 			urlLoader.addFile(b,"artwork.png",'image');
 			urlLoader.load( decodeURIComponent(FlexGlobals.topLevelApplication.parameters.facebookUploadUrl),true);
-			Notification.show("Your artwork has been shared with your friends on Facebook.","",8000,Notification.NOTIFICATION_POSITION_BOTTOM_LEFT);
+			Notification.show("Your artwork has been shared with your friends on Facebook.","",null,8000,Notification.NOTIFICATION_POSITION_BOTTOM_LEFT);
 
 
 		}

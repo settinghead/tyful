@@ -17,8 +17,10 @@
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',
-	    $('#user_nav').outerWidth()+$('#main_menu').outerWidth()+30+"px");
-	
+	    $('#header-right').outerWidth()+30+"px");
+		$('#header-middle').css('right',
+		    $('#header-right').outerWidth()+30+"px");
+	$('#header-middle').css('min-height',$('#header-right').outerHeight+"px");
 	var amount = $('#header').outerHeight()>$('#header-middle').outerHeight()
 		?$('#header').outerHeight():$('#header-middle').outerHeight();
 	$('#container').css("padding-top",amount+"px");

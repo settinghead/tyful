@@ -5,16 +5,19 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
 	import com.settinghead.groffle.client.view.components.template.TemplateEditor;
+	import com.settinghead.groffle.client.view.components.template.canvas.assets.Assets;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.BlendMode;
+	import flash.display.Shader;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.ui.Mouse;
@@ -34,7 +37,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import spark.components.BorderContainer;
 	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
-	import com.settinghead.groffle.client.view.components.template.canvas.assets.Assets;
+	import spark.primitives.Rect;
 	
 	public class TextFlowCanvas extends ItemRenderer
 	{
@@ -78,6 +81,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	
 		
 		private var a:BitmapAsset = Assets.getSmallA();
+		private var lockBoundaryShader:Shader = Assets.getLockBoundaryShader();
 		
 		private static var HintShowed:Boolean = false;
 		
@@ -114,7 +118,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				
 				if(!HintShowed){
 				    Notification.show("Use 'A' and 'S' on the keyboard to rotate text direction for the bursh, and use 'Z' and X' to increase or decrease bruth thickness."
-					,"Brush Hint",20000,null,null,this);
+					,"Brush Hint",null,15000);
 					HintShowed = true;
 				}
 				
@@ -270,6 +274,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			}
 		}
 
+		private var origin:Point = new Point(0,0);
 		
 		protected function this_mouseMoveHandler(event:MouseEvent):void
 		{
@@ -288,14 +293,20 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
 				var colorShape:Shape = new Shape();
+			
+
+				
 				switch(currentDrawingTool){
 					case TemplateEditor.BRUSH:
 						//update drawing state
 						updateDrawingRegion();
 						
-						var blendMode:String = templateEditor.chkLockBoundary.selected?
-							BlendMode.SHADER :BlendMode.NORMAL;
-						
+						var blendMode:String = 
+//						templateEditor.chkLockBoundary.selected?
+//							BlendMode.SHADER :
+							BlendMode.NORMAL;
+							var bounds:Rectangle;
+
 						if(templateEditor.chkDrawAngle.selected){
 							var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
 							shape.graphics.lineStyle(thickness, dirColor, 1);
@@ -309,8 +320,38 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							shape.graphics.lineTo(this.mouseX,this.mouseY);
 							dirShape.graphics.lineTo(this.mouseX,this.mouseY);
 							
-							layer.direction.draw(shape,null,null,blendMode);
-							bmpDirection.bitmapData.draw(dirShape,null,null,blendMode);
+
+							if(templateEditor.chkLockBoundary.selected){
+								var minX:Number = Math.min(oldMouseX, this.mouseX) - thickness/2;
+								var minY:Number = Math.min(oldMouseY, this.mouseY) - thickness/2;
+								var bWidth:Number = Math.abs(oldMouseX-this.mouseX) + thickness;
+								var bHeight:Number = Math.abs(oldMouseY-this.mouseY) + thickness;
+								bounds = new Rectangle(minX,minY,bWidth,bHeight);
+								
+								var bShape:BitmapData  = new BitmapData(bounds.width, bounds.height,true,0x00000000);
+								var bDirShape:BitmapData = new BitmapData(bounds.width, bounds.height,true, 0x00000000);
+								
+								
+								var m1:Matrix = new Matrix();
+								m1.tx -= bounds.x;
+								m1.ty -= bounds.y;
+								bShape.draw(shape,m1);
+								bDirShape.draw(dirShape,m1);
+								bShape.threshold(layer.direction,bounds,origin,"==",0,0,0xFF000000,false);
+								bDirShape.threshold(layer.direction,bounds,origin,"==",0,0,0xFF000000,false);
+								var m2:Matrix =  new Matrix();
+								m2.tx += bounds.x;
+								m2.ty += bounds.y;
+//								
+//								
+								layer.direction.draw(bShape,m2);
+								bmpDirection.bitmapData.draw(bDirShape,m2);
+							}
+							else{
+								layer.direction.draw(shape,null,null);
+								bmpDirection.bitmapData.draw(dirShape,null,null);
+							}
+
 							
 						}
 						if(templateEditor.chkDrawColor.selected){
@@ -318,7 +359,18 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
 							colorShape.graphics.moveTo(oldMouseX, oldMouseY);
 							colorShape.graphics.lineTo(this.mouseX,this.mouseY);
-							layer.colorSheet.bitmapData.draw(colorShape,null,null,blendMode);
+							
+							if(templateEditor.chkLockBoundary.selected){
+								var cShape:BitmapData  = new BitmapData(bounds.width, bounds.height,true,0x00000000);
+								cShape.draw(colorShape,m1);
+								cShape.threshold(layer.direction,bounds,origin,"==",0,0,0xFF000000,false);
+								layer.colorSheet.bitmapData.draw(cShape,m2);
+
+							}
+							else{
+								layer.colorSheet.bitmapData.draw(colorShape,null,null,blendMode);
+							}
+							
 						}
 						
 						break;

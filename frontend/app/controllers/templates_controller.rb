@@ -56,13 +56,15 @@ class TemplatesController < ApplicationController
       session["user_return_to"]=request.url
       redirect_to '/auth/facebook/'
     else
-      @mode = "renderTu"
+      @mode = "renderTu" if !@mode
       @template = Template.find(params[:id])
       retrieve_token
       ShopController.push_shop_predict_task(current_user,@template)
       REDIS.set("token_#{@template.uuid}", @template.user.token) if current_user && @template && @template.user;
       respond_to do |format|
-        format.html # show.html.erb
+        format.html do 
+          render 'show'
+        end
         # format.json { render json: @template }
       end
     end
@@ -110,16 +112,9 @@ class TemplatesController < ApplicationController
 
   # GET /templates/1/edit
   def edit
-    
-    @template = Template.find(params[:id])
-    authorize! :manage, @template
-    retrieve_token
-    ShopController.push_shop_predict_task(current_user,@template)
-    
+
     @mode = 'editTemplate'
-    respond_to do |format|
-      format.html # show.html.erb
-    end
+    show
     
   end
 
