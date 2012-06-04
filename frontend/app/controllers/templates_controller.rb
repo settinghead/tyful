@@ -39,7 +39,7 @@ class TemplatesController < ApplicationController
   
   def popular
     @templates = Template.find(:all, :conditions => ['private=?', false], :joins => 'LEFT OUTER JOIN "votes" ON "votes"."votable_id" = "templates"."id" AND "votes"."votable_type" = \'Template\'',
-     :order => 'count(votes.id) DESC', :group => 'templates.id')
+     :order => 'count(votes.id) DESC, created_at DESC', :group => 'templates.id')
     
     respond_to do |format|
       format.html do
