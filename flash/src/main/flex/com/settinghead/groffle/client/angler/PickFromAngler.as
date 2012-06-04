@@ -7,9 +7,9 @@ package com.settinghead.groffle.client.angler
 	public class PickFromAngler implements WordAngler
 	{
 		
-		private var angles:Vector.<Number>;
+		private var angles:Array;
 		private static var prng:PM_PRNG = new PM_PRNG();
-		public function PickFromAngler(angles:Vector.<Number>)
+		public function PickFromAngler(angles:Array)
 		{
 			this.angles = angles;
 		}

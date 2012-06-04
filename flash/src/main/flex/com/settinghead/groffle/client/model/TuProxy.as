@@ -127,7 +127,7 @@ package com.settinghead.groffle.client.model
 			if(tu!=null){
 				if(gThread)
 					gThread.close(true);
-				renderProcess = new RenderTuProcess(facade, tu, imageGenerator);
+				renderProcess = new RenderTuProcess(facade, tu, imageGenerator,true );
 			}
 		}
 		

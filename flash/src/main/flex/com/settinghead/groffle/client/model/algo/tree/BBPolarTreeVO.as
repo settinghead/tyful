@@ -28,7 +28,7 @@ package com.settinghead.groffle.client.model.algo.tree {
 	
 	public class BBPolarTreeVO {
 		
-		public static const HALF_PI:Number= ((Math.PI / 2));
+		public static const HALF_PI:Number= (Math.PI / 2);
 		public static const TWO_PI:Number= ((Math.PI * 2));
 		public static const PI:Number = (Math.PI);
 		public static const ONE_AND_HALF_PI:Number= ((Math.PI + HALF_PI));

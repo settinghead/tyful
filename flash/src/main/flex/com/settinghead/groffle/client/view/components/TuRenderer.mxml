@@ -21,13 +21,13 @@
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.groffle.client.ApplicationFacade;
-			import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 			import com.settinghead.groffle.client.density.Patch;
 			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordListVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
+			import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 			
 			import de.aggro.utils.CookieUtil;
 			
@@ -281,28 +281,35 @@
 				}
 			}
 			
+			private var preparing:Boolean = false;
+			
 			private function prepareForTu():void{
-				while(this.backgroundLayer.numChildren>0) 
-					this.backgroundLayer.removeChildAt(0);
-				while(this.wordLayer.numChildren>0)
-					this.wordLayer.removeChildAt(0);				
-//				this.width = _tu.width;
-//				this.height = _tu.height;
-				_tu.template.generateEffectiveBorder();
-				
-				//adjust for effective border
-				this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
-				this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
-				 this.mainCanvas.left = -_tu.template.effectiveBorder.x1+EFFECTIVE_MARGIN;
-				 this.mainCanvas.top = -_tu.template.effectiveBorder.y1+EFFECTIVE_MARGIN;
-				if(_tu.backgroundImage!=null)
-					this.backgroundLayer.addChild(_tu.backgroundImage);
-				for each(var displayWord:DisplayWordVO in _tu.dWords)
-					this.slapWord(displayWord);
+				if(!preparing){
+					preparing = true;
 					
-//				patchLayer.patchQueue=this._tu.template.patchIndex.map.getQueue(3);
+					while(this.backgroundLayer.numChildren>0) 
+						this.backgroundLayer.removeChildAt(0);
+					while(this.wordLayer.numChildren>0)
+						this.wordLayer.removeChildAt(0);				
+					//				this.width = _tu.width;
+					//				this.height = _tu.height;
+					_tu.template.generateEffectiveBorder();
+					
+					//adjust for effective border
+					this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
+					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
+					this.mainCanvas.left = -_tu.template.effectiveBorder.x1+EFFECTIVE_MARGIN;
+					this.mainCanvas.top = -_tu.template.effectiveBorder.y1+EFFECTIVE_MARGIN;
 
-				newTu = false;
+//					for each(var displayWord:DisplayWordVO in _tu.dWords)
+//					this.slapWord(displayWord);
+					
+					//				patchLayer.patchQueue=this._tu.template.patchIndex.map.getQueue(3);
+					
+					newTu = false;
+					preparing = false;
+				}
+				
 				
 			}
 			
@@ -365,7 +372,7 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0">
+			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleY="{stage.height-200}">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 				<mx:UIComponent id="wordLayer" top="0" left="0" />
 			</mx:Canvas>

@@ -38,6 +38,12 @@
 				
 			}
 			
+			protected function btnAddImageLayer_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<s:Button id="btnClose" enabled="false" visible="false" includeInLayout="false" />
@@ -50,10 +56,14 @@
 			<s:NumericStepper id="heightStepper" value="@{newHeight}" maximum="10000" minimum="10"/>
 		</s:FormItem>
 	</s:Form>
-	<s:HGroup> 
+	<s:HGroup>
 		<s:Button label="Create Template"
 				  click="createTemplate();" /> 
-	</s:HGroup> 		
+	</s:HGroup> 	
+		<!--s:Label text=" - OR -" />
+		<s:Button id="btnAddImageLayer" label="Import from a Photo" 
+				  click="btnAddImageLayer_clickHandler(event)"
+				  icon="@Embed(source='../photo.png')" /-->
 	</s:VGroup>
 
 </s:TitleWindow>

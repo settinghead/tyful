@@ -6,10 +6,10 @@ package com.settinghead.groffle.client.angler
 	{
 		public function MostlyHorizAngler()
 		{
-			super(Vector.<Number>([0, 0, 0, 0,
-				,BBPolarTreeVO.HALF_PI
-				,BBPolarTreeVO.HALF_PI+BBPolarTreeVO.PI
-			]));
+			super([0, 0, 0, 0
+				,Math.PI/2
+				,Math.PI/2*3
+			]);
 //			super(Vector.<Number>([0.3,-0.3]));
 		}
 	}

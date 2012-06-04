@@ -11,6 +11,7 @@
 			import __AS3__.vec.Vector;
 			
 			import com.adobe.viewsource.ViewSource;
+			import com.notifications.Notification;
 			import com.quasimondo.bitmapdata.ThresholdBitmap;
 			import com.quasimondo.filters.AdaptiveThresholdFilter;
 			
@@ -165,9 +166,26 @@
 			
 			protected function cbm_completeHandler(event:Event):void
 			{
-				
 				init();
 				render();				
+			}
+			
+			
+			private var urlLoader:URLLoader;
+			protected function btnLoadPhotoFromUrl_clickHandler(event:MouseEvent):void
+			{
+//				var req:URLRequest = new URLRequest();
+//				req.url = txtLoadImageUrl.text;
+//				urlLoader = new URLLoader();
+//				urlLoader.addEventListener(Event.COMPLETE, downloadImageCompleteHandler);
+//				urlLoader.load(req);
+				Security.allowDomain("*");
+
+				cbm.source = txtLoadImageUrl.text;
+
+			}
+			
+			private function downloadImageCompleteHandler(e:Event):void{ // file loaded
 			}
 			
 		]]>
@@ -185,7 +203,10 @@
 		<s:HGroup>
 			<s:VGroup maxWidth="160">
 				<s:Button id="btnBrowsePhoto" label="Load from file..." click="btnBrowsePhoto_clickHandler(event)" />
-				<s:BitmapImage id="cbm" maxHeight="150" scaleMode="letterbox" complete="cbm_completeHandler(event)" /> 
+				<s:TextInput id="txtLoadImageUrl" width="200"  />
+				<s:Button id="btnLoadPhotoFromUrl" label="Load from URL"  click="btnLoadPhotoFromUrl_clickHandler(event)"/>
+				<s:BitmapImage id="cbm" maxHeight="150" scaleMode="letterbox" 
+							   complete="cbm_completeHandler(event)"  /> 
 				<s:BitmapImage id="hbm" bottom="0" left="0" alpha="0.5" maxWidth="150" />
 			</s:VGroup>
 			<s:BitmapImage id="tbm" maxWidth="{stage.width-200}" maxHeight="{stage.height-200}" scaleMode="letterbox"/> 
