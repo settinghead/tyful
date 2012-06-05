@@ -122,8 +122,8 @@ public class FacebookRetriever {
 				addWords(
 						sb.toString(),
 						allWords,
-						5 + (int) (differenceInDays(post.getCreatedTime(),
-								earliest) * 30 / span),
+						12 + (int) (differenceInDays(post.getCreatedTime(),
+								earliest) * 16 / span),
 						new Occurence(post.getId(), "post", post.getLink()));
 			}
 		}
