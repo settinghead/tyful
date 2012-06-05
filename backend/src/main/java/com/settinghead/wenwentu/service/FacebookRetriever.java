@@ -2,11 +2,9 @@ package com.settinghead.wenwentu.service;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.SortedSet;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
@@ -15,7 +13,6 @@ import com.restfb.Parameter;
 import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
-import com.restfb.types.Post.Privacy;
 import com.settinghead.wenwentu.service.model.Occurence;
 import com.settinghead.wenwentu.service.model.Word;
 
