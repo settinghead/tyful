@@ -369,7 +369,7 @@
 		]]>
 	</fx:Script>
 	<s:VGroup width="100%" height="100%">
-		<s:VGroup horizontalAlign="center" top="0" left="0" right="0">
+		<s:VGroup horizontalAlign="center" top="0" left="0" right="0" id="controlGroup">
 			<s:HGroup depth="1">
 				<s:Label width="170" />
 				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" fontSize="18" color="#005DF2" />
@@ -414,7 +414,8 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleY="{stage.height-200}">
+			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.width&gt;tu.height?(this.width-150)/tu.width:(this.height-controlGroup.height)/tu.height}" 
+					   scaleY="{mainCanvas.scaleX}">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 				<mx:UIComponent id="wordLayer" top="0" left="0" />
 			</mx:Canvas>
