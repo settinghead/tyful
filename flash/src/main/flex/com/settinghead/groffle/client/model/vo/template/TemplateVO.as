@@ -167,7 +167,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public function get sizer():WordSizer{
 			if(this._sizer==null){
 				var max:int = this.width>this.height?this.width:this.height;
-				var min:int = max/140;
+				var min:int = max/100;
 				if(min<7) min = 7;
 				this._sizer = new ByWeightSizer(min,100);
 				
