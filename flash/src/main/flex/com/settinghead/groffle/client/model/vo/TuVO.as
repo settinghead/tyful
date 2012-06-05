@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.model.vo
 {	
+	import com.settinghead.groffle.client.model.vo.template.IWithEffectiveBorder;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordSorterAndScaler;
@@ -8,10 +9,11 @@ package com.settinghead.groffle.client.model.vo
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.geom.Rectangle;
 
 	[Event(name="failureCountChanged", type="flash.events.Event")]
 
-	public class TuVO extends EventDispatcher
+	public class TuVO extends EventDispatcher implements IWithEffectiveBorder
 	{
 		private var _template:TemplateVO;
 		private var _words:WordListVO;
@@ -127,6 +129,12 @@ package com.settinghead.groffle.client.model.vo
 			this._generatedImage = img;
 		}
 		
-	
+		public function generateEffectiveBorder():void{
+			template.generateEffectiveBorder();
+		}
+		public function get effectiveBorder():Rectangle{
+			return template.effectiveBorder;
+		}
+
 	}
 }

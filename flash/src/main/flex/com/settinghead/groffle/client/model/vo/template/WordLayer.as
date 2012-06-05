@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.model.vo.template
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
 	import com.settinghead.groffle.client.angler.RandomAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
@@ -423,22 +424,32 @@ package com.settinghead.groffle.client.model.vo.template
 
 		
 		public override function generateEffectiveBorder():void{
-			this._effectiveBorder = new TwoPointBorder();
-			for(var i:int=0;i<this.direction.width;i++){
-				for (var j:int=0; j<this.direction.height;j++){
-					if(this.containsPoint(i,j,false,-1,-1,1)){
-						if(i<_effectiveBorder.x1)
-							_effectiveBorder.x1 = i;
-						if(j<_effectiveBorder.y1){
-							_effectiveBorder.y1 = j;
-						}
-						if(i>_effectiveBorder.x2)
-							_effectiveBorder.x2 = i;
-						if(j>_effectiveBorder.y2)
-							_effectiveBorder.y2 = j;
-					}
-				}
-			}
+//			var bounds:Rectangle = 
+//				this.direction.bitmapData.getColorBoundsRect(
+//					0xFF000000,0x00000000,false);
+//			
+			
+			this._effectiveBorder =
+				this.direction.getColorBoundsRect(
+									0xFF000000,0x00000000,false);
+			
+//			Notification.show(_effectiveBorder.toString());
+			
+//			for(var i:int=0;i<this.direction.width;i++){
+//				for (var j:int=0; j<this.direction.height;j++){
+//					if(this.containsPoint(i,j,false,-1,-1,1)){
+//						if(i<_effectiveBorder.x1)
+//							_effectiveBorder.x1 = i;
+//						if(j<_effectiveBorder.y1){
+//							_effectiveBorder.y1 = j;
+//						}
+//						if(i>_effectiveBorder.x2)
+//							_effectiveBorder.x2 = i;
+//						if(j>_effectiveBorder.y2)
+//							_effectiveBorder.y2 = j;
+//					}
+//				}
+//			}
 		}
 		
 		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{

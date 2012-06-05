@@ -52,7 +52,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public var id:String = null;
 		public var uuid:String = null;
 		public var tolerance:Number = 1.0;
-		private var _effectiveBorder:TwoPointBorder = null;
+		private var _effectiveBorder:Rectangle = null;
 
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
@@ -132,23 +132,26 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		public function generateEffectiveBorder():void{
-			this._effectiveBorder = new TwoPointBorder();
+			var left:Number=Number.MAX_VALUE,
+				top:Number=Number.MAX_VALUE,
+				bottom:Number=Number.MIN_VALUE, 
+				right:Number=Number.MIN_VALUE; 
 			for each(var l:Layer in layers){
 				l.generateEffectiveBorder();
-				 var rect:TwoPointBorder = l.effectiveBorder;
-				 if(rect.x1 < this._effectiveBorder.x1)
-					 this._effectiveBorder.x1 = rect.x1;
-				 if(rect.y1 < this._effectiveBorder.y1)
-					 this._effectiveBorder.y1 = rect.y1;
-				 if(rect.x2 > this._effectiveBorder.x2)
-					 this._effectiveBorder.x2 = rect.x2;
-				 if(rect.y2 > this._effectiveBorder.y2)
-					 this._effectiveBorder.y2 = rect.y2;
-
+				 var rect:Rectangle = l.effectiveBorder;
+				 if(rect.x < left)
+					 left = rect.x;
+				 if(rect.y < top)
+					 top = rect.y;
+				 if(rect.right > right)
+					 right = rect.right;
+				 if(rect.bottom > bottom)
+					 bottom = rect.bottom;
 			}
+			this._effectiveBorder = new Rectangle(left, top, right-left, bottom-top);
 		}
 		
-		public function get effectiveBorder():TwoPointBorder{
+		public function get effectiveBorder():Rectangle{
 			if(this._effectiveBorder==null)
 				generateEffectiveBorder();
 				return this._effectiveBorder;

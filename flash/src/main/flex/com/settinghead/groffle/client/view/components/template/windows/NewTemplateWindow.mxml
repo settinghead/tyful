@@ -50,10 +50,10 @@
 	<s:VGroup verticalAlign="middle" horizontalAlign="center">
 	<s:Form>
 		<s:FormItem label="Width">
-			<s:NumericStepper id="widthStepper" value="@{newWidth}" maximum="10000" minimum="400"/>
+			<s:NumericStepper id="widthStepper" value="@{newWidth}" maximum="5000" minimum="400"/>
 		</s:FormItem>
 		<s:FormItem label="Height">
-			<s:NumericStepper id="heightStepper" value="@{newHeight}" maximum="10000" minimum="300"/>
+			<s:NumericStepper id="heightStepper" value="@{newHeight}" maximum="5000" minimum="300"/>
 		</s:FormItem>
 	</s:Form>
 	<s:HGroup>

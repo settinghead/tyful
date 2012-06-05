@@ -37,6 +37,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.notifications.Notification;
 			import com.settinghead.groffle.client.ApplicationFacade;
 			import com.settinghead.groffle.client.density.Patch;
 			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
@@ -64,7 +65,7 @@
 			public static const RESUME_RENDERING:String = "resumeRendering";
 			public static const RERENDER:String = "rerender";
 			public static const POST_TO_FACEBOOK:String = "postToFacebook";
-			public static const EFFECTIVE_MARGIN:int = 5;
+			public static const EFFECTIVE_MARGIN:int = 0;
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
@@ -116,6 +117,8 @@
 			
 			protected function btnEditTemplate_clickHandler(event:MouseEvent):void
 			{
+				//force finish first
+				btnForceFinish_clickHandler();
 				dispatchEvent(new Event(EDIT_TEMPLATE));
 			}
 			
@@ -134,7 +137,7 @@
 				file.save(bild, "tu.png");
 			}
 			
-			protected function btnForceFinish_clickHandler(event:MouseEvent):void{
+			protected function btnForceFinish_clickHandler(event:MouseEvent=null):void{
 				tu.failureCount = tu.template.perseverance;
 			}
 			
@@ -245,13 +248,15 @@
 				var scale:Number = size/maxActual;
 				var actualMargin:Number = EFFECTIVE_MARGIN/100*maxActual;
 
-				var bmpData:BitmapData = new BitmapData((mainCanvas.width+actualMargin*2)*scale, (mainCanvas.height+actualMargin*2)*scale,true);
+				var bmpData:BitmapData = new BitmapData((tu.effectiveBorder.width+actualMargin*2)*scale, (tu.effectiveBorder.height+actualMargin*2)*scale,true);
 				//crop to effective border
 				var scaleM:Matrix = new Matrix(scale,0,0,scale,
-					-(tu.template.effectiveBorder.x1-actualMargin)*scale,-(tu.template.effectiveBorder.y1-actualMargin)*scale); 
+//					0,0
+					-(tu.template.effectiveBorder.x-actualMargin)*scale,
+					-(tu.template.effectiveBorder.y-actualMargin)*scale
+				); 
 				//						var bmp:Bitmap = new Bitmap(bmpData,"auto",true);
-				bmpData.draw(mainCanvas, scaleM,null,null,new Rectangle(0,0,
-					(tu.template.effectiveBorder.width+actualMargin)*scale, (tu.template.effectiveBorder.height+actualMargin)*scale));
+				bmpData.draw(mainCanvas, scaleM,null,null,null);
 				return bmpData;
 			}
 			
@@ -327,9 +332,11 @@
 					//adjust for effective border
 					this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
 					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
-					this.mainCanvas.left = -_tu.template.effectiveBorder.x1+EFFECTIVE_MARGIN;
-					this.mainCanvas.top = -_tu.template.effectiveBorder.y1+EFFECTIVE_MARGIN;
+					this.mainCanvas.left = -_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN;
+					this.mainCanvas.top = -_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN;
 
+					Notification.show(tu.effectiveBorder.toString());
+					
 //					for each(var displayWord:DisplayWordVO in _tu.dWords)
 //					this.slapWord(displayWord);
 					
@@ -414,7 +421,7 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.width&gt;tu.height?(this.width-150)/tu.width:(this.height-controlGroup.height)/tu.height}" 
+			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
 					   scaleY="{mainCanvas.scaleX}">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 				<mx:UIComponent id="wordLayer" top="0" left="0" />

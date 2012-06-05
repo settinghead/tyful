@@ -54,7 +54,7 @@ package com.settinghead.groffle.client.model.vo.template
 		private var _name:String;
 		public var above:Layer;
 		public var below:Layer;
-		protected var _effectiveBorder:TwoPointBorder = null;
+		protected var _effectiveBorder:Rectangle = null;
 
 		
 		public function get name():String{
@@ -188,7 +188,7 @@ package com.settinghead.groffle.client.model.vo.template
 
 		}
 		
-		public function get effectiveBorder():TwoPointBorder{
+		public function get effectiveBorder():Rectangle{
 			if(this._effectiveBorder==null)
 				generateEffectiveBorder();
 			return this._effectiveBorder;
