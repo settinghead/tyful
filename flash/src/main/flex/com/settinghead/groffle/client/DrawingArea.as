@@ -1,7 +1,6 @@
 package com.settinghead.groffle.client
 {
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
@@ -18,11 +17,13 @@ package com.settinghead.groffle.client
 		private var x2:int;
 		private var y2:int;
 		
+		
 		public var drawColor:uint = 0x000000;
 		
 		public function DrawingArea()
 		{
 			super();
+			
 			
 			addEventListener(FlexEvent.CREATION_COMPLETE, function(event:FlexEvent):void {
 				erase();

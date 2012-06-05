@@ -1,9 +1,8 @@
 package com.settinghead.groffle.client.model.vo.wordlist
 {
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import com.settinghead.groffle.client.model.vo.TextShapeVO;
+	
+	import flash.geom.Rectangle;
 
 	
 	public class WordShaper {

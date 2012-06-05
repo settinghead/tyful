@@ -1,14 +1,9 @@
 package com.settinghead.groffle.client.model.zip
 {
 	import com.adobe.serialization.json.JSONDecoder;
-	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
-	import flash.events.Event;
 	import flash.utils.ByteArray;
 	
 	import ion.utils.png.PNGDecoder;
@@ -17,6 +12,8 @@ package com.settinghead.groffle.client.model.zip
 	
 	import nochump.util.zip.ZipEntry;
 	import nochump.util.zip.ZipFile;
+	
+	import org.bytearray.decoder.JPEGDecoder;
 
 	public class ZipInputImpl implements IZipInput
 	{
@@ -65,6 +62,12 @@ package com.settinghead.groffle.client.model.zip
 			}
 			else if(endWith(name, ".png")){
 				parent[name.substr(0,name.length-4)] = readBitmapFromPNGFile(e);
+			}
+			else if(endWith(name, ".jpg")){
+				parent[name.substr(0,name.length-4)] = readBitmapFromJPEGFile(e);
+			}
+			else if(endWith(name, ".jpeg")){
+				parent[name.substr(0,name.length-5)] = readBitmapFromJPEGFile(e);
 			}
 			else if(numericalName) //array entry
 			{
@@ -124,18 +127,19 @@ package com.settinghead.groffle.client.model.zip
 		}
 		
 		private function readBitmapFromPNGFile(e:ZipEntry):BitmapData{
-//			var l:Loader = new Loader();
-//			var obj:BitmapData;
-//			var complete:Boolean = false;
-//			l.addEventListener(Event.COMPLETE, function (evt:Event):void{
-//				obj = Bitmap(LoaderInfo(evt.target).content).bitmapData;
-//				complete = true;
-//			}
-//			);
-//			l.loadBytes(readBytesFromFile(e));
-//			while(!complete){}
-//			return obj;
+
 			return PNGDecoder.decodeImage(file.getInput(e));
+		}
+		
+		private function readBitmapFromJPEGFile(e:ZipEntry):BitmapData{			
+			var myDecoder:JPEGDecoder = new JPEGDecoder();
+			myDecoder.parse(file.getInput(e));
+			var width:uint = myDecoder.width;
+			var height:uint = myDecoder.height;
+			var pixels:Vector.<uint> = myDecoder.pixels;
+			var bitmap:BitmapData = new BitmapData ( width, height, false );
+			bitmap.setVector ( bitmap.rect, pixels );
+			return bitmap;
 		}
 		
 		

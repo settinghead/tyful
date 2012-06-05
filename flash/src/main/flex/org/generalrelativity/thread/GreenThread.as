@@ -1,12 +1,9 @@
 package org.generalrelativity.thread
 {
-	import __AS3__.vec.Vector;
-	
 	import flash.errors.ScriptTimeoutError;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.TimerEvent;
-	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	

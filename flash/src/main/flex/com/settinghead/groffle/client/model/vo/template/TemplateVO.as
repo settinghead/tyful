@@ -1,7 +1,6 @@
 package com.settinghead.groffle.client.model.vo.template
 {
 
-	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.colorer.ColorSheetColorer;
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
@@ -213,7 +212,8 @@ package com.settinghead.groffle.client.model.vo.template
 //		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
-			output.putBitmapDataToPNGFile("preview.png", preview);
+//			output.putBitmapDataToPNGFile("preview.png", preview);
+			output.putBitmapDataToJPEGFile("preview.jpg", preview);
 			output.process(this.layers, "layers");
 			output.process(this.fonter, "fonter");
 			output.process(this.sizer, "sizer");

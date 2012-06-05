@@ -19,28 +19,15 @@ package com.settinghead.groffle.client.model.vo
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.AntiAliasType;
-	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
-	
-	import mx.controls.Alert;
-	import mx.controls.Label;
-	
-	import org.as3commons.lang.Assert;
-	
-	import spark.components.Label;
-	import spark.primitives.Rect;
 
 	
 	/**
@@ -63,25 +50,25 @@ package com.settinghead.groffle.client.model.vo
 //		[Embed(source="coolvetica rg.ttf", fontFamily="coolvetica rg", mimeType='application/x-font',
 //        embedAsCFF='false', advancedAntiAliasing="true")]
 //		public static const CoolveticaRg: Class;
-		[Embed(source="konstellation3/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
+		[Embed(source="../../fonter/konstellation/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const Panefresco500: Class;
-		[Embed(source="konstellation3/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
+		[Embed(source="../../fonter/konstellation/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const PermanentMarker: Class;
-		[Embed(source="konstellation3/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
+		[Embed(source="../../fonter/konstellation/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const Romeral: Class;
 
-		[Embed(source="konstellation1/communist.ttf", fontFamily="communist", mimeType='application/x-font',
+		[Embed(source="../../fonter/konstellation/bpreplay-kRB.ttf", fontFamily="bpreplay-kRB", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Communist: Class;
-		[Embed(source="konstellation1/judson.ttf", fontFamily="judson", mimeType='application/x-font',
+		public static const BpreplayKRB: Class;
+		[Embed(source="../../fonter/konstellation/fifthleg-kRB.ttf", fontFamily="fifthleg-kRB", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Judson: Class;
-		[Embed(source="konstellation1/komika-axis.ttf", fontFamily="komika-axis", mimeType='application/x-font',
+		public static const FifthlegKRB: Class;
+		[Embed(source="../../fonter/konstellation/pecita-kRB.ttf", fontFamily="pecita-kRB", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const KomikaAxis: Class;
+		public static const PecitaKRB: Class;
 		
 		
 		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );

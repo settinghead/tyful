@@ -1,8 +1,6 @@
 package com.settinghead.groffle.client.model.vo.wordlist {
 
-	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	
-	import flash.geom.Point;
 
 	[Bindable]
 	[RemoteClass(alias="com.settinghead.wexpression.server.model.Word")]

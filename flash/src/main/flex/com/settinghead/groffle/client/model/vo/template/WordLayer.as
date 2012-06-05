@@ -1,8 +1,6 @@
 package com.settinghead.groffle.client.model.vo.template
 {
-	import com.notifications.Notification;
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
-	import com.settinghead.groffle.client.angler.RandomAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.colorer.WordColorer;
@@ -415,8 +413,11 @@ package com.settinghead.groffle.client.model.vo.template
 			output.process(this._fonter, "fonter");
 			output.process(this._colorer, "colorer");
 
+//			output.putBitmapDataToPNGFile("direction.png", this.direction);
+//			output.putBitmapDataToPNGFile("color.png", this.color);
 			output.putBitmapDataToPNGFile("direction.png", this.direction);
 			output.putBitmapDataToPNGFile("color.png", this.color);
+			
 			//			output.process(this._nudger, "nudger");
 			//			output.process(this._angler, "angler");
 			//			output.process(this._placer, "placer");

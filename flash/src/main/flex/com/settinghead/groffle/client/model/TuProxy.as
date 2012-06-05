@@ -3,61 +3,24 @@ package com.settinghead.groffle.client.model
 	import com.adobe.images.PNGEncoder;
 	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
-	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
-	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
-	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
-	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
-	import com.settinghead.groffle.client.angler.WordAngler;
-	import com.settinghead.groffle.client.colorer.WordColorer;
-	import com.settinghead.groffle.client.density.Patch;
-	import com.settinghead.groffle.client.fonter.WordFonter;
-	import com.settinghead.groffle.client.model.vo.DisplayWordVO;
-	import com.settinghead.groffle.client.model.vo.EngineWordVO;
-	import com.settinghead.groffle.client.model.vo.TextShapeVO;
+	import com.settinghead.groffle.client.model.algo.RenderTuProcess;
 	import com.settinghead.groffle.client.model.vo.TuVO;
-	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
-	import com.settinghead.groffle.client.nudger.WordNudger;
-	import com.settinghead.groffle.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.groffle.client.placer.WordPlacer;
-	import com.settinghead.groffle.client.sizers.WordSizer;
-	import com.settinghead.groffle.client.view.TuMediator;
 	
-	import flash.display.DisplayObject;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.geom.Rectangle;
-	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
-	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
-	import flash.utils.getTimer;
 	
 	import mx.collections.ArrayCollection;
-	import mx.controls.Alert;
-	import mx.core.Application;
 	import mx.core.FlexGlobals;
-	import mx.rpc.IResponder;
 	
-	import org.as3commons.collections.Set;
-	import org.as3commons.collections.SortedList;
-	import org.as3commons.collections.framework.IIterator;
 	import org.generalrelativity.thread.GreenThread;
 	import org.generalrelativity.thread.IRunnable;
 	import org.generalrelativity.thread.event.GreenThreadEvent;
-	import org.puremvc.as3.interfaces.IProxy;
-	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
 	
 	import ru.inspirit.net.MultipartURLLoader;
 	import ru.inspirit.net.events.MultipartURLLoaderEvent;
-	import com.settinghead.groffle.client.model.algo.RenderTuProcess;
 	
 	
 	public class TuProxy extends EntityProxy implements ILoadupProxy

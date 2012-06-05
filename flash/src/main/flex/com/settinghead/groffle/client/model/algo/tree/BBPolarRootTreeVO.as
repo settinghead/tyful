@@ -1,6 +1,5 @@
 package com.settinghead.groffle.client.model.algo.tree
 {
-	import mx.controls.Alert;
 	import com.settinghead.groffle.client.model.vo.IImageShape;
 
 	public class BBPolarRootTreeVO extends BBPolarTreeVO {

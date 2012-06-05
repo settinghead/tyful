@@ -1,19 +1,15 @@
 package com.settinghead.groffle.client.model.zip
 {
-	import com.adobe.images.PNGEncoder;
+	import com.adobe.images.JPGEncoder;
 	import com.adobe.serialization.json.JSONEncoder;
 	
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
-	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
-	import mx.preloaders.Preloader;
 	
 	import nochump.util.zip.ZipEntry;
 	import nochump.util.zip.ZipOutput;
-	
-	import org.as3commons.lang.HashArray;
 	
 	public class ZipOutputImpl implements IZipOutput
 	{
@@ -44,7 +40,27 @@ package com.settinghead.groffle.client.model.zip
 		
 		public function putBitmapDataToPNGFile(fileName: String, bmpData:BitmapData):void{
 			if(bmpData ==null) return;
-			putBytesToFile(fileName, PNGEncoder.encode(bmpData));
+			putBytesToFile(fileName, PNGEncoder2.encode(bmpData));
+		}
+		
+
+		
+		public function putBitmapDataToJPEGFile(fileName: String, bmpData:BitmapData):void{
+			
+			if(bmpData ==null) return;
+			
+//			
+//			var jpeglib:Object; 
+//			var jpeginit:CLibInit = new CLibInit(); // get library 
+//			jpeglib=jpeginit.init(); 
+//			
+//			var out:ByteArray = new ByteArray();
+//			
+//			jpeglib.encode( bmpData, out, bmpData.width, bmpData.height, 60 );			
+
+			var e:JPGEncoder = new JPGEncoder(60);
+			var out:ByteArray = e.encode(bmpData);
+			putBytesToFile(fileName, out);
 		}
 		
 		public function process(object:Object, dirName:String=""):void

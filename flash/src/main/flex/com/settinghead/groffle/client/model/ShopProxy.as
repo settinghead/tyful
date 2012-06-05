@@ -2,25 +2,17 @@ package com.settinghead.groffle.client.model
 {
 	import com.adobe.images.PNGEncoder;
 	import com.adobe.serialization.json.JSONDecoder;
-	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.vo.PreviewUrlVO;
-	import com.settinghead.groffle.client.model.vo.shop.ShopItemVO;
 	import com.settinghead.groffle.client.model.vo.shop.ShopVO;
-	import com.settinghead.groffle.client.view.components.shop.ShopItemList;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
-	import flash.system.Security;
-	import flash.system.System;
 	import flash.utils.ByteArray;
 	import flash.utils.setTimeout;
 	
@@ -28,13 +20,10 @@ package com.settinghead.groffle.client.model
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	
-	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
 	
 	import ru.inspirit.net.MultipartURLLoader;
 	import ru.inspirit.net.events.MultipartURLLoaderEvent;
-	
-	import spark.primitives.BitmapImage;
 	
 	public class ShopProxy extends EntityProxy implements ILoadupProxy
 	{

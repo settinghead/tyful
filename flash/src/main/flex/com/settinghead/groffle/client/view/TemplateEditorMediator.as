@@ -4,26 +4,17 @@ package com.settinghead.groffle.client.view
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.TemplateProxy;
 	import com.settinghead.groffle.client.model.TuProxy;
-	import com.settinghead.groffle.client.model.WordListProxy;
-	import com.settinghead.groffle.client.model.vo.TuVO;
-	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
-	import com.settinghead.groffle.client.view.components.TuRenderer;
 	import com.settinghead.groffle.client.view.components.template.CreateTemplateEvent;
 	import com.settinghead.groffle.client.view.components.template.TemplateEditor;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	
-	import flashx.textLayout.elements.BreakElement;
-	
 	import mx.containers.Canvas;
-	import mx.controls.Alert;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;

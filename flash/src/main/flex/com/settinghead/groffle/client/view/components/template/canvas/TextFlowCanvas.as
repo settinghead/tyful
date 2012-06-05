@@ -12,32 +12,22 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import flash.display.BlendMode;
 	import flash.display.Shader;
 	import flash.display.Shape;
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.text.TextField;
 	import flash.ui.Mouse;
 	
-	import flashx.textLayout.elements.BreakElement;
-	
 	import mx.binding.utils.BindingUtils;
-	import mx.containers.Canvas;
-	import mx.controls.Alert;
-	import mx.core.Application;
 	import mx.core.BitmapAsset;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
 	import org.peaceoutside.utils.ColorMath;
 	
-	import spark.components.BorderContainer;
 	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
-	import spark.primitives.Rect;
 	
 	public class TextFlowCanvas extends ItemRenderer
 	{

@@ -1,28 +1,17 @@
 package com.settinghead.groffle.client.model.vo {
-	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
+	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeBuilder;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
-	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	import com.settinghead.groffle.client.placer.WordPlacer;
 	
-	import flash.display.Sprite;
-	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.text.AntiAliasType;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	
-	import mx.controls.Alert;
-	
-	import org.as3commons.lang.Assert;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeBuilder;
 
 /*
  Copyright 2010 Daniel Bernier

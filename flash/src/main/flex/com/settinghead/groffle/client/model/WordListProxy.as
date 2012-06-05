@@ -2,33 +2,16 @@ package com.settinghead.groffle.client.model
 {
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.notifications.Notification;
-	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
-	import de.aggro.utils.CookieUtil;
-	
 	import flash.events.Event;
-	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	import flash.utils.setTimeout;
-	import flash.xml.XMLDocument;
 	
-	import mx.collections.ArrayCollection;
-	import mx.controls.Alert;
-	import mx.core.FlexGlobals;
-	import mx.messaging.Consumer;
-	import mx.rpc.IResponder;
-	import mx.rpc.events.FaultEvent;
-	import mx.rpc.events.ResultEvent;
-	import mx.rpc.http.HTTPService;
-	import mx.rpc.remoting.RemoteObject;
-	import mx.rpc.xml.SimpleXMLDecoder;
-	
-	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
 	
 	public class WordListProxy extends EntityProxy implements ILoadupProxy

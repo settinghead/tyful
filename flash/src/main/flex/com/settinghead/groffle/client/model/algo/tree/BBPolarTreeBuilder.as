@@ -15,13 +15,9 @@ package com.settinghead.groffle.client.model.algo.tree {
  limitations under the License.
  */
 
-	import com.settinghead.groffle.client.NotImplementedError;
-	
-	import flash.display.Graphics;
-	import flash.geom.Rectangle;
+	import com.settinghead.groffle.client.model.vo.IImageShape;
 	
 	import org.as3commons.lang.Assert;
-	import com.settinghead.groffle.client.model.vo.IImageShape;
 
 public class BBPolarTreeBuilder {
 

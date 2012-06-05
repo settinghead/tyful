@@ -9,12 +9,7 @@
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
-			import com.notifications.Notification;
 			import com.settinghead.groffle.client.model.vo.shop.ShopItemVO;
-			import com.settinghead.groffle.client.view.TuMediator;
-	
-			import spark.components.DataGroup;
-			import spark.components.List;
 			[Embed(source="Blue-Arrow.png")]
 			[Bindable]
 			public var blueArrow:Class;

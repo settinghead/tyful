@@ -37,27 +37,20 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.notifications.Notification;
 			import com.settinghead.groffle.client.ApplicationFacade;
 			import com.settinghead.groffle.client.density.Patch;
 			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
-			import com.settinghead.groffle.client.model.vo.DisplayWordListVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
-			import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 			
 			import de.aggro.utils.CookieUtil;
 			
-			import flash.filters.GlowFilter;
-			
-			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
-			import mx.events.NumericStepperEvent;
 			import mx.graphics.codec.PNGEncoder;
+			import flash.filters.GlowFilter;
 			
-			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
 			
 			
