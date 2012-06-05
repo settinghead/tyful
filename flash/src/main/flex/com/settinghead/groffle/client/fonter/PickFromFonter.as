@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.fonter
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;

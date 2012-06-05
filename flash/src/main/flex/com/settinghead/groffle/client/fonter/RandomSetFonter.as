@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.fonter
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
 	import de.polygonal.utils.PM_PRNG;
@@ -13,11 +14,11 @@ package com.settinghead.groffle.client.fonter
 			];
 		
 		private var fonter:PickFromFonter;
-		
+		private static var prng:PM_PRNG = new PM_PRNG();
+
 		public function RandomSetFonter()
 		{
-			 var prng:PM_PRNG = new PM_PRNG();
-			 fonter = new PickFromFonter( fontSets[prng.nextIntRange(0,fontSets.length)]);
+			 fonter = new PickFromFonter( fontSets[int((Math.random()*fontSets.length))]);
 		}
 		
 		public function fontFor(word:WordVO):String

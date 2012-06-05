@@ -69,6 +69,20 @@ package com.settinghead.groffle.client.model.vo
 		[Embed(source="../../fonter/konstellation/pecita-kRB.ttf", fontFamily="pecita-kRB", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const PecitaKRB: Class;
+		[Embed(source="../../fonter/konstellation/sniglet-kRB.ttf", fontFamily="sniglet-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const snigletKRB: Class;
+		
+		[Embed(source="../../fonter/konstellation/communist.ttf", fontFamily="communist", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Communist: Class;
+		[Embed(source="../../fonter/konstellation/judson.ttf", fontFamily="judson", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const Judson: Class;
+		[Embed(source="../../fonter/konstellation/komika-axis.ttf", fontFamily="komika-axis", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+		public static const KomikaAxis: Class;
+		
 		
 		
 		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
