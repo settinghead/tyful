@@ -242,7 +242,7 @@
 				</s:HGroup>
 				<s:HGroup>
 					<s:Label text="Smoothing" />
-					<s:HSlider change="render(event)" id="smoothSlider" minimum="0" maximum="16" value="0" width="200" />
+					<s:HSlider change="render(event)" id="smoothSlider" minimum="0" maximum="16" value="4" width="200" />
 				</s:HGroup>				
 			</s:TileGroup>
 
