@@ -1,47 +1,24 @@
 package com.settinghead.groffle.client.model.vo.template
 {
 	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
+	import com.settinghead.groffle.client.angler.RandomAngler;
 	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
 	import com.settinghead.groffle.client.angler.WordAngler;
-	import com.settinghead.groffle.client.colorer.TwoHuesRandomSatsColorer;
 	import com.settinghead.groffle.client.colorer.WordColorer;
-	import com.settinghead.groffle.client.density.DensityPatchIndex;
 	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.vo.IImageShape;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;
 	import com.settinghead.groffle.client.model.zip.IZippable;
-	import com.settinghead.groffle.client.nudger.ShapeConfinedRandomWordNudger;
-	import com.settinghead.groffle.client.nudger.ShapeConfinedSpiralWordNudger;
-	import com.settinghead.groffle.client.nudger.ShapeConfinedZigZagWordNudger;
 	import com.settinghead.groffle.client.nudger.WordNudger;
-	import com.settinghead.groffle.client.placer.ShapeConfinedPlacer;
 	import com.settinghead.groffle.client.placer.WordPlacer;
-	import com.settinghead.groffle.client.sizers.ByWeightSizer;
-	import com.settinghead.groffle.client.sizers.WordSizer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.geom.Matrix;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.net.URLRequest;
-	import flash.utils.Dictionary;
-	import flash.utils.IDataInput;
-	import flash.utils.IDataOutput;
-	import flash.utils.IExternalizable;
 	
-	import mx.controls.Alert;
-	import mx.utils.HSBColor;
-	
-	import org.as3commons.bytecode.util.Assertions;
-	import org.as3commons.lang.Assert;
 	import org.peaceoutside.utils.ColorMath;
 	
 	[Bindable]

@@ -6,7 +6,7 @@ package com.settinghead.groffle.client.angler
 	{
 		public function MostlyHorizAngler()
 		{
-			super([0, 0, 0, 0
+			super([0, 0, 0
 				,Math.PI/2
 				,Math.PI/2*3
 			]);

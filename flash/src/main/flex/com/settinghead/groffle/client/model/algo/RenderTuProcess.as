@@ -1,14 +1,7 @@
 package com.settinghead.groffle.client.model.algo
 {
-	import com.adobe.images.PNGEncoder;
-	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
-	import com.settinghead.groffle.client.angler.MostlyHorizAngler;
-	import com.settinghead.groffle.client.angler.ShapeConfinedAngler;
-	import com.settinghead.groffle.client.angler.WordAngler;
-	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.density.Patch;
-	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.ITuImageGenerator;
 	import com.settinghead.groffle.client.model.TuProxy;
 	import com.settinghead.groffle.client.model.vo.DisplayWordVO;
@@ -16,43 +9,14 @@ package com.settinghead.groffle.client.model.algo
 	import com.settinghead.groffle.client.model.vo.TextShapeVO;
 	import com.settinghead.groffle.client.model.vo.TuVO;
 	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
-	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
-	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
-	import com.settinghead.groffle.client.nudger.WordNudger;
-	import com.settinghead.groffle.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.groffle.client.placer.WordPlacer;
-	import com.settinghead.groffle.client.sizers.WordSizer;
 	
-	import flash.display.DisplayObject;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.geom.Rectangle;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
-	import flash.net.URLRequestMethod;
-	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 	
-	import mx.collections.ArrayCollection;
-	import mx.controls.Alert;
-	import mx.core.FlexGlobals;
-	import mx.rpc.IResponder;
-	
-	import org.as3commons.collections.Set;
-	import org.as3commons.collections.SortedList;
-	import org.as3commons.collections.framework.IIterator;
 	import org.generalrelativity.thread.process.AbstractProcess;
 	import org.puremvc.as3.interfaces.IFacade;
-	import org.puremvc.as3.interfaces.IProxy;
-	import org.puremvc.as3.patterns.proxy.Proxy;
-	import org.puremvc.as3.utilities.loadup.interfaces.ILoadupProxy;
-	import org.springextensions.actionscript.ioc.factory.xml.prana_objects;
 	
 	public class RenderTuProcess extends AbstractProcess
 	{
@@ -180,7 +144,7 @@ package com.settinghead.groffle.client.model.algo
 				
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
-					_failureCount = 0;
+					if(_failureCount>1) _failureCount -= 2;
 					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
 					

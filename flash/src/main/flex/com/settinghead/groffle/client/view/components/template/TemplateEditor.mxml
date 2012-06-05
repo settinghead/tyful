@@ -338,9 +338,35 @@
 					dispatchEvent(new CreateTemplateEvent(TemplateEditor.CREATE_TEMPLATE, e.width, e.height));	
 				}
 				
+				public static function resizeImage(bmp:BitmapData, maxWidth:int, maxHeight:int):BitmapData{
+					
+					var originalRatio:Number = bmp.width/bmp.height;
+					var ratio2:Number = maxWidth/maxHeight;
+					var maxActual:Number = originalRatio>ratio2?bmp.width:bmp.height;
+					var maxDim:Number = originalRatio>ratio2?maxWidth:maxHeight;
+					var scale:Number = maxDim/maxActual;
+					
+					var bmpData:BitmapData = new BitmapData((bmp.width)*scale, (bmp.height)*scale,true);
+					var scaleM:Matrix = new Matrix(scale,0,0,scale,0,0); 
+					bmpData.draw(bmp, scaleM,null,null,null,true);
+					return bmpData;
+				}
+				
 				public function importImage(e:Event):void{
+					var dirBmp:BitmapData;
+					var colorBmp:BitmapData;
+					if(template!=null){
+						dirBmp = resizeImage(importImageDialog.direction, template.width, template.height);
+						colorBmp = resizeImage(importImageDialog.colorSheet, template.width, template.height);
+					}
+					else{
+						dirBmp = importImageDialog.direction;
+						colorBmp = importImageDialog.colorSheet;
+					}
+					
 					var layer:WordLayer = new WordLayer(
-						"Layer"+(template.layers.length+1).toString(),template,importImageDialog.direction.width, importImageDialog.direction.height);
+						"Layer"+(template.layers.length+1).toString(),template,
+						dirBmp.width, dirBmp.height);
 					layer.transparentColor = 0xFFFFFFFF;
 					//				var shader:Shader = new Shader(); 
 					//				shader.byteCode = new WhiteToTransparentKernel(); 
@@ -354,12 +380,11 @@
 					//				layer.direction.draw(importImageDialog.direction,null,null);
 					var p:Point = new Point(0,0);
 					
-					layer.direction.threshold(importImageDialog.direction,
-						new Rectangle(0,0,importImageDialog.direction.width,
-							importImageDialog.direction.height),
+					layer.direction.threshold(dirBmp,
+						new Rectangle(0,0,dirBmp.width,dirBmp.height),
 						p,"==",colorToReplace,newColor,maskToUse,true);
 					
-					layer.color.draw(importImageDialog.colorSheet);
+					layer.color.draw(colorBmp);
 					layer.color.threshold(layer.direction,
 						new Rectangle(0,0,layer.direction.width,layer.direction.height),
 						p,"==",0,0,maskToUse,false);				
