@@ -274,9 +274,9 @@ package com.settinghead.groffle.client.model.vo.template
 			){
 				if(tolerance>=1) return true;
 				else return (
-					//ColorMath.dist(color.getPixel32(x,y), 
-					//	color.getPixel32(refX,refY)) <= tolerance
-					//	&&
+					ColorMath.distRGB(color.getPixel32(x,y), 
+						color.getPixel32(refX,refY)) <= tolerance
+						&&
 					ColorMath.distHue(direction.getPixel32(x,y), 
 						direction.getPixel32(refX,refY)) <= tolerance);
 			}

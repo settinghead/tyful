@@ -26,6 +26,9 @@ public class FacebookRetriever {
 		StopWords.English.readStopWords(FacebookRetriever.class
 				.getResourceAsStream("/stopwords_1000.txt"), Charset
 				.defaultCharset());
+		StopWords.English.readStopWords(FacebookRetriever.class
+				.getResourceAsStream("/negative.txt"), Charset
+				.defaultCharset());
 	}
 
 	public List<Post> getMessages(String uid, String token) {

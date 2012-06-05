@@ -335,7 +335,6 @@
 					this.mainCanvas.left = -_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN;
 					this.mainCanvas.top = -_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN;
 
-					Notification.show(tu.effectiveBorder.toString());
 					
 //					for each(var displayWord:DisplayWordVO in _tu.dWords)
 //					this.slapWord(displayWord);
