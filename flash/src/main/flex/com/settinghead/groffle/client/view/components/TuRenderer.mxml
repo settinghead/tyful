@@ -9,7 +9,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" 
 		 xmlns:template="com.settinghead.groffle.client.view.components.template.*"
-		  mouseOver="canvas1_mouseOverHandler(event)" enterFrame="onEnterFrameHandler(event)"
+		  mouseOver="canvas1_mouseOverHandler(event)" 
 		   implements="com.settinghead.groffle.client.model.ITuImageGenerator"
 		    initialize="canvas1_initializeHandler(event)"
 		 >
@@ -17,7 +17,24 @@
 	<!-- Events dispatched by this View Component -->
 	<fx:Metadata>
 	</fx:Metadata>
-
+	
+	<fx:Script>
+		<![CDATA[
+			protected function btnRerender_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new Event(RERENDER));
+				perseveranceMeter.setProgress(0,tu.template.perseverance);
+			}
+			
+			protected function perseveranceSlider_changeHandler(event:Event):void
+			{
+				dispatchEvent(new Event(RESUME_RENDERING));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.groffle.client.ApplicationFacade;
@@ -36,14 +53,16 @@
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
+			import mx.events.NumericStepperEvent;
 			import mx.graphics.codec.PNGEncoder;
 			
 			import org.as3commons.collections.framework.IIterator;
 			import org.as3commons.lang.Assert;
 			
 			
-			public static const UPDATE_PROGRESS:String = "updateProgress";
 			public static const EDIT_TEMPLATE:String = "editTemplate";
+			public static const RESUME_RENDERING:String = "resumeRendering";
+			public static const RERENDER:String = "rerender";
 			public static const POST_TO_FACEBOOK:String = "postToFacebook";
 			public static const EFFECTIVE_MARGIN:int = 5;
 
@@ -102,7 +121,9 @@
 			
 			protected function btnMoreWords_clickHandler(event:MouseEvent):void
 			{
-				dispatchEvent(new Event(EDIT_TEMPLATE));
+				perseveranceSlider.value+=10;
+				perseveranceMeter.setProgress(0,tu.template.perseverance);
+				dispatchEvent(new Event(RESUME_RENDERING));
 			}
 			
 			protected function btnSaveAsPng_clickHandler(event:MouseEvent):void{
@@ -114,7 +135,7 @@
 			}
 			
 			protected function btnForceFinish_clickHandler(event:MouseEvent):void{
-				perseveranceSlider.value = perseveranceMeter.value;
+				tu.failureCount = tu.template.perseverance;
 			}
 			
 			
@@ -217,19 +238,6 @@
 				}
 			}
 			
-			protected function onEnterFrameHandler(event:Event):void
-			{
-				if(this.visible){
-					if(newTu && this.tu!=null){
-						prepareForTu();
-					}
-					if(this.perseveranceSlider.value>this.perseveranceMeter.value)
-						dispatchEvent(new Event(UPDATE_PROGRESS));
-				}
-
-			}
-			
-			
 			
 			public function canvasImage(size:int):BitmapData{
 				var ratio:Number = mainCanvas.width/mainCanvas.height;
@@ -262,10 +270,25 @@
 			private var newTu:Boolean = false;
 			
 			[Bindable] public function set tu(_tu:TuVO):void{
+				if(this._tu!=null)
+					this._tu.removeEventListener(TuVO.FAILURE_COUNT_CHANGED, failureCountChanged);
 				this._tu = _tu;
+				this._tu.addEventListener(TuVO.FAILURE_COUNT_CHANGED,failureCountChanged);
+				perseveranceMeter.setProgress(0,tu.template.perseverance);
+
 				newTu = true;
+				if(this.loaded)
+					prepareForTu();
 			}
 			
+			
+			protected function failureCountChanged(event:Event):void{
+				this.perseveranceMeter.setProgress(
+					perseveranceMeter.value<tu.failureCount?tu.failureCount:perseveranceMeter.value
+					,tu.template.perseverance);
+			}
+			
+			private var loaded:Boolean = false;
 			protected function onCreationCompleteHandler(event:FlexEvent):void
 			{
 				if(CookieUtil.getCookie("autoPostToFacebook")!=null){
@@ -283,6 +306,8 @@
 				if(newTu && this.tu!=null){
 					prepareForTu();
 				}
+				
+				this.loaded = true;
 			}
 			
 			private var preparing:Boolean = false;
@@ -339,6 +364,8 @@
 				CookieUtil.setCookie("autoPostToFacebook", chkAutoPostToFacebook.selected,30);
 			}
 			
+
+			
 		]]>
 	</fx:Script>
 	<s:VGroup width="100%" height="100%">
@@ -353,21 +380,31 @@
 				<s:CheckBox label="Auto post when finished" selected="true" id="chkAutoPostToFacebook" click="chkAutoPostToFacebook_clickHandler(event)" />
 			</s:HGroup>
 			<s:HGroup>
-				<s:Label text="Squeeze perseverance"  />
+				<s:Label text="Fill perseverance"  />
 				<s:Group>
-					<mx:ProgressBar id="perseveranceMeter" label="" mode="manual" 
-									width="{perseveranceSlider.value*(perseveranceSlider.maximum-perseveranceSlider.minimum)/100}" />
-					<s:HSlider id="perseveranceSlider" minimum="0" maximum="150" value="@{tu.template.perseverance}" width="250" stepSize="1"
-							 toolTip="This bar sets the number of words in a row Groffle fails to squeeze in before it stops running."	/>	
+					<s:HSlider id="perseveranceSlider" minimum="0" maximum="150" value="@{tu.template.perseverance}" width="300" stepSize="1"
+							 toolTip="This bar sets the number of words in a row Groffle fails to squeeze in before it stops running."	  
+							 change="perseveranceSlider_changeHandler(event)" />	
+					
+					<mx:ProgressBar id="perseveranceMeter" mode="manual" 
+									width="{perseveranceSlider.width*perseveranceSlider.value/(perseveranceSlider.maximum-perseveranceSlider.minimum)*0.95}"
+									barSkin="com.settinghead.groffle.client.view.components.ColoredProgressBarSkin"
+									trackHeight="15" 
+									label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Finished':'Filling words...'}"
+									 labelPlacement="{perseveranceSlider.value&lt;50?'bottom':'center'}" mouseEnabled="false"
+									/>
 				</s:Group>
-				<s:Button id="btnMoreWords" label="{(perseveranceMeter.value &gt;= perseveranceSlider.value)?'Squeeze in more words':'Working...'}"
-						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}" 
-						  click="perseveranceSlider.value+=10;" />
+				<s:Button id="btnMoreWords" label="Fill in more words"
+						  enabled="{(perseveranceMeter.value &gt;= perseveranceSlider.value)}"
+						  visible="{btnMoreWords.enabled}"
+						  includeInLayout="{btnMoreWords.visible}"
+						  click="btnMoreWords_clickHandler(event)" />
 				<s:Button id="btnForceFinish" click="btnForceFinish_clickHandler(event)" label = "Force Finish" 
 						  visible="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
-						  includeInLayout="{(perseveranceMeter.value &lt; perseveranceSlider.value)}" 
+						  includeInLayout="{btnForceFinish.visible}" 
 						   toolTip="Click this button to ask Groffle to stop squeezing in more words."
 						  />
+				<s:Button id="btnRerender" click="btnRerender_clickHandler(event)" label="Regenerate" />
 				
 			</s:HGroup>
 			

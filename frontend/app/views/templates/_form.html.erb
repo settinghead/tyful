@@ -32,16 +32,16 @@ flash_vars = {:mode=>@mode,
 %>
 <%if can? :manage, @template%>
 <script type="text/javascript">
-window.onbeforeunload = function(){
-	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
-	  e = e || window.event;
-	  // For IE and Firefox
-	  if (e) {
-	    e.returnValue = message;
-	  }
-
-	  // For Safari
-	  return message;}
+// window.onbeforeunload = function(){
+// 	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
+// 	  e = e || window.event;
+// 	  // For IE and Firefox
+// 	  if (e) {
+// 	    e.returnValue = message;
+// 	  }
+// 
+// 	  // For Safari
+// 	  return message;}
 </script>
 <%end%>
 <script type="text/javascript"

@@ -509,6 +509,21 @@
 										   icon="@Embed(source='eraser.png')"/>
 							</mx:dataProvider>
 						</mx:ToggleButtonBar>
+						<s:VGroup>
+							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
+									dataProvider="{template.layers}" 
+									itemRenderer="com.settinghead.groffle.client.view.components.template.LayerButton"
+									>
+								<s:layout>
+									<s:VerticalLayout />
+								</s:layout>
+							</s:List>
+							<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
+							<s:Button id="btnRemoveLayer" label="-" click="btnRemoveLayer_clickHandler(event)" />
+							<s:Button id="btnAddImageLayer" label="+ Photo" 
+									  click="btnAddImageLayer_clickHandler(event)" 
+									  icon="@Embed(source='photo.png')" />
+						</s:VGroup>
 						
 					</s:VGroup>
 				<s:HGroup id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
@@ -523,21 +538,8 @@
 					
 					<s:VGroup id="layerNavigation" mouseOver="controlArea_mouseOverHandler(event)" top="0" bottom="0" width="100" right="0">
 						<s:Button id="btnShowAllLayers" label="All" />
-						<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
-								dataProvider="{template.layers}" 
-								itemRenderer="com.settinghead.groffle.client.view.components.template.LayerButton"
-								>
-							<s:layout>
-								<s:VerticalLayout />
-							</s:layout>
-						</s:List>
-						<s:VGroup>
-							<s:Button id="btnAddLayer" label="+"  click="btnAddLayer_clickHandler(event)"/>
-							<s:Button id="btnRemoveLayer" label="-" click="btnRemoveLayer_clickHandler(event)" />
-							<s:Button id="btnAddImageLayer" label="+ Photo" 
-									   click="btnAddImageLayer_clickHandler(event)" 
-									  icon="@Embed(source='photo.png')" />
-						</s:VGroup>
+						
+						
 					</s:VGroup>
 				</s:HGroup>
 				</s:HGroup>

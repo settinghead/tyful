@@ -59,6 +59,7 @@ package com.settinghead.groffle.client.model
 	import ru.inspirit.net.events.MultipartURLLoaderEvent;
 	import com.settinghead.groffle.client.model.algo.RenderTuProcess;
 	
+	
 	public class TuProxy extends EntityProxy implements ILoadupProxy
 	{
 		public static const NAME:String = "TuProxy";
@@ -90,25 +91,18 @@ package com.settinghead.groffle.client.model
 		}
 		
 		public function startRender():void{
-			if(gThread)
-				gThread.close(true);
+			tu.failureCount = 0;
+			if(gThread){
+				gThread.close(false);
+				gThread.removeEventListener(GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler);
+
+			}
 			var processes:Vector.<IRunnable> = new Vector.<IRunnable>();
 			processes.push(renderProcess);
 			gThread = new GreenThread(processes,(FlexGlobals.topLevelApplication.stage as Stage).frameRate*2, 0.9);
 			gThread.addEventListener( GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler );
 			gThread.open();
-
 		}
-		
-		public function stopRender():void{
-			if(gThread!=null){
-				gThread.close(false);
-				gThread.removeEventListener(GreenThreadEvent.PROCESS_COMPLETE, processCompleteHandler);
-				gThread = null;
-			}
-		}
-		
-		
 		
 		// return data property cast to proper type
 		public function get tu():TuVO
@@ -127,7 +121,7 @@ package com.settinghead.groffle.client.model
 			if(tu!=null){
 				if(gThread)
 					gThread.close(true);
-				renderProcess = new RenderTuProcess(facade, tu, imageGenerator,true );
+				renderProcess = new RenderTuProcess(facade, tu, imageGenerator,false );
 			}
 		}
 		
@@ -146,13 +140,7 @@ package com.settinghead.groffle.client.model
 			this.setData(tu);
 
 		}
-		
 
-		
-		
-		public function get failureCount():int{
-			return renderProcess!=null?renderProcess.failureCount:0;
-		}
 		
 		public function generateImage():void{
 			tu.generatedImage = imageGenerator.canvasImage(1500);

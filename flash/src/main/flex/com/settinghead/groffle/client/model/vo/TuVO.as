@@ -1,32 +1,18 @@
 package com.settinghead.groffle.client.model.vo
 {	
-	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
-	import com.settinghead.groffle.client.model.vo.template.RenderOptions;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordShaper;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordSorterAndScaler;
-	import com.settinghead.groffle.client.angler.WordAngler;
-	import com.settinghead.groffle.client.density.Patch;
-	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
-	import com.settinghead.groffle.client.sizers.WordSizer;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.groffle.client.model.vo.wordlist.WordSorterAndScaler;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	
-	import mx.controls.Alert;
-	
-	import org.as3commons.collections.Set;
-	import org.as3commons.collections.framework.IIterator;
-	import org.as3commons.lang.Assert;
-	import org.as3commons.lang.IIterator;
-	
-	import spark.primitives.BitmapImage;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordListVO;
-	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 
-	public class TuVO
+	[Event(name="failureCountChanged", type="flash.events.Event")]
+
+	public class TuVO extends EventDispatcher
 	{
-
 		private var _template:TemplateVO;
 		private var _words:WordListVO;
 		private var _dWords:DisplayWordListVO = new DisplayWordListVO();
@@ -35,6 +21,7 @@ package com.settinghead.groffle.client.model.vo
 		private var _bgMode:String;
 		private var _width:uint, _height:uint;
 //		private var failedLastVar:Boolean;
+		private var _failureCount:int = 0;
 		
 		//the generated image
 		private var _generatedImage:BitmapData = null;
@@ -43,6 +30,7 @@ package com.settinghead.groffle.client.model.vo
 		private static const BACKGROUND_IMAGE:String = "backgroundImage";
 		private var _eWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
 
+		public static const FAILURE_COUNT_CHANGED:String = "failureCountChanged";
 
 		
 		public function TuVO(template:TemplateVO, words:WordListVO){
@@ -52,6 +40,17 @@ package com.settinghead.groffle.client.model.vo
 
 			this._words = WordSorterAndScaler.sortAndScale(words);
 			
+		}
+		
+		[Bindable(event="failureCountChanged")]
+		public function get failureCount():int{
+			return _failureCount;
+		}
+		
+		public function set failureCount(v:int):void{
+			_failureCount = v;
+			dispatchEvent(new Event("failureCountChanged"));
+
 		}
 
 		public function get eWords():Vector.<EngineWordVO>{

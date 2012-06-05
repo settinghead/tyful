@@ -27,9 +27,10 @@ package com.settinghead.groffle.client.view
 		public function TuMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
-			tuRenderer.addEventListener(TuRenderer.UPDATE_PROGRESS, updateProgress);
 			tuRenderer.addEventListener(TuRenderer.EDIT_TEMPLATE, editTemplate);
 			tuRenderer.addEventListener(TuRenderer.POST_TO_FACEBOOK, postToFacebook);
+			tuRenderer.addEventListener(TuRenderer.RESUME_RENDERING, resumeRendering);
+			tuRenderer.addEventListener(TuRenderer.RERENDER, rerender);
 
 		}
 		
@@ -78,12 +79,7 @@ package com.settinghead.groffle.client.view
 		{
 			return viewComponent as TuRenderer;
 		}
-		
-		private function updateProgress( event:Event = null ):void
-		{	
-			tuRenderer.perseveranceMeter.setProgress(tuProxy.failureCount, tuProxy.tu.template.perseverance);
-			
-		}
+
 		
 		
 		private function editTemplate( event:Event = null ):void
@@ -94,6 +90,15 @@ package com.settinghead.groffle.client.view
 		private function postToFacebook( event:Event = null ):void
 		{
 			sendNotification(ApplicationFacade.POST_TO_FACEBOOK);
+		}
+		
+		private function resumeRendering( event:Event = null ):void
+		{
+			tuProxy.startRender();
+		}
+		private function rerender( event:Event = null ):void
+		{
+			sendNotification(ApplicationFacade.RENDER_TU);
 		}
 	}
 }

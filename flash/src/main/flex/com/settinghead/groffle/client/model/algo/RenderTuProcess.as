@@ -26,7 +26,6 @@ package com.settinghead.groffle.client.model.algo
 		private var tu:TuVO;
 		private var wordList:WordListVO;
 		private var numRetries:int = 0;
-		private var _failureCount:int = 0;
 		private var facade:IFacade;
 		private var _startTime:int;
 		private var snapshotTicker:int=0;
@@ -53,7 +52,7 @@ package com.settinghead.groffle.client.model.algo
 		
 		public override function get percentage() : Number
 		{
-			return failureCount<tu.template.perseverance?0:1;
+			return tu.failureCount<tu.template.perseverance?0:1;
 		}
 		
 		override public function run() : void
@@ -68,7 +67,8 @@ package com.settinghead.groffle.client.model.algo
 		override public function runAndManage( allocation:int ) : void
 		{
 			var start:int = getTimer();
-			while(tu!=null && _failureCount<tu.template.perseverance && getTimer() - start < allocation &&
+			while(tu!=null && tu.failureCount<tu.template.perseverance 
+				&& getTimer() - start < allocation &&
 			generator.rendering
 			)
 			{
@@ -80,11 +80,6 @@ package com.settinghead.groffle.client.model.algo
 			//TODO
 			renderNextDisplayWord();
 		}
-		
-		public function get failureCount():int{
-			return _failureCount;
-		}
-		
 		
 		private var retryWords:Vector.<WordVO> = new Vector.<WordVO>();
 		
@@ -144,7 +139,7 @@ package com.settinghead.groffle.client.model.algo
 				
 				var dw:DisplayWordVO = null;
 				if(!eWord.wasSkipped()){
-					if(_failureCount>1) _failureCount -= 2;
+					if(tu.failureCount>1) tu.failureCount -= 2;
 					dw = eWord.rendition(tu.template.colorer.colorFor(eWord));
 					tu.dWords.addItem(dw);
 					
@@ -171,10 +166,10 @@ package com.settinghead.groffle.client.model.algo
 					
 				}
 				else{
-					_failureCount ++;
+					tu.failureCount ++;
 					
 					//5 consecutive failures. Put rendering to an end.
-					if (failureCount >= tu.template.perseverance){
+					if (tu.failureCount >= tu.template.perseverance){
 						//						tu.skipToLast();
 						tuProxy.generateImage();
 						facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
@@ -366,12 +361,12 @@ package com.settinghead.groffle.client.model.algo
 		}
 		
 		private function markStartRendering():void{
-			_failureCount = 0;
+			tu.failureCount = 0;
 			_startTime = getTimer();
 		}
 		
 		private function markStopRendering():void{
-			_failureCount = tu.template.perseverance;
+			tu.failureCount = tu.template.perseverance;
 		}
 		
 
