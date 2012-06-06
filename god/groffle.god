@@ -10,8 +10,8 @@ end
 God.watch do |w|
   w.name = "rails"
   w.dir = basedir+"/frontend"
-  w.env = {'RAILS_ENV' => ENV['RAILS_ENV'] }
-  w.start = "rails server thin -p 3000 -e "+ENV['RAILS_ENV']
+  w.env = {'RAILS_ENV' => ENV['RAILS_ENV'], 'RACK_ENV' => ENV['RAILS_ENV'] }
+  w.start = "unicorn -p 3000 -E "+ENV['RAILS_ENV']
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
 end
