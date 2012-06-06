@@ -98,14 +98,21 @@
 	classname="secureSWF.ant.ProtectTask" />
 	  <target name="protect">
 	  <!-- <target name="protect"> -->
-	    <protect outputPath="${secure.loc}" renameIdentifiers="true" keyFilePath="${basedir}/secureSWF/key.data">
+	    <protect outputPath="${secure.loc}" 
+	    	renameIdentifiers="true" 
+	    	controlflow="0"
+	    	keyFilePath="${basedir}/secureSWF/key.data">
 		      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
 		      <!-- <fileset dir="${bin.loc}" includes="**.swc"/> -->
 			<rule filter="com.settinghead.groffle.client.*" rename="false" />
 		    <rule filter="com.settinghead.groffle.client.angler.*" rename="true" />
 		    <rule filter="com.settinghead.groffle.client.colorer.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.model.vo.algo.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.model.zip.*" rename="true" />
+		    <rule filter="com.settinghead.groffle.client.model.vo.algo.*" rename="true" controlflowobfuscation="0" />
+		    <rule filter="com.settinghead.groffle.client.model.zip.*" controlflowobfuscation="0" rename="false" />
+		    <rule filter="PNGEncoder2.*" controlflowobfuscation="0" rename="false" />
+		    <rule filter="DeflateStream.*" controlflowobfuscation="0" rename="false" />
+		    <rule filter="_PNGEncoder2.*" controlflowobfuscation="0" rename="false" />
+	    	<rule filter="CompressionLevel.*" controlflowobfuscation="0" rename="false" />
 		    <rule filter="com.settinghead.groffle.client.model.proxy.*" rename="true" />
 		    <rule filter="com.settinghead.groffle.client.nudger.*" rename="true" />
 		    <rule filter="com.settinghead.groffle.client.placer.*" rename="true" />

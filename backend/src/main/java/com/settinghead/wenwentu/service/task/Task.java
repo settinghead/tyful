@@ -7,7 +7,7 @@ public abstract class Task {
 
 	public abstract String getKey();
 
-	public abstract String perform();
+	public abstract String perform() throws Exception;
 
 	public abstract int getExpiration();
 	

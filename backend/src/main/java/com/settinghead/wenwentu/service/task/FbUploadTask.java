@@ -2,7 +2,6 @@ package com.settinghead.wenwentu.service.task;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.restfb.BinaryAttachment;
@@ -21,14 +20,14 @@ public class FbUploadTask extends Task {
 	private String imagePath;
 	private String title;
 	private String templateId;
-	
+
 	@Override
 	public String getKey() {
-		return "fbu_"+getUserId()+"_"+getTemplateId();
+		return "fbu_" + getUserId() + "_" + getTemplateId();
 	}
 
 	@Override
-	public String perform() {
+	public String perform() throws Exception {
 		FacebookClient client = new DefaultFacebookClient(this.getFbToken());
 		File file = new File(this.getImagePath());
 
@@ -49,28 +48,34 @@ public class FbUploadTask extends Task {
 		if (albumId == null)
 		// create album
 		{
-			FacebookType albumconnection = client
-					.publish(
-							"me/albums",
-							Album.class,
-							Parameter.with("name", "Groffle"),
-							Parameter
-									.with("description",
-											INTRO_STR));
+			FacebookType albumconnection = client.publish("me/albums",
+					Album.class, Parameter.with("name", "Groffle"),
+					Parameter.with("description", INTRO_STR));
 			albumId = albumconnection.getId();
 		}
 		FacebookType publishPhotoResponse = null;
-		try {
-			String title = this.getTitle();
-			if(title==null || title.equals("null")) title = "";
-			publishPhotoResponse = client
-					.publish(albumId + "/photos", FacebookType.class,
-							BinaryAttachment.with("cat.png",
-									new FileInputStream(file)), Parameter.with(
-									"message", title+" "+INTRO_STR));
-		} catch (FileNotFoundException e) {
-			logger.warning(e.getMessage());
-		}
+		String title = this.getTitle();
+		if (title == null || title.equals("null"))
+			title = "";
+		publishPhotoResponse = client.publish(albumId + "/photos",
+				FacebookType.class,
+				BinaryAttachment.with("cat.png", new FileInputStream(file)),
+				Parameter.with("message", title + " " + INTRO_STR));
+
+		// open graph action
+		
+//		HttpClient ogClient = new HttpClient();
+//		PostMethod post = new PostMethod("http://jakarata.apache.org/");
+//        NameValuePair[] data = {
+//          new NameValuePair("access_token", this.getFbToken()),
+//          new NameValuePair("groffle_artwork", this.get)
+//        };
+//        post.setRequestBody(data);
+//        // execute method and handle any error responses.
+//        ...
+//        InputStream in = post.getResponseBodyAsStream();
+//        // handle response.
+		
 		return publishPhotoResponse.getId();
 	}
 
@@ -162,7 +167,8 @@ public class FbUploadTask extends Task {
 	}
 
 	/**
-	 * @param templateId the templateId to set
+	 * @param templateId
+	 *            the templateId to set
 	 */
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;

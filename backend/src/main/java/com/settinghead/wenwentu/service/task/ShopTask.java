@@ -50,7 +50,7 @@ public class ShopTask extends Task {
 	}
 
 	@Override
-	public String perform() {
+	public String perform() throws Exception {
 		List<ShopItem> shop = ShopPredictor.getShop(this.getUserId(),
 				this.getTemplateId());
 		return toJsonStr(shop);

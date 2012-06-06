@@ -81,7 +81,7 @@ public class WordListTask extends Task {
 	}
 
 	@Override
-	public String perform() {
+	public String perform() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 

@@ -39,7 +39,8 @@ package com.settinghead.groffle.client.model.zip
 		}
 		
 		public function putBitmapDataToPNGFile(fileName: String, bmpData:BitmapData):void{
-			if(bmpData ==null) return;
+			PNGEncoder2.level = CompressionLevel.NORMAL;
+			if(bmpData==null) return;
 			putBytesToFile(fileName, PNGEncoder2.encode(bmpData));
 		}
 		

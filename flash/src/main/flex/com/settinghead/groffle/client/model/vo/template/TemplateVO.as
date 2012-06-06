@@ -26,8 +26,8 @@ package com.settinghead.groffle.client.model.vo.template
 	[Bindable]
 	public class TemplateVO implements IZippable, IWithEffectiveBorder
 	{
-		public static const DEFAULT_WIDTH:int = 1200;
-		public static const DEFAULT_HEIGHT:int = 1200;
+		public static const DEFAULT_WIDTH:int = 900;
+		public static const DEFAULT_HEIGHT:int = 900;
 		
 		
 		private var tree:BBPolarRootTreeVO;
