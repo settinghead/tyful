@@ -50,7 +50,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public var diligence:int = 8;
 		public var id:String = null;
 		public var uuid:String = null;
-		public var tolerance:Number = 0.2;
+		public var tolerance:Number = 0.5;
 		private var _effectiveBorder:Rectangle = null;
 
 		// Applet applet = new Applet();
@@ -212,8 +212,8 @@ package com.settinghead.groffle.client.model.vo.template
 //		}
 		
 		public function writeNonJSONPropertiesToZip(output:IZipOutput):void {
-//			output.putBitmapDataToPNGFile("preview.png", preview);
-			output.putBitmapDataToJPEGFile("preview.jpg", preview);
+			output.putBitmapDataToPNGFile("preview.png", preview);
+//			output.putBitmapDataToJPEGFile("preview.jpg", preview);
 			output.process(this.layers, "layers");
 			output.process(this.fonter, "fonter");
 			output.process(this.sizer, "sizer");
