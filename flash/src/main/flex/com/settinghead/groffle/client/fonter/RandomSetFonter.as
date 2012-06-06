@@ -9,7 +9,6 @@ package com.settinghead.groffle.client.fonter
 	{
 		private static const fontSets:Array = 
 			[['panefresco500','permanentmarker', 'romeral'],
-			['communist','judson','komika-axis'],
 			['bpreplay-kRB','fifthleg-kRB','pecita-kRB','sniglet-kRB']
 			];
 		

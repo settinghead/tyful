@@ -272,7 +272,7 @@ package com.settinghead.groffle.client.model.algo
 					// // TODO
 					eWord.getTree().setRotation(angle);
 					//
-					if (eWord.trespassed(candidateLoc.patch.layer, angle, tu.template.tolerance))
+					if (eWord.trespassed(candidateLoc.patch.layer, angle))
 						continue;
 					var loc:PlaceInfo= eWord.getCurrentLocation();
 					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= tu.template.width

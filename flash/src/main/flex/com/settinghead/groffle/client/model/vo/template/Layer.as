@@ -72,11 +72,11 @@ package com.settinghead.groffle.client.model.vo.template
 			throw new NotImplementedError();
 		}
 		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
 			throw new NotImplementedError();
 		}
 		
-		public function containsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function containsAllPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number):Boolean{
 			for(var i:int = 0 ;i<points.length;i++){
 				var theta:Number = (points[i] as Array)[0];
 				var d:Number = (points[i] as Array)[1];
@@ -84,12 +84,12 @@ package com.settinghead.groffle.client.model.vo.template
 				var x:Number = centerX + Math.cos(theta) * d;
 				var y:Number = centerY + Math.sin(theta) * d;
 				
-				if(!containsPoint(x,y,false, refX,refY, tolerance)) return false;
+				if(!containsPoint(x,y,false, refX,refY)) return false;
 			}
 			return true;
 		}
 		
-		public function containsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function containsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number):Boolean{
 			for(var i:int = 0 ;i<points.length;i++){
 				var theta:Number = (points[i] as Array)[0];
 				var d:Number = (points[i] as Array)[1];
@@ -97,7 +97,7 @@ package com.settinghead.groffle.client.model.vo.template
 				var x:Number = centerX + Math.cos(theta) * d;
 				var y:Number = centerY + Math.sin(theta) * d;
 				
-				if(containsPoint(x,y,false, refX,refY, tolerance)) return true;
+				if(containsPoint(x,y,false, refX,refY)) return true;
 			}
 			return false;
 		}
@@ -114,18 +114,18 @@ package com.settinghead.groffle.client.model.vo.template
 			else return false;
 		}
 		
-		public function aboveContainsPoint(x:Number, y:Number, transformed:Boolean, refX:Number, refY:Number, tolerance:Number):Boolean {
+		public function aboveContainsPoint(x:Number, y:Number, transformed:Boolean, refX:Number=-1, refY:Number=-1):Boolean {
 			if(above!=null){
-				if(above.containsPoint(x,y, transformed, refX, refY, tolerance)) return true;
-				else return above.aboveContainsPoint(x,y,transformed, refX, refY, tolerance);
+				if(above.containsPoint(x,y, transformed, refX, refY)) return true;
+				else return above.aboveContainsPoint(x,y,transformed, refX, refY);
 			}
 			else return false;
 		}
 		
-		public function aboveContainsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function aboveContainsAnyPolarPoints(centerX:Number, centerY:Number, points:Array, rotation:Number, refX:Number,refY:Number):Boolean{
 			if(above!=null){
-				if(above.containsAnyPolarPoints(centerX,centerY,points, rotation,refX,refY,tolerance)) return true;
-				else return above.aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY, tolerance);
+				if(above.containsAnyPolarPoints(centerX,centerY,points, rotation,refX,refY)) return true;
+				else return above.aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY);
 			}
 			else return false;
 		}

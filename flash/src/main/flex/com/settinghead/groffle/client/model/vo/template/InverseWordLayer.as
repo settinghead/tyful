@@ -17,9 +17,9 @@ package com.settinghead.groffle.client.model.vo.template
 			return !_l.contains(x,y,width,height,rotation,transformed);
 		}
 		
-		public function containsPoint(x:Number, y:Number, transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean
+		public function containsPoint(x:Number, y:Number, transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean
 		{
-			return !_l.containsPoint(x,y,transformed,refX,refY,tolerance);
+			return !_l.containsPoint(x,y,transformed,refX,refY);
 		}
 		
 		public function intersects(x:Number, y:Number, width:Number, height:Number, transformed:Boolean):Boolean

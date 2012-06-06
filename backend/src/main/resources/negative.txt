@@ -23,6 +23,7 @@ Filth
 dirt
 foul
 stench
+coward
 reek
 rotten
 dank

@@ -23,7 +23,8 @@ package com.settinghead.groffle.client.model.vo.template
 	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
 	{
-		public function WordLayer(name:String, template:TemplateVO, width:Number = -1, height:Number = -1, index:int=-1, autoAddAndConnect:Boolean = true)
+		public function WordLayer(name:String, template:TemplateVO,
+								  width:Number = -1, height:Number = -1, index:int=-1, autoAddAndConnect:Boolean = true)
 		{
 			super(name, template, index,autoAddAndConnect);
 			if(width>0 && height>0){
@@ -32,7 +33,7 @@ package com.settinghead.groffle.client.model.vo.template
 				this._template.height = Number.NaN;
 				this._template.width;
 				this._template.height;
-
+				this._tolerance = tolerance;
 			}
 		}
 		
@@ -46,7 +47,18 @@ package com.settinghead.groffle.client.model.vo.template
 		private var _colorer:WordColorer;
 		private var _nudger:WordNudger;
 		private var _angler:WordAngler;
+		private var _tolerance:Number = -1;
+		public function get tolerance():Number 
+		{
+			
+			if(_tolerance<0) return _template.tolerance;
+			else return _tolerance;
+		}
 		
+		public function set tolerance(value:Number):void 
+		{
+			_tolerance = value;
+		}
 		public var transparentColor:int = Number.NaN;
 		
 //		private var hsbArray:Array;
@@ -258,10 +270,10 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		
-		public override function containsPoint(x:Number, y:Number, transform:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
+		public override function containsPoint(x:Number, y:Number, transform:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
 			
 			//a layer above contains this point which covers the current layer
-			if(aboveContainsPoint(x,y,transform,refX,refY,1.0)) return false;
+			if(aboveContainsPoint(x,y,transform)) return false;
 //			if(x<0 || y<0 || x>width || y>height) return true;
 			if(x<0||y<0||x>directionBitmap.width||y>directionBitmap.height)
 				return false;
@@ -270,14 +282,14 @@ package com.settinghead.groffle.client.model.vo.template
 //				//not transparent
 //				((color.getPixel32(x,y) >> 24 &0xff)!=0 )
 			){
-//				if(tolerance>=1) 
+				if(refX<=0 || refY<=0 || tolerance>=1) 
 					return true;
-//				else return (
-//					ColorMath.distRGB(color.getPixel32(x,y), 
-//						color.getPixel32(refX,refY)) <= tolerance
-//						&&
-//					ColorMath.distHue(direction.getPixel32(x,y), 
-//						direction.getPixel32(refX,refY)) <= tolerance);
+				else return (
+					ColorMath.distRGB(color.getPixel32(x,y), 
+						color.getPixel32(refX,refY)) <= tolerance
+						&&
+					ColorMath.distHue(direction.getPixel32(x,y), 
+						direction.getPixel32(refX,refY)) <= tolerance);
 			}
 			else return false;
 		}
@@ -460,6 +472,7 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public override function saveProperties(dict:Object):void{
 			dict["transparentColor"] = transparentColor;
+			dict["tolerance"] = tolerance;
 		}
 		
 		public override function get type():String{

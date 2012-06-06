@@ -73,16 +73,16 @@ package com.settinghead.groffle.client.model.vo
         embedAsCFF='false', advancedAntiAliasing="true")]
 		public static const snigletKRB: Class;
 		
-		[Embed(source="../../fonter/konstellation/communist.ttf", fontFamily="communist", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Communist: Class;
-		[Embed(source="../../fonter/konstellation/judson.ttf", fontFamily="judson", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Judson: Class;
-		[Embed(source="../../fonter/konstellation/komika-axis.ttf", fontFamily="komika-axis", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const KomikaAxis: Class;
-		
+//		[Embed(source="../../fonter/konstellation/communist.ttf", fontFamily="communist", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const Communist: Class;
+//		[Embed(source="../../fonter/konstellation/judson.ttf", fontFamily="judson", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const Judson: Class;
+//		[Embed(source="../../fonter/konstellation/komika-axis.ttf", fontFamily="komika-axis", mimeType='application/x-font',
+//        embedAsCFF='false', advancedAntiAliasing="true")]
+//		public static const KomikaAxis: Class;
+//		
 		
 		
 		private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
@@ -167,7 +167,7 @@ package com.settinghead.groffle.client.model.vo
 				else return false;
 		}
 		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number,refY:Number, tolerance:Number):Boolean{
+		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
 //			if(transformed)
 //				return _textField.hitTestPoint(x,y,true);
 //			else{

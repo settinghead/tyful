@@ -62,6 +62,7 @@
 	
 	<mx:states>
 		<mx:State name="TextFlowMouseDown"/>
+		
 		<mx:Script>
 			<![CDATA[
 				import com.settinghead.groffle.client.ApplicationFacade;
@@ -70,6 +71,7 @@
 				import com.settinghead.groffle.client.view.components.template.canvas.TextFlowCanvas;
 				import com.settinghead.groffle.client.view.components.template.windows.ImportImageDialog;
 				import com.settinghead.groffle.client.view.components.template.windows.NewTemplateWindow;
+				import com.settinghead.groffle.client.view.components.template.windows.WordLayerOption;
 				
 				import flash.display.*;
 				import flash.events.*;
@@ -137,35 +139,7 @@
 				private var imagesFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
 				private var newTemplateDialog:NewTemplateWindow;
 				private var importImageDialog:ImportImageDialog;
-				
-				// ------- Child controls -------
-				// Common view/containers
-				private var _imageContainer:Sprite;
-				private var _currentViewContainer:Sprite;
-				
-				//			protected function btnUpload_clickHandler(event:MouseEvent):void
-				//			{
-				//				jagFileRefSave.browse([imagesFilter]);
-				//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-				//			}
-				//			
-				//			
-				//			private function onClickSave(e:MouseEvent):void{    
-				//				jagFileRefSave.browse([imagesFilter]);
-				//				jagFileRefSave.addEventListener(Event.SELECT, selectedFile);
-				//			}        
-				//			private function selectedFile(e:Event):void{
-				//				jagFileRefSave.load();
-				//				jagFileRefSave.addEventListener(Event.COMPLETE, loaded);
-				//			}
-				//			private function loaded(e:Event):void{
-				//				var rawBytes:ByteArray = jagFileRefSave.data;
-				//				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, getBitmapData);
-				//				loader.loadBytes(rawBytes);
-				//			}
-				//			private function getBitmapData(e:Event):void{
-				//				backgroundLayer.addChild(loader);
-				//			}
+				private var wordLayerOptionsWindow:WordLayerOption;
 				
 				public function get template():TemplateVO{
 					return _template;
@@ -191,6 +165,8 @@
 					
 					this.importImageDialog = new ImportImageDialog();
 					this.importImageDialog.addEventListener(ImportImageDialog.INSERT_IMAGE, importImage);
+					
+					this.wordLayerOptionsWindow = new WordLayerOption();
 					
 					BindingUtils.bindProperty(this, "colorPattern", this.colorPicker, "colorPattern");
 					BindingUtils.bindProperty(this,"currentDrawingTool", this.drawingToolBar, "selectedIndex");
@@ -271,8 +247,11 @@
 				
 				protected function btnAddLayer_clickHandler(event:MouseEvent):void
 				{
-					new WordLayer(
+					var l:WordLayer = new WordLayer(
 						"Layer"+(template.layers.length+1).toString(),template);
+					
+					//drawing layer has high tolerance to deal with mix of colors
+					l.tolerance = 1.0;
 				}
 				
 				protected function btnAddImageLayer_clickHandler(event:MouseEvent):void
@@ -351,6 +330,9 @@
 					var layer:WordLayer = new WordLayer(
 						"Layer"+(template.layers.length+1).toString(),template,
 						dirBmp.width, dirBmp.height);
+					
+					//low tolerance by default
+					layer.tolerance = 0.2;
 					layer.transparentColor = 0xFFFFFFFF;
 					//				var shader:Shader = new Shader(); 
 					//				shader.byteCode = new WhiteToTransparentKernel(); 
@@ -394,6 +376,14 @@
 						//						break;					
 						case ERASE:
 							break;
+					}
+				}
+				
+				protected function btnLayerOptions_clickHandler(event:MouseEvent):void
+				{
+					if(template.layers[layerButtons.selectedIndex] is WordLayer){
+						wordLayerOptionsWindow.layer = (template.layers[layerButtons.selectedIndex] as WordLayer);
+						PopUpManager.addPopUp(wordLayerOptionsWindow,this);
 					}
 				}
 				
@@ -507,6 +497,12 @@
 							<s:Button id="btnAddImageLayer" label="+ Photo" 
 									  click="btnAddImageLayer_clickHandler(event)" 
 									  icon="@Embed(source='photo.png')" />
+							<s:Button id="btnLayerOptions" label="Layer Options..."
+									  click="btnLayerOptions_clickHandler(event)"
+									   enabled="{layerButtons.selectedIndex>=0}"
+									   visible="{btnLayerOptions.enabled}"
+									   includeInLayout="{btnLayerOptions.visible}"
+									  />
 						</s:VGroup>
 						
 					</s:VGroup>

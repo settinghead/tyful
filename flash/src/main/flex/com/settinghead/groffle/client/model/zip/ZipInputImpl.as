@@ -86,7 +86,7 @@ package com.settinghead.groffle.client.model.zip
 				
 				processCurrent(e, end+1, nextPos(e.name, end), parent[index], parent);
 			}
-			else{
+			else if (parent.hasOwnProperty(name)){
 				if(parent==null){
 					this.hasOwnProperty();
 				}
@@ -94,7 +94,7 @@ package com.settinghead.groffle.client.model.zip
 					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent, true);
 				}
 				else{
-					if(parent[name]==null||parent[name]==undefined){
+					if((parent[name]==null||parent[name]==undefined)){
 						parent[name] = instantiateInstance(e,name,parent,grandParent,-1,start,end);
 					}
 					processCurrent(e, end+1, nextPos(e.name, end), parent[name], parent);

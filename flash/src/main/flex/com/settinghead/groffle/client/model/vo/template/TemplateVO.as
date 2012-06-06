@@ -50,9 +50,9 @@ package com.settinghead.groffle.client.model.vo.template
 		public var diligence:int = 8;
 		public var id:String = null;
 		public var uuid:String = null;
-		public var tolerance:Number = 0.5;
 		private var _effectiveBorder:Rectangle = null;
-
+		private var _tolerance:Number = 1;
+		
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");
 		private var _layers:ArrayCollection =  new ArrayCollection();
@@ -124,6 +124,16 @@ package com.settinghead.groffle.client.model.vo.template
 				this.generatePatchIndex();
 			}
 			return this._patchIndex;
+		}
+		
+		public function get tolerance():Number 
+		{
+			return _tolerance;
+		}
+		
+		public function set tolerance(value:Number):void 
+		{
+			_tolerance = value;
 		}
 		
 		public function generatePatchIndex():void{
@@ -233,7 +243,6 @@ package com.settinghead.groffle.client.model.vo.template
 			dict.height = this._height;
 			dict.perseverance = this.perseverance;
 			dict.diligence = this.diligence;
-			dict.tolerance = this.tolerance;
 		}
 		
 		public function get type():String{
