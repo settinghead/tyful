@@ -7,7 +7,8 @@
 <mx:Canvas
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:client="com.settinghead.groffle.client.*" 
-	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.groffle.client.view.components.template.*" xmlns:canvas="com.settinghead.groffle.client.view.components.template.canvas.*"
+	xmlns:s="library://ns.adobe.com/flex/spark" xmlns:template="com.settinghead.groffle.client.view.components.template.*" 
+	xmlns:canvas="com.settinghead.groffle.client.view.components.template.canvas.*"
 	 creationComplete="creationCompleteHandler(event)" xmlns:components="com.settinghead.groffle.client.view.components.*"
 	 keyDown="editor_keyDownHandler(event)"
 	 xmlns:windows="com.settinghead.groffle.client.view.components.template.windows.*" click="canvas1_clickHandler(event)" >

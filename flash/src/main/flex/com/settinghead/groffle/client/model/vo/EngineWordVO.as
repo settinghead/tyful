@@ -68,18 +68,18 @@ public class EngineWordVO {
 	
 	private function drawSamples():void{
 		this.samplePoints = new Array();
-		var numSamples:int= int((shape.width * shape.height / WordLayer.SAMPLE_DISTANCE));
+		var numSamples:int= int((shape.getWidth() * shape.getHeight() / WordLayer.SAMPLE_DISTANCE));
 		//				var numSamples = 10;
 		// TODO: devise better lower bound
 		if (numSamples < 20)
 			numSamples = 20;
 		for(var i:int = 0; i<numSamples;i++){
-			var relativeX:Number= int((Math.random() * shape.width));
-			var relativeY:Number= int((Math.random() * shape.height));
+			var relativeX:Number= int((Math.random() * shape.getWidth()));
+			var relativeY:Number= int((Math.random() * shape.getHeight()));
 			if(shape.containsPoint(relativeX, relativeY,false,-1,-1))
 			{
-				relativeX -= shape.width/2;
-				relativeY -= shape.height/2;
+				relativeX -= shape.getWidth()/2;
+				relativeY -= shape.getHeight()/2;
 				var d:Number = Math.sqrt(Math.pow(relativeX,2)+Math.pow(relativeY,2));
 				var r:Number = Math.atan2(relativeY, relativeX);
 				samplePoints.push([r,d]);

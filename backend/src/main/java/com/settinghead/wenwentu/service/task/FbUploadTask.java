@@ -3,6 +3,7 @@ package com.settinghead.wenwentu.service.task;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.Random;
 
 import com.restfb.BinaryAttachment;
 import com.restfb.Connection;
@@ -13,7 +14,9 @@ import com.restfb.types.Album;
 import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
-	private static final Object INTRO_STR = "Another groffle masterpiece (groffle.me)";
+	private static final String[] INTRO_STR = new String[] {
+			"Another groffle masterpiece (groffle.me)",
+			"Art for the ages (groffle.me)" };
 	private String userId;
 	private String fbToken;
 	private String fbUid;
@@ -48,9 +51,12 @@ public class FbUploadTask extends Task {
 		if (albumId == null)
 		// create album
 		{
-			FacebookType albumconnection = client.publish("me/albums",
-					Album.class, Parameter.with("name", "Groffle"),
-					Parameter.with("description", INTRO_STR));
+			FacebookType albumconnection = client.publish(
+					"me/albums",
+					Album.class,
+					Parameter.with("name", "Groffle"),
+					Parameter.with("description",
+							INTRO_STR[new Random().nextInt(INTRO_STR.length)]));
 			albumId = albumconnection.getId();
 		}
 		FacebookType publishPhotoResponse = null;
@@ -63,19 +69,19 @@ public class FbUploadTask extends Task {
 				Parameter.with("message", title + " " + INTRO_STR));
 
 		// open graph action
-		
-//		HttpClient ogClient = new HttpClient();
-//		PostMethod post = new PostMethod("http://jakarata.apache.org/");
-//        NameValuePair[] data = {
-//          new NameValuePair("access_token", this.getFbToken()),
-//          new NameValuePair("groffle_artwork", this.get)
-//        };
-//        post.setRequestBody(data);
-//        // execute method and handle any error responses.
-//        ...
-//        InputStream in = post.getResponseBodyAsStream();
-//        // handle response.
-		
+
+		// HttpClient ogClient = new HttpClient();
+		// PostMethod post = new PostMethod("http://jakarata.apache.org/");
+		// NameValuePair[] data = {
+		// new NameValuePair("access_token", this.getFbToken()),
+		// new NameValuePair("groffle_artwork", this.get)
+		// };
+		// post.setRequestBody(data);
+		// // execute method and handle any error responses.
+		// ...
+		// InputStream in = post.getResponseBodyAsStream();
+		// // handle response.
+
 		return publishPhotoResponse.getId();
 	}
 

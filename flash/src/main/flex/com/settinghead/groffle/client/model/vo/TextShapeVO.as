@@ -16,6 +16,7 @@ package com.settinghead.groffle.client.model.vo
 {
 	
 	import com.settinghead.groffle.client.NotImplementedError;
+	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -211,10 +212,10 @@ package com.settinghead.groffle.client.model.vo
 		
 		private var matrix:Matrix = new Matrix();
 		
-		public function get width():Number{
+		public function getWidth():Number{
 			return _textField.width;
 		}
-		public function get height():Number{
+		public function getHeight():Number{
 			return _textField.height;
 		}
 		public function get rotation():Number{

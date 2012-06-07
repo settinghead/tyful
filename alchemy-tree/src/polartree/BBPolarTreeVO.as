@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.algo.tree {
+package polartree {
 	
 	
 	/*
@@ -17,14 +17,10 @@ package com.settinghead.groffle.client.model.algo.tree {
 	limitations under the License.
 	*/
 	
-	import com.settinghead.groffle.client.NotImplementedError;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarChildTreeVO;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	
 	import mx.controls.Alert;
 	
 	import org.as3commons.lang.Assert;
-	import com.settinghead.groffle.client.model.vo.IImageShape;
 	
 	public class BBPolarTreeVO {
 		
@@ -402,5 +398,27 @@ package com.settinghead.groffle.client.model.algo.tree {
 			this._leaf = b;
 		}
 		
+		
+		public function toString(indent:int = 0):String{
+			var indentStr:String = "";
+			for (var i:int = 0; i < indent; i++) 
+			{
+				indentStr+=" ";
+			}
+			
+			var childrenStr:String = "";
+			
+			for each (var k:BBPolarTreeVO in getKids()) 
+			{
+				childrenStr+=k.toString(indent+1);
+			}
+			
+			
+			return indentStr + "R1: "+getR1(false).toString()
+				+", R2: "+getR2(false).toString()
+			+", D1: "+d1.toString()
+			+", D2: "+d2.toString() + "\n"
+			+childrenStr;
+		}
 	}
 }

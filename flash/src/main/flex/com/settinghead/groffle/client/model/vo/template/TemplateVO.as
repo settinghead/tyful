@@ -87,7 +87,7 @@ package com.settinghead.groffle.client.model.vo.template
 			if(isNaN(_width)){
 				var maxWidth:Number = 0;
 				for each(var l:Layer in layers)
-					if(maxWidth < l.width) maxWidth = l.width;
+					if(maxWidth < l.getWidth()) maxWidth = l.getWidth();
 				if(maxWidth > 0) _width = maxWidth; 
 			}
 			return _width;
@@ -101,7 +101,7 @@ package com.settinghead.groffle.client.model.vo.template
 			if(isNaN(_height)){
 				var maxHeight:Number = 0;
 				for each(var l:Layer in layers)
-				if(maxHeight < l.height) maxHeight = l.height;
+				if(maxHeight < l.getHeight()) maxHeight = l.getHeight();
 				if(maxHeight > 0) _height = maxHeight; 
 			}
 			return _height;

@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.vo {
+package polartree {
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.geom.Rectangle;

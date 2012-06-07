@@ -117,7 +117,7 @@ package com.settinghead.groffle.client.model
 			//_previewUrl.url = null;
 			tmpImg = img;
 
-			var b:ByteArray = PNGEncoder.encode(img);
+			var b:ByteArray = PNGEncoder2.encode(img);
 			// set up the request & headers for the image upload;
 //			var urlRequest : URLRequest = new URLRequest();
 //			//urlRequest.url = 'http://file.wenwentu.com/r/';

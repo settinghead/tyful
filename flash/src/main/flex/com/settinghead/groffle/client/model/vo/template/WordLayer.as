@@ -6,7 +6,7 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.fonter.WordFonter;
 	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
-	import com.settinghead.groffle.client.model.vo.IImageShape;
+	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;
 	import com.settinghead.groffle.client.model.zip.IZippable;
@@ -190,11 +190,11 @@ package com.settinghead.groffle.client.model.vo.template
 			return h;
 		}
 		
-		public override function get height():Number {
+		public override function getHeight():Number {
 			return directionBitmap.height;
 		}
 		
-		public override function get width():Number {
+		public override function getWidth():Number {
 			return directionBitmap.width;
 		}
 		

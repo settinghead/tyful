@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.algo.tree {
+package polartree {
 /*
  Copyright 2010 Daniel Bernier
 
@@ -15,7 +15,6 @@ package com.settinghead.groffle.client.model.algo.tree {
  limitations under the License.
  */
 
-	import com.settinghead.groffle.client.model.vo.IImageShape;
 	
 	import org.as3commons.lang.Assert;
 

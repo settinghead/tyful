@@ -2,7 +2,7 @@ package com.settinghead.groffle.client.model.vo.template
 {
 	
 	import com.settinghead.groffle.client.NotImplementedError;
-	import com.settinghead.groffle.client.model.vo.IImageShape;
+	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;
 	import com.settinghead.groffle.client.model.zip.IZippable;
@@ -56,11 +56,11 @@ package com.settinghead.groffle.client.model.vo.template
 			}
 		}
 		
-		public function get width():Number{
+		public function getWidth():Number{
 			throw new  NotImplementedError();
 		}
 		
-		public function get height():Number{
+		public function getHeight():Number{
 			throw new  NotImplementedError();
 		}
 		

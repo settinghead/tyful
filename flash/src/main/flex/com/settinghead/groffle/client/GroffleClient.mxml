@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:debugger="com.demonsters.debugger.*" 
-			   creationComplete="facade.startup(this);" 
+			   creationComplete="application1_creationCompleteHandler(event)" 
 			   xmlns:components="com.settinghead.groffle.client.view.components.*" 
 			   xmlns:client="com.settinghead.groffle.client.*"
 			   >
@@ -15,6 +15,11 @@
 	<fx:Script>
 		<![CDATA[
 			import com.settinghead.groffle.client.model.ITuImageGenerator;
+			
+			import flash.Boot;
+			import flash.Lib;
+			
+			import mx.events.FlexEvent;
 			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
 			public var tuImageGenerator:ITuImageGenerator;
 			
@@ -26,6 +31,12 @@
 			protected function text1_mouseOutHandler(event:MouseEvent):void
 			{
 //				(event.target as ApplicationControlBar).alpha = 0.8;
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				haxe.init(flash.Lib.current);
+				facade.startup(this);
 			}
 			
 		]]>

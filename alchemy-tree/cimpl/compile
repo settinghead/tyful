@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Add Alchemy settings to your environment
+export ALCHEMY_HOME=/Users/settinghead/alchemy-darwin-v0.5a 
+export ALCHEMY_VER=0.4a 
+export PATH=$ALCHEMY_HOME/bin:$PATH
+export ASC=$ALCHEMY_HOME/bin/asc.jar 
+export SWFBRIDGE=$ALCHEMY_HOME/bin/swfbridge  
+
+# Set this variable if you do not want to use the adl executable from your path
+#export ADL=/path/to/your/adl (or adl.exe)
+
+# Uncomment this if you want to leave intermediate build products around for debugging 
+# Leave this off if you are not actively debugging as these can be large
+#export ACHACKS_TMPS=1 
+
+# Uncomment this to turn on logging when building with achacks
+#export LOG=1
+
+# Uncomment this as set the LOGLEVEL to enable additional runtime logging
+# Higher values mean more information is logged. 1, 2, 3 are defined currently.
+# NOTE This must be set when your project is compiled
+#export LOGLEVEL=1
+
+# These are helper functions
+alias alc-home='cd $ALCHEMY_HOME'
+alias alc-on='export PRE_ALCHEMY_PATH=$PATH; export PATH=$ALCHEMY_HOME/achacks:$PATH'
+alias alc-off='export PATH=$PRE_ALCHEMY_PATH'
+
+
+#source ~/alchemy/alchemy-setup
+PATH=$PATH:~/bin:/usr/local/bin:~/bin/flex/bin:~/bin/astmp:~/alchemy/achacks
+export PATH
+export PRE_ALCHEMY_PATH=$PATH; export PATH=$ALCHEMY_HOME/achacks:$PATH
+gcc polartree.c -O3 -Wall -swc -o polartree.swc
+mv polartree.swc ../libs/
+alias alc-off='export PATH=$PRE_ALCHEMY_PATH'

@@ -422,16 +422,16 @@ package com.settinghead.groffle.client.view.components.template.canvas
 					layer.direction = (layer as WordLayer).direction;
 				}
 				else{
-					layer.direction = new BitmapData(layer.width, layer.height, true, 0xffffff);
+					layer.direction = new BitmapData(layer.getWidth(), layer.getHeight(), true, 0xffffff);
 //					layer.direction.visible = false;
 				}
 				
 				
-				bmpDirection = new Bitmap(new BitmapData(layer.width, layer.height, true, 0x00ffffff));
+				bmpDirection = new Bitmap(new BitmapData(layer.getWidth(), layer.getHeight(), true, 0x00ffffff));
 
 				
-				this.width = layer.width;
-				this.height = layer.height;
+				this.width = layer.getWidth();
+				this.height = layer.getHeight();
 				bmpDirection.x =0; bmpDirection.y = 0;
 				
 				redrawDireciton(0,0,layer.direction.width,layer.direction.height);
@@ -456,8 +456,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			//expand the region a little to align with global grid lines
 			xs = xs - xs%a.width; if(xs<0) xs = 0;
 			ys = ys - ys%a.height; if(ys<0) ys =0;
-			xe = xe + xe%a.width; if (xe>=layer.width) xe = layer.width-1;
-			ye = ye + ye%a.height; if(ye>=layer.height) ye = layer.height-1;
+			xe = xe + xe%a.width; if (xe>=layer.getWidth()) xe = layer.getWidth()-1;
+			ye = ye + ye%a.height; if(ye>=layer.getHeight()) ye = layer.getHeight()-1;
 			var dirErase:Shape = new Shape();
 			dirErase.graphics.lineStyle(1,0xff0000);
 			dirErase.graphics.beginFill(0xff0000,1);
@@ -507,7 +507,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			var y1:Number = this.mouseY-thickness/2;
 			var x2:Number = this.mouseX+thickness/2;
 			var y2:Number = this.mouseY+thickness/2;
-			if(x1<0) x1=0; if(y1<0) y1=0; if(x2>=layer.width) x2=layer.width-1; if(y2>=layer.height) y2=layer.height-1;
+			if(x1<0) x1=0; if(y1<0) y1=0; if(x2>=layer.getWidth()) x2=layer.getWidth()-1; if(y2>=layer.getHeight()) y2=layer.getHeight()-1;
 			if(x1<this.brushRegion[0]) this.brushRegion[0] = x1;
 			if(y1<this.brushRegion[1]) this.brushRegion[1] = y1;
 			if(x2>this.brushRegion[2]) this.brushRegion[2] = x2;

@@ -1,9 +1,9 @@
 package com.settinghead.groffle.client.model.vo.template
 {
-	import com.settinghead.groffle.client.model.vo.IImageShape;
+	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	
 	[Bindable]
-	public class InverseWordLayer implements IImageShape
+	public class InverseWordLayer implements com.settinghead.groffle.client.model.algo.tree.IImageShape
 	{
 		private var _l:WordLayer;
 		
@@ -27,14 +27,14 @@ package com.settinghead.groffle.client.model.vo.template
 			return !_l.intersects(x,y,width,height,transformed);
 		}
 		
-		public function get width():Number
+		public function getWidth():Number
 		{
-			return _l.width;
+			return _l.getWidth();
 		}
 		
-		public function get height():Number
+		public function getHeight():Number
 		{
-			return _l.height;
+			return _l.getHeight();
 		}
 		
 		public function get type():String{

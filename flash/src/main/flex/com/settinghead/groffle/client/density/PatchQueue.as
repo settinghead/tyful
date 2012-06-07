@@ -28,7 +28,7 @@ package com.settinghead.groffle.client.density
 			if (myLevel == 0) {
 				for each (var layer:Layer in _map.getIndex().template.layers)
 					if(layer is WordLayer)
-						tryAdd(new Patch(0, 0, layer.width, layer.height, 0, null, this, layer as WordLayer));
+						tryAdd(new Patch(0, 0, layer.getWidth(), layer.getHeight(), 0, null, this, layer as WordLayer));
 			}
 		}
 		

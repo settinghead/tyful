@@ -1,6 +1,5 @@
-package com.settinghead.groffle.client.model.algo.tree
+package polartree
 {
-	import com.settinghead.groffle.client.model.vo.IImageShape;
 
 	public class BBPolarRootTreeVO extends BBPolarTreeVO {
 		private var rootX:int;

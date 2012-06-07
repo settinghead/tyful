@@ -376,7 +376,7 @@
 				<!--s:Button id="btnSimulateEnterFrame" click="onEnterFrameHandler(event)" label = "EnterFrame" /-->
 				<!--s:Button id="btnRecalculate" click="patchLayer.patchQueue = patchLayer.patchQueue;" label="Recalculate" bottom="100" left="100" /-->
 				<s:Button id="btnPostToFacebook" label="Post to Facebook" click="btnPostToFacebook_clickHandler(event)" />
-				<s:CheckBox label="Auto post to FB when finished" selected="false" id="chkAutoPostToFacebook" click="chkAutoPostToFacebook_clickHandler(event)" />
+				<s:CheckBox label="Auto post to FB when finished" selected="true" id="chkAutoPostToFacebook" click="chkAutoPostToFacebook_clickHandler(event)" />
 			</s:HGroup>
 			<s:HGroup>
 				<s:Label text="Fill perseverance"  />

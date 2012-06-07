@@ -321,7 +321,7 @@ package com.settinghead.groffle.client.model.algo
 		}
 		
 		private function calculateMaxAttemptsFromWordWeight(eWord:EngineWordVO, p:Patch):int {
-			return (p.getWidth() * p.getHeight())  / (eWord.shape.width * eWord.shape.height) * 5 * tu.template.diligence;
+			return (p.getWidth() * p.getHeight())  / (eWord.shape.getWidth() * eWord.shape.getHeight()) * 5 * tu.template.diligence;
 			* (1+ Math.random() * 0.4)
 				;
 			//			var area:Number = p.getWidth() * p.getHeight();
