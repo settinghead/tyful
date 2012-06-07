@@ -13,7 +13,7 @@ import com.restfb.types.Album;
 import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
-	private static final Object INTRO_STR = "Check out the typography artwork I created for my Facebook profile using Groffle. You should give it a try, too! (Create your own Facebook profile artwork at https://www.groffle.me)";
+	private static final Object INTRO_STR = "Another groffle masterpiece (groffle.me)";
 	private String userId;
 	private String fbToken;
 	private String fbUid;
