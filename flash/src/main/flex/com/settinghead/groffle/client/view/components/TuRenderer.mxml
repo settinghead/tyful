@@ -61,7 +61,7 @@
 			public static const RESUME_RENDERING:String = "resumeRendering";
 			public static const RERENDER:String = "rerender";
 			public static const POST_TO_FACEBOOK:String = "postToFacebook";
-			public static const EFFECTIVE_MARGIN:int = 20;
+			public static const EFFECTIVE_MARGIN:int = 0;
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
