@@ -113,11 +113,14 @@ package com.settinghead.groffle.client.model
 		
 		private var tmpImg:BitmapData = null;
 		
+		
+		
 		public function uploadImage(img:BitmapData):void{
 			//_previewUrl.url = null;
 			tmpImg = img;
-
-			var b:ByteArray = PNGEncoder2.encode(img);
+			
+			
+			var b:ByteArray = PNGEncoder.encode(img);
 			// set up the request & headers for the image upload;
 //			var urlRequest : URLRequest = new URLRequest();
 //			//urlRequest.url = 'http://file.wenwentu.com/r/';
@@ -139,6 +142,7 @@ package com.settinghead.groffle.client.model
 //			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, uploadError);
 //			urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, uploadError);
 		}
+		
 		public function uploadError(e:Event):void{
 			Alert.show(e.toString());
 		}
