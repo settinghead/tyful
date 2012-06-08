@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.controller.template
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.ApplicationFacade;
 	import com.settinghead.groffle.client.model.TemplateProxy;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
@@ -40,7 +41,7 @@ package com.settinghead.groffle.client.controller.template
 				sendNotification(ApplicationFacade.GENERATE_TEMPLATE_PREVIEW, this);
 			}
 			else{
-				Mask.show("Saving template...");
+				Notification.show("Uploading template...");
 				templateProxy.uploadTemplate();
 			}
 			ExternalInterface.call("submitForm");

@@ -71,7 +71,7 @@ package com.settinghead.groffle.client.view
 					break;
 				
 				case ApplicationFacade.DOWNLOAD_TEMPLATE:
-					Mask.show("Loading template. ");
+					Mask.show("Loading template... ");
 					break;
 				case ApplicationFacade.GENERATE_TEMPLATE_PREVIEW:
 					Mask.show("Groffle is creating a sample artwork so that your artwork can be displayed in the public gallery. Just a moment.");

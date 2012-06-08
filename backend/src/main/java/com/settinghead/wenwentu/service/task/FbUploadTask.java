@@ -15,8 +15,8 @@ import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
 	private static final String[] INTRO_STR = new String[] {
-			"Another groffle masterpiece (groffle.me)",
-			"Art for the ages (groffle.me)" };
+			" - Another groffle masterpiece (http://groffle.me)",
+			" - Art for the ages (http://groffle.me)" };
 	private String userId;
 	private String fbToken;
 	private String fbUid;
@@ -66,7 +66,7 @@ public class FbUploadTask extends Task {
 		publishPhotoResponse = client.publish(albumId + "/photos",
 				FacebookType.class,
 				BinaryAttachment.with("cat.png", new FileInputStream(file)),
-				Parameter.with("message", title + " " + INTRO_STR));
+				Parameter.with("message", title + " " + INTRO_STR[new Random().nextInt(INTRO_STR.length)]));
 
 		// open graph action
 

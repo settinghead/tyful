@@ -15,8 +15,10 @@
 
 <%content_for :header do%>
 <div class="instructional">
-Choose an image you like > Connect to Facebook > See the results
-	<br /> Or <%= link_to 'Design Your Own', new_template_path, {:class=>'create-button'} %> if you feel creative!</div>
+Instructions: click an image you like > Connect to Facebook > See the results
+	<br /> Or <%= link_to 'Design Your Own', new_template_path, {:class=>'create-button'} %> by doodling or using a photo of your own!
+	<br /> (It's super simple and ridiculously fun!)
+</div>
 <%end%>
 
 <%if @show_intro %>

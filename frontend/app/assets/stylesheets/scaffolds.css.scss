@@ -28,8 +28,8 @@ pre {
 
 a {
   text-decoration: none;
-  font-family: Lato;
-  color: #000000;
+  font-family: Lato, Helvetica, arial, freesans, clean, sans-serif;
+  color: #555;
   &:visited {
     color: #666; 
   }
@@ -240,7 +240,7 @@ float: right;
   
 }
 .instructional{
-
+	padding: 5px;
 }
 
 #user_nav {
@@ -277,7 +277,7 @@ float: right;
 	margin-bottom: 4px;
 	margin-top: 4px;
 	padding: 2px;
-	padding-top: 10px;
+	padding-top: 5px;
     text-align: center;
 	border-radius: 5px;
 	border-width: 1px;
@@ -293,7 +293,7 @@ float: right;
 		font-size: 28px;
 		line-height: 20px;
 		font-weight: 400;
-		font-family: 'Special Elite', cursive;
+		font-family: 'Special Elite', Monospace;
 		clear: both;
 	}
 
@@ -302,7 +302,7 @@ float: right;
 	}
 
 	#tagline{
-		font-size: 9px;
+		font-size: 12px;
 	}
 
 

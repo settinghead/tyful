@@ -13,6 +13,7 @@ package com.settinghead.groffle.client.view
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 	
 	import mx.containers.Canvas;
 	
@@ -99,6 +100,9 @@ package com.settinghead.groffle.client.view
 		private function createTemplate(event:CreateTemplateEvent):void{
 
 			templateProxy.newTemplate(event.width, event.height);
+			setTimeout(function(){
+				Notification.show("Start by drawing something. ", "Tip",null, 10000);
+			}, 2000);
 		}
 		
 		private var ref:FileReference;
