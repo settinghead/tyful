@@ -43,13 +43,16 @@
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
 			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
+			import com.settinghead.groffle.client.model.vo.template.ImageLayer;
+			import com.settinghead.groffle.client.model.vo.template.Layer;
 			
 			import de.aggro.utils.CookieUtil;
+			
+			import flash.filters.GlowFilter;
 			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.graphics.codec.PNGEncoder;
-			import flash.filters.GlowFilter;
 			
 			import org.as3commons.lang.Assert;
 			
@@ -74,7 +77,7 @@
 			private var _tu:TuVO;
 			
 			public function slapWord(dWord:DisplayWordVO):void{
-				this.wordLayer.addChild(dWord);
+				(dict[dWord.engineWord.getCurrentLocation().patch.layer] as UIComponent).addChild(dWord);
 				this._tu.dWords.addItem(dWord);
 //				patchLayer.graphics.clear();
 //				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
@@ -309,6 +312,7 @@
 			}
 			
 			private var preparing:Boolean = false;
+			private var dict:Dictionary;
 			
 			private function prepareForTu():void{
 				if(!preparing){
@@ -316,10 +320,8 @@
 					
 					while(this.backgroundLayer.numChildren>0) 
 						this.backgroundLayer.removeChildAt(0);
-					while(this.wordLayer.numChildren>0)
-						this.wordLayer.removeChildAt(0);				
-					//				this.width = _tu.width;
-					//				this.height = _tu.height;
+					while(this.wordLayers.numChildren>0)
+						this.wordLayers.removeChildAt(0);
 					_tu.template.generateEffectiveBorder();
 					
 					//adjust for effective border
@@ -327,7 +329,18 @@
 					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
 					this.mainCanvas.left = -_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN;
 					this.mainCanvas.top = -_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN;
-
+					dict = new Dictionary();
+					
+					for each(var l:Layer in _tu.template.layers){
+						var lc:UIComponent = new UIComponent();
+						lc.top = lc.left = lc.bottom = lc.right = 0;
+						dict[l] = lc;
+						if(l is ImageLayer){
+							lc.graphics.beginBitmapFill((l as ImageLayer).image);
+							lc.graphics.drawRect(0,0,l.getWidth(), l.getHeight());
+						}
+						wordLayers.addChild(lc);
+					}
 					
 //					for each(var displayWord:DisplayWordVO in _tu.dWords)
 //					this.slapWord(displayWord);
@@ -336,11 +349,8 @@
 					
 					newTu = false;
 					preparing = false;
-				}
-				
-				
+				}	
 			}
-			
 			
 			protected function canvas1_mouseOverHandler(event:MouseEvent):void
 			{
@@ -416,7 +426,7 @@
 			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
 					   scaleY="{mainCanvas.scaleX}">
 				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
-				<mx:UIComponent id="wordLayer" top="0" left="0" />
+				<mx:Canvas id="wordLayers" top="0" left="0" />
 			</mx:Canvas>
 			<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
 			<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->

@@ -40,7 +40,7 @@ package com.quasimondo.bitmapdata
 	import flash.filters.ConvolutionFilter;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
-	
+	[Bindable]
 	public class ThresholdBitmap extends BitmapData
 	{
 		public static const FIXED:String        = "FIXED"; // fastest

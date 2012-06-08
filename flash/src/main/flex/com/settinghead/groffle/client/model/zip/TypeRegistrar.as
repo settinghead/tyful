@@ -1,6 +1,7 @@
 package com.settinghead.groffle.client.model.zip
 {
 	import com.settinghead.groffle.client.NotImplementedError;
+	import com.settinghead.groffle.client.model.vo.template.ImageLayer;
 	import com.settinghead.groffle.client.model.vo.template.InverseWordLayer;
 	import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
@@ -13,7 +14,9 @@ package com.settinghead.groffle.client.model.zip
 					return new TemplateVO();
 					break;
 				case "WordLayer":
-					return new WordLayer("layer"+name, grandParent, -1, -1,index, false);
+					return new WordLayer("Layer "+name, grandParent, -1, -1,index, false);
+				case "ImageLayer":
+					return new ImageLayer("Layer "+name, grandParent,null,index, false);
 					break;
 				case "InverseWordLayer":
 					return new InverseWordLayer();

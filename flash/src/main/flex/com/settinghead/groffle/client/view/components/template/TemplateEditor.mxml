@@ -67,8 +67,10 @@
 		<mx:Script>
 			<![CDATA[
 				import com.settinghead.groffle.client.ApplicationFacade;
+				import com.settinghead.groffle.client.model.vo.template.ImageLayer;
 				import com.settinghead.groffle.client.model.vo.template.TemplateVO;
 				import com.settinghead.groffle.client.model.vo.template.WordLayer;
+				import com.settinghead.groffle.client.view.components.template.canvas.ImageCanvas;
 				import com.settinghead.groffle.client.view.components.template.canvas.TextFlowCanvas;
 				import com.settinghead.groffle.client.view.components.template.windows.ImportImageDialog;
 				import com.settinghead.groffle.client.view.components.template.windows.NewTemplateWindow;
@@ -77,6 +79,8 @@
 				import flash.display.*;
 				import flash.events.*;
 				import flash.net.*;
+				
+				import flashx.textLayout.elements.BreakElement;
 				
 				import mx.binding.utils.BindingUtils;
 				import mx.controls.Button;
@@ -274,10 +278,12 @@
 					if(item is WordLayer){
 						cla = TextFlowCanvas;
 					}
+					else if (item is ImageLayer){
+						cla = ImageCanvas;
+					}
 					var renderer:ClassFactory = new ClassFactory(cla);
 					renderer.properties = 
 						{templateEditor: this, depth: template.layers.length};
-					var tfc:TextFlowCanvas;
 					return renderer;
 				}
 				
@@ -317,44 +323,55 @@
 				}
 				
 				public function importImage(e:Event):void{
-					var dirBmp:BitmapData;
-					var colorBmp:BitmapData;
-					if(template!=null){
-						dirBmp = resizeImage(importImageDialog.direction, template.width, template.height);
-						colorBmp = resizeImage(importImageDialog.colorSheet, template.width, template.height);
+
+					
+					switch(importImageDialog.importType){
+						case "words":
+							var dirBmp:BitmapData;
+							var colorBmp:BitmapData;
+							if(template!=null){
+								dirBmp = resizeImage(importImageDialog.direction, template.width, template.height);
+								colorBmp = resizeImage(importImageDialog.colorSheet, template.width, template.height);
+							}
+							else{
+								dirBmp = importImageDialog.direction;
+								colorBmp = importImageDialog.colorSheet;
+							}
+							
+							var layer:WordLayer = new WordLayer(
+								"Layer"+(template.layers.length+2).toString(),template,
+								dirBmp.width, dirBmp.height);
+							//low tolerance by default
+							layer.tolerance = 0.4;
+							layer.transparentColor = 0xFFFFFFFF;
+							
+							var colorToReplace:uint = 0xFFFFFFFF;
+							var newColor:uint = 0x00000000;
+							var maskToUse:uint = 0xffffffff;
+							
+							//				layer.direction.draw(importImageDialog.direction,null,null);
+							var p:Point = new Point(0,0);
+							
+							layer.direction.threshold(dirBmp,
+								new Rectangle(0,0,dirBmp.width,dirBmp.height),
+								p,"==",colorToReplace,newColor,maskToUse,true);
+							
+							layer.color.draw(colorBmp);
+							layer.color.threshold(layer.direction,
+								new Rectangle(0,0,layer.direction.width,layer.direction.height),
+								p,"==",0,0,maskToUse,false);
+						break;
+						case "image":
+							var imageBmp:BitmapData;
+							if(template!=null){
+								imageBmp = resizeImage(importImageDialog.colorSheet, template.width, template.height);
+								var imgLayer:ImageLayer = new ImageLayer("Layer"+(template.layers.length+1).toString(),template,imageBmp);
+							}
+						break;
 					}
-					else{
-						dirBmp = importImageDialog.direction;
-						colorBmp = importImageDialog.colorSheet;
-					}
 					
-					var layer:WordLayer = new WordLayer(
-						"Layer"+(template.layers.length+1).toString(),template,
-						dirBmp.width, dirBmp.height);
+
 					
-					//low tolerance by default
-					layer.tolerance = 0.2;
-					layer.transparentColor = 0xFFFFFFFF;
-					//				var shader:Shader = new Shader(); 
-					//				shader.byteCode = new WhiteToTransparentKernel(); 
-					//				var source:Bitmap = new Bitmap(importImageDialog.direction);
-					//				source.blendShader = shader;
-					
-					var colorToReplace:uint = 0xFFFFFFFF;
-					var newColor:uint = 0x00000000;
-					var maskToUse:uint = 0xffffffff;
-					
-					//				layer.direction.draw(importImageDialog.direction,null,null);
-					var p:Point = new Point(0,0);
-					
-					layer.direction.threshold(dirBmp,
-						new Rectangle(0,0,dirBmp.width,dirBmp.height),
-						p,"==",colorToReplace,newColor,maskToUse,true);
-					
-					layer.color.draw(colorBmp);
-					layer.color.threshold(layer.direction,
-						new Rectangle(0,0,layer.direction.width,layer.direction.height),
-						p,"==",0,0,maskToUse,false);				
 				}
 				
 				protected function drawingToolBar_itemClickHandler(event:ItemClickEvent):void

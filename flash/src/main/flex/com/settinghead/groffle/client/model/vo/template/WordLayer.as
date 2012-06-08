@@ -404,70 +404,26 @@ package com.settinghead.groffle.client.model.vo.template
 			return this._angler;
 		}
 		
+		public override function generateEffectiveBorder():void{
+			
+			this._effectiveBorder =
+				this.direction.getColorBoundsRect(
+					0xFF000000,0x00000000,false);
+		}
 		
-//		public function loadLayerFromPNG(callback:Function = null):void{
-//			var my_loader:Loader = new Loader();
-//			
-//			my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-//			if(callback!=null)
-//				my_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, callback);
-//			
-//			my_loader.load(new URLRequest(this._path));
-//		}
-		
-//		private function onLoadComplete (event:Event):void
-//		{
-//			this._img = new Bitmap(event.target.content.bitmapData);
-////			this.hsbArray = new Array(this._img.width);
-//			this._template.onLoadComplete(event);
-//		}
 		
 		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.process(this._fonter, "fonter");
 			output.process(this._colorer, "colorer");
 
-//			output.putBitmapDataToPNGFile("direction.png", this.direction);
-//			output.putBitmapDataToPNGFile("color.png", this.color);
 			output.putBitmapDataToPNGFile("direction.png", this.direction);
 			output.putBitmapDataToPNGFile("color.png", this.color);
-			
-			//			output.process(this._nudger, "nudger");
-			//			output.process(this._angler, "angler");
-			//			output.process(this._placer, "placer");
 		}
 
 		
-		public override function generateEffectiveBorder():void{
-//			var bounds:Rectangle = 
-//				this.direction.bitmapData.getColorBoundsRect(
-//					0xFF000000,0x00000000,false);
-//			
-			
-			this._effectiveBorder =
-				this.direction.getColorBoundsRect(
-									0xFF000000,0x00000000,false);
-			
-//			Notification.show(_effectiveBorder.toString());
-			
-//			for(var i:int=0;i<this.direction.width;i++){
-//				for (var j:int=0; j<this.direction.height;j++){
-//					if(this.containsPoint(i,j,false,-1,-1,1)){
-//						if(i<_effectiveBorder.x1)
-//							_effectiveBorder.x1 = i;
-//						if(j<_effectiveBorder.y1){
-//							_effectiveBorder.y1 = j;
-//						}
-//						if(i>_effectiveBorder.x2)
-//							_effectiveBorder.x2 = i;
-//						if(j>_effectiveBorder.y2)
-//							_effectiveBorder.y2 = j;
-//					}
-//				}
-//			}
-		}
 		
 		public override function readNonJSONPropertiesFromZip(input:IZipInput): void{
-			//TODO	
+			//TODO
 		}
 		
 		public override function saveProperties(dict:Object):void{
