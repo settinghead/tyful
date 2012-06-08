@@ -116,7 +116,7 @@ function startServices(){
 			    		 res.send(JSON.stringify({"error":err}));
 					} else {
 						console.log("saved to "+'/tmp/' + uuid +".png");
-						 res.send(JSON.stringify({"id":uuid}));
+						 res.send(JSON.stringify({"id":uuid+".png"}));
 					}
 				});
 			}
@@ -167,9 +167,9 @@ function startServices(){
 	});  
 
 
-	app.get('/r/:id', function(req, res){
+	app.get('/r/:filename', function(req, res){
 	
-	fs.readFile('/tmp/'+req.params.id+'.png', "binary", function(err, file) {
+	fs.readFile('/tmp/'+req.params.filename, "binary", function(err, file) {
 	      if(err) {        
 	        res.writeHead(500, {"Content-Type": "text/plain"});
 	        res.write(err + "\n");
