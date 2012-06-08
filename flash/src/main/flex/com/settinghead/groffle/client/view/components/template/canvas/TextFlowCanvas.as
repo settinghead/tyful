@@ -282,7 +282,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			if(drawingState){
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
-			
+				var colorShape:Shape = new Shape();
+
 
 				
 				switch(currentDrawingTool){
@@ -345,7 +346,6 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							
 						}
 						if(templateEditor.chkDrawColor.selected){
-							var colorShape:Shape = new Shape();
 
 							colorShape.graphics.lineStyle(thickness,0,1,true);
 							colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);

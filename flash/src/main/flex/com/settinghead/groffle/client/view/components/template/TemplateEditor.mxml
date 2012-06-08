@@ -157,7 +157,7 @@
 					this.callLater(drawTransparentBackground);
 					
 				}
-				public var myTip:ToolTip;
+//				public var myTip:ToolTip;
 				
 				protected function creationCompleteHandler(event:FlexEvent):void
 				{
@@ -180,18 +180,18 @@
 					this.drawingToolBar.selectedIndex  = BRUSH;
 					
 					
-					var s:String = "You are in editing mode.\Draw something on the canvas. \nThen click this button to create your personalized artwork with words from your Facebook profile and timeline."
-					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
-					myTip.setStyle("backgroundColor",0xFFCC00);
-					BindingUtils.bindProperty(myTip, "visible", this,"visible");
-					
+//					var s:String = "You are in editing mode.\Draw something on the canvas. \nThen click this button to create your personalized artwork with words from your Facebook profile and timeline."
+//					myTip = ToolTipManager.createToolTip(s,btnRender.x,btnRender.y+btnRender.height,"errorTipBelow",btnRender) as ToolTip;
+//					myTip.setStyle("backgroundColor",0xFFCC00);
+//					BindingUtils.bindProperty(myTip, "visible", this,"visible");
+//					
 				}
 				protected function canvas1_clickHandler(event:MouseEvent):void
 				{
-					if(myTip.visible){
-						ToolTipManager.destroyToolTip(myTip);
-						myTip.visible = false;
-					}
+//					if(myTip.visible){
+//						ToolTipManager.destroyToolTip(myTip);
+//						myTip.visible = false;
+//					}
 					
 				}
 				
