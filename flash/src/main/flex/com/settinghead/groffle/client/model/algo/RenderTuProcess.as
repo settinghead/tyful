@@ -101,7 +101,8 @@ package com.settinghead.groffle.client.model.algo
 						//in next round
 					{
 						if(totalAttemptedWords>0){
-							retryWords.push(eWord.word);
+							if(tu.eWords.length>0)
+								retryWords.push(eWord.word);
 							//							_failureCount++;
 							//							//5 consecutive failures. Put rendering to an end.
 							//							if (failureCount > tu.template.perseverance){
@@ -335,11 +336,8 @@ package com.settinghead.groffle.client.model.algo
 		}
 		
 		private function getNextWordAndIncrement():WordVO{
-			if(tu.eWords.length==0)
-			{
-				if(currentWordIndex==0) incrCurrentWordIndexAndGet();
+			if(tu.eWords.length==0) 
 				return tu.words.itemAt(0);
-			}
 			if(currentWordIndex==tu.words.size-1 && retryWords.length>0)
 				return retryWords.pop(); 
 			else 

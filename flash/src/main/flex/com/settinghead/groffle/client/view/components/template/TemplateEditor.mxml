@@ -341,8 +341,7 @@
 							var layer:WordLayer = new WordLayer(
 								"Layer"+(template.layers.length+2).toString(),template,
 								dirBmp.width, dirBmp.height);
-							//low tolerance by default
-							layer.tolerance = 0.4;
+							layer.tolerance = 1.0;
 							layer.transparentColor = 0xFFFFFFFF;
 							
 							var colorToReplace:uint = 0xFFFFFFFF;
