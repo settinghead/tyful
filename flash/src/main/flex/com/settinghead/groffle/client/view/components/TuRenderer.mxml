@@ -423,13 +423,17 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-			<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
-					   scaleY="{mainCanvas.scaleX}">
-				<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
-				<mx:Canvas id="wordLayers" top="0" left="0" />
+				<mx:Canvas top="0" left="0" bottom="0">				
+					<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
+						   scaleY="{mainCanvas.scaleX}">
+					<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
+					<mx:Canvas id="wordLayers" top="0" left="0" />
+				</mx:Canvas>
+				<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
+				<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
+
 			</mx:Canvas>
-			<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
-			<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
+
 		</s:Group>
 
 	</s:VGroup>
