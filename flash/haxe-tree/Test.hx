@@ -11,11 +11,9 @@ import flash.display.BitmapData;
 class Test {
 	
     static function main() {
-		var bmpd:BitmapData = new BitmapData(100,300, true, 0x00000000);
+		var bmpd:BitmapData = new BitmapData(100,100, true);
 		var s:BitmapShapeVO = new BitmapShapeVO(bmpd);
 		var t:BBPolarRootTreeVO = BBPolarTreeBuilder.makeTree(s,0);
-			
-		ExternalInterface.call( "console.log" , t.toString());
-			
+		ExternalInterface.call( "console.log" , t.toString());			
     }
 }

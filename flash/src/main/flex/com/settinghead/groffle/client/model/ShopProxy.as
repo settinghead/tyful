@@ -119,8 +119,8 @@ package com.settinghead.groffle.client.model
 			//_previewUrl.url = null;
 			tmpImg = img;
 			
-			
-			var b:ByteArray = PNGEncoder.encode(img);
+			PNGEncoder2.level=CompressionLevel.FAST;
+			var b:ByteArray = PNGEncoder2.encode(img);
 			// set up the request & headers for the image upload;
 //			var urlRequest : URLRequest = new URLRequest();
 //			//urlRequest.url = 'http://file.wenwentu.com/r/';
@@ -130,7 +130,6 @@ package com.settinghead.groffle.client.model
 //			urlRequest.method = URLRequestMethod.POST;
 //			urlRequest.data = b;
 //			urlRequest.requestHeaders.push(header);
-
 			urlLoader = new MultipartURLLoader();
 			// create the image loader & send the image to the server;
 			urlLoader.dataFormat = URLLoaderDataFormat.TEXT;

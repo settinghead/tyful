@@ -11,17 +11,17 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 		}
 			
 			
-	public override function getRootX():Int {
+	public override inline function getRootX():Int {
 		return root.getRootX();
 	}
 			
 			
-	public override function getRootY():Int {
+	public override inline function getRootY():Int {
 		return root.getRootY();
 	}
 			
 			
-	private override function computeX(rotate:Bool):Float {
+	private override inline function computeX(rotate:Bool):Float {
 		var x:Float;
 		if (getR1(rotate) < BBPolarTreeVO.HALF_PI) {
 			if (getR2(rotate) < getR1(rotate)) {
@@ -72,7 +72,7 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 	}
 			
 			
-	private override function computeY(rotate:Bool):Float {
+	private override inline function computeY(rotate:Bool):Float {
 		var y:Float;
 		if (getR1(rotate) < BBPolarTreeVO.HALF_PI) {
 			if (getR2(rotate) < getR1(rotate)) {
@@ -120,7 +120,7 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 	}
 			
 			
-	private override function computeRight(rotate:Bool):Float {
+	private override inline function computeRight(rotate:Bool):Float {
 		var right:Float;
 		if (getR1(rotate) < BBPolarTreeVO.HALF_PI) {
 			if (getR2(rotate) < getR1(rotate)) {
@@ -166,7 +166,7 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 	}
 			
 			
-	private override function computeBottom(rotate:Bool):Float {
+	private override inline function computeBottom(rotate:Bool):Float {
 		var bottom:Float;
 		if (getR1(rotate) < BBPolarTreeVO.HALF_PI) {
 			if (getR2(rotate) < getR1(rotate)) {
@@ -217,12 +217,12 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 	}
 			
 			
-	override public function getRotation():Float {
+	override public inline function getRotation():Float {
 		return root.getRotation();
 	}
 			
 			
-	public override function getCurrentStamp():Int {
+	public override inline function getCurrentStamp():Int {
 		return root.getCurrentStamp();
 	}
 			
@@ -231,12 +231,12 @@ class BBPolarChildTreeVO extends BBPolarTreeVO {
 	}
 			
 			
-	public override function getMinBoxSize():Int {
+	public override inline function getMinBoxSize():Int {
 		return root.getMinBoxSize();
 	}
 			
 			
-	public override function getShape():IImageShape {
+	public override inline function getShape():IImageShape {
 		return root.getShape();
 	}
 }

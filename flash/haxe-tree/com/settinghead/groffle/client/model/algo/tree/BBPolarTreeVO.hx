@@ -152,7 +152,7 @@ class BBPolarTreeVO {
 	private function computeRight(rotate:Bool):Float  {throw "NotImplementedError";return Math.NaN;}
 	private function computeBottom(rotate:Bool):Float  {throw "NotImplementedError";return Math.NaN;}
 		
-	public function getR1(rotate:Bool):Float {
+	public inline function getR1(rotate:Bool):Float {
 		if (rotate) {
 			checkRecompute();
 			return this._computedR1;
@@ -160,7 +160,7 @@ class BBPolarTreeVO {
 			return this._r1;
 	}
 		
-	public function getR2(rotate:Bool):Float {
+	public inline function getR2(rotate:Bool):Float {
 		if (rotate) {
 			checkRecompute();
 			return this._computedR2;
@@ -168,7 +168,7 @@ class BBPolarTreeVO {
 			return this._r2;
 	}
 		
-	public function checkRecompute():Void {
+	public inline function checkRecompute():Void {
 		if (this.rStamp != this.getCurrentStamp()) {
 			computeR1();
 			computeR2();
@@ -176,21 +176,21 @@ class BBPolarTreeVO {
 		}
 	}
 		
-	private function computeR1():Void {
+	private inline function computeR1():Void {
 		_computedR1 = this._r1 + getRotation();
 		if (_computedR1 > TWO_PI)
 			this._computedR1 = this._computedR1 % TWO_PI;
 			
 	}
 		
-	private function computeR2():Void {
+	private inline function computeR2():Void {
 		this._computedR2 = this._r2 + getRotation();
 		if (this._computedR2 > TWO_PI)
 			this._computedR2 = this._computedR2 % TWO_PI;
 			
 	}
 		
-	private function checkUpdatePoints():Void{
+	private inline function checkUpdatePoints():Void{
 		if (this.pointsStamp != this.getCurrentStamp()) {
 			this._px = getRootX() - swelling + getX(true);
 			this._py = getRootY() - swelling + getY(true);
@@ -210,28 +210,28 @@ class BBPolarTreeVO {
 		}
 	}
 		
-	private function px():Float{
+	private inline function px():Float{
 		checkUpdatePoints();
 		return this._px;
 	}
 		
-	private function py():Float{
+	private inline function py():Float{
 		checkUpdatePoints();
 		return this._py;
 	}
 		
-	private function pright():Float{
+	private inline function pright():Float{
 		checkUpdatePoints();
 		return this._pright;
 	}
 		
-	private function pbottom():Float{
+	private inline function pbottom():Float{
 		checkUpdatePoints();
 		return this._pbottom;
 	}
 		
 		
-	private function collide(bTree:BBPolarTreeVO):Bool {	
+	private inline function collide(bTree:BBPolarTreeVO):Bool {	
 		var dist:Float = Math.sqrt(Math.pow( this.getRootX()-bTree.getRootX(), 2)+Math.pow( this.getRootY()-bTree.getRootY(), 2));
 		if(dist > this.d2 + bTree.d2) return false;
 		else 
@@ -251,21 +251,21 @@ class BBPolarTreeVO {
 	}
 		
 		
-	private function rectCollide(bTree:BBPolarTreeVO):Bool {	
+	private inline function rectCollide(bTree:BBPolarTreeVO):Bool {	
 		return rectCollideCoord(bTree.px(), bTree.py(), bTree.pright(), bTree.pbottom());
 	}
 		
-	private function rectContain(x:Float, y:Float, right:Float, bottom:Float):Bool {
+	private inline function rectContain(x:Float, y:Float, right:Float, bottom:Float):Bool {
 		return this.px() <= x && this.py() <= y && this.pright() >= right && this.pbottom() >= bottom;
 	}
 		
-	private function rectCollideCoord(x:Float, y:Float, right:Float, bottom:Float):Bool {
+	private inline function rectCollideCoord(x:Float, y:Float, right:Float, bottom:Float):Bool {
 			
 		//			var margin:Int = 2;
 		return this.pbottom() > y && this.py() < bottom  && this.pright() > x && this.px() < right;
 	}
 		
-	public function isLeaf():Bool {
+	public inline function isLeaf():Bool {
 		return _leaf;
 	}
 		
@@ -297,14 +297,14 @@ class BBPolarTreeVO {
 	 *            the rotation to set
 	 */
 		
-	private function checkComputeX():Void {
+	private inline function checkComputeX():Void {
 		if (this.xStamp != this.getCurrentStamp()) {
 			this._x = computeX(true);
 			this.xStamp = this.getCurrentStamp();
 		}
 	}
 		
-	private function checkComputeY():Void {
+	private inline function checkComputeY():Void {
 		if (this.yStamp != this.getCurrentStamp()) {
 			this._y = computeY(true);
 			this.yStamp = this.getCurrentStamp();
@@ -312,39 +312,39 @@ class BBPolarTreeVO {
 			
 	}
 		
-	private function checkComputeRight():Void {
+	private inline function checkComputeRight():Void {
 		if (this.rightStamp != this.getCurrentStamp()) {
 			this._right = computeRight(true);
 			this.rightStamp = this.getCurrentStamp();
 		}
 	}
 		
-	private function checkComputeBottom():Void {
+	private inline function checkComputeBottom():Void {
 		if (this.bottomStamp != this.getCurrentStamp()) {
 			this._bottom = computeBottom(true);
 			this.bottomStamp = this.getCurrentStamp();
 		}
 	}
 		
-	private function getRelativeX():Float {
+	private inline function getRelativeX():Float {
 		if (Math.isNaN(this._relativeX))
 			this._relativeX = computeX(false);
 		return this._relativeX;
 	}
 		
-	private function getRelativeY():Float {
+	private inline function getRelativeY():Float {
 		if (Math.isNaN(this._relativeY))
 			this._relativeY = computeY(false);
 		return this._relativeY;
 	}
 		
-	private function getRelativeRight():Float {
+	private inline function getRelativeRight():Float {
 		if (Math.isNaN(this._relativeRight))
 			this._relativeRight = computeRight(false);
 		return this._relativeRight;
 	}
 		
-	private function getRelativeBottom():Float {
+	private inline function getRelativeBottom():Float {
 		if (Math.isNaN(this._relativeBottom))
 			this._relativeBottom = computeBottom(false);
 		return this._relativeBottom;
@@ -392,7 +392,7 @@ class BBPolarTreeVO {
 		
 	public function getCurrentStamp():Int {
 		throw "NotImplementedError";
-		return 0;
+		return -1;
 	}
 		
 	public function setLeaf(b:Bool):Void {

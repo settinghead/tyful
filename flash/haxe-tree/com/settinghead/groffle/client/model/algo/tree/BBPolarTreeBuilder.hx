@@ -9,7 +9,7 @@ class BBPolarTreeBuilder {
 	          haxe.Log.trace("Assert in "+pos.className+"::"+pos.methodName,pos);
 	   }
 
-	public static function makeTree(shape:IImageShape, swelling:Int):BBPolarRootTreeVO {
+	public static inline function makeTree(shape:IImageShape, swelling:Int):BBPolarRootTreeVO {
 		var minBoxSize:Int= 1;
 		// center
 		var x:Int= Std.int(shape.getWidth() / 2);
@@ -38,7 +38,7 @@ class BBPolarTreeBuilder {
 			tree.addKids(children);
 	}
 
-	public static function splitTree(tree:BBPolarTreeVO, shape:IImageShape,
+	public static inline function splitTree(tree:BBPolarTreeVO, shape:IImageShape,
 		 minBoxSize:Int, root:BBPolarRootTreeVO, type:Int):Array<BBPolarChildTreeVO> {
 		var result:Array<BBPolarChildTreeVO>= new Array<BBPolarChildTreeVO>();
 		var re:BBPolarChildTreeVO;
@@ -148,7 +148,7 @@ class BBPolarTreeBuilder {
 		return result;
 	}
 
-	private static function determineType(tree:BBPolarTreeVO):Int {
+	private static inline function determineType(tree:BBPolarTreeVO):Int {
 		var d:Float= (tree.d2 - tree.d1);
 		var midLength:Float= ((tree.d2 + tree.d1)
 				* (tree.getR2(false) - tree.getR1(false)) / 2);
@@ -163,32 +163,40 @@ class BBPolarTreeBuilder {
 			return SplitType._1RAY1CUT;
 	}
 
-	private static function makeChildTree(shape:IImageShape, minBoxSize:Int,
+	private static inline function makeChildTree(shape:IImageShape, minBoxSize:Int,
 			r1:Float, r2:Float, d1:Float, d2:Float, root:BBPolarRootTreeVO):BBPolarChildTreeVO {
 
 		var tree:BBPolarChildTreeVO= new BBPolarChildTreeVO(r1, r2, d1, d2,
 				root, minBoxSize);
 		var x:Float= tree.getX(false) +  shape.getWidth() / 2;
-		if(x>shape.getWidth()) return null;
-		var y:Float= tree.getY(false) + shape.getHeight() / 2;
-		if(y>shape.getHeight()) return null;
-		var width:Float= tree.getRight(false) - tree.getX(false);
-//		if(width<1) return null;
-		if(x+width<0) return null;
-		var height:Float= tree.getBottom(false) - tree.getY(false);
-//		if(height<1) return null;
-		if(y+height<0) return null;
-		assert(width > 0);
-		assert(height > 0);
-		if (shape == null || shape.contains(x, y, width, height, 0, false)) {
-			return tree;
-		} else {
-			if (shape.intersects(x, y, width, height,false)) {
-				return tree;
-			} else { // neither contains nor intersects
-				return null;
+		if(x>shape.getWidth()) tree = null;
+		else{
+			var y:Float= tree.getY(false) + shape.getHeight() / 2;
+			if(y>shape.getHeight()) tree = null;
+			else{
+				var width:Float= tree.getRight(false) - tree.getX(false);
+		//		if(width<1) return null;
+				if(x+width<0) tree = null;
+				else{
+					var height:Float= tree.getBottom(false) - tree.getY(false);
+			//		if(height<1) return null;
+					if(y+height<0) tree =  null;
+					else{
+						assert(width > 0);
+						assert(height > 0);
+						if (shape == null || shape.contains(x, y, width, height, 0, false)) {
+						} else {
+							if (shape.intersects(x, y, width, height,false)) {
+							} else { // neither contains nor intersects
+								tree = null;
+							}
+						}
+						
+					}
+				}
 			}
 		}
+		return tree;
 	}
 
 	public static var correctCount:Int= 0;
