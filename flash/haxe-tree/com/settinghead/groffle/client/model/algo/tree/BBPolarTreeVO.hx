@@ -88,14 +88,14 @@ class BBPolarTreeVO {
 		return false;
 	}
 		
-	public function getKids():Array<BBPolarChildTreeVO> {
+	public inline function getKids():Array<BBPolarChildTreeVO> {
 		if ((!this.isLeaf()) && this._kids == null)
 			BBPolarTreeBuilder.makeChildren(this, getShape(), getMinBoxSize(),
 				getRoot());
 		return this._kids;
 	}
 		
-	public function getKidsNoGrowth():Array<BBPolarChildTreeVO> {
+	public inline function getKidsNoGrowth():Array<BBPolarChildTreeVO> {
 		return this._kids;
 	}
 		
