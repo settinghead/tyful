@@ -35,7 +35,7 @@ public class FacebookRetriever {
 		ArrayList<Post> messages = new ArrayList<Post>();
 
 		FacebookClient client = new DefaultFacebookClient(token);
-		Connection<Post> myFeed = client.fetchConnection("me/posts",
+		Connection<Post> myFeed = client.fetchConnection(uid+"/posts",
 				Post.class, Parameter.with("limit", "100"));
 		int count = 0;
 		outer: for (List<Post> myFeedConnectionPage : myFeed)
@@ -87,7 +87,7 @@ public class FacebookRetriever {
 
 	public List<Word> parseWordList(String uid, String token, List<Post> posts) {
 		FacebookClient facebookClient = new DefaultFacebookClient(token);
-		User me = facebookClient.fetchObject("me", User.class);
+		User me = facebookClient.fetchObject(uid, User.class);
 
 		ArrayList<Word> result = new ArrayList<Word>();
 		final Counter<String> allWords = new Counter<String>();
@@ -176,7 +176,7 @@ public class FacebookRetriever {
 		final Counter<String> allWords = new Counter<String>();
 
 		FacebookClient client = new DefaultFacebookClient(token);
-		Connection<Page> myLikes = client.fetchConnection("me/likes",
+		Connection<Page> myLikes = client.fetchConnection(uid+"/likes",
 				Page.class);
 		int count = 0;
 		outer: for (List<Page> myFeedConnectionPage : myLikes)
@@ -199,12 +199,12 @@ public class FacebookRetriever {
 
 	private HashMap<String, ArrayList<Occurence>> occurMap = new HashMap<String, ArrayList<Occurence>>();
 
-	public List<Word> getWordsForUser(String uid, String token) {
-		List<Post> messages = getMessages(uid, token);
-		List<Word> wordList = parseWordList(uid, token, messages);
+	public List<Word> getWordsForUser(String targetUid, String uid, String token) {
+		List<Post> messages = getMessages(targetUid, token);
+		List<Word> wordList = parseWordList(targetUid, token, messages);
 		if (wordList.size() < 100) {
 			// use likes to fill in space
-			Counter<String> likeWords = getLikes(uid, token);
+			Counter<String> likeWords = getLikes(targetUid, token);
 			for (String key : likeWords.keySet())
 				wordList.add(new Word(key, likeWords.getCount(key), occurMap
 						.get(key)));

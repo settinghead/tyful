@@ -30,7 +30,7 @@ package com.settinghead.groffle.client.model
 		public function load() :void{
 			if(this._list==null){
 				//var wordListId:String = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.wordListId) as String;
-				var request : URLRequest = new URLRequest  ( "/word_list/recent" );
+				var request : URLRequest = new URLRequest  ( "/word_list/facebook/me" );
 				var urlVariables : URLVariables = new URLVariables ();
 				request.data = urlVariables;
 				request.method = URLRequestMethod.GET;

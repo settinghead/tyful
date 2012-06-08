@@ -15,23 +15,45 @@ class WordListController < ApplicationController
     end
   end
   
-  def show
+  def facebook
     str = nil
     @l = {}
-    if(params[:id]=='recent')
-      if session.has_key?('omniauth')
-        str = REDIS.get('wl_'+session[:omniauth].provider+'_'+session[:omniauth].uid)
-        if(str)
-          @l = ActiveSupport::JSON.decode(str)
-        else
-          WordListController.push_wordlist_task(session[:omniauth],current_user)
-          @l = {:status => 'requested'}
-        end
+    if(params[:id]=='me')
+      targetId = session[:omniauth].uid;
+    else
+      targetId = params[:id]
+    end
+  
+    if session.has_key?('omniauth')
+      str = REDIS.get("wl_#{session[:omniauth].provider}_#{session[:omniauth].uid}_#{targetId}")
+      if(str)
+        @l = ActiveSupport::JSON.decode(str)
       else
-        @l = {:error => 'You need to log in to Facebook in order to create your personalized word cloud. Groffle will use a sample word list for now.'}
+        WordListController.push_wordlist_task(session[:omniauth],current_user)
+        @l = {:status => 'requested'}
       end
     else
-      str = REDIS.get('wl_'+params[:id])
+      @l = {:error => 'You need to log in to Facebook in order to create an artwork for Facebook profile. Groffle will use a sample word list for now.'}
+    end
+    
+    respond_to do |format|
+      format.html { render json: @l }
+      format.json { render json: @l }
+    end
+      
+  end
+    
+  def url
+    
+  end
+  
+  def show
+    @l = {}
+    str = REDIS.get('wl_'+params[:id])
+    if(str)
+      @l = ActiveSupport::JSON.decode(str)
+    else
+      @l = {:error => "No such word list with given id #{params[:id]}"}
     end
     respond_to do |format|
       format.html { render json: @l }
@@ -39,12 +61,15 @@ class WordListController < ApplicationController
     end
   end
   
-  def self.push_wordlist_task(omniauth, user)
+  def self.push_wordlist_task(omniauth, user, targetId=nil)
+    targetId = omniauth['uid'] if !targetId
     #enqueue wordlist generation task
     task = {:provider => omniauth['provider'], 
       :token => omniauth['credentials']['token'],
       :uid => omniauth['uid'],
-      :user_id => user.id}
+      :user_id => user.id,
+      :targetId => targetId
+    }
     REDIS.lpush("wordlisttask_q", ActiveSupport::JSON.encode(task))
   end
 end

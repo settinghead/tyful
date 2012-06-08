@@ -14,6 +14,7 @@ public class WordListTask extends Task {
 	private String uid;
 	private int user_id;
 	private String provider;
+	private String targetId;
 
 	/**
 	 * @return the token
@@ -77,7 +78,8 @@ public class WordListTask extends Task {
 
 	@Override
 	public String getKey() {
-		return "wl_" + this.getProvider() + "_" + this.getUid();
+		return "wl_" + this.getProvider() + "_" + this.getUid() + "_"
+				+ this.getTargetId();
 	}
 
 	@Override
@@ -86,8 +88,8 @@ public class WordListTask extends Task {
 		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 
 		FacebookRetriever retriever = new FacebookRetriever();
-		List<Word> wordList = retriever.getWordsForUser(this.getUid(),
-				this.getToken());
+		List<Word> wordList = retriever.getWordsForUser(this.getTargetId(),
+				this.getUid(), this.getToken());
 
 		StringWriter sw = new StringWriter();
 		try {
@@ -97,9 +99,25 @@ public class WordListTask extends Task {
 		return sw.toString();
 	}
 
+	/**
+	 * @return the targetId
+	 */
+	public String getTargetId() {
+		return targetId;
+	}
+
+	/**
+	 * @param targetId
+	 *            the targetId to set
+	 */
+	public void setTargetId(String targetId) {
+		this.targetId = targetId;
+	}
+
 	@Override
 	public int getExpiration() {
 		// expires in 24 hours
 		return 86400;
 	}
+
 }

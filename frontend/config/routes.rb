@@ -6,7 +6,10 @@ Groffle::Application.routes.draw do
   get "shop/show"
 
   resources :authentications
-  resources :word_list
+  
+  match '/word_list/facebook/:id' => 'word_list#facebook'
+  match '/word_list/url/:url' => 'word_list#url'
+  resources :word_list 
   resources :shop
   resources :artworks
   match '/facebook/invite/' => 'facebook#invite'

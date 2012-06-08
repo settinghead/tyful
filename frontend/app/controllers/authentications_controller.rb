@@ -57,7 +57,7 @@ class AuthenticationsController < ApplicationController
     REDIS.set("token_#{user.id}", user.token)
     #REDIS.set("fbtoken_#{user.id}", omniauth['credentials']['token'])
 
-    WordListController.push_wordlist_task(omniauth, user)
+    WordListController.push_wordlist_task(omniauth, user, omniauth['uid'])
     
   end
   

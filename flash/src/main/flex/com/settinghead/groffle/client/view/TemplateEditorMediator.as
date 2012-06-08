@@ -100,7 +100,7 @@ package com.settinghead.groffle.client.view
 		private function createTemplate(event:CreateTemplateEvent):void{
 
 			templateProxy.newTemplate(event.width, event.height);
-			setTimeout(function(){
+			setTimeout(function():void{
 				Notification.show("Start by drawing something. ", "Tip",null, 10000);
 			}, 2000);
 		}
