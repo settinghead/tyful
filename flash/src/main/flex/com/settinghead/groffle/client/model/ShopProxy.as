@@ -119,7 +119,7 @@ package com.settinghead.groffle.client.model
 			//_previewUrl.url = null;
 			tmpImg = img;
 			
-			PNGEncoder2.level=CompressionLevel.FAST;
+			PNGEncoder2.level=CompressionLevel.UNCOMPRESSED;
 			var b:ByteArray = PNGEncoder2.encode(img);
 			// set up the request & headers for the image upload;
 //			var urlRequest : URLRequest = new URLRequest();
