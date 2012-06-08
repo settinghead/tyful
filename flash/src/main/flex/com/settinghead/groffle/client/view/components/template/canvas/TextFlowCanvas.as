@@ -70,7 +70,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 	
 		
-		private var a:BitmapAsset = Assets.getSmallA();
+		private var smallA:BitmapAsset = Assets.getSmallA();
 		private var lockBoundaryShader:Shader = Assets.getLockBoundaryShader();
 		
 		private static var HintShowed:Boolean = false;
@@ -220,20 +220,22 @@ package com.settinghead.groffle.client.view.components.template.canvas
 
 						var textLayer:UIComponent = new UIComponent();
 						textLayer.graphics.clear();
-						var m:Matrix = a.transform.matrix;
-						m.tx -= a.width/2;
-						m.ty -= a.height/2;
+						var m:Matrix = smallA.transform.matrix;
+						m.tx -= smallA.width/2;
+						m.ty -= smallA.height/2;
 						m.rotate(-angle);
-						m.tx += a.width/2;
-						m.ty += a.height/2;
+						m.tx += smallA.width/2;
+						m.ty += smallA.height/2;
 						textLayer.width = thickness;
 						textLayer.height = thickness;
 						textLayer.x = 0;
 						textLayer.y = 0;
-						textLayer.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-						textLayer.graphics.beginBitmapFill(a.bitmapData,m,true, true);
+						textLayer.graphics.lineBitmapStyle(smallA.bitmapData,m,true,true);
+						textLayer.graphics.beginBitmapFill(smallA.bitmapData,m,true, true);
 						textLayer.graphics.drawCircle(0, 0, thickness/2);
 						textLayer.graphics.endFill();
+						textLayer.blendMode = BlendMode.ALPHA;
+						cursor.blendMode = BlendMode.LAYER;
 						
 						while(cursor.numChildren>0)
 							cursor.removeChildAt(0);
@@ -315,9 +317,9 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							shape.graphics.lineStyle(thickness, dirColor, 1);
 							dirShape.graphics.lineStyle(thickness,0,0.5,true);
 	//						var a:BitmapAsset = new SmallA();
-							var m:Matrix = a.transform.matrix;
+							var m:Matrix = smallA.transform.matrix;
 							m.rotate(-angle);
-							dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
+							dirShape.graphics.lineBitmapStyle(smallA.bitmapData,m,true,true);
 							shape.graphics.moveTo(oldMouseX, oldMouseY);
 							dirShape.graphics.moveTo(oldMouseX, oldMouseY);
 							shape.graphics.lineTo(this.mouseX,this.mouseY);
@@ -446,6 +448,9 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				bmpDirElement = new BitmapImage();
 				bmpDirElement.source = bmpDirection;
 				
+				this.blendMode = BlendMode.LAYER;
+				this.bmpDirElement.blendMode = BlendMode.ALPHA;
+				
 //				this.addElement(bmpElement);
 				this.addElement(colorSheetElement);
 				this.addElement(bmpDirElement);
@@ -456,10 +461,10 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		private function redrawDireciton(xs:Number,ys:Number,xe:Number,ye:Number):void{
 //			var str:String = "";
 			//expand the region a little to align with global grid lines
-			xs = xs - xs%a.width; if(xs<0) xs = 0;
-			ys = ys - ys%a.height; if(ys<0) ys =0;
-			xe = xe + xe%a.width; if (xe>=layer.getWidth()) xe = layer.getWidth()-1;
-			ye = ye + ye%a.height; if(ye>=layer.getHeight()) ye = layer.getHeight()-1;
+			xs = xs - xs%smallA.width; if(xs<0) xs = 0;
+			ys = ys - ys%smallA.height; if(ys<0) ys =0;
+			xe = xe + xe%smallA.width; if (xe>=layer.getWidth()) xe = layer.getWidth()-1;
+			ye = ye + ye%smallA.height; if(ye>=layer.getHeight()) ye = layer.getHeight()-1;
 			var dirErase:Shape = new Shape();
 			dirErase.graphics.lineStyle(1,0xff0000);
 			dirErase.graphics.beginFill(0xff0000,1);
@@ -467,22 +472,22 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			dirErase.graphics.endFill();
 			bmpDirection.bitmapData.draw(dirErase,new Matrix(),null,BlendMode.ERASE);
 		
-			for(var w:Number = xs; w<xe;w+=a.width){
-				for(var h:Number = ys; h<ye;h+=a.height){
+			for(var w:Number = xs; w<xe;w+=smallA.width){
+				for(var h:Number = ys; h<ye;h+=smallA.height){
 					var m:Matrix = new Matrix();
 
-					var angle:Number = layer.getHue(w+a.width/2, h+a.height/2)*BBPolarTreeVO.TWO_PI;
+					var angle:Number = layer.getHue(w+smallA.width/2, h+smallA.height/2)*BBPolarTreeVO.TWO_PI;
 //					str = str+" "+angle.toString();
-					m.tx -= a.width/2;
-					m.ty -= a.height/2;
+					m.tx -= smallA.width/2;
+					m.ty -= smallA.height/2;
 					m.rotate(-angle);
-					m.tx += a.width/2;
-					m.ty += a.height/2;
+					m.tx += smallA.width/2;
+					m.ty += smallA.height/2;
 					var dirShape:Shape = new Shape();
 					dirShape.graphics.lineStyle(1,0,0.3,false);
-					dirShape.graphics.lineBitmapStyle(a.bitmapData,m,true,true);
-					for(var ox:Number = 0; ox<a.width;ox++)
-						for(var oy:Number = 0; oy<a.height;oy++){
+					dirShape.graphics.lineBitmapStyle(smallA.bitmapData,m,true,true);
+					for(var ox:Number = 0; ox<smallA.width;ox++)
+						for(var oy:Number = 0; oy<smallA.height;oy++){
 							if(layer.containsPoint(ox+w,oy+h,false)){
 								dirShape.graphics.moveTo(ox, oy);
 								dirShape.graphics.lineTo(ox,oy+1);
