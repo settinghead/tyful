@@ -327,8 +327,8 @@
 					//adjust for effective border
 					this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
 					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
-					this.mainCanvas.left = -_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN;
-					this.mainCanvas.top = -_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN;
+					this.mainCanvas.left = (-_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN)/mainCanvas.scaleX;
+					this.mainCanvas.top = -(_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN)/mainCanvas.scaleY;
 					dict = new Dictionary();
 					
 					for each(var l:Layer in _tu.template.layers){
@@ -423,7 +423,6 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-				<mx:Canvas top="0" left="0" bottom="0">				
 					<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
 						   scaleY="{mainCanvas.scaleX}">
 					<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
@@ -431,9 +430,6 @@
 				</mx:Canvas>
 				<mx:Canvas id="treeLayer" top="0" bottom="0" left="0" right="0" visible="false" />
 				<!--template:PatchLayer id="patchLayer"  top="0" bottom="0" left="0" right="0" visible="true" /-->
-
-			</mx:Canvas>
-
 		</s:Group>
 
 	</s:VGroup>
