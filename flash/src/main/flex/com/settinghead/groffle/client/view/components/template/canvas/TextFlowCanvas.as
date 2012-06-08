@@ -282,7 +282,6 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			if(drawingState){
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
-				var colorShape:Shape = new Shape();
 			
 
 				
@@ -295,8 +294,21 @@ package com.settinghead.groffle.client.view.components.template.canvas
 //						templateEditor.chkLockBoundary.selected?
 //							BlendMode.SHADER :
 							BlendMode.NORMAL;
-							var bounds:Rectangle;
-
+						var bounds:Rectangle;
+						var minX:Number = Math.min(oldMouseX, this.mouseX) - thickness/2;
+						var minY:Number = Math.min(oldMouseY, this.mouseY) - thickness/2;
+						var bWidth:Number = Math.abs(oldMouseX-this.mouseX) + thickness;
+						var bHeight:Number = Math.abs(oldMouseY-this.mouseY) + thickness;
+						bounds = new Rectangle(minX,minY,bWidth,bHeight);
+							//init transform matrices
+							
+							var m1:Matrix = new Matrix();
+							m1.tx -= bounds.x;
+							m1.ty -= bounds.y;
+							var m2:Matrix =  new Matrix();
+							m2.tx += bounds.x;
+							m2.ty += bounds.y;
+						
 						if(templateEditor.chkDrawAngle.selected){
 							var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
 							shape.graphics.lineStyle(thickness, dirColor, 1);
@@ -312,28 +324,16 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							
 
 							if(templateEditor.chkLockBoundary.selected){
-								var minX:Number = Math.min(oldMouseX, this.mouseX) - thickness/2;
-								var minY:Number = Math.min(oldMouseY, this.mouseY) - thickness/2;
-								var bWidth:Number = Math.abs(oldMouseX-this.mouseX) + thickness;
-								var bHeight:Number = Math.abs(oldMouseY-this.mouseY) + thickness;
-								bounds = new Rectangle(minX,minY,bWidth,bHeight);
-								
+						
 								var bShape:BitmapData  = new BitmapData(bounds.width, bounds.height,true,0x00000000);
 								var bDirShape:BitmapData = new BitmapData(bounds.width, bounds.height,true, 0x00000000);
 								
-								
-								var m1:Matrix = new Matrix();
-								m1.tx -= bounds.x;
-								m1.ty -= bounds.y;
+							
 								bShape.draw(shape,m1);
 								bDirShape.draw(dirShape,m1);
 								bShape.threshold(layer.direction,bounds,origin,"==",0,0,0xFF000000,false);
 								bDirShape.threshold(layer.direction,bounds,origin,"==",0,0,0xFF000000,false);
-								var m2:Matrix =  new Matrix();
-								m2.tx += bounds.x;
-								m2.ty += bounds.y;
-//								
-//								
+								
 								layer.direction.draw(bShape,m2);
 								bmpDirection.bitmapData.draw(bDirShape,m2);
 							}
@@ -345,6 +345,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							
 						}
 						if(templateEditor.chkDrawColor.selected){
+							var colorShape:Shape = new Shape();
+
 							colorShape.graphics.lineStyle(thickness,0,1,true);
 							colorShape.graphics.lineBitmapStyle(colorPattern,m,true,true);
 							colorShape.graphics.moveTo(oldMouseX, oldMouseY);
