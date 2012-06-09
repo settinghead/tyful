@@ -47,34 +47,45 @@
   margin-bottom: 10px;
 }
 
-h1{
-  display:inline;
-}
+	h1{
+	  display:inline;
+	}
   #modal{
     display: none;
   }
-
+  
   .masonry-container{
+  
+  margin-left: 20px;
   .item {
   text-align: center;
   .inner{
-    font-size: 10px;
-	width: 200px;
+    font-size: 12px;
+	width: 220px;
 	background-color: #fff;
-
-	.tools{
-	    float: right;
-	}
     img{
 	  max-width: 200px;
+	  border: 0px;
+	  border-right: 1px;
+	  border-style: solid;
+	  border-color: #eee;
+	  margin: 10px;
+	}
+	.tools{
+	    display: inline;
+	}
+	
+	.label-area{
+		padding: 10px;
+		background-color: #eee;
+		
+		width: 200px;
 	}
 	}
   }
   
   .box .inner
   {
-  
-  	padding: 10px;
   	background-color: #fff;
   	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
   	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
@@ -164,7 +175,7 @@ h1{
 	border:1px solid #74b807;
 	display:inline-block;
 	color:#ffffff;
-	font-size:31px;
+	font-size:29px;
 	font-weight:700;
 	padding:2px 20px;
 	text-decoration:none;
