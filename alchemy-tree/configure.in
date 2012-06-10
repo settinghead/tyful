@@ -1,0 +1,27 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(alchemyTest, 0.0.1)
+AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_SRCDIR(src/main/cpp/stringecho.c)
+
+AM_INIT_AUTOMAKE
+
+dnl Compiler
+AC_PROG_CXX
+AC_PROG_CC
+AC_LANG(C++)
+AC_LANG(C)
+
+CFLAGS=""
+AM_CFLAGS="-Wall -O3 -swc "
+AC_SUBST(AM_CFLAGS)
+CXXFLAGS=""
+AM_CXXFLAGS="-Wall -O3 -swc "
+AC_SUBST(AM_CXXFLAGS)
+
+dnl Initialise top_srcdir
+top_srcdir=.
+
+AC_OUTPUT([
+Makefile
+alchemy/Makefile
+])
