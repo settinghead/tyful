@@ -4,7 +4,7 @@
 #include "BBPolarRootTreeVO.h"
 #include "BBPolarTreeBuilder.h"
 #include "BBPolarTreeVO.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 namespace polartree {
 
@@ -303,7 +303,7 @@ int BBPolarChildTreeVO::getMinBoxSize() {
 	return this->root->getMinBoxSize();
 }
 
-IImageShape* BBPolarChildTreeVO::getShape() {
+ImageShape* BBPolarChildTreeVO::getShape() {
 	return this->root->getShape();
 }
 

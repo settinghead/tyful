@@ -3,7 +3,7 @@
 #include "BBPolarChildTreeVO.h"
 #include "BBPolarRootTreeVO.h"
 #include "BBPolarTreeBuilder.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 namespace polartree {
 

@@ -6,12 +6,12 @@
 #ifndef INCLUDED_polartree_BBPolarTreeVO
 #include <polartree/BBPolarTreeVO.h>
 #endif
-#ifndef INCLUDED_polartree_IImageShape
-#include <polartree/IImageShape.h>
+#ifndef INCLUDED_polartree_ImageShape
+#include <polartree/ImageShape.h>
 #endif
 namespace polartree{
 
-Void BBPolarRootTreeVO_obj::__construct(::polartree::IImageShape shape,int centerX,int centerY,double d,int minBoxSize)
+Void BBPolarRootTreeVO_obj::__construct(::polartree::ImageShape shape,int centerX,int centerY,double d,int minBoxSize)
 {
 {
 	HX_SOURCE_POS("polartree/BBPolarRootTreeVO.hx",12)
@@ -38,7 +38,7 @@ Void BBPolarRootTreeVO_obj::__construct(::polartree::IImageShape shape,int cente
 BBPolarRootTreeVO_obj::~BBPolarRootTreeVO_obj() { }
 
 Dynamic BBPolarRootTreeVO_obj::__CreateEmpty() { return  new BBPolarRootTreeVO_obj; }
-hx::ObjectPtr< BBPolarRootTreeVO_obj > BBPolarRootTreeVO_obj::__new(::polartree::IImageShape shape,int centerX,int centerY,double d,int minBoxSize)
+hx::ObjectPtr< BBPolarRootTreeVO_obj > BBPolarRootTreeVO_obj::__new(::polartree::ImageShape shape,int centerX,int centerY,double d,int minBoxSize)
 {  hx::ObjectPtr< BBPolarRootTreeVO_obj > result = new BBPolarRootTreeVO_obj();
 	result->__construct(shape,centerX,centerY,d,minBoxSize);
 	return result;}
@@ -153,7 +153,7 @@ int BBPolarRootTreeVO_obj::getMinBoxSize( ){
 }
 
 
-::polartree::IImageShape BBPolarRootTreeVO_obj::getShape( ){
+::polartree::ImageShape BBPolarRootTreeVO_obj::getShape( ){
 	HX_SOURCE_PUSH("BBPolarRootTreeVO_obj::getShape")
 	HX_SOURCE_POS("polartree/BBPolarRootTreeVO.hx",99)
 	return this->shape;
@@ -225,7 +225,7 @@ Dynamic BBPolarRootTreeVO_obj::__SetField(const ::String &inName,const Dynamic &
 	case 5:
 		if (HX_FIELD_EQ(inName,"rootX") ) { rootX=inValue.Cast< int >(); return inValue; }
 		if (HX_FIELD_EQ(inName,"rootY") ) { rootY=inValue.Cast< int >(); return inValue; }
-		if (HX_FIELD_EQ(inName,"shape") ) { shape=inValue.Cast< ::polartree::IImageShape >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"shape") ) { shape=inValue.Cast< ::polartree::ImageShape >(); return inValue; }
 		break;
 	case 9:
 		if (HX_FIELD_EQ(inName,"_rotation") ) { _rotation=inValue.Cast< double >(); return inValue; }

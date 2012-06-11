@@ -189,6 +189,10 @@ package polartree
 			return _textField.getBounds(_textField.parent);
 		}
 		
+		public function get bitmapData():BitmapData{
+			return _bmp.bitmapData;
+		}
+		
 		public function rotate(rotation:Number):void{
 			
 			this._rotation = rotation;

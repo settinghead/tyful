@@ -12,8 +12,8 @@
 #ifndef INCLUDED_polartree_BBPolarTreeVO
 #include <polartree/BBPolarTreeVO.h>
 #endif
-#ifndef INCLUDED_polartree_IImageShape
-#include <polartree/IImageShape.h>
+#ifndef INCLUDED_polartree_ImageShape
+#include <polartree/ImageShape.h>
 #endif
 
 Void Test_obj::__construct()
@@ -38,7 +38,7 @@ Void Test_obj::main( ){
 {
 		HX_SOURCE_PUSH("Test_obj::main")
 		HX_SOURCE_POS("Test.hx",11)
-		::polartree::IImageShape s = null();
+		::polartree::ImageShape s = null();
 		HX_SOURCE_POS("Test.hx",12)
 		::polartree::BBPolarRootTreeVO t = ::polartree::BBPolarTreeBuilder_obj::makeTree(s,(int)0);
 	}

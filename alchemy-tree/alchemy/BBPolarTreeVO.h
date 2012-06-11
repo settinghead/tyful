@@ -2,7 +2,7 @@
 #define BBPOLARTREEVO_H
 
 #include <vector>
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 using namespace std;
 using namespace polartree;
@@ -41,7 +41,7 @@ public:
 	vector<BBPolarChildTreeVO*>* getKidsNoGrowth();
 	virtual BBPolarRootTreeVO* getRoot();
 	virtual int getMinBoxSize();
-	virtual IImageShape* getShape();
+	virtual ImageShape* getShape();
 	virtual bool overlapsCoord(double x, double y, double right, double bottom);
 	virtual bool contains(double x, double y, double right, double bottom);
 	virtual double computeX(bool rotate);

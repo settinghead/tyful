@@ -21,8 +21,8 @@
 #ifndef INCLUDED_polartree_BBPolarTreeVO
 #include <polartree/BBPolarTreeVO.h>
 #endif
-#ifndef INCLUDED_polartree_IImageShape
-#include <polartree/IImageShape.h>
+#ifndef INCLUDED_polartree_ImageShape
+#include <polartree/ImageShape.h>
 #endif
 #ifndef INCLUDED_polartree_SplitType
 #include <polartree/SplitType.h>
@@ -64,7 +64,7 @@ return null();
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC2(BBPolarTreeBuilder_obj,_assert,(void))
 
-::polartree::BBPolarRootTreeVO BBPolarTreeBuilder_obj::makeTree( ::polartree::IImageShape shape,int swelling){
+::polartree::BBPolarRootTreeVO BBPolarTreeBuilder_obj::makeTree( ::polartree::ImageShape shape,int swelling){
 	HX_SOURCE_PUSH("BBPolarTreeBuilder_obj::makeTree")
 	HX_SOURCE_POS("polartree/BBPolarTreeBuilder.hx",13)
 	int minBoxSize = (int)1;
@@ -83,7 +83,7 @@ STATIC_HX_DEFINE_DYNAMIC_FUNC2(BBPolarTreeBuilder_obj,_assert,(void))
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC2(BBPolarTreeBuilder_obj,makeTree,return )
 
-Void BBPolarTreeBuilder_obj::makeChildren( ::polartree::BBPolarTreeVO tree,::polartree::IImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root){
+Void BBPolarTreeBuilder_obj::makeChildren( ::polartree::BBPolarTreeVO tree,::polartree::ImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root){
 {
 		HX_SOURCE_PUSH("BBPolarTreeBuilder_obj::makeChildren")
 		HX_SOURCE_POS("polartree/BBPolarTreeBuilder.hx",32)
@@ -99,7 +99,7 @@ return null();
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC4(BBPolarTreeBuilder_obj,makeChildren,(void))
 
-Array< ::polartree::BBPolarChildTreeVO > BBPolarTreeBuilder_obj::splitTree( ::polartree::BBPolarTreeVO tree,::polartree::IImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root,int type){
+Array< ::polartree::BBPolarChildTreeVO > BBPolarTreeBuilder_obj::splitTree( ::polartree::BBPolarTreeVO tree,::polartree::ImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root,int type){
 	HX_SOURCE_PUSH("BBPolarTreeBuilder_obj::splitTree")
 	HX_SOURCE_POS("polartree/BBPolarTreeBuilder.hx",43)
 	Array< ::polartree::BBPolarChildTreeVO > result = Array_obj< ::polartree::BBPolarChildTreeVO >::__new();
@@ -397,7 +397,7 @@ int BBPolarTreeBuilder_obj::determineType( ::polartree::BBPolarTreeVO tree){
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(BBPolarTreeBuilder_obj,determineType,return )
 
-::polartree::BBPolarChildTreeVO BBPolarTreeBuilder_obj::makeChildTree( ::polartree::IImageShape shape,int minBoxSize,double r1,double r2,double d1,double d2,::polartree::BBPolarRootTreeVO root){
+::polartree::BBPolarChildTreeVO BBPolarTreeBuilder_obj::makeChildTree( ::polartree::ImageShape shape,int minBoxSize,double r1,double r2,double d1,double d2,::polartree::BBPolarRootTreeVO root){
 	HX_SOURCE_PUSH("BBPolarTreeBuilder_obj::makeChildTree")
 	HX_SOURCE_POS("polartree/BBPolarTreeBuilder.hx",169)
 	::polartree::BBPolarChildTreeVO tree = ::polartree::BBPolarChildTreeVO_obj::__new(r1,r2,d1,d2,root,minBoxSize);

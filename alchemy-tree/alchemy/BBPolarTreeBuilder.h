@@ -8,7 +8,7 @@
 #include "BBPolarChildTreeVO.h"
 #include "BBPolarRootTreeVO.h"
 #include "BBPolarTreeVO.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 namespace polartree {
 inline static SplitType determineType(BBPolarTreeVO* tree) {
@@ -27,7 +27,7 @@ inline static SplitType determineType(BBPolarTreeVO* tree) {
 	}
 }
 
-inline static BBPolarChildTreeVO* makeChildTree(IImageShape* shape,
+inline static BBPolarChildTreeVO* makeChildTree(ImageShape* shape,
 		int minBoxSize, double r1, double r2, double d1, double d2,
 		BBPolarRootTreeVO* root) {
 	BBPolarChildTreeVO* tree = new BBPolarChildTreeVO(r1, r2, d1, d2, root,
@@ -67,7 +67,7 @@ inline static BBPolarChildTreeVO* makeChildTree(IImageShape* shape,
 }
 
 inline static vector<BBPolarChildTreeVO*>* splitTree(BBPolarTreeVO* tree,
-		IImageShape* shape, int minBoxSize, BBPolarRootTreeVO* root,
+		ImageShape* shape, int minBoxSize, BBPolarRootTreeVO* root,
 		SplitType type) {
 	vector<BBPolarChildTreeVO*>* result = new vector<BBPolarChildTreeVO*>();
 	BBPolarChildTreeVO* re;
@@ -233,7 +233,7 @@ inline static vector<BBPolarChildTreeVO*>* splitTree(BBPolarTreeVO* tree,
 	return result;
 }
 
-inline static BBPolarRootTreeVO* makeTree(IImageShape* shape, int swelling) {
+inline static BBPolarRootTreeVO* makeTree(ImageShape* shape, int swelling) {
 	int minBoxSize = (int) 1;
 	int x = int(shape->getWidth() / 2.0);
 	int y = int(shape->getHeight() / 2.0);
@@ -244,7 +244,7 @@ inline static BBPolarRootTreeVO* makeTree(IImageShape* shape, int swelling) {
 	return tree;
 }
 
-inline static void makeChildren(BBPolarTreeVO* tree, IImageShape* shape,
+inline static void makeChildren(BBPolarTreeVO* tree, ImageShape* shape,
 		int minBoxSize, BBPolarRootTreeVO* root) {
 	{
 		SplitType type = determineType(tree);

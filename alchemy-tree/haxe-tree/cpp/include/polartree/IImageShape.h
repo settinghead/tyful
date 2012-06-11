@@ -1,18 +1,18 @@
-#ifndef INCLUDED_polartree_IImageShape
-#define INCLUDED_polartree_IImageShape
+#ifndef INCLUDED_polartree_ImageShape
+#define INCLUDED_polartree_ImageShape
 
 #ifndef HXCPP_H
 #include <hxcpp.h>
 #endif
 
-HX_DECLARE_CLASS1(polartree,IImageShape)
+HX_DECLARE_CLASS1(polartree,ImageShape)
 namespace polartree{
 
 
-class IImageShape_obj : public hx::Interface{
+class ImageShape_obj : public hx::Interface{
 	public:
 		typedef hx::Interface super;
-		typedef IImageShape_obj OBJ_;
+		typedef ImageShape_obj OBJ_;
 		HX_DO_INTERFACE_RTTI;
 virtual bool contains( double x,double y,double width,double height,double rotation,bool transformed)=0;
 		Dynamic contains_dyn();
@@ -26,7 +26,7 @@ virtual double getHeight( )=0;
 		Dynamic getHeight_dyn();
 };
 
-#define DELEGATE_polartree_IImageShape \
+#define DELEGATE_polartree_ImageShape \
 virtual bool contains( double x,double y,double width,double height,double rotation,bool transformed) { return mDelegate->contains(x,y,width,height,rotation,transformed);}  \
 virtual Dynamic contains_dyn() { return mDelegate->contains_dyn();}  \
 virtual bool containsPoint( double x,double y,bool transformed,hx::Null< double >  refX,hx::Null< double >  refY) { return mDelegate->containsPoint(x,y,transformed,refX,refY);}  \
@@ -40,16 +40,16 @@ virtual Dynamic getHeight_dyn() { return mDelegate->getHeight_dyn();}  \
 
 
 template<typename IMPL>
-class IImageShape_delegate_ : public IImageShape_obj
+class ImageShape_delegate_ : public ImageShape_obj
 {
 	protected:
 		IMPL *mDelegate;
 	public:
-		IImageShape_delegate_(IMPL *inDelegate) : mDelegate(inDelegate) {}
+		ImageShape_delegate_(IMPL *inDelegate) : mDelegate(inDelegate) {}
 		hx::Object *__GetRealObject() { return mDelegate; }
-		DELEGATE_polartree_IImageShape
+		DELEGATE_polartree_ImageShape
 };
 
 } // end namespace polartree
 
-#endif /* INCLUDED_polartree_IImageShape */ 
+#endif /* INCLUDED_polartree_ImageShape */ 

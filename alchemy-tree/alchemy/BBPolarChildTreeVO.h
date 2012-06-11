@@ -2,7 +2,7 @@
 #define BBPOLARCHILDTREEVO_H
 
 #include "BBPolarTreeVO.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 namespace polartree {
 class BBPolarRootTreeVO;
@@ -21,7 +21,7 @@ public:
 	double getRotation();
 	int getCurrentStamp();
 	BBPolarRootTreeVO* getRoot();
-	IImageShape* getShape();
+	ImageShape* getShape();
 	int getMinBoxSize();
 };
 

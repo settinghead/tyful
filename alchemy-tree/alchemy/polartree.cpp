@@ -7,7 +7,7 @@
 #include "AS3.h"
 
 #include "BBPolarTreeBuilder.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 
 //Header file for AS3 interop APIs
 //this is linked in by the compiler (when using flaccon)
@@ -15,28 +15,48 @@
 using namespace std;
 using namespace polartree;
 
+static int counter;
+
 //Method exposed to ActionScript
 //Takes a String and echos it
-static AS3_Val echo(void* self, AS3_Val args) {
+static AS3_Val buildTree(void* self, AS3_Val args) {
 
-	IImageShape* img;
-	makeTree(img,0);
+//	makeTree(img,0);
+
+	unsigned int width, height;
+	AS3_Val src = AS3_Undefined();
+
+	AS3_ArrayValue(args, "AS3ValType, IntType, IntType", &src, &width, &height);
+
+	ImageShape* img = new ImageShape(src, width, height);
+	BBPolarRootTreeVO* tree_ptr = makeTree(img,0);
+//
+//
+//	sprintf(str, "%d, %d, %d, %x,%x,%x,%x,%x,%x,%x,%x", width, height, len,
+//			((unsigned int *) pixels)[0],
+//			((unsigned int *) pixels)[1],
+//			((unsigned int *) pixels)[2],
+//			((unsigned int *) pixels)[3],
+//			((unsigned int *) pixels)[4],
+//			((unsigned int *) pixels)[5],
+//			((unsigned int *) pixels)[6],
+//			((unsigned int *) pixels)[7]);
 
 	//otherwise, return the string that was passed in
-	return AS3_String("bbbb");
+	return AS3_Ptr(tree_ptr);
 }
 
 //entry point for code
 int main() {
 	//define the methods exposed to ActionScript
 	//typed as an ActionScript Function instance
-	AS3_Val echoMethod = AS3_Function(NULL, echo);
+	AS3_Val buildTreeMethod = AS3_Function(NULL, buildTree);
 
 	// construct an object that holds references to the functions
-	AS3_Val result = AS3_Object("echo: AS3ValType", echoMethod);
+	AS3_Val result = AS3_Object("buildTree: AS3ValType", buildTreeMethod);
 
 	// Release
-	AS3_Release(echoMethod);
+	AS3_Release(buildTreeMethod);
 
 	// notify that we initialized -- THIS DOES NOT RETURN!
 	AS3_LibInit(result);

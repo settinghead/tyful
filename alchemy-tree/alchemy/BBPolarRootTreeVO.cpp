@@ -1,10 +1,10 @@
 #include "BBPolarRootTreeVO.h"
 #include "BBPolarTreeVO.h"
-#include "IImageShape.h"
+#include "ImageShape.h"
 #include <math.h>
 namespace polartree {
 
-BBPolarRootTreeVO::BBPolarRootTreeVO(IImageShape* shape, int centerX,
+BBPolarRootTreeVO::BBPolarRootTreeVO(ImageShape* shape, int centerX,
 		int centerY, double d, int minBoxSize) :
 		BBPolarTreeVO((int) 0, BBPolarTreeVO::TWO_PI, (int) 0, d, minBoxSize) {
 	this->_rotation = (int) 0;
@@ -74,7 +74,7 @@ int BBPolarRootTreeVO::getMinBoxSize() {
 	return this->_minBoxSize;
 }
 
-IImageShape* BBPolarRootTreeVO::getShape() {
+ImageShape* BBPolarRootTreeVO::getShape() {
 	return this->shape;
 }
 

@@ -8,7 +8,7 @@
 HX_DECLARE_CLASS1(polartree,BBPolarChildTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarRootTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarTreeVO)
-HX_DECLARE_CLASS1(polartree,IImageShape)
+HX_DECLARE_CLASS1(polartree,ImageShape)
 namespace polartree{
 
 
@@ -81,7 +81,7 @@ class BBPolarTreeVO_obj : public hx::Object{
 		virtual int getMinBoxSize( );
 		Dynamic getMinBoxSize_dyn();
 
-		virtual ::polartree::IImageShape getShape( );
+		virtual ::polartree::ImageShape getShape( );
 		Dynamic getShape_dyn();
 
 		virtual bool overlapsCoord( double x,double y,double right,double bottom);

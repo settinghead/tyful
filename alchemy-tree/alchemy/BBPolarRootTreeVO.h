@@ -1,20 +1,20 @@
 #ifndef BBPOLARROOTTREEVO_H
 #define BBPOLARROOTTREEVO_H
-#include "IImageShape.h"
+#include "ImageShape.h"
 #include "BBPolarTreeVO.h"
 
 namespace polartree {
 
 class BBPolarRootTreeVO: public BBPolarTreeVO {
 public:
-	BBPolarRootTreeVO(IImageShape* shape, int centerX, int centerY, double d,
+	BBPolarRootTreeVO(ImageShape* shape, int centerX, int centerY, double d,
 			int minBoxSize);
 	~BBPolarRootTreeVO();
 	int rootX; /* REM */
 	int rootY; /* REM */
 	double _rotation; /* REM */
 	int rootStamp; /* REM */
-	IImageShape* shape; /* REM */
+	ImageShape* shape; /* REM */
 	int _minBoxSize; /* REM */
 	void setLocation(int centerX, int centerY);
 	int getRootX();
@@ -28,7 +28,7 @@ public:
 	int getCurrentStamp();
 	BBPolarRootTreeVO* getRoot();
 	int getMinBoxSize();
-	IImageShape* getShape();
+	ImageShape* getShape();
 };
 
 } // end namespace polartree

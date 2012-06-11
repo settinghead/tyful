@@ -32,6 +32,13 @@ alias alc-off='export PATH=$PRE_ALCHEMY_PATH'
 PATH=$PATH:~/bin:/usr/local/bin:~/bin/flex/bin:~/bin/astmp:~/alchemy/achacks
 export PATH
 export PRE_ALCHEMY_PATH=$PATH; export PATH=$ALCHEMY_HOME/achacks:$PATH
-g++ polartree.cpp -O3 -Wall -DOSX -swc -o polartree.swc
+g++ -c polartree.cpp -DOSX -O3 -swc
+g++ -c BBPolarChildTreeVO.cpp -DOSX -O3 -swc
+g++ -c BBPolarRootTreeVO.cpp -DOSX -O3 -swc
+g++ -c BBPolarTreeVO.cpp -DOSX -O3 -swc
+g++ -c BBPolarTreeBuilder.cpp -DOSX -O3 -swc
+g++ -c ImageShape.cpp -DOSX -O3 -swc
+g++ BBPolarChildTreeVO.o BBPolarRootTreeVO.o BBPolarTreeVO.o BBPolarTreeBuilder.o ImageShape.o polartree.o -swc -lm -o polartree.swc
 mv polartree.swc ../libs/
+rm BBPolarChildTreeVO.o BBPolarRootTreeVO.o BBPolarTreeVO.o BBPolarTreeBuilder.o ImageShape.o polartree.o
 alias alc-off='export PATH=$PRE_ALCHEMY_PATH'

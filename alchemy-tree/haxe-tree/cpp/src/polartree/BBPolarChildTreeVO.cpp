@@ -12,8 +12,8 @@
 #ifndef INCLUDED_polartree_BBPolarTreeVO
 #include <polartree/BBPolarTreeVO.h>
 #endif
-#ifndef INCLUDED_polartree_IImageShape
-#include <polartree/IImageShape.h>
+#ifndef INCLUDED_polartree_ImageShape
+#include <polartree/ImageShape.h>
 #endif
 namespace polartree{
 
@@ -538,7 +538,7 @@ int BBPolarChildTreeVO_obj::getMinBoxSize( ){
 }
 
 
-::polartree::IImageShape BBPolarChildTreeVO_obj::getShape( ){
+::polartree::ImageShape BBPolarChildTreeVO_obj::getShape( ){
 	HX_SOURCE_PUSH("BBPolarChildTreeVO_obj::getShape")
 	HX_SOURCE_POS("polartree/BBPolarChildTreeVO.hx",239)
 	return this->root->getShape();
