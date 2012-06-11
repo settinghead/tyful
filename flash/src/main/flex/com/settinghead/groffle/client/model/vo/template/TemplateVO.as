@@ -6,7 +6,6 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.density.DensityPatchIndex;
 	import com.settinghead.groffle.client.fonter.RandomSetFonter;
 	import com.settinghead.groffle.client.fonter.WordFonter;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;
 	import com.settinghead.groffle.client.model.zip.IZippable;
@@ -18,9 +17,11 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.sizers.WordSizer;
 	
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
+	import mx.events.CollectionEvent;
 	
 	
 	[Bindable]
@@ -30,7 +31,7 @@ package com.settinghead.groffle.client.model.vo.template
 		public static const DEFAULT_HEIGHT:int = 900;
 		
 		
-		private var tree:BBPolarRootTreeVO;
+//		private var tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number = 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
@@ -59,6 +60,8 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		public function TemplateVO()
 		{
+			_layers.addEventListener(CollectionEvent.COLLECTION_CHANGE, layersChanged);
+
 		}
 		
 		
@@ -81,6 +84,10 @@ package com.settinghead.groffle.client.model.vo.template
 			if(index>0 && index<layers.length-1)
 					Layer.connect(layers[index+1],layers[index-1]);
 			layers.removeItemAt(index);
+		}
+		
+		private function layersChanged(e:Event):void{
+			connectLayers();
 		}
 		
 		public function get width():Number{

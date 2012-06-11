@@ -2,9 +2,10 @@
  * 
  */
 package com.settinghead.groffle.client.angler {
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.EngineWordVO;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
+	
+	import polartree.AlchemyPolarTree;
 
 /**
  * @author settinghead
@@ -28,7 +29,7 @@ public class ShapeConfinedAngler implements WordAngler {
 		// % BBPolarTree.TWO_PI;
 		var angle:Number= (layer.getHue(
 				int(eWord.getCurrentLocation().getpVector().x), int(eWord
-						.getCurrentLocation().getpVector().y)) *BBPolarTreeVO.TWO_PI);
+						.getCurrentLocation().getpVector().y)) *AlchemyPolarTree.TWO_PI);
 		if (isNaN(angle) || angle == 0)
 			return otherwise.angleFor(eWord);
 		else

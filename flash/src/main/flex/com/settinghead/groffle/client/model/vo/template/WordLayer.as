@@ -5,7 +5,6 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.colorer.WordColorer;
 	import com.settinghead.groffle.client.fonter.WordFonter;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
 	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	import com.settinghead.groffle.client.model.zip.IZipInput;
 	import com.settinghead.groffle.client.model.zip.IZipOutput;
@@ -19,6 +18,7 @@ package com.settinghead.groffle.client.model.vo.template
 	import flash.geom.Rectangle;
 	
 	import org.peaceoutside.utils.ColorMath;
+	
 	
 	[Bindable]
 	public class WordLayer extends Layer implements IImageShape, IZippable
@@ -39,7 +39,7 @@ package com.settinghead.groffle.client.model.vo.template
 		
 		private var _img:Bitmap;
 		private var _colorSheet:Bitmap;
-		private var _tree:BBPolarRootTreeVO;
+//		private var _tree:BBPolarRootTreeVO;
 		private var _bounds:Rectangle= null;
 		public static const SAMPLE_DISTANCE:Number= 20;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
@@ -214,7 +214,7 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		public override function contains(x:Number, y:Number, width:Number, height:Number, rotation:Number, transformed:Boolean):Boolean {
-			if (_tree == null) {
+//			if (_tree == null) {
 				// sampling approach
 				var numSamples:int= int((width * height / SAMPLE_DISTANCE));
 				//				var numSamples = 10;
@@ -264,9 +264,9 @@ package com.settinghead.groffle.client.model.vo.template
 				
 				return true;
 				
-			} else {
-				return _tree.overlapsCoord(x, y, x + width, y + height);
-			}
+//			} else {
+//				return _tree.overlapsCoord(x, y, x + width, y + height);
+//			}
 		}
 		
 		
@@ -295,7 +295,7 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		
 		public override function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
-			if (_tree == null) {
+//			if (_tree == null) {
 				var threshold:int= 10;
 				var darkCount:int= 0;
 				var brightCount:int= 0;
@@ -323,9 +323,9 @@ package com.settinghead.groffle.client.model.vo.template
 				
 				return false;
 				
-			} else {
-				return _tree.overlapsCoord(x, y, x + width, y + height);
-			}
+//			} else {
+//				return _tree.overlapsCoord(x, y, x + width, y + height);
+//			}
 		}
 		
 		public function translate(tx:Number, ty: Number):void{

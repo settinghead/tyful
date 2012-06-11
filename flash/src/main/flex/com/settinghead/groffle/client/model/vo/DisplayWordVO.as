@@ -1,13 +1,17 @@
 package com.settinghead.groffle.client.model.vo
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.sizers.WordSizer;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
 	
+	import mx.core.UIComponent;
 	import mx.states.AddChild;
 
 	public class DisplayWordVO extends Sprite
@@ -15,13 +19,14 @@ package com.settinghead.groffle.client.model.vo
 		private var _engineWord: EngineWordVO;
 		private var _textField:TextField;
 		
+		
 		public function DisplayWordVO(eWord:EngineWordVO){
 			super();
 			this._engineWord = eWord;
 			this.useHandCursor = true;
 			this.buttonMode = true;
 			this.mouseChildren = true;
-//			this.addEventListener(MouseEvent.CLICK, handleMouseClick);
+
 		}
 		
 		public function set textField(t:TextField):void{
@@ -37,15 +42,10 @@ package com.settinghead.groffle.client.model.vo
 			return _textField;
 		}
 		
-//		private function handleMouseClick(e:MouseEvent):void{
-//			if(this.engineWord.word.occurences!=null && this.engineWord.word.occurences.length>0){
-//				navigateToURL(new URLRequest((this.engineWord.word.occurences[0].link) as String), '_blank');
-//			}
-//
-//		}
-		
 		public function get engineWord():EngineWordVO{
 			return this._engineWord;
 		}
+		
+		
 	}
 }

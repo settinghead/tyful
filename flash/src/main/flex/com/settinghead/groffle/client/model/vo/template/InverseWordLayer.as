@@ -3,7 +3,7 @@ package com.settinghead.groffle.client.model.vo.template
 	import com.settinghead.groffle.client.model.algo.tree.IImageShape;
 	
 	[Bindable]
-	public class InverseWordLayer implements com.settinghead.groffle.client.model.algo.tree.IImageShape
+	public class InverseWordLayer implements IImageShape
 	{
 		private var _l:WordLayer;
 		

@@ -121,10 +121,6 @@ class BitmapShapeVO implements IImageShape
 		this._centerX = centerX;
 		this._centerY = centerY;
 	}
-	
-		
-
-
 		
 	public function getWidth():Float{
 		return _bmp.width;

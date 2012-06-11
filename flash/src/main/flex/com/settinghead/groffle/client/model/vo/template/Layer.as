@@ -11,6 +11,7 @@ package com.settinghead.groffle.client.model.vo.template
 	import flash.geom.Rectangle;
 	
 	
+	
 	[Bindable]
 	public class Layer implements IImageShape, IZippable, IWithEffectiveBorder
 	{

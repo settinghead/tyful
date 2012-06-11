@@ -29,6 +29,7 @@ package com.settinghead.groffle.client.model.vo
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	
 
 	
 	/**
@@ -234,6 +235,10 @@ package com.settinghead.groffle.client.model.vo
 		
 		public function get objectBounds():Rectangle{
 			return _textField.getBounds(_textField.parent);
+		}
+		
+		public function get bitmapData():BitmapData{
+			return _bmp.bitmapData;
 		}
 		
 		public function rotate(rotation:Number):void{

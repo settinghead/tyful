@@ -6,7 +6,7 @@
 				 dataChange="onCreationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
+			import polartree.AlchemyPolarTree;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -69,7 +69,7 @@
 		</s:layout>
 		<s:Label id="thumb" width="30" height="30">
 		</s:Label>
-		<s:Label id="number" text="{int((360 - (data as Number)/BBPolarTreeVO.TWO_PI * 360)%360)}&#176;" />
+		<s:Label id="number" text="{int((360 - (data as Number)/AlchemyPolarTree.TWO_PI * 360)%360)}&#176;" />
 	</s:Group>
 
 </s:ItemRenderer>

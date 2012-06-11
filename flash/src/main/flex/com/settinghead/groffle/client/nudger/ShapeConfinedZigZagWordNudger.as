@@ -3,7 +3,6 @@ package com.settinghead.groffle.client.nudger {
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.math.MathUtils;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
 	import flash.geom.Point;
@@ -33,8 +32,11 @@ package com.settinghead.groffle.client.nudger {
 				y *= 1.5;
 				if(attempt % 2==0)
 				{
-					x = p.getWidth() - x;
 					y = p.getHeight() - y;
+				}
+				if(attempt/2%2==0){
+					x = p.getWidth() - x;
+
 				}
 				
 			retPoint.x = x;

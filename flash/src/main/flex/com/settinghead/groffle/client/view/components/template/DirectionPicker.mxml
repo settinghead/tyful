@@ -8,12 +8,10 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
-			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			
-			import spark.components.Button;
+			import polartree.AlchemyPolarTree;
 			
 			[Bindable] public var buttonArray:ArrayCollection = new ArrayCollection();
 			private var _angle:Number = 0.1;
@@ -40,7 +38,7 @@
 				var numButtons:int = 30;
 
 				for(var i:int=0;i<numButtons;i++){
-					var ang:Number = BBPolarTreeVO.TWO_PI - BBPolarTreeVO.TWO_PI/numButtons*i;
+					var ang:Number = AlchemyPolarTree.TWO_PI - AlchemyPolarTree.TWO_PI/numButtons*i;
 //					a.addEventListener(MouseEvent.CLICK, function( evt:Event ){this._angle = ang; });
 					this.buttonArray.addItem(ang);
 				}

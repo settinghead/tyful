@@ -12,6 +12,8 @@ package com.settinghead.groffle.client.model.vo {
 	
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	
+	import polartree.AlchemyPolarTree;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -111,7 +113,12 @@ public class EngineWordVO {
 	}
 
 	public function nudgeTo(loc:Point, patch:Patch):void {
-		currentLocation = new PlaceInfo(loc, patch);
+		if(currentLocation==null)
+			currentLocation = new PlaceInfo(loc, patch);
+		else{
+			currentLocation.getpVector().x = loc.x;
+			currentLocation.getpVector().y = loc.y;
+		}
 		bbTree.setLocation(int(currentLocation.getpVector().x),
 				int(currentLocation.getpVector().y));
 	}
@@ -280,7 +287,6 @@ public class EngineWordVO {
 	
 	
 	public function rendition(c:uint):DisplayWordVO{
-		
 		var s:DisplayWordVO = new DisplayWordVO(this);
 			this.shape.textField.textColor = c;
 			s.textField = this.shape.textField;
@@ -289,6 +295,7 @@ public class EngineWordVO {
 			var h:Number = s.height;
 			s.x = this.shape.centerX-w/2;
 			s.y = this.shape.centerY-h/2;
+			
 			
 			if(this.shape.rotation!=0){
 				var centerX:Number=s.x+s.width/2;

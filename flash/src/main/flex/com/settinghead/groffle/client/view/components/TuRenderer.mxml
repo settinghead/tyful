@@ -37,11 +37,10 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.notifications.Notification;
 			import com.settinghead.groffle.client.ApplicationFacade;
 			import com.settinghead.groffle.client.density.Patch;
-			import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 			import com.settinghead.groffle.client.model.vo.DisplayWordVO;
-			import com.settinghead.groffle.client.model.vo.EngineWordVO;
 			import com.settinghead.groffle.client.model.vo.TuVO;
 			import com.settinghead.groffle.client.model.vo.template.ImageLayer;
 			import com.settinghead.groffle.client.model.vo.template.Layer;
@@ -54,14 +53,12 @@
 			import mx.events.FlexEvent;
 			import mx.graphics.codec.PNGEncoder;
 			
-			import org.as3commons.lang.Assert;
-			
 			
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const RESUME_RENDERING:String = "resumeRendering";
 			public static const RERENDER:String = "rerender";
 			public static const POST_TO_FACEBOOK:String = "postToFacebook";
-			public static const EFFECTIVE_MARGIN:int = 0;
+			public static const EFFECTIVE_MARGIN:int = 10;
 
 			
 			[Bindable] private var _driftDistanceSum:Number = 0;
@@ -151,21 +148,21 @@
 //				drawSamplePoints(dWord.engineWord);
 			}
 			
-			private function drawSamplePoints(ew:EngineWordVO):void{
-//				treeLayer.graphics.clear();
-				treeLayer.graphics.beginFill(0xcccccc,1.0);
-				for(var i:int = 0 ;i<ew.samplePoints.length;i++){
-					var theta:Number = (ew.samplePoints[i] as Array)[0];
-					var d:Number = (ew.samplePoints[i] as Array)[1];
-					theta -= ew.bbTree.getRotation();
-					var x:Number = ew.bbTree.getRootX() + Math.cos(theta) * d;
-					var y:Number = ew.bbTree.getRootY() + Math.sin(theta) * d;
-					
-					treeLayer.graphics.drawCircle(x,y,2);
-				}
-				treeLayer.graphics.endFill();
-			}
-			
+//			private function drawSamplePoints(ew:EngineWordVO):void{
+////				treeLayer.graphics.clear();
+//				treeLayer.graphics.beginFill(0xcccccc,1.0);
+//				for(var i:int = 0 ;i<ew.samplePoints.length;i++){
+//					var theta:Number = (ew.samplePoints[i] as Array)[0];
+//					var d:Number = (ew.samplePoints[i] as Array)[1];
+//					theta -= ew.bbTree.getRotation();
+//					var x:Number = ew.bbTree.getRootX() + Math.cos(theta) * d;
+//					var y:Number = ew.bbTree.getRootY() + Math.sin(theta) * d;
+//					
+//					treeLayer.graphics.drawCircle(x,y,2);
+//				}
+//				treeLayer.graphics.endFill();
+//			}
+//			
 			public function wordMouseOut(e:MouseEvent):void{
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
 				dWord.filters=[];
@@ -178,49 +175,49 @@
 //				patchLayer.graphics.endFill();
 			}
 			
-			private function drawTree(tree:BBPolarTreeVO):void{
-				treeLayer.graphics.clear();
-				treeLayer.graphics.lineStyle(1,0x111111,1.0);
-				drawLeaves(tree);
-			}
-			
-			private function drawLeaves(tree:BBPolarTreeVO):void {
-				if (tree.isLeaf() || tree.getKidsNoGrowth()==null || tree.getKidsNoGrowth().length==0) {
-					drawBounds(tree);
-				} else {
-					for (var i:int= 0; i < tree.getKidsNoGrowth().length; i++) {
-						drawLeaves(tree.getKidsNoGrowth()[i]);
-					}
-				}
-			}
-			
-			private function drawBounds(tree:BBPolarTreeVO):void {
-				var x1:int, x2:int, x3:int, x4:int, y1:int, y2:int, y3:int, y4:int;
-				x1 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR1(true))));
-				y1 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR1(true))));
-				x2 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR2(true))));
-				y2 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR2(true))));
-				x3 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR1(true))));
-				y3 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR1(true))));
-				x4 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR2(true))));
-				y4 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR2(true))));
-				
-				var r:Number= tree.getR2(true) - tree.getR1(true);
-				if (r < 0)
-					r = BBPolarTreeVO.TWO_PI + r;
-				Assert.isTrue(r < BBPolarTreeVO.PI);
-				
-				drawArc(tree.getRootX(),
-					tree.getRootY(), tree.d2,
-					tree.getR1(true), tree.getR2(true), 1);
-				drawArc(tree.getRootX(),
-					tree.getRootY(), tree.d1,
-					tree.getR1(true), tree.getR2(true), 1);
-				treeLayer.graphics.moveTo(x1,y1);
-				treeLayer.graphics.lineTo(x3,y3);
-				treeLayer.graphics.moveTo(x2,y2);
-				treeLayer.graphics.lineTo(x4,y4);
-			}
+//			private function drawTree(tree:BBPolarTreeVO):void{
+//				treeLayer.graphics.clear();
+//				treeLayer.graphics.lineStyle(1,0x111111,1.0);
+//				drawLeaves(tree);
+//			}
+//			
+//			private function drawLeaves(tree:BBPolarTreeVO):void {
+//				if (tree.isLeaf() || tree.getKidsNoGrowth()==null || tree.getKidsNoGrowth().length==0) {
+//					drawBounds(tree);
+//				} else {
+//					for (var i:int= 0; i < tree.getKidsNoGrowth().length; i++) {
+//						drawLeaves(tree.getKidsNoGrowth()[i]);
+//					}
+//				}
+//			}
+//			
+//			private function drawBounds(tree:BBPolarTreeVO):void {
+//				var x1:int, x2:int, x3:int, x4:int, y1:int, y2:int, y3:int, y4:int;
+//				x1 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR1(true))));
+//				y1 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR1(true))));
+//				x2 = int((tree.getRootX() + tree.d1 * Math.cos(tree.getR2(true))));
+//				y2 = int((tree.getRootY() - tree.d1 * Math.sin(tree.getR2(true))));
+//				x3 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR1(true))));
+//				y3 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR1(true))));
+//				x4 = int((tree.getRootX() + tree.d2 * Math.cos(tree.getR2(true))));
+//				y4 = int((tree.getRootY() - tree.d2 * Math.sin(tree.getR2(true))));
+//				
+//				var r:Number= tree.getR2(true) - tree.getR1(true);
+//				if (r < 0)
+//					r = BBPolarTreeVO.TWO_PI + r;
+//				Assert.isTrue(r < BBPolarTreeVO.PI);
+//				
+//				drawArc(tree.getRootX(),
+//					tree.getRootY(), tree.d2,
+//					tree.getR1(true), tree.getR2(true), 1);
+//				drawArc(tree.getRootX(),
+//					tree.getRootY(), tree.d1,
+//					tree.getR1(true), tree.getR2(true), 1);
+//				treeLayer.graphics.moveTo(x1,y1);
+//				treeLayer.graphics.lineTo(x3,y3);
+//				treeLayer.graphics.moveTo(x2,y2);
+//				treeLayer.graphics.lineTo(x4,y4);
+//			}
 			
 			private function drawArc(center_x:Number,center_y:Number,
 									radius:Number,angle_from:Number,angle_to:Number,precision:Number):void {
@@ -327,8 +324,14 @@
 					//adjust for effective border
 					this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
 					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
-					this.mainCanvas.left = (-_tu.template.effectiveBorder.left+EFFECTIVE_MARGIN)/mainCanvas.scaleX;
-					this.mainCanvas.top = -(_tu.template.effectiveBorder.top+EFFECTIVE_MARGIN)/mainCanvas.scaleY;
+					
+					var scale:Number = tu.effectiveBorder.width>tu.effectiveBorder.height?(this.stage.width-150)/tu.effectiveBorder.width:(this.stage.height-controlGroup.height)/tu.effectiveBorder.height;
+					mainCanvas.scaleX = scale;
+					mainCanvas.scaleY = scale;
+					this.mainCanvas.left = -(_tu.template.effectiveBorder.x+EFFECTIVE_MARGIN)*scale;
+					this.mainCanvas.top = -(_tu.template.effectiveBorder.y+EFFECTIVE_MARGIN)*scale;
+					Notification.show(
+						scale.toString());
 					dict = new Dictionary();
 					
 					for each(var l:Layer in _tu.template.layers){
@@ -423,7 +426,7 @@
 			<s:layout>
 				<s:BasicLayout />
 			</s:layout>
-					<mx:Canvas id="mainCanvas" top="0" left="0" bottom="0" scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.width-150)/tu.effectiveBorder.width:(this.height-controlGroup.height)/tu.effectiveBorder.height}" 
+				<mx:Canvas id="mainCanvas"  scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.stage.width-150)/tu.effectiveBorder.width:(this.stage.height-controlGroup.height)/tu.effectiveBorder.height}" 
 						   scaleY="{mainCanvas.scaleX}">
 					<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 					<mx:Canvas id="wordLayers" top="0" left="0" />

@@ -501,7 +501,9 @@
 							</mx:dataProvider>
 						</mx:ToggleButtonBar>
 						<s:VGroup>
-							<s:List id="layerButtons" dragEnabled="true" dropEnabled="true" width="80" 
+							<s:List id="layerButtons" dragEnabled="true" 
+									dropEnabled="true" 
+									dragMoveEnabled="true" width="80" 
 									dataProvider="{template.layers}" 
 									itemRenderer="com.settinghead.groffle.client.view.components.template.LayerButton"
 									>

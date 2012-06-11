@@ -1,7 +1,6 @@
 package com.settinghead.groffle.client.view.components.template.canvas
 {
 	import com.notifications.Notification;
-	import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
 	import com.settinghead.groffle.client.model.vo.template.Layer;
 	import com.settinghead.groffle.client.model.vo.template.WordLayer;
 	import com.settinghead.groffle.client.view.components.template.TemplateEditor;
@@ -25,6 +24,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	import mx.events.FlexEvent;
 	
 	import org.peaceoutside.utils.ColorMath;
+	
+	import polartree.AlchemyPolarTree;
 	
 	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
@@ -190,9 +191,11 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				if(this.cursor!=null)this.cursor.visible=true;
 			}
 			else{
-				this.alpha = 0.5;
+				this.alpha = 0.3;
 				if(this.cursor!=null)this.cursor.visible = false;
 			}
+			if(l)
+				Notification.show(l.name,this.layer.name);
 
 		}
 		
@@ -313,7 +316,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 							m2.ty += bounds.y;
 						
 						if(templateEditor.chkDrawAngle.selected){
-							var dirColor:uint = ColorMath.HSLtoRGB(angle/BBPolarTreeVO.TWO_PI*360,0.5,0.5);
+							var dirColor:uint = ColorMath.HSLtoRGB(angle/AlchemyPolarTree.TWO_PI*360,0.5,0.5);
 							shape.graphics.lineStyle(thickness, dirColor, 1);
 							dirShape.graphics.lineStyle(thickness,0,0.5,true);
 	//						var a:BitmapAsset = new SmallA();
@@ -476,7 +479,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				for(var h:Number = ys; h<ye;h+=smallA.height){
 					var m:Matrix = new Matrix();
 
-					var angle:Number = layer.getHue(w+smallA.width/2, h+smallA.height/2)*BBPolarTreeVO.TWO_PI;
+					var angle:Number = layer.getHue(w+smallA.width/2, h+smallA.height/2)*AlchemyPolarTree.TWO_PI;
 //					str = str+" "+angle.toString();
 					m.tx -= smallA.width/2;
 					m.ty -= smallA.height/2;
