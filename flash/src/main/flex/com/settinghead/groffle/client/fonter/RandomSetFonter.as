@@ -8,8 +8,8 @@ package com.settinghead.groffle.client.fonter
 	public class RandomSetFonter implements WordFonter
 	{
 		private static const fontSets:Array = 
-			[['panefresco500','permanentmarker', 'romeral'],
-			['bpreplay-kRB','fifthleg-kRB','pecita-kRB','sniglet-kRB']
+			[['panefresco500','permanentmarker', 'romeral']
+//			,['bpreplay-kRB','fifthleg-kRB','pecita-kRB','sniglet-kRB']
 			];
 		
 		private var fonter:PickFromFonter;
