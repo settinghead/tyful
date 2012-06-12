@@ -44,7 +44,7 @@ class BitmapShapeVO implements IImageShape
 
 	}
 		
-	private function createTextField( fontName: String, text: String, size: Float ): TextField
+	private inline function createTextField( fontName: String, text: String, size: Float ): TextField
 	{
 
 			
@@ -73,7 +73,7 @@ class BitmapShapeVO implements IImageShape
 		return textField;
 	}
 
-	public function contains(x:Float, y:Float, width:Float, height:Float, rotation:Float, transformed:Bool):Bool {
+	public inline function contains(x:Float, y:Float, width:Float, height:Float, rotation:Float, transformed:Bool):Bool {
 		if(rotation!=0) throw "NotImplementedError";
 		if(!intersects(x,y,width,height,transformed)) {
 			var rX:Float = x+ width*Math.random();
@@ -86,7 +86,7 @@ class BitmapShapeVO implements IImageShape
 			else return false;
 	}
 		
-	public function containsPoint(x:Float, y:Float,transformed:Bool,  refX:Float=-1,refY:Float=-1):Bool{
+	public inline function containsPoint(x:Float, y:Float,transformed:Bool,  refX:Float=-1,refY:Float=-1):Bool{
 //			if(transformed)
 //				return _textField.hitTestPoint(x,y,true);
 //			else{
@@ -95,7 +95,7 @@ class BitmapShapeVO implements IImageShape
 		return _bmp.bitmapData.getPixel32(Std.int(x),Std.int(y)) > 0x00000000;
 	}
 	
-	public function intersects(x:Float, y:Float, width:Float, height:Float,transformed:Bool):Bool {
+	public inline function intersects(x:Float, y:Float, width:Float, height:Float,transformed:Bool):Bool {
 //
 //			if(width<1) width = 1;
 //			if(height<1) height = 1;
@@ -117,36 +117,36 @@ class BitmapShapeVO implements IImageShape
 		}
 	}
 		
-	public function setCenterLocation(centerX:Float,centerY:Float):Void{
+	public inline function setCenterLocation(centerX:Float,centerY:Float):Void{
 		this._centerX = centerX;
 		this._centerY = centerY;
 	}
 		
-	public function getWidth():Float{
+	public inline function getWidth():Float{
 		return _bmp.width;
 	}
-	public function getHeight():Float{
+	public inline function getHeight():Float{
 		return _bmp.height;
 	}
-	public function getRotation():Float{
+	public inline function getRotation():Float{
 		return _rotation;
 	}
-	public function getCenterX():Float{
+	public inline function getCenterX():Float{
 		return _centerX;
 	}
-	public function getCenterY():Float{
+	public inline function getCenterY():Float{
 		return _centerY;
 	}
 		
-	public function getTxtField():TextField{
+	public inline function getTxtField():TextField{
 		return _textField;
 	}
 		
-	public function getObjectBounds():Rectangle{
+	public inline function getObjectBounds():Rectangle{
 		return _textField.getBounds(_textField.parent);
 	}
 		
-	public function rotate(rotation:Float):Void{
+	public inline function rotate(rotation:Float):Void{
 			
 		this._rotation = rotation;
 	}

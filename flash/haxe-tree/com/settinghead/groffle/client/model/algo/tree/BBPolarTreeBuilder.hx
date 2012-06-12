@@ -27,7 +27,7 @@ class BBPolarTreeBuilder {
 		return tree;
 	}
 
-	public static function makeChildren(tree:BBPolarTreeVO, shape:IImageShape,
+	public static inline function makeChildren(tree:BBPolarTreeVO, shape:IImageShape,
 			minBoxSize:Int, root:BBPolarRootTreeVO):Void {
 		var type:Int= determineType(tree);
 

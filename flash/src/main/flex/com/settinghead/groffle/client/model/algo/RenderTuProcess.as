@@ -271,7 +271,7 @@ package com.settinghead.groffle.client.model.algo
 					//			eWord.getTree().draw(destination.graphics);
 					
 					// // TODO
-					eWord.getTree().setRotation(angle);
+					eWord.bbTree.setRotation(angle);
 					//
 					if (eWord.trespassed(candidateLoc.patch.layer, angle))
 						continue;

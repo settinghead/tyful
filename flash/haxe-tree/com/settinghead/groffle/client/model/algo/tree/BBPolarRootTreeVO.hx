@@ -81,7 +81,7 @@ class BBPolarRootTreeVO extends BBPolarTreeVO {
 	}
 		
 		
-	public override inline function getCurrentStamp():Int {
+	public override function getCurrentStamp():Int {
 		return this.rootStamp;
 	}
 		

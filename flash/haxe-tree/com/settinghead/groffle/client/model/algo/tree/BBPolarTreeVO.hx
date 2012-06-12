@@ -52,7 +52,7 @@ class BBPolarTreeVO {
 			this.setLeaf(true);
 	}
 		
-	public function addKids(kidList:Array<BBPolarChildTreeVO>):Void {
+	public inline function addKids(kidList:Array<BBPolarChildTreeVO>):Void {
 		_kids = kidList;
 	}
 		
@@ -284,11 +284,11 @@ class BBPolarTreeVO {
 		
 		
 		
-	public function getWidth(rotate:Bool):Float {
+	public inline function getWidth(rotate:Bool):Float {
 		return this.getRight(rotate) - this.getX(rotate);
 	}
 		
-	public function getHeight(rotate:Bool):Float {
+	public inline function getHeight(rotate:Bool):Float {
 		return this.getBottom(rotate) - this.getY(rotate);
 	}
 		
@@ -350,7 +350,7 @@ class BBPolarTreeVO {
 		return this._relativeBottom;
 	}
 		
-	public function getX(rotate:Bool):Float {
+	public inline function getX(rotate:Bool):Float {
 		if (rotate) {
 			checkComputeX();
 			return _x - MARGIN;
@@ -358,7 +358,7 @@ class BBPolarTreeVO {
 			return getRelativeX();
 	}
 		
-	public function getY(rotate:Bool):Float {
+	public inline function getY(rotate:Bool):Float {
 		if (rotate) {
 			checkComputeY();
 			return _y - MARGIN;
@@ -366,7 +366,7 @@ class BBPolarTreeVO {
 			return getRelativeY();
 	}
 		
-	public function getRight(rotate:Bool):Float {
+	public inline function getRight(rotate:Bool):Float {
 		if (rotate) {
 			checkComputeRight();
 			return _right + MARGIN;
@@ -374,18 +374,19 @@ class BBPolarTreeVO {
 			return getRelativeRight();
 	}
 		
-	public function getBottom(rotate:Bool):Float {
+	public inline function getBottom(rotate:Bool):Float {
 		if (rotate) {
 			checkComputeBottom();
 			return _bottom + MARGIN;
 		}
-		return getRelativeBottom();
+		else
+			return getRelativeBottom();
 	}
 		
 	/**
 	 * @return the rotation
 	 */
-	public  function getRotation():Float {
+	public function getRotation():Float {
 		throw "NotImplementedError";
 		return Math.NaN;
 	}
@@ -395,7 +396,7 @@ class BBPolarTreeVO {
 		return -1;
 	}
 		
-	public function setLeaf(b:Bool):Void {
+	public inline function setLeaf(b:Bool):Void {
 		this._leaf = b;
 	}
 		

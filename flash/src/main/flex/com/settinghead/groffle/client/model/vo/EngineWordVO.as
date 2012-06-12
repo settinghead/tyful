@@ -131,7 +131,7 @@ public class EngineWordVO {
 
 		_shape =
 		// WordShaper.moveToOrigin(
-		WordShaper.rotate(shape, getTree().getRotation()
+		WordShaper.rotate(shape, bbTree.getRotation()
 				);
 
 		 bbTree.setLocation(currentLocation.getpVector().x, currentLocation.getpVector().y);
@@ -190,9 +190,6 @@ public class EngineWordVO {
 		return true;
 	}
 
-	public function getTree():BBPolarRootTreeVO {
-		return this.bbTree;
-	}
 
 	public function getAngle(angler:WordAngler):Number {
 		renderedAngle = !isNaN(presetAngle)  ? presetAngle : angler

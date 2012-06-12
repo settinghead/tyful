@@ -325,13 +325,34 @@
 					this.mainCanvas.width = _tu.template.effectiveBorder.width+EFFECTIVE_MARGIN;
 					this.mainCanvas.height = _tu.template.effectiveBorder.height+EFFECTIVE_MARGIN;
 					
-					var scale:Number = tu.effectiveBorder.width>tu.effectiveBorder.height?(this.stage.width-150)/tu.effectiveBorder.width:(this.stage.height-controlGroup.height)/tu.effectiveBorder.height;
+					var stageScale:Number = (this.stage.width-150)/(this.stage.height-controlGroup.height);
+					var tuScale:Number = this.tu.effectiveBorder.width/this.tu.effectiveBorder.height;
+					var scale:Number;
+					if(stageScale>tuScale){
+						scale = (this.stage.height-controlGroup.height-100)/tu.effectiveBorder.height;
+					}else{
+						scale = (this.stage.width-250)/tu.effectiveBorder.width;
+
+					}
+					
+					if(scale>3) scale = 3;
+										
 					mainCanvas.scaleX = scale;
 					mainCanvas.scaleY = scale;
+					
+					Notification.show("stage w: "+(this.stage.width-150).toString()
+						+"; stage h:"+(this.stage.height-this.controlGroup.height).toString()
+						+"; tu w:" + this.tu.effectiveBorder.width.toString()
+						+"; tu h:" + this.tu.effectiveBorder.height.toString()+"; scale:"+scale.toString());
+					
+//					var offsetX:int = -(this.stage.width-150-tu.effectiveBorder.width*scale)/2;
+//					var offsetY:int = -(this.stage.height-this.controlGroup.height-tu.effectiveBorder.height*scale)/2;
+					
+					
 					this.mainCanvas.left = -(_tu.template.effectiveBorder.x+EFFECTIVE_MARGIN)*scale;
 					this.mainCanvas.top = -(_tu.template.effectiveBorder.y+EFFECTIVE_MARGIN)*scale;
-					Notification.show(
-						scale.toString());
+//					Notification.show(
+//						scale.toString());
 					dict = new Dictionary();
 					
 					for each(var l:Layer in _tu.template.layers){
@@ -381,7 +402,8 @@
 		]]>
 	</fx:Script>
 	<s:VGroup width="100%" height="100%">
-		<s:VGroup horizontalAlign="center" top="0" left="0" right="0" id="controlGroup">
+		<s:VGroup horizontalAlign="center" top="0" left="0" right="0" id="controlGroup"
+				   depth="10">
 			<s:HGroup depth="1">
 				<s:Label width="170" />
 				<s:Button id="btnEditTemplate" click="btnEditTemplate_clickHandler(event)" label="Edit template" fontSize="18" color="#005DF2" />
@@ -423,11 +445,7 @@
 		</s:VGroup>
 
 		<s:Group depth="2" top="0" left="0" right="0" bottom="0">
-			<s:layout>
-				<s:BasicLayout />
-			</s:layout>
-				<mx:Canvas id="mainCanvas"  scaleX="{tu.effectiveBorder.width&gt;tu.effectiveBorder.height?(this.stage.width-150)/tu.effectiveBorder.width:(this.stage.height-controlGroup.height)/tu.effectiveBorder.height}" 
-						   scaleY="{mainCanvas.scaleX}">
+				<mx:Canvas id="mainCanvas" depth="3">
 					<mx:UIComponent id="backgroundLayer" top="0" left="0" visible="true"/>
 					<mx:Canvas id="wordLayers" top="0" left="0" />
 				</mx:Canvas>

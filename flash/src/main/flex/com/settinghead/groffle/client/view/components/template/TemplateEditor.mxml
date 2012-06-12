@@ -439,7 +439,7 @@
 								includeInLayout="{decodeURIComponent(FlexGlobals.topLevelApplication.parameters.token).length>0 || (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.mode as String)) == ApplicationFacade.MODE_NEW_TEMPLATE}"
 								>
 								<s:Button id="btnUploadTemplate" click="btnUploadTemplate_clickHandler(event)" label="Save/share your template" 
-										  toolTip="Show off your artistic talent by sharing your template with others." />
+										  toolTip="Show off your artwork by sharing your template with the Groffle community." />
 								<s:CheckBox id="chkRerenderThumbnail" label="Rerender thumbnail preview" />								
 							</mx:HBox>
 
