@@ -10,16 +10,20 @@ class AuthenticationsController < ApplicationController
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
       #flash[:notice] = "You have successfully signed in to Groffle."
+      authentication.access_token = omniauth['credentials']['token']
+      authentication.save
       post_authentication_work(authentication.user,omniauth)
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
-      current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
+      current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token =>  omniauth['credentials']['token'])
       flash[:notice] = "You are now connected to Facebook."
       post_authentication_work(current_user,omniauth)
       redirect_to authentications_url
     else
       user = User.new
       user.apply_omniauth(omniauth)
+      user.authentication.access_token = omniauth['credentials']['token']
+
       if user.save
         #flash[:notice] = "You have successfully signed in to Groffle."
         post_authentication_work(user,omniauth)
