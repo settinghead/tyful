@@ -38,7 +38,8 @@ g++ -c BBPolarRootTreeVO.cpp -DOSX -O3 -swc
 g++ -c BBPolarTreeVO.cpp -DOSX -O3 -swc
 g++ -c BBPolarTreeBuilder.cpp -DOSX -O3 -swc
 g++ -c ImageShape.cpp -DOSX -O3 -swc
-g++ BBPolarChildTreeVO.o BBPolarRootTreeVO.o BBPolarTreeVO.o BBPolarTreeBuilder.o ImageShape.o polartree.o -swc -lm -o polartree.swc
+g++ BBPolarChildTreeVO.o BBPolarRootTreeVO.o BBPolarTreeVO.o BBPolarTreeBuilder.o ImageShape.o polartree.o -O3 -swc -lm -o polartree.swc
 mv polartree.swc ../libs/
+cp ../libs/polartree.swc ../../flash/libs/
 rm BBPolarChildTreeVO.o BBPolarRootTreeVO.o BBPolarTreeVO.o BBPolarTreeBuilder.o ImageShape.o polartree.o
 alias alc-off='export PATH=$PRE_ALCHEMY_PATH'

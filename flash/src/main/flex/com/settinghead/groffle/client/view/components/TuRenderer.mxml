@@ -340,10 +340,10 @@
 					mainCanvas.scaleX = scale;
 					mainCanvas.scaleY = scale;
 					
-					Notification.show("stage w: "+(this.stage.width-150).toString()
-						+"; stage h:"+(this.stage.height-this.controlGroup.height).toString()
-						+"; tu w:" + this.tu.effectiveBorder.width.toString()
-						+"; tu h:" + this.tu.effectiveBorder.height.toString()+"; scale:"+scale.toString());
+//					Notification.show("stage w: "+(this.stage.width-150).toString()
+//						+"; stage h:"+(this.stage.height-this.controlGroup.height).toString()
+//						+"; tu w:" + this.tu.effectiveBorder.width.toString()
+//						+"; tu h:" + this.tu.effectiveBorder.height.toString()+"; scale:"+scale.toString());
 					
 //					var offsetX:int = -(this.stage.width-150-tu.effectiveBorder.width*scale)/2;
 //					var offsetY:int = -(this.stage.height-this.controlGroup.height-tu.effectiveBorder.height*scale)/2;

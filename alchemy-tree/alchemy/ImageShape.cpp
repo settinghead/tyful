@@ -36,20 +36,20 @@ bool ImageShape::contains(int x, int y, int width, int height) {
 	if (intersects(x, y, width, height)) {
 		return false;
 	} else {
-		int rX = rand() % width;
-		int rY = rand() % height;
+		int rX = rand() % width+x;
+		int rY = rand() % height+y;
 		return containsPoint(rX, rY);
 	}
 }
 
 bool ImageShape::containsPoint(int x, int y) {
-	return pixels[y * width + x] & 0x000000FF > 0;
+	return pixels[x * height + y] & 0xFF > 0;
 }
 
 bool ImageShape::intersects(int x, int y, int width, int height) {
 	int cmp = pixels[y * width + x];
-	for (int xx = 0; xx < x; xx++) {
-		for (int yy = 0; yy < y; yy++) {
+	for (int xx = x; xx < x+width; xx++) {
+		for (int yy = y; yy < y+height; yy++) {
 			if (pixels[yy * width + xx] != cmp)
 				return true;
 		}

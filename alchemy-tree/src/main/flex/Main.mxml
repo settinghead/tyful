@@ -9,9 +9,25 @@
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
+			import com.notifications.Notification;
+			
+			import polartree.AlchemyPolarTree;
+			import polartree.TextShapeVO;
+			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var e:EchoTest = new EchoTest();
+				for(var i:int =0; i<100; i++){
+					var t1:TextShapeVO = new TextShapeVO(true,".",0,120,0,"arial");
+					var t2:TextShapeVO = new TextShapeVO(true,"^",0,120,0,"arial");
+				
+					var tree1:AlchemyPolarTree = new AlchemyPolarTree(t1);
+					var tree2:AlchemyPolarTree = new AlchemyPolarTree(t2);
+				
+					tree1.setLocation(100,100);
+					tree2.setLocation(100,100);
+					tree1.overlaps(tree2);
+				}
+				Notification.show(tree1.overlaps(tree2));	
 			}
 			
 			
