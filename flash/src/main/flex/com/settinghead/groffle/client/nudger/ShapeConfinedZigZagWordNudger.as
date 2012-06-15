@@ -1,8 +1,8 @@
 package com.settinghead.groffle.client.nudger {
-	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.angler.WordAngler;
 	import com.settinghead.groffle.client.density.Patch;
 	import com.settinghead.groffle.client.math.MathUtils;
+	import com.settinghead.groffle.client.model.vo.template.PlaceInfo;
 	import com.settinghead.groffle.client.model.vo.wordlist.WordVO;
 	
 	import flash.geom.Point;
@@ -19,8 +19,8 @@ package com.settinghead.groffle.client.nudger {
 		public function ShapeConfinedZigZagWordNudger() {
 		}
 		
-		private var retPoint:Point = new Point(0,0);
-		public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):Point {
+		private var retPoint:PlaceInfo = new PlaceInfo(0,0);
+		public function nudgeFor(w:WordVO, pInfo:PlaceInfo, attempt:int, totalPlannedAttempt:int):PlaceInfo {
 			var factor:int;
 				attempt = ( attempt + pInfo.patch.lastAttempt + totalPlannedAttempt / 2) % totalPlannedAttempt;
 				var p:Patch= Patch(pInfo.patch);
@@ -41,6 +41,7 @@ package com.settinghead.groffle.client.nudger {
 				
 			retPoint.x = x;
 			retPoint.y = y;
+			retPoint.patch = pInfo.patch;
 			return retPoint;
 		}
 	}

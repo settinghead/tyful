@@ -52,7 +52,7 @@ public class EngineWordVO {
 	private var _desiredLocations:Vector.<PlaceInfo>;
 	private var currentLocation:PlaceInfo;
 	private var targetPlaceInfo:Vector.<PlaceInfo>;
-	private var renderedPlace:Point;
+	private var renderedPlace:PlaceInfo;
 	private var skippedBecause:int = -1;
 	public var samplePoints:Array;
 	
@@ -112,21 +112,22 @@ public class EngineWordVO {
 		return _desiredLocations[desiredLocationIndex++];
 	}
 
-	public function nudgeTo(loc:Point, patch:Patch):void {
+	public function nudgeTo(p:PlaceInfo, patch:Patch):void {
 		if(currentLocation==null)
-			currentLocation = new PlaceInfo(loc, patch);
+			currentLocation = p;
 		else{
-			currentLocation.getpVector().x = loc.x;
-			currentLocation.getpVector().y = loc.y;
+			currentLocation.x = p.x;
+			currentLocation.y = p.y;
+			currentLocation.patch = patch;
 		}
-		bbTree.setLocation(int(currentLocation.getpVector().x),
-				int(currentLocation.getpVector().y));
+		bbTree.setLocation(int(currentLocation.x),
+				int(currentLocation.y));
 	}
 
 	public function finalizeLocation():void {
 
-		var x:Number= currentLocation.getpVector().x ;
-		var y:Number= currentLocation.getpVector().y ;
+		var x:Number= currentLocation.x ;
+		var y:Number= currentLocation.y ;
 		shape.setCenterLocation(x,y);
 
 		_shape =
@@ -134,8 +135,8 @@ public class EngineWordVO {
 		WordShaper.rotate(shape, bbTree.getRotation()
 				);
 
-		 bbTree.setLocation(currentLocation.getpVector().x, currentLocation.getpVector().y);
-		setRenderedPlace(currentLocation.getpVector());
+		 bbTree.setLocation(currentLocation.x, currentLocation.y);
+		setRenderedPlace(currentLocation);
 		currentLocation.patch.eWords.push(this);
 	}
 	
@@ -160,26 +161,26 @@ public class EngineWordVO {
 
 	public function trespassed(layer:Layer, rotation:Number):Boolean {
 		if(layer==null) return false;		
-		var x:Number = (this.currentLocation.getpVector().x - this.shape.textField.width / 2);
-		var y:Number = (this.currentLocation.getpVector().y - this.shape.textField.height / 2);
+		var x:Number = (this.currentLocation.x - this.shape.textField.width / 2);
+		var y:Number = (this.currentLocation.y - this.shape.textField.height / 2);
 
-		// float right = (float) (this.currentLocation.getpVector().x + bounds
+		// float right = (float) (this.currentLocation.x + bounds
 		// .getWidth());
-		// float bottom = (float) (this.currentLocation.getpVector().y + bounds
+		// float bottom = (float) (this.currentLocation.y + bounds
 		// .getHeight());
 //		Assert.isTrue( this.shape.textField.width>0);
 //		Assert.isTrue( this.shape.textField.height > 0);
 		
-		if (layer.containsAllPolarPoints(this.currentLocation.getpVector().x ,
-			this.currentLocation.getpVector().y, this.samplePoints, rotation, 
-			this.currentLocation.getpVector().x,
-			this.currentLocation.getpVector().y
+		if (layer.containsAllPolarPoints(this.currentLocation.x ,
+			this.currentLocation.y, this.samplePoints, rotation, 
+			this.currentLocation.x,
+			this.currentLocation.y
 		))
 		{
-			return (layer.aboveContainsAnyPolarPoints(this.currentLocation.getpVector().x ,
-				this.currentLocation.getpVector().y, this.samplePoints, rotation,
-				this.currentLocation.getpVector().x,
-				this.currentLocation.getpVector().y
+			return (layer.aboveContainsAnyPolarPoints(this.currentLocation.x ,
+				this.currentLocation.y, this.samplePoints, rotation,
+				this.currentLocation.x,
+				this.currentLocation.y
 			));
 		}
 		
@@ -233,7 +234,7 @@ public class EngineWordVO {
 		return targetPlaceInfo;
 	}
 	
-	public function setRenderedPlace(place:Point):void {
+	public function setRenderedPlace(place:PlaceInfo):void {
 		renderedPlace = place.clone();
 	}
 	

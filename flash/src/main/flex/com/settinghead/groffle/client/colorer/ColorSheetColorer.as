@@ -1,5 +1,6 @@
 package com.settinghead.groffle.client.colorer
 {
+	import com.notifications.Notification;
 	import com.settinghead.groffle.client.model.vo.EngineWordVO;
 	
 	public class ColorSheetColorer implements WordColorer
@@ -14,7 +15,11 @@ package com.settinghead.groffle.client.colorer
 		{
 			var color:uint = 
 				eWord.getCurrentLocation().patch.layer.colorSheet.bitmapData.getPixel(
-					eWord.getCurrentLocation().getpVector().x, eWord.getCurrentLocation().getpVector().y);
+					eWord.getCurrentLocation().x, eWord.getCurrentLocation().y);
+//			if(color==0){
+//				Notification.show(eWord.getCurrentLocation().x.toString()+
+//					", "+ eWord.getCurrentLocation().y.toString());
+//			}
 			return color;
 //			else return otherwise.colorFor(eWord);
 		}

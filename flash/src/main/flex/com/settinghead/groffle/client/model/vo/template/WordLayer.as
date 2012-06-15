@@ -61,6 +61,12 @@ package com.settinghead.groffle.client.model.vo.template
 		}
 		public var transparentColor:int = Number.NaN;
 		
+		public function get template():TemplateVO 
+		{
+			
+			return _template;
+		}
+		
 //		private var hsbArray:Array;
 		// Applet applet = new Applet();
 		// Frame frame = new Frame("Roseindia.net");

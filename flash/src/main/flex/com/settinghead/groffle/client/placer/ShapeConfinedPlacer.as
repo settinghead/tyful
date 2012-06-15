@@ -30,8 +30,8 @@ public class ShapeConfinedPlacer implements WordPlacer {
 		index.lock();
 		var places:Vector.<PlaceInfo> = new Vector.<PlaceInfo>();
 		for(var i:int=0;i<patches.length;i++)
-			places.push(new PlaceInfo(new Point((patches[i] as Patch).getX() + (patches[i] as Patch).getWidth() / 2, (patches[i] as Patch).getY()
-			+ (patches[i] as Patch).getHeight() / 2), (patches[i] as Patch)));
+			places.push(new PlaceInfo((patches[i] as Patch).getX() + (patches[i] as Patch).getWidth() / 2, (patches[i] as Patch).getY()
+			+ (patches[i] as Patch).getHeight() / 2, (patches[i] as Patch)));
 		return places;
 	}
 

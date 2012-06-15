@@ -5,22 +5,17 @@ package com.settinghead.groffle.client.model.vo.template
 	import flash.geom.Point;
 
 	public class PlaceInfo {
-		private var pVector:Point;
 		private var _patch:Patch;
 		
-		public function PlaceInfo(pVector:Point, p:Patch = null) {
-			this.setpVector(pVector);
+		public var x:int;
+		public var y:int;
+		
+		public function PlaceInfo(x:int, y:int, p:Patch = null) {
+			this.x = x;
+			this.y = y;
 			this.patch = p;
 		}
 		
-		
-		private function setpVector(pVector:Point):void {
-			this.pVector = pVector;
-		}
-		
-		public function getpVector():Point {
-			return pVector;
-		}
 		
 		public function set patch(p:Patch):void{
 			this._patch = p;
@@ -29,15 +24,23 @@ package com.settinghead.groffle.client.model.vo.template
 		public function get patch():Patch{
 			return this._patch;
 		}
-		
-		public function get():PlaceInfo {
-			return new PlaceInfo(this.getpVector().clone(), this.patch);
-		}
+
 		
 		public function distanceFrom(p:PlaceInfo):Number{
 			return Math.sqrt(
-				Math.pow(p.getpVector().x - this.getpVector().x, 2) +
-				Math.pow(p.getpVector().y - this.getpVector().y, 2));
+				Math.pow(p.x - this.x, 2) +
+				Math.pow(p.y - this.y, 2));
+		}
+		
+		public function clone():PlaceInfo{
+			return new PlaceInfo(x,y,_patch);
+		}
+		
+		public function add(addum:PlaceInfo):PlaceInfo{
+			var p:PlaceInfo = this.clone();
+			p.x += addum.x;
+			p.y += addum.y;
+			return p;
 		}
 	}
 

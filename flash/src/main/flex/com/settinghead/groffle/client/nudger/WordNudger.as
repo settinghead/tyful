@@ -59,6 +59,6 @@ public interface WordNudger {
 	 * @return the PVector to add to the word's desired location, to get the
 	 *         next spot to try fitting the word
 	 */
-	 function nudgeFor(word:WordVO, pInfo:PlaceInfo, attemptNumber:int, totalPlannedAttempt:int):Point ;
+	 function nudgeFor(word:WordVO, pInfo:PlaceInfo, attemptNumber:int, totalPlannedAttempt:int):PlaceInfo ;
 }
 }

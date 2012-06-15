@@ -28,8 +28,8 @@ public class ShapeConfinedAngler implements WordAngler {
 		// .getCurrentLocation().getpVector().y) + BBPolarTree.PI)
 		// % BBPolarTree.TWO_PI;
 		var angle:Number= (layer.getHue(
-				int(eWord.getCurrentLocation().getpVector().x), int(eWord
-						.getCurrentLocation().getpVector().y)) *AlchemyPolarTree.TWO_PI);
+				eWord.getCurrentLocation().x, eWord
+						.getCurrentLocation().y) *AlchemyPolarTree.TWO_PI);
 		if (isNaN(angle) || angle == 0)
 			return otherwise.angleFor(eWord);
 		else

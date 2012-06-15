@@ -264,7 +264,7 @@ package com.settinghead.groffle.client.model.algo
 				
 				
 				inner: for (attempt= 0; attempt < maxAttemptsToPlace; attempt++) {
-					eWord.nudgeTo(candidateLoc.getpVector().add(tu.template.nudger.nudgeFor(word, candidateLoc,
+					eWord.nudgeTo(candidateLoc.add(tu.template.nudger.nudgeFor(word, candidateLoc,
 						attempt,maxAttemptsToPlace)), candidateLoc.patch);
 					
 					var angle:Number= candidateLoc.patch.layer.angler.angleFor(eWord);
@@ -276,8 +276,8 @@ package com.settinghead.groffle.client.model.algo
 					if (eWord.trespassed(candidateLoc.patch.layer, angle))
 						continue;
 					var loc:PlaceInfo= eWord.getCurrentLocation();
-					if (loc.getpVector().x < 0|| loc.getpVector().y < 0|| loc.getpVector().x + wordImageWidth >= tu.template.width
-						|| loc.getpVector().y + wordImageHeight >= tu.template.height) {
+					if (loc.x < 0|| loc.y < 0|| loc.x + wordImageWidth >= tu.template.width
+						|| loc.y + wordImageHeight >= tu.template.height) {
 						continue;
 					}
 					

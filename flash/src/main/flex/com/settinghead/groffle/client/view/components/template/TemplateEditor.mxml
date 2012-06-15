@@ -528,8 +528,10 @@
 				<s:HGroup id="mainCanvasArea" top="80" bottom="0" left="0" right="0" styleName="mainCanvasArea">
 					<mx:Canvas top="0" bottom="0" left="0" right="0">
 							<mx:UIComponent id="cvnTransparentBackground" visible="true" />
-							<components:LayerStack id="layers" dataProvider="{template.layers}" width="{template.width}" height="{template.height}"
-												   itemRendererFunction="layers_itemRendererFunc"  >
+							<components:LayerStack id="layers" dataProvider="{template.layers}" 
+												   width="{template.width}" height="{template.height}"
+												   itemRendererFunction="layers_itemRendererFunc"
+												   >
 							</components:LayerStack>
 							<!--template:PatchLayer id="patchLayer" visible="true" /-->
 					</mx:Canvas>

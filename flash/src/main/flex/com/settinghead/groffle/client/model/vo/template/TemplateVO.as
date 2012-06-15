@@ -23,6 +23,8 @@ package com.settinghead.groffle.client.model.vo.template
 	import mx.collections.ArrayCollection;
 	import mx.events.CollectionEvent;
 	
+	import org.as3commons.collections.utils.NullComparator;
+	
 	
 	[Bindable]
 	public class TemplateVO implements IZippable, IWithEffectiveBorder
@@ -69,10 +71,18 @@ package com.settinghead.groffle.client.model.vo.template
 			return this._layers;
 		}
 
+		private var connecting:Boolean = false;
 		public function connectLayers():void{
-			for(var i:int=0;i<layers.length;i++){
-				if(i>0) Layer.connect( (layers[i] as Layer),(layers[i-1] as Layer)); 
+			if(!connecting){
+				connecting = true;
+				for(var i:int=0;i<layers.length;i++){
+					(layers[i] as Layer).above = null;
+					(layers[i] as Layer).below = null;
+					if(i>0) Layer.connect( (layers[i] as Layer),(layers[i-1] as Layer)); 
+				}
+				connecting = false;
 			}
+			
 		}
 
 		

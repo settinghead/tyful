@@ -27,6 +27,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 	
 	import polartree.AlchemyPolarTree;
 	
+	import spark.components.Group;
 	import spark.components.supportClasses.ItemRenderer;
 	import spark.primitives.BitmapImage;
 	
@@ -36,15 +37,23 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		public function TextFlowCanvas()
 		{
 			super();
-			this.addEventListener(MouseEvent.MOUSE_DOWN, this_mouseDownHandler);
-			this.addEventListener(MouseEvent.MOUSE_UP, this_mouseUpHandler);
-			this.addEventListener(MouseEvent.MOUSE_MOVE, this_mouseMoveHandler);
-			this.addEventListener(MouseEvent.MOUSE_OVER, this_mouseOverHandler);
-			this.addEventListener(MouseEvent.MOUSE_OUT, this_mouseOutHandler);
-			this.addEventListener(FocusEvent.FOCUS_OUT, this_focusOutHandler);
-			this.addEventListener("creationComplete", this_creationCompleteHandler);
+
+			this.canvas.width = this.width;
+			this.canvas.height = this.height;
+			this.canvas.x = 0;
+			this.canvas.y = 0;
+			this.addElement(canvas);
+			canvas.addEventListener(MouseEvent.MOUSE_DOWN, this_mouseDownHandler);
+			canvas.addEventListener(MouseEvent.MOUSE_UP, this_mouseUpHandler);
+			canvas.addEventListener(MouseEvent.MOUSE_MOVE, this_mouseMoveHandler);
+			canvas.addEventListener(MouseEvent.MOUSE_OVER, this_mouseOverHandler);
+			canvas.addEventListener(MouseEvent.MOUSE_OUT, this_mouseOutHandler);
+			canvas.addEventListener(FocusEvent.FOCUS_OUT, this_focusOutHandler);
+			canvas.addEventListener("creationComplete", this_creationCompleteHandler);
 			this.autoDrawBackground = false;
 		}
+		
+		private var canvas:Group = new Group();
 		
 		private var _templateEditor:TemplateEditor;
 		public function set templateEditor(v:TemplateEditor):void{
@@ -84,9 +93,10 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				oldMouseX = this.mouseX;
 				oldMouseY = this.mouseY;
 				stage.focus = this;
-
 			}
 		}
+		
+		
 		
 		public function get layer():WordLayer{
 			return data as WordLayer;
@@ -185,17 +195,18 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		public function set currentLayer(l:Layer):void{
 			this._isCurrentLayer = (l==this.layer);
-			this.mouseEnabled=_isCurrentLayer;
 			if(_isCurrentLayer){
 				this.alpha = 1;
-				if(this.cursor!=null)this.cursor.visible=true;
+				if(this.cursor!=null)
+					this.cursor.visible=true;
+				this.mouseEnabled=true;
 			}
 			else{
 				this.alpha = 0.3;
 				if(this.cursor!=null)this.cursor.visible = false;
+				this.mouseEnabled=false;
 			}
-			if(l)
-				Notification.show(l.name,this.layer.name);
+			updateLayerDepth();
 
 		}
 		
@@ -288,18 +299,12 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				var shape:Shape = new Shape();
 				var dirShape:Shape = new Shape();
 				var colorShape:Shape = new Shape();
-
-
-				
+		
 				switch(currentDrawingTool){
 					case TemplateEditor.BRUSH:
 						//update drawing state
 						updateDrawingRegion();
-						
-						var blendMode:String = 
-//						templateEditor.chkLockBoundary.selected?
-//							BlendMode.SHADER :
-							BlendMode.NORMAL;
+
 						var bounds:Rectangle;
 						var minX:Number = Math.min(oldMouseX, this.mouseX) - thickness/2;
 						var minY:Number = Math.min(oldMouseY, this.mouseY) - thickness/2;
@@ -365,7 +370,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 
 							}
 							else{
-								layer.colorSheet.bitmapData.draw(colorShape,null,null,blendMode);
+								layer.colorSheet.bitmapData.draw(colorShape);
 							}
 							
 						}
@@ -399,6 +404,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 		
 		protected function this_creationCompleteHandler(event:FlexEvent):void
 		{
+			
 			this._templateEditor.initColors();
 			populateLayer();
 			initCursor();
@@ -406,6 +412,7 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			rebuildCursor();
 			if(isCurrentLayer)
 				stage.focus = this;
+			
 
 		}
 		
@@ -413,18 +420,16 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			cursor = new UIComponent();
 			cursor.depth = 999;
 			cursor.graphics.clear();
-			
-			//cursor.blendMode = BlendMode.HARDLIGHT;
 			cursor.alpha = 0.9;
-			this.addElement(cursor);
+			canvas.addElement(cursor);
 		}
 		
 		private function populateLayer():void{
 			if(this.layer!=null)
 			{
 				
-				for(var i:int=0;i<this.numChildren;i++)
-					this.removeChildAt(0);
+				for(var i:int=0;i<canvas.numElements;i++)
+					canvas.removeElementAt(0);
 				if((layer as WordLayer).direction!=null){
 					layer.direction = (layer as WordLayer).direction;
 				}
@@ -437,8 +442,8 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				bmpDirection = new Bitmap(new BitmapData(layer.getWidth(), layer.getHeight(), true, 0x00ffffff));
 
 				
-				this.width = layer.getWidth();
-				this.height = layer.getHeight();
+				this.width = canvas.width = layer.getWidth();
+				this.height = canvas.height = layer.getHeight();
 				bmpDirection.x =0; bmpDirection.y = 0;
 				
 				redrawDireciton(0,0,layer.direction.width,layer.direction.height);
@@ -451,12 +456,12 @@ package com.settinghead.groffle.client.view.components.template.canvas
 				bmpDirElement = new BitmapImage();
 				bmpDirElement.source = bmpDirection;
 				
-				this.blendMode = BlendMode.LAYER;
-				this.bmpDirElement.blendMode = BlendMode.ALPHA;
+//				canvas.blendMode = BlendMode.LAYER;
+//				bmpDirElement.blendMode = BlendMode.ALPHA;
 				
-//				this.addElement(bmpElement);
-				this.addElement(colorSheetElement);
-				this.addElement(bmpDirElement);
+//				canvas.addElement(bmpElement);
+				canvas.addElement(colorSheetElement);
+				canvas.addElement(bmpDirElement);
 				//this.patchLayer.patchQueue = template.patchIndex.map.getQueue(3);
 			}
 		}
@@ -524,5 +529,14 @@ package com.settinghead.groffle.client.view.components.template.canvas
 			if(y2>this.brushRegion[3]) this.brushRegion[3] = y2;
 		}
 		
+		private function updateLayerDepth():void{
+			if(layer!=null){
+				for(var i:int = 0; i<layer.template.layers.length; i++){
+					if(layer.template.layers.getItemAt(i) == this.layer){
+						this.depth = i;
+					}
+				}
+			}
+		}
 	}
 }
