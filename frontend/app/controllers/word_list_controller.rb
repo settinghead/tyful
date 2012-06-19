@@ -29,7 +29,7 @@ class WordListController < ApplicationController
       if(str)
         @l = ActiveSupport::JSON.decode(str)
       else
-        WordListController.push_wordlist_task(session[:omniauth],current_user)
+        WordListController.push_wordlist_task(session[:omniauth],current_user,targetId)
         @l = {:status => 'requested'}
       end
     else

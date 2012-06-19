@@ -1,7 +1,11 @@
 Groffle::Application.routes.draw do
+  
+  match "/resize", :to => ResizeApp
+  match "/crop", :to => ResizeApp
+  
   resources :facebook_posts
-
-  get "fb/post_photo"
+    
+  match "/facebook/photos/:fb_uid" => "facebook#photos"
 
   get "shop/show"
 

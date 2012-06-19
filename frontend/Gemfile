@@ -33,6 +33,11 @@ gem 'open-meta-tags', :require => 'open_meta_tags'
 gem 'client_side_validations'
 gem "dynamic_form"
 gem 'meta-tags', :require => 'meta_tags'
+gem "koala"
+gem "rack-mount"
+gem "sinatra"
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~>0.9.12'
 
 # Gems used only for assets and not required
 # in production environments by default.
