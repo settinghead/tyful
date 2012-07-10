@@ -21,10 +21,10 @@ upstream phppgadmin {
 }
 
 
-server { listen 80; server_name groffle.me; rewrite ^/(.*) http://www.groffle.me permanent; }
+server { listen 80; server_name tyful.com; rewrite ^/(.*) http://www.tyful.com permanent; }
 server {
        listen         80;
-       server_name    www.groffle.me;
+       server_name    www.tyful.com;
 
            location / {
                if ($request_uri ~* ^/r/)
@@ -48,7 +48,7 @@ server {
 	ssl_certificate /etc/ssl/sslchain.crt;
 	ssl_certificate_key /etc/ssl/server.key;
 	
-	server_name  www.groffle.me;
+	server_name  www.tyful.com;
 	access_log  /var/log/nginx/localhost.access.log;
 
 	location /f/ {
@@ -124,7 +124,7 @@ server {
 
 server {
 	listen 80;
-	server_name ci.laika.groffle.me;
+	server_name ci.laika.tyful.com;
 	location / {
 		proxy_pass http://ci;
 	    proxy_set_header Host $host;
@@ -133,7 +133,7 @@ server {
 
 server {
 	listen 80;
-	server_name pg.laika.groffle.me;
+	server_name pg.laika.tyful.com;
 	location / {
 		proxy_pass http://phppgadmin;
 	    proxy_set_header Host $host;
