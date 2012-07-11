@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require jquery.hoverIntent
 //= require jquery.purr
 //= require notifications.js

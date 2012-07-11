@@ -58,7 +58,7 @@ Groffle::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  config.action_mailer.default_url_options = { :host => 'groffle.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'tyful.com' }
   GRAPH_APP_ID = '415282955156503'
   GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
   #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@localhost:9908/'
