@@ -62,12 +62,12 @@ Groffle::Application.configure do
   GRAPH_APP_ID = '415282955156503'
   GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
   #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@localhost:9908/'
-  ENV["FLASH_URL"] = 'https://www.groffle.me/f/client/'
-  ENV["RELAY_URL"] = 'http://www.groffle.me/r/'
-  ENV["TEMPLATE_URL"] = 'https://www.groffle.me/t/'
-  ENV["TEMPLATE_PREVIEW_URL"] = 'https://www.groffle.me/tp/'
+  ENV["FLASH_URL"] = 'https://tyful.com/f/client/'
+  ENV["RELAY_URL"] = 'http://tyful.com/r/'
+  ENV["TEMPLATE_URL"] = 'https://tyful.com/t/'
+  ENV["TEMPLATE_PREVIEW_URL"] = 'https://tyful.com/tp/'
   ENV['FB_APP_ID'] = '415282955156503'
-  ENV['FACEBOOK_UPLOAD_URL'] = "https://www.groffle.me/fbupload/"
+  ENV['FACEBOOK_UPLOAD_URL'] = "https://tyful.com/fbupload/"
   
-  OmniAuth.config.full_host = 'https://www.groffle.me'
+  OmniAuth.config.full_host = 'https://tyful.com'
 end
