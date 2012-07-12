@@ -1,12 +1,12 @@
 <%
 
 set_meta_tags :title => @template.name
-set_meta_tags :description => @template.description + " Create cool typography artwork with Groffle."
+set_meta_tags :description => @template.description + " Create cool typography artwork with Tyful."
 
 content_for :head do
 global_meta_tags :title        => @template.name, \
-    :type         => 'groffle:groffle_artwork', \
-    :site_name    => 'Groffle', \
+    :type         => 'tyful:tyful_artwork', \
+    :site_name    => 'Tyful', \
     :image        =>  ENV['TEMPLATE_PREVIEW_URL']+@template.uuid+'.png', \
     :app_id      =>  ENV['FB_APP_ID'], \
     :description  => @template.description	

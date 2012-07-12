@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true">
+	<fx:Metadata>
+		[Event(name="ProcessShopClick", type="com.settinghead.tyful.client.view.components.shop.ShopClickEvent")]
+		
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.settinghead.tyful.client.model.vo.shop.ShopItemVO;
+			[Embed(source="Blue-Arrow.png")]
+			[Bindable]
+			public var blueArrow:Class;
+			public static const PROCESS_SHOP_CLICK:String = "ProcessShopClick";
+
+			public function get item():ShopItemVO{
+				return data as ShopItemVO;
+			}
+			
+			protected function itemImage_clickHandler(event:MouseEvent):void
+			{
+//				(owner as List).dispatchEvent(new ShopClickEvent(PROCESS_SHOP_CLICK,data as ShopItemVO));
+				navigateToURL(new URLRequest((data as ShopItemVO).itemUrl), '_blank');
+
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup horizontalAlign="center">
+		<s:Group>
+			<mx:Image id="itemImage" 
+					  source="{(data as ShopItemVO).imageUrl}" width="120" height="120" scaleContent="true" click="itemImage_clickHandler(event)" 
+					  useHandCursor="true" buttonMode="true" mouseChildren="false"/> 
+			<s:Image source="{blueArrow}" alpha="0.5" left="-5" top="10" depth="0" />
+
+		</s:Group>
+	
+		<mx:LinkButton id="btnShopLink" label="{(data as ShopItemVO).name}" click="itemImage_clickHandler(event)"  /> 
+		
+	</s:VGroup>
+
+</s:ItemRenderer>

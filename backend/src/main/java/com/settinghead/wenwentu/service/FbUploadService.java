@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.service;
+package com.settinghead.tyful.service;
 
-import com.settinghead.wenwentu.service.task.FbUploadTask;
+import com.settinghead.tyful.service.task.FbUploadTask;
 
 public class FbUploadService {
 
@@ -9,7 +9,7 @@ public class FbUploadService {
 	 */
 	public static void main(String[] args) {
 
-		GroffleService<FbUploadTask> service = new GroffleService<FbUploadTask>(
+		TyfulService<FbUploadTask> service = new TyfulService<FbUploadTask>(
 				FbUploadTask.class);
 		service.run(20);
 	}

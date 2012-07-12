@@ -2,7 +2,7 @@ package polartree
 {
 	import cmodule.polartree.CLibInit;
 	
-	import com.settinghead.groffle.client.model.vo.TextShapeVO;
+	import com.settinghead.tyful.client.model.vo.TextShapeVO;
 	
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;

@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.service.task;
+package com.settinghead.tyful.service.task;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +15,8 @@ import com.restfb.types.FacebookType;
 
 public class FbUploadTask extends Task {
 	private static final String[] INTRO_STR = new String[] {
-			" - Another groffle masterpiece (http://groffle.me)",
-			" - Art for the ages (http://groffle.me)" };
+			" - Another tyful masterpiece (http://tyful.me)",
+			" - Art for the ages (http://tyful.me)" };
 	private String userId;
 	private String fbToken;
 	private String fbUid;
@@ -41,7 +41,7 @@ public class FbUploadTask extends Task {
 				Album.class);
 		outer: for (List<Album> albums : myAlbums) {
 			for (Album album : albums) {
-				if (album.getName().startsWith("Groffle")) {
+				if (album.getName().startsWith("Tyful")) {
 					albumId = album.getId();
 					break outer;
 				}
@@ -54,7 +54,7 @@ public class FbUploadTask extends Task {
 			FacebookType albumconnection = client.publish(
 					"me/albums",
 					Album.class,
-					Parameter.with("name", "Groffle"),
+					Parameter.with("name", "Tyful"),
 					Parameter.with("description",
 							INTRO_STR[new Random().nextInt(INTRO_STR.length)]));
 			albumId = albumconnection.getId();
@@ -74,7 +74,7 @@ public class FbUploadTask extends Task {
 		// PostMethod post = new PostMethod("http://jakarata.apache.org/");
 		// NameValuePair[] data = {
 		// new NameValuePair("access_token", this.getFbToken()),
-		// new NameValuePair("groffle_artwork", this.get)
+		// new NameValuePair("tyful_artwork", this.get)
 		// };
 		// post.setRequestBody(data);
 		// // execute method and handle any error responses.

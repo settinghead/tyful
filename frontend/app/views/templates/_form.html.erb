@@ -67,7 +67,7 @@ $(document).ready(function(){
 	attributes.name = "Main";
 	attributes.align = "middle";
 	swfobject.embedSWF(
-			"<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>",
+			"<%=ENV['FLASH_URL']+'TyfulClient.swf'%>?rnd=<%=swfRandomizer%>",
 			"flashContent", "100%", "100%", swfVersionStr, xiSwfUrlStr,
 			flashvars, params, attributes);
 	// JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
@@ -95,7 +95,7 @@ $(document).ready(function(){
 	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 		width="100%" id="Main" name="Main">
 		<param name="movie"
-			value="<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>"
+			value="<%=ENV['FLASH_URL']+'TyfulClient.swf'%>?rnd=<%=swfRandomizer%>"
 		<param name="quality" value="high" />
 		<param name="bgcolor" value="#ffffff" />
 		<param name="allowScriptAccess" value="sameDomain" />
@@ -105,7 +105,7 @@ $(document).ready(function(){
 			value="<%=flash_vars.to_query%>" />
 		<!--[if !IE]>-->
 		<object type="application/x-shockwave-flash"
-			data="<%=ENV['FLASH_URL']+'GroffleClient.swf'%>?rnd=<%=swfRandomizer%>"
+			data="<%=ENV['FLASH_URL']+'TyfulClient.swf'%>?rnd=<%=swfRandomizer%>"
 			width="100%" id="ieMain">
 			<param name="quality" value="high" />
 			<param name="bgcolor" value="#ffffff" />

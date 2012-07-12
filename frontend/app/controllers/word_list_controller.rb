@@ -33,7 +33,7 @@ class WordListController < ApplicationController
         @l = {:status => 'requested'}
       end
     else
-      @l = {:error => 'You need to log in to Facebook in order to create an artwork for Facebook profile. Groffle will use a sample word list for now.'}
+      @l = {:error => 'You need to log in to Facebook in order to create an artwork for Facebook profile. Tyful will use a sample word list for now.'}
     end
     
     respond_to do |format|

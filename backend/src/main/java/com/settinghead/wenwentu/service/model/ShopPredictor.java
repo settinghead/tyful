@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.tyful.service.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ShopPredictor {
 		return getGenericShop();
 	}
 	
-	private static final String IMAGE_URL_PREFIX = "https://www.groffle.me/f/shop/";
+	private static final String IMAGE_URL_PREFIX = "https://www.tyful.me/f/shop/";
 	
 	public static List<ShopItem> getGenericShop(){
 		List<ShopItem> result = new ArrayList<ShopItem>();

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.tyful.service.model;
 
 /**
  * @author settinghead
@@ -25,7 +25,7 @@ public class TermItem extends ScoreItem<Double> implements java.io.Serializable 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.settinghead.wenwentu.service.model.ScoreItem#clone()
+	 * @see com.settinghead.tyful.service.model.ScoreItem#clone()
 	 */
 	@Override
 	public TermItem clone() {

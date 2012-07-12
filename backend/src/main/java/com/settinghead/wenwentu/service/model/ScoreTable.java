@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.tyful.service.model;
 
 import java.io.Serializable;
 import java.util.HashMap;

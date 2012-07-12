@@ -1,7 +1,7 @@
 #include <hxcpp.h>
 
 #include <polartree/SplitType.h>
-#include <polartree/ImageShape.h>
+#include <polartree/IImageShape.h>
 #include <polartree/BBPolarTreeBuilder.h>
 #include <polartree/BBPolarRootTreeVO.h>
 #include <polartree/BBPolarChildTreeVO.h>
@@ -14,7 +14,7 @@ void __boot_all()
 {
 hx::RegisterResources( hx::GetResources() );
 ::polartree::SplitType_obj::__register();
-::polartree::ImageShape_obj::__register();
+::polartree::IImageShape_obj::__register();
 ::polartree::BBPolarTreeBuilder_obj::__register();
 ::polartree::BBPolarRootTreeVO_obj::__register();
 ::polartree::BBPolarChildTreeVO_obj::__register();
@@ -29,7 +29,7 @@ hx::RegisterResources( hx::GetResources() );
 ::polartree::BBPolarChildTreeVO_obj::__boot();
 ::polartree::BBPolarRootTreeVO_obj::__boot();
 ::polartree::BBPolarTreeBuilder_obj::__boot();
-::polartree::ImageShape_obj::__boot();
+::polartree::IImageShape_obj::__boot();
 ::polartree::SplitType_obj::__boot();
 }
 

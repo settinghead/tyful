@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.service;
+package com.settinghead.tyful.service;
 
-import com.settinghead.wenwentu.service.task.ShopTask;
+import com.settinghead.tyful.service.task.ShopTask;
 
 public class ShopService {
 
@@ -12,7 +12,7 @@ public class ShopService {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GroffleService<ShopTask> service = new GroffleService<ShopTask>(
+		TyfulService<ShopTask> service = new TyfulService<ShopTask>(
 				ShopTask.class);
 			service.run(20);
 	}

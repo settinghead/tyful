@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.settinghead.wenwentu.service.ner;
+package com.settinghead.tyful.service.ner;
 
 import java.util.Collection;
 

@@ -1,9 +1,9 @@
-import com.settinghead.groffle.client.model.algo.tree.BBPolarChildTreeVO;
-import com.settinghead.groffle.client.model.algo.tree.BBPolarRootTreeVO;
-import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeBuilder;
-import com.settinghead.groffle.client.model.algo.tree.BBPolarTreeVO;
-import com.settinghead.groffle.client.model.algo.tree.IImageShape;
-import com.settinghead.groffle.client.model.algo.tree.BitmapShapeVO;
+import com.settinghead.tyful.client.model.algo.tree.BBPolarChildTreeVO;
+import com.settinghead.tyful.client.model.algo.tree.BBPolarRootTreeVO;
+import com.settinghead.tyful.client.model.algo.tree.BBPolarTreeBuilder;
+import com.settinghead.tyful.client.model.algo.tree.BBPolarTreeVO;
+import com.settinghead.tyful.client.model.algo.tree.IImageShape;
+import com.settinghead.tyful.client.model.algo.tree.BitmapShapeVO;
 import flash.external.ExternalInterface;
 import flash.display.BitmapData;
 

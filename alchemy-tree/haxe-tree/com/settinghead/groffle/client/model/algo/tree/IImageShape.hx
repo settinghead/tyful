@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.algo.tree;	
+package com.settinghead.tyful.client.model.algo.tree;	
 
 interface IImageShape {
 	

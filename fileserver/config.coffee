@@ -1,6 +1,6 @@
 #Set the current environment to true in the env object
 currentEnv = process.env.NODE_ENV or 'development'
-exports.appName = "Groffle Fileserver"
+exports.appName = "Tyful Fileserver"
 exports.env =
   production: false
   staging: false
@@ -19,11 +19,11 @@ if currentEnv not in ['production', 'staging']
   exports.server.ip = '0.0.0.0'
 if currentEnv in ['production']
   exports.redis_db = "redis://localhost:6379/2"
-  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_prod"
+  exports.pg_db = "tcp://Tyful_user:0e4,swa=apu3ru@localhost/Tyful_prod"
 else if currentEnv in ['test']
   exports.redis_db = "redis://localhost:6379/1"
-  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_test"
+  exports.pg_db = "tcp://Tyful_user:0e4,swa=apu3ru@localhost/Tyful_test"
 else
   exports.redis_db = "redis://localhost:6379/0"
-  exports.pg_db = "tcp://groffle_user:0e4,swa=apu3ru@localhost/groffle_dev"
+  exports.pg_db = "tcp://Tyful_user:0e4,swa=apu3ru@localhost/Tyful_dev"
   

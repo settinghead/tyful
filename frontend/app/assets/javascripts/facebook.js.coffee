@@ -5,7 +5,7 @@
 //= require jquery.isotope.min.js
 
 window.inviteFriendsOnFacebook = () ->
-	opts = {method: 'apprequests', message: 'I used Groffle to create my own typography artwork. It\'s a simple and fun way to create beautiful artworks that uniquely describes you. You should give it a try, too!'};
+	opts = {method: 'apprequests', message: 'I used Tyful to create my own typography artwork. It\'s a simple and fun way to create beautiful artworks that uniquely describes you. You should give it a try, too!'};
 	FB.ui(opts);
 onLayoutFn = ($elems, instance) ->
 

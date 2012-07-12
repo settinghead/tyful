@@ -8,7 +8,7 @@
 #include <polartree/BBPolarTreeVO.h>
 HX_DECLARE_CLASS1(polartree,BBPolarRootTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarTreeVO)
-HX_DECLARE_CLASS1(polartree,ImageShape)
+HX_DECLARE_CLASS1(polartree,IImageShape)
 namespace polartree{
 
 
@@ -17,10 +17,10 @@ class BBPolarRootTreeVO_obj : public ::polartree::BBPolarTreeVO_obj{
 		typedef ::polartree::BBPolarTreeVO_obj super;
 		typedef BBPolarRootTreeVO_obj OBJ_;
 		BBPolarRootTreeVO_obj();
-		Void __construct(::polartree::ImageShape shape,int centerX,int centerY,double d,int minBoxSize);
+		Void __construct(::polartree::IImageShape shape,int centerX,int centerY,double d,int minBoxSize);
 
 	public:
-		static hx::ObjectPtr< BBPolarRootTreeVO_obj > __new(::polartree::ImageShape shape,int centerX,int centerY,double d,int minBoxSize);
+		static hx::ObjectPtr< BBPolarRootTreeVO_obj > __new(::polartree::IImageShape shape,int centerX,int centerY,double d,int minBoxSize);
 		static Dynamic __CreateEmpty();
 		static Dynamic __Create(hx::DynamicArray inArgs);
 		~BBPolarRootTreeVO_obj();
@@ -35,7 +35,7 @@ class BBPolarRootTreeVO_obj : public ::polartree::BBPolarTreeVO_obj{
 		int rootY; /* REM */ 
 		double _rotation; /* REM */ 
 		int rootStamp; /* REM */ 
-		::polartree::ImageShape shape; /* REM */ 
+		::polartree::IImageShape shape; /* REM */ 
 		int _minBoxSize; /* REM */ 
 		virtual Void setLocation( int centerX,int centerY);
 		Dynamic setLocation_dyn();
@@ -63,7 +63,7 @@ class BBPolarRootTreeVO_obj : public ::polartree::BBPolarTreeVO_obj{
 
 		virtual int getMinBoxSize( );
 
-		virtual ::polartree::ImageShape getShape( );
+		virtual ::polartree::IImageShape getShape( );
 
 };
 

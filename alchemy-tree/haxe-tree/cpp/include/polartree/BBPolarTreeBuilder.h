@@ -9,7 +9,7 @@ HX_DECLARE_CLASS1(polartree,BBPolarChildTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarRootTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarTreeBuilder)
 HX_DECLARE_CLASS1(polartree,BBPolarTreeVO)
-HX_DECLARE_CLASS1(polartree,ImageShape)
+HX_DECLARE_CLASS1(polartree,IImageShape)
 namespace polartree{
 
 
@@ -36,19 +36,19 @@ class BBPolarTreeBuilder_obj : public hx::Object{
 		static Void _assert( bool cond,Dynamic pos);
 		static Dynamic _assert_dyn();
 
-		static ::polartree::BBPolarRootTreeVO makeTree( ::polartree::ImageShape shape,int swelling);
+		static ::polartree::BBPolarRootTreeVO makeTree( ::polartree::IImageShape shape,int swelling);
 		static Dynamic makeTree_dyn();
 
-		static Void makeChildren( ::polartree::BBPolarTreeVO tree,::polartree::ImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root);
+		static Void makeChildren( ::polartree::BBPolarTreeVO tree,::polartree::IImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root);
 		static Dynamic makeChildren_dyn();
 
-		static Array< ::polartree::BBPolarChildTreeVO > splitTree( ::polartree::BBPolarTreeVO tree,::polartree::ImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root,int type);
+		static Array< ::polartree::BBPolarChildTreeVO > splitTree( ::polartree::BBPolarTreeVO tree,::polartree::IImageShape shape,int minBoxSize,::polartree::BBPolarRootTreeVO root,int type);
 		static Dynamic splitTree_dyn();
 
 		static int determineType( ::polartree::BBPolarTreeVO tree);
 		static Dynamic determineType_dyn();
 
-		static ::polartree::BBPolarChildTreeVO makeChildTree( ::polartree::ImageShape shape,int minBoxSize,double r1,double r2,double d1,double d2,::polartree::BBPolarRootTreeVO root);
+		static ::polartree::BBPolarChildTreeVO makeChildTree( ::polartree::IImageShape shape,int minBoxSize,double r1,double r2,double d1,double d2,::polartree::BBPolarRootTreeVO root);
 		static Dynamic makeChildTree_dyn();
 
 		static int correctCount; /* REM */ 

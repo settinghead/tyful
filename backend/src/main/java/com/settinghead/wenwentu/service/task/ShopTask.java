@@ -1,12 +1,12 @@
-package com.settinghead.wenwentu.service.task;
+package com.settinghead.tyful.service.task;
 
 import java.io.StringWriter;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.settinghead.wenwentu.service.model.ShopItem;
-import com.settinghead.wenwentu.service.model.ShopPredictor;
+import com.settinghead.tyful.service.model.ShopItem;
+import com.settinghead.tyful.service.model.ShopPredictor;
 
 
 public class ShopTask extends Task {

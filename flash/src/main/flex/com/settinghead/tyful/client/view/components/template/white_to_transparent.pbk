@@ -1,0 +1,19 @@
+<languageVersion : 1.0;>
+
+kernel white_to_transparent
+<   namespace : "com.settinghead";
+    vendor : "Settinghead";
+    version : 1;
+>
+{
+    input image4 src1;
+    input image4 src2;
+    output pixel4 dst;
+
+    void
+    evaluatePixel()
+    {
+        float4 p = sampleNearest(src1,outCoord());
+        dst = (1.0-p[0]) *(1.0-p[1]) *(1.0-p[2]) * sampleNearest(src2,outCoord());
+    }
+}

@@ -9,7 +9,7 @@
 HX_DECLARE_CLASS1(polartree,BBPolarChildTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarRootTreeVO)
 HX_DECLARE_CLASS1(polartree,BBPolarTreeVO)
-HX_DECLARE_CLASS1(polartree,ImageShape)
+HX_DECLARE_CLASS1(polartree,IImageShape)
 namespace polartree{
 
 
@@ -53,7 +53,7 @@ class BBPolarChildTreeVO_obj : public ::polartree::BBPolarTreeVO_obj{
 
 		virtual int getMinBoxSize( );
 
-		virtual ::polartree::ImageShape getShape( );
+		virtual ::polartree::IImageShape getShape( );
 
 };
 

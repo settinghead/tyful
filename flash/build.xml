@@ -46,7 +46,7 @@
 	<target name="compile" depends="init">
 		<!-- Compile Main.mxml as a SWF -->
 		<mxmlc
-			file="${main.src.loc}/com/settinghead/groffle/client/GroffleClient.mxml" output="${bin.loc}/GroffleClient.swf">
+			file="${main.src.loc}/com/settinghead/tyful/client/TyfulClient.mxml" output="${bin.loc}/TyfulClient.swf">
 			<source-path path-element="${main.src.loc}" />
 			<library-path dir="${lib.loc}" append="true">
 				<include name="*.swc" />
@@ -59,7 +59,7 @@
 	<target name="test" depends="compile">
 		<!-- Compile TestRunner.mxml as a SWF -->
 		<mxmlc
-			file="${test.src.loc}/com/settinghead/groffle/client/TestRunner.mxml"
+			file="${test.src.loc}/com/settinghead/tyful/client/TestRunner.mxml"
 			output="${bin.loc}/TestRunner.swf">
 			<source-path path-element="${main.src.loc}" />
 			<library-path dir="${lib.loc}" append="true">
@@ -102,32 +102,32 @@
 	    	renameIdentifiers="true" 
 	    	controlflow="0"
 	    	keyFilePath="${basedir}/secureSWF/key.data">
-		      <fileset dir="${bin.loc}" includes="GroffleClient.swf"/>
+		      <fileset dir="${bin.loc}" includes="TyfulClient.swf"/>
 		      <!-- <fileset dir="${bin.loc}" includes="**.swc"/> -->
-			<rule filter="com.settinghead.groffle.client.*" rename="false" />
-		    <rule filter="com.settinghead.groffle.client.angler.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.colorer.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.model.vo.algo.*" rename="true" controlflowobfuscation="0" />
-		    <rule filter="com.settinghead.groffle.client.model.zip.*" controlflowobfuscation="0" rename="false" />
+			<rule filter="com.settinghead.tyful.client.*" rename="false" />
+		    <rule filter="com.settinghead.tyful.client.angler.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.colorer.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.model.vo.algo.*" rename="true" controlflowobfuscation="0" />
+		    <rule filter="com.settinghead.tyful.client.model.zip.*" controlflowobfuscation="0" rename="false" />
 		    <rule filter="PNGEncoder2.*" controlflowobfuscation="0" rename="false" />
 		    <rule filter="DeflateStream.*" controlflowobfuscation="0" rename="false" />
 		    <rule filter="_PNGEncoder2.*" controlflowobfuscation="0" rename="false" />
 	    	<rule filter="CompressionLevel.*" controlflowobfuscation="0" rename="false" />
-		    <rule filter="com.settinghead.groffle.client.model.proxy.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.nudger.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.placer.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.sizers.*" rename="true" />
-		    <rule filter="com.settinghead.groffle.client.view.components.template.*" rename="false" />
-		    <rule filter="com.settinghead.groffle.client.view.components.template.canvas.*" rename="false" />
-		    <rule filter="com.settinghead.groffle.client.view.components.template.canvas.assets.*" rename="false" />
+		    <rule filter="com.settinghead.tyful.client.model.proxy.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.nudger.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.placer.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.sizers.*" rename="true" />
+		    <rule filter="com.settinghead.tyful.client.view.components.template.*" rename="false" />
+		    <rule filter="com.settinghead.tyful.client.view.components.template.canvas.*" rename="false" />
+		    <rule filter="com.settinghead.tyful.client.view.components.template.canvas.assets.*" rename="false" />
 
 	      <!--literalString value="sEc.R3t"/-->
-	      <domainName value="groffle.me" />
-	      <domainName value="www.groffle.me"/>
+	      <domainName value="tyful.me" />
+	      <domainName value="www.tyful.me"/>
 	</protect>
 	
 	<!-- <exec executable="secureSWF/secureSWF"> -->
-	    <!-- <arg value="${bin.loc}/GroffleClient.swf"/> -->
+	    <!-- <arg value="${bin.loc}/TyfulClient.swf"/> -->
 	    <!-- <arg value="${secore.loc}"/> -->
 	  <!-- </exec> -->
 	  </target>

@@ -19,7 +19,7 @@ Please contact me at afoucal@free.fr.
 
 <grad:GradientCanvas xmlns:mx="http://www.adobe.com/2006/mxml"
 					 xmlns:grad="com.gradientcomponents.*"
-					 
+					 mouseEnabled="false"
 					 focusEnabled="false" 
 					 creationComplete="completed();" styleName="notification" >
 

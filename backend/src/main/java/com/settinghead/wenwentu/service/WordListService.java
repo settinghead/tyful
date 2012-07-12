@@ -1,6 +1,6 @@
-package com.settinghead.wenwentu.service;
+package com.settinghead.tyful.service;
 
-import com.settinghead.wenwentu.service.task.WordListTask;
+import com.settinghead.tyful.service.task.WordListTask;
 
 public class WordListService {
 
@@ -9,7 +9,7 @@ public class WordListService {
 	 */
 	public static void main(String[] args) {
 
-		GroffleService<WordListTask> service = new GroffleService<WordListTask>(
+		TyfulService<WordListTask> service = new TyfulService<WordListTask>(
 				WordListTask.class);
 		service.run(20);
 	}

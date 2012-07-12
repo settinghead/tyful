@@ -1,4 +1,4 @@
-package com.settinghead.groffle.client.model.algo.tree;	
+package com.settinghead.tyful.client.model.algo.tree;	
 class SplitType
 {
 	public static var _3RAYS:Int = 0;

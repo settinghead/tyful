@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.service.model;
+package com.settinghead.tyful.service.model;
 
 public class ShopItem {
 	private String url;

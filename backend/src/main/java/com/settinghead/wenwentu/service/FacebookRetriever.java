@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.service;
+package com.settinghead.tyful.service;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import com.restfb.Parameter;
 import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
-import com.settinghead.wenwentu.service.model.Occurence;
-import com.settinghead.wenwentu.service.model.Word;
+import com.settinghead.tyful.service.model.Occurence;
+import com.settinghead.tyful.service.model.Word;
 
 import cue.lang.Counter;
 import cue.lang.WordIterator;

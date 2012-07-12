@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
- <title><%= content_for?(:title) ? yield(:title) : "Groffle - Create Cool Typography Artwork by Drawing Doodles" %></title>
+ <title><%= content_for?(:title) ? yield(:title) : "Tyful - Create Cool Typography Artwork by Drawing Doodles" %></title>
  	<%= metamagic :title => @title %>
-	<% meta :description => "Groffle is a fun way for creating typographic art.",
- :keywords => "word cloud, typograhpy, art, creative, groffle" %>
+	<% meta :description => "Tyful is a fun way for creating typographic art.",
+ :keywords => "word cloud, typograhpy, art, creative, tyful" %>
  
 	<!--link href='https://fonts.googleapis.com/css?family=Lato|Quattrocento|Special+Elite' rel='stylesheet' type='text/css'-->
     <%= stylesheet_link_tag "application" %>
@@ -50,7 +50,7 @@
 	<div id ="logo_bar">		
 		<div id="logo">
 		<%=link_to root_path do%>
-			<span class="main">Groffle</span><span class="domain">.me</span>
+			<span class="main">Tyful</span><span class="domain">.me</span>
 		<%end%>
 		
 		</div>
@@ -73,7 +73,7 @@
 		  <% end %>
 		</div>
 		<div id="main_menu">
-		<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FGroffle&amp;send=false&amp;layout=button_count&amp;width=30&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=trebuchet+ms&amp;height=21&amp;appId=415282955156503" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; display: inline;" allowTransparency="true"></iframe>
+		<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTyful&amp;send=false&amp;layout=button_count&amp;width=30&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=trebuchet+ms&amp;height=21&amp;appId=415282955156503" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; display: inline;" allowTransparency="true"></iframe>
 		  <ul>
   			<li><%=link_to "My", :controller=> "/templates", :action=>"my"%></li>
 			

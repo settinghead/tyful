@@ -1,4 +1,4 @@
-Groffle::Application.routes.draw do
+Tyful::Application.routes.draw do
   
   match "/resize", :to => ResizeApp
   match "/crop", :to => ResizeApp

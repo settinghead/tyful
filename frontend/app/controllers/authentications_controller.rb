@@ -10,7 +10,7 @@ class AuthenticationsController < ApplicationController
     
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
-      #flash[:notice] = "You have successfully signed in to Groffle."
+      #flash[:notice] = "You have successfully signed in to Tyful."
       authentication.access_token = omniauth['credentials']['token']
       authentication.save
       post_authentication_work(authentication.user,omniauth)
@@ -26,7 +26,7 @@ class AuthenticationsController < ApplicationController
       user.authentication.access_token = omniauth['credentials']['token']
 
       if user.save
-        #flash[:notice] = "You have successfully signed in to Groffle."
+        #flash[:notice] = "You have successfully signed in to Tyful."
         post_authentication_work(user,omniauth)
         
         sign_in_and_redirect(:user, user)

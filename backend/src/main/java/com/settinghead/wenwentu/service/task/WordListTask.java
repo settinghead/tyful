@@ -1,4 +1,4 @@
-package com.settinghead.wenwentu.service.task;
+package com.settinghead.tyful.service.task;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import com.settinghead.wenwentu.service.FacebookRetriever;
-import com.settinghead.wenwentu.service.model.Word;
+import com.settinghead.tyful.service.FacebookRetriever;
+import com.settinghead.tyful.service.model.Word;
 
 public class WordListTask extends Task {
 	private String token;

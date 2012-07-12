@@ -1,6 +1,6 @@
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-31849035-1']);
-  _gaq.push(['_setDomainName', 'groffle.me']);
+  _gaq.push(['_setDomainName', 'tyful.me']);
   _gaq.push(['_trackPageview']);
 
   (function() {
