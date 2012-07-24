@@ -21,10 +21,10 @@ upstream phppgadmin {
 }
 
 
-server { listen 80; server_name www.tyful.com; rewrite ^/(.*) http://tyful.com permanent; }
+server { listen 80; server_name tyful.com; rewrite ^/(.*) http://www.tyful.com permanent; }
 server {
        listen         80;
-       server_name    tyful.com;
+       server_name    www.tyful.com;
 
            location / {
                if ($request_uri ~* ^/r/)
@@ -48,7 +48,7 @@ server {
 	ssl_certificate /etc/ssl/sslchain.crt;
 	ssl_certificate_key /etc/ssl/server.key;
 	
-	server_name  tyful.com;
+	server_name  www.tyful.com;
 	access_log  /var/log/nginx/localhost.access.log;
 
 	location /f/ {
