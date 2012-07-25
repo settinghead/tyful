@@ -10,6 +10,8 @@
     </div>
   <% end %>
 
+<div class="span12" style="height: 100%;">
+
 <%
 if(ENV['RAILS_ENV']=='production')
 	swfRandomizer = `cat #{Rails.root}/../static/f/client/version.txt`
@@ -130,6 +132,7 @@ $(document).ready(function(){
 	</object>
 	</div>
 </noscript>
+</div>
 <%if can? :manage, @template %>
 <div id="modal">
 	<%= form_for(@template,:remote => true) do |f| %>
