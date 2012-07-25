@@ -11,7 +11,7 @@ God.watch do |w|
   w.name = "rails"
   w.dir = basedir+"/frontend"
   w.env = {'RAILS_ENV' => ENV['RAILS_ENV'], 'RACK_ENV' => ENV['RAILS_ENV'], 'PORT' => 3000 }
-  w.start = "bundle exec unicorn -p 3000 -E "+ENV['RAILS_ENV'] + " -c " + basedir + "/frontend/config/unicorn.rb"
+  w.start = (ENV['RAILS_ENV']=='production') ? "bundle exec unicorn -p 3000 -E "+ENV['RAILS_ENV'] + " -c " + basedir + "/frontend/config/unicorn.rb" : "rails server -p 3002 -e " + ENV['RAILS_ENV']
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
 end
