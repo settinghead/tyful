@@ -3,10 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%
+      set_meta_tags :title => @title
+      set_meta_tags :description =>  "Tyful is a fun way for creating typographic art."
+    %>
 <title><%= content_for?(:title) ? yield(:title) : "Tyful - Create Cool Typography Artwork by Drawing Doodles" %></title>
- 	<%= metamagic :title => @title %>
-	<% meta :description => "Tyful is a fun way for creating typographic art.",
- :keywords => "word cloud, typograhpy, art, creative, tyful" %>
      <%= csrf_meta_tags %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->

@@ -25,7 +25,7 @@ gem 'factory_girl_rails'
 gem 'impressionist'
 gem 'acts_as_votable'
 gem 'newrelic_rpm'
-gem 'metamagic'
+#gem 'metamagic'
 gem 'friendly_id'
 gem "cancan"
 gem 'acts-as-taggable-on'
