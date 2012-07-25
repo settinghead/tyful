@@ -38,7 +38,7 @@ gem "rack-mount"
 gem "sinatra"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '2.0.8'
 
 # Gems used only for assets and not required
 # in production environments by default.
