@@ -3,6 +3,7 @@
 	<name>flash</name>
 	<comment></comment>
 	<projects>
+		<project>haxe-tree</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

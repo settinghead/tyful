@@ -1,0 +1,3 @@
+-cp src
+-swf ../flash/libs/polartree_haxe.swc
+-main Test
