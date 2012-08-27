@@ -1,60 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <%
+ <title><%= content_for?(:title) ? yield(:title) : "Tyful - Create Cool Typography Artwork by Drawing Doodles" %></title>
+   <%
       set_meta_tags :title => @title
       set_meta_tags :description =>  "Tyful is a fun way for creating typographic art."
     %>
-<title><%= content_for?(:title) ? yield(:title) : "Tyful - Create Cool Typography Artwork by Drawing Doodles" %></title>
-     <%= csrf_meta_tags %>
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
-
-    <%= stylesheet_link_tag "application", :media => "all" %>
-	<%= stylesheet_link_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" %>
-
-    <%= javascript_include_tag "https://connect.facebook.net/en_US/all.js"%>
-    <%= javascript_include_tag "application" %>
+    
+    <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" %>
+  
+  <%= favicon_link_tag %>
+  <%= javascript_include_tag "https://connect.facebook.net/en_US/all.js"%>
+  <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
-
-    <link href="images/favicon.ico" rel="shortcut icon">
-    <link href="images/apple-touch-icon.png" rel="apple-touch-icon">
-    <link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
-    <link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
-
-	<script type="text/javascript"> 
-	if (self.location.href!=top.location.href)
-	 {
-		 top.location.href="<%=request.url%>"; 
-	 }
+  
+  <script type="text/javascript"> 
+  if (self.location.href!=top.location.href)
+   {
+     top.location.href="<%=request.url%>"; 
+   }
   </script>
-	
-	<script type="text/javascript">
-	$(document).ready(function(){
-	  <% flash.each do |name, msg| %>
-	  window.notify("<%=msg%>", "Notice");
+  
+  <script type="text/javascript">
+  $(document).ready(function(){
+    <% flash.each do |name, msg| %>
+    window.notify("<%=msg%>", "Notice");
       <% end %>
   });
   
   FB.init({
-  	appId: <%=ENV['FB_APP_ID']%>, cookie: true,
-  	status: true, xfbml: true
+    appId: <%=ENV['FB_APP_ID']%>, cookie: true,
+    status: true, xfbml: true
   });
   
-	
-	</script>
-
+  
+  </script>
   </head>
   <body>
-
-    <div class="navbar navbar-fixed-top">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<%=ENV['FB_APP_ID']%>";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+      <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -62,35 +55,54 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Tyful</a>
+
+          <a class="brand" href="<%=root_url%>"><span class="text"><%=APP_CONFIG['site_name']%></span></a>
           
           <div class="container-fluid nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTyful&amp;send=false&amp;layout=button_count&amp;width=30&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=trebuchet+ms&amp;height=21&amp;appId=415282955156503" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; display: inline;" allowTransparency="true"></iframe></li>
+              <li><%=link_to "My", :controller=> "/templates", :action=>"my"%></li>
+            
+              <li><%=link_to "Popular", :controller=> "/templates", :action=>"popular"%></li>
+              <li><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
+            <li class="last"><%=link_to "Invite", {:controller => "/facebook", :action=>"invite"}, :remote=> true%></li>
+            </ul>
+
+            <ul class="nav pull-right">
+              <% if user_signed_in? %>
+                <li>Hi <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!</li>
+                <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+              <% else %>
+                <li><%= link_to '/auth/facebook' do%> 
+                <div class="sign-in-fb">
+              Sign up or sign in        
+                </div>
+              </li>
+
+              <%end%>
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-       
-          <%= yield %>
-      </div><!--/row-->
-
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-    <!-- Javascripts
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "application" %>
-
+  <div id="page-header">
+        <%= content_tag :h1, yield(:title) if show_title? %>
+        <%=yield(:header)%>
+  </div>
+    
+    <div id="container">  
+      <%= yield %>
+    </div>
+  
+  <script type="text/javascript">
+    var uvOptions = {};
+    (function() {
+      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+      uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/HmTnaUHev8bB84UrxIBcCQ.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+    })();
+  </script>
   </body>
 </html>

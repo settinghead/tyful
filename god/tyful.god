@@ -8,10 +8,18 @@ else
 end
 
 God.watch do |w|
+  w.name = "redis"
+  w.dir = basedir
+  w.start = "redis-server"
+  w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
+  w.keepalive
+end
+
+God.watch do |w|
   w.name = "rails"
   w.dir = basedir+"/frontend"
   w.env = {'RAILS_ENV' => ENV['RAILS_ENV'], 'RACK_ENV' => ENV['RAILS_ENV'], 'PORT' => 3000 }
-  w.start = (ENV['RAILS_ENV']=='production') ? "bundle exec unicorn -p 3000 -E "+ENV['RAILS_ENV'] + " -c " + basedir + "/frontend/config/unicorn.rb" : "rails server -p 3002 -e " + ENV['RAILS_ENV']
+  w.start = (ENV['RAILS_ENV']=='production') ? "bundle exec unicorn -p 3000 -E "+ENV['RAILS_ENV'] + " -c " + basedir + "/frontend/config/unicorn.rb" : "thin start -p 3002 -e " + ENV['RAILS_ENV']
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
 end
@@ -52,3 +60,12 @@ God.watch do |w|
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
 end
+
+God.watch do |w|
+  w.name = "showoff"
+  w.dir = basedir
+  w.start = "show 3002"
+  w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
+  w.keepalive
+end
+

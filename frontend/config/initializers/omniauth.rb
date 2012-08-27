@@ -7,5 +7,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   else
     provider :facebook, GRAPH_APP_ID, GRAPH_SECRET, {:scope => fb_permissions, :authorize_params => { :display => 'page' }}
   end
-  
+	if Rails.env.development? 
+    	OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE 
+    end
 end

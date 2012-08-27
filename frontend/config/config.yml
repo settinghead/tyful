@@ -1,0 +1,10 @@
+defaults: &defaults
+  site_name: 'Tyful'
+  site_description: 'Create typography art.'
+
+development:
+  <<: *defaults
+
+
+production:
+  <<: *defaults

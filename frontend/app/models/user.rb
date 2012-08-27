@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
       self.email = omniauth['user_info']['email'] if omniauth['user_info'] && omniauth['user_info']['email']
       self.email = omniauth['extra']['raw_info']['email'] if omniauth['extra'] && omniauth['extra']['raw_info'] && omniauth['extra']['raw_info']['email']
     end
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    auth = authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    auth.access_token = omniauth['credentials']['token']
   end
 
   def password_required?

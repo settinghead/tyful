@@ -23,7 +23,6 @@ class AuthenticationsController < ApplicationController
     else
       user = User.new
       user.apply_omniauth(omniauth)
-      user.authentication.access_token = omniauth['credentials']['token']
 
       if user.save
         #flash[:notice] = "You have successfully signed in to Tyful."
