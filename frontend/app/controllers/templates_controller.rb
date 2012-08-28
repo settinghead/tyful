@@ -132,10 +132,12 @@ class TemplatesController < ApplicationController
         format.html { redirect_to @template, notice: 'Template was successfully created.' }
         format.json { render json: @template, status: :created, location: @template }
         format.js
+        puts 'tempalte saved'
       else
         format.html { render action: "new" }
         format.json { render json: @template.errors, status: :unprocessable_entity }
         format.js
+        puts 'tempalte not saved'
       end
     end
   end

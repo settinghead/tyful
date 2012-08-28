@@ -20,30 +20,30 @@ class ArtworksControllerTest < ActionController::TestCase
 
   test "should create artwork" do
     assert_difference('Artwork.count') do
-      post :create, artwork: @artwork.attributes
+      post :create, artwork: {name: @artwork.name, description: @artwork.description}
     end
 
     assert_redirected_to artwork_path(assigns(:artwork))
   end
 
   test "should show artwork" do
-    get :show, id: @artwork.to_param
+    get :show, id: @artwork
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @artwork.to_param
+    get :edit, id: @artwork
     assert_response :success
   end
 
   test "should update artwork" do
-    put :update, id: @artwork.to_param, artwork: @artwork.attributes
+    put :update, id: @artwork, artwork: {name: @artwork.name, description: @artwork.description}
     assert_redirected_to artwork_path(assigns(:artwork))
   end
 
   test "should destroy artwork" do
     assert_difference('Artwork.count', -1) do
-      delete :destroy, id: @artwork.to_param
+      delete :destroy, id: @artwork
     end
 
     assert_redirected_to artworks_path

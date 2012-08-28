@@ -1,12 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: Template1
   description: MyText
   uuid: bab72b40-a1e3-11e1-b3dd-0800200c9a66
   user: one
 two:
-  name: MyString
+  name: Template2
   description: MyText
-  uuid: b70805f0-a1e3-11e1-b3dd-0800200c9a66
+  uuid: b5a727d0-f13f-11e1-aff1-0800200c9a66
   user: one

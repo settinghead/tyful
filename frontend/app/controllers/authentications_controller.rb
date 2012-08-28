@@ -8,13 +8,13 @@ class AuthenticationsController < ApplicationController
     session[:omniauth] = omniauth.except('extra')
     session['fb_access_token'] = omniauth['credentials']['token']
     
-    authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
-    if authentication
+    @authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    if @authentication
       #flash[:notice] = "You have successfully signed in to Tyful."
-      authentication.access_token = omniauth['credentials']['token']
-      authentication.save
-      post_authentication_work(authentication.user,omniauth)
-      sign_in_and_redirect(:user, authentication.user)
+      @authentication.access_token = omniauth['credentials']['token']
+      @authentication.save
+      post_authentication_work(@authentication.user,omniauth)
+      sign_in_and_redirect(:user, @authentication.user)
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token =>  omniauth['credentials']['token'])
       flash[:notice] = "You are now connected to Facebook."
@@ -22,7 +22,7 @@ class AuthenticationsController < ApplicationController
       redirect_to authentications_url
     else
       user = User.new
-      user.apply_omniauth(omniauth)
+      @authentication = user.apply_omniauth(omniauth)
 
       if user.save
         #flash[:notice] = "You have successfully signed in to Tyful."

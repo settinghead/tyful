@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
     end
     auth = authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
     auth.access_token = omniauth['credentials']['token']
+    return auth
   end
 
   def password_required?

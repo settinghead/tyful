@@ -1,7 +1,8 @@
 class Template < ActiveRecord::Base
+  extend FriendlyId
   belongs_to :user
   acts_as_votable
-  extend FriendlyId
+  attr_accessible :name, :description, :private, :uuid
   friendly_id :name, use: :slugged
                      
   validates :name, :presence => true

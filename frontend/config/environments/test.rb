@@ -2,9 +2,9 @@ Tyful::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
-  # test suite.  You never need to work with it otherwise.  Remember that
+  # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
-  # and recreated between test runs.  Don't rely on the data there!
+  # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
@@ -32,20 +32,15 @@ Tyful::Application.configure do
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  GRAPH_APP_ID = '295922833823667'
-  GRAPH_SECRET = 'b79bd680c9c8c659a2c79a98d366852d'
-  #ENV["REDISTOGO_URL"] = 'redis://localhost:6379' 
-  ENV["FLASH_URL"] = 'http://localhost:5000/f/client/'
-  ENV["RELAY_URL"] = 'http://localhost:5000/r/'
-  ENV["TEMPLATE_URL"] = 'http://localhost:5000/t/'
-  ENV["TEMPLATE_PREVIEW_URL"] = 'http://localhost:5000/tp/'
-  ENV['FB_APP_ID'] = '295922833823667'
-  
+
+    GRAPH_APP_ID = '295922833823667'
+    GRAPH_SECRET = 'b79bd680c9c8c659a2c79a98d366852d'
+    #ENV["REDISTOGO_URL"] = 'redis://localhost:6379' 
+    ENV["FLASH_URL"] = 'http://localhost:5000/f/client/'
+    ENV["RELAY_URL"] = 'http://localhost:5000/r/'
+    ENV["TEMPLATE_URL"] = 'http://localhost:5000/t/'
+    ENV["TEMPLATE_PREVIEW_URL"] = 'http://localhost:5000/tp/'
+    ENV['FB_APP_ID'] = '295922833823667'
 end

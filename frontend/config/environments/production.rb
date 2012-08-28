@@ -15,12 +15,12 @@ Tyful::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-#  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  # Defaults to Rails.root.join("public/assets")
+  # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
   # Specifies the header that your server uses for sending files
@@ -33,8 +33,11 @@ Tyful::Application.configure do
   # See everything in the log (default is :info)
   # config.log_level = :debug
 
+  # Prepend all log lines with the following tags
+  # config.log_tags = [ :subdomain, :uuid ]
+
   # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
+  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -57,17 +60,21 @@ Tyful::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
-  config.action_mailer.default_url_options = { :host => 'tyful.com' }
-  GRAPH_APP_ID = '415282955156503'
-  GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
-  #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@localhost:9908/'
-  ENV["FLASH_URL"] = 'https://tyful.com/f/client/'
-  ENV["RELAY_URL"] = 'http://tyful.com/r/'
-  ENV["TEMPLATE_URL"] = 'https://tyful.com/t/'
-  ENV["TEMPLATE_PREVIEW_URL"] = 'https://tyful.com/tp/'
-  ENV['FB_APP_ID'] = '415282955156503'
-  ENV['FACEBOOK_UPLOAD_URL'] = "https://tyful.com/fbupload/"
-  
-  OmniAuth.config.full_host = 'https://tyful.com'
+
+  # Log the query plan for queries taking more than this (works
+  # with SQLite, MySQL, and PostgreSQL)
+  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+    config.action_mailer.default_url_options = { :host => 'tyful.com' }
+    GRAPH_APP_ID = '415282955156503'
+    GRAPH_SECRET = 'af293249bcc9f5d56e5ce0bb51f1a5cb'
+    #ENV["REDISTOGO_URL"] = 'redis://redistogo:f2b8629f3024c28a1768d4a661786397@localhost:9908/'
+    ENV["FLASH_URL"] = 'https://tyful.com/f/client/'
+    ENV["RELAY_URL"] = 'http://tyful.com/r/'
+    ENV["TEMPLATE_URL"] = 'https://tyful.com/t/'
+    ENV["TEMPLATE_PREVIEW_URL"] = 'https://tyful.com/tp/'
+    ENV['FB_APP_ID'] = '415282955156503'
+    ENV['FACEBOOK_UPLOAD_URL'] = "https://tyful.com/fbupload/"
+    
+    OmniAuth.config.full_host = 'https://tyful.com'
 end

@@ -7,11 +7,13 @@
 one: 
   email: one@example.com
   token: u3ukkdyshdkx0xdaokgsb6bo9tm5njadj5vryqsfkhcmttpg1nqc3dxl32zj3b796wk3tt7zdztavjvypsfjqeaugowll1xxfm8i5qua7l4qe7cc50ou2elvjheocx29
+  nickname: nick1
 
 # column: value
 #
 two: 
   email: two@example.com
   token: drh4gfaa5otp4rt5nno8xgtp5l6t8q4x2fkdwtswt92nv9nwh7gqg8ddx82zsydp223ottk1z7c9l8y7b9wro76bm2nvapjv0rp1za7ei2uqdyy43qvxp6168p00j1gq
+  nickname: nick2
 
 #  column: value

@@ -12,6 +12,7 @@ gem 'pg'
 # gem 'jruby-openssl'
 gem 'thin'
 gem 'devise'
+gem 'therubyracer'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
@@ -62,8 +63,8 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test do
-  # Pretty printed test output
-  gem 'turn', '0.8.2', :require => false
-end
+# group :test do
+#   # Pretty printed test output
+#   gem 'turn', '0.9.6', :require => false
+# end
 gem "mocha", :group => :test
