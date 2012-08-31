@@ -15,6 +15,10 @@ onLayoutFn = ($elems, instance) ->
 
 
 $(document).ready ->
+  $("#see-gallery").click ->
+    $("html,body").animate
+      scrollTop: $(".masonry-container").offset().top
+    , "slow"
   $('.masonry-container').imagesLoaded ->
     iso_options = { itemSelector : ".item", onLayout:onLayoutFn}
     $('.masonry-container').isotope(iso_options);

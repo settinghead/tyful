@@ -18,14 +18,13 @@ class WordListController < ApplicationController
   def facebook
     str = nil
     @l = {}
-    if(params[:id]=='me')
-      targetId = session[:omniauth].uid;
-    else
-      targetId = params[:id]
-    end
-  
     if session.has_key?('omniauth')
-      str = REDIS.get("wl_#{session[:omniauth].provider}_#{session[:omniauth].uid}_#{targetId}")
+      if(params[:id]=='me')
+        targetId = session[:omniauth].uid;
+      else
+        targetId = params[:id]
+      end
+        str = REDIS.get("wl_#{session[:omniauth].provider}_#{session[:omniauth].uid}_#{targetId}")
       if(str)
         @l = ActiveSupport::JSON.decode(str)
       else
@@ -33,7 +32,12 @@ class WordListController < ApplicationController
         @l = {:status => 'requested'}
       end
     else
-      @l = {:error => 'You need to log in to Facebook in order to create an artwork for Facebook profile. Tyful will use a sample word list for now.'}
+      # @l = {:error => 'You need to log in to Facebook in order to create an artwork for Facebook profile. Tyful will use a sample word list for now.'}
+      @l = [{:word => 'Tyful', :weight => 1, :occurences => []}, 
+        {:word => 'fun', :weight => 1, :occurences => []}, 
+        {:word => 'Your Name Here', :weight => 1, :occurences => []}, 
+        {:word => 'Create', :weight => 1, :occurences => []}
+      ]
     end
     
     respond_to do |format|

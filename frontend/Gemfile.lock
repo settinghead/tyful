@@ -38,6 +38,9 @@ GEM
     bcrypt-ruby (3.0.1-java)
     builder (3.0.0)
     cancan (1.6.8)
+    cells (3.8.5)
+      actionpack (~> 3.0)
+      railties (~> 3.0)
     client_side_validations (3.1.4)
     cocaine (0.2.1)
     coffee-rails (3.2.2)
@@ -235,6 +238,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_votable
   cancan
+  cells
   client_side_validations
   coffee-rails (~> 3.2.1)
   devise

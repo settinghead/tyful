@@ -50,25 +50,24 @@
       <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
 
           <a class="brand" href="<%=root_url%>"><span class="text"><%=APP_CONFIG['site_name']%></span></a>
           
-          <div class="container-fluid nav-collapse">
+          <div class="container-fluid">
             <ul class="nav">
               <li><iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTyful&amp;send=false&amp;layout=button_count&amp;width=30&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=trebuchet+ms&amp;height=21&amp;appId=415282955156503" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; display: inline;" allowTransparency="true"></iframe></li>
               <li><%=link_to "My", :controller=> "/templates", :action=>"my"%></li>
             
               <li><%=link_to "Popular", :controller=> "/templates", :action=>"popular"%></li>
               <li><%=link_to "Newest", :controller=> "/templates", :action=>"newest"%></li>
-            <li class="last"><%=link_to "Invite", {:controller => "/facebook", :action=>"invite"}, :remote=> true%></li>
+            <li class="last">
+              <a href="#" onclick="javascript:window.inviteFriendsOnFacebook();">Invite</a>
+            <!--   <%=link_to "Invite", {:controller => "/facebook", :action=>"invite"}, :remote=> true%> -->
+            </li>
             </ul>
 
             <ul class="nav pull-right">
+              <li>Words from: <%=render :partial => 'word_list/source'%></li>
               <% if user_signed_in? %>
                 <li>Hi <span id="artist_name"><%= current_user.nickname || current_user.email %></span>!</li>
                 <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>

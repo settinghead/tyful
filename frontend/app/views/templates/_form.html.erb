@@ -10,6 +10,7 @@
     </div>
   <% end %>
 
+<div class="row-fluid">
 <div class="span12" style="height: 100%;">
 
 <%
@@ -133,6 +134,8 @@ $(document).ready(function(){
 	</div>
 </noscript>
 </div>
+</div>
+
 <%if can? :manage, @template %>
 <div id="modal">
 	<%= form_for(@template,:remote => true) do |f| %>
