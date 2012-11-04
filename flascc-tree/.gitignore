@@ -1,4 +1,6 @@
 *.o
 *.swf
+*.swc
 *.out
 *.abc
+polartree/*.swc

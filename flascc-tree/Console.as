@@ -12,8 +12,15 @@ package com.adobe.flascc
 {
   import flash.display.Bitmap;
   import flash.display.BitmapData;
-  import flash.display.DisplayObjectContainer;
   import flash.display.Sprite;
+  import flash.filters.DropShadowFilter;
+  import flash.geom.Matrix;
+  import flash.geom.Point;
+  import flash.geom.Rectangle;
+  import flash.text.AntiAliasType;
+  import flash.text.StyleSheet;
+  import flash.text.TextFieldAutoSize;
+  import flash.display.DisplayObjectContainer;
   import flash.display.Stage;
   import flash.display.StageScaleMode;
   import flash.events.Event;
@@ -22,6 +29,8 @@ package com.adobe.flascc
   import flash.text.TextField;
   import flash.utils.ByteArray;
   import com.adobe.flascc.vfs.ISpecialFile;
+  import polartree.PolarTree.slapWord;
+
 
   /**
   * A basic implementation of a console for flascc apps.
@@ -70,7 +79,7 @@ package com.adobe.flascc
       
       bmd = new BitmapData(stage.stageWidth, stage.stageHeight, false)
       bm = new Bitmap(bmd)
-      inputContainer.addChild(bm)
+      addChild(bm)
       CModule.startAsync(this)
       initTesting()
     }
@@ -154,8 +163,71 @@ package com.adobe.flascc
     {
       CModule.serviceUIRequests()
       var args:Vector.<int> = new Vector.<int>;
-      CModule.callI(CModule.getPublicSymbol("slapShape"), args);
+
+      var textField:TextField = getTextField("Blah", 30);
+      var params:Array = getTextShape(textField);
+      args.push(params[0]);
+      args.push(params[1]);
+      args.push(params[2]);
+      var coord:Vector.<int> =
+       polartree.PolarTree.CModule.callI(polartree.PolarTree.CModule.getPublicSymbol("slapShape"), args);
+       //slapShape();
+      //textField.x = coord[0];
+      //textField.y = coord[1];
+
+      CModule.activeConsole.addChild(textField);
+
+
     }
+    private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
+
+    public function getTextField(text: String, size: Number, rotation: Number = 0):TextField
+    {
+      var textField: TextField = new TextField();
+//      textField.setTextFormat( new TextFormat( font.fontName, size ) );
+      var style:StyleSheet = new StyleSheet();
+      style.parseCSS("div{font-size: "+size+"; leading: 0; text-align: center;}");
+      textField.styleSheet = style;
+      textField.autoSize = TextFieldAutoSize.LEFT;
+      textField.background = false;
+      textField.selectable = false;
+      textField.embedFonts = true;
+      textField.cacheAsBitmap = false;
+      textField.x = 0;
+      textField.y = 0;
+      textField.antiAliasType = AntiAliasType.ADVANCED;
+//      textField.text  = text;
+      textField.htmlText = "<div>"+text+"</div>";
+      textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
+      if(text.length>11){ //TODO: this is a temporary fix
+        var w:Number = textField.width;
+        textField.wordWrap = true;
+        textField.width = w/(text.length/11)*1.1 ;
+      }
+      return textField;
+    }
+
+    private function getTextShape(textField:TextField, safetyBorder:Number=0):Array{
+      var bounds: Rectangle = textField.getBounds( textField );
+      HELPER_MATRIX.tx = -bounds.x + safetyBorder;
+      HELPER_MATRIX.ty = -bounds.y + safetyBorder;
+      
+      var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
+      var s:Sprite = new Sprite();
+      s.width = textField.width;
+      s.height = textField.height;
+        
+      s.addChild(textField);
+      bmp.bitmapData.draw( s );
+
+
+      var data:ByteArray = bmp.bitmapData.getPixels(new Rectangle(bmp.width, bmp.height));
+      trace(data.length);
+      var addr:int = CModule.malloc(data.length);
+      CModule.writeBytes(addr, data.length, data);
+      return [addr,bmp.width, bmp.height];
+    }
+
 
     /**
     * Provide a way to get the TextField's text.

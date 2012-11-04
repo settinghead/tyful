@@ -1,19 +1,15 @@
 polartree: check
-	$(AS3COMPILERARGS) -abcfuture -AS3 \
-	-import $(call nativepath,$(FLASCC)/usr/lib/builtin.abc) \
-	-import $(call nativepath,$(FLASCC)/usr/lib/ISpecialFile.abc) \
-	-import $(call nativepath,$(FLASCC)/usr/lib/playerglobal.abc) \
-	Console.as -outdir . -out Console
-	# "$(FLASCC)/usr/bin/g++" -c polartree.cpp -DOSX -O3 -swc
-	# "$(FLASCC)/usr/bin/g++" -c BBPolarChildTreeVO.cpp -DOSX -O3 -swc
-	# "$(FLASCC)/usr/bin/g++" -c BBPolarRootTreeVO.cpp -DOSX -O3 -swc
-	# "$(FLASCC)/usr/bin/g++" -c BBPolarTreeVO.cpp -DOSX -O3 -swc
-	# "$(FLASCC)/usr/bin/g++" -c BBPolarTreeBuilder.cpp -DOSX -O3 -swc
-	# "$(FLASCC)/usr/bin/g++" -c ImageShape.cpp -DOSX -O3 -swc
+	# $(AS3COMPILERARGS) -abcfuture -AS3 \
+	# -import $(call nativepath,$(FLASCC)/usr/lib/builtin.abc) \
+	# -import $(call nativepath,$(FLASCC)/usr/lib/ISpecialFile.abc) \
+	# -import $(call nativepath,$(FLASCC)/usr/lib/playerglobal.abc) \
+	# Console.as -outdir . -out Console
 
-	"$(FLASCC)/usr/bin/g++" *.cpp -emit-swf -symbol-abc=Console.abc -swf-size=800x600 -lm -o polartree.swf
+	"$(FLASCC)/usr/bin/g++" -04 polartree/*.cpp -emit-swc=polartree.PolarTree -lFlash++ -lAS3++ -o polartree/PolarTree.swc
+	"$(FLEX)/bin/mxmlc" -compiler.omit-trace-statements=false -library-path=polartree/PolarTree.swc -debug=true runexperiment.as -o runwxperiment.swf
+
 #
 include ./Makefile.common
 
 clean:
-	rm -f *.swf *.bc *.exe
+	rm -f *.swf *.swc *.bc *.exe

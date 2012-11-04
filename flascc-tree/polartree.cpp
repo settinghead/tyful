@@ -1,7 +1,3 @@
-//Simple String Echo example
-//mike chambers
-//mchamber@adobe.com
-
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -10,11 +6,14 @@
 #include "BBPolarTreeBuilder.h"
 
 #include "AS3/AS3.h"
+#include "AS3/AS3++.h"
+
 
 //Header file for AS3 interop APIs
 //this is linked in by the compiler (when using flaccon)
 
 using namespace std;
+using namespace AS3::local;
 
 // //Method exposed to ActionScript
 // //Takes a String and echos it
@@ -58,12 +57,15 @@ using namespace std;
 // 	return result ? AS3_True() : AS3_False();
 // }
 
-extern "C" void slapShape(){
-	unsigned int * pixels = (unsigned int *) malloc(sizeof(unsigned char) * (200*200 + 1));
-	ImageShape* img = new ImageShape(pixels, 200, 200);
-	BBPolarRootTreeVO* tree_ptr = makeTree(img, 0);
+uint32_t xd, yd;
+
+
+ImageShape* generateNextShape(unsigned int * pixels, int width, int height){
+	ImageShape* img = new ImageShape(pixels, width, height);
+	return img;
 }
 
 int main() {
 
+    AS3_GoAsync();
 }

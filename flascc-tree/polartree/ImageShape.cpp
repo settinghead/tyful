@@ -12,7 +12,7 @@ ImageShape::ImageShape(unsigned int * pixels, int width, int height) {
 }
 
 ImageShape::~ImageShape() {
-	delete pixels;
+	free(pixels);
 }
 
 bool ImageShape::contains(int x, int y, int width, int height) {
