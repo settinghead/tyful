@@ -16,13 +16,14 @@
 		7CF53CE21646658B00A218BE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CE11646658B00A218BE /* SenTestingKit.framework */; };
 		7CF53CE31646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
 		7CF53CEB1646658B00A218BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CF53CE91646658B00A218BE /* InfoPlist.strings */; };
-		7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.m */; };
+		7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.mm */; };
 		7CF53D021646663300A218BE /* PolarChildTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CF81646663300A218BE /* PolarChildTree.cpp */; };
 		7CF53D031646663300A218BE /* PolarRootTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFA1646663300A218BE /* PolarRootTree.cpp */; };
 		7CF53D041646663300A218BE /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFC1646663300A218BE /* PolarTreeBuilder.cpp */; };
 		7CF53D051646663300A218BE /* PolarTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFE1646663300A218BE /* PolarTree.cpp */; };
-		7CF53D061646663300A218BE /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53D001646663300A218BE /* ImageShape.cpp */; };
 		7CF53D0F16467CA000A218BE /* MainView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53D0E16467CA000A218BE /* MainView.mm */; };
+		7CF84D7F164C169F008D8664 /* PixelImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */; };
+		7CF84D85164C1988008D8664 /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF84D84164C1988008D8664 /* ImageShape.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C4AD670164C102700335CFC /* PixelImageShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelImageShape.h; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -54,7 +56,7 @@
 		7CF53CE81646658B00A218BE /* PolarTree ExperimentTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PolarTree ExperimentTests-Info.plist"; sourceTree = "<group>"; };
 		7CF53CEA1646658B00A218BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7CF53CEC1646658B00A218BE /* PolarTree_ExperimentTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarTree_ExperimentTests.h; sourceTree = "<group>"; };
-		7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolarTree_ExperimentTests.m; sourceTree = "<group>"; };
+		7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PolarTree_ExperimentTests.mm; sourceTree = "<group>"; };
 		7CF53CF81646663300A218BE /* PolarChildTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarChildTree.cpp; sourceTree = "<group>"; };
 		7CF53CF91646663300A218BE /* PolarChildTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarChildTree.h; sourceTree = "<group>"; };
 		7CF53CFA1646663300A218BE /* PolarRootTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarRootTree.cpp; sourceTree = "<group>"; };
@@ -63,10 +65,11 @@
 		7CF53CFD1646663300A218BE /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
 		7CF53CFE1646663300A218BE /* PolarTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTree.cpp; sourceTree = "<group>"; };
 		7CF53CFF1646663300A218BE /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
-		7CF53D001646663300A218BE /* ImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageShape.cpp; sourceTree = "<group>"; };
 		7CF53D011646663300A218BE /* ImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageShape.h; sourceTree = "<group>"; };
 		7CF53D0D16467CA000A218BE /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		7CF53D0E16467CA000A218BE /* MainView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainView.mm; sourceTree = "<group>"; };
+		7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelImageShape.cpp; sourceTree = "<group>"; };
+		7CF84D84164C1988008D8664 /* ImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageShape.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				7CF53CEC1646658B00A218BE /* PolarTree_ExperimentTests.h */,
-				7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.m */,
+				7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.mm */,
 				7CF53CE71646658B00A218BE /* Supporting Files */,
 			);
 			path = "PolarTree ExperimentTests";
@@ -201,8 +204,10 @@
 				7CF53CFD1646663300A218BE /* PolarTreeBuilder.h */,
 				7C80D617164BF48100D05F6D /* nudger */,
 				7C80D615164BF47300D05F6D /* placer */,
-				7CF53D001646663300A218BE /* ImageShape.cpp */,
 				7CF53D011646663300A218BE /* ImageShape.h */,
+				7CF84D84164C1988008D8664 /* ImageShape.cpp */,
+				7C4AD670164C102700335CFC /* PixelImageShape.h */,
+				7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */,
 			);
 			path = polartree;
 			sourceTree = "<group>";
@@ -321,8 +326,9 @@
 				7CF53D031646663300A218BE /* PolarRootTree.cpp in Sources */,
 				7CF53D041646663300A218BE /* PolarTreeBuilder.cpp in Sources */,
 				7CF53D051646663300A218BE /* PolarTree.cpp in Sources */,
-				7CF53D061646663300A218BE /* ImageShape.cpp in Sources */,
 				7CF53D0F16467CA000A218BE /* MainView.mm in Sources */,
+				7CF84D7F164C169F008D8664 /* PixelImageShape.cpp in Sources */,
+				7CF84D85164C1988008D8664 /* ImageShape.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.m in Sources */,
+				7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

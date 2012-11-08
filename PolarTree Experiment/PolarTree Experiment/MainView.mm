@@ -7,7 +7,7 @@
 //
 
 #import "MainView.h"
-#include "polartree/ImageShape.h"
+#include "polartree/PixelImageShape.h"
 #include "polartree/PolarTree.h"
 #include "polartree/PolarTreeBuilder.h"
 #include <stdlib.h>
@@ -51,8 +51,8 @@
 
   NSAttributedString *stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
     
-    NSBitmapImageRep *textImage = [self getTextImage:stringToInsert];
-    ImageShape *shape = new ImageShape((unsigned int *)[textImage bitmapData], [textImage size].width, [textImage size].height);
+    NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
+    ImageShape *shape = new PixelImageShape((unsigned int *)[textImage bitmapData], [textImage size].width, [textImage size].height);
     PolarRootTree *tree = makeTree(shape, 0);
     
     NSPoint point;
@@ -62,7 +62,7 @@
         y = arc4random() % 500;
         tree->setLocation(x, y);
     }
-    while ([self collide:tree]);
+    while ([MainView collide:tree:trees]);
 
     point = NSMakePoint(x, y);
     [trees addObject:[NSValue valueWithPointer:tree]];
@@ -70,8 +70,9 @@
     [self drawText:point withStringToInsert:stringToInsert];
 }
 
--(bool)collide:(PolarRootTree*)tree{
-    NSEnumerator *e = [trees objectEnumerator];
++(bool)collide:(PolarRootTree*)tree:
+                (NSArray*)oTrees{
+    NSEnumerator *e = [oTrees objectEnumerator];
     NSValue *oTree;
     while (oTree = [e nextObject]) {
         if(tree->collide((PolarTree*)oTree.pointerValue)) return true;
@@ -125,7 +126,7 @@
         [self setNeedsDisplay:YES];
 }
 
--(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str
++(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str
 {
     // Assign the redrawRect based on the string's size and the insertion point
     NSRect rect = [str boundingRectWithSize:[str size]

@@ -5,17 +5,11 @@
 
 class ImageShape {
 public:
-	ImageShape(unsigned int * pixels, int width, int height);
-	~ImageShape();
 	bool contains(int x, int y, int width, int height);
-	bool containsPoint(int x, int y);
-	bool intersects(int x, int y, int width, int height);
-	int getWidth();
-	int getHeight();
-
-private:
-	int width, height;
-	unsigned int * pixels;
+	virtual bool containsPoint(int x, int y) = 0;
+	virtual bool intersects(int x, int y, int width, int height) = 0;
+	virtual int getWidth() = 0;
+	virtual int getHeight() = 0;
 };
 #endif
 

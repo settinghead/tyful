@@ -17,6 +17,6 @@
 
 }
 - (IBAction)drawRandomText:(id)sender;
--(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str;
--(bool)collide:(PolarRootTree*)tree;
++(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str;
++(bool)collide:(PolarRootTree*)tree:(NSArray*)oTrees;
 @end
