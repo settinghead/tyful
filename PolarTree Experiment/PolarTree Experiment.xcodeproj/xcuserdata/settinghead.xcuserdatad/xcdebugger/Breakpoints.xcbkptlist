@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PolarTree Experiment/MainView.mm"
-         timestampString = "374079941.898072"
+         timestampString = "374091390.260008"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "-drawText:withStringToInsert:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PolarTree Experiment/MainView.mm"
-         timestampString = "374079941.898072"
+         timestampString = "374091390.260008"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
+         startingLineNumber = "134"
+         endingLineNumber = "134"
          landmarkName = "-drawText:withStringToInsert:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,51 +60,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PolarTree Experiment/MainView.mm"
-         timestampString = "374079994.939727"
+         timestampString = "374091390.260008"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
-         landmarkName = "-drawRandomText:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "PolarTree Experiment/MainView.mm"
-         timestampString = "374079994.939727"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
-         landmarkName = "-drawRandomText:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "PolarTree Experiment/MainView.mm"
-         timestampString = "374079972.2779"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
          landmarkName = "+collide::"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "PolarTree Experiment/polartree/PolarTree.cpp"
-         timestampString = "374080209.813937"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "213"
-         endingLineNumber = "213"
-         landmarkName = "PolarTree::collide(PolarTree* bTree)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -118,6 +79,32 @@
          startingLineNumber = "54"
          endingLineNumber = "54"
          landmarkName = "-testPolarTreeCollide"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PolarTree Experiment/polartree/PixelImageShape.cpp"
+         timestampString = "374090618.736817"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
+         landmarkName = "PixelImageShape::intersects(int x, int y, int width, int height)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PolarTree Experiment/polartree/ImageShape.cpp"
+         timestampString = "374087350.715252"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "15"
+         endingLineNumber = "15"
+         landmarkName = "ImageShape::contains(int x, int y, int width, int height)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

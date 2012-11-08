@@ -47,12 +47,12 @@
     NSBitmapImageRep *image2 = [MainView getTextImage:str2];
     
     ImageShape *shape1 = new PixelImageShape((unsigned int *)[image1 bitmapData], [image1 size].width, [image1 size].height);
-    ImageShape *shape2 = new ImageShape((unsigned int *)[image2 bitmapData], [image2 size].width, [image2 size].height);
+    ImageShape *shape2 = new PixelImageShape((unsigned int *)[image2 bitmapData], [image2 size].width, [image2 size].height);
     PolarRootTree *tree1 = makeTree(shape1, 0);
     PolarRootTree *tree2 = makeTree(shape2, 0);    
     
     tree1->setLocation(0,0);
-    tree2->setLocation(0,image1.size.height+10);
+    tree2->setLocation(0,image1.size.height+100);
     
     if(tree1->collide(tree2))
         STFail(@"Collision test failed.");

@@ -2,12 +2,15 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 
 
-PixelImageShape::PixelImageShape(unsigned int * pixels, int width, int height) {
+PixelImageShape::PixelImageShape(unsigned char * pixels, int width, int height) {
 	this->width = width;
 	this->height = height;
-	this->pixels = pixels;
+    int size = sizeof(unsigned char)*width*height;
+	this->pixels = (unsigned char *)malloc(size);
+    memcpy(this->pixels, pixels, size);
 }
 
 PixelImageShape::~PixelImageShape() {
@@ -22,6 +25,8 @@ bool PixelImageShape::intersects(int x, int y, int width, int height) {
 	int cmp = pixels[y * width + x];
 	for (int xx = x; xx < x+width; xx++) {
 		for (int yy = y; yy < y+height; yy++) {
+//            if(pixels[yy * width + xx] >0)
+//                std::cout << (unsigned int)pixels[yy * width + xx] << "\n";
 			if (pixels[yy * width + xx] != cmp)
 				return true;
 		}

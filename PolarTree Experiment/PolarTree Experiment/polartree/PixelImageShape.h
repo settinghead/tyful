@@ -12,7 +12,7 @@
 
 class PixelImageShape : public ImageShape{
 public:
-    PixelImageShape(unsigned int * pixels, int width, int height);
+    PixelImageShape(unsigned char * pixels, int width, int height);
 	~PixelImageShape();
 	bool containsPoint(int x, int y);
 	bool intersects(int x, int y, int width, int height);
@@ -21,7 +21,7 @@ public:
 
 private:
 	int width, height;
-	unsigned int * pixels;
+	unsigned char * pixels;
 };
 
 #endif

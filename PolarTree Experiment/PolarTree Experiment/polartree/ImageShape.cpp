@@ -15,8 +15,8 @@ bool ImageShape::contains(int x, int y, int width, int height) {
 	if (intersects(x, y, width, height)) {
 		return false;
 	} else {
-		int rX = rand() % width+x;
-		int rY = rand() % height+y;
+		int rX = ((width==0)?0:rand() % width)+x;
+		int rY = ((height==0)?0:rand() % height)+y;
 		return containsPoint(rX, rY);
 	}
 }

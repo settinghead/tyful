@@ -57,11 +57,6 @@ public:
 	virtual double py();
 	virtual double pright();
 	virtual double pbottom();
-	virtual bool collide(PolarTree* bTree);
-	virtual bool rectCollide(PolarTree* bTree);
-	virtual bool rectContain(double x, double y, double right, double bottom);
-	virtual bool rectCollideCoord(double x, double y, double right,
-			double bottom);
 	virtual bool isLeaf();
 	int swelling;
 	virtual void swell(int extra);
@@ -82,5 +77,11 @@ public:
 	virtual double getRotation() = 0;
 	virtual int getCurrentStamp() = 0;
 	virtual void setLeaf(bool b);
+private:
+    virtual bool collide(PolarTree* bTree);
+	virtual bool rectCollide(PolarTree* bTree);
+	virtual bool rectContain(double x, double y, double right, double bottom);
+	virtual bool rectCollideCoord(double x, double y, double right,
+                                  double bottom);
 };
 #endif

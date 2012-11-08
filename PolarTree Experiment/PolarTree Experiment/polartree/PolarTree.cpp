@@ -11,6 +11,7 @@ PolarTree::PolarTree(double r1, double r2, double d1, double d2,
 	this->_computedR1 = NAN;
 	this->_computedR2 = NAN;
 	this->swelling = (int) 0;
+	this->_kids = NULL;
 	this->_leaf = false;
 	this->_r1 = r1;
 	this->_r2 = r2;

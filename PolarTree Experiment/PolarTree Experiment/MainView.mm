@@ -40,34 +40,46 @@
 }
 
 - (void)drawRandomText:(id)sender{
-    NSString *str = @"firstsecondthird";
-    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
-    NSFont *font = [NSFont fontWithName:@"Arial" size:23.0];
-
-    [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-    [string addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:NSMakeRange(5,6)];
-    [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
-    [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
-
-  NSAttributedString *stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
-    
-    NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
-    ImageShape *shape = new PixelImageShape((unsigned int *)[textImage bitmapData], [textImage size].width, [textImage size].height);
-    PolarRootTree *tree = makeTree(shape, 0);
-    
-    NSPoint point;
     int x,y;
-    do {
-        x = arc4random() % 500;
-        y = arc4random() % 500;
-        tree->setLocation(x, y);
+    PolarRootTree *tree;
+    NSString *str = @"firstsecondthird";
+    NSAttributedString *stringToInsert;
+    
+    while(true){
+
+        NSFont *font = [NSFont fontWithName:@"Arial" size:(arc4random() % 30+1)];
+        NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
+
+        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
+        [string addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:NSMakeRange(5,6)];
+        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
+        [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
+
+      stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
+        
+        NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
+    //    unsigned char* d = [textImage bitmapData];
+    //    int a = d[(int)([textImage size].width-1)*(int)([textImage size].height-1)];
+    //    [textImages addObject:textImage];
+
+        ImageShape *shape = new PixelImageShape([textImage bitmapData], [textImage size].width, [textImage size].height);
+        tree = makeTree(shape, 0);
+        
+        int count = 0;
+        do {
+            x = arc4random() % 500;
+            y = arc4random() % 500;
+            tree->setLocation(x, y);
+        }
+        while ([MainView collide:tree:trees] && ++count<1000);
+        if(count<1000)
+            break;
     }
-    while ([MainView collide:tree:trees]);
 
-    point = NSMakePoint(x, y);
-    [trees addObject:[NSValue valueWithPointer:tree]];
+        NSPoint point = NSMakePoint(x, y);
+        [trees addObject:[NSValue valueWithPointer:tree]];
 
-    [self drawText:point withStringToInsert:stringToInsert];
+        [self drawText:point withStringToInsert:stringToInsert];
 }
 
 +(bool)collide:(PolarRootTree*)tree:
@@ -75,7 +87,7 @@
     NSEnumerator *e = [oTrees objectEnumerator];
     NSValue *oTree;
     while (oTree = [e nextObject]) {
-        if(tree->collide((PolarTree*)oTree.pointerValue)) return true;
+        if(tree->overlaps((PolarTree*)oTree.pointerValue)) return true;
     }
     return false;
 }

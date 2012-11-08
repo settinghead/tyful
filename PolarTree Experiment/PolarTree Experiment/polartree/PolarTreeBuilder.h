@@ -34,13 +34,13 @@
         PolarChildTree* tree = new PolarChildTree(r1, r2, d1, d2, root,
                 minBoxSize);
         double x = (tree->getX(false)
-                + (double(shape->getWidth()) / double((int) 2)));
+                + (double(shape->getWidth()) / 2.0));
         if (((x > shape->getWidth()))) {
             delete tree;
             tree = NULL;
         } else {
             double y = (tree->getY(false)
-                    + (double(shape->getHeight()) / double((int) 2)));
+                    + (double(shape->getHeight()) / 2.0));
             if (((y > shape->getHeight()))) {
                 delete tree;
                 tree = NULL;
