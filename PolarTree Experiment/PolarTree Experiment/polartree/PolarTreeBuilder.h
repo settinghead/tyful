@@ -37,13 +37,13 @@
                 + (double(shape->getWidth()) / 2.0));
         if (((x > shape->getWidth()))) {
             delete tree;
-            tree = NULL;
+            return NULL;
         } else {
             double y = (tree->getY(false)
                     + (double(shape->getHeight()) / 2.0));
             if (((y > shape->getHeight()))) {
                 delete tree;
-                tree = NULL;
+                return NULL;
             } else {
                 double width = (tree->getRight(false) - tree->getX(false));
                 if ((((x + width) < (int) 0))) {
@@ -53,7 +53,7 @@
                     double height = (tree->getBottom(false) - tree->getY(false));
                     if ((((y + height) < (int) 0))) {
                         delete tree;
-                        tree = NULL;
+                        return NULL;
                     } else {
                         assert(width > (int) 0);
                         assert(height > (int) 0);
@@ -62,7 +62,7 @@
                             if (shape->intersects(x, y, width, height)) {
                             } else {
                                 delete tree;
-                                tree = NULL;
+                                return NULL;
                             }
                         }
                     }

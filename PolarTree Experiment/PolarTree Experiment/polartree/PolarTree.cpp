@@ -72,6 +72,11 @@ vector<PolarChildTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
+        vector<PolarChildTree*>* tKids = this->getKids();
+        for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
+             myKid != tKids->end(); ++myKid) {
+            (*myKid)->getKids();
+        }
 	}
 	return this->_kids;
 }

@@ -21,7 +21,7 @@ public:
 
 private:
 	int width, height;
-	unsigned char * pixels;
+	unsigned int * pixels;
 };
 
 #endif

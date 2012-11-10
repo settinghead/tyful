@@ -13,6 +13,7 @@ PolarRootTree::PolarRootTree(ImageShape* shape, int centerX,
 	this->shape = shape;
 	this->_minBoxSize = minBoxSize;
 	(this->rootStamp)++;
+            this->getKids();
 
 }
 
