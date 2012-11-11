@@ -2,18 +2,19 @@
 #include "PolarRootTree.h"
 #include "ImageShape.h"
 #include <math.h>
+#include "Flip.h"
 
 PolarRootTree::PolarRootTree(ImageShape* shape, int centerX,
 		int centerY, double d, int minBoxSize) :
-		PolarTree((int) 0, TWO_PI, (int) 0, d, minBoxSize) {
-	this->_rotation = (int) 0;
-	this->rootStamp = (int) 0;
+		PolarTree(0, TWO_PI, 0, d, minBoxSize) {
+	this->_rotation = 0;
+	this->rootStamp = 0;
 	this->rootX = centerX;
 	this->rootY = centerY;
 	this->shape = shape;
 	this->_minBoxSize = minBoxSize;
-	(this->rootStamp)++;
-            this->getKids();
+	this->rootStamp++;
+    this->getKids();
 
 }
 
@@ -23,6 +24,12 @@ PolarRootTree::~PolarRootTree() {
 void PolarRootTree::setLocation(int centerX, int centerY) {
 	this->rootX = centerX;
 	this->rootY = centerY;
+	(this->rootStamp)++;
+}
+
+void PolarRootTree::setTopLeftLocation(int top, int left) {
+	this->rootX = this->shape->getWidth()/2 + top;
+	this->rootY = this->shape->getHeight()/2 + left;
 	(this->rootStamp)++;
 }
 
@@ -39,7 +46,11 @@ double PolarRootTree::computeX(bool rotate) {
 }
 
 double PolarRootTree::computeY(bool rotate) {
+#ifdef FLIP
 	return -(this->d2);
+#else
+    return this->d2;
+#endif
 }
 
 double PolarRootTree::computeRight(bool rotate) {
@@ -47,7 +58,11 @@ double PolarRootTree::computeRight(bool rotate) {
 }
 
 double PolarRootTree::computeBottom(bool rotate) {
+#ifdef FLIP
 	return this->d2;
+#else
+    return -(this->d2);
+#endif
 }
 
 void PolarRootTree::setRotation(double rotation) {

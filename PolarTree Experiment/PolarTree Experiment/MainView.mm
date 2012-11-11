@@ -11,6 +11,7 @@
 #include "polartree/PolarTree.h"
 #include "polartree/PolarTreeBuilder.h"
 #include <stdlib.h>
+#include <iostream>
 
 
 @implementation MainView
@@ -61,13 +62,13 @@
 -(void) drawBounds:(PolarTree*)tree {
     int x1, x2, x3, x4, y1, y2, y3, y4;
     x1 = int((tree->getRootX() + tree->d1 * cos(tree->getR1(true))));
-    y1 = int((tree->getRootY() - tree->d1 * sin(tree->getR1(true))));
+    y1 = int((tree->getRootY() + tree->d1 * sin(tree->getR1(true))));
     x2 = int((tree->getRootX() + tree->d1 * cos(tree->getR2(true))));
-    y2 = int((tree->getRootY() - tree->d1 * sin(tree->getR2(true))));
+    y2 = int((tree->getRootY() + tree->d1 * sin(tree->getR2(true))));
     x3 = int((tree->getRootX() + tree->d2 * cos(tree->getR1(true))));
-    y3 = int((tree->getRootY() - tree->d2 * sin(tree->getR1(true))));
+    y3 = int((tree->getRootY() + tree->d2 * sin(tree->getR1(true))));
     x4 = int((tree->getRootX() + tree->d2 * cos(tree->getR2(true))));
-    y4 = int((tree->getRootY() - tree->d2 * sin(tree->getR2(true))));
+    y4 = int((tree->getRootY() + tree->d2 * sin(tree->getR2(true))));
 
     float r = tree->getR2(true) - tree->getR1(true);
     if (r < 0)
@@ -98,7 +99,7 @@
     if(steps==0) steps = 1;
     float angle = angle_from;
     float px=center_x+radius * cos(angle);
-    float py=center_y-radius * sin(angle);
+    float py=center_y+radius * sin(angle);
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
@@ -106,7 +107,7 @@
     
     for (int i=1; i<=steps; i++) {
         angle=angle_from+angle_diff/steps*i;
-        [thePath lineToPoint:NSMakePoint(center_x+radius*cos(angle), center_y-radius*sin(angle))];
+        [thePath lineToPoint:NSMakePoint(center_x+radius*cos(angle), center_y+radius*sin(angle))];
     }
     [thePath stroke];
 
@@ -116,16 +117,16 @@
 - (void)drawRandomText:(id)sender{
     int x,y;
     PolarRootTree *tree;
-    NSString *str = @"..";
+    NSString *str = @"A";
     NSAttributedString *stringToInsert;
     
     while(true){
 
-        NSFont *font = [NSFont fontWithName:@"Arial" size:(arc4random() % 10+290)];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:100];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0,[str length])];
+        [string addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:NSMakeRange(0,[str length])];
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
 
@@ -135,15 +136,25 @@
     //    unsigned char* d = [textImage bitmapData];
     //    int a = d[(int)([textImage size].width-1)*(int)([textImage size].height-1)];
     //    [textImages addObject:textImage];
-
-        ImageShape *shape = new PixelImageShape([textImage bitmapData], [textImage size].width, [textImage size].height);
-        tree = makeTree(shape, 0);
         
+        int size = sizeof(unsigned int)*textImage.size.width*textImage.size.height;
+        unsigned int * pixels = (unsigned int *)malloc(size);
+        for (int xx=0; xx<textImage.size.width; xx++) {
+            for(int yy=0;yy<textImage.size.height;yy++){
+                NSUInteger pixelData[4] = {0,0,0,0};
+                [textImage getPixel:pixelData atX:xx y:yy];
+//                cout << pixelData[0] << " " << pixelData[1] << " " << pixelData[2] << " "<< pixelData[3] << "|";
+                pixels[yy*((int)textImage.size.width)+xx] = (((unsigned int)pixelData[0]<<16)|((unsigned int)pixelData[1]<<8)|((unsigned int)pixelData[2])|((unsigned int)pixelData[3]<<24));
+//                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
+            }
+        }
+        
+        ImageShape *shape = new PixelImageShape((unsigned char *)pixels, [textImage size].width, [textImage size].height);
+        tree = makeTree(shape, 0);
         int count = 0;
         do {
             x = arc4random() % (int)mainImage.size.width;
             y = arc4random() % (int)mainImage.size.height;
-            tree->setLocation(x, y);
         }
         while ([MainView collide:tree:trees] && ++count<1000);
         if(count<1000)
@@ -151,9 +162,12 @@
     }
 
         NSPoint point = NSMakePoint(x, y);
+//        NSPoint point = NSMakePoint(0, 0);
+        tree->setTopLeftLocation(point.x, point.y);
+
         [trees addObject:[NSValue valueWithPointer:tree]];
 
-//    [self drawText:point withStringToInsert:stringToInsert];
+    [self drawText:point withStringToInsert:stringToInsert];
     [self drawTextTree:tree];
 }
 
@@ -231,12 +245,14 @@
 +(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str
 {
     // Assign the redrawRect based on the string's size and the insertion point
-    NSRect rect = [str boundingRectWithSize:[str size]
-                                               options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics];
+//    NSRect rect = [str boundingRectWithSize:[str size]
+//                                               options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics];
+//    std::cout << "width: " << str.size.width << "; height: " << str.size.height;
+
     NSBitmapImageRep *textImage = [[NSBitmapImageRep alloc]
                                    initWithBitmapDataPlanes:nil
-                                   pixelsWide:rect.size.width
-                                   pixelsHigh:rect.size.height
+                                   pixelsWide:str.size.width
+                                   pixelsHigh:str.size.height
                                    bitsPerSample: 8
                                    samplesPerPixel: 4
                                    hasAlpha: YES

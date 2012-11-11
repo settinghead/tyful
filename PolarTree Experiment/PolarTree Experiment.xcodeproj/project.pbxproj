@@ -38,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		7C4AD670164C102700335CFC /* PixelImageShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelImageShape.h; sourceTree = "<group>"; };
+		7C8F21EC164FC11D0084C060 /* Flip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flip.h; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -208,6 +209,7 @@
 				7CF84D84164C1988008D8664 /* ImageShape.cpp */,
 				7C4AD670164C102700335CFC /* PixelImageShape.h */,
 				7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */,
+				7C8F21EC164FC11D0084C060 /* Flip.h */,
 			);
 			path = polartree;
 			sourceTree = "<group>";

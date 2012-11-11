@@ -34,29 +34,33 @@
         PolarChildTree* tree = new PolarChildTree(r1, r2, d1, d2, root,
                 minBoxSize);
         double x = (tree->getX(false)
-                + (double(shape->getWidth()) / 2.0));
+                + shape->getWidth()/2);
         if (((x > shape->getWidth()))) {
             delete tree;
             return NULL;
         } else {
             double y = (tree->getY(false)
-                    + (double(shape->getHeight()) / 2.0));
+                    + shape->getHeight()/2);
             if (((y > shape->getHeight()))) {
                 delete tree;
                 return NULL;
             } else {
                 double width = (tree->getRight(false) - tree->getX(false));
-                if ((((x + width) < (int) 0))) {
+                if ((((x + width) < 0))) {
                     delete tree;
                     tree = NULL;
                 } else {
-                    double height = (tree->getBottom(false) - tree->getY(false));
-                    if ((((y + height) < (int) 0))) {
+#ifdef FLIP
+                    double height = tree->getBottom(false) - tree->getY(false);
+#else
+                    double height =  tree->getY(false) - tree->getBottom(false);
+#endif
+                    if ((((y + height) < 0))) {
                         delete tree;
                         return NULL;
                     } else {
-                        assert(width > (int) 0);
-                        assert(height > (int) 0);
+                        assert(width > 0);
+                        assert(height > 0);
                         if (((shape == NULL || shape->contains(x, y, width, height)))) {
                         } else {
                             if (shape->intersects(x, y, width, height)) {
@@ -244,7 +248,7 @@
         int x = int(shape->getWidth() / 2.0);
         int y = int(shape->getHeight() / 2.0);
         double d = sqrt(
-                (pow((double(shape->getWidth()) / double((int) 2)), 2.0)
+                (pow((double(shape->getWidth()) / 2.0), 2.0)
                         + pow((double(shape->getHeight()) / 2.0), 2.0)));
         PolarRootTree* tree = new PolarRootTree(shape, x, y, d, minBoxSize);
         return tree;

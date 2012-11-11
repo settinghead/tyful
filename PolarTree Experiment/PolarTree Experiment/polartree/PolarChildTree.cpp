@@ -5,7 +5,7 @@
 #include "PolarTreeBuilder.h"
 #include "PolarChildTree.h"
 #include "ImageShape.h"
-
+#include "Flip.h"
 
 PolarChildTree::PolarChildTree(double r1, double r2, double d1,
 		double d2, PolarRootTree* root, int minBoxSize) :
@@ -156,8 +156,11 @@ double PolarChildTree::computeY(bool rotate) {
 			}
 		}
 	}
-	y = -(y);
+#ifdef FLIP
+    return -y;
+#else
 	return y;
+#endif
 }
 
 double PolarChildTree::computeRight(bool rotate) {
@@ -282,8 +285,11 @@ double PolarChildTree::computeBottom(bool rotate) {
 			}
 		}
 	}
-	bottom = -(bottom);
+#ifdef FLIP
+    return -bottom;
+#else
 	return bottom;
+#endif
 }
 
 double PolarChildTree::getRotation() {

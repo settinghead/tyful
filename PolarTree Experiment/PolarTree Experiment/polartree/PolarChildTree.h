@@ -3,6 +3,7 @@
 
 #include "PolarTree.h"
 #include "ImageShape.h"
+#include "Flip.h"
 
 class PolarRootTree;
 class PolarChildTree: public PolarTree {

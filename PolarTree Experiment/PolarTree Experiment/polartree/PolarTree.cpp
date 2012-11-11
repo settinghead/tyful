@@ -4,6 +4,7 @@
 #include "PolarRootTree.h"
 #include "PolarTreeBuilder.h"
 #include "ImageShape.h"
+#include "Flip.h"
 
 PolarTree::PolarTree(double r1, double r2, double d1, double d2,
 		int minBoxSize) {
@@ -178,10 +179,9 @@ void PolarTree::checkUpdatePoints() {
 		if (((this->pointsStamp != this->getCurrentStamp()))) {
 			this->_px =
 					((this->getRootX() - this->swelling) + this->getX(true));
-			this->_py =
-					((this->getRootY() - this->swelling) + this->getY(true));
 			this->_pright = ((this->getRootX() + this->swelling)
 					+ this->getRight(true));
+			this->_py = ((this->getRootY() - this->swelling) + this->getY(true));
 			this->_pbottom = ((this->getRootY() + this->swelling)
 					+ this->getBottom(true));
 			this->pointsStamp = this->getCurrentStamp();
@@ -236,10 +236,17 @@ bool PolarTree::rectContain(double x, double y, double right,
 
 bool PolarTree::rectCollideCoord(double x, double y, double right,
 		double bottom) {
+#ifdef FLIP
 	return this->pbottom() > y
         && this->py() < bottom
         && this->pright() > x
         && this->px() < right;
+#else
+    return this->pbottom() < y
+    && this->py() > bottom
+    && this->pright() > x
+    && this->px() < right;
+#endif
 }
 
 bool PolarTree::isLeaf() {
