@@ -135,15 +135,21 @@
     float rotation;
     PolarRootTree *tree;
     ImageShape *shape;
-    NSString *str = @"人人";
+    NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
+                        @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
+    NSArray *colors = [[NSArray alloc] initWithObjects:[NSColor greenColor],
+                       [NSColor blackColor],[NSColor brownColor],[NSColor cyanColor],
+                       [NSColor blueColor],[NSColor yellowColor],[NSColor darkGrayColor],
+                       [NSColor headerColor],[NSColor knobColor],[NSColor magentaColor],nil];
+    NSString *str = strings[arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
     while(true){
 
-        NSFont *font = [NSFont fontWithName:@"Arial" size:100];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 130];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:NSMakeRange(0,[str length])];
+        [string addAttribute:NSForegroundColorAttributeName value:colors[arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
 
@@ -169,7 +175,7 @@
                                      y);
             tree->setRotation(-rotation/360*TWO_PI+PI);
         }
-        while ([MainView collide:tree:trees] && ++count<1000);
+        while ([MainView collide:tree:trees] && ++count<10000);
         if(count<1000)
             break;
         else
@@ -183,7 +189,7 @@
         [trees addObject:[NSValue valueWithPointer:tree]];
 
     [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-    [self drawTextTree:tree];
+//    [self drawTextTree:tree];
 }
 
 +(bool)collide:(PolarRootTree*)tree:
@@ -311,7 +317,7 @@
             [image getPixel:pixelData atX:xx y:yy];
 //            origPixels[int(image.size.height-yy)*((int)image.size.width)+xx];
             //                cout << pixelData[0] << " " << pixelData[1] << " " << pixelData[2] << " "<< pixelData[3] << "|";
-            int i = (height-yy-1)*width+xx;
+            int i = (height-yy-1)*width+(width-xx-1);
             pixels[i] = (((unsigned int)pixelData[0]<<16)|((unsigned int)pixelData[1]<<8)|((unsigned int)pixelData[2])|((unsigned int)pixelData[3]<<24));
             //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
         }

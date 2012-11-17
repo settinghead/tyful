@@ -40,8 +40,8 @@ bool ImageShape::intersects(int x, int y, int width, int height) {
     else if (y<0) y=0;
 
 	int cmp = getPixel(x, y);
-    for (int yy = y; yy < y+height; yy++) {
-        for (int xx = x; xx < x+width; xx++) {
+    for (int yy = y; yy < y+height && yy <getHeight(); yy++) {
+        for (int xx = x; xx < x+width && xx < getWidth(); xx++) {
             //            if(pixels[yy * width + xx] >0)
             //                std::cout << (unsigned int)pixels[yy * width + xx] << ",";
 			if (getPixel(xx,yy) != cmp)
