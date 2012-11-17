@@ -17,8 +17,8 @@ public:
 	int _minBoxSize; /* REM */
 	void setLocation(int centerX, int centerY);
 	void setTopLeftLocation(int centerX, int centerY);
-	int getRootX();
-	int getRootY();
+	inline int getRootX();
+	inline int getRootY();
 	double computeX(bool rotate);
 	double computeY(bool rotate);
 	double computeRight(bool rotate);

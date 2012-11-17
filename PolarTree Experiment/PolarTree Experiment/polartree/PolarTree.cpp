@@ -211,14 +211,13 @@ double PolarTree::pbottom() {
 
 bool PolarTree::collide(PolarTree* bTree) {
 	double dist = sqrt(
-			(pow((this->getRootX() - bTree->getRootX()), (int) 2)
-					+ pow((this->getRootY() - bTree->getRootY()), (int) 2)));
+			(pow((this->getRootX() - bTree->getRootX()), 2)
+					+ pow((this->getRootY() - bTree->getRootY()), 2)));
 	if (((dist > (this->d2 + bTree->d2)))) {
 		return false;
 	} else {
 		return this->rectCollide(bTree);
 	}
-	return false;
 }
 
 bool PolarTree::rectCollide(PolarTree* bTree) {

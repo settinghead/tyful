@@ -111,7 +111,7 @@
     float px=center_x+radius * cos(angle);
     float py=
         mainImage.size.height-
-        (center_y+radius * sin(angle));
+        (center_y-radius * sin(angle));
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
@@ -122,7 +122,7 @@
         int x = center_x+radius*cos(angle);
         int y =
         mainImage.size.height-
-        (center_y+radius*sin(angle));
+        (center_y-radius*sin(angle));
         [thePath lineToPoint:NSMakePoint(x, y)];
     }
     [thePath stroke];
@@ -132,14 +132,14 @@
 
 - (void)drawRandomText:(id)sender{
     int x,y;
+    float rotation;
     PolarRootTree *tree;
     ImageShape *shape;
-    NSString *str = @"Hello";
+    NSString *str = @"人人";
     NSAttributedString *stringToInsert;
-    
     while(true){
 
-        NSFont *font = [NSFont fontWithName:@"Arial" size:40];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:100];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
@@ -160,15 +160,20 @@
         tree = makeTree(shape, 0);
         int count = 0;
         do {
-            x = arc4random() % (int)mainImage.size.width;
-            y = arc4random() % (int)mainImage.size.height;
+            x = arc4random() % (int)(mainImage.size.width+textImage.size.width)-textImage.size.width/2;
+            y = arc4random() % (int)(mainImage.size.height+textImage.size.height)-textImage.size.height/2;
+            rotation = ((double)arc4random() / 0x100000000) * 90;
+//            rotation = 0;
             tree->setTopLeftLocation(x,
                                      mainImage.size.height-tree->shape->getHeight()-
                                      y);
+            tree->setRotation(-rotation/360*TWO_PI+PI);
         }
         while ([MainView collide:tree:trees] && ++count<1000);
         if(count<1000)
             break;
+        else
+            return;
     }
 
         NSPoint point = NSMakePoint(x, y);
@@ -177,7 +182,7 @@
     
         [trees addObject:[NSValue valueWithPointer:tree]];
 
-    [self drawText:point withStringToInsert:stringToInsert];
+    [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
     [self drawTextTree:tree];
 }
 
@@ -203,6 +208,7 @@
 
 - (void)drawText:(NSPoint)point
                   withStringToInsert:(NSAttributedString *)stringToInsert
+                 withRotation:(float)rotation
 {
     
 		// The size of the string, as a guesstimate
@@ -226,11 +232,19 @@
         NSGraphicsContext* nsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:nsContext];
-//        NSAffineTransform *transform = [NSAffineTransform transform];
-//		// Create the transform
-//		[transform scaleXBy:1.0 yBy:-1.0];
-//		[transform translateXBy:0 yBy:(0-[mainImage pixelsHigh])];
-//		[transform concat];
+        // rorate
+        NSAffineTransform *transform = [NSAffineTransform transform];
+    
+//        [transform translateXBy: stringToInsert.size.width yBy: stringToInsert.size.height];
+//        [transform rotateByDegrees:rotation];
+//        [transform translateXBy: -stringToInsert.size.width yBy: -stringToInsert.size.height];
+//    
+        [transform translateXBy: point.x+stringToInsert.size.width/2 yBy: point.y+stringToInsert.size.height/2];
+        [transform rotateByDegrees:-rotation];
+        [transform translateXBy: -point.x-stringToInsert.size.width/2 yBy: -point.y-stringToInsert.size.height/2];
+    
+		[transform concat];
+    
 		[stringToInsert drawAtPoint:point];
     
 		[NSGraphicsContext restoreGraphicsState];
