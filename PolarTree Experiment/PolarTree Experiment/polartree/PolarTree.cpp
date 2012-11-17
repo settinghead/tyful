@@ -236,17 +236,17 @@ bool PolarTree::rectContain(double x, double y, double right,
 
 bool PolarTree::rectCollideCoord(double x, double y, double right,
 		double bottom) {
-#ifdef FLIP
+//#ifdef FLIP
 	return this->pbottom() > y
         && this->py() < bottom
         && this->pright() > x
         && this->px() < right;
-#else
-    return this->pbottom() < y
-    && this->py() > bottom
-    && this->pright() > x
-    && this->px() < right;
-#endif
+//#else
+//    return this->pbottom() < y
+//    && this->py() > bottom
+//    && this->pright() > x
+//    && this->px() < right;
+//#endif
 }
 
 bool PolarTree::isLeaf() {

@@ -46,11 +46,11 @@ double PolarRootTree::computeX(bool rotate) {
 }
 
 double PolarRootTree::computeY(bool rotate) {
-#ifdef FLIP
+//#ifdef FLIP
 	return -(this->d2);
-#else
-    return this->d2;
-#endif
+//#else
+//    return this->d2;
+//#endif
 }
 
 double PolarRootTree::computeRight(bool rotate) {
@@ -58,11 +58,11 @@ double PolarRootTree::computeRight(bool rotate) {
 }
 
 double PolarRootTree::computeBottom(bool rotate) {
-#ifdef FLIP
+//#ifdef FLIP
 	return this->d2;
-#else
-    return -(this->d2);
-#endif
+//#else
+//    return -(this->d2);
+//#endif
 }
 
 void PolarRootTree::setRotation(double rotation) {

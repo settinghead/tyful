@@ -59,16 +59,25 @@
     }
 }
 //
--(void) drawBounds:(PolarTree*)tree {
+-(void) drawBounds:(PolarTree*)tree
+{
     int x1, x2, x3, x4, y1, y2, y3, y4;
     x1 = int((tree->getRootX() + tree->d1 * cos(tree->getR1(true))));
-    y1 = int((tree->getRootY() + tree->d1 * sin(tree->getR1(true))));
+    y1 = int(
+             mainImage.size.height-
+             ((tree->getRootY() - tree->d1 * sin(tree->getR1(true)))));
     x2 = int((tree->getRootX() + tree->d1 * cos(tree->getR2(true))));
-    y2 = int((tree->getRootY() + tree->d1 * sin(tree->getR2(true))));
+    y2 = int(
+             mainImage.size.height-
+             ((tree->getRootY() - tree->d1 * sin(tree->getR2(true)))));
     x3 = int((tree->getRootX() + tree->d2 * cos(tree->getR1(true))));
-    y3 = int((tree->getRootY() + tree->d2 * sin(tree->getR1(true))));
+    y3 = int(
+             mainImage.size.height-
+             ((tree->getRootY() - tree->d2 * sin(tree->getR1(true)))));
     x4 = int((tree->getRootX() + tree->d2 * cos(tree->getR2(true))));
-    y4 = int((tree->getRootY() + tree->d2 * sin(tree->getR2(true))));
+    y4 = int(
+             mainImage.size.height-
+             ((tree->getRootY() - tree->d2 * sin(tree->getR2(true)))));
 
     float r = tree->getR2(true) - tree->getR1(true);
     if (r < 0)
@@ -76,8 +85,8 @@
     
 //    assert(r < PI);
     
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d2 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0];
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d1 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d2 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d1 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
@@ -93,13 +102,16 @@
                   withRadius:(float)radius
                   withAngleFrom:(float)angle_from
                   withAngleTo:(float)angle_to
-                  withPrecision:(float)precision {
+                  withPrecision:(float)precision
+                  withTree:(PolarTree*)tree{
     float angle_diff=angle_to-angle_from;
     int steps=round(angle_diff*precision);
     if(steps==0) steps = 1;
     float angle = angle_from;
     float px=center_x+radius * cos(angle);
-    float py=center_y+radius * sin(angle);
+    float py=
+        mainImage.size.height-
+        (center_y+radius * sin(angle));
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
@@ -107,7 +119,11 @@
     
     for (int i=1; i<=steps; i++) {
         angle=angle_from+angle_diff/steps*i;
-        [thePath lineToPoint:NSMakePoint(center_x+radius*cos(angle), center_y+radius*sin(angle))];
+        int x = center_x+radius*cos(angle);
+        int y =
+        mainImage.size.height-
+        (center_y+radius*sin(angle));
+        [thePath lineToPoint:NSMakePoint(x, y)];
     }
     [thePath stroke];
 
@@ -117,12 +133,13 @@
 - (void)drawRandomText:(id)sender{
     int x,y;
     PolarRootTree *tree;
-    NSString *str = @"A";
+    ImageShape *shape;
+    NSString *str = @"Hello";
     NSAttributedString *stringToInsert;
     
     while(true){
 
-        NSFont *font = [NSFont fontWithName:@"Arial" size:100];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:40];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
@@ -137,24 +154,17 @@
     //    int a = d[(int)([textImage size].width-1)*(int)([textImage size].height-1)];
     //    [textImages addObject:textImage];
         
-        int size = sizeof(unsigned int)*textImage.size.width*textImage.size.height;
-        unsigned int * pixels = (unsigned int *)malloc(size);
-        for (int xx=0; xx<textImage.size.width; xx++) {
-            for(int yy=0;yy<textImage.size.height;yy++){
-                NSUInteger pixelData[4] = {0,0,0,0};
-                [textImage getPixel:pixelData atX:xx y:yy];
-//                cout << pixelData[0] << " " << pixelData[1] << " " << pixelData[2] << " "<< pixelData[3] << "|";
-                pixels[yy*((int)textImage.size.width)+xx] = (((unsigned int)pixelData[0]<<16)|((unsigned int)pixelData[1]<<8)|((unsigned int)pixelData[2])|((unsigned int)pixelData[3]<<24));
-//                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
-            }
-        }
+        unsigned int * pixels = [MainView getFlippedPixels:textImage];
         
-        ImageShape *shape = new PixelImageShape((unsigned char *)pixels, [textImage size].width, [textImage size].height);
+        shape = new PixelImageShape((unsigned char *)pixels, [textImage size].width, [textImage size].height);
         tree = makeTree(shape, 0);
         int count = 0;
         do {
             x = arc4random() % (int)mainImage.size.width;
             y = arc4random() % (int)mainImage.size.height;
+            tree->setTopLeftLocation(x,
+                                     mainImage.size.height-tree->shape->getHeight()-
+                                     y);
         }
         while ([MainView collide:tree:trees] && ++count<1000);
         if(count<1000)
@@ -163,8 +173,8 @@
 
         NSPoint point = NSMakePoint(x, y);
 //        NSPoint point = NSMakePoint(0, 0);
-        tree->setTopLeftLocation(point.x, point.y);
 
+    
         [trees addObject:[NSValue valueWithPointer:tree]];
 
     [self drawText:point withStringToInsert:stringToInsert];
@@ -270,6 +280,29 @@
     [str drawAtPoint:NSMakePoint(0, 0)];
     [NSGraphicsContext restoreGraphicsState];
     return textImage;
+}
+
++(unsigned int *) getFlippedPixels:(NSBitmapImageRep*)image{
+    int width = [image size].width;
+    int height = [image size].height;
+    
+    int size = sizeof(unsigned int)*width*height;
+
+//    unsigned char * orig = image.bitmapData;
+    unsigned int * pixels = (unsigned int *)malloc(size);
+//    unsigned char * origPixels = [image bitmapData];
+    for (int xx=0; xx<width; xx++) {
+        for(int yy=0;yy<height;yy++){
+            NSUInteger pixelData[4] = {0,0,0,0};
+            [image getPixel:pixelData atX:xx y:yy];
+//            origPixels[int(image.size.height-yy)*((int)image.size.width)+xx];
+            //                cout << pixelData[0] << " " << pixelData[1] << " " << pixelData[2] << " "<< pixelData[3] << "|";
+            int i = (height-yy-1)*width+xx;
+            pixels[i] = (((unsigned int)pixelData[0]<<16)|((unsigned int)pixelData[1]<<8)|((unsigned int)pixelData[2])|((unsigned int)pixelData[3]<<24));
+            //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
+        }
+    }
+    return pixels;
 }
 
 @end

@@ -34,6 +34,11 @@ bool ImageShape::containsPoint(int x, int y) {
 }
 
 bool ImageShape::intersects(int x, int y, int width, int height) {
+    if(x>=getWidth()) x=getWidth()-1;
+    else if (x<0) x=0;
+    if(y>=getHeight()) y=getHeight()-1;
+    else if (y<0) y=0;
+
 	int cmp = getPixel(x, y);
     for (int yy = y; yy < y+height; yy++) {
         for (int xx = x; xx < x+width; xx++) {

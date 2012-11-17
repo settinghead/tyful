@@ -24,8 +24,10 @@
      withRadius:(float)radius
   withAngleFrom:(float)angle_from
     withAngleTo:(float)angle_to
- owithPrecision:(float)precision;
+ owithPrecision:(float)precision
+ withTree:(PolarTree*)tree;
 
 +(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str;
 +(bool)collide:(PolarRootTree*)tree:(NSArray*)oTrees;
++(unsigned int *) getFlippedPixels:(NSBitmapImageRep*)image;
 @end

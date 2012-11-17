@@ -156,11 +156,11 @@ double PolarChildTree::computeY(bool rotate) {
 			}
 		}
 	}
-#ifdef FLIP
+//#ifdef FLIP
     return -y;
-#else
-	return y;
-#endif
+//#else
+//	return y;
+//#endif
 }
 
 double PolarChildTree::computeRight(bool rotate) {
@@ -285,11 +285,11 @@ double PolarChildTree::computeBottom(bool rotate) {
 			}
 		}
 	}
-#ifdef FLIP
+//#ifdef FLIP
     return -bottom;
-#else
-	return bottom;
-#endif
+//#else
+//	return bottom;
+//#endif
 }
 
 double PolarChildTree::getRotation() {

@@ -50,11 +50,11 @@
                     delete tree;
                     tree = NULL;
                 } else {
-#ifdef FLIP
+//#ifdef FLIP
                     double height = tree->getBottom(false) - tree->getY(false);
-#else
-                    double height =  tree->getY(false) - tree->getBottom(false);
-#endif
+//#else
+//                    double height =  tree->getY(false) - tree->getBottom(false);
+//#endif
                     if ((((y + height) < 0))) {
                         delete tree;
                         return NULL;
