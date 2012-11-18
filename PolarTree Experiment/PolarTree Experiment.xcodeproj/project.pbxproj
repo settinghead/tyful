@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C10FE8916594762003F656A /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8716594762003F656A /* ColorMapAngler.cpp */; };
+		7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */; };
+		7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */; };
 		7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */; };
 		7C1B3B2D1657F3DC00D3DCAD /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */; };
 		7CBD6B5816580DB700E9047C /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5716580DB700E9047C /* EngineShape.cpp */; };
@@ -46,6 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C10FE8716594762003F656A /* ColorMapAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapAngler.cpp; sourceTree = "<group>"; };
+		7C10FE8816594762003F656A /* ColorMapAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapAngler.h; sourceTree = "<group>"; };
+		7C10FE8B16594878003F656A /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		7C10FE8D16594AB7003F656A /* PickFromAngler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickFromAngler.h; sourceTree = "<group>"; };
+		7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PickFromAngler.cpp; sourceTree = "<group>"; };
+		7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MostlyHorizontalAngler.cpp; sourceTree = "<group>"; };
+		7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
 		7C1B3B221657DB0200D3DCAD /* PolarCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
 		7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
 		7C1B3B2B1657F31000D3DCAD /* PolarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
@@ -125,6 +135,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C10FE8C16594885003F656A /* common */ = {
+			isa = PBXGroup;
+			children = (
+				7C10FE8B16594878003F656A /* constants.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
 		7C1B3B261657E03600D3DCAD /* density */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +187,12 @@
 			children = (
 				7CBD6B6716584FE200E9047C /* Angler.cpp */,
 				7CBD6B6816584FE200E9047C /* Angler.h */,
+				7C10FE8716594762003F656A /* ColorMapAngler.cpp */,
+				7C10FE8816594762003F656A /* ColorMapAngler.h */,
+				7C10FE8D16594AB7003F656A /* PickFromAngler.h */,
+				7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */,
+				7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */,
+				7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */,
 			);
 			name = angler;
 			sourceTree = "<group>";
@@ -268,6 +292,7 @@
 		7CF53CF71646663300A218BE /* polartree */ = {
 			isa = PBXGroup;
 			children = (
+				7C10FE8C16594885003F656A /* common */,
 				7CBD6B6D1659366A00E9047C /* math */,
 				7CBD6B6616584FD400E9047C /* angler */,
 				7CBD6B521658098D00E9047C /* sizer */,
@@ -425,6 +450,9 @@
 				7CBD6B6416583B3A00E9047C /* DensityPatchIndex.cpp in Sources */,
 				7CBD6B6916584FE200E9047C /* Angler.cpp in Sources */,
 				7CBD6B6C16588E5700E9047C /* WordLayer.cpp in Sources */,
+				7C10FE8916594762003F656A /* ColorMapAngler.cpp in Sources */,
+				7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */,
+				7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

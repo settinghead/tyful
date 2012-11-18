@@ -82,4 +82,41 @@ double WordLayer::getBrightness(int x, int y) {
     }
     return ColorMath::getBrightness(rgbPixel);
 }
+
+double WordLayer::getHue(int x, int y) {
+    int colour = getHSB(x,y);
+    //			Assert.isTrue(!isNaN(colour.hue));
+    double h = ( (colour & 0x00FF0000) >> 16);
+    h/=255;
+    return h;
+}
+
+double WordLayer::getHSB(int x, int y){
+    //			if(this.hsbArray[x]==null)
+    //				this.hsbArray[x] = new Array(this._img.height);
+    //			if(this.hsbArray[x][y]==null){
+    //				var rgbPixel : uint = _img.bitmapData.getPixel32( x, y );
+    //				var alpha:uint = rgbPixel>> 24 & 0xFF;
+    //				if(alpha == 0) {
+    //					hsbArray[x][y]  = NaN;
+    //					return NaN;
+    //				}
+    //				else {
+    //					var colour:int =  ColorMath.RGBtoHSB(rgbPixel);
+    //					hsbArray[x][y] = colour;
+    //					return colour;
+    //				}
+    //			}
+    //			return this.hsbArray[x][y];
+    
+    unsigned int rgbPixel  = getPixel( x, y );
+    unsigned int alpha  = rgbPixel>> 24 & 0xFF;
+    if(alpha == 0) {
+        return NAN;
+    }
+    else {
+        int colour =  ColorMath::RGBtoHSB(rgbPixel);
+        return colour;
+    }
+}
     

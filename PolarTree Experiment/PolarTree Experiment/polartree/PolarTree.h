@@ -2,14 +2,10 @@
 #define PolarTree_H
 
 #include <vector>
-
+#include "constants.h"
 using namespace std;
 
-#define PI 3.14159265359
-#define HALF_PI 1.57079633
-#define TWO_PI 6.2831853
-#define ONE_AND_HALF_PI 4.712388980
-#define MARGIN 0
+
 
 class PolarRootTree;
 class PolarChildTree;
