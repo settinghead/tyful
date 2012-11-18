@@ -11,7 +11,7 @@
 #include "PolarCanvas.h"
 #include <math.h>
 
-PolarLayer::PolarLayer(unsigned char * pixels, int width, int height)
+PolarLayer::PolarLayer(unsigned int * pixels, int width, int height)
 :PixelImageShape::PixelImageShape(pixels,width,height), type(WORD_LAYER){
 }
 

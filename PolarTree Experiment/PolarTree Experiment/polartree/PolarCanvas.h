@@ -27,11 +27,11 @@ class Angler;
 class Patch;
 class Nudger;
 
-struct Point{
+struct CartisianPoint{
     double x;
     double y;
-    inline Point operator + (const Point &o) const{
-        Point p;
+    inline CartisianPoint operator + (const CartisianPoint &o) const{
+        CartisianPoint p;
         p.x = o.x + x;
         p.y = o.y + y;
         return p;
@@ -44,7 +44,7 @@ struct PolarPoint{
 };
 
 struct Placement{
-    Point location;
+    CartisianPoint location;
     double scale;
     double rotation;
     Patch* patch;

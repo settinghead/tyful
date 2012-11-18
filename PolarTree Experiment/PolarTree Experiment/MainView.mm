@@ -13,6 +13,9 @@
 #include "polartree/PolarTree.h"
 #include "polartree/PolarTreeBuilder.h"
 #include "constants.h"
+#include "PolarCanvas.h"
+#include "PolarLayer.h"
+#include "WordLayer.h"
 #include <stdlib.h>
 #include <iostream>
 
@@ -29,6 +32,7 @@
 }
 
 - (void)awakeFromNib {
+    
     mainImage = [[NSBitmapImageRep alloc]
                  initWithBitmapDataPlanes:nil
                  pixelsWide:800
@@ -44,8 +48,22 @@
     for(int x=0;x<mainImage.size.width;x++)
         for(int y=0;y<mainImage.size.height;y++)
             [mainImage setPixel:zColourAry atX:x y:y];
-
     trees = [NSMutableArray array];
+    
+    [self loadDirectionImage];
+}
+
+
+-(void) loadDirectionImage{
+    NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
+    NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [bundleRoot stringByAppendingString:@"/Contents/Resources/egg.png"]];
+	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
+	directionImage = [[NSBitmapImageRep alloc] initWithData:zNsDataTifData];
+    unsigned int * pixels = [MainView getFlippedPixels:directionImage];
+    WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height);
+    
+    PolarCanvas* canvas = new PolarCanvas();
+    canvas->getLayers()->push_back(layer);
 }
 
 -(void) drawTree:(PolarTree*)tree{
@@ -164,7 +182,7 @@
         
         unsigned int * pixels = [MainView getFlippedPixels:textImage];
         
-        shape = new PixelImageShape((unsigned char *)pixels, [textImage size].width, [textImage size].height);
+        shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
         int count = 0;
         do {
             x = arc4random() % (int)(mainImage.size.width+textImage.size.width)-textImage.size.width/2;

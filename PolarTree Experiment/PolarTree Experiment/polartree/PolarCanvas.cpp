@@ -92,7 +92,7 @@ bool PolarCanvas::placeShape(EngineShape * shape){
             //
             if (shape->trespassed(candidatePlacement->patch->getLayer()))
                 continue;
-            Point loc = shape->getCurrentPlacement()->location;
+            CartisianPoint loc = shape->getCurrentPlacement()->location;
             if (loc.x < 0|| loc.y < 0|| loc.x + shape->getShape()->getWidth() >= this->width
                 || loc.y + shape->getShape()->getHeight() >= this->height) {
                 continue;

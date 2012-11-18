@@ -20,7 +20,7 @@ DensityPatchIndex::DensityPatchIndex(PolarCanvas* canvas){
 vector<Patch*>* DensityPatchIndex::findPatchFor(int width, int height){
     vector<Patch*>* result = new vector<Patch*>();
     int level = findGranularityLevel(width,height);
-    double area = width*height;
+//    double area = width*height;
     
     for(int i=0;i<NUMBER_OF_ATTEMPTED_PATCHES; i++){
         Patch* p = getBestPatchAtLevel(level);

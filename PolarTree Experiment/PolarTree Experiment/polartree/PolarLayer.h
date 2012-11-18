@@ -17,7 +17,7 @@ class PolarLayer : public PixelImageShape{
 public:
     typedef int LAYER_TYPE;
     const LAYER_TYPE type;
-    PolarLayer(unsigned char * pixels, int width, int height);
+    PolarLayer(unsigned int * pixels, int width, int height);
     virtual bool contains(double x, double y, double width, double height, double rotation) = 0;
     virtual bool containsPoint(double x, double y, double refX, double refY) = 0;
     bool containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint*>* points, double rotation, double refX,double refY);

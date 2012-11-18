@@ -13,6 +13,7 @@ class PolarRootTree;
 
 @interface MainView : NSView{
     NSBitmapImageRep *mainImage;
+    NSBitmapImageRep *directionImage;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
 

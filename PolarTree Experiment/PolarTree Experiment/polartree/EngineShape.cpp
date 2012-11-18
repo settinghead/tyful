@@ -99,8 +99,8 @@ bool ::EngineShape::hasNextDesiredPlacement(){
 
 bool EngineShape::trespassed(PolarLayer* layer){
     if(layer==NULL) return false;
-    double x = (this->currentPlacement->location.x - this->shape->getWidth() / 2);
-    double y = (this->currentPlacement->location.y - this->shape->getHeight() / 2);
+//    double x = (this->currentPlacement->location.x - this->shape->getWidth() / 2);
+//    double y = (this->currentPlacement->location.y - this->shape->getHeight() / 2);
     
     // float right = (float) (this.currentLocation.x + bounds
     // .getWidth());

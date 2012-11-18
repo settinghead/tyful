@@ -54,8 +54,8 @@
     unsigned int * pixels1 = [MainView getFlippedPixels:image1];
     unsigned int * pixels2 = [MainView getFlippedPixels:image2];
 //
-//    ImageShape *shape1 = new PixelImageShape((unsigned char *)pixels1, [image1 size].width, [image1 size].height);
-//    ImageShape *shape2 = new PixelImageShape((unsigned char *)pixels2, [image2 size].width, [image2 size].height);
+//    ImageShape *shape1 = new PixelImageShape((unsigned int *)pixels1, [image1 size].width, [image1 size].height);
+//    ImageShape *shape2 = new PixelImageShape((unsigned int *)pixels2, [image2 size].width, [image2 size].height);
 //    PolarRootTree *tree1 = makeTree(shape1, 0);
 //    PolarRootTree *tree2 = makeTree(shape2, 0);    
 //    

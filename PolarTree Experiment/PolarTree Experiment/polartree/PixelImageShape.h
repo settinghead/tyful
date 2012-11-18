@@ -13,14 +13,14 @@
 
 class PixelImageShape : public ImageShape{
 public:
-    PixelImageShape( unsigned char * pixels, int width, int height);
+    PixelImageShape( unsigned int * pixels, int width, int height);
 	~PixelImageShape();
 	int getWidth();
 	int getHeight();
     bool isEmpty(unsigned int pixelValue);
 	unsigned int getPixel(int x, int y);
 
-private:
+protected:
 	int width, height;
 	unsigned int * pixels;
 //    unsigned char * pixels;

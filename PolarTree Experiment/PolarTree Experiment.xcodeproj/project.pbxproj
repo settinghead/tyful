@@ -13,6 +13,7 @@
 		7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9316595E38003F656A /* ByWeightSizer.cpp */; };
 		7C10FE9816595FE2003F656A /* ColorMapZigzagNudger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */; };
 		7C10FE9B165962EB003F656A /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */; };
+		7C10FEA5165993C0003F656A /* egg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C10FEA4165993C0003F656A /* egg.png */; };
 		7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */; };
 		7C1B3B2D1657F3DC00D3DCAD /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */; };
 		7CBD6B5816580DB700E9047C /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5716580DB700E9047C /* EngineShape.cpp */; };
@@ -65,6 +66,7 @@
 		7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
 		7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapPlacer.cpp; sourceTree = "<group>"; };
 		7C10FE9A165962EB003F656A /* ColorMapPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapPlacer.h; sourceTree = "<group>"; };
+		7C10FEA4165993C0003F656A /* egg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egg.png; sourceTree = "<group>"; };
 		7C1B3B221657DB0200D3DCAD /* PolarCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
 		7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
 		7C1B3B2B1657F31000D3DCAD /* PolarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		7C10FEA31659939A003F656A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7C10FEA4165993C0003F656A /* egg.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		7C1B3B261657E03600D3DCAD /* density */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +233,7 @@
 		7CF53CB41646658B00A218BE = {
 			isa = PBXGroup;
 			children = (
+				7C10FEA31659939A003F656A /* Resources */,
 				7CF53CC91646658B00A218BE /* PolarTree Experiment */,
 				7CF53CE61646658B00A218BE /* PolarTree ExperimentTests */,
 				7CF53CC21646658B00A218BE /* Frameworks */,
@@ -413,6 +424,7 @@
 				7CF53CCE1646658B00A218BE /* InfoPlist.strings in Resources */,
 				7CF53CD41646658B00A218BE /* Credits.rtf in Resources */,
 				7CF53CDA1646658B00A218BE /* MainMenu.xib in Resources */,
+				7C10FEA5165993C0003F656A /* egg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

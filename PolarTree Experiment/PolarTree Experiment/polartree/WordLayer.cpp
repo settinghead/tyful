@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+WordLayer::WordLayer(unsigned int * pixels, int width, int height)
+:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER){
+}
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
     if (this->tree == NULL) {
@@ -73,6 +76,31 @@ bool WordLayer::contains(double x, double y, double width, double height, double
     }
 }
 
+bool WordLayer::containsPoint(double x, double y, double refX, double refY){
+    
+    //a layer above contains this point which covers the current layer
+    if(aboveContainsPoint(x,y,-1,-1)) return false;
+    //			if(x<0 || y<0 || x>width || y>height) return true;
+    if(x<0||y<0||x>this->width||y>this->height)
+        return false;
+    if((getPixel(x,y) >> 24 &0xff)!=0
+       //				&&
+       //				//not transparent
+       //				((color.getPixel32(x,y) >> 24 &0xff)!=0 )
+       ){
+        if(refX<=0 || refY<=0 || tolerance>=1)
+            return true;
+        else return (
+                     colorSheet==NULL || (
+                     ColorMath::distRGB(colorSheet->getPixel(x,y),
+                                       colorSheet->getPixel(refX,refY)) <= tolerance
+                     &&
+                     ColorMath::distHue(getPixel(x,y),
+                                       getPixel(refX,refY)) <= tolerance));
+    }
+    else return false;
+}
+
 double WordLayer::getBrightness(int x, int y) {
     
     unsigned int rgbPixel = getPixel(x, y);
@@ -89,6 +117,18 @@ double WordLayer::getHue(int x, int y) {
     double h = ( (colour & 0x00FF0000) >> 16);
     h/=255;
     return h;
+}
+
+void WordLayer::setTolerance(double v){
+    tolerance = v;
+}
+
+WordLayer::ColorSheet* WordLayer::getColorSheet(){
+    return colorSheet;
+}
+
+void WordLayer::setColorSheet(WordLayer::ColorSheet* colorSheet){
+    this->colorSheet = colorSheet;
 }
 
 double WordLayer::getHSB(int x, int y){
