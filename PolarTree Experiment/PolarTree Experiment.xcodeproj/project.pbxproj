@@ -11,6 +11,7 @@
 		7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */; };
 		7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */; };
 		7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9316595E38003F656A /* ByWeightSizer.cpp */; };
+		7C10FE9816595FE2003F656A /* ColorMapZigzagNudger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */; };
 		7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */; };
 		7C1B3B2D1657F3DC00D3DCAD /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */; };
 		7CBD6B5816580DB700E9047C /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5716580DB700E9047C /* EngineShape.cpp */; };
@@ -59,6 +60,8 @@
 		7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
 		7C10FE9316595E38003F656A /* ByWeightSizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ByWeightSizer.cpp; sourceTree = "<group>"; };
 		7C10FE9416595E38003F656A /* ByWeightSizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByWeightSizer.h; sourceTree = "<group>"; };
+		7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapZigzagNudger.cpp; sourceTree = "<group>"; };
+		7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
 		7C1B3B221657DB0200D3DCAD /* PolarCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
 		7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
 		7C1B3B2B1657F31000D3DCAD /* PolarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				7CBD6B4F1657FBF900E9047C /* Nudger.h */,
+				7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */,
+				7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */,
 			);
 			name = nudger;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */,
 				7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */,
 				7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */,
+				7C10FE9816595FE2003F656A /* ColorMapZigzagNudger.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

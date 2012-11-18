@@ -34,6 +34,7 @@ public:
     double getAlphaSum();
     void mark(int smearedArea, bool spreadSmearToChildren);
     void setLastAttempt(int attempt);
+    int getLastAttempt();
     void fail();
     
 private:

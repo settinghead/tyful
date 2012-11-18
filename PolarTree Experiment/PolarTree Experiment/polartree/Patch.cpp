@@ -111,6 +111,10 @@ void Patch::setLastAttempt(int attempt){
     lastAttempt = attempt;
 }
 
+int Patch::getLastAttempt(){
+    return lastAttempt;
+}
+
 void Patch::fail(){
     numberOfFailures++;
 }
