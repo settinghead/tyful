@@ -2,8 +2,6 @@
 #define PolarCHILDTree_H
 
 #include "PolarTree.h"
-#include "ImageShape.h"
-#include "Flip.h"
 
 class PolarRootTree;
 class PolarChildTree: public PolarTree {
@@ -12,17 +10,17 @@ public:
 			double d2, PolarRootTree* root, int minBoxSize);
 	~PolarChildTree();
 	PolarRootTree* root; /* REM */
-	int getRootX();
-	int getRootY();
-	double computeX(bool rotate);
-	double computeY(bool rotate);
-	double computeRight(bool rotate);
-	double computeBottom(bool rotate);
-	double getRotation();
-	int getCurrentStamp();
-	PolarRootTree* getRoot();
-	ImageShape* getShape();
-	int getMinBoxSize();
+	inline int getRootX();
+	inline int getRootY();
+	inline double computeX(bool rotate);
+	inline double computeY(bool rotate);
+	inline double computeRight(bool rotate);
+	inline double computeBottom(bool rotate);
+	inline double getRotation();
+	inline int getCurrentStamp();
+	inline PolarRootTree* getRoot();
+	inline ImageShape* getShape();
+	inline int getMinBoxSize();
 };
 
 

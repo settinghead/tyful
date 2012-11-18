@@ -8,19 +8,24 @@
 
 #include "PatchQueue.h"
 #include <queue>
+#include <cstdlib>
+#include <cstring>
+#include <unordered_map>
 #include <vector>
 #include "PolarLayer.h"
 #include "Patch.h"
 #include "LeveledPatchMap.h"
 #include "DensityPatchIndex.h"
 
+using namespace std;
+
 PatchQueue::PatchQueue(int myLevel, LeveledPatchMap* map):priority_queue<Patch*>(){
     this->myLevel = myLevel;
-    this->lookupMap = new unordered_map<string, Patch*>();
+//    this->lookupMap = new LookupMap;
     this->map  = map;
     if(myLevel==0){
         for (vector<PolarLayer*>::iterator it = map->getIndex()->getCanvas()->getLayers()->begin();
-             it != map->getIndex()->getCanvas()->layers->end(); ++it) {
+             it != map->getIndex()->getCanvas()->getLayers()->end(); ++it) {
             PolarLayer* layer = *it;
             if(layer->type==WORD_LAYER){
                 this->tryPush(new Patch(0,0,layer->getWidth(),layer->getHeight(),0,NULL,this,layer));
@@ -43,9 +48,17 @@ PatchQueue* PatchQueue::descend(int level){
          it != queue_vector->end(); ++it){
         Patch* patch = (*it);
         vector<Patch*>* children = patch->divideIntoNineOrMore(queue);
-        queue->tryAddAll(children);
+        queue->tryPushAll(children);
     }
     return queue;
+}
+
+void PatchQueue::tryPushAll(vector<Patch*>* patches){
+    for (vector<Patch*>::iterator it = patches->begin();
+         it != patches->end(); ++it){
+        Patch* p = (*it);
+        tryPush(p);
+    }
 }
 
 unsigned long PatchQueue::size(){
@@ -55,7 +68,7 @@ unsigned long PatchQueue::size(){
 
 void PatchQueue::tryPush(Patch* patch){
     if (patch->getAlphaSum() > QUEUE_ALPHA_THRESHOLD){
-        this->push(patch);
+        (*this).priority_queue<Patch*>::push(patch);
     }
 }
 

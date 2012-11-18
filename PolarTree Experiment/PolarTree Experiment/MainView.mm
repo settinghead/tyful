@@ -8,6 +8,8 @@
 
 #import "MainView.h"
 #include "polartree/PixelImageShape.h"
+#include "polartree/ImageShape.h"
+#include "polartree/PolarRootTree.h"
 #include "polartree/PolarTree.h"
 #include "polartree/PolarTreeBuilder.h"
 #include <stdlib.h>
@@ -133,7 +135,6 @@
 - (void)drawRandomText:(id)sender{
     int x,y;
     float rotation;
-    PolarRootTree *tree;
     ImageShape *shape;
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
                         @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
@@ -163,19 +164,18 @@
         unsigned int * pixels = [MainView getFlippedPixels:textImage];
         
         shape = new PixelImageShape((unsigned char *)pixels, [textImage size].width, [textImage size].height);
-        tree = makeTree(shape, 0);
         int count = 0;
         do {
             x = arc4random() % (int)(mainImage.size.width+textImage.size.width)-textImage.size.width/2;
             y = arc4random() % (int)(mainImage.size.height+textImage.size.height)-textImage.size.height/2;
             rotation = ((double)arc4random() / 0x100000000) * 90;
 //            rotation = 0;
-            tree->setTopLeftLocation(x,
-                                     mainImage.size.height-tree->shape->getHeight()-
+            shape->getTree()->setTopLeftLocation(x,
+                                     mainImage.size.height-shape->getHeight()-
                                      y);
-            tree->setRotation(-rotation/360*TWO_PI+PI);
+            shape->getTree()->setRotation(-rotation/360*TWO_PI+PI);
         }
-        while ([MainView collide:tree:trees] && ++count<10000);
+        while ([MainView collide:shape->getTree():trees] && ++count<10000);
         if(count<1000)
             break;
         else
@@ -186,7 +186,7 @@
 //        NSPoint point = NSMakePoint(0, 0);
 
     
-        [trees addObject:[NSValue valueWithPointer:tree]];
+        [trees addObject:[NSValue valueWithPointer:shape->getTree()]];
 
     [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
 //    [self drawTextTree:tree];

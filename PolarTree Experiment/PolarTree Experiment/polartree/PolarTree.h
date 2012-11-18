@@ -2,7 +2,6 @@
 #define PolarTree_H
 
 #include <vector>
-#include "ImageShape.h"
 
 using namespace std;
 
@@ -14,6 +13,7 @@ using namespace std;
 
 class PolarRootTree;
 class PolarChildTree;
+class ImageShape;
 enum SplitType {
 	_3RAYS, _2RAYS1CUT, _1RAY1CUT, _1RAY2CUTS, _3CUTS
 };
@@ -43,40 +43,40 @@ public:
 	virtual ImageShape* getShape() = 0;
 	virtual bool overlapsCoord(double x, double y, double right, double bottom);
 	virtual bool contains(double x, double y, double right, double bottom);
-	virtual double computeX(bool rotate) = 0;
-	virtual double computeY(bool rotate) = 0;
-	virtual double computeRight(bool rotate) = 0;
-	virtual double computeBottom(bool rotate) = 0;
-	virtual double getR1(bool rotate);
-	virtual double getR2(bool rotate);
-	virtual void checkRecompute();
-	virtual void computeR1();
-	virtual void computeR2();
-	virtual void checkUpdatePoints();
-	virtual double px();
-	virtual double py();
-	virtual double pright();
-	virtual double pbottom();
-	virtual bool isLeaf();
+	inline virtual double computeX(bool rotate) = 0;
+	inline virtual double computeY(bool rotate) = 0;
+	inline virtual double computeRight(bool rotate) = 0;
+	inline virtual double computeBottom(bool rotate) = 0;
+	inline virtual double getR1(bool rotate);
+	inline virtual double getR2(bool rotate);
+	inline virtual void checkRecompute();
+	inline virtual void computeR1();
+	inline virtual void computeR2();
+	inline virtual void checkUpdatePoints();
+	inline virtual double px();
+	inline virtual double py();
+	inline virtual double pright();
+	inline virtual double pbottom();
+	inline virtual bool isLeaf();
 	int swelling;
 	virtual void swell(int extra);
-	virtual double getWidth(bool rotate);
-	virtual double getHeight(bool rotate);
-	virtual void checkComputeX();
-	virtual void checkComputeY();
-	virtual void checkComputeRight();
-	virtual void checkComputeBottom();
-	virtual double getRelativeX();
-	virtual double getRelativeY();
-	virtual double getRelativeRight();
-	virtual double getRelativeBottom();
-	virtual double getX(bool rotate);
-	virtual double getY(bool rotate);
-	virtual double getRight(bool rotate);
-	virtual double getBottom(bool rotate);
-	virtual double getRotation() = 0;
-	virtual int getCurrentStamp() = 0;
-	virtual void setLeaf(bool b);
+	inline virtual double getWidth(bool rotate);
+	inline virtual double getHeight(bool rotate);
+	inline virtual void checkComputeX();
+	inline virtual void checkComputeY();
+	inline virtual void checkComputeRight();
+	inline virtual void checkComputeBottom();
+	inline virtual double getRelativeX();
+	inline virtual double getRelativeY();
+	inline virtual double getRelativeRight();
+	inline virtual double getRelativeBottom();
+	inline virtual double getX(bool rotate);
+	inline virtual double getY(bool rotate);
+	inline virtual double getRight(bool rotate);
+	inline virtual double getBottom(bool rotate);
+	inline virtual double getRotation() = 0;
+	inline virtual int getCurrentStamp() = 0;
+	inline virtual void setLeaf(bool b);
 private:
     virtual bool collide(PolarTree* bTree);
 	virtual bool rectCollide(PolarTree* bTree);

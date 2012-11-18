@@ -11,13 +11,15 @@
 #include "PatchQueue.h"
 #include "LeveledPatchMap.h"
 #include "DensityPatchIndex.h"
+#include "EngineShape.h"
 
-Patch::Patch(int x, int y, int width, int height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer){
+Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer){
     this->x = x; this->y = y; this->width = width; this->height = height;
     this->parent = parent;
     this->rank = rank;
     this->queue = queue;
     this->layer = layer;
+    this->shapes = new vector<EngineShape*>();
 }
 
 PolarCanvas* Patch::getCanvas(){
@@ -81,4 +83,56 @@ double Patch::getAlphaSum(){
         alphaSum = DBL_MIN;
     }
     return alphaSum;
+}
+
+double Patch::getArea() {
+    if (isnan(area))
+        area = width * height;
+        return area;
+}
+
+double Patch::getWidth(){
+    return width;
+}
+
+double Patch::getHeight(){
+    return height;
+}
+
+PolarLayer* Patch::getLayer(){
+    return layer;
+}
+
+vector<EngineShape*>* Patch::getShapes(){
+    return shapes;
+}
+
+void Patch::setLastAttempt(int attempt){
+    lastAttempt = attempt;
+}
+
+void Patch::fail(){
+    numberOfFailures++;
+}
+
+void Patch::mark(int smearedArea, bool spreadSmearToChildren) {
+    //			this.resetWorthCalculations();
+    //			this.getAlphaSum();
+    this->alphaSum -= smearedArea * MARK_FILL_FACTOR;
+    if(spreadSmearToChildren)
+        for (vector<Patch*>::iterator it = children->begin();
+             it != children->end(); ++it){
+            Patch* child = (*it);
+            child->mark(smearedArea * MARK_FILL_FACTOR/children->size(), true);
+            //				child._alphaSum -= smearedArea * DensityPatchIndex.MARK_FILL_FACTOR/this.getChildren().length;
+            //				child._queue.remove(child);
+            //				child._queue.tryAdd(child);
+        }
+            //			if (getParent() != null)
+            //				getParent().markChild(this);
+			if (parent != NULL){
+				parent->mark(smearedArea, false);
+                //				parent._queue.remove(parent);
+                //				parent._queue.tryAdd(parent);
+			}
 }

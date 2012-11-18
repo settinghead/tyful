@@ -12,33 +12,42 @@
 #include <math.h>
 #include <float.h>
 #define NUMBER_OF_DIVISIONS 2
+#define MARK_FILL_FACTOR 1
 
 using namespace std;
 
 class PatchQueue;
 class PolarLayer;
 class PolarCanvas;
+class EngineShape;
 
 class Patch{
 public:
-    Patch(int x, int y, int width, int height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer);
+    Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer);
     PolarCanvas* getCanvas();
     double getAverageAlpha();
     vector<Patch*>* divideIntoNineOrMore(PatchQueue* newQueue);
-
+    double getWidth();
+    double getHeight();
+    PolarLayer* getLayer();
+    vector<EngineShape*>* getShapes();
+    double getAlphaSum();
+    void mark(int smearedArea, bool spreadSmearToChildren);
+    void setLastAttempt(int attempt);
+    void fail();
+    
 private:
-    int x,y, width, height;
+    double x,y, width, height;
     double averageAlpha= NAN, area=NAN, alphaSum=NAN;
     Patch* parent;
     PatchQueue* queue;
     vector<Patch*>* children;
+    vector<EngineShape*>* shapes;
     int rank;
-    int numberOfFailures;
+    int numberOfFailures = 0;
     int lastAttempt = 0;
     PolarLayer* layer;
-    double getAlphaSum();
     double getArea();
-
 
 };
 

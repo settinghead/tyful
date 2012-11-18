@@ -9,14 +9,18 @@
 #ifndef PolarTree_Experiment_PatchQueue_h
 #define PolarTree_Experiment_PatchQueue_h
 #include <queue>
+#include <unordered_map>
 #include <cstdlib>
 #include <cstring>
-#include <unordered_map>
+#include <vector>
+
+#define QUEUE_ALPHA_THRESHOLD -DBL_MAX
 
 using namespace std;
 
 class Patch;
 class LeveledPatchMap;
+typedef std::unordered_map<string, Patch*> LookupMap;
 
 class PatchQueue:priority_queue<Patch*>{
 public:
@@ -26,10 +30,12 @@ public:
     PatchQueue* descend(int level);
     LeveledPatchMap* getMap();
     unsigned long size();
+    void tryPushAll(vector<Patch*>* patches);
+    
 private:
     int myLevel;
     LeveledPatchMap* map;
-    unordered_map<string, Patch*>* lookupMap;
+//    LookupMap* lookupMap;
     void tryPush(Patch* patch);
 };
 

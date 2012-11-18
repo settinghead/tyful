@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include "polartree/PolarTree.h"
 
+class PolarTree;
+class PolarRootTree;
 
 @interface MainView : NSView{
     NSBitmapImageRep *mainImage;

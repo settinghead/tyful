@@ -7,10 +7,16 @@
 //
 
 #include "ImageShape.h"
+#include "PolarRootTree.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "Flip.h"
+#include "PolarTreeBuilder.h"
+
+ImageShape::ImageShape(){
+    this->tree = NULL;
+}
 
 bool ImageShape::contains(int x, int y, int width, int height) {
 	if (intersects(x, y, width, height)) {
@@ -50,4 +56,10 @@ bool ImageShape::intersects(int x, int y, int width, int height) {
         //        std::cout << "\n";
     }
 	return false;
+}
+
+PolarRootTree* ImageShape::getTree(){
+    if(this->tree==NULL)
+        this->tree = makeTree(this,0);
+    return this->tree;
 }

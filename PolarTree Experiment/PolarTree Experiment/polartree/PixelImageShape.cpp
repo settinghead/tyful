@@ -5,7 +5,8 @@
 #include <iostream>
 #include "Flip.h"
 
-PixelImageShape::PixelImageShape(unsigned char * pixels, int width, int height) {
+PixelImageShape::PixelImageShape(unsigned char * pixels, int width, int height):
+ImageShape::ImageShape(){
 	this->width = width;
 	this->height = height;
     int size = sizeof(unsigned int)*width*height;

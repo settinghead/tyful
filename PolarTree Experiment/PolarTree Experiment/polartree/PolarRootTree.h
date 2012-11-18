@@ -1,8 +1,8 @@
 #ifndef PolarROOTTree_H
 #define PolarROOTTree_H
-#include "ImageShape.h"
 #include "PolarTree.h"
 
+class ImageShape;
 
 class PolarRootTree: public PolarTree {
 public:
@@ -19,16 +19,16 @@ public:
 	void setTopLeftLocation(int centerX, int centerY);
 	inline int getRootX();
 	inline int getRootY();
-	double computeX(bool rotate);
-	double computeY(bool rotate);
-	double computeRight(bool rotate);
-	double computeBottom(bool rotate);
+	inline double computeX(bool rotate);
+	inline double computeY(bool rotate);
+	inline double computeRight(bool rotate);
+	inline double computeBottom(bool rotate);
 	void setRotation(double rotation);
-	double getRotation();
-	int getCurrentStamp();
-	PolarRootTree* getRoot();
-	int getMinBoxSize();
-	ImageShape* getShape();
+	inline double getRotation();
+	inline int getCurrentStamp();
+	inline PolarRootTree* getRoot();
+	inline int getMinBoxSize();
+	inline ImageShape* getShape();
 };
 
 #endif
