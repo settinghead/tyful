@@ -12,9 +12,36 @@
 #include "PolarRootTree.h"
 #include "PolarLayer.h"
 #include "Patch.h"
+#include <stdlib.h>
+#include <time.h>
 
 EngineShape::EngineShape(ImageShape* shape){
     this->shape = shape;
+    this->shape->getTree();
+    drawSamples();
+    srand ( (unsigned int)time(NULL) );
+}
+
+void EngineShape::drawSamples(){
+    this->samplePoints = new vector<PolarPoint*>();
+    int numSamples = int((shape->getWidth() * shape->getHeight() / SAMPLE_DISTANCE));
+    //				var numSamples = 10;
+    // TODO: devise better lower bound
+    if (numSamples < 20)
+        numSamples = 20;
+    for(int i=0; i<numSamples;i++){
+			double relativeX= int((rand() % shape->getWidth()));
+			double relativeY= int((rand() % shape->getHeight()));
+			if(shape->containsPoint(relativeX, relativeY))
+			{
+				relativeX -= shape->getWidth()/2;
+				relativeY -= shape->getHeight()/2;
+				double d = sqrt(pow(relativeX,2)+pow(relativeY,2));
+				double r = atan2(relativeY, relativeX);
+                PolarPoint p {.r=r,.d=d};
+				samplePoints->push_back(&p);
+			}
+		}
 }
 
 bool EngineShape::wasSkipped(){

@@ -14,5 +14,7 @@
 #define TWO_PI 6.2831853
 #define ONE_AND_HALF_PI 4.712388980
 #define MARGIN 0
+#define SAMPLE_DISTANCE 20
+
 
 #endif

@@ -12,6 +12,7 @@
 #include "polartree/PolarRootTree.h"
 #include "polartree/PolarTree.h"
 #include "polartree/PolarTreeBuilder.h"
+#include "constants.h"
 #include <stdlib.h>
 #include <iostream>
 

@@ -42,6 +42,7 @@ private:
     vector<PolarPoint*>* samplePoints;
     vector<Placement*>* desiredPlacements = NULL;
     int desiredPlacementIndex = 0;
+    void drawSamples();
 };
 
 #endif

@@ -10,7 +10,6 @@
 #define __PolarTree_Experiment__WordLayer__
 #include "PolarLayer.h"
 
-#define SAMPLE_DISTANCE 20
 
 class WordLayer: public PolarLayer{
 public:
