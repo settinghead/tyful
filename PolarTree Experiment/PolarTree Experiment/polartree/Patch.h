@@ -27,6 +27,8 @@ public:
     PolarCanvas* getCanvas();
     double getAverageAlpha();
     vector<Patch*>* divideIntoNineOrMore(PatchQueue* newQueue);
+    double getX();
+    double getY();
     double getWidth();
     double getHeight();
     PolarLayer* getLayer();
@@ -36,7 +38,7 @@ public:
     void setLastAttempt(int attempt);
     int getLastAttempt();
     void fail();
-    
+
 private:
     double x,y, width, height;
     double averageAlpha= NAN, area=NAN, alphaSum=NAN;

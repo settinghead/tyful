@@ -99,6 +99,14 @@ double Patch::getHeight(){
     return height;
 }
 
+double Patch::getX(){
+    return x;
+}
+
+double Patch::getY(){
+    return y;
+}
+
 PolarLayer* Patch::getLayer(){
     return layer;
 }

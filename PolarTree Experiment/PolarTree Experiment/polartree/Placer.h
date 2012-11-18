@@ -13,9 +13,11 @@
 struct Placement;
 class EngineShape;
 
+using namespace std;
+
 class Placer{
 public:
-    virtual vector<Placement*>* place(EngineShape* shape, unsigned long totalCount);
+    virtual vector<Placement*>* place(EngineShape* shape, unsigned long totalCount) = 0;
     virtual void success() = 0;
     virtual void fail() = 0;
     virtual void success(vector<Placement*>*) = 0;
