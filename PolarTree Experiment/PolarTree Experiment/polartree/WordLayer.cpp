@@ -24,7 +24,7 @@ WordLayer::WordLayer(unsigned int * pixels, int width, int height)
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
-    if (this->tree == NULL) {
+    if (this->getTree() == NULL) {
         // sampling approach
         int numSamples = width * height / SAMPLE_DISTANCE;
         //				var numSamples = 10;
@@ -77,7 +77,7 @@ bool WordLayer::contains(double x, double y, double width, double height, double
         return true;
     }
     else {
-        return tree->overlapsCoord(x, y, x + width, y + height);
+        return getTree()->overlapsCoord(x, y, x + width, y + height);
     }
 }
 

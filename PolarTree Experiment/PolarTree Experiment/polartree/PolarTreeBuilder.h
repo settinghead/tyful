@@ -13,8 +13,8 @@
 //class PolarTreeBuilder{
 //public:
     static SplitType determineType(PolarTree* tree) {
-        double d = (tree->d2 - tree->d1);
-        double midLength = (((tree->d2 + tree->d1))
+        double d = (tree->getD2(false) - tree->getD1(false));
+        double midLength = (((tree->getD2(false) + tree->getD1(false)))
                 * ((tree->getR2(false) - tree->getR1(false)))) / 2.0;
         double factor = d / midLength;
         if (factor < 0.7) {
@@ -105,19 +105,19 @@
             assert(
                     ((bool((bool((r1 < r2)) && bool((r2 < r3)))) && bool((r3 < r4)))
                             && bool((r4 < r5))));
-            re = makeChildTree(shape, minBoxSize, r1, r2, tree->d1, tree->d2, root);
+            re = makeChildTree(shape, minBoxSize, r1, r2, tree->getD1(false), tree->getD2(false), root);
             if (((re != NULL))) {
                 result->push_back(re);
             }
-            re = makeChildTree(shape, minBoxSize, r2, r3, tree->d1, tree->d2, root);
+            re = makeChildTree(shape, minBoxSize, r2, r3, tree->getD1(false), tree->getD2(false), root);
             if (((re != NULL))) {
                 result->push_back(re);
             }
-            re = makeChildTree(shape, minBoxSize, r3, r4, tree->d1, tree->d2, root);
+            re = makeChildTree(shape, minBoxSize, r3, r4, tree->getD1(false), tree->getD2(false), root);
             if (((re != NULL))) {
                 result->push_back(re);
             }
-            re = makeChildTree(shape, minBoxSize, r4, r5, tree->d1, tree->d2, root);
+            re = makeChildTree(shape, minBoxSize, r4, r5, tree->getD1(false), tree->getD2(false), root);
             if (((re != NULL))) {
                 result->push_back(re);
             }
@@ -130,9 +130,9 @@
             r2 = (r1 + r);
             r3 = (r2 + r);
             r4 = tree->getR2(false);
-            d1 = tree->d1;
-            d2 = (tree->d1 + (double(((tree->d2 - tree->d1))) / double((int) 2)));
-            d3 = tree->d2;
+            d1 = tree->getD1(false);
+            d2 = (tree->getD1(false) + (double(((tree->getD2(false) - tree->getD1(false)))) / 2.0));
+            d3 = tree->getD2(false);
             assert((bool((bool((r1 < r2)) && bool((r2 < r3)))) && bool((r3 < r4))));
             re = makeChildTree(shape, minBoxSize, r1, r4, d1, d2, root);
             if (((re != NULL))) {
@@ -158,10 +158,10 @@
             r1 = tree->getR1(false);
             r2 = (r1 + r);
             r3 = tree->getR2(false);
-            d = (double(((tree->d2 - tree->d1))) / double((int) 2));
-            d1 = tree->d1;
+            d = (double(((tree->getD2(false) - tree->getD1(false)))) / 2.0);
+            d1 = tree->getD1(false);
             d2 = (d1 + d);
-            d3 = tree->d2;
+            d3 = tree->getD2(false);
             assert((bool((r1 < r2)) && bool((r2 < r3))));
             re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
             if (((re != NULL))) {
@@ -187,11 +187,11 @@
             r1 = tree->getR1(false);
             r2 = (r1 + r);
             r3 = tree->getR2(false);
-            d = (double(((tree->d2 - tree->d1))) / double((int) 3));
-            d1 = tree->d1;
+            d = (double(((tree->getD2(false) - tree->getD1(false)))) / 3.0);
+            d1 = tree->getD1(false);
             d2 = (d1 + d);
             d3 = (d2 + d);
-            d4 = tree->d2;
+            d4 = tree->getD2(false);
             assert((bool((r1 < r2)) && bool((r2 < r3))));
             re = makeChildTree(shape, minBoxSize, r1, r3, d1, d2, root);
             if (((re != NULL))) {
@@ -214,12 +214,12 @@
         case _3CUTS: {
             r1 = tree->getR1(false);
             r2 = tree->getR2(false);
-            d = (double(((tree->d2 - tree->d1))) / double((int) 4));
-            d1 = tree->d1;
+            d = (double(((tree->getD2(false) - tree->getD1(false)))) / 4.0);
+            d1 = tree->getD1(false);
             d2 = (d1 + d);
             d3 = (d2 + d);
             d4 = (d3 + d);
-            d5 = tree->d2;
+            d5 = tree->getD2(false);
             assert(r1 < r2);
             re = makeChildTree(shape, minBoxSize, r1, r2, d1, d2, root);
             if (((re != NULL))) {

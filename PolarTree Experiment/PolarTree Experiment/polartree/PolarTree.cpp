@@ -17,8 +17,8 @@ PolarTree::PolarTree(double r1, double r2, double d1, double d2,
 	this->_leaf = false;
 	this->_r1 = r1;
 	this->_r2 = r2;
-	this->d1 = d1;
-	this->d2 = d2;
+	this->_d1 = d1;
+	this->_d2 = d2;
 	this->_relativeX = NAN;
 	this->_relativeY = NAN;
 	this->_relativeRight = NAN;
@@ -74,11 +74,11 @@ vector<PolarChildTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
-//        vector<PolarChildTree*>* tKids = this->getKids();
-//        for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
-//             myKid != tKids->end(); ++myKid) {
-//            (*myKid)->getKids();
-//        }
+        vector<PolarChildTree*>* tKids = this->getKids();
+        for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
+             myKid != tKids->end(); ++myKid) {
+            (*myKid)->getKids();
+        }
 	}
 	return this->_kids;
 }
@@ -134,7 +134,6 @@ double PolarTree::getR1(bool rotate) {
 	} else {
 		return this->_r1;
 	}
-	return 0.;
 }
 
 double PolarTree::getR2(bool rotate) {
@@ -144,36 +143,42 @@ double PolarTree::getR2(bool rotate) {
 	} else {
 		return this->_r2;
 	}
-	return 0.;
 }
 
-void PolarTree::checkRecompute() {
+inline void PolarTree::checkRecompute() {
 	{
 		if (((this->rStamp != this->getCurrentStamp()))) {
 			this->computeR1();
 			this->computeR2();
+            this->computeD1();
+            this->computeD2();
 			this->rStamp = this->getCurrentStamp();
 		}
 	}
 }
 
 void PolarTree::computeR1() {
-	{
-		this->_computedR1 = (this->_r1 + this->getRotation());
-		if (((this->_computedR1 > TWO_PI))) {
-			this->_computedR1 = fmod(this->_computedR1, TWO_PI);
-		}
-	}
+    this->_computedR1 = (this->_r1 + this->getRotation());
+    if (((this->_computedR1 > TWO_PI))) {
+        this->_computedR1 = fmod(this->_computedR1, TWO_PI);
+    }
 }
 
 void PolarTree::computeR2() {
-	{
-		this->_computedR2 = (this->_r2 + this->getRotation());
-		if (((this->_computedR2 > TWO_PI))) {
-			this->_computedR2 = fmod(this->_computedR2, TWO_PI);
-		}
-	}
+    this->_computedR2 = (this->_r2 + this->getRotation());
+    if (((this->_computedR2 > TWO_PI))) {
+        this->_computedR2 = fmod(this->_computedR2, TWO_PI);
+    }
 }
+
+void PolarTree::computeD1() {
+    this->_computedD1 = this->_d1 * getScale();
+}
+
+void PolarTree::computeD2() {
+    this->_computedD2 = this->_d2 * getScale();
+}
+
 
 void PolarTree::checkUpdatePoints() {
 	{
@@ -214,7 +219,7 @@ bool PolarTree::collide(PolarTree* bTree) {
 	double dist = sqrt(
 			(pow((this->getRootX() - bTree->getRootX()), 2)
 					+ pow((this->getRootY() - bTree->getRootY()), 2)));
-	if (((dist > (this->d2 + bTree->d2)))) {
+	if (((dist > (this->getD2(true) + bTree->getD2(true))))) {
 		return false;
 	} else {
 		return this->rectCollide(bTree);
@@ -250,8 +255,26 @@ bool PolarTree::rectCollideCoord(double x, double y, double right,
 }
 
 bool PolarTree::isLeaf() {
-	return this->_leaf;
+	return this->_leaf || this->getWidth(true)<1;
 }
+
+inline double PolarTree::getD1(bool scale){
+    if ((scale)) {
+		this->checkRecompute();
+		return this->_computedD1;
+	} else {
+		return this->_d1;
+	}
+}
+
+inline double PolarTree::getD2(bool scale){
+    if ((scale)) {
+		this->checkRecompute();
+		return this->_computedD2;
+	} else {
+		return this->_d2;
+	}}
+
 
 void PolarTree::swell(int extra) {
 	{

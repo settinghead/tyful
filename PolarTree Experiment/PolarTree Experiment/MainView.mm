@@ -86,22 +86,22 @@
 -(void) drawBounds:(PolarTree*)tree
 {
     int x1, x2, x3, x4, y1, y2, y3, y4;
-    x1 = int((tree->getRootX() + tree->d1 * cos(tree->getR1(true))));
+    x1 = int((tree->getRootX() + tree->getD1(true) * cos(tree->getR1(true))));
     y1 = int(
              mainImage.size.height-
-             ((tree->getRootY() - tree->d1 * sin(tree->getR1(true)))));
-    x2 = int((tree->getRootX() + tree->d1 * cos(tree->getR2(true))));
+             ((tree->getRootY() - tree->getD1(true) * sin(tree->getR1(true)))));
+    x2 = int((tree->getRootX() + tree->getD1(true) * cos(tree->getR2(true))));
     y2 = int(
              mainImage.size.height-
-             ((tree->getRootY() - tree->d1 * sin(tree->getR2(true)))));
-    x3 = int((tree->getRootX() + tree->d2 * cos(tree->getR1(true))));
+             ((tree->getRootY() - tree->getD1(true) * sin(tree->getR2(true)))));
+    x3 = int((tree->getRootX() + tree->getD2(true) * cos(tree->getR1(true))));
     y3 = int(
              mainImage.size.height-
-             ((tree->getRootY() - tree->d2 * sin(tree->getR1(true)))));
-    x4 = int((tree->getRootX() + tree->d2 * cos(tree->getR2(true))));
+             ((tree->getRootY() - tree->getD2(true) * sin(tree->getR1(true)))));
+    x4 = int((tree->getRootX() + tree->getD2(true) * cos(tree->getR2(true))));
     y4 = int(
              mainImage.size.height-
-             ((tree->getRootY() - tree->d2 * sin(tree->getR2(true)))));
+             ((tree->getRootY() - tree->getD2(true) * sin(tree->getR2(true)))));
 
     float r = tree->getR2(true) - tree->getR1(true);
     if (r < 0)
@@ -109,8 +109,8 @@
     
 //    assert(r < PI);
     
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d2 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d1 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->getD2(true) withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->getD1(true) withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
@@ -171,7 +171,7 @@
         NSString *str = strings[arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
         
-        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 30+15];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 60+30];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
@@ -185,15 +185,15 @@
         unsigned int * pixels = [MainView getFlippedPixels:textImage];
         
         shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
-        
+        shape->getTree()->setScale(0.5);
         Placement* placement = canvas->slapShape(shape);
         if(placement!=NULL){
             double rotation = -(shape->getTree()->getRotation()-PI)*360/TWO_PI;
             NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
                                         mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
 
-            [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-    //        [self drawTextTree:shape->getTree()];
+//            [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
+            [self drawTextTree:shape->getTree()];
         }
     }
     NSDate *methodFinish = [NSDate date];
@@ -245,7 +245,7 @@
 //            rotation = 0;
             shape->getTree()->setTopLeftLocation(x,
                                      mainImage.size.height-shape->getHeight()-
-                                     y);
+                                     y, true);
             shape->getTree()->setRotation(-rotation/360*TWO_PI+PI);
         }
         while ([MainView collide:shape->getTree():trees] && ++count<10000);

@@ -39,6 +39,8 @@ Placement* PolarCanvas::slapShape(ImageShape* shape){
     while(failureCount <= perseverance && status == RENDERING){
         EngineShape* eShape = generateEngineWord(shape);
         Placement* p = tryCurrentSize(eShape);
+        if(shapes->size()>1000)
+            status = PAUSED;
         if(p!=NULL) return p;
     }
     return NULL;

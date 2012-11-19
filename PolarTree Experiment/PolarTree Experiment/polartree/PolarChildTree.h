@@ -17,6 +17,7 @@ public:
 	inline double computeRight(bool rotate);
 	inline double computeBottom(bool rotate);
 	inline double getRotation();
+	inline double getScale();
 	inline int getCurrentStamp();
 	inline PolarRootTree* getRoot();
 	inline ImageShape* getShape();
