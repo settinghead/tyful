@@ -28,7 +28,7 @@ public:
     
 private:
     double getHSB(int x, int y);
-    double tolerance = 0.5;
+    double tolerance = 1.0;
     ColorSheet* colorSheet = NULL;
     Angler* _angler = NULL;
 

@@ -36,7 +36,7 @@ PolarCanvas::PolarCanvas()
 }
 
 Placement* PolarCanvas::slapShape(ImageShape* shape){
-    while(failureCount <= perseverance && status == RENDERING){
+    if(failureCount <= perseverance && status == RENDERING){
         EngineShape* eShape = generateEngineWord(shape);
         Placement* p = tryCurrentSize(eShape);
         if(p!=NULL) return p;
@@ -92,10 +92,10 @@ Placement* PolarCanvas::tryCurrentSize(EngineShape * shape){
 
 Sizer* PolarCanvas::getSizer(){
     if(this->_sizer==NULL){
-        int max = width>height?width:height;
-        int min = max/100;
-        if(min<7) min = 7;
-        _sizer = new ByWeightSizer(min,100);
+//        int max = width>height?width:height;
+//        int min = max/100;
+//        if(min<7) min = 7;
+        _sizer = new ByWeightSizer(0,1);
         
     }
     return _sizer;
@@ -209,7 +209,7 @@ int PolarCanvas::getWidth(){
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p){
     srand((unsigned)time(NULL));
-    int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * 2 * diligence;
+    int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * diligence;
     return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.4);
 }
 
@@ -238,4 +238,8 @@ Placer* PolarCanvas::getPlacer(){
         _placer = new ColorMapPlacer(this, getPatchIndex());
     }
     return _placer;
+}
+
+double PolarCanvas::getShrinkage(){
+    return getSizer()->getCurrentSize();
 }

@@ -23,6 +23,12 @@
 		7CBD6B6416583B3A00E9047C /* DensityPatchIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6216583B3A00E9047C /* DensityPatchIndex.cpp */; };
 		7CBD6B6916584FE200E9047C /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6716584FE200E9047C /* Angler.cpp */; };
 		7CBD6B6C16588E5700E9047C /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6A16588E5400E9047C /* WordLayer.cpp */; };
+		7CBDAAF8165AADFC00E009E5 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF2165AADFC00E009E5 /* dog.png */; };
+		7CBDAAF9165AADFC00E009E5 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF3165AADFC00E009E5 /* face.png */; };
+		7CBDAAFA165AADFC00E009E5 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF4165AADFC00E009E5 /* heart.png */; };
+		7CBDAAFB165AADFC00E009E5 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF5165AADFC00E009E5 /* star.png */; };
+		7CBDAAFC165AADFC00E009E5 /* wheel_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF6165AADFC00E009E5 /* wheel_h.png */; };
+		7CBDAAFD165AADFC00E009E5 /* wheel_v.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF7165AADFC00E009E5 /* wheel_v.png */; };
 		7CF53CC41646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
 		7CF53CCE1646658B00A218BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CF53CCC1646658B00A218BE /* InfoPlist.strings */; };
 		7CF53CD01646658B00A218BE /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CCF1646658B00A218BE /* main.mm */; };
@@ -92,6 +98,12 @@
 		7CBD6B6B16588E5500E9047C /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CBD6B6E1659368400E9047C /* ColorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
 		7CBDAAF01659D54700E009E5 /* PatchComparator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatchComparator.h; sourceTree = "<group>"; };
+		7CBDAAF2165AADFC00E009E5 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		7CBDAAF3165AADFC00E009E5 /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
+		7CBDAAF4165AADFC00E009E5 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		7CBDAAF5165AADFC00E009E5 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		7CBDAAF6165AADFC00E009E5 /* wheel_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_h.png; sourceTree = "<group>"; };
+		7CBDAAF7165AADFC00E009E5 /* wheel_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_v.png; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -158,6 +170,12 @@
 		7C10FEA31659939A003F656A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7CBDAAF2165AADFC00E009E5 /* dog.png */,
+				7CBDAAF3165AADFC00E009E5 /* face.png */,
+				7CBDAAF4165AADFC00E009E5 /* heart.png */,
+				7CBDAAF5165AADFC00E009E5 /* star.png */,
+				7CBDAAF6165AADFC00E009E5 /* wheel_h.png */,
+				7CBDAAF7165AADFC00E009E5 /* wheel_v.png */,
 				7C10FEA4165993C0003F656A /* egg.png */,
 			);
 			name = Resources;
@@ -427,6 +445,12 @@
 				7CF53CD41646658B00A218BE /* Credits.rtf in Resources */,
 				7CF53CDA1646658B00A218BE /* MainMenu.xib in Resources */,
 				7C10FEA5165993C0003F656A /* egg.png in Resources */,
+				7CBDAAF8165AADFC00E009E5 /* dog.png in Resources */,
+				7CBDAAF9165AADFC00E009E5 /* face.png in Resources */,
+				7CBDAAFA165AADFC00E009E5 /* heart.png in Resources */,
+				7CBDAAFB165AADFC00E009E5 /* star.png in Resources */,
+				7CBDAAFC165AADFC00E009E5 /* wheel_h.png in Resources */,
+				7CBDAAFD165AADFC00E009E5 /* wheel_v.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

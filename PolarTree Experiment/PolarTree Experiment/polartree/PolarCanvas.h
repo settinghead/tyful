@@ -71,7 +71,7 @@ public:
     int getWidth();
     int getHeight();
     vector<PolarLayer*>* getLayers();
-
+    double getShrinkage();
     Placer* getPlacer();
     void setStatus(STATUS status);
     STATUS getStatus();
@@ -83,7 +83,7 @@ private:
     int failureCount = 0;
     int numRetries = 0;
     int totalAttempted = 0;
-    int perseverance = 15, diligence = 8;
+    int perseverance = 10, diligence = 8;
     double width = NAN, height= NAN;
     STATUS status = PAUSED;
     Sizer* _sizer = NULL;

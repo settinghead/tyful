@@ -32,12 +32,11 @@
 }
 
 - (void)awakeFromNib {
-    [self loadDirectionImage];
-    [self resetMainImage];
+
 }
 
 -(void)resetMainImage {
-    unsigned int * pixels = [MainView getFlippedPixels:directionImage];
+    unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
     WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height);
     canvas = new PolarCanvas();
     canvas->getLayers()->push_back(layer);
@@ -62,8 +61,12 @@
 
 
 -(void) loadDirectionImage{
+    NSArray *templates = [[NSArray alloc] initWithObjects:@"dog.png",@"wheel_h.png",@"egg.png",
+                        @"face.png",@"wheel_v.png",@"star.png",@"heart.png",nil];
+    NSString *tpl = templates[arc4random() % [templates count]];
+
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
-    NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [bundleRoot stringByAppendingString:@"/Contents/Resources/egg.png"]];
+    NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
 	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
 	directionImage = [[NSBitmapImageRep alloc] initWithData:zNsDataTifData];
 
@@ -154,6 +157,7 @@
 }
 
 - (void)drawColorMappedText:(id)sender{
+    [self loadDirectionImage];
     [self resetMainImage];
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
                         @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
@@ -171,7 +175,7 @@
         NSString *str = strings[arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
         
-        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 30+15];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 100.0*canvas->getShrinkage()+20];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
@@ -182,18 +186,18 @@
         stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
         
         NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
-        unsigned int * pixels = [MainView getFlippedPixels:textImage];
+        unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
         shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
         
         Placement* placement = canvas->slapShape(shape);
         if(placement!=NULL){
-            double rotation = -(shape->getTree()->getRotation()-PI)*360/TWO_PI;
+            double rotation = -(shape->getTree()->getRotation())*360/TWO_PI;
             NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
                                         mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
 
             [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-    //        [self drawTextTree:shape->getTree()];
+//            [self drawTextTree:shape->getTree()];
         }
     }
     NSDate *methodFinish = [NSDate date];
@@ -234,7 +238,7 @@
     //    int a = d[(int)([textImage size].width-1)*(int)([textImage size].height-1)];
     //    [textImages addObject:textImage];
         
-        unsigned int * pixels = [MainView getFlippedPixels:textImage];
+        unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
         shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
         int count = 0;
@@ -375,7 +379,8 @@
     return textImage;
 }
 
-+(unsigned int *) getFlippedPixels:(NSBitmapImageRep*)image{
++(unsigned int *) getPixels:(NSBitmapImageRep*)image
+                   withFlip:(bool)flip{
     int width = [image size].width;
     int height = [image size].height;
     
@@ -390,7 +395,7 @@
             [image getPixel:pixelData atX:xx y:yy];
 //            origPixels[int(image.size.height-yy)*((int)image.size.width)+xx];
             //                cout << pixelData[0] << " " << pixelData[1] << " " << pixelData[2] << " "<< pixelData[3] << "|";
-            int i = (height-yy-1)*width+(width-xx-1);
+            int i = flip? (height-yy-1)*width+xx : yy*width+xx;
             pixels[i] = (((unsigned int)pixelData[0]<<16)|((unsigned int)pixelData[1]<<8)|((unsigned int)pixelData[2])|((unsigned int)pixelData[3]<<24));
             //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
         }

@@ -8,7 +8,6 @@
 
 #ifndef __PolarTree_Experiment__DensityPatchIndex__
 #define __PolarTree_Experiment__DensityPatchIndex__
-#define NUMBER_OF_ATTEMPTED_PATCHES 5
 #include <vector>
 
 using namespace std;

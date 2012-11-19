@@ -15,15 +15,15 @@ PolarChildTree::PolarChildTree(double r1, double r2, double d1,
 
 PolarChildTree::~PolarChildTree() {
 }
-int PolarChildTree::getRootX() {
+inline int PolarChildTree::getRootX() {
 	return this->root->getRootX();
 }
 
-int PolarChildTree::getRootY() {
+inline int PolarChildTree::getRootY() {
 	return this->root->getRootY();
 }
 
-double PolarChildTree::computeX(bool rotate) {
+inline double PolarChildTree::computeX(bool rotate) {
 	double x;
 	if (((this->getR1(rotate) < HALF_PI))) {
 		if (((this->getR2(rotate) < this->getR1(rotate)))) {
@@ -94,7 +94,7 @@ double PolarChildTree::computeX(bool rotate) {
 	return x;
 }
 
-double PolarChildTree::computeY(bool rotate) {
+inline double PolarChildTree::computeY(bool rotate) {
 	double y;
 	if (((this->getR1(rotate) < HALF_PI))) {
 		if (((this->getR2(rotate) < this->getR1(rotate)))) {
@@ -163,7 +163,7 @@ double PolarChildTree::computeY(bool rotate) {
 //#endif
 }
 
-double PolarChildTree::computeRight(bool rotate) {
+inline double PolarChildTree::computeRight(bool rotate) {
 	double right;
 	if (((this->getR1(rotate) < HALF_PI))) {
 		if (((this->getR2(rotate) < this->getR1(rotate)))) {
@@ -220,7 +220,7 @@ double PolarChildTree::computeRight(bool rotate) {
 	return right;
 }
 
-double PolarChildTree::computeBottom(bool rotate) {
+inline double PolarChildTree::computeBottom(bool rotate) {
 	double bottom;
 	if (((this->getR1(rotate) < HALF_PI))) {
 		if (((this->getR2(rotate) < this->getR1(rotate)))) {
@@ -292,19 +292,19 @@ double PolarChildTree::computeBottom(bool rotate) {
 //#endif
 }
 
-double PolarChildTree::getRotation() {
+inline double PolarChildTree::getRotation() {
 	return this->root->getRotation();
 }
 
-int PolarChildTree::getCurrentStamp() {
+inline int PolarChildTree::getCurrentStamp() {
 	return this->root->getCurrentStamp();
 }
 
-PolarRootTree* PolarChildTree::getRoot() {
+inline PolarRootTree* PolarChildTree::getRoot() {
 	return this->root;
 }
 
-int PolarChildTree::getMinBoxSize() {
+inline int PolarChildTree::getMinBoxSize() {
 	return this->root->getMinBoxSize();
 }
 

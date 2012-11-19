@@ -34,5 +34,6 @@ class PolarCanvas;
 
 +(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str;
 +(bool)collide:(PolarRootTree*)tree:(NSArray*)oTrees;
-+(unsigned int *) getFlippedPixels:(NSBitmapImageRep*)image;
++(unsigned int *) getPixels:(NSBitmapImageRep*)image
+                   withFlip:(bool)flip;
 @end

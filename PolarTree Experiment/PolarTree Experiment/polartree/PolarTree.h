@@ -33,14 +33,14 @@ public:
 	void addKids(vector<PolarChildTree*>* kidList);
 	inline virtual int getRootX() = 0;
 	inline virtual int getRootY() = 0;
-	bool overlaps(PolarTree* otherTree);
+	inline virtual bool overlaps(PolarTree* otherTree);
 	vector<PolarChildTree*>* getKids();
 	vector<PolarChildTree*>* getKidsNoGrowth();
 	virtual PolarRootTree* getRoot() = 0;
 	virtual int getMinBoxSize() = 0;
 	virtual ImageShape* getShape() = 0;
-	virtual bool overlapsCoord(double x, double y, double right, double bottom);
-	virtual bool contains(double x, double y, double right, double bottom);
+	inline virtual bool overlapsCoord(double x, double y, double right, double bottom);
+	inline virtual bool contains(double x, double y, double right, double bottom);
     CartisianPoint getTopLeftLocation();
 	inline virtual double computeX(bool rotate) = 0;
 	inline virtual double computeY(bool rotate) = 0;

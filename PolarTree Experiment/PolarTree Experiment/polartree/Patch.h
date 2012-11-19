@@ -11,8 +11,6 @@
 #include <vector>
 #include <math.h>
 #include <float.h>
-#define NUMBER_OF_DIVISIONS 3
-#define MARK_FILL_FACTOR 1
 
 using namespace std;
 
