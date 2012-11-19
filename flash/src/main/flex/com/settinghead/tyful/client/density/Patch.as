@@ -17,7 +17,7 @@ package com.settinghead.tyful.client.density
 		private var _averageAlpha:Number= Number.NaN;
 		private var parent:Patch;
 		private var children:Vector.<Patch> = null;
-		private var _childrenMarker:Set;
+//		private var _childrenMarker:Set;
 		private var _area:Number= Number.NaN;
 		private var _alphaSum:Number= Number.NaN;
 		private var _queue:PatchQueue;
