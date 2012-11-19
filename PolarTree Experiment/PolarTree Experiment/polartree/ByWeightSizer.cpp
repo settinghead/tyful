@@ -13,13 +13,13 @@ ByWeightSizer::ByWeightSizer(int minSize, int maxSize){
     this->maxSize = maxSize;
     reset();
 }
-double ByWeightSizer::sizeFor(EngineShape* shape, int rank, int count){
+inline double ByWeightSizer::sizeFor(EngineShape* shape, int rank, int count){
     
     //TODO: revise logic
     return maxSize	- pow(sqrt((maxSize-minSize))*rank/count,2);
  
 }
-bool ByWeightSizer::switchToNextSize(){
+inline bool ByWeightSizer::switchToNextSize(){
     if(currentSize>minSize){
         currentSize-= decr;
         if(currentSize<minSize)
@@ -30,15 +30,15 @@ bool ByWeightSizer::switchToNextSize(){
         return false;
     
 }
-double ByWeightSizer::getCurrentSize(){
+inline double ByWeightSizer::getCurrentSize(){
     return currentSize;
 }
-void ByWeightSizer::reset(){
+inline void ByWeightSizer::reset(){
     currentSize = maxSize;
     decr = (maxSize-minSize)/20;
     if(decr<1) decr=1;
 }
-bool ByWeightSizer::hasNextSize(){
+inline bool ByWeightSizer::hasNextSize(){
     return currentSize > minSize;
 
 }

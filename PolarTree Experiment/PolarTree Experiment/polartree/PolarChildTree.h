@@ -2,12 +2,15 @@
 #define PolarCHILDTree_H
 
 #include "PolarTree.h"
+#include "PolarRootTree.h"
 
-class PolarRootTree;
 class PolarChildTree: public PolarTree {
 public:
-	PolarChildTree(double r1, double r2, double d1,
-			double d2, PolarRootTree* root, int minBoxSize);
+	inline PolarChildTree(double r1, double r2, double d1,
+                          double d2, PolarRootTree* root, int minBoxSize)
+    :PolarTree::PolarTree(r1, r2, d1, d2, minBoxSize) {
+        this->root = root;
+    }
 	~PolarChildTree();
 	PolarRootTree* root; /* REM */
 	inline int getRootX();

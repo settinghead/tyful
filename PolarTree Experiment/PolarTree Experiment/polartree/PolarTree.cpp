@@ -83,10 +83,6 @@ inline vector<PolarChildTree*>* PolarTree::getKids() {
 	return this->_kids;
 }
 
-vector<PolarChildTree*>* PolarTree::getKidsNoGrowth() {
-	return this->_kids;
-}
-
 inline bool PolarTree::overlapsCoord(double x, double y, double right,
 		double bottom) {
 	if ((this->rectCollideCoord(x, y, right, bottom))) {
@@ -160,18 +156,21 @@ void PolarTree::checkRecompute() {
 inline void PolarTree::computeR1() {
 	{
 		this->_computedR1 = (this->_r1 + this->getRotation());
-		if (((this->_computedR1 > TWO_PI))) {
-			this->_computedR1 = fmod(this->_computedR1, TWO_PI);
+		if (((this->_computedR1 > TWO_PI ))) {
+			this->_computedR1 -= TWO_PI;
 		}
+        else if(this->_computedR1<0)
+            this->_computedR1 += TWO_PI;
 	}
 }
 
 inline void PolarTree::computeR2() {
 	{
 		this->_computedR2 = (this->_r2 + this->getRotation());
-		if (((this->_computedR2 > TWO_PI))) {
-			this->_computedR2 = fmod(this->_computedR2, TWO_PI);
-		}
+		if (((this->_computedR2 > TWO_PI)))
+			this->_computedR2 -= TWO_PI;
+        else if(this->_computedR2<0)
+            this->_computedR2 += TWO_PI;
 	}
 }
 
@@ -381,14 +380,6 @@ double PolarTree::getBottom(bool rotate) {
 void PolarTree::setLeaf(bool b) {
 	this->_leaf = b;
 }
-
-CartisianPoint PolarTree::getTopLeftLocation(){
-    CartisianPoint p;
-    p.x = getRootX()-getShape()->getWidth()/2;
-    p.y = getRootY()-getShape()->getHeight()/2;
-    return p;
-}
-
 
 //char* PolarTree::toString() {
 //	int indent = 0;

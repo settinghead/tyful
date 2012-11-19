@@ -17,9 +17,12 @@ class Patch;
 
 class LeveledPatchMap{
 public:
-    LeveledPatchMap(DensityPatchIndex* index);
+    inline LeveledPatchMap(DensityPatchIndex* index){
+        this->index = index;
+        this->map = new vector<PatchQueue*>();
+    }
     Patch* getBestPatchAtLevel(int level);
-    DensityPatchIndex* getIndex();
+    inline DensityPatchIndex* getIndex();
     void add(Patch* p);
 private:
     vector<PatchQueue*>* map;

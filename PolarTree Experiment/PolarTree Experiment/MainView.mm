@@ -162,9 +162,9 @@
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
                         @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
     NSArray *colors = [[NSArray alloc] initWithObjects:[NSColor greenColor],
-                       [NSColor blackColor],[NSColor brownColor],[NSColor cyanColor],
-                       [NSColor blueColor],[NSColor yellowColor],[NSColor darkGrayColor],
-                       [NSColor headerColor],[NSColor knobColor],[NSColor magentaColor],nil];
+                       [NSColor redColor],[NSColor brownColor],[NSColor cyanColor],
+                       [NSColor blueColor],[NSColor orangeColor],[NSColor darkGrayColor],
+                       [NSColor headerColor],[NSColor purpleColor],[NSColor knobColor],nil];
     
     canvas->setStatus(RENDERING);
     NSDate *methodStart = [NSDate date];

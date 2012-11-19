@@ -12,7 +12,7 @@
 
 //class PolarTreeBuilder{
 //public:
-    static SplitType determineType(PolarTree* tree) {
+    inline static SplitType determineType(PolarTree* tree) {
         double d = (tree->d2 - tree->d1);
         double midLength = (((tree->d2 + tree->d1))
                 * ((tree->getR2(false) - tree->getR1(false)))) / 2.0;
@@ -28,7 +28,7 @@
         }
     }
 
-     static PolarChildTree* makeChildTree(ImageShape* shape,
+     inline static PolarChildTree* makeChildTree(ImageShape* shape,
             int minBoxSize, double r1, double r2, double d1, double d2,
             PolarRootTree* root) {
         PolarChildTree* tree = new PolarChildTree(r1, r2, d1, d2, root,
@@ -76,7 +76,7 @@
         return tree;
     }
 
-    static vector<PolarChildTree*>* splitTree(PolarTree* tree,
+    inline static vector<PolarChildTree*>* splitTree(PolarTree* tree,
             ImageShape* shape, int minBoxSize, PolarRootTree* root,
             SplitType type) {
         vector<PolarChildTree*>* result = new vector<PolarChildTree*>();
@@ -243,7 +243,7 @@
         return result;
     }
 
-    static PolarRootTree* makeTree(ImageShape* shape, int swelling) {
+    inline static PolarRootTree* makeTree(ImageShape* shape, int swelling) {
         int minBoxSize = (int) 1;
         int x = int(shape->getWidth() / 2.0);
         int y = int(shape->getHeight() / 2.0);
@@ -254,7 +254,7 @@
         return tree;
     }
 
-    static void makeChildren(PolarTree* tree, ImageShape* shape,
+    inline static void makeChildren(PolarTree* tree, ImageShape* shape,
             int minBoxSize, PolarRootTree* root) {
         {
             SplitType type = determineType(tree);

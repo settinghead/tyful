@@ -11,49 +11,21 @@
 #include <vector>
 #include <math.h>
 #include "constants.h"
+#include "structs.h"
+#include "Sizer.h"
 
 using namespace std;
 
 class EngineShape;
 class ImageShape;
 class PolarLayer;
-class Sizer;
 class Placer;
 class Angler;
 class Patch;
 class Nudger;
 class DensityPatchIndex;
 
-struct CartisianPoint{
-    double x = 0;
-    double y = 0;
-    inline CartisianPoint operator + (const CartisianPoint &o) const{
-        CartisianPoint p;
-        p.x = o.x + x;
-        p.y = o.y + y;
-        return p;
-    }
-};
 
-struct PolarPoint{
-    double d = 0;
-    double r = 0;
-};
-
-struct Placement{
-    CartisianPoint location;
-    double scale = 1;
-    double rotation = 0;
-    Patch* patch = NULL;
-    inline Placement operator + (const Placement &o) const{
-        Placement p;
-        p.location = o.location + location;
-        p.scale = scale;
-        p.rotation = rotation;
-        p.patch = patch;
-        return p;
-    }
-};
 
 typedef int STATUS;
 typedef int SKIP_REASON;
@@ -68,11 +40,13 @@ public:
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
     void setNudger(Nudger* placer);
-    int getWidth();
-    int getHeight();
+    inline int getWidth();
+    inline int getHeight();
     vector<PolarLayer*>* getLayers();
-    double getShrinkage();
-    Placer* getPlacer();
+    inline double getShrinkage(){
+        return getSizer()->getCurrentSize();
+    }
+    inline Placer* getPlacer();
     void setStatus(STATUS status);
     STATUS getStatus();
 private:
@@ -89,16 +63,16 @@ private:
     Sizer* _sizer = NULL;
     Nudger* _nudger = NULL;
     Placer* _placer = NULL;
-    Sizer* getSizer();
-    Nudger* getNudger();
-    EngineShape* generateEngineWord(ImageShape* shape);
-    bool placeShape(EngineShape * shape);
-    void computeDesiredPlacements(EngineShape* shape);
-    Placement* tryCurrentSize(EngineShape* shape);
-    void skipShape(EngineShape* shape, SKIP_REASON reason);
-    int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
+    inline Sizer* getSizer();
+    inline Nudger* getNudger();
+    inline EngineShape* generateEngineWord(ImageShape* shape);
+    inline bool placeShape(EngineShape * shape);
+    inline void computeDesiredPlacements(EngineShape* shape);
+    inline Placement* tryCurrentSize(EngineShape* shape);
+    inline void skipShape(EngineShape* shape, SKIP_REASON reason);
+    inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
     DensityPatchIndex* _patchIndex = NULL;
-    DensityPatchIndex* getPatchIndex();
+    inline DensityPatchIndex* getPatchIndex();
 };
 
 

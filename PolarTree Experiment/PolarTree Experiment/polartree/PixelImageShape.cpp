@@ -19,24 +19,3 @@ ImageShape::ImageShape(){
 PixelImageShape::~PixelImageShape() {
 //	free(pixels);
 };
-
-int PixelImageShape::getWidth() {
-	return width;
-};
-
-int PixelImageShape::getHeight() {
-	return height;
-};
-
-bool PixelImageShape::isEmpty(unsigned int pixelValue){
-    return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
-};
-
-unsigned int PixelImageShape::getPixel(int x, int y){
-//    return    this->img->getPixel(x,y);
-//    return pixels[x * height + y];
-    if(x>=width||y>=height||x<0||y<0)
-        return 0x00000000;
-    else
-        return pixels[y * width + x];
-};

@@ -7,11 +7,6 @@
 #include "ImageShape.h"
 #include "Flip.h"
 
-PolarChildTree::PolarChildTree(double r1, double r2, double d1,
-		double d2, PolarRootTree* root, int minBoxSize) :
-		PolarTree::PolarTree(r1, r2, d1, d2, minBoxSize) {
-	this->root = root;
-}
 
 PolarChildTree::~PolarChildTree() {
 }

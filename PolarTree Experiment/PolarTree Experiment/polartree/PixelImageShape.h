@@ -15,10 +15,23 @@ class PixelImageShape : public ImageShape{
 public:
     PixelImageShape( unsigned int * pixels, int width, int height);
 	~PixelImageShape();
-	int getWidth();
-	int getHeight();
-    bool isEmpty(unsigned int pixelValue);
-	unsigned int getPixel(int x, int y);
+	inline int getWidth(){
+        return width;
+    }
+	inline int getHeight(){
+        return height;
+    }
+    inline bool isEmpty(unsigned int pixelValue){
+        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
+    }
+	inline unsigned int getPixel(int x, int y){
+        //    return    this->img->getPixel(x,y);
+        //    return pixels[x * height + y];
+        if(x>=width||y>=height||x<0||y<0)
+            return 0x00000000;
+        else
+            return pixels[y * width + x];
+    }
 
 protected:
 	unsigned int width, height;

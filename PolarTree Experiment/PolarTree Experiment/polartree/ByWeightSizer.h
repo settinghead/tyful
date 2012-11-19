@@ -17,11 +17,11 @@ private:
     double currentSize, decr;
 public:
     ByWeightSizer(int minSize, int maxSize);
-    double sizeFor(EngineShape* shape, int rank, int count) ;
-    bool switchToNextSize();
-    double getCurrentSize();
-    void reset();
-    bool hasNextSize();
+    inline double sizeFor(EngineShape* shape, int rank, int count) ;
+    inline bool switchToNextSize();
+    inline double getCurrentSize();
+    inline void reset();
+    inline bool hasNextSize();
     
 };
 #endif /* defined(__PolarTree_Experiment__ByWeightSizer__) */

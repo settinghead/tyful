@@ -11,7 +11,7 @@
 
 class ColorMath{
 public:
-    static double getBrightness(unsigned int rgb){
+    inline static double getBrightness(unsigned int rgb){
         int r = (rgb) >> 16 & 0xFF;
         int g = (rgb) >> 8 & 0xFF;
         int b = rgb & 0xFF;
@@ -21,7 +21,7 @@ public:
         return cmax/255;
     }
     
-    static int RGBtoHSB(unsigned int rgbPixel) {
+    inline static int RGBtoHSB(unsigned int rgbPixel) {
         int r = (rgbPixel) >> 16 & 0xFF;
         int g = (rgbPixel) >> 8 & 0xFF;
         int b = rgbPixel & 0xFF;
@@ -60,7 +60,7 @@ public:
         return 0xff000000 | (h << 16) | (s << 8) | bb;
     }
     
-    static double getHue(unsigned int rgbPixel) {
+    inline static double getHue(unsigned int rgbPixel) {
         int r = (rgbPixel) >> 16 & 0xFF;
         int g = (rgbPixel) >> 8 & 0xFF;
         int b = rgbPixel & 0xFF;
@@ -95,7 +95,7 @@ public:
         return hue;
     }
     
-    static double distRGB(unsigned int c1, unsigned int c2){
+    inline static double distRGB(unsigned int c1, unsigned int c2){
         double r1 = (c1) >> 16 & 0xFF;
         double g1 = (c1) >> 8 & 0xFF;
         double b1 = c1 & 0xFF;
@@ -105,7 +105,7 @@ public:
         return fabs(r1-r2)/256/3 + fabs(g1-g2)/256/3 + fabs(b1-b2)/256/3;
     }
     
-    static double distHue(unsigned int c1, unsigned int c2){
+    inline static double distHue(unsigned int c1, unsigned int c2){
         double h1 = getHue(c1);
         double h2 = getHue(c2);
         double diff= fabs(h1-h2);

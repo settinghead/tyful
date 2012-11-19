@@ -239,7 +239,3 @@ Placer* PolarCanvas::getPlacer(){
     }
     return _placer;
 }
-
-double PolarCanvas::getShrinkage(){
-    return getSizer()->getCurrentSize();
-}

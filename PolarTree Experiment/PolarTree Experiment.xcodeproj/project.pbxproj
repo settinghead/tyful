@@ -11,7 +11,6 @@
 		7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */; };
 		7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */; };
 		7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9316595E38003F656A /* ByWeightSizer.cpp */; };
-		7C10FE9816595FE2003F656A /* ColorMapZigzagNudger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */; };
 		7C10FE9B165962EB003F656A /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */; };
 		7C10FEA5165993C0003F656A /* egg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C10FEA4165993C0003F656A /* egg.png */; };
 		7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */; };
@@ -68,7 +67,6 @@
 		7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
 		7C10FE9316595E38003F656A /* ByWeightSizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ByWeightSizer.cpp; sourceTree = "<group>"; };
 		7C10FE9416595E38003F656A /* ByWeightSizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByWeightSizer.h; sourceTree = "<group>"; };
-		7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapZigzagNudger.cpp; sourceTree = "<group>"; };
 		7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
 		7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapPlacer.cpp; sourceTree = "<group>"; };
 		7C10FE9A165962EB003F656A /* ColorMapPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapPlacer.h; sourceTree = "<group>"; };
@@ -97,13 +95,13 @@
 		7CBD6B6A16588E5400E9047C /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
 		7CBD6B6B16588E5500E9047C /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CBD6B6E1659368400E9047C /* ColorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
-		7CBDAAF01659D54700E009E5 /* PatchComparator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatchComparator.h; sourceTree = "<group>"; };
 		7CBDAAF2165AADFC00E009E5 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		7CBDAAF3165AADFC00E009E5 /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		7CBDAAF4165AADFC00E009E5 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		7CBDAAF5165AADFC00E009E5 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		7CBDAAF6165AADFC00E009E5 /* wheel_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_h.png; sourceTree = "<group>"; };
 		7CBDAAF7165AADFC00E009E5 /* wheel_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_v.png; sourceTree = "<group>"; };
+		7CBDAAFE165AF7AD00E009E5 /* structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -163,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				7C10FE8B16594878003F656A /* constants.h */,
+				7CBDAAFE165AF7AD00E009E5 /* structs.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -192,7 +191,6 @@
 				7CBD6B5D1658303000E9047C /* PatchQueue.cpp */,
 				7CBD6B5F1658305300E9047C /* LeveledPatchMap.cpp */,
 				7CBD6B601658305400E9047C /* LeveledPatchMap.h */,
-				7CBDAAF01659D54700E009E5 /* PatchComparator.h */,
 			);
 			name = density;
 			sourceTree = "<group>";
@@ -211,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				7CBD6B4F1657FBF900E9047C /* Nudger.h */,
-				7C10FE9616595FE2003F656A /* ColorMapZigzagNudger.cpp */,
 				7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */,
 			);
 			name = nudger;
@@ -507,7 +504,6 @@
 				7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */,
 				7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */,
 				7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */,
-				7C10FE9816595FE2003F656A /* ColorMapZigzagNudger.cpp in Sources */,
 				7C10FE9B165962EB003F656A /* ColorMapPlacer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "constants.h"
+#include "structs.h"
+#include "ImageShape.h"
 using namespace std;
 
 
@@ -17,31 +19,28 @@ enum SplitType {
 };
 class PolarTree {
 public:
-
+    double d1,d2;
 	PolarTree(double r1, double r2, double d1, double d2, int minBoxSize);
 	virtual ~PolarTree();
-	int rStamp;
-	double _x, _y, _right, _bottom, _r1, d1, _r2, d2;
-	vector<PolarChildTree*>* _kids;
-	double _computedR1;
-	double _computedR2;
-	double pointsStamp;
-	double _px, _py, _pright, _pbottom;
-	double xStamp, yStamp, rightStamp, bottomStamp;
-	bool _leaf;
-	double _relativeX, _relativeY, _relativeRight, _relativeBottom;
-	void addKids(vector<PolarChildTree*>* kidList);
+	inline void addKids(vector<PolarChildTree*>* kidList);
 	inline virtual int getRootX() = 0;
 	inline virtual int getRootY() = 0;
 	inline virtual bool overlaps(PolarTree* otherTree);
-	vector<PolarChildTree*>* getKids();
-	vector<PolarChildTree*>* getKidsNoGrowth();
-	virtual PolarRootTree* getRoot() = 0;
-	virtual int getMinBoxSize() = 0;
-	virtual ImageShape* getShape() = 0;
+	inline vector<PolarChildTree*>* getKids();
+	inline vector<PolarChildTree*>* getKidsNoGrowth(){
+        return this->_kids;
+    }
+	inline virtual PolarRootTree* getRoot() = 0;
+	inline virtual int getMinBoxSize() = 0;
+	inline virtual ImageShape* getShape() = 0;
 	inline virtual bool overlapsCoord(double x, double y, double right, double bottom);
 	inline virtual bool contains(double x, double y, double right, double bottom);
-    CartisianPoint getTopLeftLocation();
+    inline CartisianPoint getTopLeftLocation(){
+        CartisianPoint p;
+        p.x = getRootX()-getShape()->getWidth()/2;
+        p.y = getRootY()-getShape()->getHeight()/2;
+        return p;
+    }
 	inline virtual double computeX(bool rotate) = 0;
 	inline virtual double computeY(bool rotate) = 0;
 	inline virtual double computeRight(bool rotate) = 0;
@@ -76,7 +75,17 @@ public:
 	inline virtual double getRotation() = 0;
 	inline virtual int getCurrentStamp() = 0;
 	inline virtual void setLeaf(bool b);
-private:
+protected:
+    int rStamp;
+	double _x, _y, _right, _bottom, _r1, _r2;
+	vector<PolarChildTree*>* _kids;
+	double _computedR1;
+	double _computedR2;
+	double pointsStamp;
+	double _px, _py, _pright, _pbottom;
+	double xStamp, yStamp, rightStamp, bottomStamp;
+	bool _leaf;
+	double _relativeX, _relativeY, _relativeRight, _relativeBottom;
     inline bool collide(PolarTree* bTree);
 	inline bool rectCollide(PolarTree* bTree);
 	inline bool rectContain(double x, double y, double right, double bottom);

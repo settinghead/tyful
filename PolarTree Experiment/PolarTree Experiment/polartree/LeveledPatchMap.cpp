@@ -14,11 +14,6 @@
 
 using namespace std;
 
-LeveledPatchMap::LeveledPatchMap(DensityPatchIndex* index){
-        this->index = index;
-        this->map = new vector<PatchQueue*>();
-}
-
 Patch* LeveledPatchMap::getBestPatchAtLevel(int level){
     PatchQueue* queue = getQueue(level);
     if(queue->size()>0)

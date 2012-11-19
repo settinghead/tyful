@@ -106,7 +106,7 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
     else return false;
 }
 
-double WordLayer::getBrightness(int x, int y) {
+inline double WordLayer::getBrightness(int x, int y) {
     
     unsigned int rgbPixel = getPixel(x, y);
     unsigned int alpha = rgbPixel>> 24 & 0xFF;

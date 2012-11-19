@@ -21,17 +21,7 @@ PolarRootTree::PolarRootTree(ImageShape* shape, int centerX,
 PolarRootTree::~PolarRootTree() {
 }
 
-void PolarRootTree::setLocation(int centerX, int centerY) {
-	this->rootX = centerX;
-	this->rootY = centerY;
-	(this->rootStamp)++;
-}
 
-void PolarRootTree::setTopLeftLocation(int top, int left) {
-	this->rootX = this->shape->getWidth()/2 + top;
-	this->rootY = this->shape->getHeight()/2 + left;
-	(this->rootStamp)++;
-}
 
 int PolarRootTree::getRootX() {
 	return this->rootX;
@@ -63,14 +53,6 @@ double PolarRootTree::computeBottom(bool rotate) {
 //#else
 //    return -(this->d2);
 //#endif
-}
-
-void PolarRootTree::setRotation(double rotation) {
-	this->_rotation = fmod(rotation, TWO_PI);
-	if (this->_rotation < 0) {
-		this->_rotation = (TWO_PI + this->_rotation);
-	}
-	(this->rootStamp)++;
 }
 
 double PolarRootTree::getRotation() {
