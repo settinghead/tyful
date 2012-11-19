@@ -22,6 +22,11 @@ Patch::Patch(double x, double y, double width, double height, int rank, Patch* p
     this->shapes = new vector<EngineShape*>();
 }
 
+const int Patch::getNumberOfFailures(){
+    return numberOfFailures;
+}
+
+
 PolarCanvas* Patch::getCanvas(){
     return queue->getMap()->getIndex()->getCanvas();
 }
@@ -80,7 +85,7 @@ double Patch::getAlphaSum(){
         alphaSum = 1;
     }
     if(alphaSum==0){
-        alphaSum = DBL_MIN;
+        alphaSum = NAN;
     }
     return alphaSum;
 }

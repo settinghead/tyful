@@ -91,6 +91,7 @@
 		7CBD6B6A16588E5400E9047C /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
 		7CBD6B6B16588E5500E9047C /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CBD6B6E1659368400E9047C /* ColorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
+		7CBDAAF01659D54700E009E5 /* PatchComparator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatchComparator.h; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -173,6 +174,7 @@
 				7CBD6B5D1658303000E9047C /* PatchQueue.cpp */,
 				7CBD6B5F1658305300E9047C /* LeveledPatchMap.cpp */,
 				7CBD6B601658305400E9047C /* LeveledPatchMap.h */,
+				7CBDAAF01659D54700E009E5 /* PatchComparator.h */,
 			);
 			name = density;
 			sourceTree = "<group>";

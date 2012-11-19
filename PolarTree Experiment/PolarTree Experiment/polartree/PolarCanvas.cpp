@@ -209,7 +209,7 @@ int PolarCanvas::getWidth(){
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p){
     srand((unsigned)time(NULL));
-    int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * 5 * diligence;
+    int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * 2 * diligence;
     return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.4);
 }
 

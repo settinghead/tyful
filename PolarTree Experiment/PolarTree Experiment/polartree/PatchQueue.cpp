@@ -19,7 +19,7 @@
 
 using namespace std;
 
-PatchQueue::PatchQueue(int myLevel, LeveledPatchMap* map):priority_queue<Patch*>(){
+PatchQueue::PatchQueue(int myLevel, LeveledPatchMap* map):priority_queue<Patch*, vector<Patch*>, ComparePatch>(){
     this->myLevel = myLevel;
 //    this->lookupMap = new LookupMap;
     this->map  = map;
@@ -72,7 +72,7 @@ int PatchQueue::getLevel(){
 
 void PatchQueue::tryPush(Patch* patch){
     if (patch->getAlphaSum() > QUEUE_ALPHA_THRESHOLD){
-        (*this).priority_queue<Patch*>::push(patch);
+        (*this).priority_queue<Patch*, vector<Patch*>, ComparePatch>::push(patch);
     }
 }
 

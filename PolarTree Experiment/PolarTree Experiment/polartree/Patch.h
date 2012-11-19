@@ -11,7 +11,7 @@
 #include <vector>
 #include <math.h>
 #include <float.h>
-#define NUMBER_OF_DIVISIONS 2
+#define NUMBER_OF_DIVISIONS 3
 #define MARK_FILL_FACTOR 1
 
 using namespace std;
@@ -39,6 +39,7 @@ public:
     int getLastAttempt();
     void fail();
     int getLevel();
+    const int getNumberOfFailures();
 private:
     double x,y, width, height;
     double averageAlpha= NAN, area=NAN, alphaSum=NAN;
@@ -51,7 +52,25 @@ private:
     int lastAttempt = 0;
     WordLayer* layer;
     double getArea();
+};
 
+struct ComparePatch : public std::binary_function<Patch*, Patch*, bool>
+{
+    bool operator()(Patch* lhs, Patch* rhs) const
+    {
+        //			var r:int= -_numComparator.compare(p1.getAverageAlpha(),p2.getAverageAlpha());
+        int f1 = lhs->getNumberOfFailures(), f2 = rhs->getNumberOfFailures();
+        return (f1==f2) ? (lhs->getAlphaSum()<rhs->getAlphaSum()) : (f1>f2);
+        
+        //                if(r==0){
+        //                    r = _numComparator.compare(p1.getAlphaSum(), p2.getAlphaSum());
+        //                    if (r == 0)
+        //                        return p1.getRank() - p2.getRank();
+        //                        else
+        //                            return r;
+        //                }
+        //        else return r;
+    }
 };
 
 #endif

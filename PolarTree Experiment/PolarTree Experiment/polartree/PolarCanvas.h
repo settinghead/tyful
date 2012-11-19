@@ -83,7 +83,7 @@ private:
     int failureCount = 0;
     int numRetries = 0;
     int totalAttempted = 0;
-    int perseverance = 10, diligence = 8;
+    int perseverance = 15, diligence = 8;
     double width = NAN, height= NAN;
     STATUS status = PAUSED;
     Sizer* _sizer = NULL;

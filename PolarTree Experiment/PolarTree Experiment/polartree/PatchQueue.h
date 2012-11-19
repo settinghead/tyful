@@ -13,16 +13,18 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <functional>
+#include "Patch.h"
 
 #define QUEUE_ALPHA_THRESHOLD -DBL_MAX
 
 using namespace std;
 
-class Patch;
 class LeveledPatchMap;
 typedef std::unordered_map<string, Patch*> LookupMap;
+struct ComparePatch;
 
-class PatchQueue:priority_queue<Patch*>{
+class PatchQueue:priority_queue<Patch*, vector<Patch*>, ComparePatch>{
 public:
     PatchQueue(int myLevel, LeveledPatchMap* map);
     void push(const value_type &__v);
