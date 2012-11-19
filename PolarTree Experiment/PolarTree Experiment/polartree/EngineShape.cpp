@@ -87,6 +87,8 @@ vector<Placement*>* EngineShape::getDesiredPlacements(){
 }
 
 void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
+    if(desiredPlacements!=NULL)
+        delete desiredPlacements;
     desiredPlacements = placements;
 }
 

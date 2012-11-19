@@ -55,6 +55,9 @@ struct Placement{
     }
 };
 
+typedef int STATUS;
+typedef int SKIP_REASON;
+
 class PolarCanvas{
 public:
     PolarCanvas();
@@ -68,11 +71,10 @@ public:
     int getWidth();
     int getHeight();
     vector<PolarLayer*>* getLayers();
-    typedef int STATUS;
-    typedef int SKIP_REASON;
+
     Placer* getPlacer();
     void setStatus(STATUS status);
-
+    STATUS getStatus();
 private:
     vector<PolarLayer*>* layers;
     vector<EngineShape*>* shapes;

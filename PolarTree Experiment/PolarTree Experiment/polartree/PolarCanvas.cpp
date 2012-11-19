@@ -36,7 +36,7 @@ PolarCanvas::PolarCanvas()
 }
 
 Placement* PolarCanvas::slapShape(ImageShape* shape){
-    while(failureCount < perseverance && status == RENDERING){
+    while(failureCount <= perseverance && status == RENDERING){
         EngineShape* eShape = generateEngineWord(shape);
         Placement* p = tryCurrentSize(eShape);
         if(p!=NULL) return p;
@@ -227,6 +227,10 @@ DensityPatchIndex* PolarCanvas::getPatchIndex(){
 
 void PolarCanvas::setStatus(STATUS status){
     this->status = status;
+}
+
+STATUS PolarCanvas::getStatus(){
+    return this->status;
 }
 
 Placer* PolarCanvas::getPlacer(){

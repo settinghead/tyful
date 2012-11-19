@@ -45,7 +45,7 @@ void PolarTree::addKids(vector<PolarChildTree*>* kidList) {
 
 bool PolarTree::overlaps(PolarTree* otherTree) {
 	if ((this->collide(otherTree))) {
-		if (((bool(this->isLeaf()) && bool(otherTree->isLeaf())))) {
+		if (this->isLeaf() && otherTree->isLeaf()) {
 			return true;
 		} else {
 			if ((this->isLeaf())) {

@@ -31,8 +31,8 @@ public:
 	bool _leaf;
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom;
 	void addKids(vector<PolarChildTree*>* kidList);
-	virtual int getRootX() = 0;
-	virtual int getRootY() = 0;
+	inline virtual int getRootX() = 0;
+	inline virtual int getRootY() = 0;
 	bool overlaps(PolarTree* otherTree);
 	vector<PolarChildTree*>* getKids();
 	vector<PolarChildTree*>* getKidsNoGrowth();
@@ -77,10 +77,10 @@ public:
 	inline virtual int getCurrentStamp() = 0;
 	inline virtual void setLeaf(bool b);
 private:
-    virtual bool collide(PolarTree* bTree);
-	virtual bool rectCollide(PolarTree* bTree);
-	virtual bool rectContain(double x, double y, double right, double bottom);
-	virtual bool rectCollideCoord(double x, double y, double right,
+    inline bool collide(PolarTree* bTree);
+	inline bool rectCollide(PolarTree* bTree);
+	inline bool rectContain(double x, double y, double right, double bottom);
+	inline bool rectCollideCoord(double x, double y, double right,
                                   double bottom);
 };
 #endif

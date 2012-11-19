@@ -33,7 +33,15 @@
 
 - (void)awakeFromNib {
     [self loadDirectionImage];
+    [self resetMainImage];
+}
 
+-(void)resetMainImage {
+    unsigned int * pixels = [MainView getFlippedPixels:directionImage];
+    WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height);
+    canvas = new PolarCanvas();
+    canvas->getLayers()->push_back(layer);
+    
     mainImage = [[NSBitmapImageRep alloc]
                  initWithBitmapDataPlanes:nil
                  pixelsWide:directionImage.size.width
@@ -50,7 +58,6 @@
         for(int y=0;y<mainImage.size.height;y++)
             [mainImage setPixel:zColourAry atX:x y:y];
     trees = [NSMutableArray array];
-    
 }
 
 
@@ -59,11 +66,7 @@
     NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [bundleRoot stringByAppendingString:@"/Contents/Resources/egg.png"]];
 	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
 	directionImage = [[NSBitmapImageRep alloc] initWithData:zNsDataTifData];
-    unsigned int * pixels = [MainView getFlippedPixels:directionImage];
-    WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height);
-    
-    canvas = new PolarCanvas();
-    canvas->getLayers()->push_back(layer);
+
 }
 
 -(void) drawTree:(PolarTree*)tree{
@@ -151,42 +154,52 @@
 }
 
 - (void)drawColorMappedText:(id)sender{
-    canvas->setStatus(RENDERING);
-    
-    ImageShape *shape;
+    [self resetMainImage];
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
                         @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
     NSArray *colors = [[NSArray alloc] initWithObjects:[NSColor greenColor],
                        [NSColor blackColor],[NSColor brownColor],[NSColor cyanColor],
                        [NSColor blueColor],[NSColor yellowColor],[NSColor darkGrayColor],
                        [NSColor headerColor],[NSColor knobColor],[NSColor magentaColor],nil];
-    NSString *str = strings[arc4random() % [strings count]];
-    NSAttributedString *stringToInsert;
     
-    NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 30+15];
-    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
-    
-    //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-    [string addAttribute:NSForegroundColorAttributeName value:colors[arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
-    //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
-    [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
-    
-    stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
-    
-    NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
-    unsigned int * pixels = [MainView getFlippedPixels:textImage];
-    
-    shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
-    
-    Placement* placement = canvas->slapShape(shape);
-    if(placement!=NULL){
-        double rotation = -(shape->getTree()->getRotation()-PI)*360/TWO_PI;
-        NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
-                                    mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
+    canvas->setStatus(RENDERING);
+    NSDate *methodStart = [NSDate date];
 
-        [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-//        [self drawTextTree:shape->getTree()];
+    while(canvas->getStatus()==RENDERING){
+        ImageShape *shape;
+
+        NSString *str = strings[arc4random() % [strings count]];
+        NSAttributedString *stringToInsert;
+        
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 30+15];
+        NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
+        
+        //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
+        [string addAttribute:NSForegroundColorAttributeName value:colors[arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
+        //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
+        [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
+        
+        stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
+        
+        NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
+        unsigned int * pixels = [MainView getFlippedPixels:textImage];
+        
+        shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
+        
+        Placement* placement = canvas->slapShape(shape);
+        if(placement!=NULL){
+            double rotation = -(shape->getTree()->getRotation()-PI)*360/TWO_PI;
+            NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
+                                        mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
+
+            [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
+    //        [self drawTextTree:shape->getTree()];
+        }
     }
+    NSDate *methodFinish = [NSDate date];
+    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+
+    NSLog(@"Execution time: %f",executionTime);
  
 }
 
