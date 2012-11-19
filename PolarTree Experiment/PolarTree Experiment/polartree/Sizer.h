@@ -14,8 +14,8 @@ class EngineShape;
 class Sizer{
 public:
     virtual double sizeFor(EngineShape* shape, int rank, int count) = 0;
-    virtual double switchToNextSize() = 0;
-    virtual double currentSize() = 0;
+    virtual bool switchToNextSize() = 0;
+    virtual double getCurrentSize() = 0;
     virtual void reset() = 0;
     virtual bool hasNextSize() = 0;
 };

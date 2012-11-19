@@ -16,5 +16,10 @@
 #define MARGIN 0
 #define SAMPLE_DISTANCE 20
 
+#define RENDERING 1
+#define PAUSED 0
+#define MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE 2
+#define MAX_ATTEMPTS_TO_PLACE -1
+#define SKIP_REASON_NO_SPACE 1
 
 #endif

@@ -63,3 +63,4 @@ PolarRootTree* ImageShape::getTree(){
         this->tree = makeTree(this,0);
     return this->tree;
 }
+

@@ -10,6 +10,8 @@ using namespace std;
 class PolarRootTree;
 class PolarChildTree;
 class ImageShape;
+struct CartisianPoint;
+
 enum SplitType {
 	_3RAYS, _2RAYS1CUT, _1RAY1CUT, _1RAY2CUTS, _3CUTS
 };
@@ -39,6 +41,7 @@ public:
 	virtual ImageShape* getShape() = 0;
 	virtual bool overlapsCoord(double x, double y, double right, double bottom);
 	virtual bool contains(double x, double y, double right, double bottom);
+    CartisianPoint getTopLeftLocation();
 	inline virtual double computeX(bool rotate) = 0;
 	inline virtual double computeY(bool rotate) = 0;
 	inline virtual double computeRight(bool rotate) = 0;

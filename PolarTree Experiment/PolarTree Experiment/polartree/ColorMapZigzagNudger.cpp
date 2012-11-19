@@ -11,7 +11,7 @@
 #include "EngineShape.h"
 #include "Patch.h"
 
-Placement ColorMapZigzagNudger::nudgeFor(EngineShape* shape, Placement* placement, int attempt, int totalPlannedAttempt){
+Placement* ColorMapZigzagNudger::nudgeFor(EngineShape* shape, Placement* placement, int attempt, int totalPlannedAttempt){
     attempt = ( attempt + placement->patch->getLastAttempt() + totalPlannedAttempt / 2) % totalPlannedAttempt;
     Patch* p= placement->patch;
     double unitDistance = sqrt(p->getWidth() * p->getHeight()/totalPlannedAttempt);
@@ -27,9 +27,9 @@ Placement ColorMapZigzagNudger::nudgeFor(EngineShape* shape, Placement* placemen
         x = p->getWidth() - x;
     }
     
-    Placement retPoint;
-    retPoint.location.x = x;
-    retPoint.location.y = y;
-    retPoint.patch = placement->patch;
+    Placement* retPoint = (Placement*)malloc(sizeof(Placement));
+    retPoint->location.x = x;
+    retPoint->location.y = y;
+    retPoint->patch = placement->patch;
     return retPoint;
 }

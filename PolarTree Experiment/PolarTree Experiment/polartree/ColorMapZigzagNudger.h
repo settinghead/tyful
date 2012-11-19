@@ -15,7 +15,7 @@ class EngineShape;
 class ColorMapZigzagNudger:public Nudger{
 private:
 public:
-    Placement nudgeFor(EngineShape* shape, Placement* placement, int attemptNumber, int totalPlannedAttempts);
+    Placement* nudgeFor(EngineShape* shape, Placement* placement, int attemptNumber, int totalPlannedAttempts);
 };
 
 #endif /* defined(__PolarTree_Experiment__ColorMapNudger__) */

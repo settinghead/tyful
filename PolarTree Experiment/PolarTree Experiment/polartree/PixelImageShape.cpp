@@ -9,6 +9,7 @@ PixelImageShape::PixelImageShape(unsigned int * pixels, int width, int height):
 ImageShape::ImageShape(){
 	this->width = width;
 	this->height = height;
+    this->total = width*height;
     int size = sizeof(unsigned int)*width*height;
 	this->pixels = (unsigned int *)malloc(size);
     memcpy(this->pixels, pixels, size);
@@ -34,5 +35,8 @@ bool PixelImageShape::isEmpty(unsigned int pixelValue){
 unsigned int PixelImageShape::getPixel(int x, int y){
 //    return    this->img->getPixel(x,y);
 //    return pixels[x * height + y];
+    if(x>=width||y>=height||x<0||y<0)
+        return 0x00000000;
+    else
         return pixels[y * width + x];
 };

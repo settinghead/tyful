@@ -10,6 +10,7 @@
 #define __PolarTree_Experiment__WordLayer__
 #include "PolarLayer.h"
 
+class Angler;
 
 class WordLayer: public PolarLayer{
 public:
@@ -23,10 +24,14 @@ public:
     void setTolerance(double v);
     ColorSheet* getColorSheet();
     void setColorSheet(ColorSheet* colorSheet);
+    Angler* getAngler();
+    
 private:
     double getHSB(int x, int y);
     double tolerance = 0.5;
     ColorSheet* colorSheet = NULL;
+    Angler* _angler = NULL;
+
 };
 
 #endif /* defined(__PolarTree_Experiment__WordLayer__) */

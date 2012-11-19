@@ -17,13 +17,13 @@
 using namespace std;
 
 class PatchQueue;
-class PolarLayer;
+class WordLayer;
 class PolarCanvas;
 class EngineShape;
 
 class Patch{
 public:
-    Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer);
+    Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer);
     PolarCanvas* getCanvas();
     double getAverageAlpha();
     vector<Patch*>* divideIntoNineOrMore(PatchQueue* newQueue);
@@ -31,14 +31,14 @@ public:
     double getY();
     double getWidth();
     double getHeight();
-    PolarLayer* getLayer();
+    WordLayer* getLayer();
     vector<EngineShape*>* getShapes();
     double getAlphaSum();
     void mark(int smearedArea, bool spreadSmearToChildren);
     void setLastAttempt(int attempt);
     int getLastAttempt();
     void fail();
-
+    int getLevel();
 private:
     double x,y, width, height;
     double averageAlpha= NAN, area=NAN, alphaSum=NAN;
@@ -49,7 +49,7 @@ private:
     int rank;
     int numberOfFailures = 0;
     int lastAttempt = 0;
-    PolarLayer* layer;
+    WordLayer* layer;
     double getArea();
 
 };

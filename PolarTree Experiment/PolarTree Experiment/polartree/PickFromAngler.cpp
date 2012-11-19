@@ -19,5 +19,6 @@ PickFromAngler::PickFromAngler(vector<double>* angles){
 }
 
 double PickFromAngler::angleFor(EngineShape* shape){
-    return angles->at(rand() * angles->size());
+    int i = (int)(rand() % angles->size());
+    return angles->at(i);
 }

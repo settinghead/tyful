@@ -10,26 +10,23 @@
 #define PolarTree_Experiment_PolarCanvas_h
 #include <vector>
 #include <math.h>
-
-#define RENDERING 1
-#define PAUSED 0
-#define MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE 2
-#define MAX_ATTEMPTS_TO_PLACE -1
-#define SKIP_REASON_NO_SPACE 1
+#include "constants.h"
 
 using namespace std;
 
 class EngineShape;
+class ImageShape;
 class PolarLayer;
 class Sizer;
 class Placer;
 class Angler;
 class Patch;
 class Nudger;
+class DensityPatchIndex;
 
 struct CartisianPoint{
-    double x;
-    double y;
+    double x = 0;
+    double y = 0;
     inline CartisianPoint operator + (const CartisianPoint &o) const{
         CartisianPoint p;
         p.x = o.x + x;
@@ -39,15 +36,15 @@ struct CartisianPoint{
 };
 
 struct PolarPoint{
-    double d;
-    double r;
+    double d = 0;
+    double r = 0;
 };
 
 struct Placement{
     CartisianPoint location;
-    double scale;
-    double rotation;
-    Patch* patch;
+    double scale = 1;
+    double rotation = 0;
+    Patch* patch = NULL;
     inline Placement operator + (const Placement &o) const{
         Placement p;
         p.location = o.location + location;
@@ -61,7 +58,7 @@ struct Placement{
 class PolarCanvas{
 public:
     PolarCanvas();
-    Placement* slapShape(EngineShape* shape);
+    Placement* slapShape(ImageShape* shape);
     void setPerseverance(int v);
     int getPerseverance();
     void setSizer(Sizer* sizer);
@@ -71,7 +68,11 @@ public:
     int getWidth();
     int getHeight();
     vector<PolarLayer*>* getLayers();
+    typedef int STATUS;
     typedef int SKIP_REASON;
+    Placer* getPlacer();
+    void setStatus(STATUS status);
+
 private:
     vector<PolarLayer*>* layers;
     vector<EngineShape*>* shapes;
@@ -82,18 +83,22 @@ private:
     int totalAttempted = 0;
     int perseverance = 10, diligence = 8;
     double width = NAN, height= NAN;
-    typedef int STATUS;
     STATUS status = PAUSED;
-    Sizer* sizer;
-    Angler* angler;
-    Nudger* nudger;
-    Placer* placer;
+    Sizer* _sizer = NULL;
+    Nudger* _nudger = NULL;
+    Placer* _placer = NULL;
+    Sizer* getSizer();
+    Nudger* getNudger();
+    EngineShape* generateEngineWord(ImageShape* shape);
     bool placeShape(EngineShape * shape);
     void computeDesiredPlacements(EngineShape* shape);
     Placement* tryCurrentSize(EngineShape* shape);
     void skipShape(EngineShape* shape, SKIP_REASON reason);
     int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
-
+    DensityPatchIndex* _patchIndex = NULL;
+    DensityPatchIndex* getPatchIndex();
 };
+
+
 
 #endif

@@ -20,7 +20,7 @@ public:
     LeveledPatchMap(DensityPatchIndex* index);
     Patch* getBestPatchAtLevel(int level);
     DensityPatchIndex* getIndex();
-
+    void add(Patch* p);
 private:
     vector<PatchQueue*>* map;
     DensityPatchIndex* index;

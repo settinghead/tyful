@@ -30,13 +30,14 @@ public:
     PatchQueue* descend(int level);
     LeveledPatchMap* getMap();
     unsigned long size();
+    int getLevel();
+    void tryPush(Patch* patch);
     void tryPushAll(vector<Patch*>* patches);
     
 private:
     int myLevel;
     LeveledPatchMap* map;
 //    LookupMap* lookupMap;
-    void tryPush(Patch* patch);
 };
 
 #endif

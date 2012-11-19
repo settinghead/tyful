@@ -10,9 +10,13 @@
 #include "DensityPatchIndex.h"
 #include "Patch.h"
 #include "PatchQueue.h"
+#include "vector"
+
+using namespace std;
 
 LeveledPatchMap::LeveledPatchMap(DensityPatchIndex* index){
         this->index = index;
+        this->map = new vector<PatchQueue*>();
 }
 
 Patch* LeveledPatchMap::getBestPatchAtLevel(int level){
@@ -24,7 +28,7 @@ Patch* LeveledPatchMap::getBestPatchAtLevel(int level){
 }
 
 PatchQueue* LeveledPatchMap::getQueue(int level){
-    if(level>map->size())
+    if(level>=map->size())
         generateLevelQueue(level);
     return map->at(level);
 }
@@ -41,6 +45,10 @@ void LeveledPatchMap::generateLevelQueue(int level){
         //descend and push
         map->push_back(map->at(map->size()-1)->descend(level));
     }
+}
+
+void LeveledPatchMap::add(Patch* p){
+    getQueue(p->getLevel())->tryPush(p);
 }
 
 DensityPatchIndex* LeveledPatchMap::getIndex(){

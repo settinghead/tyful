@@ -13,7 +13,7 @@
 #include "DensityPatchIndex.h"
 #include "EngineShape.h"
 
-Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, PolarLayer* layer){
+Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer){
     this->x = x; this->y = y; this->width = width; this->height = height;
     this->parent = parent;
     this->rank = rank;
@@ -107,7 +107,7 @@ double Patch::getY(){
     return y;
 }
 
-PolarLayer* Patch::getLayer(){
+WordLayer* Patch::getLayer(){
     return layer;
 }
 
@@ -125,6 +125,10 @@ int Patch::getLastAttempt(){
 
 void Patch::fail(){
     numberOfFailures++;
+}
+
+int Patch::getLevel(){
+    return queue->getLevel();
 }
 
 void Patch::mark(int smearedArea, bool spreadSmearToChildren) {

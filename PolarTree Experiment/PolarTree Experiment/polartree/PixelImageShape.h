@@ -21,7 +21,8 @@ public:
 	unsigned int getPixel(int x, int y);
 
 protected:
-	int width, height;
+	unsigned int width, height;
+    unsigned int total;
 	unsigned int * pixels;
 //    unsigned char * pixels;
 };

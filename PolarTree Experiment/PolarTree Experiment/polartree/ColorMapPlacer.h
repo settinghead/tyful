@@ -12,20 +12,21 @@
 #include <vector>
 
 using namespace std;
+class PolarCanvas;
 class EngineShape;
 class DensityPatchIndex;
 
 
 class ColorMapPlacer:public Placer{
 public:
-    ColorMapPlacer(EngineShape* shape, DensityPatchIndex* index);
+    ColorMapPlacer(PolarCanvas* canvas, DensityPatchIndex* index);
     vector<Placement*>* place(EngineShape* shape, unsigned long totalCount);
     void success();
     void fail();
     void success(vector<Placement*>*);
     void fail(vector<Placement*>*);
 private:
-    EngineShape* shape;
+    PolarCanvas* canvas;
     DensityPatchIndex* index;
 };
 

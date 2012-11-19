@@ -9,12 +9,19 @@
 #include "PolarCanvas.h"
 #include "EngineShape.h"
 #include "Sizer.h"
+#include "ByWeightSizer.h"
 #include "Placer.h"
+#include "ColorMapPlacer.h"
 #include "Patch.h"
-#include "PolarLayer.h"
+#include "WordLayer.h"
 #include "Angler.h"
+#include "ColorMapAngler.h"
 #include "PolarRootTree.h"
 #include "Nudger.h"
+#include "Placer.h"
+#include "ColorMapPlacer.h"
+#include "ColorMapZigzagNudger.h"
+#include "DensityPatchIndex.h"
 #include <cmath>
 #include <limits>
 #include <cstdlib>
@@ -28,12 +35,22 @@ PolarCanvas::PolarCanvas()
     this->retryShapes = new vector<EngineShape*>();
 }
 
-Placement* PolarCanvas::slapShape(EngineShape* shape){
+Placement* PolarCanvas::slapShape(ImageShape* shape){
     while(failureCount < perseverance && status == RENDERING){
-        Placement* p = tryCurrentSize(shape);
+        EngineShape* eShape = generateEngineWord(shape);
+        Placement* p = tryCurrentSize(eShape);
         if(p!=NULL) return p;
     }
     return NULL;
+}
+
+EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape){
+//    int newIndex = totalAttempted<tu.words.size?totalAttemptedWords
+    //				+ indexOffset
+//    :tu.words.size;
+    
+    EngineShape* eShape = new EngineShape(shape);
+    return eShape;
 }
 
 vector<PolarLayer*>* PolarCanvas::getLayers(){
@@ -43,7 +60,7 @@ vector<PolarLayer*>* PolarCanvas::getLayers(){
 Placement* PolarCanvas::tryCurrentSize(EngineShape * shape){
     placeShape(shape);
     if(shape->wasSkipped()){
-        if(sizer->hasNextSize()){
+        if(getSizer()->hasNextSize()){
             if(totalAttempted>0){
                 retryShapes->push_back(shape);
                 numRetries++;
@@ -51,7 +68,7 @@ Placement* PolarCanvas::tryCurrentSize(EngineShape * shape){
             else
                 numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
             if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE ){
-                sizer->switchToNextSize();
+                getSizer()->switchToNextSize();
                 numRetries = 0;
             }
             return NULL;
@@ -73,6 +90,24 @@ Placement* PolarCanvas::tryCurrentSize(EngineShape * shape){
     return shape->getFinalPlacement();
 }
 
+Sizer* PolarCanvas::getSizer(){
+    if(this->_sizer==NULL){
+        int max = width>height?width:height;
+        int min = max/100;
+        if(min<7) min = 7;
+        _sizer = new ByWeightSizer(min,100);
+        
+    }
+    return _sizer;
+}
+
+Nudger* PolarCanvas::getNudger(){
+    if(_nudger==NULL){
+        _nudger = new ColorMapZigzagNudger();
+    }
+    return _nudger;
+}
+
 bool PolarCanvas::placeShape(EngineShape * shape){
     computeDesiredPlacements(shape);
     while(shape->hasNextDesiredPlacement()){
@@ -81,10 +116,11 @@ bool PolarCanvas::placeShape(EngineShape * shape){
         EngineShape* lastCollidedWith = NULL;
         int attempt;
         for (attempt= 0; attempt < maxAttemptsToPlace; attempt++) {
-            Placement newPlacement = (*candidatePlacement + nudger->nudgeFor(shape, candidatePlacement, attempt,maxAttemptsToPlace));
+            Placement* relative = getNudger()->nudgeFor(shape, candidatePlacement, attempt,maxAttemptsToPlace);
+            Placement newPlacement = (*candidatePlacement + (*relative));
             shape->nudgeTo(&newPlacement);
             
-            double angle= angler->angleFor(shape);
+            double angle= candidatePlacement->patch->getLayer()->getAngler()->angleFor(shape);
             //			eWord.getTree().draw(destination.graphics);
             
             // // TODO
@@ -120,7 +156,7 @@ bool PolarCanvas::placeShape(EngineShape * shape){
             
             if (!foundOverlap) {
                 candidatePlacement->patch->mark(shape->getShape()->getWidth()*shape->getShape()->getHeight(), false);
-                placer->success(shape->getDesiredPlacements());
+                getPlacer()->success(shape->getDesiredPlacements());
 //                placer->success();
                 shape->finalizePlacement();
                 //						successCount++;
@@ -132,13 +168,13 @@ bool PolarCanvas::placeShape(EngineShape * shape){
         }
             candidatePlacement->patch->setLastAttempt(attempt);
             candidatePlacement->patch->fail();
-        }
+    }
         
-        skipShape(shape, SKIP_REASON_NO_SPACE);
-        //			info.patch.mark(wordImageWidth*wordImageHeight, true);
-        placer->fail(shape->getDesiredPlacements());
-        //			tu.failedLastVar = true;
-        return false;
+    skipShape(shape, SKIP_REASON_NO_SPACE);
+    //			info.patch.mark(wordImageWidth*wordImageHeight, true);
+    getPlacer()->fail(shape->getDesiredPlacements());
+    //			tu.failedLastVar = true;
+    return false;
 }
 
 void PolarCanvas::skipShape(EngineShape* shape, int reason){
@@ -173,12 +209,29 @@ int PolarCanvas::getWidth(){
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p){
     srand((unsigned)time(NULL));
-    return (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * 5 * diligence
-    * (1+ ((double) rand() / (RAND_MAX+1)) * 0.4)
-    ;
+    int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * 5 * diligence;
+    return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.4);
 }
 
 void PolarCanvas::computeDesiredPlacements(EngineShape* shape){
-    shape->setDesiredPlacements(placer->place(shape, shapes->size()));
+    shape->setDesiredPlacements(getPlacer()->place(shape, shapes->size()));
     
+}
+
+DensityPatchIndex* PolarCanvas::getPatchIndex(){
+    if(_patchIndex==NULL){
+        _patchIndex = new DensityPatchIndex(this);
+    }
+    return _patchIndex;
+}
+
+void PolarCanvas::setStatus(STATUS status){
+    this->status = status;
+}
+
+Placer* PolarCanvas::getPlacer(){
+    if(_placer==NULL){
+        _placer = new ColorMapPlacer(this, getPatchIndex());
+    }
+    return _placer;
 }

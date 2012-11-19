@@ -5,6 +5,7 @@
 #include "PolarTreeBuilder.h"
 #include "ImageShape.h"
 #include "Flip.h"
+#include "PolarCanvas.h"
 
 PolarTree::PolarTree(double r1, double r2, double d1, double d2,
 		int minBoxSize) {
@@ -380,6 +381,14 @@ double PolarTree::getBottom(bool rotate) {
 void PolarTree::setLeaf(bool b) {
 	this->_leaf = b;
 }
+
+CartisianPoint PolarTree::getTopLeftLocation(){
+    CartisianPoint p;
+    p.x = getRootX()-getShape()->getWidth()/2;
+    p.y = getRootY()-getShape()->getHeight()/2;
+    return p;
+}
+
 
 //char* PolarTree::toString() {
 //	int indent = 0;

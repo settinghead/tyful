@@ -11,6 +11,11 @@
 #include "PixelImageShape.h"
 #include "PolarRootTree.h"
 #include "ColorMath.h"
+#include "Angler.h"
+#include "MostlyHorizontalAngler.h"
+#include "ColorMapAngler.h"
+#include "Placer.h"
+#include "ColorMapPlacer.h"
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
@@ -159,4 +164,12 @@ double WordLayer::getHSB(int x, int y){
         return colour;
     }
 }
-    
+
+
+Angler* WordLayer::getAngler(){
+    if(_angler==NULL){
+        _angler = new ColorMapAngler(this, new MostlyHorizontalAngler());
+        //				this._angler = new MostlyHorizAngler();
+    }
+    return _angler;
+}

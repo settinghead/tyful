@@ -30,6 +30,9 @@ vector<Patch*>* DensityPatchIndex::findPatchFor(int width, int height){
     return result;
 }
 
+void DensityPatchIndex::add(Patch* p){
+    map->add(p);
+}
 
 Patch* DensityPatchIndex::getBestPatchAtLevel(int level) {
     Patch* result= map->getBestPatchAtLevel(level);

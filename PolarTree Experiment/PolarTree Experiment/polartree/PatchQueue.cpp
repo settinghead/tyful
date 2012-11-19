@@ -28,7 +28,7 @@ PatchQueue::PatchQueue(int myLevel, LeveledPatchMap* map):priority_queue<Patch*>
              it != map->getIndex()->getCanvas()->getLayers()->end(); ++it) {
             PolarLayer* layer = *it;
             if(layer->type==WORD_LAYER){
-                this->tryPush(new Patch(0,0,layer->getWidth(),layer->getHeight(),0,NULL,this,layer));
+                this->tryPush(new Patch(0,0,layer->getWidth(),layer->getHeight(),0,NULL,this,(WordLayer*)layer));
             }
         }
     }
@@ -64,6 +64,10 @@ void PatchQueue::tryPushAll(vector<Patch*>* patches){
 unsigned long PatchQueue::size(){
     return reinterpret_cast<vector<Patch*>*>(this)->size();
 
+}
+
+int PatchQueue::getLevel(){
+    return myLevel;
 }
 
 void PatchQueue::tryPush(Patch* patch){

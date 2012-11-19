@@ -10,15 +10,18 @@
 
 class PolarTree;
 class PolarRootTree;
+class PolarCanvas;
 
 @interface MainView : NSView{
     NSBitmapImageRep *mainImage;
     NSBitmapImageRep *directionImage;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
+    PolarCanvas* canvas;
 
 }
 - (IBAction)drawRandomText:(id)sender;
+- (IBAction)drawColorMappedText:(id)sender;
 -(void) drawLeaves:(PolarTree*)tree;
 -(void) drawTree:(PolarTree*)tree;
 -(void) drawArc:(float)center_x

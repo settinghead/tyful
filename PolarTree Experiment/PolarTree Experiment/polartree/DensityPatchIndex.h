@@ -22,6 +22,7 @@ public:
     DensityPatchIndex(PolarCanvas* canvas);
     PolarCanvas* getCanvas();
     vector<Patch*>* findPatchFor(int width, int height);
+    void add(Patch* p);
 private:
     PolarCanvas* canvas;
     LeveledPatchMap* map;

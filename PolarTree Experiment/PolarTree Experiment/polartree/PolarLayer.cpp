@@ -15,10 +15,10 @@ PolarLayer::PolarLayer(unsigned int * pixels, int width, int height)
 :PixelImageShape::PixelImageShape(pixels,width,height), type(WORD_LAYER){
 }
 
-bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint*>* points, double rotation, double refX,double refY){
+bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){
     for(int i = 0 ;i<points->size();i++){
-        double theta = points->at(i)->r;
-        double d = points->at(i)->d;
+        double theta = points->at(i).r;
+        double d = points->at(i).d;
         theta -= rotation;
         double x = centerX + cos(theta) * d;
         double y = centerY + sin(theta) * d;
@@ -28,10 +28,10 @@ bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<P
     return true;
 }
 
-bool PolarLayer::containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint*>* points, double rotation, double refX, double refY){
+bool PolarLayer::containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX, double refY){
     for(int i=0;i<points->size();i++){
-        double theta = points->at(i)->r;
-        double d = points->at(i)->d;
+        double theta = points->at(i).r;
+        double d = points->at(i).d;
         theta -= rotation;
         double x = centerX + cos(theta) * d;
         double y = centerY + sin(theta) * d;
@@ -57,7 +57,7 @@ bool PolarLayer::aboveContainsPoint(double x, double y, double refX, double refY
     else return false;
 }
 
-bool PolarLayer::aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint*>* points, double rotation, double refX,double refY){
+bool PolarLayer::aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){
     if(above!=NULL){
         if(above->containsAnyPolarPoints(centerX,centerY,points, rotation,refX,refY)) return true;
         else return above->aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY);
