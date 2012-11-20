@@ -5,7 +5,7 @@ polartree: check
 	# -import $(call nativepath,$(FLASCC)/usr/lib/playerglobal.abc) \
 	# Console.as -outdir . -out Console
 
-	"$(FLASCC)/usr/bin/g++" -04 polartree/*.cpp -emit-swc=polartree.PolarTree -lFlash++ -lAS3++ -o polartree/PolarTree.swc
+	"$(FLASCC)/usr/bin/g++" -04 -O3 ../cpp_common/polartree/*.cpp polartree/*.cpp -emit-swc=polartree.PolarTree -lFlash++ -lAS3++ -o polartree/PolarTree.swc
 	"$(FLEX)/bin/mxmlc" -compiler.omit-trace-statements=false -library-path=polartree/PolarTree.swc -debug=true runexperiment.as -o runwxperiment.swf
 
 #

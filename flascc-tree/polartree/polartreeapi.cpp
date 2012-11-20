@@ -6,7 +6,7 @@
 #include <Flash++.h>
 
 #include "ImageShape.h"
-#include "BBPolarTreeBuilder.h"
+#include "PolarTreeBuilder.h"
 
 
 // First we mark the function declaration with a GCC attribute specifying the

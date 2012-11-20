@@ -7,27 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C10FE8916594762003F656A /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8716594762003F656A /* ColorMapAngler.cpp */; };
-		7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */; };
-		7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */; };
-		7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE9316595E38003F656A /* ByWeightSizer.cpp */; };
-		7C10FE9B165962EB003F656A /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */; };
 		7C10FEA5165993C0003F656A /* egg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C10FEA4165993C0003F656A /* egg.png */; };
-		7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */; };
-		7C1B3B2D1657F3DC00D3DCAD /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */; };
-		7CBD6B5816580DB700E9047C /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5716580DB700E9047C /* EngineShape.cpp */; };
-		7CBD6B5B16582F7500E9047C /* Patch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5A16582F7500E9047C /* Patch.cpp */; };
-		7CBD6B5E1658303000E9047C /* PatchQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5D1658303000E9047C /* PatchQueue.cpp */; };
-		7CBD6B611658305400E9047C /* LeveledPatchMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B5F1658305300E9047C /* LeveledPatchMap.cpp */; };
-		7CBD6B6416583B3A00E9047C /* DensityPatchIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6216583B3A00E9047C /* DensityPatchIndex.cpp */; };
-		7CBD6B6916584FE200E9047C /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6716584FE200E9047C /* Angler.cpp */; };
-		7CBD6B6C16588E5700E9047C /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBD6B6A16588E5400E9047C /* WordLayer.cpp */; };
 		7CBDAAF8165AADFC00E009E5 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF2165AADFC00E009E5 /* dog.png */; };
 		7CBDAAF9165AADFC00E009E5 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF3165AADFC00E009E5 /* face.png */; };
 		7CBDAAFA165AADFC00E009E5 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF4165AADFC00E009E5 /* heart.png */; };
 		7CBDAAFB165AADFC00E009E5 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF5165AADFC00E009E5 /* star.png */; };
 		7CBDAAFC165AADFC00E009E5 /* wheel_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF6165AADFC00E009E5 /* wheel_h.png */; };
 		7CBDAAFD165AADFC00E009E5 /* wheel_v.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF7165AADFC00E009E5 /* wheel_v.png */; };
+		7CBDAB38165B4E7800E009E5 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB08165B4E7800E009E5 /* Angler.cpp */; };
+		7CBDAB39165B4E7800E009E5 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB08165B4E7800E009E5 /* Angler.cpp */; };
+		7CBDAB3A165B4E7800E009E5 /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0A165B4E7800E009E5 /* ByWeightSizer.cpp */; };
+		7CBDAB3B165B4E7800E009E5 /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0A165B4E7800E009E5 /* ByWeightSizer.cpp */; };
+		7CBDAB3C165B4E7800E009E5 /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0C165B4E7800E009E5 /* ColorMapAngler.cpp */; };
+		7CBDAB3D165B4E7800E009E5 /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0C165B4E7800E009E5 /* ColorMapAngler.cpp */; };
+		7CBDAB3E165B4E7800E009E5 /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0E165B4E7800E009E5 /* ColorMapPlacer.cpp */; };
+		7CBDAB3F165B4E7800E009E5 /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB0E165B4E7800E009E5 /* ColorMapPlacer.cpp */; };
+		7CBDAB40165B4E7800E009E5 /* DensityPatchIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB13165B4E7800E009E5 /* DensityPatchIndex.cpp */; };
+		7CBDAB41165B4E7800E009E5 /* DensityPatchIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB13165B4E7800E009E5 /* DensityPatchIndex.cpp */; };
+		7CBDAB42165B4E7800E009E5 /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB15165B4E7800E009E5 /* EngineShape.cpp */; };
+		7CBDAB43165B4E7800E009E5 /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB15165B4E7800E009E5 /* EngineShape.cpp */; };
+		7CBDAB44165B4E7800E009E5 /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB18165B4E7800E009E5 /* ImageShape.cpp */; };
+		7CBDAB45165B4E7800E009E5 /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB18165B4E7800E009E5 /* ImageShape.cpp */; };
+		7CBDAB46165B4E7800E009E5 /* LeveledPatchMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1A165B4E7800E009E5 /* LeveledPatchMap.cpp */; };
+		7CBDAB47165B4E7800E009E5 /* LeveledPatchMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1A165B4E7800E009E5 /* LeveledPatchMap.cpp */; };
+		7CBDAB48165B4E7800E009E5 /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1C165B4E7800E009E5 /* MostlyHorizontalAngler.cpp */; };
+		7CBDAB49165B4E7800E009E5 /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1C165B4E7800E009E5 /* MostlyHorizontalAngler.cpp */; };
+		7CBDAB4A165B4E7800E009E5 /* Patch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1F165B4E7800E009E5 /* Patch.cpp */; };
+		7CBDAB4B165B4E7800E009E5 /* Patch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB1F165B4E7800E009E5 /* Patch.cpp */; };
+		7CBDAB4C165B4E7800E009E5 /* PatchQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB21165B4E7800E009E5 /* PatchQueue.cpp */; };
+		7CBDAB4D165B4E7800E009E5 /* PatchQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB21165B4E7800E009E5 /* PatchQueue.cpp */; };
+		7CBDAB4E165B4E7800E009E5 /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB23165B4E7800E009E5 /* PickFromAngler.cpp */; };
+		7CBDAB4F165B4E7800E009E5 /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB23165B4E7800E009E5 /* PickFromAngler.cpp */; };
+		7CBDAB50165B4E7800E009E5 /* PixelImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB25165B4E7800E009E5 /* PixelImageShape.cpp */; };
+		7CBDAB51165B4E7800E009E5 /* PixelImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB25165B4E7800E009E5 /* PixelImageShape.cpp */; };
+		7CBDAB52165B4E7800E009E5 /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB28165B4E7800E009E5 /* PolarCanvas.cpp */; };
+		7CBDAB53165B4E7800E009E5 /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB28165B4E7800E009E5 /* PolarCanvas.cpp */; };
+		7CBDAB54165B4E7800E009E5 /* PolarChildTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2A165B4E7800E009E5 /* PolarChildTree.cpp */; };
+		7CBDAB55165B4E7800E009E5 /* PolarChildTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2A165B4E7800E009E5 /* PolarChildTree.cpp */; };
+		7CBDAB56165B4E7800E009E5 /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2C165B4E7800E009E5 /* PolarLayer.cpp */; };
+		7CBDAB57165B4E7800E009E5 /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2C165B4E7800E009E5 /* PolarLayer.cpp */; };
+		7CBDAB58165B4E7800E009E5 /* PolarRootTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2E165B4E7800E009E5 /* PolarRootTree.cpp */; };
+		7CBDAB59165B4E7800E009E5 /* PolarRootTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB2E165B4E7800E009E5 /* PolarRootTree.cpp */; };
+		7CBDAB5A165B4E7800E009E5 /* PolarTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB30165B4E7800E009E5 /* PolarTree.cpp */; };
+		7CBDAB5B165B4E7800E009E5 /* PolarTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB30165B4E7800E009E5 /* PolarTree.cpp */; };
+		7CBDAB5C165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB32165B4E7800E009E5 /* PolarTreeBuilder.cpp */; };
+		7CBDAB5D165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB32165B4E7800E009E5 /* PolarTreeBuilder.cpp */; };
+		7CBDAB5E165B4E7800E009E5 /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */; };
+		7CBDAB5F165B4E7800E009E5 /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */; };
 		7CF53CC41646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
 		7CF53CCE1646658B00A218BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CF53CCC1646658B00A218BE /* InfoPlist.strings */; };
 		7CF53CD01646658B00A218BE /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CCF1646658B00A218BE /* main.mm */; };
@@ -38,13 +64,7 @@
 		7CF53CE31646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
 		7CF53CEB1646658B00A218BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CF53CE91646658B00A218BE /* InfoPlist.strings */; };
 		7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.mm */; };
-		7CF53D021646663300A218BE /* PolarChildTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CF81646663300A218BE /* PolarChildTree.cpp */; };
-		7CF53D031646663300A218BE /* PolarRootTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFA1646663300A218BE /* PolarRootTree.cpp */; };
-		7CF53D041646663300A218BE /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFC1646663300A218BE /* PolarTreeBuilder.cpp */; };
-		7CF53D051646663300A218BE /* PolarTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CFE1646663300A218BE /* PolarTree.cpp */; };
 		7CF53D0F16467CA000A218BE /* MainView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53D0E16467CA000A218BE /* MainView.mm */; };
-		7CF84D7F164C169F008D8664 /* PixelImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */; };
-		7CF84D85164C1988008D8664 /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF84D84164C1988008D8664 /* ImageShape.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,50 +78,61 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7C10FE8716594762003F656A /* ColorMapAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapAngler.cpp; sourceTree = "<group>"; };
-		7C10FE8816594762003F656A /* ColorMapAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapAngler.h; sourceTree = "<group>"; };
-		7C10FE8B16594878003F656A /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		7C10FE8D16594AB7003F656A /* PickFromAngler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickFromAngler.h; sourceTree = "<group>"; };
-		7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PickFromAngler.cpp; sourceTree = "<group>"; };
-		7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MostlyHorizontalAngler.cpp; sourceTree = "<group>"; };
-		7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
-		7C10FE9316595E38003F656A /* ByWeightSizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ByWeightSizer.cpp; sourceTree = "<group>"; };
-		7C10FE9416595E38003F656A /* ByWeightSizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByWeightSizer.h; sourceTree = "<group>"; };
-		7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
-		7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapPlacer.cpp; sourceTree = "<group>"; };
-		7C10FE9A165962EB003F656A /* ColorMapPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapPlacer.h; sourceTree = "<group>"; };
 		7C10FEA4165993C0003F656A /* egg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egg.png; sourceTree = "<group>"; };
-		7C1B3B221657DB0200D3DCAD /* PolarCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
-		7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
-		7C1B3B2B1657F31000D3DCAD /* PolarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
-		7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarLayer.cpp; sourceTree = "<group>"; };
-		7C4AD670164C102700335CFC /* PixelImageShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelImageShape.h; sourceTree = "<group>"; };
-		7C8F21EC164FC11D0084C060 /* Flip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flip.h; sourceTree = "<group>"; };
-		7CBD6B4F1657FBF900E9047C /* Nudger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Nudger.h; sourceTree = "<group>"; };
-		7CBD6B511657FCB100E9047C /* Placer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Placer.h; sourceTree = "<group>"; };
-		7CBD6B5516580B9000E9047C /* EngineShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineShape.h; sourceTree = "<group>"; };
-		7CBD6B5616580C7800E9047C /* Sizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sizer.h; sourceTree = "<group>"; };
-		7CBD6B5716580DB700E9047C /* EngineShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineShape.cpp; sourceTree = "<group>"; };
-		7CBD6B5916582B5200E9047C /* Patch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
-		7CBD6B5A16582F7500E9047C /* Patch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Patch.cpp; sourceTree = "<group>"; };
-		7CBD6B5C1658302500E9047C /* PatchQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatchQueue.h; sourceTree = "<group>"; };
-		7CBD6B5D1658303000E9047C /* PatchQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PatchQueue.cpp; sourceTree = "<group>"; };
-		7CBD6B5F1658305300E9047C /* LeveledPatchMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeveledPatchMap.cpp; sourceTree = "<group>"; };
-		7CBD6B601658305400E9047C /* LeveledPatchMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeveledPatchMap.h; sourceTree = "<group>"; };
-		7CBD6B6216583B3A00E9047C /* DensityPatchIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DensityPatchIndex.cpp; sourceTree = "<group>"; };
-		7CBD6B6316583B3A00E9047C /* DensityPatchIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DensityPatchIndex.h; sourceTree = "<group>"; };
-		7CBD6B6716584FE200E9047C /* Angler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Angler.cpp; sourceTree = "<group>"; };
-		7CBD6B6816584FE200E9047C /* Angler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Angler.h; sourceTree = "<group>"; };
-		7CBD6B6A16588E5400E9047C /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
-		7CBD6B6B16588E5500E9047C /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
-		7CBD6B6E1659368400E9047C /* ColorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
 		7CBDAAF2165AADFC00E009E5 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		7CBDAAF3165AADFC00E009E5 /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		7CBDAAF4165AADFC00E009E5 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		7CBDAAF5165AADFC00E009E5 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		7CBDAAF6165AADFC00E009E5 /* wheel_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_h.png; sourceTree = "<group>"; };
 		7CBDAAF7165AADFC00E009E5 /* wheel_v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel_v.png; sourceTree = "<group>"; };
-		7CBDAAFE165AF7AD00E009E5 /* structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
+		7CBDAB08165B4E7800E009E5 /* Angler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Angler.cpp; sourceTree = "<group>"; };
+		7CBDAB09165B4E7800E009E5 /* Angler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Angler.h; sourceTree = "<group>"; };
+		7CBDAB0A165B4E7800E009E5 /* ByWeightSizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ByWeightSizer.cpp; sourceTree = "<group>"; };
+		7CBDAB0B165B4E7800E009E5 /* ByWeightSizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByWeightSizer.h; sourceTree = "<group>"; };
+		7CBDAB0C165B4E7800E009E5 /* ColorMapAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapAngler.cpp; sourceTree = "<group>"; };
+		7CBDAB0D165B4E7800E009E5 /* ColorMapAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapAngler.h; sourceTree = "<group>"; };
+		7CBDAB0E165B4E7800E009E5 /* ColorMapPlacer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapPlacer.cpp; sourceTree = "<group>"; };
+		7CBDAB0F165B4E7800E009E5 /* ColorMapPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapPlacer.h; sourceTree = "<group>"; };
+		7CBDAB10165B4E7800E009E5 /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
+		7CBDAB11165B4E7800E009E5 /* ColorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
+		7CBDAB12165B4E7800E009E5 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		7CBDAB13165B4E7800E009E5 /* DensityPatchIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DensityPatchIndex.cpp; sourceTree = "<group>"; };
+		7CBDAB14165B4E7800E009E5 /* DensityPatchIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DensityPatchIndex.h; sourceTree = "<group>"; };
+		7CBDAB15165B4E7800E009E5 /* EngineShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineShape.cpp; sourceTree = "<group>"; };
+		7CBDAB16165B4E7800E009E5 /* EngineShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineShape.h; sourceTree = "<group>"; };
+		7CBDAB17165B4E7800E009E5 /* Flip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flip.h; sourceTree = "<group>"; };
+		7CBDAB18165B4E7800E009E5 /* ImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageShape.cpp; sourceTree = "<group>"; };
+		7CBDAB19165B4E7800E009E5 /* ImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageShape.h; sourceTree = "<group>"; };
+		7CBDAB1A165B4E7800E009E5 /* LeveledPatchMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeveledPatchMap.cpp; sourceTree = "<group>"; };
+		7CBDAB1B165B4E7800E009E5 /* LeveledPatchMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeveledPatchMap.h; sourceTree = "<group>"; };
+		7CBDAB1C165B4E7800E009E5 /* MostlyHorizontalAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MostlyHorizontalAngler.cpp; sourceTree = "<group>"; };
+		7CBDAB1D165B4E7800E009E5 /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
+		7CBDAB1E165B4E7800E009E5 /* Nudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nudger.h; sourceTree = "<group>"; };
+		7CBDAB1F165B4E7800E009E5 /* Patch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Patch.cpp; sourceTree = "<group>"; };
+		7CBDAB20165B4E7800E009E5 /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
+		7CBDAB21165B4E7800E009E5 /* PatchQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PatchQueue.cpp; sourceTree = "<group>"; };
+		7CBDAB22165B4E7800E009E5 /* PatchQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatchQueue.h; sourceTree = "<group>"; };
+		7CBDAB23165B4E7800E009E5 /* PickFromAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PickFromAngler.cpp; sourceTree = "<group>"; };
+		7CBDAB24165B4E7800E009E5 /* PickFromAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickFromAngler.h; sourceTree = "<group>"; };
+		7CBDAB25165B4E7800E009E5 /* PixelImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelImageShape.cpp; sourceTree = "<group>"; };
+		7CBDAB26165B4E7800E009E5 /* PixelImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelImageShape.h; sourceTree = "<group>"; };
+		7CBDAB27165B4E7800E009E5 /* Placer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Placer.h; sourceTree = "<group>"; };
+		7CBDAB28165B4E7800E009E5 /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
+		7CBDAB29165B4E7800E009E5 /* PolarCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
+		7CBDAB2A165B4E7800E009E5 /* PolarChildTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarChildTree.cpp; sourceTree = "<group>"; };
+		7CBDAB2B165B4E7800E009E5 /* PolarChildTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarChildTree.h; sourceTree = "<group>"; };
+		7CBDAB2C165B4E7800E009E5 /* PolarLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarLayer.cpp; sourceTree = "<group>"; };
+		7CBDAB2D165B4E7800E009E5 /* PolarLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
+		7CBDAB2E165B4E7800E009E5 /* PolarRootTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarRootTree.cpp; sourceTree = "<group>"; };
+		7CBDAB2F165B4E7800E009E5 /* PolarRootTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarRootTree.h; sourceTree = "<group>"; };
+		7CBDAB30165B4E7800E009E5 /* PolarTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTree.cpp; sourceTree = "<group>"; };
+		7CBDAB31165B4E7800E009E5 /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
+		7CBDAB32165B4E7800E009E5 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
+		7CBDAB33165B4E7800E009E5 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
+		7CBDAB34165B4E7800E009E5 /* Sizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sizer.h; sourceTree = "<group>"; };
+		7CBDAB35165B4E7800E009E5 /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
+		7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
+		7CBDAB37165B4E7800E009E5 /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -121,19 +152,8 @@
 		7CF53CEA1646658B00A218BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7CF53CEC1646658B00A218BE /* PolarTree_ExperimentTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolarTree_ExperimentTests.h; sourceTree = "<group>"; };
 		7CF53CED1646658B00A218BE /* PolarTree_ExperimentTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PolarTree_ExperimentTests.mm; sourceTree = "<group>"; };
-		7CF53CF81646663300A218BE /* PolarChildTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarChildTree.cpp; sourceTree = "<group>"; };
-		7CF53CF91646663300A218BE /* PolarChildTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarChildTree.h; sourceTree = "<group>"; };
-		7CF53CFA1646663300A218BE /* PolarRootTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarRootTree.cpp; sourceTree = "<group>"; };
-		7CF53CFB1646663300A218BE /* PolarRootTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarRootTree.h; sourceTree = "<group>"; };
-		7CF53CFC1646663300A218BE /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
-		7CF53CFD1646663300A218BE /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
-		7CF53CFE1646663300A218BE /* PolarTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTree.cpp; sourceTree = "<group>"; };
-		7CF53CFF1646663300A218BE /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
-		7CF53D011646663300A218BE /* ImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageShape.h; sourceTree = "<group>"; };
 		7CF53D0D16467CA000A218BE /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		7CF53D0E16467CA000A218BE /* MainView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainView.mm; sourceTree = "<group>"; };
-		7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelImageShape.cpp; sourceTree = "<group>"; };
-		7CF84D84164C1988008D8664 /* ImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageShape.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,15 +177,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C10FE8C16594885003F656A /* common */ = {
-			isa = PBXGroup;
-			children = (
-				7C10FE8B16594878003F656A /* constants.h */,
-				7CBDAAFE165AF7AD00E009E5 /* structs.h */,
-			);
-			name = common;
-			sourceTree = "<group>";
-		};
 		7C10FEA31659939A003F656A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,71 +191,60 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		7C1B3B261657E03600D3DCAD /* density */ = {
+		7CBDAB07165B4E7800E009E5 /* polartree */ = {
 			isa = PBXGroup;
 			children = (
-				7CBD6B5916582B5200E9047C /* Patch.h */,
-				7CBD6B6216583B3A00E9047C /* DensityPatchIndex.cpp */,
-				7CBD6B6316583B3A00E9047C /* DensityPatchIndex.h */,
-				7CBD6B5A16582F7500E9047C /* Patch.cpp */,
-				7CBD6B5C1658302500E9047C /* PatchQueue.h */,
-				7CBD6B5D1658303000E9047C /* PatchQueue.cpp */,
-				7CBD6B5F1658305300E9047C /* LeveledPatchMap.cpp */,
-				7CBD6B601658305400E9047C /* LeveledPatchMap.h */,
+				7CBDAB08165B4E7800E009E5 /* Angler.cpp */,
+				7CBDAB09165B4E7800E009E5 /* Angler.h */,
+				7CBDAB0A165B4E7800E009E5 /* ByWeightSizer.cpp */,
+				7CBDAB0B165B4E7800E009E5 /* ByWeightSizer.h */,
+				7CBDAB0C165B4E7800E009E5 /* ColorMapAngler.cpp */,
+				7CBDAB0D165B4E7800E009E5 /* ColorMapAngler.h */,
+				7CBDAB0E165B4E7800E009E5 /* ColorMapPlacer.cpp */,
+				7CBDAB0F165B4E7800E009E5 /* ColorMapPlacer.h */,
+				7CBDAB10165B4E7800E009E5 /* ColorMapZigzagNudger.h */,
+				7CBDAB11165B4E7800E009E5 /* ColorMath.h */,
+				7CBDAB12165B4E7800E009E5 /* constants.h */,
+				7CBDAB13165B4E7800E009E5 /* DensityPatchIndex.cpp */,
+				7CBDAB14165B4E7800E009E5 /* DensityPatchIndex.h */,
+				7CBDAB15165B4E7800E009E5 /* EngineShape.cpp */,
+				7CBDAB16165B4E7800E009E5 /* EngineShape.h */,
+				7CBDAB17165B4E7800E009E5 /* Flip.h */,
+				7CBDAB18165B4E7800E009E5 /* ImageShape.cpp */,
+				7CBDAB19165B4E7800E009E5 /* ImageShape.h */,
+				7CBDAB1A165B4E7800E009E5 /* LeveledPatchMap.cpp */,
+				7CBDAB1B165B4E7800E009E5 /* LeveledPatchMap.h */,
+				7CBDAB1C165B4E7800E009E5 /* MostlyHorizontalAngler.cpp */,
+				7CBDAB1D165B4E7800E009E5 /* MostlyHorizontalAngler.h */,
+				7CBDAB1E165B4E7800E009E5 /* Nudger.h */,
+				7CBDAB1F165B4E7800E009E5 /* Patch.cpp */,
+				7CBDAB20165B4E7800E009E5 /* Patch.h */,
+				7CBDAB21165B4E7800E009E5 /* PatchQueue.cpp */,
+				7CBDAB22165B4E7800E009E5 /* PatchQueue.h */,
+				7CBDAB23165B4E7800E009E5 /* PickFromAngler.cpp */,
+				7CBDAB24165B4E7800E009E5 /* PickFromAngler.h */,
+				7CBDAB25165B4E7800E009E5 /* PixelImageShape.cpp */,
+				7CBDAB26165B4E7800E009E5 /* PixelImageShape.h */,
+				7CBDAB27165B4E7800E009E5 /* Placer.h */,
+				7CBDAB28165B4E7800E009E5 /* PolarCanvas.cpp */,
+				7CBDAB29165B4E7800E009E5 /* PolarCanvas.h */,
+				7CBDAB2A165B4E7800E009E5 /* PolarChildTree.cpp */,
+				7CBDAB2B165B4E7800E009E5 /* PolarChildTree.h */,
+				7CBDAB2C165B4E7800E009E5 /* PolarLayer.cpp */,
+				7CBDAB2D165B4E7800E009E5 /* PolarLayer.h */,
+				7CBDAB2E165B4E7800E009E5 /* PolarRootTree.cpp */,
+				7CBDAB2F165B4E7800E009E5 /* PolarRootTree.h */,
+				7CBDAB30165B4E7800E009E5 /* PolarTree.cpp */,
+				7CBDAB31165B4E7800E009E5 /* PolarTree.h */,
+				7CBDAB32165B4E7800E009E5 /* PolarTreeBuilder.cpp */,
+				7CBDAB33165B4E7800E009E5 /* PolarTreeBuilder.h */,
+				7CBDAB34165B4E7800E009E5 /* Sizer.h */,
+				7CBDAB35165B4E7800E009E5 /* structs.h */,
+				7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */,
+				7CBDAB37165B4E7800E009E5 /* WordLayer.h */,
 			);
-			name = density;
-			sourceTree = "<group>";
-		};
-		7C80D615164BF47300D05F6D /* placer */ = {
-			isa = PBXGroup;
-			children = (
-				7CBD6B511657FCB100E9047C /* Placer.h */,
-				7C10FE99165962EB003F656A /* ColorMapPlacer.cpp */,
-				7C10FE9A165962EB003F656A /* ColorMapPlacer.h */,
-			);
-			name = placer;
-			sourceTree = "<group>";
-		};
-		7C80D617164BF48100D05F6D /* nudger */ = {
-			isa = PBXGroup;
-			children = (
-				7CBD6B4F1657FBF900E9047C /* Nudger.h */,
-				7C10FE9716595FE2003F656A /* ColorMapZigzagNudger.h */,
-			);
-			name = nudger;
-			sourceTree = "<group>";
-		};
-		7CBD6B521658098D00E9047C /* sizer */ = {
-			isa = PBXGroup;
-			children = (
-				7CBD6B5616580C7800E9047C /* Sizer.h */,
-				7C10FE9316595E38003F656A /* ByWeightSizer.cpp */,
-				7C10FE9416595E38003F656A /* ByWeightSizer.h */,
-			);
-			name = sizer;
-			sourceTree = "<group>";
-		};
-		7CBD6B6616584FD400E9047C /* angler */ = {
-			isa = PBXGroup;
-			children = (
-				7CBD6B6716584FE200E9047C /* Angler.cpp */,
-				7CBD6B6816584FE200E9047C /* Angler.h */,
-				7C10FE8716594762003F656A /* ColorMapAngler.cpp */,
-				7C10FE8816594762003F656A /* ColorMapAngler.h */,
-				7C10FE8D16594AB7003F656A /* PickFromAngler.h */,
-				7C10FE8E16594BD4003F656A /* PickFromAngler.cpp */,
-				7C10FE9016594C6C003F656A /* MostlyHorizontalAngler.cpp */,
-				7C10FE9116594C6D003F656A /* MostlyHorizontalAngler.h */,
-			);
-			name = angler;
-			sourceTree = "<group>";
-		};
-		7CBD6B6D1659366A00E9047C /* math */ = {
-			isa = PBXGroup;
-			children = (
-				7CBD6B6E1659368400E9047C /* ColorMath.h */,
-			);
-			name = math;
+			name = polartree;
+			path = ../../cpp_common/polartree;
 			sourceTree = "<group>";
 		};
 		7CF53CB41646658B00A218BE = {
@@ -290,7 +290,7 @@
 		7CF53CC91646658B00A218BE /* PolarTree Experiment */ = {
 			isa = PBXGroup;
 			children = (
-				7CF53CF71646663300A218BE /* polartree */,
+				7CBDAB07165B4E7800E009E5 /* polartree */,
 				7CF53CD51646658B00A218BE /* AppDelegate.h */,
 				7CF53CD61646658B00A218BE /* AppDelegate.mm */,
 				7CF53CD81646658B00A218BE /* MainMenu.xib */,
@@ -330,41 +330,6 @@
 				7CF53CE91646658B00A218BE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7CF53CF71646663300A218BE /* polartree */ = {
-			isa = PBXGroup;
-			children = (
-				7C10FE8C16594885003F656A /* common */,
-				7CBD6B6D1659366A00E9047C /* math */,
-				7CBD6B6616584FD400E9047C /* angler */,
-				7CBD6B521658098D00E9047C /* sizer */,
-				7C1B3B261657E03600D3DCAD /* density */,
-				7CF53CF81646663300A218BE /* PolarChildTree.cpp */,
-				7CF53CF91646663300A218BE /* PolarChildTree.h */,
-				7CF53CFA1646663300A218BE /* PolarRootTree.cpp */,
-				7CF53CFB1646663300A218BE /* PolarRootTree.h */,
-				7CF53CFE1646663300A218BE /* PolarTree.cpp */,
-				7CF53CFF1646663300A218BE /* PolarTree.h */,
-				7CF53CFC1646663300A218BE /* PolarTreeBuilder.cpp */,
-				7CF53CFD1646663300A218BE /* PolarTreeBuilder.h */,
-				7C80D617164BF48100D05F6D /* nudger */,
-				7C80D615164BF47300D05F6D /* placer */,
-				7CF53D011646663300A218BE /* ImageShape.h */,
-				7CF84D84164C1988008D8664 /* ImageShape.cpp */,
-				7C4AD670164C102700335CFC /* PixelImageShape.h */,
-				7CF84D7E164C169F008D8664 /* PixelImageShape.cpp */,
-				7C8F21EC164FC11D0084C060 /* Flip.h */,
-				7C1B3B221657DB0200D3DCAD /* PolarCanvas.h */,
-				7C1B3B231657DCB700D3DCAD /* PolarCanvas.cpp */,
-				7C1B3B2B1657F31000D3DCAD /* PolarLayer.h */,
-				7C1B3B2C1657F3DC00D3DCAD /* PolarLayer.cpp */,
-				7CBD6B5516580B9000E9047C /* EngineShape.h */,
-				7CBD6B5716580DB700E9047C /* EngineShape.cpp */,
-				7CBD6B6A16588E5400E9047C /* WordLayer.cpp */,
-				7CBD6B6B16588E5500E9047C /* WordLayer.h */,
-			);
-			path = polartree;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,27 +449,27 @@
 			files = (
 				7CF53CD01646658B00A218BE /* main.mm in Sources */,
 				7CF53CD71646658B00A218BE /* AppDelegate.mm in Sources */,
-				7CF53D021646663300A218BE /* PolarChildTree.cpp in Sources */,
-				7CF53D031646663300A218BE /* PolarRootTree.cpp in Sources */,
-				7CF53D041646663300A218BE /* PolarTreeBuilder.cpp in Sources */,
-				7CF53D051646663300A218BE /* PolarTree.cpp in Sources */,
 				7CF53D0F16467CA000A218BE /* MainView.mm in Sources */,
-				7CF84D7F164C169F008D8664 /* PixelImageShape.cpp in Sources */,
-				7CF84D85164C1988008D8664 /* ImageShape.cpp in Sources */,
-				7C1B3B241657DCB700D3DCAD /* PolarCanvas.cpp in Sources */,
-				7C1B3B2D1657F3DC00D3DCAD /* PolarLayer.cpp in Sources */,
-				7CBD6B5816580DB700E9047C /* EngineShape.cpp in Sources */,
-				7CBD6B5B16582F7500E9047C /* Patch.cpp in Sources */,
-				7CBD6B5E1658303000E9047C /* PatchQueue.cpp in Sources */,
-				7CBD6B611658305400E9047C /* LeveledPatchMap.cpp in Sources */,
-				7CBD6B6416583B3A00E9047C /* DensityPatchIndex.cpp in Sources */,
-				7CBD6B6916584FE200E9047C /* Angler.cpp in Sources */,
-				7CBD6B6C16588E5700E9047C /* WordLayer.cpp in Sources */,
-				7C10FE8916594762003F656A /* ColorMapAngler.cpp in Sources */,
-				7C10FE8F16594BD4003F656A /* PickFromAngler.cpp in Sources */,
-				7C10FE9216594C6D003F656A /* MostlyHorizontalAngler.cpp in Sources */,
-				7C10FE9516595E38003F656A /* ByWeightSizer.cpp in Sources */,
-				7C10FE9B165962EB003F656A /* ColorMapPlacer.cpp in Sources */,
+				7CBDAB38165B4E7800E009E5 /* Angler.cpp in Sources */,
+				7CBDAB3A165B4E7800E009E5 /* ByWeightSizer.cpp in Sources */,
+				7CBDAB3C165B4E7800E009E5 /* ColorMapAngler.cpp in Sources */,
+				7CBDAB3E165B4E7800E009E5 /* ColorMapPlacer.cpp in Sources */,
+				7CBDAB40165B4E7800E009E5 /* DensityPatchIndex.cpp in Sources */,
+				7CBDAB42165B4E7800E009E5 /* EngineShape.cpp in Sources */,
+				7CBDAB44165B4E7800E009E5 /* ImageShape.cpp in Sources */,
+				7CBDAB46165B4E7800E009E5 /* LeveledPatchMap.cpp in Sources */,
+				7CBDAB48165B4E7800E009E5 /* MostlyHorizontalAngler.cpp in Sources */,
+				7CBDAB4A165B4E7800E009E5 /* Patch.cpp in Sources */,
+				7CBDAB4C165B4E7800E009E5 /* PatchQueue.cpp in Sources */,
+				7CBDAB4E165B4E7800E009E5 /* PickFromAngler.cpp in Sources */,
+				7CBDAB50165B4E7800E009E5 /* PixelImageShape.cpp in Sources */,
+				7CBDAB52165B4E7800E009E5 /* PolarCanvas.cpp in Sources */,
+				7CBDAB54165B4E7800E009E5 /* PolarChildTree.cpp in Sources */,
+				7CBDAB56165B4E7800E009E5 /* PolarLayer.cpp in Sources */,
+				7CBDAB58165B4E7800E009E5 /* PolarRootTree.cpp in Sources */,
+				7CBDAB5A165B4E7800E009E5 /* PolarTree.cpp in Sources */,
+				7CBDAB5C165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */,
+				7CBDAB5E165B4E7800E009E5 /* WordLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +478,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CF53CEE1646658B00A218BE /* PolarTree_ExperimentTests.mm in Sources */,
+				7CBDAB39165B4E7800E009E5 /* Angler.cpp in Sources */,
+				7CBDAB3B165B4E7800E009E5 /* ByWeightSizer.cpp in Sources */,
+				7CBDAB3D165B4E7800E009E5 /* ColorMapAngler.cpp in Sources */,
+				7CBDAB3F165B4E7800E009E5 /* ColorMapPlacer.cpp in Sources */,
+				7CBDAB41165B4E7800E009E5 /* DensityPatchIndex.cpp in Sources */,
+				7CBDAB43165B4E7800E009E5 /* EngineShape.cpp in Sources */,
+				7CBDAB45165B4E7800E009E5 /* ImageShape.cpp in Sources */,
+				7CBDAB47165B4E7800E009E5 /* LeveledPatchMap.cpp in Sources */,
+				7CBDAB49165B4E7800E009E5 /* MostlyHorizontalAngler.cpp in Sources */,
+				7CBDAB4B165B4E7800E009E5 /* Patch.cpp in Sources */,
+				7CBDAB4D165B4E7800E009E5 /* PatchQueue.cpp in Sources */,
+				7CBDAB4F165B4E7800E009E5 /* PickFromAngler.cpp in Sources */,
+				7CBDAB51165B4E7800E009E5 /* PixelImageShape.cpp in Sources */,
+				7CBDAB53165B4E7800E009E5 /* PolarCanvas.cpp in Sources */,
+				7CBDAB55165B4E7800E009E5 /* PolarChildTree.cpp in Sources */,
+				7CBDAB57165B4E7800E009E5 /* PolarLayer.cpp in Sources */,
+				7CBDAB59165B4E7800E009E5 /* PolarRootTree.cpp in Sources */,
+				7CBDAB5B165B4E7800E009E5 /* PolarTree.cpp in Sources */,
+				7CBDAB5D165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */,
+				7CBDAB5F165B4E7800E009E5 /* WordLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

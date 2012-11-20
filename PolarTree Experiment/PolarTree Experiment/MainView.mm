@@ -7,15 +7,15 @@
 //
 
 #import "MainView.h"
-#include "polartree/PixelImageShape.h"
-#include "polartree/ImageShape.h"
-#include "polartree/PolarRootTree.h"
-#include "polartree/PolarTree.h"
-#include "polartree/PolarTreeBuilder.h"
-#include "constants.h"
-#include "PolarCanvas.h"
-#include "PolarLayer.h"
-#include "WordLayer.h"
+#include "../../cpp_common/polartree/PixelImageShape.h"
+#include "../../cpp_common/polartree/ImageShape.h"
+#include "../../cpp_common/polartree/PolarRootTree.h"
+#include "../../cpp_common/polartree/PolarTree.h"
+#include "../../cpp_common/polartree/PolarTreeBuilder.h"
+#include "../../cpp_common/polartree/constants.h"
+#include "../../cpp_common/polartree/PolarCanvas.h"
+#include "../../cpp_common/polartree/PolarLayer.h"
+#include "../../cpp_common/polartree/WordLayer.h"
 #include <stdlib.h>
 #include <iostream>
 
