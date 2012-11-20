@@ -61,8 +61,11 @@
 
 
 -(void) loadDirectionImage{
-    NSArray *templates = [[NSArray alloc] initWithObjects:@"dog.png",@"wheel_h.png",@"egg.png",
-                        @"face.png",@"wheel_v.png",@"star.png",@"heart.png",nil];
+    NSArray *templates = [[NSArray alloc] initWithObjects:
+                          @"dog.png",@"wheel_h.png",@"egg.png",
+                        @"face.png",
+                          @"wheel_v.png",@"star.png",@"heart.png",
+                          nil];
     NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
@@ -105,7 +108,7 @@
              mainImage.size.height-
              ((tree->getRootY() - tree->d2 * sin(tree->getR2(true)))));
 
-    float r = tree->getR2(true) - tree->getR1(true);
+    double r = tree->getR2(true) - tree->getR1(true);
     if (r < 0)
         r+=TWO_PI;
     
@@ -123,19 +126,19 @@
 }
 
 -(void) drawArc:
-                  (float)center_x
-                  withCenterY:(float)center_y
-                  withRadius:(float)radius
-                  withAngleFrom:(float)angle_from
-                  withAngleTo:(float)angle_to
-                  withPrecision:(float)precision
+                  (double)center_x
+                  withCenterY:(double)center_y
+                  withRadius:(double)radius
+                  withAngleFrom:(double)angle_from
+                  withAngleTo:(double)angle_to
+                  withPrecision:(double)precision
                   withTree:(PolarTree*)tree{
-    float angle_diff=angle_to-angle_from;
+    double angle_diff=angle_to-angle_from;
     int steps=round(angle_diff*precision);
     if(steps==0) steps = 1;
-    float angle = angle_from;
-    float px=center_x+radius * cos(angle);
-    float py=
+    double angle = angle_from;
+    double px=center_x+radius * cos(angle);
+    double py=
         mainImage.size.height-
         (center_y-radius * sin(angle));
     
@@ -159,7 +162,8 @@
     [self loadDirectionImage];
     [self resetMainImage];
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
-                        @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
+                        @"尼玛",@"FCUK",@"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful",
+                        @"compassion",@"troll",@"ice cream",@"hippo",@"fun",@"Your name",nil];
     NSArray *colors = [[NSArray alloc] initWithObjects:[NSColor greenColor],
                        [NSColor redColor],[NSColor brownColor],[NSColor cyanColor],
                        [NSColor blueColor],[NSColor orangeColor],[NSColor darkGrayColor],
@@ -185,18 +189,21 @@
         stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
         
         NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
-        unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
-        
-        Placement* placement = canvas->slapShape(shape);
-        if(placement!=NULL){
-            double rotation = -(shape->getTree()->getRotation())*360/TWO_PI;
-            NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
-                                        mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
+        if(textImage.size.width>0){
+            unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
+            
+            shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
+            
+            Placement* placement = canvas->slapShape(shape);
+            if(placement!=NULL){
+                double rotation = -(shape->getTree()->getRotation())*360/TWO_PI;
+                NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
+                                            mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
 
-            [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-//            [self drawTextTree:shape->getTree()];
+                [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
+    //            [self drawTextTree:shape->getTree()];
+            }
         }
     }
     NSDate *methodFinish = [NSDate date];
@@ -210,7 +217,7 @@
 
 - (void)drawRandomText:(id)sender{
     int x,y;
-    float rotation;
+    double rotation;
     ImageShape *shape;
     NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
                         @"尼玛",@"FCUK",@"Quick fox",@"Halo",nil];
@@ -290,7 +297,7 @@
 
 - (void)drawText:(NSPoint)point
                   withStringToInsert:(NSAttributedString *)stringToInsert
-                 withRotation:(float)rotation
+                 withRotation:(double)rotation
 {
     
 		// The size of the string, as a guesstimate

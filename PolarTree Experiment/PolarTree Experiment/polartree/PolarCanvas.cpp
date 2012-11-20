@@ -29,7 +29,7 @@
 
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
-perseverance(10),diligence(8)
+perseverance(10),diligence(4)
 {
     this->layers = new vector<PolarLayer*>();
     this->shapes = new vector<EngineShape*>();
@@ -202,7 +202,7 @@ int PolarCanvas::getWidth(){
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p){
     srand((unsigned)time(NULL));
     int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * diligence;
-    return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.4);
+    return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.2);
 }
 
 void PolarCanvas::computeDesiredPlacements(EngineShape* shape){

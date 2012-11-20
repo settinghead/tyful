@@ -24,12 +24,12 @@ class PolarCanvas;
 - (IBAction)drawColorMappedText:(id)sender;
 -(void) drawLeaves:(PolarTree*)tree;
 -(void) drawTree:(PolarTree*)tree;
--(void) drawArc:(float)center_x
-    withCenterY:(float)center_y
-     withRadius:(float)radius
-  withAngleFrom:(float)angle_from
-    withAngleTo:(float)angle_to
- owithPrecision:(float)precision
+-(void) drawArc:(double)center_x
+    withCenterY:(double)center_y
+     withRadius:(double)radius
+  withAngleFrom:(double)angle_from
+    withAngleTo:(double)angle_to
+ owithPrecision:(double)precision
  withTree:(PolarTree*)tree;
 
 +(NSBitmapImageRep*) getTextImage:(NSAttributedString*)str;

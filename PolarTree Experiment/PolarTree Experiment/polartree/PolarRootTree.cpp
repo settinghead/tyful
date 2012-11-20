@@ -6,7 +6,7 @@
 
 PolarRootTree::PolarRootTree(ImageShape* shape, int centerX,
 		int centerY, double d, int minBoxSize) :
-		PolarTree(0, TWO_PI, 0, d, minBoxSize) {
+		PolarTree(0, TWO_PI, 0, d, minBoxSize),_rotation(0) {
 	this->_rotation = 0;
 	this->rootStamp = 0;
 	this->rootX = centerX;
