@@ -14,6 +14,10 @@
 using namespace std;
 
 MostlyHorizontalAngler::MostlyHorizontalAngler():
-PickFromAngler::PickFromAngler(new vector<double>({ 0,0,0,HALF_PI,HALF_PI*3 })){
-    
+PickFromAngler::PickFromAngler(new vector<double>()){
+    angles->push_back(0);
+    angles->push_back(0);
+    angles->push_back(0);
+    angles->push_back(HALF_PI);
+    angles->push_back(HALF_PI*3);
 }

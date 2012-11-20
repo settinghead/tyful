@@ -12,7 +12,7 @@
 #include <math.h>
 
 PolarLayer::PolarLayer(unsigned int * pixels, int width, int height)
-:PixelImageShape::PixelImageShape(pixels,width,height), type(WORD_LAYER){
+:PixelImageShape::PixelImageShape(pixels,width,height), type(WORD_LAYER),above(NULL),below(NULL){
 }
 
 bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){

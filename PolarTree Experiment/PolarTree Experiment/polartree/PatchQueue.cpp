@@ -10,14 +10,12 @@
 #include <queue>
 #include <cstdlib>
 #include <cstring>
-#include <unordered_map>
 #include <vector>
 #include "PolarLayer.h"
 #include "Patch.h"
 #include "LeveledPatchMap.h"
 #include "DensityPatchIndex.h"
 
-using namespace std;
 
 LeveledPatchMap* PatchQueue::getMap(){
     return map;

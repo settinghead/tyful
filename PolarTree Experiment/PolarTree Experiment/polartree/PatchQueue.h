@@ -9,7 +9,7 @@
 #ifndef PolarTree_Experiment_PatchQueue_h
 #define PolarTree_Experiment_PatchQueue_h
 #include <queue>
-#include <unordered_map>
+#include <tr1/unordered_map>
 #include <cstdlib>
 #include <cstring>
 #include <vector>
@@ -21,8 +21,8 @@
 #define QUEUE_ALPHA_THRESHOLD -DBL_MAX
 
 using namespace std;
-
-typedef std::unordered_map<string, Patch*> LookupMap;
+using namespace std::tr1;
+typedef unordered_map<string, Patch*> LookupMap;
 struct ComparePatch;
 
 class PatchQueue:priority_queue<Patch*, vector<Patch*>, ComparePatch>{

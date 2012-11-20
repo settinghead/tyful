@@ -27,8 +27,8 @@ public:
     bool aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY);
 
 protected:
-    PolarLayer* above = NULL;
-    PolarLayer* below = NULL;
+    PolarLayer* above;
+    PolarLayer* below;
 };
 
 

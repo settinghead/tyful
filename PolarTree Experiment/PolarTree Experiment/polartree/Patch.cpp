@@ -14,7 +14,7 @@
 #include "EngineShape.h"
 #include "WordLayer.h"
 
-Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer){
+Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer):averageAlpha(NAN),alphaSum(NAN),area(NAN),children(NULL),numberOfFailures(0),lastAttempt(0){
     this->x = x; this->y = y; this->width = width; this->height = height;
     this->parent = parent;
     this->rank = rank;

@@ -20,7 +20,8 @@
 #include <time.h>
 #include <math.h>
 WordLayer::WordLayer(unsigned int * pixels, int width, int height)
-:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER){
+:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),
+tolerance(1.0){
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
@@ -106,15 +107,6 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
     else return false;
 }
 
-inline double WordLayer::getBrightness(int x, int y) {
-    
-    unsigned int rgbPixel = getPixel(x, y);
-    unsigned int alpha = rgbPixel>> 24 & 0xFF;
-    if(alpha == 0) {
-        return NAN;
-    }
-    return ColorMath::getBrightness(rgbPixel);
-}
 
 double WordLayer::getHue(int x, int y) {
     int colour = getHSB(x,y);

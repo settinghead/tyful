@@ -9,17 +9,24 @@
 #ifndef __PolarTree_Experiment__WordLayer__
 #define __PolarTree_Experiment__WordLayer__
 #include "PolarLayer.h"
-
+#include "ColorMath.h"
 class Angler;
 
 class WordLayer: public PolarLayer{
 public:
     class ColorSheet: public PixelImageShape{};
     WordLayer(unsigned int * pixels, int width, int height);
-    const LAYER_TYPE type = WORD_LAYER;
+    const LAYER_TYPE type;
     bool contains(double x, double y, double width, double height, double rotation);
     bool containsPoint(double x, double y, double refX, double refY);
-    double getBrightness(int x, int y);
+    inline double getBrightness(int x, int y){
+        unsigned int rgbPixel = getPixel(x, y);
+        unsigned int alpha = rgbPixel>> 24 & 0xFF;
+        if(alpha == 0) {
+            return NAN;
+        }
+        return ColorMath::getBrightness(rgbPixel);
+    }
     double getHue(int x, int y);
     void setTolerance(double v);
     ColorSheet* getColorSheet();
@@ -27,9 +34,9 @@ public:
     Angler* getAngler();
 private:
     double getHSB(int x, int y);
-    double tolerance = 1.0;
-    ColorSheet* colorSheet = NULL;
-    Angler* _angler = NULL;
+    double tolerance;
+    ColorSheet* colorSheet;
+    Angler* _angler;
 
 };
 

@@ -63,8 +63,7 @@
 -(void) loadDirectionImage{
     NSArray *templates = [[NSArray alloc] initWithObjects:@"dog.png",@"wheel_h.png",@"egg.png",
                         @"face.png",@"wheel_v.png",@"star.png",@"heart.png",nil];
-    NSString *tpl = templates[arc4random() % [templates count]];
-
+    NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
 	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
@@ -172,14 +171,14 @@
     while(canvas->getStatus()==RENDERING){
         ImageShape *shape;
 
-        NSString *str = strings[arc4random() % [strings count]];
+        NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
         
-        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 100.0*canvas->getShrinkage()+20];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 200*canvas->getShrinkage()+15];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:colors[arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
+        [string addAttribute:NSForegroundColorAttributeName value:[colors objectAtIndex:arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
         
@@ -219,7 +218,7 @@
                        [NSColor blackColor],[NSColor brownColor],[NSColor cyanColor],
                        [NSColor blueColor],[NSColor yellowColor],[NSColor darkGrayColor],
                        [NSColor headerColor],[NSColor knobColor],[NSColor magentaColor],nil];
-    NSString *str = strings[arc4random() % [strings count]];
+    NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
     while(true){
 
@@ -227,7 +226,7 @@
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:colors[arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
+        [string addAttribute:NSForegroundColorAttributeName value:[colors objectAtIndex:arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
 

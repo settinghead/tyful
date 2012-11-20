@@ -27,7 +27,9 @@
 #include <cstdlib>
 #include <ctime>
 
-PolarCanvas::PolarCanvas()
+PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
+width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
+perseverance(10),diligence(8)
 {
     this->layers = new vector<PolarLayer*>();
     this->shapes = new vector<EngineShape*>();
@@ -90,16 +92,6 @@ Placement* PolarCanvas::tryCurrentSize(EngineShape * shape){
     return shape->getFinalPlacement();
 }
 
-Sizer* PolarCanvas::getSizer(){
-    if(this->_sizer==NULL){
-//        int max = width>height?width:height;
-//        int min = max/100;
-//        if(min<7) min = 7;
-        _sizer = new ByWeightSizer(0,1);
-        
-    }
-    return _sizer;
-}
 
 Nudger* PolarCanvas::getNudger(){
     if(_nudger==NULL){

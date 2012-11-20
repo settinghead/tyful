@@ -11,8 +11,8 @@
 #include <stdlib.h>
 class Patch;
 struct CartisianPoint{
-    double x = 0;
-    double y = 0;
+    double x;
+    double y;
     inline CartisianPoint operator + (const CartisianPoint &o) const{
         CartisianPoint p;
         p.x = o.x + x;
@@ -22,15 +22,15 @@ struct CartisianPoint{
 };
 
 struct PolarPoint{
-    double d = 0;
-    double r = 0;
+    double d;
+    double r;
 };
 
 struct Placement{
     CartisianPoint location;
-    double scale = 1;
-    double rotation = 0;
-    Patch* patch = NULL;
+    double scale;
+    double rotation;
+    Patch* patch;
     inline Placement operator + (const Placement &o) const{
         Placement p;
         p.location = o.location + location;

@@ -13,7 +13,7 @@
 class EngineShape;
 class ByWeightSizer:public Sizer{
 private:
-    int minSize, maxSize;
+    double minSize, maxSize;
     double currentSize, decr;
 public:
     ByWeightSizer(int minSize, int maxSize);

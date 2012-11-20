@@ -35,13 +35,13 @@ public:
     void setDesiredPlacements(vector<Placement*>*);
 
 private:
-    int skipReason = 0;
+    int skipReason;
     ImageShape* shape;
-    Placement* currentPlacement = NULL;
-    Placement* renderedPlacement = NULL;
+    Placement* currentPlacement;
+    Placement* renderedPlacement;
     vector<PolarPoint>* samplePoints;
-    vector<Placement*>* desiredPlacements = NULL;
-    int desiredPlacementIndex = 0;
+    vector<Placement*>* desiredPlacements;
+    int desiredPlacementIndex;
     void drawSamples();
 };
 

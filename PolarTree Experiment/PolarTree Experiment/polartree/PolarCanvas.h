@@ -13,6 +13,7 @@
 #include "constants.h"
 #include "structs.h"
 #include "Sizer.h"
+#include "ByWeightSizer.h"
 
 using namespace std;
 
@@ -54,16 +55,25 @@ private:
     vector<EngineShape*>* shapes;
     vector<EngineShape*>* displayShapes;
     vector<EngineShape*>* retryShapes;
-    int failureCount = 0;
-    int numRetries = 0;
-    int totalAttempted = 0;
-    int perseverance = 10, diligence = 8;
-    double width = NAN, height= NAN;
-    STATUS status = PAUSED;
-    Sizer* _sizer = NULL;
-    Nudger* _nudger = NULL;
-    Placer* _placer = NULL;
-    inline Sizer* getSizer();
+    int failureCount;
+    int numRetries;
+    int totalAttempted;
+    int perseverance, diligence;
+    double width, height;
+    STATUS status;
+    Sizer* _sizer;
+    Nudger* _nudger;
+    Placer* _placer;
+    inline Sizer* getSizer(){
+        if(this->_sizer==NULL){
+            //        int max = width>height?width:height;
+            //        int min = max/100;
+            //        if(min<7) min = 7;
+            _sizer = new ByWeightSizer(0,1);
+            
+        }
+        return _sizer;
+    }
     inline Nudger* getNudger();
     inline EngineShape* generateEngineWord(ImageShape* shape);
     inline bool placeShape(EngineShape * shape);
@@ -71,7 +81,7 @@ private:
     inline Placement* tryCurrentSize(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
     inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
-    DensityPatchIndex* _patchIndex = NULL;
+    DensityPatchIndex* _patchIndex;
     inline DensityPatchIndex* getPatchIndex();
 };
 

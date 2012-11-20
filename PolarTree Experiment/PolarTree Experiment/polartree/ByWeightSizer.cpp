@@ -35,8 +35,7 @@ inline double ByWeightSizer::getCurrentSize(){
 }
 inline void ByWeightSizer::reset(){
     currentSize = maxSize;
-    decr = (maxSize-minSize)/20;
-    if(decr<1) decr=1;
+    decr = (maxSize-minSize)/30;
 }
 inline bool ByWeightSizer::hasNextSize(){
     return currentSize > minSize;

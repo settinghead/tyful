@@ -15,7 +15,7 @@ using namespace std;
 class EngineShape;
 
 class PickFromAngler:public Angler{
-private:
+protected:
     vector<double>* angles;
     
 public:

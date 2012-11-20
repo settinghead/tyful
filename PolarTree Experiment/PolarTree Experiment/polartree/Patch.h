@@ -21,14 +21,14 @@ class EngineShape;
 class Patch{
 private:
     double x,y, width, height;
-    double averageAlpha= NAN, area=NAN, alphaSum=NAN;
+    double averageAlpha, area, alphaSum;
     Patch* parent;
     PatchQueue* queue;
-    vector<Patch*>* children = NULL;
+    vector<Patch*>* children;
     vector<EngineShape*>* shapes;
     int rank;
-    int numberOfFailures = 0;
-    int lastAttempt = 0;
+    int numberOfFailures;
+    int lastAttempt;
     WordLayer* layer;
     double getArea();
 public:
@@ -159,7 +159,7 @@ public:
     }
 };
 
-struct ComparePatch : public std::binary_function<Patch*, Patch*, bool>
+struct ComparePatch
 {
     inline bool operator()(Patch* lhs, Patch* rhs) const
     {

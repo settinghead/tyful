@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape){
+EngineShape::EngineShape(ImageShape* shape):skipReason(0),currentPlacement(NULL),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0){
     this->shape = shape;
     this->shape->getTree();
     drawSamples();
