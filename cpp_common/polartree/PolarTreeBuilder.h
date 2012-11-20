@@ -28,7 +28,7 @@
         }
     }
 
-     inline static PolarChildTree* makeChildTree(ImageShape* shape,
+     inline static PolarTree* makeChildTree(ImageShape* shape,
             int minBoxSize, double r1, double r2, double d1, double d2,
             PolarRootTree* root) {
         PolarChildTree* tree = new PolarChildTree(r1, r2, d1, d2, root,
@@ -76,11 +76,11 @@
         return tree;
     }
 
-    inline static vector<PolarChildTree*>* splitTree(PolarTree* tree,
+    inline static vector<PolarTree*>* splitTree(PolarTree* tree,
             ImageShape* shape, int minBoxSize, PolarRootTree* root,
             SplitType type) {
-        vector<PolarChildTree*>* result = new vector<PolarChildTree*>();
-        PolarChildTree* re;
+        vector<PolarTree*>* result = new vector<PolarTree*>();
+        PolarTree* re;
         double r;
         double r1;
         double r2;
@@ -258,7 +258,7 @@
             int minBoxSize, PolarRootTree* root) {
         {
             SplitType type = determineType(tree);
-            vector<PolarChildTree*>* children = splitTree(tree, shape,
+            vector<PolarTree*>* children = splitTree(tree, shape,
                     minBoxSize, root, type);
             tree->addKids(children);
         }

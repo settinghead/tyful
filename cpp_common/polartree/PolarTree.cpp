@@ -1,6 +1,5 @@
 #include <math.h>
 #include <vector>
-#include "PolarChildTree.h"
 #include "PolarRootTree.h"
 #include "PolarTreeBuilder.h"
 #include "ImageShape.h"
@@ -37,7 +36,7 @@ PolarTree::~PolarTree() {
 	delete _kids;
 }
 
-void PolarTree::addKids(vector<PolarChildTree*>* kidList) {
+void PolarTree::addKids(vector<PolarTree*>* kidList) {
 	{
 		this->_kids = kidList;
 	}
@@ -49,16 +48,16 @@ inline bool PolarTree::overlaps(PolarTree* otherTree) {
 			return true;
 		} else {
 			if ((this->isLeaf())) {
-				vector<PolarChildTree*>* oKids = otherTree->getKids();
-				for (vector<PolarChildTree*>::iterator it = oKids->begin();
+				vector<PolarTree*>* oKids = otherTree->getKids();
+				for (vector<PolarTree*>::iterator it = oKids->begin();
 						it != oKids->end(); ++it) {
 					if ((this->overlaps(*it)))
 						return true;
 				}
 			} else {
-				vector<PolarChildTree*>* tKids = this->getKids();
+				vector<PolarTree*>* tKids = this->getKids();
 
-				for (vector<PolarChildTree*>::iterator it = tKids->begin();
+				for (vector<PolarTree*>::iterator it = tKids->begin();
 						it != tKids->end(); ++it) {
 					if ((otherTree->overlaps(*it)))
 						return true;
@@ -70,7 +69,7 @@ inline bool PolarTree::overlaps(PolarTree* otherTree) {
 	return false;
 }
 
-inline vector<PolarChildTree*>* PolarTree::getKids() {
+inline vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
@@ -83,23 +82,6 @@ inline vector<PolarChildTree*>* PolarTree::getKids() {
 	return this->_kids;
 }
 
-inline bool PolarTree::overlapsCoord(double x, double y, double right,
-		double bottom) {
-	if ((this->rectCollideCoord(x, y, right, bottom))) {
-		if ((this->isLeaf())) {
-			return true;
-		} else {
-			vector<PolarChildTree*>* tKids = this->getKids();
-			for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
-					myKid != tKids->end(); ++myKid) {
-				if (((*myKid)->overlapsCoord(x, y, right, bottom))) {
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
 
 bool PolarTree::contains(double x, double y, double right, double bottom) {
 	if ((this->rectContain(x, y, right, bottom))) {
@@ -107,8 +89,8 @@ bool PolarTree::contains(double x, double y, double right, double bottom) {
 			return true;
 		} else {
 			{
-				vector<PolarChildTree*>* tKids = this->getKids();
-				for (vector<PolarChildTree*>::iterator myKid =
+				vector<PolarTree*>* tKids = this->getKids();
+				for (vector<PolarTree*>::iterator myKid =
 						tKids->begin(); myKid != tKids->end(); ++myKid) {
 					if (((*myKid)->contains(x, y, right, bottom))) {
 						return true;
@@ -123,56 +105,6 @@ bool PolarTree::contains(double x, double y, double right, double bottom) {
 	return false;
 }
 
-double PolarTree::getR1(bool rotate) {
-	if ((rotate)) {
-		this->checkRecompute();
-		return this->_computedR1;
-	} else {
-		return this->_r1;
-	}
-	return 0.;
-}
-
-double PolarTree::getR2(bool rotate) {
-	if ((rotate)) {
-		this->checkRecompute();
-		return this->_computedR2;
-	} else {
-		return this->_r2;
-	}
-	return 0.;
-}
-
-void PolarTree::checkRecompute() {
-	{
-		if (((this->rStamp != this->getCurrentStamp()))) {
-			this->computeR1();
-			this->computeR2();
-			this->rStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-inline void PolarTree::computeR1() {
-	{
-		this->_computedR1 = (this->_r1 + this->getRotation());
-		if (((this->_computedR1 > TWO_PI ))) {
-			this->_computedR1 -= TWO_PI;
-		}
-        else if(this->_computedR1<0)
-            this->_computedR1 += TWO_PI;
-	}
-}
-
-inline void PolarTree::computeR2() {
-	{
-		this->_computedR2 = (this->_r2 + this->getRotation());
-		if (((this->_computedR2 > TWO_PI)))
-			this->_computedR2 -= TWO_PI;
-        else if(this->_computedR2<0)
-            this->_computedR2 += TWO_PI;
-	}
-}
 
 inline void PolarTree::checkUpdatePoints() {
 	{
@@ -189,25 +121,6 @@ inline void PolarTree::checkUpdatePoints() {
 	}
 }
 
-inline double PolarTree::px() {
-	this->checkUpdatePoints();
-	return this->_px;
-}
-
-inline double PolarTree::py() {
-	this->checkUpdatePoints();
-	return this->_py;
-}
-
-inline double PolarTree::pright() {
-	this->checkUpdatePoints();
-	return this->_pright;
-}
-
-inline double PolarTree::pbottom() {
-	this->checkUpdatePoints();
-	return this->_pbottom;
-}
 
 inline bool PolarTree::collide(PolarTree* bTree) {
 	double dist = sqrt(
@@ -220,10 +133,6 @@ inline bool PolarTree::collide(PolarTree* bTree) {
 	}
 }
 
-bool PolarTree::rectCollide(PolarTree* bTree) {
-	return this->rectCollideCoord(bTree->px(), bTree->py(), bTree->pright(),
-			bTree->pbottom());
-}
 
 bool PolarTree::rectContain(double x, double y, double right,
 		double bottom) {
@@ -233,32 +142,13 @@ bool PolarTree::rectContain(double x, double y, double right,
 			&& bool((this->pbottom() >= bottom)));
 }
 
-bool PolarTree::rectCollideCoord(double x, double y, double right,
-		double bottom) {
-//#ifdef FLIP
-	return this->pbottom() > y
-        && this->py() < bottom
-        && this->pright() > x
-        && this->px() < right;
-//#else
-//    return this->pbottom() < y
-//    && this->py() > bottom
-//    && this->pright() > x
-//    && this->px() < right;
-//#endif
-}
-
-bool PolarTree::isLeaf() {
-	return this->_leaf;
-}
-
 void PolarTree::swell(int extra) {
 	{
 		this->swelling += extra;
 		if (!this->isLeaf()) {
 
-			vector<PolarChildTree*>* tKids = this->getKids();
-			for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
+			vector<PolarTree*>* tKids = this->getKids();
+			for (vector<PolarTree*>::iterator myKid = tKids->begin();
 					myKid != tKids->end(); ++myKid) {
 				(*myKid)->swell(extra);
 			}
