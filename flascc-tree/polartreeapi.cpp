@@ -1,21 +1,99 @@
-#include "ImageShape.h"
-#include "BBPolarTreeBuilder.h"
-
+#include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
+#include <omp.h>
+#include <sys/time.h>
+#include <Flash++.h>
 
-#include "AS3/AS3.h"
+#include "../cpp_common/polartree/PolarCanvas.h"
+#include "../cpp_common/polartree/ImageShape.h"
+#include "../cpp_common/polartree/PolarTree.h"
+#include "../cpp_common/polartree/PolarRootTree.h"
+#include "../cpp_common/polartree/WordLayer.h"
+#include "../cpp_common/polartree/constants.h"
+#include "../cpp_common/polartree/structs.h"
+
+#include <assert.h>
 
 // First we mark the function declaration with a GCC attribute specifying the
 // AS3 signature we want it to have in the generated SWC. The function will
 // be located in the sample.MurmurHash namespace.
+
+PolarCanvas* canvas;
+
+void initCanvas() __attribute__((used,
+	annotate("as3sig:public function initCanvas(_pixels:int, _width:int, _height: int):void"),
+	annotate("as3package:polartree.PolarTree")));
+
+void initCanvas(){
+
+	unsigned int *pixels = (unsigned int *) 0 ;
+	int width = 0 ;
+	int height = 0 ;
+
+    AS3_GetScalarFromVar(pixels, _pixels);
+    AS3_GetScalarFromVar(width, _width);
+    AS3_GetScalarFromVar(height, _height);
+
+    assert(width>0);
+    assert(height>0);
+
+	WordLayer* layer = new WordLayer((unsigned int *)pixels, width, height);
+	canvas = new PolarCanvas();
+	canvas->getLayers()->push_back(layer);
+	canvas->setStatus(RENDERING);
+	printf("Canvas initialized.\n");
+}
+
 void slapShape() __attribute__((used,
-	annotate("as3sig:public function slapShape(pixels:int, width:int, height:int):Vector.<int>"),
+	annotate("as3sig:public function slapShape(_pixels:int, _width:int, _height: int):Vector.<Number>"),
 	annotate("as3package:polartree.PolarTree")));
 
 void slapShape()
 {
-    inline_as3("var coord:Vector.<int> = new Vector.<int>();\n");
-    inline_as3("coord.push(%0);\n" : : "r"(300));
-    inline_as3("coord.push(%0);\n" : : "r"(300));
-    AS3_ReturnAS3Var(coord);
+	printf("slapShape requested. Current shrinkage: %f\n", canvas->getShrinkage());
+	unsigned int *pixels = (unsigned int *) 0 ;
+	int width = 0 ;
+	int height = 0 ;
+
+    AS3_GetScalarFromVar(pixels, _pixels);
+    AS3_GetScalarFromVar(width, _width);
+    AS3_GetScalarFromVar(height, _height);
+
+
+	ImageShape *shape = new PixelImageShape((unsigned int *)pixels, width, height);
+	Placement* placement = canvas->slapShape(shape);
+
+	if(placement!=NULL){
+		printf("Coord: %d, %d; rotation: %f"
+			,shape->getTree()->getTopLeftLocation().x
+			,shape->getTree()->getTopLeftLocation().y
+			,shape->getTree()->getRotation());
+
+    	inline_as3("var coord:Vector.<Number> = new Vector.<Number>();\n");
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().x));
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().y));
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation()));
+    	AS3_ReturnAS3Var(coord);
+	}
+}
+
+void getStatus() __attribute__((used,
+	annotate("as3sig:public function getStatus():int"),
+	annotate("as3package:polartree.PolarTree")));
+
+void getStatus()
+{
+	inline_as3("var status:int = (%0);\n" : : "r"(canvas->getStatus()));
+	AS3_ReturnAS3Var(status);
+}
+
+void getShrinkage() __attribute__((used,
+	annotate("as3sig:public function getShrinkage():Number"),
+	annotate("as3package:polartree.PolarTree")));
+
+void getShrinkage()
+{
+	inline_as3("var shrinkage:Number = (%0);\n" : : "r"(canvas->getShrinkage()));
+	AS3_ReturnAS3Var(shrinkage);
 }

@@ -42,42 +42,16 @@ void PolarTree::addKids(vector<PolarTree*>* kidList) {
 	}
 }
 
-inline bool PolarTree::overlaps(PolarTree* otherTree) {
-	if ((this->collide(otherTree))) {
-		if (this->isLeaf() && otherTree->isLeaf()) {
-			return true;
-		} else {
-			if ((this->isLeaf())) {
-				vector<PolarTree*>* oKids = otherTree->getKids();
-				for (vector<PolarTree*>::iterator it = oKids->begin();
-						it != oKids->end(); ++it) {
-					if ((this->overlaps(*it)))
-						return true;
-				}
-			} else {
-				vector<PolarTree*>* tKids = this->getKids();
 
-				for (vector<PolarTree*>::iterator it = tKids->begin();
-						it != tKids->end(); ++it) {
-					if ((otherTree->overlaps(*it)))
-						return true;
-				}
-
-			}
-		}
-	}
-	return false;
-}
-
-inline vector<PolarTree*>* PolarTree::getKids() {
+vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
-//        vector<PolarChildTree*>* tKids = this->getKids();
-//        for (vector<PolarChildTree*>::iterator myKid = tKids->begin();
-//             myKid != tKids->end(); ++myKid) {
-//            (*myKid)->getKids();
-//        }
+        vector<PolarTree*>* tKids = this->getKids();
+        for (vector<PolarTree*>::iterator myKid = tKids->begin();
+             myKid != tKids->end(); ++myKid) {
+            (*myKid)->getKids();
+        }
 	}
 	return this->_kids;
 }
@@ -106,32 +80,6 @@ bool PolarTree::contains(double x, double y, double right, double bottom) {
 }
 
 
-inline void PolarTree::checkUpdatePoints() {
-	{
-		if (((this->pointsStamp != this->getCurrentStamp()))) {
-			this->_px =
-					((this->getRootX() - this->swelling) + this->getX(true));
-			this->_pright = ((this->getRootX() + this->swelling)
-					+ this->getRight(true));
-			this->_py = ((this->getRootY() - this->swelling) + this->getY(true));
-			this->_pbottom = ((this->getRootY() + this->swelling)
-					+ this->getBottom(true));
-			this->pointsStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-
-inline bool PolarTree::collide(PolarTree* bTree) {
-	double dist = sqrt(
-			(pow((this->getRootX() - bTree->getRootX()), 2)
-					+ pow((this->getRootY() - bTree->getRootY()), 2)));
-	if (((dist > (this->d2 + bTree->d2)))) {
-		return false;
-	} else {
-		return this->rectCollide(bTree);
-	}
-}
 
 
 bool PolarTree::rectContain(double x, double y, double right,
@@ -163,108 +111,6 @@ double PolarTree::getWidth(bool rotate) {
 
 double PolarTree::getHeight(bool rotate) {
 	return (this->getBottom(rotate) - this->getY(rotate));
-}
-
-inline void PolarTree::checkComputeX() {
-	{
-		if (((this->xStamp != this->getCurrentStamp()))) {
-			this->_x = this->computeX(true);
-			this->xStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-inline void PolarTree::checkComputeY() {
-	{
-		if (((this->yStamp != this->getCurrentStamp()))) {
-			this->_y = this->computeY(true);
-			this->yStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-inline void PolarTree::checkComputeRight() {
-	{
-		if (((this->rightStamp != this->getCurrentStamp()))) {
-			this->_right = this->computeRight(true);
-			this->rightStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-inline void PolarTree::checkComputeBottom() {
-	{
-		if (((this->bottomStamp != this->getCurrentStamp()))) {
-			this->_bottom = this->computeBottom(true);
-			this->bottomStamp = this->getCurrentStamp();
-		}
-	}
-}
-
-inline double PolarTree::getRelativeX() {
-	if ((isnan(this->_relativeX))) {
-		this->_relativeX = this->computeX(false);
-	}
-	return this->_relativeX;
-}
-
-inline double PolarTree::getRelativeY() {
-	if ((isnan(this->_relativeY))) {
-		this->_relativeY = this->computeY(false);
-	}
-	return this->_relativeY;
-}
-
-inline double PolarTree::getRelativeRight() {
-	if ((isnan(this->_relativeRight))) {
-		this->_relativeRight = this->computeRight(false);
-	}
-	return this->_relativeRight;
-}
-
-inline double PolarTree::getRelativeBottom() {
-	if ((isnan(this->_relativeBottom))) {
-		this->_relativeBottom = this->computeBottom(false);
-	}
-	return this->_relativeBottom;
-}
-
-inline double PolarTree::getX(bool rotate) {
-	if ((rotate)) {
-		this->checkComputeX();
-		return (this->_x - MARGIN);
-	} else {
-		return this->getRelativeX();
-	}
-	return 0.;
-}
-
-inline double PolarTree::getY(bool rotate) {
-	if ((rotate)) {
-		this->checkComputeY();
-		return (this->_y - MARGIN);
-	} else {
-		return this->getRelativeY();
-	}
-	return 0.;
-}
-
-double PolarTree::getRight(bool rotate) {
-	if ((rotate)) {
-		this->checkComputeRight();
-		return (this->_right + MARGIN);
-	} else {
-		return this->getRelativeRight();
-	}
-	return 0.;
-}
-
-double PolarTree::getBottom(bool rotate) {
-	if ((rotate)) {
-		this->checkComputeBottom();
-		return (this->_bottom + MARGIN);
-	}
-	return this->getRelativeBottom();
 }
 
 void PolarTree::setLeaf(bool b) {

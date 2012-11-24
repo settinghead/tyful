@@ -8,32 +8,31 @@
 ** source other than Adobe, then your use, modification, or distribution of it requires the prior
 ** written permission of Adobe.
 */
-package com.adobe.flascc
+package plartree
 {
-  import flash.display.Bitmap;
-  import flash.display.BitmapData;
-  import flash.display.Sprite;
-  import flash.filters.DropShadowFilter;
   import flash.geom.Matrix;
   import flash.geom.Point;
   import flash.geom.Rectangle;
-  import flash.text.AntiAliasType;
-  import flash.text.StyleSheet;
-  import flash.text.TextFieldAutoSize;
+  import flash.display.Loader;
+  import flash.display.LoaderInfo;
+  import flash.display.Bitmap;
+  import flash.display.BitmapData;
   import flash.display.DisplayObjectContainer;
+  import flash.display.Sprite;
   import flash.display.Stage;
   import flash.display.StageScaleMode;
-  import flash.events.Event;
+  import flash.net.LocalConnection;
+  import flash.net.URLRequest;
+  import flash.events.*;
   import flash.net.LocalConnection;
   import flash.net.URLRequest;
   import flash.text.TextField;
   import flash.utils.ByteArray;
   import com.adobe.flascc.vfs.ISpecialFile;
-  import polartree.PolarTree.slapWord;
-
+  import polartree.PolarTree.CModule;
 
   /**
-  * A basic implementation of a console for flascc apps.
+  * A basic implementation of a console for FlasCC apps.
   * The PlayerKernel class delegates to this for things like read/write
   * so that console output can be displayed in a TextField on the Stage.
   */
@@ -41,10 +40,7 @@ package com.adobe.flascc
   {
     private var inputContainer:DisplayObjectContainer
     
-    public var bmd:BitmapData;
-    public var bm:Bitmap;
-
-    include "./TestingCode.as";
+    private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
 
     /**
     * To Support the preloader case you might want to have the Console
@@ -63,29 +59,47 @@ package com.adobe.flascc
     }
 
     /**
-    * All of the real flascc init happens in this method
+    * All of the real FlasCC init happens in this method
     * which is either run on startup or once the SWF has
     * been added to the stage.
     */
     protected function init(e:Event):void
     {
+
+      //CModule.rootSprite = this;
+      //CModule.vfs.console = this;
+      //var width:int = 1024, height:int = 768;
+      var loader:Loader = new Loader();
+      loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+      loader.load(new URLRequest("../static/f/templates/egg.png"));
+    }
+
+    function onLoadComplete (event:Event):void{
       inputContainer = new Sprite()
       addChild(inputContainer)
 
-      addEventListener(Event.ENTER_FRAME, enterFrame)
+      CModule.serviceUIRequests()
+      var bitmapData:BitmapData;
+      bitmapData = Bitmap(LoaderInfo(event.target).content).bitmapData;
+      var directionBmp:Bitmap = new Bitmap(bitmapData);
+      var data:ByteArray = directionBmp.bitmapData.getPixels(new Rectangle(directionBmp.width, directionBmp.height));
+      trace(data.length);
+      var addr:int = CModule.malloc(data.length);
+      CModule.writeBytes(addr, data.length, data);
 
+      CModule.initCanvas(addr,directionBmp.width,directionBmp.height);
+
+
+      addEventListener(Event.ENTER_FRAME, enterFrame)
       stage.frameRate = 60
       stage.scaleMode = StageScaleMode.NO_SCALE
       
-      bmd = new BitmapData(stage.stageWidth, stage.stageHeight, false)
-      bm = new Bitmap(bmd)
-      addChild(bm)
+      inputContainer.addChild(directionBmp);
       CModule.startAsync(this)
-      initTesting()
     }
 
     /**
-    * The callback to call when flascc code calls the posix exit() function. Leave null to exit silently.
+    * The callback to call when FlasCC code calls the posix exit() function. Leave null to exit silently.
     * @private
     */
     public var exitHook:Function;
@@ -159,59 +173,40 @@ package com.adobe.flascc
     * The enterFrame callback will be run once every frame. UI thunk requests should be handled
     * here by calling CModule.serviceUIRequests() (see CModule ASdocs for more information on the UI thunking functionality).
     */
+
     protected function enterFrame(e:Event):void
     {
       CModule.serviceUIRequests()
-      var args:Vector.<int> = new Vector.<int>;
+      trace("enterFrame event");
 
-      var textField:TextField = getTextField("Blah", 30);
-      var params:Array = getTextShape(textField);
-      args.push(params[0]);
-      args.push(params[1]);
-      args.push(params[2]);
-      var coord:Vector.<int> =
-       polartree.PolarTree.CModule.callI(polartree.PolarTree.CModule.getPublicSymbol("slapShape"), args);
-       //slapShape();
-      //textField.x = coord[0];
-      //textField.y = coord[1];
+      while(canvas->getStatus()>0)
+      {
+        var textField:TextField = getTextField("Blah", 100.0*getShrinkage());
+        var params:Array = getTextShape(textField);
 
-      CModule.activeConsole.addChild(textField);
+        var args:Vector.<int> = new Vector.<Number>;
+        args.push(params[0]);
+        args.push(params[1]);
+        args.push(params[2]);
 
+        var coord:Vector.<Number> =
+         CModule.callI(CModule.getPublicSymbol("slapShape"), args);
 
-    }
-    private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
-
-    public function getTextField(text: String, size: Number, rotation: Number = 0):TextField
-    {
-      var textField: TextField = new TextField();
-//      textField.setTextFormat( new TextFormat( font.fontName, size ) );
-      var style:StyleSheet = new StyleSheet();
-      style.parseCSS("div{font-size: "+size+"; leading: 0; text-align: center;}");
-      textField.styleSheet = style;
-      textField.autoSize = TextFieldAutoSize.LEFT;
-      textField.background = false;
-      textField.selectable = false;
-      textField.embedFonts = true;
-      textField.cacheAsBitmap = false;
-      textField.x = 0;
-      textField.y = 0;
-      textField.antiAliasType = AntiAliasType.ADVANCED;
-//      textField.text  = text;
-      textField.htmlText = "<div>"+text+"</div>";
-      textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
-      if(text.length>11){ //TODO: this is a temporary fix
-        var w:Number = textField.width;
-        textField.wordWrap = true;
-        textField.width = w/(text.length/11)*1.1 ;
+         if(coord!=null){
+          textField.x = coord[0];
+          textField.y = coord[1];
+          addChild(textField);
+          break;
+        }
       }
-      return textField;
     }
 
-    private function getTextShape(textField:TextField, safetyBorder:Number=0):Array{
+    private function getTextShape(textField:TextField, safetyBorder:Number=0):Array
+    {
       var bounds: Rectangle = textField.getBounds( textField );
       HELPER_MATRIX.tx = -bounds.x + safetyBorder;
       HELPER_MATRIX.ty = -bounds.y + safetyBorder;
-      
+
       var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
       var s:Sprite = new Sprite();
       s.width = textField.width;
@@ -228,19 +223,29 @@ package com.adobe.flascc
       return [addr,bmp.width, bmp.height];
     }
 
-
-    /**
-    * Provide a way to get the TextField's text.
-    */
-    public function get consoleText():String
+    public function getTextField(text: String, size: Number, rotation: Number = 0):TextField
     {
-        var txt:String = null;
-
-        if(_tf != null){
-            txt = _tf.text;
-        }
-        
-        return txt;
+      var textField: TextField = new TextField();
+//      textField.setTextFormat( new TextFormat( font.fontName, size ) );
+      var style:StyleSheet = new StyleSheet();
+      style.parseCSS("div{font-size: "+size+"; leading: 0; text-align: center;}");
+      textField.styleSheet = style;
+      textField.autoSize = TextFieldAutoSize.LEFT;
+      textField.background = false;
+      textField.selectable = false;
+      //textField.embedFonts = true;
+      //textField.cacheAsBitmap = true;
+      //textField.x = 0;
+      //textField.y = 0;
+      textField.antiAliasType = AntiAliasType.ADVANCED;
+      textField.htmlText = "<div>"+text+"</div>";
+      textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
+      if(text.length>11){ //TODO: this is a temporary fix
+        var w:Number = textField.width;
+        textField.wordWrap = true;
+        textField.width = w/(text.length/11)*1.1 ;
+      }
+      return textField;
     }
   }
 }

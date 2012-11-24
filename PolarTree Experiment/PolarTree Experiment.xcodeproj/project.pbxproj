@@ -54,6 +54,11 @@
 		7CBDAB5D165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB32165B4E7800E009E5 /* PolarTreeBuilder.cpp */; };
 		7CBDAB5E165B4E7800E009E5 /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */; };
 		7CBDAB5F165B4E7800E009E5 /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */; };
+		7CBDAB61165D0AAF00E009E5 /* ghandi.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB60165D0AAE00E009E5 /* ghandi.png */; };
+		7CBDAB62165D0AAF00E009E5 /* ghandi.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB60165D0AAE00E009E5 /* ghandi.png */; };
+		7CBDAB64165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
+		7CBDAB65165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
+		7CF50B9E165D539A007E4B70 /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF50B9D165D539A007E4B70 /* swift.png */; };
 		7CF53CC41646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
 		7CF53CCE1646658B00A218BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CF53CCC1646658B00A218BE /* InfoPlist.strings */; };
 		7CF53CD01646658B00A218BE /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7CF53CCF1646658B00A218BE /* main.mm */; };
@@ -133,6 +138,9 @@
 		7CBDAB35165B4E7800E009E5 /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		7CBDAB36165B4E7800E009E5 /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
 		7CBDAB37165B4E7800E009E5 /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
+		7CBDAB60165D0AAE00E009E5 /* ghandi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ghandi.png; sourceTree = "<group>"; };
+		7CBDAB63165D0B7A00E009E5 /* pbs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pbs.png; sourceTree = "<group>"; };
+		7CF50B9D165D539A007E4B70 /* swift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift.png; sourceTree = "<group>"; };
 		7CF53CBF1646658B00A218BE /* PolarTree Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PolarTree Experiment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF53CC31646658B00A218BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7CF53CC61646658B00A218BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -180,6 +188,9 @@
 		7C10FEA31659939A003F656A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7CF50B9D165D539A007E4B70 /* swift.png */,
+				7CBDAB63165D0B7A00E009E5 /* pbs.png */,
+				7CBDAB60165D0AAE00E009E5 /* ghandi.png */,
 				7CBDAAF2165AADFC00E009E5 /* dog.png */,
 				7CBDAAF3165AADFC00E009E5 /* face.png */,
 				7CBDAAF4165AADFC00E009E5 /* heart.png */,
@@ -413,6 +424,9 @@
 				7CBDAAFB165AADFC00E009E5 /* star.png in Resources */,
 				7CBDAAFC165AADFC00E009E5 /* wheel_h.png in Resources */,
 				7CBDAAFD165AADFC00E009E5 /* wheel_v.png in Resources */,
+				7CBDAB61165D0AAF00E009E5 /* ghandi.png in Resources */,
+				7CBDAB64165D0B7B00E009E5 /* pbs.png in Resources */,
+				7CF50B9E165D539A007E4B70 /* swift.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +435,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CF53CEB1646658B00A218BE /* InfoPlist.strings in Resources */,
+				7CBDAB62165D0AAF00E009E5 /* ghandi.png in Resources */,
+				7CBDAB65165D0B7B00E009E5 /* pbs.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +583,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -592,7 +608,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;

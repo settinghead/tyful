@@ -64,7 +64,11 @@
     NSArray *templates = [[NSArray alloc] initWithObjects:
                           @"dog.png",@"wheel_h.png",@"egg.png",
                         @"face.png",
-                          @"wheel_v.png",@"star.png",@"heart.png",
+                          @"wheel_v.png",@"star.png",
+//                          @"heart.png",
+//                          @"pbs.png",
+//                          @"ghandi.png",
+//                            @"swift.png",
                           nil];
     NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
@@ -74,21 +78,24 @@
 
 }
 
--(void) drawTree:(PolarTree*)tree{
-    [self drawLeaves:tree];
+-(void) drawTree:(PolarTree*)tree
+       withColor:(NSColor*)color{
+    [self drawLeaves:tree withColor:color];
 }
 
--(void) drawLeaves:(PolarTree*)tree {
+-(void) drawLeaves:(PolarTree*)tree
+         withColor:(NSColor*)color{
     if (tree->isLeaf() || tree->getKidsNoGrowth()==NULL || tree->getKidsNoGrowth()->size()==0) {
-        [self drawBounds:tree];
+        [self drawBounds:tree withColor:color];
     } else {
         for (int i=0; i < tree->getKidsNoGrowth()->size(); i++) {
-            [self drawLeaves:tree->getKidsNoGrowth()->at(i)];
+            [self drawLeaves:tree->getKidsNoGrowth()->at(i) withColor:color];
         }
     }
 }
 //
 -(void) drawBounds:(PolarTree*)tree
+         withColor:(NSColor*)color
 {
     int x1, x2, x3, x4, y1, y2, y3, y4;
     x1 = int((tree->getRootX() + tree->d1 * cos(tree->getR1(true))));
@@ -113,11 +120,11 @@
         r+=TWO_PI;
     
 //    assert(r < PI);
-    
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d2 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
-    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d1 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d2 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree withColor:color];
+    [self drawArc:tree->getRootX() withCenterY:tree->getRootY() withRadius:tree->d1 withAngleFrom:tree->getR1(true) withAngleTo:tree->getR2(true) withPrecision:1.0 withTree:tree withColor:color];
     
     NSBezierPath* thePath = [NSBezierPath bezierPath];
+    [color set];
     [thePath setLineWidth:1.0]; // Has no effect.
     [thePath moveToPoint:NSMakePoint(x1, y1)];
     [thePath lineToPoint:NSMakePoint(x3, y3)];
@@ -126,13 +133,14 @@
 }
 
 -(void) drawArc:
-                  (double)center_x
-                  withCenterY:(double)center_y
+                  (int)center_x
+                  withCenterY:(int)center_y
                   withRadius:(double)radius
                   withAngleFrom:(double)angle_from
                   withAngleTo:(double)angle_to
                   withPrecision:(double)precision
-                  withTree:(PolarTree*)tree{
+                  withTree:(PolarTree*)tree
+                withColor:(NSColor*)color{
     double angle_diff=angle_to-angle_from;
     int steps=round(angle_diff*precision);
     if(steps==0) steps = 1;
@@ -145,13 +153,13 @@
     NSBezierPath* thePath = [NSBezierPath bezierPath];
     [thePath setLineWidth:1.0]; // Has no effect.
     [thePath moveToPoint:NSMakePoint(px, py)];
-    
     for (int i=1; i<=steps; i++) {
         angle=angle_from+angle_diff/steps*i;
         int x = center_x+radius*cos(angle);
         int y =
         mainImage.size.height-
         (center_y-radius*sin(angle));
+        [color set];
         [thePath lineToPoint:NSMakePoint(x, y)];
     }
     [thePath stroke];
@@ -161,13 +169,24 @@
 - (void)drawColorMappedText:(id)sender{
     [self loadDirectionImage];
     [self resetMainImage];
-    NSArray *strings = [[NSArray alloc] initWithObjects:@"椅子",@"passion",@"LOL",
-                        @"尼玛",@"FCUK",@"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful",
-                        @"compassion",@"troll",@"ice cream",@"hippo",@"fun",@"Your name",nil];
-    NSArray *colors = [[NSArray alloc] initWithObjects:[NSColor greenColor],
-                       [NSColor redColor],[NSColor brownColor],[NSColor cyanColor],
+    NSArray *strings = [[NSArray alloc] initWithObjects:
+                        @"橙子",@"passion",@"贪婪",
+                        @"可笑可乐",
+                        @"War rages on\n in Africa."
+                        ,@"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful"
+//                        ,@"glutton",@"lust",@"envy",@"sloth",@"贪婪",@"傲慢"
+                        ,@"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή"
+                        ,@"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname"
+//                        @"文俊",@"Wenjun",@"cool"
+                        ,nil];
+    NSArray *colors = [[NSArray alloc] initWithObjects:
+                       [NSColor greenColor],
+                       [NSColor redColor],
+                       [NSColor brownColor],
+                       [NSColor cyanColor],
                        [NSColor blueColor],[NSColor orangeColor],[NSColor darkGrayColor],
-                       [NSColor headerColor],[NSColor purpleColor],[NSColor knobColor],nil];
+                       [NSColor headerColor],[NSColor purpleColor],[NSColor knobColor],
+                       nil];
     
     canvas->setStatus(RENDERING);
     NSDate *methodStart = [NSDate date];
@@ -178,11 +197,12 @@
         NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
         
-        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 200*canvas->getShrinkage()+15];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*canvas->getShrinkage()+12];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:[colors objectAtIndex:arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
+        NSColor* color = [colors objectAtIndex:arc4random()%[colors count]];
+        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
         
@@ -202,7 +222,7 @@
                                             mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
 
                 [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-    //            [self drawTextTree:shape->getTree()];
+//                [self drawTextTree:shape->getTree() withColor:color];
             }
         }
     }
@@ -227,13 +247,15 @@
                        [NSColor headerColor],[NSColor knobColor],[NSColor magentaColor],nil];
     NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
+    NSColor* color = [colors objectAtIndex:arc4random()%[colors count]];
+
     while(true){
 
         NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 130];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
 
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        [string addAttribute:NSForegroundColorAttributeName value:[colors objectAtIndex:arc4random()%[colors count]] range:NSMakeRange(0,[str length])];
+        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
 //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
 
@@ -258,7 +280,7 @@
                                      y);
             shape->getTree()->setRotation(-rotation/360*TWO_PI+PI);
         }
-        while ([MainView collide:shape->getTree():trees] && ++count<10000);
+        while ([MainView collide:shape->getTree():trees] && ++count<1000);
         if(count<1000)
             break;
         else
@@ -272,7 +294,7 @@
         [trees addObject:[NSValue valueWithPointer:shape->getTree()]];
 
     [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
-//    [self drawTextTree:tree];
+//    [self drawTextTree:shape->getTree() withColor:color];
 }
 
 +(bool)collide:(PolarRootTree*)tree:
@@ -342,13 +364,14 @@
 }
 
 - (void)drawTextTree:(PolarTree*)tree
+           withColor:(NSColor*)color
 {
     
     NSGraphicsContext* nsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:nsContext];
-    
-    [self drawTree:tree];
+    [color set];
+    [self drawTree:tree withColor:color];
     
     [NSGraphicsContext restoreGraphicsState];
     [mainView setNeedsDisplay:YES];

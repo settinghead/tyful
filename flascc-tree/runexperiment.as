@@ -10,60 +10,238 @@
 */
 package
 {
-  import flash.display.Bitmap;
-  import flash.display.BitmapData;
-  import flash.display.Sprite;
-  import flash.filters.DropShadowFilter;
   import flash.geom.Matrix;
   import flash.geom.Point;
   import flash.geom.Rectangle;
-  import flash.text.AntiAliasType;
-  import flash.text.StyleSheet;
-  import flash.text.TextFieldAutoSize;
+  import flash.display.Loader;
+  import flash.display.LoaderInfo;
+  import flash.display.Bitmap;
+  import flash.display.BitmapData;
   import flash.display.DisplayObjectContainer;
+  import flash.display.Sprite;
   import flash.display.Stage;
   import flash.display.StageScaleMode;
-  import flash.events.Event;
+  import flash.net.LocalConnection;
+  import flash.net.URLRequest;
+  import flash.events.*;
   import flash.net.LocalConnection;
   import flash.net.URLRequest;
   import flash.text.TextField;
+  import flash.text.AntiAliasType;
+  import flash.text.StyleSheet;
+  import flash.text.TextFieldAutoSize;  
+  import flash.filters.DropShadowFilter;
   import flash.utils.ByteArray;
+  import polartree.PolarTree.vfs.ISpecialFile;
   import polartree.PolarTree.slapShape;
+  import polartree.PolarTree.initCanvas;
+  import polartree.PolarTree.getShrinkage;
+  import polartree.PolarTree.getStatus;
   import polartree.PolarTree.CModule;
 
-  public class runexperiment extends Sprite
+  /**
+  * A basic implementation of a console for FlasCC apps.
+  * The PlayerKernel class delegates to this for things like read/write
+  * so that console output can be displayed in a TextField on the Stage.
+  */
+  public class runexperiment extends Sprite implements ISpecialFile
   {
+    private var inputContainer:DisplayObjectContainer
+    private var enableConsole:Boolean = true
+    private var _tf:TextField
+
     private const HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
 
-    public function runexperiment()
+    /**
+    * To Support the preloader case you might want to have the Console
+    * act as a child of some other DisplayObjectContainer.
+    */
+    public function runexperiment(container:DisplayObjectContainer = null)
     {
-      addEventListener(Event.ADDED_TO_STAGE, initCode);
-      addEventListener(Event.ENTER_FRAME, enterFrame);
+      CModule.rootSprite = container ? container.root : this
+      CModule.rootSprite = this
+
+      if(container) {
+        container.addChild(this)
+        init(null)
+      } else {
+        addEventListener(Event.ADDED_TO_STAGE, init)
+      }
     }
+
+    /**
+    * All of the real FlasCC init happens in this method
+    * which is either run on startup or once the SWF has
+    * been added to the stage.
+    */
+    protected function init(e:Event):void
+    {
+
+      //CModule.rootSprite = this;
+      CModule.vfs.console = this;
+      //var width:int = 1024, height:int = 768;
+
+      inputContainer = new Sprite()
+      addChild(inputContainer)
+
+      addEventListener(Event.ENTER_FRAME, enterFrame)
+
+      stage.frameRate = 60
+      stage.scaleMode = StageScaleMode.NO_SCALE
+
+      if(enableConsole) {
+        _tf = new TextField
+        _tf.multiline = true
+        _tf.width = stage.stageWidth
+        _tf.height = stage.stageHeight 
+        inputContainer.addChild(_tf)
+      }
+
+      var loader:Loader = new Loader();
+      loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+      loader.load(new URLRequest("../static/f/templates/egg.png"));
+    }
+
+    protected function onLoadComplete (event:Event):void{
+      //inputContainer = new Sprite()
+      //addChild(inputContainer)
+
+      CModule.serviceUIRequests()
+      var bitmapData:BitmapData;
+      bitmapData = Bitmap(LoaderInfo(event.target).content).bitmapData;
+      var directionBmp:Bitmap = new Bitmap(bitmapData);
+      var data:ByteArray = directionBmp.bitmapData.getPixels(new Rectangle(directionBmp.width, directionBmp.height));
+      trace(data.length);
+      var addr:int = CModule.malloc(data.length);
+      CModule.writeBytes(addr, data.length, data);
+
+      initCanvas(addr,directionBmp.width,directionBmp.height);
+
+
+      addEventListener(Event.ENTER_FRAME, enterFrame)
+
+      //inputContainer.addChild(directionBmp);
+      CModule.startAsync(this)
+    }
+
+    /**
+    * The callback to call when FlasCC code calls the posix exit() function. Leave null to exit silently.
+    * @private
+    */
+    public var exitHook:Function;
+
+    /**
+    * The PlayerKernel implementation will use this function to handle
+    * C process exit requests
+    */
+    public function exit(code:int):Boolean
+    {
+      // default to unhandled
+      return exitHook ? exitHook(code) : false;
+    }
+
+    /**
+    * The PlayerKernel implementation will use this function to handle
+    * C IO write requests to the file "/dev/tty" (e.g. output from
+    * printf will pass through this function). See the ISpecialFile
+    * documentation for more information about the arguments and return value.
+    */
+    public function write(fd:int, bufPtr:int, nbyte:int, errnoPtr:int):int
+    {
+      var str:String = CModule.readString(bufPtr, nbyte)
+      consoleWrite(str)
+      return nbyte
+    }
+
+    /**
+    * The PlayerKernel implementation will use this function to handle
+    * C IO read requests to the file "/dev/tty" (e.g. reads from stdin
+    * will expect this function to provide the data). See the ISpecialFile
+    * documentation for more information about the arguments and return value.
+    */
+    public function read(fd:int, bufPtr:int, nbyte:int, errnoPtr:int):int
+    {
+      return 0
+    }
+
+    /**
+    * The PlayerKernel implementation will use this function to handle
+    * C fcntl requests to the file "/dev/tty" 
+    * See the ISpecialFile documentation for more information about the
+    * arguments and return value.
+    */
+    public function fcntl(fd:int, com:int, data:int, errnoPtr:int):int
+    {
+      return 0
+    }
+
+    /**
+    * The PlayerKernel implementation will use this function to handle
+    * C ioctl requests to the file "/dev/tty" 
+    * See the ISpecialFile documentation for more information about the
+    * arguments and return value.
+    */
+    public function ioctl(fd:int, com:int, data:int, errnoPtr:int):int
+    {
+      return 0
+    }
+
+    /**
+    * Helper function that traces to the flashlog text file and also
+    * displays output in the on-screen textfield console.
+    */
+    protected function consoleWrite(s:String):void
+    {
+      trace(s)
+      if(enableConsole) {
+        _tf.appendText(s)
+        _tf.scrollV = _tf.maxScrollV
+      }
+    }
+
+    /**
+    * Provide a way to get the TextField's text.
+    */
+    public function get consoleText():String
+    {
+        var txt:String = null;
+
+        if(_tf != null){
+            txt = _tf.text;
+        }
+        
+        return txt;
+    }
+
+    /**
+    * The enterFrame callback will be run once every frame. UI thunk requests should be handled
+    * here by calling CModule.serviceUIRequests() (see CModule ASdocs for more information on the UI thunking functionality).
+    */
 
     protected function enterFrame(e:Event):void
     {
       CModule.serviceUIRequests()
+      trace("enterFrame event");
 
-      var textField:TextField = getTextField("Blah", 100);
-      var params:Array = getTextShape(textField);
+      while(getStatus()>0){
 
-      //var args:Vector.<int> = new Vector.<int>;
-      //args.push(params[0]);
-      //args.push(params[1]);
-      //args.push(params[2]);
+        var textField:TextField = getTextField("Blah", 100*getShrinkage());
+        var params:Array = getTextShape(textField);
 
-      var coord:Vector.<int> =
-       slapShape(params[0],params[1],params[2]);
+        var coord:Vector.<Number> =
+          slapShape(params[0],params[1],params[2]);
 
-      textField.x = coord[0];
-      textField.y = coord[1];
-
-      addChild(textField);
-    }
-
-    public function initCode(e:Event):void
-    {
+         if(coord!=null){
+          textField.x = coord[0];
+          textField.y = coord[1];
+          addChild(textField);
+          break;
+        }
+      }
+//      var args:Vector.<int> = new Vector.<Number>;
+//      args.push(params[0]);
+//      args.push(params[1]);
+//      args.push(params[2]);
     }
 
     private function getTextShape(textField:TextField, safetyBorder:Number=0):Array
@@ -99,7 +277,7 @@ package
       textField.background = false;
       textField.selectable = false;
       //textField.embedFonts = true;
-      textField.cacheAsBitmap = false;
+      //textField.cacheAsBitmap = true;
       //textField.x = 0;
       //textField.y = 0;
       textField.antiAliasType = AntiAliasType.ADVANCED;

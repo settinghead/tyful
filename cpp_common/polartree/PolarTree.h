@@ -25,8 +25,33 @@ public:
 	inline void addKids(vector<PolarTree*>* kidList);
 	inline virtual int getRootX() = 0;
 	inline virtual int getRootY() = 0;
-	inline virtual bool overlaps(PolarTree* otherTree);
-	inline vector<PolarTree*>* getKids();
+	inline virtual bool overlaps(PolarTree* otherTree){
+        if ((this->collide(otherTree))) {
+            if (this->isLeaf() && otherTree->isLeaf()) {
+                return true;
+            } else {
+                if ((this->isLeaf())) {
+                    vector<PolarTree*>* oKids = otherTree->getKids();
+                    for (vector<PolarTree*>::iterator it = oKids->begin();
+                         it != oKids->end(); ++it) {
+                        if ((this->overlaps(*it)))
+                            return true;
+                    }
+                } else {
+                    vector<PolarTree*>* tKids = this->getKids();
+                    
+                    for (vector<PolarTree*>::iterator it = tKids->begin();
+                         it != tKids->end(); ++it) {
+                        if ((otherTree->overlaps(*it)))
+                            return true;
+                    }
+                    
+                }
+            }
+        }
+        return false;
+    }
+	vector<PolarTree*>* getKids();
 	inline vector<PolarTree*>* getKidsNoGrowth(){
         return this->_kids;
     }
@@ -98,7 +123,18 @@ public:
         else if(this->_computedR2<0)
             this->_computedR2 += TWO_PI;
     }
-	inline void checkUpdatePoints();
+	inline void checkUpdatePoints(){
+        if (((this->pointsStamp != this->getCurrentStamp()))) {
+			this->_px =
+            ((this->getRootX() - this->swelling) + this->getX(true));
+			this->_pright = ((this->getRootX() + this->swelling)
+                             + this->getRight(true));
+			this->_py = ((this->getRootY() - this->swelling) + this->getY(true));
+			this->_pbottom = ((this->getRootY() + this->swelling)
+                              + this->getBottom(true));
+			this->pointsStamp = this->getCurrentStamp();
+		}
+    }
 	inline double px(){
         this->checkUpdatePoints();
         return this->_px;
@@ -122,20 +158,88 @@ public:
 	inline void swell(int extra);
 	inline double getWidth(bool rotate);
 	inline double getHeight(bool rotate);
-	inline void checkComputeX();
-	inline void checkComputeY();
-	inline void checkComputeRight();
-	inline void checkComputeBottom();
-	inline double getRelativeX();
-	inline double getRelativeY();
-	inline double getRelativeRight();
-	inline double getRelativeBottom();
-	inline double getX(bool rotate);
-	inline double getY(bool rotate);
-	inline double getRight(bool rotate);
-	inline double getBottom(bool rotate);
-	inline virtual double getRotation() = 0;
-	inline virtual int getCurrentStamp() = 0;
+	inline void checkComputeX(){
+        if (((this->xStamp != this->getCurrentStamp()))) {
+			this->_x = this->computeX(true);
+			this->xStamp = this->getCurrentStamp();
+		}
+    }
+	inline void checkComputeY(){
+        if (((this->yStamp != this->getCurrentStamp()))) {
+			this->_y = this->computeY(true);
+			this->yStamp = this->getCurrentStamp();
+		}
+    }
+	inline void checkComputeRight(){
+        if (((this->rightStamp != this->getCurrentStamp()))) {
+			this->_right = this->computeRight(true);
+			this->rightStamp = this->getCurrentStamp();
+		}
+    }
+	inline void checkComputeBottom(){
+        if (((this->bottomStamp != this->getCurrentStamp()))) {
+			this->_bottom = this->computeBottom(true);
+			this->bottomStamp = this->getCurrentStamp();
+		}
+    }
+	inline double getRelativeX(){
+        if ((isnan(this->_relativeX))) {
+            this->_relativeX = this->computeX(false);
+        }
+        return this->_relativeX;
+    }
+	inline double getRelativeY(){
+        if ((isnan(this->_relativeY))) {
+            this->_relativeY = this->computeY(false);
+        }
+        return this->_relativeY;
+    }
+	inline double getRelativeRight(){
+        if ((isnan(this->_relativeRight))) {
+            this->_relativeRight = this->computeRight(false);
+        }
+        return this->_relativeRight;
+    }
+	inline double getRelativeBottom(){
+        if ((isnan(this->_relativeBottom))) {
+            this->_relativeBottom = this->computeBottom(false);
+        }
+        return this->_relativeBottom;
+        
+    }
+	inline double getX(bool rotate){
+        if ((rotate)) {
+            this->checkComputeX();
+            return (this->_x - MARGIN);
+        } else {
+            return this->getRelativeX();
+        }
+    }
+	inline double getY(bool rotate){
+        if ((rotate)) {
+            this->checkComputeY();
+            return (this->_y - MARGIN);
+        } else {
+            return this->getRelativeY();
+        }
+    }
+	inline double getRight(bool rotate){
+        if ((rotate)) {
+            this->checkComputeRight();
+            return (this->_right + MARGIN);
+        } else {
+            return this->getRelativeRight();
+        }
+    }
+	inline double getBottom(bool rotate){
+        if ((rotate)) {
+            this->checkComputeBottom();
+            return (this->_bottom + MARGIN);
+        }
+        return this->getRelativeBottom();
+    }
+	virtual double getRotation() = 0;
+	virtual int getCurrentStamp() = 0;
 	inline void setLeaf(bool b);
 protected:
     int rStamp;
@@ -148,7 +252,16 @@ protected:
 	double xStamp, yStamp, rightStamp, bottomStamp;
 	bool _leaf;
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom;
-    inline bool collide(PolarTree* bTree);
+    inline bool collide(PolarTree* bTree){
+        double dist = sqrt(
+                           (pow((this->getRootX() - bTree->getRootX()), 2)
+                            + pow((this->getRootY() - bTree->getRootY()), 2)));
+        if (((dist > (this->d2 + bTree->d2)))) {
+            return false;
+        } else {
+            return this->rectCollide(bTree);
+        }
+    }
 	inline bool rectCollide(PolarTree* bTree){
         return this->rectCollideCoord(bTree->px(), bTree->py(), bTree->pright(),
                                       bTree->pbottom());
