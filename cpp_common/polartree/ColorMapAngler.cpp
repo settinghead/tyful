@@ -23,7 +23,7 @@ double ColorMapAngler::angleFor(EngineShape* shape){
     // .getCurrentLocation().getpVector().y) + BBPolarTree.PI)
     // % BBPolarTree.TWO_PI;
     double angle= (layer->getHue((int)shape->getCurrentPlacement()->location.x, (int)shape->getCurrentPlacement()->location.y) * TWO_PI);
-    if (isnan(angle) || angle == 0)
+    if (isnan(angle))
         return otherwise->angleFor(shape);
     else
         return angle;

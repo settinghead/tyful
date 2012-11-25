@@ -5,17 +5,30 @@
 #include <iostream>
 #include "Flip.h"
 
-PixelImageShape::PixelImageShape(unsigned int const * pixels, int width, int height):
-ImageShape::ImageShape(){
-	this->width = width;
-	this->height = height;
-    this->total = width*height;
+PixelImageShape::PixelImageShape(unsigned int const * pixels, int width, int height, bool revert):
+ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels((unsigned int *) pixels){
+//	this->width = width;
+//	this->height = height;
+//    this->total = width*height;
 //    int size = sizeof(unsigned int)*width*height;
-    this->pixels = (unsigned int *)pixels;
+//    this->pixels = (unsigned int *)pixels;
 //	this->pixels = (unsigned int *)malloc(size);
     //memcpy(this->pixels, pixels, size);
 //    this->img = img;
 //    printStats();
+    if(revert){
+        int size = sizeof(unsigned int)*width*height;
+        this->pixels = (unsigned int *)malloc(size);
+        for (int xx=0; xx<width; xx++) {
+            for(int yy=0;yy<height;yy++){
+                int i = yy*width+xx;
+                this->pixels[i] = (pixels[i] & 0x000000FFU) << 24 | (pixels[i] & 0x0000FF00U) << 8 |
+                (pixels[i] & 0x00FF0000U) >> 8 | (pixels[i] & 0xFF000000U) >> 24;;
+                //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
+            }
+        }
+
+    }
 };
 
 PixelImageShape::~PixelImageShape() {
@@ -30,6 +43,6 @@ void PixelImageShape::printStats() {
         }
     sum/=width*height;
     printf("Width: %d, height: %d, Fill rate: %f, pixel addr: %p\n", width, height, sum, pixels);
-    printf("Text image special pixel (1,1): %u, empty: %d\n", getPixel(1, 1), isEmpty(getPixel(1, 1)));
+    printf("Text image special pixel (1,1): %u, empty: %x\n", getPixel(1, 1), isEmpty(getPixel(1, 1)));
 
 };

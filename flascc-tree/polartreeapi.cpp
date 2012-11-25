@@ -39,9 +39,9 @@ void initCanvas(){
     assert(width>0);
     assert(height>0);
 
-	WordLayer* layer = new WordLayer((unsigned int const *)pixels, width, height);
-	printf("Special point(5,5): %p\n", layer->getPixel(5,5));
-	printf("Special point(600,400): %p\n", layer->getPixel(600,400));
+	WordLayer* layer = new WordLayer((unsigned int const *)pixels, width, height,true);
+	printf("Special point(5,5): %x\n", layer->getPixel(5,5));
+	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
 	layer->printStats();
 	canvas = new PolarCanvas();
 	canvas->getLayers()->push_back(layer);
@@ -65,7 +65,7 @@ void slapShape()
     AS3_GetScalarFromVar(height, _height);
 
 
-	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height);
+	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height,false);
 	shape->printStats();
 	Placement* placement = canvas->slapShape(shape);
 

@@ -19,8 +19,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-WordLayer::WordLayer(unsigned int const * pixels, int width, int height)
-:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),tolerance(1.0){
+WordLayer::WordLayer(unsigned int const * pixels, int width, int height, bool revert)
+:PolarLayer::PolarLayer(pixels,width,height,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),tolerance(1.0){
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
@@ -109,10 +109,14 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
 
 double WordLayer::getHue(int x, int y) {
     int colour = getHSB(x,y);
-    //			Assert.isTrue(!isNaN(colour.hue));
-    double h = ( (colour & 0x00FF0000) >> 16);
-    h/=255;
-    return h;
+    if(isnan(colour))
+        return NAN;
+    else{
+        //			Assert.isTrue(!isNaN(colour.hue));
+        double h = ( (colour & 0x00FF0000) >> 16);
+        h/=255;
+        return h;
+    }
 }
 
 void WordLayer::setTolerance(double v){

@@ -15,10 +15,10 @@ class Angler;
 class WordLayer: public PolarLayer{
 public:
     class ColorSheet: public PixelImageShape{};
-    WordLayer(unsigned int const * pixels, int width, int height);
+    WordLayer(unsigned int const * pixels, int width, int height,bool revert);
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
-        return ((pixelValue >> 24) & 0xFF) == 0x00;
+        return (pixelValue >> 24) == 0x00;
     }
     const LAYER_TYPE type;
     bool contains(double x, double y, double width, double height, double rotation);

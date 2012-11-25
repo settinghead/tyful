@@ -14,8 +14,7 @@
 #include "Flip.h"
 #include "PolarTreeBuilder.h"
 
-ImageShape::ImageShape(){
-    this->tree = NULL;
+ImageShape::ImageShape():tree(NULL){
 }
 
 PolarRootTree* ImageShape::getTree(){

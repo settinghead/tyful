@@ -58,6 +58,7 @@
 		7CBDAB62165D0AAF00E009E5 /* ghandi.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB60165D0AAE00E009E5 /* ghandi.png */; };
 		7CBDAB64165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
 		7CBDAB65165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
+		7CF28B061662B45C00F35815 /* quarter_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF28B051662B45C00F35815 /* quarter_red.png */; };
 		7CF50B9E165D539A007E4B70 /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF50B9D165D539A007E4B70 /* swift.png */; };
 		7CF50BA216617326007E4B70 /* TextImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50BA016617324007E4B70 /* TextImageShape.cpp */; };
 		7CF53CC41646658B00A218BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF53CC31646658B00A218BE /* Cocoa.framework */; };
@@ -141,6 +142,7 @@
 		7CBDAB37165B4E7800E009E5 /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CBDAB60165D0AAE00E009E5 /* ghandi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ghandi.png; sourceTree = "<group>"; };
 		7CBDAB63165D0B7A00E009E5 /* pbs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pbs.png; sourceTree = "<group>"; };
+		7CF28B051662B45C00F35815 /* quarter_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quarter_red.png; path = ../static/f/templates/quarter_red.png; sourceTree = "<group>"; };
 		7CF50B9D165D539A007E4B70 /* swift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift.png; sourceTree = "<group>"; };
 		7CF50BA016617324007E4B70 /* TextImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextImageShape.cpp; sourceTree = "<group>"; };
 		7CF50BA116617325007E4B70 /* TextImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextImageShape.h; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		7C10FEA31659939A003F656A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7CF28B051662B45C00F35815 /* quarter_red.png */,
 				7CF50B9D165D539A007E4B70 /* swift.png */,
 				7CBDAB63165D0B7A00E009E5 /* pbs.png */,
 				7CBDAB60165D0AAE00E009E5 /* ghandi.png */,
@@ -432,6 +435,7 @@
 				7CBDAB61165D0AAF00E009E5 /* ghandi.png in Resources */,
 				7CBDAB64165D0B7B00E009E5 /* pbs.png in Resources */,
 				7CF50B9E165D539A007E4B70 /* swift.png in Resources */,
+				7CF28B061662B45C00F35815 /* quarter_red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

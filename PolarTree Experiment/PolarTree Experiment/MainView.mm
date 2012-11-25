@@ -38,7 +38,7 @@
 
 -(void)resetMainImage {
     unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
-    WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height);
+    WordLayer* layer = new WordLayer(pixels, directionImage.size.width, directionImage.size.height,false);
     canvas = new PolarCanvas();
     canvas->getLayers()->push_back(layer);
     
@@ -65,7 +65,8 @@
 //                          @"dog.png",@"wheel_h.png",@"egg.png",
 //                        @"face.png",
 //                          @"wheel_v.png",@"star.png",
-                          @"heart.png",
+//                          @"heart.png",
+                          @"quarter_red.png",
 //                          @"pbs.png",
 //                          @"ghandi.png",
 //                            @"swift.png",
@@ -215,7 +216,7 @@
         if(textImage.size.width>0){
             unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
             
-            shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height);
+            shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height,false);
 //            shape->printStats();
             Placement* placement = canvas->slapShape(shape);
             if(placement!=NULL){
@@ -274,7 +275,7 @@
         
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height);
+        shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height,false);
         int count = 0;
         do {
             x = arc4random() % (int)(mainImage.size.width+textImage.size.width)-textImage.size.width/2;

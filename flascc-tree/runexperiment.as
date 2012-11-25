@@ -38,6 +38,7 @@ package
   import polartree.PolarTree.getShrinkage;
   import polartree.PolarTree.getStatus;
   import polartree.PolarTree.CModule;
+  import flash.utils.Endian;
 
 
 

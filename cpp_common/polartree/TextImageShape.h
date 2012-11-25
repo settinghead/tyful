@@ -12,7 +12,7 @@
 
 class TextImageShape:public PixelImageShape{
 public:
-    TextImageShape( unsigned int const * pixels, int width, int height):PixelImageShape(pixels,width,height){
+    TextImageShape( unsigned int const * pixels, int width, int height, bool revert):PixelImageShape(pixels,width,height, revert){
     }
     
     virtual inline bool isEmpty(unsigned int pixelValue){
