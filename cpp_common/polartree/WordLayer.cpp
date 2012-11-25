@@ -19,9 +19,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-WordLayer::WordLayer(unsigned int * pixels, int width, int height)
-:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),
-tolerance(1.0){
+WordLayer::WordLayer(unsigned int const * pixels, int width, int height)
+:PolarLayer::PolarLayer(pixels,width,height), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),tolerance(1.0){
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
@@ -89,7 +88,7 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
     //			if(x<0 || y<0 || x>width || y>height) return true;
     if(x<0||y<0||x>this->width||y>this->height)
         return false;
-    if((getPixel(x,y) >> 24 &0xff)!=0
+    if(ImageShape::containsPoint(x, y)
        //				&&
        //				//not transparent
        //				((color.getPixel32(x,y) >> 24 &0xff)!=0 )

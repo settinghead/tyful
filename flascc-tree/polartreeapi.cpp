@@ -7,6 +7,7 @@
 
 #include "../cpp_common/polartree/PolarCanvas.h"
 #include "../cpp_common/polartree/ImageShape.h"
+#include "../cpp_common/polartree/TextImageShape.h"
 #include "../cpp_common/polartree/PolarTree.h"
 #include "../cpp_common/polartree/PolarRootTree.h"
 #include "../cpp_common/polartree/WordLayer.h"
@@ -27,7 +28,7 @@ void initCanvas() __attribute__((used,
 
 void initCanvas(){
 
-	unsigned int *pixels = (unsigned int *) 0 ;
+	unsigned char *pixels = (unsigned char *) 0 ;
 	int width = 0 ;
 	int height = 0 ;
 
@@ -38,7 +39,10 @@ void initCanvas(){
     assert(width>0);
     assert(height>0);
 
-	WordLayer* layer = new WordLayer((unsigned int *)pixels, width, height);
+	WordLayer* layer = new WordLayer((unsigned int const *)pixels, width, height);
+	printf("Special point(5,5): %p\n", layer->getPixel(5,5));
+	printf("Special point(600,400): %p\n", layer->getPixel(600,400));
+	layer->printStats();
 	canvas = new PolarCanvas();
 	canvas->getLayers()->push_back(layer);
 	canvas->setStatus(RENDERING);
@@ -46,26 +50,27 @@ void initCanvas(){
 }
 
 void slapShape() __attribute__((used,
-	annotate("as3sig:public function slapShape(_pixels:int, _width:int, _height: int):Vector.<Number>"),
+	annotate("as3sig:public function slapShape(_pixels:int, _width:Number, _height: Number):Vector.<Number>"),
 	annotate("as3package:polartree.PolarTree")));
 
 void slapShape()
 {
 	printf("slapShape requested. Current shrinkage: %f\n", canvas->getShrinkage());
 	unsigned int *pixels = (unsigned int *) 0 ;
-	int width = 0 ;
-	int height = 0 ;
+	double width = 0 ;
+	double height = 0 ;
 
     AS3_GetScalarFromVar(pixels, _pixels);
     AS3_GetScalarFromVar(width, _width);
     AS3_GetScalarFromVar(height, _height);
 
 
-	ImageShape *shape = new PixelImageShape((unsigned int *)pixels, width, height);
+	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height);
+	shape->printStats();
 	Placement* placement = canvas->slapShape(shape);
 
 	if(placement!=NULL){
-		printf("Coord: %d, %d; rotation: %f"
+		printf("Coord: %f, %f; rotation: %f\n"
 			,shape->getTree()->getTopLeftLocation().x
 			,shape->getTree()->getTopLeftLocation().y
 			,shape->getTree()->getRotation());

@@ -11,10 +11,10 @@ class PolarRootTree;
 class ImageShape {
 public:
     ImageShape();
-    virtual bool isEmpty(unsigned int pixelValue) = 0;
+    virtual inline bool isEmpty(unsigned int pixelValue) = 0;
 
     inline bool containsPoint(int x, int y){
-        return isEmpty(getPixel(x, y));
+        return !isEmpty(getPixel(x, y));
     }
 	inline bool intersects(int x, int y, int width, int height){
         if(x>=getWidth()) x=getWidth()-1;
@@ -48,9 +48,9 @@ public:
             return containsPoint(rX, rY);
         }
     }
-	inline virtual int getWidth() = 0;
-	inline virtual int getHeight() = 0;
-	inline virtual unsigned int getPixel(int x, int y) = 0;
+	virtual int getWidth() = 0;
+	virtual int getHeight() = 0;
+	virtual unsigned int getPixel(int x, int y) = 0;
     PolarRootTree* getTree();
 protected:
     PolarRootTree* tree;

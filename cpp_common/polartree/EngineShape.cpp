@@ -50,6 +50,7 @@ bool EngineShape::wasSkipped(){
 }
 
 void EngineShape::skipBecause(int reason){
+    printf("Skipped because %d\n",reason);
     this->skipReason = reason;
 }
 

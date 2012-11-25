@@ -13,16 +13,16 @@
 
 class PixelImageShape : public ImageShape{
 public:
-    PixelImageShape( unsigned int * pixels, int width, int height);
+    PixelImageShape( unsigned int const * pixels, int width, int height);
 	~PixelImageShape();
+    virtual inline bool isEmpty(unsigned int pixelValue) = 0;
+    void printStats();
+
 	inline int getWidth(){
         return width;
     }
 	inline int getHeight(){
         return height;
-    }
-    inline bool isEmpty(unsigned int pixelValue){
-        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
     }
 	inline unsigned int getPixel(int x, int y){
         //    return    this->img->getPixel(x,y);

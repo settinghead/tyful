@@ -8,6 +8,7 @@
 
 #import "MainView.h"
 #include "../../cpp_common/polartree/PixelImageShape.h"
+#include "../../cpp_common/polartree/TextImageShape.h"
 #include "../../cpp_common/polartree/ImageShape.h"
 #include "../../cpp_common/polartree/PolarRootTree.h"
 #include "../../cpp_common/polartree/PolarTree.h"
@@ -59,18 +60,18 @@
     trees = [NSMutableArray array];
 }
 
-
 -(void) loadDirectionImage{
     NSArray *templates = [[NSArray alloc] initWithObjects:
-                          @"dog.png",@"wheel_h.png",@"egg.png",
-                        @"face.png",
-                          @"wheel_v.png",@"star.png",
-//                          @"heart.png",
+//                          @"dog.png",@"wheel_h.png",@"egg.png",
+//                        @"face.png",
+//                          @"wheel_v.png",@"star.png",
+                          @"heart.png",
 //                          @"pbs.png",
 //                          @"ghandi.png",
 //                            @"swift.png",
                           nil];
     NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
+    NSLog(@"Template: %@",tpl);
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
 	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
@@ -177,6 +178,7 @@
 //                        ,@"glutton",@"lust",@"envy",@"sloth",@"贪婪",@"傲慢"
                         ,@"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή"
                         ,@"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname"
+//                        @"."
 //                        @"文俊",@"Wenjun",@"cool"
                         ,nil];
     NSArray *colors = [[NSArray alloc] initWithObjects:
@@ -192,7 +194,7 @@
     NSDate *methodStart = [NSDate date];
 
     while(canvas->getStatus()==RENDERING){
-        ImageShape *shape;
+        TextImageShape *shape;
 
         NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
@@ -213,13 +215,17 @@
         if(textImage.size.width>0){
             unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
             
-            shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
-            
+            shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height);
+//            shape->printStats();
             Placement* placement = canvas->slapShape(shape);
             if(placement!=NULL){
                 double rotation = -(shape->getTree()->getRotation())*360/TWO_PI;
                 NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
                                             mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
+                printf("Coord: %f, %f; rotation: %f\n"
+                       ,shape->getTree()->getTopLeftLocation().x
+                       ,shape->getTree()->getTopLeftLocation().y
+                       ,shape->getTree()->getRotation());
 
                 [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
 //                [self drawTextTree:shape->getTree() withColor:color];
@@ -268,7 +274,7 @@
         
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        shape = new PixelImageShape(pixels, [textImage size].width, [textImage size].height);
+        shape = new TextImageShape(pixels, [textImage size].width, [textImage size].height);
         int count = 0;
         do {
             x = arc4random() % (int)(mainImage.size.width+textImage.size.width)-textImage.size.width/2;
@@ -396,6 +402,8 @@
                                    colorSpaceName: NSCalibratedRGBColorSpace
                                    bytesPerRow: 0	// "you figure it out"
                                    bitsPerPixel: 32];
+    
+    
     NSUInteger zColourAry[3] = {255,255,255};
     for(int x=0;x<textImage.size.width;x++)
         for(int y=0;y<textImage.size.height;y++)
@@ -403,6 +411,8 @@
     
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:textImage]];
+    [[NSColor colorWithDeviceRed: 0 green: 0 blue: 0 alpha: 0] set];
+    [NSBezierPath fillRect:NSMakeRect(0, 0, textImage.size.width, textImage.size.height)];
     [str drawAtPoint:NSMakePoint(0, 0)];
     [NSGraphicsContext restoreGraphicsState];
     return textImage;

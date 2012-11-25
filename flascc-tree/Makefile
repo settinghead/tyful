@@ -12,8 +12,8 @@ polartree: check
 	# 	-import $(call nativepath,$(FLASCC)/usr/lib/playerglobal.abc) \
 	# 	Console.as -outdir . -out Console
 
-	"$(FLASCC)/usr/bin/g++" $(BASE_CFLAGS) -O4 ../cpp_common/polartree/*.cpp ./*.cpp -emit-swc=polartree.PolarTree -o PolarTree.swc
-	"$(FLEX)/bin/mxmlc" -static-link-runtime-shared-libraries -compiler.omit-trace-statements=false -library-path=PolarTree.swc -debug=false runexperiment.as -o runexperiment.swf
+	"$(FLASCC)/usr/bin/g++" $(BASE_CFLAGS) -O3 -strict ../cpp_common/polartree/*.cpp ./*.cpp -emit-swc=polartree.PolarTree -o PolarTree.swc
+	"$(FLEX)/bin/mxmlc" -static-link-runtime-shared-libraries -compiler.omit-trace-statements=false -default-size 1024 768 -library-path=PolarTree.swc,"$(FLEX)frameworks/libs/framework.swc" -debug=true runexperiment.as -o runexperiment.swf
 
 
 	# "$(FLEX)/bin/mxmlc" -compiler.omit-trace-statements=false -library-path=PolarTree.swc -debug=true runexperiment.as -o runexperiment.swf

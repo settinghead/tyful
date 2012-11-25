@@ -39,6 +39,8 @@ package
   import polartree.PolarTree.getStatus;
   import polartree.PolarTree.CModule;
 
+
+
   /**
   * A basic implementation of a console for FlasCC apps.
   * The PlayerKernel class delegates to this for things like read/write
@@ -46,6 +48,30 @@ package
   */
   public class runexperiment extends Sprite implements ISpecialFile
   {
+
+    [Embed(source="./fonts/konstellation/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const Panefresco500: Class;
+    [Embed(source="./fonts/konstellation/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const PermanentMarker: Class;
+    [Embed(source="./fonts/konstellation/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const Romeral: Class;
+
+    [Embed(source="./fonts/konstellation/bpreplay-kRB.ttf", fontFamily="bpreplay-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const BpreplayKRB: Class;
+    [Embed(source="./fonts/konstellation/fifthleg-kRB.ttf", fontFamily="fifthleg-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const FifthlegKRB: Class;
+    [Embed(source="./fonts/konstellation/pecita-kRB.ttf", fontFamily="pecita-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const PecitaKRB: Class;
+    [Embed(source="./fonts/konstellation/sniglet-kRB.ttf", fontFamily="sniglet-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+    public static const snigletKRB: Class;
+
     private var inputContainer:DisplayObjectContainer
     private var enableConsole:Boolean = true
     private var _tf:TextField
@@ -59,7 +85,7 @@ package
     public function runexperiment(container:DisplayObjectContainer = null)
     {
       CModule.rootSprite = container ? container.root : this
-      CModule.rootSprite = this
+      //CModule.rootSprite = this
 
       if(container) {
         container.addChild(this)
@@ -84,8 +110,6 @@ package
       inputContainer = new Sprite()
       addChild(inputContainer)
 
-      addEventListener(Event.ENTER_FRAME, enterFrame)
-
       stage.frameRate = 60
       stage.scaleMode = StageScaleMode.NO_SCALE
 
@@ -99,7 +123,7 @@ package
 
       var loader:Loader = new Loader();
       loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-      loader.load(new URLRequest("../static/f/templates/egg.png"));
+      loader.load(new URLRequest("../static/f/templates/heart.png"));
     }
 
     protected function onLoadComplete (event:Event):void{
@@ -110,8 +134,9 @@ package
       var bitmapData:BitmapData;
       bitmapData = Bitmap(LoaderInfo(event.target).content).bitmapData;
       var directionBmp:Bitmap = new Bitmap(bitmapData);
-      var data:ByteArray = directionBmp.bitmapData.getPixels(new Rectangle(directionBmp.width, directionBmp.height));
-      trace(data.length);
+      var data:ByteArray = directionBmp.bitmapData.getPixels(new Rectangle(0,0,bitmapData.width, bitmapData.height));
+      consoleWrite("data length: "+ data.length.toString()+"\n");
+      data.position = 0;
       var addr:int = CModule.malloc(data.length);
       CModule.writeBytes(addr, data.length, data);
 
@@ -223,19 +248,42 @@ package
       CModule.serviceUIRequests()
       trace("enterFrame event");
 
-      while(getStatus()>0){
+      if(getStatus()>0){
 
-        var textField:TextField = getTextField("Blah", 100*getShrinkage());
+        var textField:TextField = getTextField("Test", 100*getShrinkage()+10);
         var params:Array = getTextShape(textField);
 
         var coord:Vector.<Number> =
           slapShape(params[0],params[1],params[2]);
 
          if(coord!=null){
-          textField.x = coord[0];
-          textField.y = coord[1];
-          addChild(textField);
-          break;
+          var rotation:Number = coord[2];
+
+          var s:Sprite = new Sprite();
+          //s.width = textField.width;
+          //s.height = textField.height;
+          textField.x = 0;
+          textField.y = 0;
+
+          s.addChild(textField);
+          var w:Number = s.width;
+          var h:Number = s.height;
+          s.x = coord[0];
+          s.y = coord[1];
+
+          var centerX:Number=s.x+s.width/2;
+          var centerY:Number = s.y+s.height/2;
+
+          consoleWrite("CenterX: "+centerX.toString()+", CenterY: "+centerY.toString()+", width: "+ s.width.toString() +", height: "+ s.height.toString() +" rotation: "+rotation.toString());
+
+          var m:Matrix=s.transform.matrix;
+          m.tx -= centerX;
+          m.ty -= centerY;
+          m.rotate(-rotation); // was a missing "=" here
+          m.tx += centerX;
+          m.ty += centerY;
+          s.transform.matrix = m;
+          addChild(s);
         }
       }
 //      var args:Vector.<int> = new Vector.<Number>;
@@ -250,17 +298,19 @@ package
       HELPER_MATRIX.tx = -bounds.x + safetyBorder;
       HELPER_MATRIX.ty = -bounds.y + safetyBorder;
 
-      var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0 ) );
+      var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0xFFFFFFFF ) );
       var s:Sprite = new Sprite();
-      s.width = textField.width;
-      s.height = textField.height;
-        
+      //s.width = textField.width;
+      //s.height = textField.height;
+      s.x = 0;
+      s.y = 0;
       s.addChild(textField);
       bmp.bitmapData.draw( s );
 
 
-      var data:ByteArray = bmp.bitmapData.getPixels(new Rectangle(bmp.width, bmp.height));
-      trace(data.length);
+      var data:ByteArray = bmp.bitmapData.getPixels(new Rectangle(0,0,bmp.bitmapData.width, bmp.bitmapData.height));
+      consoleWrite("width: "+s.width.toString()+", height: "+s.height.toString()+", length: "+data.length.toString()+"\n");
+      data.position = 0;
       var addr:int = CModule.malloc(data.length);
       CModule.writeBytes(addr, data.length, data);
       return [addr,bmp.width, bmp.height];
@@ -271,15 +321,15 @@ package
       var textField: TextField = new TextField();
 //      textField.setTextFormat( new TextFormat( font.fontName, size ) );
       var style:StyleSheet = new StyleSheet();
-      style.parseCSS("div{font-size: "+size+"; leading: 0; text-align: center;}");
+      style.parseCSS("div{font-size: "+size+"; font-family: romeral; leading: 0; text-align: center;}");
       textField.styleSheet = style;
       textField.autoSize = TextFieldAutoSize.LEFT;
       textField.background = false;
       textField.selectable = false;
-      //textField.embedFonts = true;
+      textField.embedFonts = true;
       //textField.cacheAsBitmap = true;
-      //textField.x = 0;
-      //textField.y = 0;
+      textField.x = 0;
+      textField.y = 0;
       textField.antiAliasType = AntiAliasType.ADVANCED;
       textField.htmlText = "<div>"+text+"</div>";
       textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
