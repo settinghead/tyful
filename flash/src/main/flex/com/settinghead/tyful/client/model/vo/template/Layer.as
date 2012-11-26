@@ -13,7 +13,7 @@ package com.settinghead.tyful.client.model.vo.template
 	
 	
 	[Bindable]
-	public class Layer implements IImageShape, IZippable, IWithEffectiveBorder
+	public class Layer implements IZippable, IWithEffectiveBorder
 	{
 		protected var _template:TemplateVO;
 		protected var _thumbnail:BitmapData;

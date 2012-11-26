@@ -36,7 +36,7 @@ package com.settinghead.tyful.client.model.vo
 	 * @author Martin Heidegger
 	 * @version 1.0
 	 */
-	public class TextShapeVO implements IImageShape
+	public class TextShapeVO
 	{
 //		[Embed(source="Vera.ttf", fontFamily="vera", mimeType='application/x-font',
 //        embedAsCFF='false', advancedAntiAliasing="true")]

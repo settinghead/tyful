@@ -21,7 +21,7 @@ package com.settinghead.tyful.client.model.vo.template
 	
 	
 	[Bindable]
-	public class WordLayer extends Layer implements IImageShape, IZippable
+	public class WordLayer extends Layer implements IZippable
 	{
 		public function WordLayer(name:String, template:TemplateVO,
 								  width:Number = -1, height:Number = -1, index:int=-1, autoAddAndConnect:Boolean = true)

@@ -124,7 +124,7 @@ package
 
       var loader:Loader = new Loader();
       loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-      loader.load(new URLRequest("../static/f/templates/heart.png"));
+      loader.load(new URLRequest("../static/f/templates/wheel_h.png"));
     }
 
     protected function onLoadComplete (event:Event):void{

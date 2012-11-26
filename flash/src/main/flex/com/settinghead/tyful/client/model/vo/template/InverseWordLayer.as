@@ -3,7 +3,7 @@ package com.settinghead.tyful.client.model.vo.template
 	import com.settinghead.tyful.client.model.algo.tree.IImageShape;
 	
 	[Bindable]
-	public class InverseWordLayer implements IImageShape
+	public class InverseWordLayer
 	{
 		private var _l:WordLayer;
 		

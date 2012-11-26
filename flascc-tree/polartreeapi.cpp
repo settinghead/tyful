@@ -24,7 +24,7 @@ PolarCanvas* canvas;
 
 void initCanvas() __attribute__((used,
 	annotate("as3sig:public function initCanvas(_pixels:int, _width:int, _height: int):void"),
-	annotate("as3package:polartree.PolarTree")));
+	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
 
 void initCanvas(){
 
@@ -51,7 +51,7 @@ void initCanvas(){
 
 void slapShape() __attribute__((used,
 	annotate("as3sig:public function slapShape(_pixels:int, _width:Number, _height: Number):Vector.<Number>"),
-	annotate("as3package:polartree.PolarTree")));
+	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
 
 void slapShape()
 {
@@ -85,7 +85,7 @@ void slapShape()
 
 void getStatus() __attribute__((used,
 	annotate("as3sig:public function getStatus():int"),
-	annotate("as3package:polartree.PolarTree")));
+	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
 
 void getStatus()
 {
@@ -95,7 +95,7 @@ void getStatus()
 
 void getShrinkage() __attribute__((used,
 	annotate("as3sig:public function getShrinkage():Number"),
-	annotate("as3package:polartree.PolarTree")));
+	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
 
 void getShrinkage()
 {
