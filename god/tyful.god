@@ -62,9 +62,9 @@ God.watch do |w|
 end
 
 God.watch do |w|
-  w.name = "showoff"
+  w.name = "forward"
   w.dir = basedir
-  w.start = "show 3002"
+  w.start = "forward 3002"
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
 end
