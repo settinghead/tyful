@@ -24,7 +24,7 @@ PolarCanvas* canvas;
 
 void initCanvas() __attribute__((used,
 	annotate("as3sig:public function initCanvas(_pixels:int, _width:int, _height: int):void"),
-	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
+	annotate("as3package:polartree.PolarTree")));
 
 void initCanvas(){
 
@@ -42,7 +42,7 @@ void initCanvas(){
 	WordLayer* layer = new WordLayer((unsigned int const *)pixels, width, height,true);
 	printf("Special point(5,5): %x\n", layer->getPixel(5,5));
 	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
-	layer->printStats();
+	// layer->printStats();
 	canvas = new PolarCanvas();
 	canvas->getLayers()->push_back(layer);
 	canvas->setStatus(RENDERING);
@@ -51,7 +51,7 @@ void initCanvas(){
 
 void slapShape() __attribute__((used,
 	annotate("as3sig:public function slapShape(_pixels:int, _width:Number, _height: Number):Vector.<Number>"),
-	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
+	annotate("as3package:polartree.PolarTree")));
 
 void slapShape()
 {
@@ -65,8 +65,8 @@ void slapShape()
     AS3_GetScalarFromVar(height, _height);
 
 
-	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height,false);
-	shape->printStats();
+	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height, false);
+	// shape->printStats();
 	Placement* placement = canvas->slapShape(shape);
 
 	if(placement!=NULL){
@@ -85,7 +85,7 @@ void slapShape()
 
 void getStatus() __attribute__((used,
 	annotate("as3sig:public function getStatus():int"),
-	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
+	annotate("as3package:polartree.PolarTree")));
 
 void getStatus()
 {
@@ -93,9 +93,20 @@ void getStatus()
 	AS3_ReturnAS3Var(status);
 }
 
+void setStatus() __attribute__((used,
+	annotate("as3sig:public function setStatus(_status:int):void"),
+	annotate("as3package:polartree.PolarTree")));
+
+void setStatus()
+{
+	int status = 0 ;
+    AS3_GetScalarFromVar(status, _status);
+	canvas->setStatus(status);
+}
+
 void getShrinkage() __attribute__((used,
 	annotate("as3sig:public function getShrinkage():Number"),
-	annotate("as3package:com.settinghead.tyful.client.algo.PolarTree")));
+	annotate("as3package:polartree.PolarTree")));
 
 void getShrinkage()
 {

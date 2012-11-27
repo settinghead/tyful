@@ -62,11 +62,11 @@
 
 -(void) loadDirectionImage{
     NSArray *templates = [[NSArray alloc] initWithObjects:
-//                          @"dog.png",@"wheel_h.png",@"egg.png",
-//                        @"face.png",
-//                          @"wheel_v.png",@"star.png",
-//                          @"heart.png",
-                          @"quarter_red.png",
+                          @"dog.png",@"wheel_h.png",@"egg.png",
+                        @"face.png",
+                          @"wheel_v.png",@"star.png",
+                          @"heart.png",
+//                          @"quarter_red.png",
 //                          @"pbs.png",
 //                          @"ghandi.png",
 //                            @"swift.png",
