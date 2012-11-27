@@ -90,6 +90,8 @@ package com.settinghead.tyful.client.model
 				var l:Array = (obj as Object) as Array;
 				var shop:ShopVO = new ShopVO(previewUrl, l);
 				this.setData(shop);
+				sendLoadedNotification( ApplicationFacade.SHOP_LOADED, NAME, SRNAME);
+
 			}
 			else
 				//retry

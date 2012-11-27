@@ -1,13 +1,12 @@
 package com.settinghead.tyful.client.model.vo.template
 {
-	import com.settinghead.tyful.client.model.algo.tree.IImageShape;
 	import com.settinghead.tyful.client.model.zip.IZipInput;
 	import com.settinghead.tyful.client.model.zip.IZipOutput;
 	import com.settinghead.tyful.client.model.zip.IZippable;
 	
 	import flash.display.BitmapData;
 
-	public class ImageLayer extends Layer implements IImageShape, IZippable
+	public class ImageLayer extends Layer implements IZippable
 	{
 		private var _img:BitmapData;
 
@@ -40,10 +39,10 @@ package com.settinghead.tyful.client.model.vo.template
 				this.image.getColorBoundsRect(
 					0xFF000000,0x00000000,false);
 		}
-		public override function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
-			return ((image.getPixel32(x,y) >> 24 &0xff)!=0); 
-		}
-		
+//		public override function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
+//			return ((image.getPixel32(x,y) >> 24 &0xff)!=0); 
+//		}
+//		
 		
 		public override function writeNonJSONPropertiesToZip(output:IZipOutput):void {
 			output.putBitmapDataToPNGFile("image.png", this.image);

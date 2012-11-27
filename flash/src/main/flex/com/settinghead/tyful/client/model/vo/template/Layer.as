@@ -2,7 +2,6 @@ package com.settinghead.tyful.client.model.vo.template
 {
 	
 	import com.settinghead.tyful.client.NotImplementedError;
-	import com.settinghead.tyful.client.model.algo.tree.IImageShape;
 	import com.settinghead.tyful.client.model.zip.IZipInput;
 	import com.settinghead.tyful.client.model.zip.IZipOutput;
 	import com.settinghead.tyful.client.model.zip.IZippable;

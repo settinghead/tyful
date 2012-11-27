@@ -8,6 +8,7 @@ package com.settinghead.tyful.client
 	import com.settinghead.tyful.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.NewTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.SaveTemplateCommand;
+	import com.settinghead.tyful.client.controller.template.UpdateRenderTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.UploadTemplateCommand;
 	import com.settinghead.tyful.client.controller.tu.PostToFacebookCommand;
 	import com.settinghead.tyful.client.controller.tu.RenderTuCommand;
@@ -15,6 +16,8 @@ package com.settinghead.tyful.client
 	import flash.display.LoaderInfo;
 	
 	import org.puremvc.as3.patterns.facade.Facade;
+	import org.puremvc.as3.utilities.loadup.controller.LoadupResourceFailedCommand;
+	import org.puremvc.as3.utilities.loadup.controller.LoadupResourceLoadedCommand;
 	
 	public class ApplicationFacade extends Facade
 	{
@@ -25,8 +28,6 @@ package com.settinghead.tyful.client
 		public static const GENERATE_TU_IMAGE:String			  = "generateTuImage";
 		public static const DISPLAYWORD_CREATED:String    = "displaywordCreated";
 		public static const TEMPLATE_EDIT_MOUSE_DOWN:String = "templateEditMouseDown";
-		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
-		public static const TEMPLATE_LOADED:String			= "templateLoaded";
 		public static const DOWNLOAD_TEMPLATE:String			= "downloadTemplate";
 		public static const LOAD_TEMPLATE:String			= "loadTemplate";
 		public static const NEW_TEMPLATE:String			= "newTemplate";
@@ -40,6 +41,13 @@ package com.settinghead.tyful.client
 		public static const TU_GENERATION_LAST_CALL:String	= "tuGenerationLastCall";
 		public static const SHOW_SHOP:String				= "showShop";
 		public static const POST_TO_FACEBOOK:String				= "postToFacebook";
+		
+		public static const RENDER_ENGINE_LOADED:String		= "RenderEngineLoaded";
+		public static const WORD_LIST_LOADED:String        = "wordListLoaded";
+		public static const SHOP_LOADED:String        = "shopLoaded";
+		public static const TEMPLATE_LOADED:String        = "templateLoaded";
+		public static const TU_LOADED:String        = "tuLoaded";
+
 //		public static const PROCESS_SHOP_CLICK:String		= "processShopClick";
 		
 		public static const MODE_EDIT_TEMPLATE:String	= "editTemplate";
@@ -74,6 +82,14 @@ package com.settinghead.tyful.client
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 			registerCommand ( RENDER_TU, RenderTuCommand);
 			registerCommand (POST_TO_FACEBOOK, PostToFacebookCommand);
+			registerCommand(TEMPLATE_LOADED, UpdateRenderTemplateCommand);
+			
+			registerResourceLoadedCommand( RENDER_ENGINE_LOADED );
+			registerResourceLoadedCommand( WORD_LIST_LOADED );
+			registerResourceLoadedCommand( SHOP_LOADED );
+			registerResourceLoadedCommand( TU_LOADED );
+			registerResourceLoadedCommand( TEMPLATE_LOADED );
+
 		}
 		
 		/**
@@ -82,6 +98,13 @@ package com.settinghead.tyful.client
 		public static function getInstance() : ApplicationFacade {
 			if ( instance == null ) instance = new ApplicationFacade( );
 			return ApplicationFacade( instance ) ;
+		}
+		
+		private function registerResourceLoadedCommand( notificationName :String ) :void {
+			registerCommand( notificationName, LoadupResourceLoadedCommand );
+		}
+		private function registerResourceFailedCommand( notificationName :String ) :void {
+			registerCommand( notificationName, LoadupResourceFailedCommand );
 		}
 	}
 }

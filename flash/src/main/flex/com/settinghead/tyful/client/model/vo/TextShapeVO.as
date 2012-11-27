@@ -155,63 +155,16 @@ package com.settinghead.tyful.client.model.vo
 			return textField;
 		}
 
-		public function contains(x:Number, y:Number, width:Number, height:Number, rotation:Number, transformed:Boolean):Boolean {
-			if(rotation!=0) throw new NotImplementedError();
-			if(!intersects(x,y,width,height,transformed)) {
-				var rX:Number = x+ width*Math.random();
-				var rY:Number = y+ height*Math.random();
-				if(transformed)
-					return _textField.hitTestPoint(rY, rY, true);
-				else
-					return _bmp.hitTestPoint(rX, rY, true);
-			}
-				else return false;
-		}
-		
-		public function containsPoint(x:Number, y:Number,transformed:Boolean,  refX:Number=-1,refY:Number=-1):Boolean{
-//			if(transformed)
-//				return _textField.hitTestPoint(x,y,true);
-//			else{
-//				return _bmp.hitTestPoint(x,y,true);
-//			}
-			return _bmp.bitmapData.getPixel32(x,y) > 0x00000000;
-		}
 		
 		private var origin:Point = new Point(0,0);
 		private var testRect:Rectangle = new Rectangle(0,0,1,1);
-		public function intersects(x:Number, y:Number, width:Number, height:Number,transformed:Boolean):Boolean {
-//
-//			if(width<1) width = 1;
-//			if(height<1) height = 1;
-			if(transformed)
-				throw new NotImplementedError();
-			else{
-//				for(var xx:Number = x; xx<x+width;xx++)
-//					for(var yy:Number = y; yy<y+height;yy++){
-//						if(_bmp.bitmapData.getPixel(xx,yy)!=0xffffff)
-//							return true;
-//					}
-//				return false;
-				testRect.x = x;
-				testRect.y = y;
-				testRect.width = width;
-				testRect.height = height;
-				var r:Boolean = _bmp.bitmapData.hitTest(origin,1, testRect,null,1);
-				return r;
-			}
-		}
+		
 		
 		public function setCenterLocation(centerX:Number,centerY:Number):void{
 			this._centerX = centerX;
 			this._centerY = centerY;
 		}
 	
-		
-
-
-		
-		private var matrix:Matrix = new Matrix();
-		
 		public function getWidth():Number{
 			return _textField.width;
 		}

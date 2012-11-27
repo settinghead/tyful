@@ -2,6 +2,7 @@ package com.settinghead.tyful.client.controller.tu
 {
 	import com.notifications.Notification;
 	import com.settinghead.tyful.client.ApplicationFacade;
+	import com.settinghead.tyful.client.model.RenderProxy;
 	import com.settinghead.tyful.client.model.TemplateProxy;
 	import com.settinghead.tyful.client.model.TuProxy;
 	import com.settinghead.tyful.client.model.WordListProxy;
@@ -52,9 +53,10 @@ package com.settinghead.tyful.client.controller.tu
 				Mask.close();
 
 				var tuProxy:TuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+				var renderProxy:RenderProxy = facade.retrieveProxy(RenderProxy.NAME) as RenderProxy;
 
 				tuProxy.load();
-				tuProxy.startRender();
+				renderProxy.startRender();
 
 			}
 

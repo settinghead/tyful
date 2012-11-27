@@ -1,7 +1,5 @@
 package com.settinghead.tyful.client.model.vo.template
-{
-	import com.settinghead.tyful.client.model.algo.tree.IImageShape;
-	
+{	
 	[Bindable]
 	public class InverseWordLayer
 	{

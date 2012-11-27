@@ -81,10 +81,21 @@ package com.settinghead.tyful.client.model
 		}
 		
 		public function set template(t:TemplateVO):void{
-			if(t.id==null) t.id = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId) as String;
 
 			this.setData(t);
 		}
+		
+		
+		public override function setData(data:Object):void{
+			var t:TemplateVO = data as TemplateVO;
+			
+			if(t!=null && t.id==null) t.id = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId) as String;
+			
+			
+			
+			super.setData(data);
+		}
+		
 		
 		public function toFile(template:TemplateVO = null):ByteArray{
 			if(template==null) template = this.template;
@@ -100,9 +111,10 @@ package com.settinghead.tyful.client.model
 		}
 		
 		public function newTemplate(width:int, height:int):void{
-			template = new TemplateVO();
+			var template:TemplateVO = new TemplateVO();
 
 			var layer:Layer = new WordLayer("Layer1", template, width, height);
+			this.template = template; 
 //			template.layers.addItem(new WordLayer("Layer1", template));
 			facade.sendNotification(ApplicationFacade.TEMPLATE_CREATED);
 		}

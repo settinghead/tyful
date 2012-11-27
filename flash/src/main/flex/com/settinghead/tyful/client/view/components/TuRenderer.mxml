@@ -10,7 +10,6 @@
 		 creationComplete="onCreationCompleteHandler(event)" show="onCreationCompleteHandler(event)" 
 		 xmlns:template="com.settinghead.tyful.client.view.components.template.*"
 		  mouseOver="canvas1_mouseOverHandler(event)" 
-		   implements="com.settinghead.tyful.client.model.ITuImageGenerator"
 		    initialize="canvas1_initializeHandler(event)"
 		 >
 	
@@ -37,9 +36,7 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.notifications.Notification;
 			import com.settinghead.tyful.client.ApplicationFacade;
-			import com.settinghead.tyful.client.density.Patch;
 			import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 			import com.settinghead.tyful.client.model.vo.TuVO;
 			import com.settinghead.tyful.client.model.vo.template.ImageLayer;
@@ -61,7 +58,7 @@
 			public static const EFFECTIVE_MARGIN:int = 10;
 
 			
-			[Bindable] private var _driftDistanceSum:Number = 0;
+//			[Bindable] private var _driftDistanceSum:Number = 0;
 			
 			[Bindable]public function get autoPostToFacebook():Boolean{
 				return chkAutoPostToFacebook.selected;
@@ -74,7 +71,7 @@
 			private var _tu:TuVO;
 			
 			public function slapWord(dWord:DisplayWordVO):void{
-				(dict[dWord.engineWord.getCurrentLocation().patch.layer] as UIComponent).addChild(dWord);
+				(dict[dWord.place.layer] as UIComponent).addChild(dWord);
 				this._tu.dWords.addItem(dWord);
 //				patchLayer.graphics.clear();
 //				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)
@@ -86,7 +83,7 @@
 //					dWord.mouseChildren = true;
 					dWord.addEventListener(MouseEvent.CLICK, wordClick);
 
-				this._driftDistanceSum += dWord.engineWord.offsetDistance;
+//				this._driftDistanceSum += dWord.engineWord.offsetDistance;
 				
 //								patchLayer.patchQueue = patchLayer.patchQueue;
 
@@ -95,16 +92,16 @@
 			private function wordClick(e:MouseEvent):void{
 				var dWord:DisplayWordVO = e.target as DisplayWordVO;
 				if(dWord!=null && 
-					dWord.engineWord!=null && dWord.engineWord.word!=null && 
-					dWord.engineWord.word.occurences!=null 
-					&& dWord.engineWord.word.occurences.length>0){
-					if(dWord.engineWord.word.occurences[0].link!=null)
+					dWord.word!=null && 
+					dWord.word.occurences!=null 
+					&& dWord.word.occurences.length>0){
+					if(dWord.word.occurences[0].link!=null)
 						navigateToURL(new URLRequest(
-							(dWord.engineWord.word.occurences[0].link
+							(dWord.word.occurences[0].link
 								as String)), '_blank');
 					    navigateToURL(new URLRequest(
 							"http://www.facebook.com/"+
-							(dWord.engineWord.word.occurences[0].id as String).replace('_','/posts/')), '_blank');
+							(dWord.word.occurences[0].id as String).replace('_','/posts/')), '_blank');
 				}
 			}
 			
@@ -169,11 +166,11 @@
 //				dWord.visible = true;
 			}
 			
-			public function highlightPatch(patch:Patch):void{
+//			public function highlightPatch(patch:Patch):void{
 //				patchLayer.graphics.beginFill(0xCCCCCC,0.5);
 //				patchLayer.graphics.drawRect(patch.getX(), patch.getY(), patch.getWidth(), patch.getHeight());
 //				patchLayer.graphics.endFill();
-			}
+//			}
 			
 //			private function drawTree(tree:BBPolarTreeVO):void{
 //				treeLayer.graphics.clear();
@@ -384,7 +381,7 @@
 			protected function canvas1_initializeHandler(event:FlexEvent):void
 			{
 				//register self as a tu image generator
-				FlexGlobals.topLevelApplication["tuImageGenerator"] = this;
+//				FlexGlobals.topLevelApplication["tuImageGenerator"] = this;
 			}
 			
 			protected function btnPostToFacebook_clickHandler(event:MouseEvent):void

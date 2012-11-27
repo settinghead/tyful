@@ -48,6 +48,8 @@
 		<mxmlc
 			file="${main.src.loc}/com/settinghead/tyful/client/TyfulClient.mxml" output="${bin.loc}/TyfulClient.swf">
 			<source-path path-element="${main.src.loc}" />
+			<swf-version>17</swf-version>
+			<target-player>11.4</target-player>
 			<library-path dir="${lib.loc}" append="true">
 				<include name="*.swc" />
 			</library-path>
@@ -67,6 +69,8 @@
 			</library-path>
 			<compiler.verbose-stacktraces>true</compiler.verbose-stacktraces>
 			<compiler.headless-server>true</compiler.headless-server>
+			<swf-version>17</swf-version>
+			<target-player>11.4</target-player>
 		</mxmlc>
 
 		<!-- Execute TestRunner.swf as FlexUnit tests and publish reports -->

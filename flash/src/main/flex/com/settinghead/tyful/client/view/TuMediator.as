@@ -2,6 +2,7 @@ package com.settinghead.tyful.client.view
 {
 	import com.notifications.Notification;
 	import com.settinghead.tyful.client.ApplicationFacade;
+	import com.settinghead.tyful.client.model.RenderProxy;
 	import com.settinghead.tyful.client.model.TuProxy;
 	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 	import com.settinghead.tyful.client.view.components.TuRenderer;
@@ -15,6 +16,7 @@ package com.settinghead.tyful.client.view
 	{
 		public static const NAME:String = "TuMediator";
 		private var tuProxy:TuProxy;
+		private var renderProxy:RenderProxy;
 		private var waitingForWord:Boolean = false;
 		
 		public function TuMediator(viewComponent:Object=null)
@@ -30,6 +32,7 @@ package com.settinghead.tyful.client.view
 		override public function onRegister():void
 		{
 			tuProxy = TuProxy( facade.retrieveProxy( TuProxy.NAME ) );
+			renderProxy = RenderProxy( facade.retrieveProxy( RenderProxy.NAME ) );
 		}
 		
 		override public function listNotificationInterests():Array
@@ -87,7 +90,7 @@ package com.settinghead.tyful.client.view
 		
 		private function resumeRendering( event:Event = null ):void
 		{
-			tuProxy.startRender();
+			renderProxy.startRender();
 		}
 		private function rerender( event:Event = null ):void
 		{

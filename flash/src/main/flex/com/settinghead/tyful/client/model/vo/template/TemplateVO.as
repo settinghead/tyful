@@ -3,28 +3,18 @@ package com.settinghead.tyful.client.model.vo.template
 
 	import com.settinghead.tyful.client.colorer.ColorSheetColorer;
 	import com.settinghead.tyful.client.colorer.WordColorer;
-	import com.settinghead.tyful.client.density.DensityPatchIndex;
 	import com.settinghead.tyful.client.fonter.RandomSetFonter;
 	import com.settinghead.tyful.client.fonter.WordFonter;
 	import com.settinghead.tyful.client.model.zip.IZipInput;
 	import com.settinghead.tyful.client.model.zip.IZipOutput;
 	import com.settinghead.tyful.client.model.zip.IZippable;
-	import com.settinghead.tyful.client.nudger.ShapeConfinedZigZagWordNudger;
-	import com.settinghead.tyful.client.nudger.WordNudger;
-	import com.settinghead.tyful.client.placer.ShapeConfinedPlacer;
-	import com.settinghead.tyful.client.placer.WordPlacer;
-	import com.settinghead.tyful.client.sizers.ByWeightSizer;
-	import com.settinghead.tyful.client.sizers.WordSizer;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
-	import mx.events.CollectionEvent;
-	
-	import org.as3commons.collections.utils.NullComparator;
-	
+	import mx.events.CollectionEvent;	
 	
 	[Bindable]
 	public class TemplateVO implements IZippable, IWithEffectiveBorder
@@ -37,15 +27,10 @@ package com.settinghead.tyful.client.model.vo.template
 		private var _bounds:Rectangle= null;
 		private static const SAMPLE_DISTANCE:Number = 100;
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
-		private var _sizer:WordSizer;
 		private var _fonter:WordFonter;
 		private var _colorer:WordColorer;
-		private var _placer:WordPlacer;
-		private var _nudger:WordNudger;
-//		private var _angler:WordAngler;
 		private var _renderOptions:RenderOptions;
 //		private var hsbArray:Array;
-		private var _patchIndex:DensityPatchIndex;
 		private var _width:Number, _height:Number;
 		private var _previewPNG: BitmapData;
 		public var mixColorDistance:int = 5;
@@ -136,13 +121,6 @@ package com.settinghead.tyful.client.model.vo.template
 			 _previewPNG = p;
 		}
 		
-		public function get patchIndex():DensityPatchIndex{
-			if(this._patchIndex==null){
-				this.generatePatchIndex();
-			}
-			return this._patchIndex;
-		}
-		
 		public function get tolerance():Number 
 		{
 			return _tolerance;
@@ -151,10 +129,6 @@ package com.settinghead.tyful.client.model.vo.template
 		public function set tolerance(value:Number):void 
 		{
 			_tolerance = value;
-		}
-		
-		public function generatePatchIndex():void{
-			this._patchIndex = new DensityPatchIndex(this);
 		}
 		
 		public function generateEffectiveBorder():void{
@@ -182,24 +156,7 @@ package com.settinghead.tyful.client.model.vo.template
 				generateEffectiveBorder();
 				return this._effectiveBorder;
 		}
-		
-		public function get placer():WordPlacer{
-			if(this._placer==null){
-				this._placer = new ShapeConfinedPlacer(this, patchIndex);
-			}
-			return this._placer;
-		}
-		
-		public function get sizer():WordSizer{
-			if(this._sizer==null){
-				var max:int = this.width>this.height?this.width:this.height;
-				var min:int = max/100;
-				if(min<7) min = 7;
-				this._sizer = new ByWeightSizer(min,100);
-				
-			}
-			return this._sizer;
-		}
+
 
 		public function get fonter():WordFonter{
 			if(this._fonter==null){
@@ -214,16 +171,6 @@ package com.settinghead.tyful.client.model.vo.template
 				this._colorer = new ColorSheetColorer();
 			}
 			return this._colorer;
-		}
-		
-		public function get nudger():WordNudger{
-			if(this._nudger==null){
-//								this._nudger = new ShapeConfinedSpiralWordNudger();
-//								this._nudger = new ShapeConfinedRandomWordNudger();
-				this._nudger = new ShapeConfinedZigZagWordNudger();
-				
-			}
-			return this._nudger;
 		}
 		
 		public function get renderOptions():RenderOptions{
@@ -243,11 +190,7 @@ package com.settinghead.tyful.client.model.vo.template
 //			output.putBitmapDataToJPEGFile("preview.jpg", preview);
 			output.process(this.layers, "layers");
 			output.process(this.fonter, "fonter");
-			output.process(this.sizer, "sizer");
 			output.process(this.colorer, "colorer");
-//			output.process(this._nudger, "nudger");
-//			output.process(this._angler, "angler");
-//			output.process(this._placer, "placer");
 			output.process(this.renderOptions, "renderOptions");
 		}
 		

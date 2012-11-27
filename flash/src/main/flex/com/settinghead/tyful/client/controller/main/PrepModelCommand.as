@@ -1,5 +1,6 @@
 package com.settinghead.tyful.client.controller.main
 {
+	import com.settinghead.tyful.client.model.RenderProxy;
 	import com.settinghead.tyful.client.model.ShopProxy;
 	import com.settinghead.tyful.client.model.TemplateProxy;
 	import com.settinghead.tyful.client.model.TuProxy;
@@ -27,6 +28,7 @@ package com.settinghead.tyful.client.controller.main
 			var templateProxy:TemplateProxy = new TemplateProxy();
 			var tuProxy:TuProxy = new TuProxy();
 			var shopProxy:ShopProxy = new ShopProxy();
+			var renderProxy:RenderProxy = new RenderProxy();
 			var wordListProxy:WordListProxy = new WordListProxy();
 			wordListProxy.load();
 			// register it
@@ -34,14 +36,16 @@ package com.settinghead.tyful.client.controller.main
 			facade.registerProxy(tuProxy );
 			facade.registerProxy(shopProxy);
 			facade.registerProxy(wordListProxy);
+			facade.registerProxy(renderProxy);
 			
 			var rTemplate:LoadupResourceProxy = registerResourceProxy(TemplateProxy.SRNAME,templateProxy);
 			var rTu:LoadupResourceProxy = registerResourceProxy(TuProxy.SRNAME,tuProxy);
 			var rShop:LoadupResourceProxy = registerResourceProxy(ShopProxy.SRNAME,shopProxy);
 			var rWordList:LoadupResourceProxy = registerResourceProxy(WordListProxy.SRNAME,wordListProxy);
+			var rRender:LoadupResourceProxy = registerResourceProxy(RenderProxy.SRNAME,renderProxy);
 			
-			rTu.requires = [rWordList, rTemplate];
-			rShop.requires = [rTu];
+			rTu.requires = [rWordList, rTemplate, rRender];
+			rShop.requires = [rTu, rTemplate];
 		}
 		
 		private function registerResourceProxy(srName:String, px:ILoadupProxy):LoadupResourceProxy{

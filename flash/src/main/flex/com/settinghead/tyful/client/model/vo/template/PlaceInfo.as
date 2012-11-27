@@ -1,28 +1,26 @@
 package com.settinghead.tyful.client.model.vo.template
 {
-	import com.settinghead.tyful.client.density.Patch;
-	
-	import flash.geom.Point;
-
 	public class PlaceInfo {
-		private var _patch:Patch;
+		private var _layer:WordLayer;
 		
-		public var x:int;
-		public var y:int;
+		public var x:Number;
+		public var y:Number;
+		public var rotation:Number;
 		
-		public function PlaceInfo(x:int, y:int, p:Patch = null) {
+		public function PlaceInfo(x:Number, y:Number, rotation:Number, l:WordLayer = null) {
 			this.x = x;
 			this.y = y;
-			this.patch = p;
+			this.rotation = rotation;
+			this.layer = l;
 		}
 		
 		
-		public function set patch(p:Patch):void{
-			this._patch = p;
+		public function set layer(l:WordLayer):void{
+			this._layer = l;
 		}
 		
-		public function get patch():Patch{
-			return this._patch;
+		public function get layer():WordLayer{
+			return this._layer;
 		}
 
 		
@@ -33,7 +31,7 @@ package com.settinghead.tyful.client.model.vo.template
 		}
 		
 		public function clone():PlaceInfo{
-			return new PlaceInfo(x,y,_patch);
+			return new PlaceInfo(x,y,rotation,_layer);
 		}
 		
 		public function add(addum:PlaceInfo):PlaceInfo{

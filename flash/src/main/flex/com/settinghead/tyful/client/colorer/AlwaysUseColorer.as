@@ -1,7 +1,6 @@
 package com.settinghead.tyful.client.colorer
 {
-	import com.settinghead.tyful.client.model.vo.EngineWordVO;
-	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
+	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	
 	public class AlwaysUseColorer implements WordColorer
 	{
@@ -12,7 +11,7 @@ package com.settinghead.tyful.client.colorer
 			this.color = color;
 		}
 		
-		public function colorFor(eWord:EngineWordVO):uint
+		public function colorFor(place:PlaceInfo = null):uint
 		{
 			return color;
 		}

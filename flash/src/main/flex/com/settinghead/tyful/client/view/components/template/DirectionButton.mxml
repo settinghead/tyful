@@ -6,7 +6,6 @@
 				 dataChange="onCreationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import polartree.AlchemyPolarTree;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -14,7 +13,6 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[			
-			import mx.collections.ArrayCollection;
 			import mx.core.BitmapAsset;
 			import mx.events.FlexEvent;
 			
@@ -69,7 +67,7 @@
 		</s:layout>
 		<s:Label id="thumb" width="30" height="30">
 		</s:Label>
-		<s:Label id="number" text="{int((360 - (data as Number)/AlchemyPolarTree.TWO_PI * 360)%360)}&#176;" />
+		<s:Label id="number" text="{int((360 - (data as Number)/(Math.PI*2) * 360)%360)}&#176;" />
 	</s:Group>
 
 </s:ItemRenderer>

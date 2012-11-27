@@ -2,6 +2,7 @@ package com.settinghead.tyful.client.math
 {
 	public class MathUtils
 	{
+		public static  const TWO_PI:Number = Math.PI * 2;
 		public function MathUtils()
 		{
 		}

@@ -5,7 +5,7 @@ package com.settinghead.tyful.client.controller.main
 	import com.settinghead.tyful.client.controller.shop.LoadShopCommand;
 	import com.settinghead.tyful.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.LoadTemplateCommand;
-	import com.settinghead.tyful.client.controller.template.NewTemplateCommand;
+	import com.settinghead.tyful.client.controller.template.UpdateRenderTemplateCommand;
 	import com.settinghead.tyful.client.model.TuProxy;
 	import com.settinghead.tyful.client.model.vo.TuVO;
 	import com.settinghead.tyful.client.model.vo.template.TemplateVO;

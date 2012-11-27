@@ -1,32 +1,24 @@
 package com.settinghead.tyful.client.model.vo
-{
-	import com.notifications.Notification;
-	import com.settinghead.tyful.client.sizers.WordSizer;
+{	
+	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.filters.GlowFilter;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
 	import flash.text.TextField;
 	
-	import mx.core.UIComponent;
-	import mx.states.AddChild;
-
 	public class DisplayWordVO extends Sprite
 	{
-		private var _engineWord: EngineWordVO;
 		private var _textField:TextField;
+		private var _word:WordVO = null;
+		private var _place:PlaceInfo = null;
 		
-		
-		public function DisplayWordVO(eWord:EngineWordVO){
+		public function DisplayWordVO(word:WordVO, place:PlaceInfo){
 			super();
-			this._engineWord = eWord;
 			this.useHandCursor = true;
 			this.buttonMode = true;
 			this.mouseChildren = true;
-
+			this._word = word;
+			this._place = place;
 		}
 		
 		public function set textField(t:TextField):void{
@@ -42,10 +34,13 @@ package com.settinghead.tyful.client.model.vo
 			return _textField;
 		}
 		
-		public function get engineWord():EngineWordVO{
-			return this._engineWord;
+		public function get word():WordVO{
+			return _word;
 		}
 		
+		public function get place():PlaceInfo{
+			return _place;
+		}
 		
 	}
 }

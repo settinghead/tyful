@@ -30,8 +30,6 @@ package com.settinghead.tyful.client.model.vo
 		
 		private static const SOLID_COLOR:String = "solidColor";
 		private static const BACKGROUND_IMAGE:String = "backgroundImage";
-		private var _eWords:Vector.<EngineWordVO> = new Vector.<EngineWordVO>();
-
 		public static const FAILURE_COUNT_CHANGED:String = "failureCountChanged";
 
 		
@@ -55,13 +53,6 @@ package com.settinghead.tyful.client.model.vo
 
 		}
 
-		public function get eWords():Vector.<EngineWordVO>{
-			return this._eWords;
-		}
-		
-		public function pushEngineWord(eWord:EngineWordVO):void{
-			this._eWords.push(eWord);
-		}
 		
 		public function get dWords():DisplayWordListVO{
 			return _dWords;

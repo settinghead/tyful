@@ -2,6 +2,7 @@ package com.settinghead.tyful.client.model
 {
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.notifications.Notification;
+	import com.settinghead.tyful.client.ApplicationFacade;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
@@ -60,6 +61,7 @@ package com.settinghead.tyful.client.model
 				var l:Array = (obj as Object) as Array;
 				var wordList:WordListVO = new WordListVO(l);
 				this._list = wordList;
+				sendLoadedNotification( ApplicationFacade.WORD_LIST_LOADED, NAME, SRNAME);
 
 			}
 		}

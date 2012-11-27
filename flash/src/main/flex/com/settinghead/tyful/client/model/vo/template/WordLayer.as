@@ -1,16 +1,10 @@
 package com.settinghead.tyful.client.model.vo.template
 {
-	import com.settinghead.tyful.client.angler.MostlyHorizAngler;
-	import com.settinghead.tyful.client.angler.ShapeConfinedAngler;
-	import com.settinghead.tyful.client.angler.WordAngler;
 	import com.settinghead.tyful.client.colorer.WordColorer;
 	import com.settinghead.tyful.client.fonter.WordFonter;
-	import com.settinghead.tyful.client.model.algo.tree.IImageShape;
 	import com.settinghead.tyful.client.model.zip.IZipInput;
 	import com.settinghead.tyful.client.model.zip.IZipOutput;
 	import com.settinghead.tyful.client.model.zip.IZippable;
-	import com.settinghead.tyful.client.nudger.WordNudger;
-	import com.settinghead.tyful.client.placer.WordPlacer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -45,8 +39,6 @@ package com.settinghead.tyful.client.model.vo.template
 		private static const MISS_PERCENTAGE_THRESHOLD:Number= 0.1;
 //		private var _path:String;
 		private var _colorer:WordColorer;
-		private var _nudger:WordNudger;
-		private var _angler:WordAngler;
 		private var _tolerance:Number = -1;
 		public function get tolerance():Number 
 		{
@@ -79,7 +71,6 @@ package com.settinghead.tyful.client.model.vo.template
 			else return this._fonter;
 		}
 		
-		private var _placer:WordPlacer;
 		public function get colorer():WordColorer{
 			if(this._colorer==null){
 				return this._template.colorer;
@@ -394,21 +385,6 @@ package com.settinghead.tyful.client.model.vo.template
 //			this._path = p;
 //		}
 
-		
-		public function get nudger():WordNudger{
-			if(this._nudger==null){
-				return _template.nudger;				
-			}
-			else return this._nudger;
-		}
-		
-		public function get angler():WordAngler{
-			if(this._angler==null){
-				this._angler = new ShapeConfinedAngler(this, new MostlyHorizAngler());
-//				this._angler = new MostlyHorizAngler();
-			}
-			return this._angler;
-		}
 		
 		public override function generateEffectiveBorder():void{
 			
