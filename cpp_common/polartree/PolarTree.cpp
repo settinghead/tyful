@@ -7,21 +7,9 @@
 #include "PolarCanvas.h"
 
 PolarTree::PolarTree(double r1, double r2, double d1, double d2,
-		int minBoxSize) {
-
-	this->_computedR1 = NAN;
-	this->_computedR2 = NAN;
-	this->swelling = (int) 0;
-	this->_kids = NULL;
-	this->_leaf = false;
-	this->_r1 = r1;
-	this->_r2 = r2;
-	this->d1 = d1;
-	this->d2 = d2;
-	this->_relativeX = NAN;
-	this->_relativeY = NAN;
-	this->_relativeRight = NAN;
-	this->_relativeBottom = NAN;
+                     int minBoxSize):_computedR1(NAN),_computedR2(NAN),swelling(0),
+_kids(NULL),_leaf(false),_r1(r1),_r2(r2),d1(d1),d2(d2),
+_relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN){
 	double r = (r2 - r1);
 	double d = (double(((PI * ((d1 + d2))) * r))
 			/ double(TWO_PI));
@@ -36,28 +24,28 @@ PolarTree::~PolarTree() {
 	delete _kids;
 }
 
-void PolarTree::addKids(vector<PolarTree*>* kidList) {
+inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
 	{
 		this->_kids = kidList;
 	}
 }
 
 
-vector<PolarTree*>* PolarTree::getKids() {
+inline vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
-        vector<PolarTree*>* tKids = this->getKids();
-        for (vector<PolarTree*>::iterator myKid = tKids->begin();
-             myKid != tKids->end(); ++myKid) {
-            (*myKid)->getKids();
-        }
+//        vector<PolarTree*>* tKids = this->getKids();
+//        for (vector<PolarTree*>::iterator myKid = tKids->begin();
+//             myKid != tKids->end(); ++myKid) {
+//            (*myKid)->getKids();
+//        }
 	}
 	return this->_kids;
 }
 
 
-bool PolarTree::contains(double x, double y, double right, double bottom) {
+inline bool PolarTree::contains(double x, double y, double right, double bottom) {
 	if ((this->rectContain(x, y, right, bottom))) {
 		if ((this->isLeaf())) {
 			return true;
@@ -82,7 +70,7 @@ bool PolarTree::contains(double x, double y, double right, double bottom) {
 
 
 
-bool PolarTree::rectContain(double x, double y, double right,
+inline bool PolarTree::rectContain(double x, double y, double right,
 		double bottom) {
 	return (bool(
 			(bool((bool((this->px() <= x)) && bool((this->py() <= y))))
@@ -90,7 +78,7 @@ bool PolarTree::rectContain(double x, double y, double right,
 			&& bool((this->pbottom() >= bottom)));
 }
 
-void PolarTree::swell(int extra) {
+inline void PolarTree::swell(int extra) {
 	{
 		this->swelling += extra;
 		if (!this->isLeaf()) {
@@ -105,15 +93,15 @@ void PolarTree::swell(int extra) {
 	}
 }
 
-double PolarTree::getWidth(bool rotate) {
+inline double PolarTree::getWidth(bool rotate) {
 	return (this->getRight(rotate) - this->getX(rotate));
 }
 
-double PolarTree::getHeight(bool rotate) {
+inline double PolarTree::getHeight(bool rotate) {
 	return (this->getBottom(rotate) - this->getY(rotate));
 }
 
-void PolarTree::setLeaf(bool b) {
+inline void PolarTree::setLeaf(bool b) {
 	this->_leaf = b;
 }
 

@@ -50,12 +50,8 @@ bool EngineShape::wasSkipped(){
 }
 
 void EngineShape::skipBecause(int reason){
-    printf("Skipped because %d\n",reason);
+//    printf("Skipped because %d\n",reason);
     this->skipReason = reason;
-}
-
-ImageShape* EngineShape::getShape(){
-    return shape;
 }
 
 void EngineShape::nudgeTo(Placement *p){
@@ -93,13 +89,6 @@ void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
     desiredPlacements = placements;
 }
 
-Placement* EngineShape::nextDesiredPlacement(){
-    return desiredPlacements->at(desiredPlacementIndex++);
-}
-
-bool ::EngineShape::hasNextDesiredPlacement(){
-    return desiredPlacementIndex < desiredPlacements->size();
-}
 
 bool EngineShape::trespassed(PolarLayer* layer){
     if(layer==NULL) return false;

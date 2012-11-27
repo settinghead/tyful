@@ -15,7 +15,7 @@ ColorMapAngler::ColorMapAngler(WordLayer* layer, Angler* otherwise){
     this->otherwise = otherwise;
 }
 
-double ColorMapAngler::angleFor(EngineShape* shape){
+inline double ColorMapAngler::angleFor(EngineShape* shape){
     if (shape->getCurrentPlacement() == NULL)
         return otherwise->angleFor(shape);
     // float angle = (img.getHue(

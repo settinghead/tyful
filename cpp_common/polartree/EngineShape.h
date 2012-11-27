@@ -23,9 +23,15 @@ public:
     EngineShape(ImageShape* shape);
     bool wasSkipped();
     void skipBecause(int reason);
-    bool hasNextDesiredPlacement();
-    Placement* nextDesiredPlacement();
-    ImageShape* getShape();
+    inline bool hasNextDesiredPlacement(){
+        return desiredPlacementIndex < desiredPlacements->size();
+    }
+    inline Placement* nextDesiredPlacement(){
+        return desiredPlacements->at(desiredPlacementIndex++);
+    }
+    inline ImageShape* getShape(){
+        return shape;
+    }
     void nudgeTo(Placement* place);
     void finalizePlacement();
     Placement* getFinalPlacement();

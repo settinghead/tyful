@@ -51,7 +51,7 @@ public:
         }
         return false;
     }
-	vector<PolarTree*>* getKids();
+	inline vector<PolarTree*>* getKids();
 	inline vector<PolarTree*>* getKidsNoGrowth(){
         return this->_kids;
     }
