@@ -3,7 +3,6 @@ package com.settinghead.tyful.client.model.vo.wordlist {
 	
 
 	[Bindable]
-	[RemoteClass(alias="com.settinghead.wexpression.server.model.Word")]
 	public class WordVO {
 		public var word:String;
 		public var weight:Number;

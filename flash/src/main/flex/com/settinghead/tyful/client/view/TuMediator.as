@@ -50,7 +50,6 @@ package com.settinghead.tyful.client.view
 			{
 				case ApplicationFacade.RENDER_TU:
 					tuRenderer.tu =  tuProxy.tu;
-
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
 					if(note.getBody()!=null)

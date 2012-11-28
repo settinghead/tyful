@@ -44,7 +44,7 @@ package com.settinghead.tyful.client.model
 
 		public function TemplateProxy( )
 		{
-			super( NAME, new ArrayCollection );
+			super( NAME, null );
 		}
 		
 		public function set templatePath(path:String):void{
@@ -54,7 +54,8 @@ package com.settinghead.tyful.client.model
 		private var loader : URLLoader;
 
 		public function load() :void{
-			loading = true;
+			if(templateIdToLoad!=null){
+				loading = true;
 				var request : URLRequest
 				= new URLRequest  (decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateUrl) + this.templateIdToLoad);
 				var urlVariables : URLVariables = new URLVariables ();
@@ -64,6 +65,7 @@ package com.settinghead.tyful.client.model
 				loader.addEventListener( Event.COMPLETE, fileLoaded );
 				loader.dataFormat = URLLoaderDataFormat.BINARY;
 				loader.load ( request );
+			}
 		}
 	
 		public function fileLoaded(e:Event):void{
@@ -71,7 +73,6 @@ package com.settinghead.tyful.client.model
 			var b:ByteArray = (obj as Object) as ByteArray;
 			this.fromFile(b);
 			loading = false;
-			facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, template);
 //			facade.sendNotification(ApplicationFacade.EDIT_TEMPLATE, template);
 		}
 		
@@ -87,13 +88,15 @@ package com.settinghead.tyful.client.model
 		
 		
 		public override function setData(data:Object):void{
-			var t:TemplateVO = data as TemplateVO;
+			if(data!=null){
+				var t:TemplateVO = data as TemplateVO;
 			
-			if(t!=null && t.id==null) t.id = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId) as String;
+				if(t!=null && t.id==null) t.id = decodeURIComponent(FlexGlobals.topLevelApplication.parameters.templateId) as String;
 			
-			
-			
-			super.setData(data);
+				super.setData(data);
+				facade.sendNotification(ApplicationFacade.SR_TEMPLATE_LOADED, NAME, SRNAME);
+				facade.sendNotification(ApplicationFacade.TEMPLATE_LOADED, NAME, SRNAME);
+			}
 		}
 		
 		

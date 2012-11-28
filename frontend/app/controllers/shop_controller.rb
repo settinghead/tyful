@@ -34,7 +34,7 @@ class ShopController < ApplicationController
   end
   
   def self.c_null(value)
-    if(!value)
+    if(!value.present?)
       return 'null'
     else
       return value

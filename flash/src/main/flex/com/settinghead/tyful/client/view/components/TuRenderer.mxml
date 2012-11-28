@@ -42,14 +42,38 @@
 			import com.settinghead.tyful.client.model.vo.template.ImageLayer;
 			import com.settinghead.tyful.client.model.vo.template.Layer;
 			
-			import de.aggro.utils.CookieUtil;
-			
+			import flash.filters.DropShadowFilter;
 			import flash.filters.GlowFilter;
 			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.graphics.codec.PNGEncoder;
 			
+			import de.aggro.utils.CookieUtil;
+			
+			
+			[Embed(source="../../fonter/konstellation/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const Panefresco500: Class;
+			[Embed(source="../../fonter/konstellation/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const PermanentMarker: Class;
+			[Embed(source="../../fonter/konstellation/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const Romeral: Class;
+			
+			[Embed(source="../../fonter/konstellation/bpreplay-kRB.ttf", fontFamily="bpreplay-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const BpreplayKRB: Class;
+			[Embed(source="../../fonter/konstellation/fifthleg-kRB.ttf", fontFamily="fifthleg-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const FifthlegKRB: Class;
+			[Embed(source="../../fonter/konstellation/pecita-kRB.ttf", fontFamily="pecita-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const PecitaKRB: Class;
+			[Embed(source="../../fonter/konstellation/sniglet-kRB.ttf", fontFamily="sniglet-kRB", mimeType='application/x-font',
+        embedAsCFF='false', advancedAntiAliasing="true")]
+			public static const snigletKRB: Class;
 			
 			public static const EDIT_TEMPLATE:String = "editTemplate";
 			public static const RESUME_RENDERING:String = "resumeRendering";
@@ -71,7 +95,7 @@
 			private var _tu:TuVO;
 			
 			public function slapWord(dWord:DisplayWordVO):void{
-				(dict[dWord.place.layer] as UIComponent).addChild(dWord);
+				(dict[tu.template.layers[dWord.place.layer]] as UIComponent).addChild(dWord);				
 				this._tu.dWords.addItem(dWord);
 //				patchLayer.graphics.clear();
 //				for each(var pi:PlaceInfo in dWord.engineWord.desiredLocations)

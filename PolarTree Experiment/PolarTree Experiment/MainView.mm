@@ -174,6 +174,9 @@
     NSArray *strings = [[NSArray alloc] initWithObjects:
                         @"橙子",@"passion",@"贪婪",
                         @"可笑可乐",
+                        @"Circumstances do not make the man.\nThey reveal him.",
+                        @"The self always\n comes through.",
+                        @"Forgive me.\nYou have my soul and \n I have your money.",
                         @"War rages on\n in Africa."
                         ,@"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful"
 //                        ,@"glutton",@"lust",@"envy",@"sloth",@"贪婪",@"傲慢"

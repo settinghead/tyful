@@ -36,7 +36,7 @@ package com.settinghead.tyful.client.model
 		
 		public function TuProxy()
 		{
-			super(NAME, new ArrayCollection());
+			super(NAME, null);
 		}
 		
 		private var _generateTemplatePreview:Boolean = false;
@@ -77,6 +77,8 @@ package com.settinghead.tyful.client.model
 		
 		public override function setData(data:Object):void{
 			super.setData(data);
+			if(this.data!=null) sendLoadedNotification( ApplicationFacade.SR_TU_LOADED, NAME, SRNAME);
+			if(this.data!=null) sendLoadedNotification( ApplicationFacade.TU_LOADED, NAME, SRNAME);
 		}
 		
 
@@ -84,10 +86,10 @@ package com.settinghead.tyful.client.model
 		public function load() :void{
 			var templateProxy:TemplateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
-
-			var tu:TuVO = new TuVO(templateProxy.template, wordListProxy.currentWordList);
-			this.setData(tu);
-			sendLoadedNotification( ApplicationFacade.TU_LOADED, NAME, SRNAME);
+			if(templateProxy.template!=null && wordListProxy.wordList!=null){
+				var tu:TuVO = new TuVO(templateProxy.template, wordListProxy.wordList);
+				this.setData(tu);
+			}
 
 		}
 

@@ -2,9 +2,13 @@ package com.settinghead.tyful.client.model
 {
 	import com.settinghead.tyful.client.ApplicationFacade;
 	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
+	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
 	import flash.events.Event;
+	import flash.net.registerClassAlias;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
 	import flash.system.WorkerDomain;
@@ -20,11 +24,11 @@ package com.settinghead.tyful.client.model
 		
 		public static const NAME:String = "RenderProxy";
 		public static const SRNAME:String = "RenderSRProxy";
-		private var renderWorker:Worker;
 		private var resultChannel:MessageChannel;
 		private var statusChannel:MessageChannel;
 		private var controlChannel:MessageChannel;
 		private var _generator:ITuImageGenerator = null;
+		
 		private function get generator():ITuImageGenerator{
 			if(_generator==null)
 				_generator = FlexGlobals.topLevelApplication["tuImageGenerator"];
@@ -36,40 +40,57 @@ package com.settinghead.tyful.client.model
 		
 		public function RenderProxy()
 		{
-			super(NAME, data);
+			super(NAME, null);
 			//TODO
-			load();
+			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
+
+		}
+		
+		private function get renderWorker():Worker{
+			return getData() as Worker;
 		}
 		
 		public function load():void{
-			renderWorker = WorkerDomain.current.createWorker(Workers.com_settinghead_tyful_client_algo_PolarWorker);
+			setData(WorkerDomain.current.createWorker(Workers.com_settinghead_tyful_client_algo_PolarWorker));
 			controlChannel = Worker.current.createMessageChannel(renderWorker);
 			renderWorker.setSharedProperty("controlChannel", controlChannel);
 			
-			resultChannel = Worker.current.createMessageChannel(renderWorker);
+			resultChannel = renderWorker.createMessageChannel(Worker.current);
 			resultChannel.addEventListener(Event.CHANNEL_MESSAGE, handleResultMessage);
 			renderWorker.setSharedProperty("resultChannel", resultChannel);
 			
-			statusChannel = Worker.current.createMessageChannel(renderWorker);
+			statusChannel = renderWorker.createMessageChannel(Worker.current);
 			statusChannel.addEventListener(Event.CHANNEL_MESSAGE, handleStatusMessage);
 			renderWorker.setSharedProperty("statusChannel", statusChannel);
 			
 			renderWorker.addEventListener(Event.WORKER_STATE, handleBGWorkerStateChange);
 			if(tuProxy==null)tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+			
+			renderWorker.start();
+
 		}
 		
-		public function updateTemplate(template:TemplateVO){
-			controlChannel.send(["template",template]);
+		public function updateTemplate(template:TemplateVO):void{
+			controlChannel.send(["template",template.toTransferrableObject()]);
 		}
-		public function startRender(){
+		
+		public function updateWordList(wordList:WordListVO):void{
+			controlChannel.send(["words",wordList.toArray()]);
+		}
+		public function startRender():void{
 			controlChannel.send(["start"]);
 		}
 		
 		private function handleResultMessage(event:Event):void
 		{
-			var dw:DisplayWordVO = statusChannel.receive() as DisplayWordVO;
-			if (dw != null){
-				tuProxy.tu.dWords.addItem(dw);
+			var msg:Object = resultChannel.receive() as Object;
+			var place:PlaceInfo = new PlaceInfo(msg["x"] as Number, msg["y"] as Number, msg["rotation"] as Number, msg["layer"] as int);
+			var fontName:String = msg["fontName"];
+			var fontSize:Number = msg["fontSize"];
+			var word:WordVO = msg["word"] as WordVO;
+			
+			if (place != null){
+				var dw:DisplayWordVO = new DisplayWordVO(word,fontName,fontSize,place);
 				facade.sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}
 		}
@@ -84,6 +105,13 @@ package com.settinghead.tyful.client.model
 					}
 				}
 			}
+		}
+		
+		
+		public override function setData(data:Object):void{			
+			super.setData(data);
+			if (this.data!=null) sendLoadedNotification( ApplicationFacade.SR_RENDER_ENGINE_LOADED, NAME, SRNAME);			
+			if (this.data!=null) sendLoadedNotification( ApplicationFacade.RENDER_ENGINE_LOADED, NAME, SRNAME);	
 		}
 		
 		private function handleBGWorkerStateChange(event:Event):void{

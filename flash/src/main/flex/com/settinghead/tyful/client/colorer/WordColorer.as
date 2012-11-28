@@ -1,5 +1,7 @@
 package com.settinghead.tyful.client.colorer {
+	import com.settinghead.tyful.client.model.vo.template.Layer;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
+	import com.settinghead.tyful.client.model.vo.template.WordLayer;
 
 /*
  Copyright 2010 Daniel Bernier
@@ -38,6 +40,6 @@ public interface WordColorer {
 	 * @param word the word to pick the color for
 	 * @return the color for the word
 	 */
-	function colorFor(place:PlaceInfo = null):uint ;
+	function colorFor(place:PlaceInfo = null, layer:WordLayer = null):uint ;
 }
 }

@@ -45,7 +45,9 @@ package com.settinghead.tyful.client.controller.main
 			var rRender:LoadupResourceProxy = registerResourceProxy(RenderProxy.SRNAME,renderProxy);
 			
 			rTu.requires = [rWordList, rTemplate, rRender];
+			rRender.requires[rWordList];
 			rShop.requires = [rTu, rTemplate];
+			monitor.tryToCompleteLoadResources();
 		}
 		
 		private function registerResourceProxy(srName:String, px:ILoadupProxy):LoadupResourceProxy{

@@ -13,6 +13,7 @@ package com.settinghead.tyful.client.controller.tu
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	import org.puremvc.as3.utilities.loadup.model.LoadupMonitorProxy;
 	
 	public class RenderTuCommand extends SimpleCommand
 	{
@@ -22,6 +23,7 @@ package com.settinghead.tyful.client.controller.tu
 		}
 		
 		public override function execute(note:INotification):void{
+			(facade.retrieveProxy(LoadupMonitorProxy.NAME) as LoadupMonitorProxy).tryToCompleteLoadResources();
 			this.waitForWordList();
 		}
 		
@@ -41,7 +43,7 @@ package com.settinghead.tyful.client.controller.tu
 				}
 					, 200);	
 			}
-			else if(wordListProxy.currentWordList==null){
+			else if(wordListProxy.wordList==null){
 				if(!Mask.shown){
 					Mask.show("Analyzing your Facebook profile and status data. Just a moment.");
 				}
@@ -56,6 +58,7 @@ package com.settinghead.tyful.client.controller.tu
 				var renderProxy:RenderProxy = facade.retrieveProxy(RenderProxy.NAME) as RenderProxy;
 
 				tuProxy.load();
+				renderProxy.updateTemplate(templateProxy.template);
 				renderProxy.startRender();
 
 			}

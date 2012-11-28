@@ -3,7 +3,9 @@ package com.settinghead.tyful.client.controller.template
 	import com.notifications.Notification;
 	import com.settinghead.tyful.client.ApplicationFacade;
 	import com.settinghead.tyful.client.model.TemplateProxy;
+	import com.settinghead.tyful.client.model.WordListProxy;
 	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
 	
 	import flash.events.Event;
 	import flash.external.ExternalInterface;
@@ -35,7 +37,6 @@ package com.settinghead.tyful.client.controller.template
 			templateProxy = facade.retrieveProxy(TemplateProxy.NAME) as TemplateProxy;
 			
 			var template:TemplateVO = templateProxy.template;
-			
 			
 			if(template.preview==null){
 				sendNotification(ApplicationFacade.GENERATE_TEMPLATE_PREVIEW, this);

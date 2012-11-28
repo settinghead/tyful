@@ -2,8 +2,7 @@ package com.settinghead.tyful.client.algo
 {	
 	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
-	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
-	import com.settinghead.tyful.client.model.vo.template.WordLayer;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordComparator;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
@@ -24,13 +23,16 @@ package com.settinghead.tyful.client.algo
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 	
+	import org.as3commons.collections.SortedList;
+	
 	import polartree.PolarTree.CModule;
 	import polartree.PolarTree.getShrinkage;
 	import polartree.PolarTree.getStatus;
 	import polartree.PolarTree.initCanvas;
 	import polartree.PolarTree.slapShape;
+	import polartree.PolarTree.vfs.ISpecialFile;
 	
-	public class PolarWorker
+	public class PolarWorker extends Sprite implements ISpecialFile
 	{
 		[Embed(source="../fonter/konstellation/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
         embedAsCFF='false', advancedAntiAliasing="true")]
@@ -56,7 +58,8 @@ package com.settinghead.tyful.client.algo
 		public static const snigletKRB: Class;
 		
 		private var wordList:WordListVO = null;
-		private var template:TemplateVO = null;
+		private var template:Object = null;
+
 		public function PolarWorker()
 		{
 			initialize();
@@ -68,17 +71,16 @@ package com.settinghead.tyful.client.algo
 		public const STOPPED:String = "STOPPED";
 		public const PAUSED:String = "PAUSED";
 		public const RUNNING:String = "RUNNING";
-		
+		private var status:String = STOPPED;
 		
 		private function initialize():void
 		{
+			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
+			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordComparator", WordComparator);
+			registerClassAlias("org.as3commons.collections.SortedList", SortedList);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.template.PlaceInfo", PlaceInfo);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.template.TemplateVO", TemplateVO);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.template.WordLayer", WordLayer);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
-			registerClassAlias("com.adobe.test.vo.CountResult", DisplayWordVO);
 
 			// These are for sending messages to the parent worker
 			resultChannel = Worker.current.getSharedProperty("resultChannel") as MessageChannel;
@@ -87,7 +89,8 @@ package com.settinghead.tyful.client.algo
 			// This one is for receiving messages from the parent worker
 			controlChannel = Worker.current.getSharedProperty("controlChannel") as MessageChannel;
 			controlChannel.addEventListener(Event.CHANNEL_MESSAGE, controlCommandReceived);
-			
+			CModule.vfs.console = this;
+
 		}        
 		
 		
@@ -102,23 +105,33 @@ package com.settinghead.tyful.client.algo
 			{
 				if(message[0] == "words")
 				{
-					wordList = (message[1] as WordListVO).clone();
+					wordList = new WordListVO((message[1] as Array));
 				}
 				else if (message[0] == "start"){
 					start();
 				}
+				
+				else if (message[0] == "pause"){
+					status = PAUSED;
+				}
 				else if (message[0] == "template"){
 					CModule.serviceUIRequests();
-					template = message[1] as TemplateVO;
-					var directionBitmapData:BitmapData= (template.layers[0] as WordLayer).direction;
+//					template = message[1] as TemplateVO;
+					template = message[1] as Object;
+//					var directionBitmapData:BitmapData= (template.layers[0] as WordLayer).direction;
 						//TODO: complete multi-layer implementation
-					var data:ByteArray = directionBitmapData.getPixels(new Rectangle(0,0,directionBitmapData.width, directionBitmapData.height));
+//					var data:ByteArray = directionBitmapData.getPixels(new Rectangle(0,0,directionBitmapData.width, directionBitmapData.height));
 					//trace("data length: "+ data.length.toString()+"\n");
+					var a:Array = (template["directions"] as Array)[0] as Array;
+					var width:Number = a[0];
+					var height:Number = a[1];
+					var data:ByteArray = a[2];
+					
 					data.position = 0;
 					var addr:int = CModule.malloc(data.length);
 					CModule.writeBytes(addr, data.length, data);
 					
-					initCanvas(addr,directionBitmapData.width,directionBitmapData.height); 
+					initCanvas(addr,width,height); 
 				}
 				checkStart();
 			}
@@ -131,52 +144,40 @@ package com.settinghead.tyful.client.algo
 		
 		private function start():void{
 			var currentWords:WordListVO = wordList.clone();
-			Worker.current.setSharedProperty("status", RUNNING);
-			while(Worker.current.getSharedProperty("status")==RUNNING && getStatus()>0){
+			status = RUNNING;
+			while(status==RUNNING && getStatus()>0){
 				var word:WordVO = wordList.next();
 				
 				CModule.serviceUIRequests()				
-				
-				var textField:TextField = getTextField(word.word, 100*getShrinkage()+10);
-				var params:Array = getTextShape(textField);
+				var fontSize:Number = 100*getShrinkage()+10;
+				var fontName:String = "romeral";
+				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
+				var params:Array = getTextShape(dw);
 				
 				var coord:Vector.<Number> =
 					slapShape(params[0],params[1],params[2]);
 				
 				if(coord!=null){
 					var rotation:Number = coord[2];
-					var place:PlaceInfo = new PlaceInfo(coord[0], coord[1], coord[2], template.layers[0] as WordLayer);
-					var s:DisplayWordVO = new DisplayWordVO(word, place);
-					//s.width = textField.width;
-					//s.height = textField.height;
-					textField.x = 0;
-					textField.y = 0;
-					
-					s.textField = textField;
-					var w:Number = s.width;
-					var h:Number = s.height;
-					s.x = coord[0];
-					s.y = coord[1];
-					
-					var centerX:Number=s.x+s.width/2;
-					var centerY:Number = s.y+s.height/2;
-					
-					//						trace("CenterX: "+centerX.toString()+", CenterY: "+centerY.toString()+", width: "+ s.width.toString() +", height: "+ s.height.toString() +" rotation: "+rotation.toString());
-					
-					var m:Matrix=s.transform.matrix;
-					m.tx -= centerX;
-					m.ty -= centerY;
-					m.rotate(-rotation); // was a missing "=" here
-					m.tx += centerX;
-					m.ty += centerY;
-					s.transform.matrix = m;
-					resultChannel.send(s);
+					var place:PlaceInfo = new PlaceInfo(coord[0], coord[1], coord[2], 0);
+					var msg:Object = new Object();
+					msg["word"] = word;
+					msg["fontSize"] = fontSize;
+					msg["fontName"] = fontName;
+					msg["x"] = place.x;
+					msg["y"] = place.y;
+					msg["rotation"] = place.rotation;
+					msg["layer"] = place.layer;
+					resultChannel.send(msg);
 				}
 				
 				//      var args:Vector.<int> = new Vector.<Number>;
 				//      args.push(params[0]);
 				//      args.push(params[1]);
 				//      args.push(params[2]);
+				
+				if(controlChannel.messageAvailable)
+					controlCommandReceived(null);
 			}
 			
 			if(getStatus()==0)
@@ -187,56 +188,111 @@ package com.settinghead.tyful.client.algo
 			
 		}
 		
-		private function getTextShape(textField:TextField, safetyBorder:Number=0):Array
+		private function getTextShape(dw:DisplayWordVO, safetyBorder:Number=0):Array
 		{
 			var HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
 			
-			var bounds: Rectangle = textField.getBounds( textField );
+			var bounds: Rectangle = dw.textField.getBounds( dw.textField );
 			HELPER_MATRIX.tx = -bounds.x + safetyBorder;
 			HELPER_MATRIX.ty = -bounds.y + safetyBorder;
 			
 			
 			var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0xFFFFFFFF ) );
-			var s:Sprite = new Sprite();
 			//s.width = textField.width;
 			//s.height = textField.height;
-			s.x = 0;
-			s.y = 0;
-			s.addChild(textField);
-			bmp.bitmapData.draw( s );
+			dw.x = 0;
+			dw.y = 0;
+			bmp.bitmapData.draw( dw );
 			
 			
 			var data:ByteArray = bmp.bitmapData.getPixels(new Rectangle(0,0,bmp.bitmapData.width, bmp.bitmapData.height));
-			trace("width: "+s.width.toString()+", height: "+s.height.toString()+", length: "+data.length.toString()+"\n");
+//			trace("width: "+s.width.toString()+", height: "+s.height.toString()+", length: "+data.length.toString()+"\n");
 			data.position = 0;
 			var addr:int = CModule.malloc(data.length);
 			CModule.writeBytes(addr, data.length, data);
 			return [addr,bmp.width, bmp.height];
 		}
 		
-		public function getTextField(text: String, size: Number, rotation: Number = 0):TextField
+		/**
+		 * The callback to call when FlasCC code calls the posix exit() function. Leave null to exit silently.
+		 * @private
+		 */
+		public var exitHook:Function;
+		/**
+		 * The PlayerKernel implementation will use this function to handle
+		 * C process exit requests
+		 */
+		public function exit(code:int):Boolean
 		{
-			var textField: TextField = new TextField();
-			//      textField.setTextFormat( new TextFormat( font.fontName, size ) );
-			var style:StyleSheet = new StyleSheet();
-			style.parseCSS("div{font-size: "+size+"; font-family: romeral; leading: 0; text-align: center;}");
-			textField.styleSheet = style;
-			textField.autoSize = TextFieldAutoSize.LEFT;
-			textField.background = false;
-			textField.selectable = false;
-			textField.embedFonts = true;
-			//textField.cacheAsBitmap = true;
-			textField.x = 0;
-			textField.y = 0;
-			textField.antiAliasType = AntiAliasType.ADVANCED;
-			textField.htmlText = "<div>"+text+"</div>";
-			textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
-			if(text.length>11){ //TODO: this is a temporary fix
-				var w:Number = textField.width;
-				textField.wordWrap = true;
-				textField.width = w/(text.length/11)*1.1 ;
-			}
-			return textField;
+			// default to unhandled
+			return exitHook ? exitHook(code) : false;
 		}
+		
+		/**
+		 * The PlayerKernel implementation will use this function to handle
+		 * C IO write requests to the file "/dev/tty" (e.g. output from
+		 * printf will pass through this function). See the ISpecialFile
+		 * documentation for more information about the arguments and return value.
+		 */
+		public function write(fd:int, bufPtr:int, nbyte:int, errnoPtr:int):int
+		{
+			var str:String = CModule.readString(bufPtr, nbyte)
+			consoleWrite(str)
+			return nbyte
+		}
+		
+		/**
+		 * The PlayerKernel implementation will use this function to handle
+		 * C IO read requests to the file "/dev/tty" (e.g. reads from stdin
+		 * will expect this function to provide the data). See the ISpecialFile
+		 * documentation for more information about the arguments and return value.
+		 */
+		public function read(fd:int, bufPtr:int, nbyte:int, errnoPtr:int):int
+		{
+			return 0
+		}
+		
+		/**
+		 * The PlayerKernel implementation will use this function to handle
+		 * C fcntl requests to the file "/dev/tty" 
+		 * See the ISpecialFile documentation for more information about the
+		 * arguments and return value.
+		 */
+		public function fcntl(fd:int, com:int, data:int, errnoPtr:int):int
+		{
+			return 0
+		}
+		
+		/**
+		 * The PlayerKernel implementation will use this function to handle
+		 * C ioctl requests to the file "/dev/tty" 
+		 * See the ISpecialFile documentation for more information about the
+		 * arguments and return value.
+		 */
+		public function ioctl(fd:int, com:int, data:int, errnoPtr:int):int
+		{
+			return 0
+		}
+		
+		/**
+		 * Helper function that traces to the flashlog text file and also
+		 * displays output in the on-screen textfield console.
+		 */
+		protected function consoleWrite(s:String):void
+		{
+			trace(s);
+		}
+		
+		/**
+		 * Provide a way to get the TextField's text.
+		 */
+		public function get consoleText():String
+		{
+			var txt:String = null;
+			
+			return txt;
+		}
+
+		
 	}
 }

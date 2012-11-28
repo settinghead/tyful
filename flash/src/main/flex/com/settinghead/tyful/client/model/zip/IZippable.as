@@ -1,7 +1,5 @@
 package com.settinghead.tyful.client.model.zip
 {
-	import flash.utils.Dictionary;
-
 	public interface IZippable
 	{
 		function writeNonJSONPropertiesToZip(output:IZipOutput):void;

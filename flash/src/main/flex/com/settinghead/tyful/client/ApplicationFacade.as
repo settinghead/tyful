@@ -2,18 +2,16 @@ package com.settinghead.tyful.client
 {
 	import com.settinghead.tyful.client.TyfulClient;
 	import com.settinghead.tyful.client.controller.main.StartupCommand;
-	import com.settinghead.tyful.client.controller.shop.PrepSampleShopCommand;
 	import com.settinghead.tyful.client.controller.template.DownloadTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.GenerateTemplatePreviewCommand;
 	import com.settinghead.tyful.client.controller.template.LoadTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.NewTemplateCommand;
 	import com.settinghead.tyful.client.controller.template.SaveTemplateCommand;
-	import com.settinghead.tyful.client.controller.template.UpdateRenderTemplateCommand;
+	import com.settinghead.tyful.client.controller.template.UpdateRenderResourcesCommand;
 	import com.settinghead.tyful.client.controller.template.UploadTemplateCommand;
 	import com.settinghead.tyful.client.controller.tu.PostToFacebookCommand;
 	import com.settinghead.tyful.client.controller.tu.RenderTuCommand;
 	
-	import flash.display.LoaderInfo;
 	
 	import org.puremvc.as3.patterns.facade.Facade;
 	import org.puremvc.as3.utilities.loadup.controller.LoadupResourceFailedCommand;
@@ -47,6 +45,11 @@ package com.settinghead.tyful.client
 		public static const SHOP_LOADED:String        = "shopLoaded";
 		public static const TEMPLATE_LOADED:String        = "templateLoaded";
 		public static const TU_LOADED:String        = "tuLoaded";
+		public static const SR_RENDER_ENGINE_LOADED:String		= "SRRenderEngineLoaded";
+		public static const SR_WORD_LIST_LOADED:String        = "SRWordListLoaded";
+		public static const SR_SHOP_LOADED:String        = "SRShopLoaded";
+		public static const SR_TEMPLATE_LOADED:String        = "SRTemplateLoaded";
+		public static const SR_TU_LOADED:String        = "SRTuLoaded";
 
 //		public static const PROCESS_SHOP_CLICK:String		= "processShopClick";
 		
@@ -70,7 +73,15 @@ package com.settinghead.tyful.client
 		 */
 		override protected function initializeController( ) : void 
 		{
-			super.initializeController();            
+			super.initializeController();   
+			
+			
+			registerResourceLoadedCommand( SR_RENDER_ENGINE_LOADED );
+			registerResourceLoadedCommand( SR_WORD_LIST_LOADED );
+			registerResourceLoadedCommand( SR_SHOP_LOADED );
+			registerResourceLoadedCommand( SR_TU_LOADED );
+			registerResourceLoadedCommand( SR_TEMPLATE_LOADED );
+			
 			registerCommand( STARTUP, StartupCommand );	
 			registerCommand (DOWNLOAD_TEMPLATE, DownloadTemplateCommand);
 			registerCommand (SAVE_TEMPLATE, SaveTemplateCommand);
@@ -82,13 +93,9 @@ package com.settinghead.tyful.client
 			registerCommand ( NEW_TEMPLATE, NewTemplateCommand);
 			registerCommand ( RENDER_TU, RenderTuCommand);
 			registerCommand (POST_TO_FACEBOOK, PostToFacebookCommand);
-			registerCommand(TEMPLATE_LOADED, UpdateRenderTemplateCommand);
-			
-			registerResourceLoadedCommand( RENDER_ENGINE_LOADED );
-			registerResourceLoadedCommand( WORD_LIST_LOADED );
-			registerResourceLoadedCommand( SHOP_LOADED );
-			registerResourceLoadedCommand( TU_LOADED );
-			registerResourceLoadedCommand( TEMPLATE_LOADED );
+			registerCommand(TEMPLATE_LOADED, UpdateRenderResourcesCommand);
+			registerCommand(WORD_LIST_LOADED, UpdateRenderResourcesCommand);
+
 
 		}
 		

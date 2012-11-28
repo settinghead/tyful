@@ -9,12 +9,13 @@ package com.settinghead.tyful.client.model.vo.template
 	import com.settinghead.tyful.client.model.zip.IZipOutput;
 	import com.settinghead.tyful.client.model.zip.IZippable;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
-	import mx.events.CollectionEvent;	
+	import mx.events.CollectionEvent;
 	
 	[Bindable]
 	public class TemplateVO implements IZippable, IWithEffectiveBorder
@@ -103,7 +104,7 @@ package com.settinghead.tyful.client.model.vo.template
 			if(isNaN(_height)){
 				var maxHeight:Number = 0;
 				for each(var l:Layer in layers)
-				if(maxHeight < l.getHeight()) maxHeight = l.getHeight();
+					if(maxHeight < l.getHeight()) maxHeight = l.getHeight();
 				if(maxHeight > 0) _height = maxHeight; 
 			}
 			return _height;
@@ -212,6 +213,36 @@ package com.settinghead.tyful.client.model.vo.template
 		public function set type(t:String):void{
 			//dummy method; do nothing 
 		}
+		
+		public function toTransferrableObject():Object{
+			var obj:Object = new Object();
+			obj["colors"] = new Array();
+			obj["directions"] = new Array();
+			obj["images"] = new Array();
+			obj["tolerance"]= tolerance;
+			obj["perseverance"] = perseverance;
+			for each(var l:Layer in layers){
+				var image:BitmapData = null;
+				var direction:BitmapData = null;
+				var color:BitmapData = null;
+				if(l is WordLayer){
+					direction = (l as WordLayer).direction;
+					color = (l as WordLayer).color;	
+				}
+				else if (l is ImageLayer){
+					image = (l as ImageLayer).image;
+				}
+				if(color!=null) (obj["colors"] as Array).push([color.width,color.height,color.getPixels(new Rectangle(0,0,color.width,color.height))]);
+				if(direction!=null) (obj["directions"] as Array).push([direction.width,direction.height,direction.getPixels(new Rectangle(0,0,direction.width,direction.height))]);
+				if(image!=null) (obj["images"] as Array).push([image.width,image.height,image.getPixels(new Rectangle(0,0,image.width,image.height))]);
+			}
+			return obj;
+		}
+		
+//		public static function fromTransferrableObject(obj:Object):TemplateVO{
+//			var template:TemplateVO = new TemplateVO;
+//			template.tolerance = obj
+//		}
 		
 	}
 }

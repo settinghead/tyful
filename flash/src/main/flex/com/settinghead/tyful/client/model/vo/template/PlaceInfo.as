@@ -1,25 +1,25 @@
 package com.settinghead.tyful.client.model.vo.template
 {
 	public class PlaceInfo {
-		private var _layer:WordLayer;
+		private var _layer:int;
 		
 		public var x:Number;
 		public var y:Number;
 		public var rotation:Number;
 		
-		public function PlaceInfo(x:Number, y:Number, rotation:Number, l:WordLayer = null) {
+		public function PlaceInfo(x:Number, y:Number, rotation:Number, lNum:int) {
 			this.x = x;
 			this.y = y;
 			this.rotation = rotation;
-			this.layer = l;
+			this.layer = lNum;
 		}
 		
 		
-		public function set layer(l:WordLayer):void{
+		public function set layer(l:int):void{
 			this._layer = l;
 		}
 		
-		public function get layer():WordLayer{
+		public function get layer():int{
 			return this._layer;
 		}
 

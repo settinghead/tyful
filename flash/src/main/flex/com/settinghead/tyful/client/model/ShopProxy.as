@@ -5,6 +5,7 @@ package com.settinghead.tyful.client.model
 	import com.settinghead.tyful.client.ApplicationFacade;
 	import com.settinghead.tyful.client.model.vo.PreviewUrlVO;
 	import com.settinghead.tyful.client.model.vo.shop.ShopVO;
+	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -90,7 +91,6 @@ package com.settinghead.tyful.client.model
 				var l:Array = (obj as Object) as Array;
 				var shop:ShopVO = new ShopVO(previewUrl, l);
 				this.setData(shop);
-				sendLoadedNotification( ApplicationFacade.SHOP_LOADED, NAME, SRNAME);
 
 			}
 			else
@@ -99,6 +99,13 @@ package com.settinghead.tyful.client.model
 				retrieveAttempt++;
 				setTimeout(load,3000);
 			}
+		}
+		
+		
+		public override function setData(data:Object):void{			
+			super.setData(data);
+			if (this.shop!=null) sendLoadedNotification( ApplicationFacade.SR_SHOP_LOADED, NAME, SRNAME);			
+			if (this.shop!=null) sendLoadedNotification( ApplicationFacade.SHOP_LOADED, NAME, SRNAME);			
 		}
 		
 //		public function prepareSampleShop():void{

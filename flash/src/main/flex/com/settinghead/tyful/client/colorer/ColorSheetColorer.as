@@ -1,6 +1,7 @@
 package com.settinghead.tyful.client.colorer
 {
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
+	import com.settinghead.tyful.client.model.vo.template.WordLayer;
 	
 	public class ColorSheetColorer implements WordColorer
 	{
@@ -10,10 +11,10 @@ package com.settinghead.tyful.client.colorer
 			
 		}
 		
-		public function colorFor(place:PlaceInfo = null):uint
+		public function colorFor(place:PlaceInfo = null, layer:WordLayer=null):uint
 		{
 			var color:uint = 
-				place.layer.colorSheet.bitmapData.getPixel(
+				layer.colorSheet.bitmapData.getPixel(
 					place.x, place.y);
 //			if(color==0){
 //				Notification.show(eWord.getCurrentLocation().x.toString()+

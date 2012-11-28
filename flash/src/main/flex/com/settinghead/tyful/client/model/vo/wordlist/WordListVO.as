@@ -6,7 +6,7 @@ package com.settinghead.tyful.client.model.vo.wordlist
 	public class WordListVO extends SortedList
 	{
 		private var currentWordIndex:int = 0;
-		public function WordListVO(array:Array){
+		public function WordListVO(array:Array=null){
 			super(new WordComparator());
 			if(array!=null){
 				for(var i:int = 0; i<array.length; i++){
@@ -20,6 +20,7 @@ package com.settinghead.tyful.client.model.vo.wordlist
 				this.add(new WordVO(w.word, 0));
 			}
 		}
+		
 		
 		public function reset():void{
 			currentWordIndex = 0;
