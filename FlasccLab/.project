@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>flash</name>
+	<name>FlasccLab</name>
 	<comment></comment>
 	<projects>
-		<project>flash_models</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -21,11 +20,6 @@
 			<name>[source path] flex</name>
 			<type>2</type>
 			<locationURI>DOCUMENTS/flash_shared_code/src/main/flex</locationURI>
-		</link>
-		<link>
-			<name>bin-debug</name>
-			<type>2</type>
-			<locationURI>DOCUMENTS/static/f/client</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

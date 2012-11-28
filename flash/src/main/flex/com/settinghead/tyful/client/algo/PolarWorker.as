@@ -29,6 +29,7 @@ package com.settinghead.tyful.client.algo
 	import polartree.PolarTree.getShrinkage;
 	import polartree.PolarTree.getStatus;
 	import polartree.PolarTree.initCanvas;
+	import polartree.PolarTree.setPerseverance;
 	import polartree.PolarTree.slapShape;
 	import polartree.PolarTree.vfs.ISpecialFile;
 	
@@ -137,6 +138,10 @@ package com.settinghead.tyful.client.algo
 					CModule.writeBytes(colorAddr, colorData.length, colorData);
 					
 					initCanvas(addr,colorAddr,width,height); 
+				}
+				else if (message[0] == "perseverance"){
+					CModule.serviceUIRequests();
+					setPerseverance(message[1] as int);
 				}
 				checkStart();
 			}

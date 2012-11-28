@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" initialize="application1_initializeHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.example.vo.CountResult;
+			
+			import flash.display.Shape;
+			import flash.display.Sprite;
+			import flash.display.StageAlign;
+			import flash.display.StageScaleMode;
+			import flash.events.Event;
+			import flash.net.registerClassAlias;
+			import flash.system.MessageChannel;
+			import flash.system.Worker;
+			import flash.system.WorkerDomain;
+			import flash.system.WorkerState;
+			import flash.text.TextField;
+			import flash.text.TextFormat;
+			import flash.text.TextFormatAlign;
+			import flash.utils.ByteArray;
+			
+			import mx.events.FlexEvent;
+			private var bgWorker:Worker;
+			private var bgWorkerCommandChannel:MessageChannel;
+			private var progressChannel:MessageChannel;
+			private var resultChannel:MessageChannel;
+			
+			private function handleBGWorkerStateChange(event:Event):void
+			{
+				if (bgWorker.state == WorkerState.RUNNING) 
+				{
+					lblStatus.text = "Background worker started";
+					bgWorkerCommandChannel.send(["startCount", 100000000]);
+				}
+			}
+			
+			
+			private function handleProgressMessage(event:Event):void
+			{
+				var percentComplete:Number = progressChannel.receive();
+				setPercentComplete(percentComplete);
+				lblStatus.text = Math.round(percentComplete).toString() + "% complete";
+			}
+			
+			
+			private function handleResultMessage(event:Event):void
+			{
+				var result:CountResult = resultChannel.receive() as CountResult;
+				setPercentComplete(100);
+				lblStatus.text = "Counted to " + result.countTarget + " in " + (Math.round(result.countDurationSeconds * 10) / 10) + " seconds";
+			}
+			
+			
+			// ------- Create UI -------
+			
+			private var _currentPercentComplete:int = 0;
+			private var _needsValidation:Boolean = false;
+			
+//			private function setupStage():void
+//			{
+////				stage.align = StageAlign.TOP_LEFT;
+//				stage.scaleMode = StageScaleMode.NO_SCALE;
+//				stage.stageWidth = 800;
+//				stage.stageHeight = 600;
+//				stage.color = 0xffffff;
+//			}
+//			
+			
+			private function createStatusText():void
+			{
+				lblStatus.text = "Initializing...";				
+			}
+			
+			
+			
+			private function setPercentComplete(percentComplete:int):void
+			{
+				if (_currentPercentComplete == percentComplete)
+					return;
+				
+				_currentPercentComplete = percentComplete;
+				invalidateValue();
+			}
+			
+			
+			private function invalidateValue():void
+			{
+				if (_needsValidation)
+					return;
+				
+				_needsValidation = true;
+				addEventListener(Event.EXIT_FRAME, validate);
+			}
+			
+			private function validate(event:Event):void
+			{
+				removeEventListener(Event.EXIT_FRAME, validate);
+				_needsValidation = false;				
+			}
+			
+			
+			protected function application1_initializeHandler(event:FlexEvent):void
+			{
+				// create the user interface
+//				setupStage();
+				createStatusText();
+				
+				// Register the alias so we can pass CountResult objects between workers
+				registerClassAlias("com.adobe.test.vo.CountResult", CountResult);
+				
+				// Create the background worker
+				bgWorker = WorkerDomain.current.createWorker(Workers.com_adobe_example_workers_BackgroundWorker);
+				
+				// Set up the MessageChannels for communication between workers
+				bgWorkerCommandChannel = Worker.current.createMessageChannel(bgWorker);
+				bgWorker.setSharedProperty("incomingCommandChannel", bgWorkerCommandChannel);
+				
+				progressChannel = bgWorker.createMessageChannel(Worker.current);
+				progressChannel.addEventListener(Event.CHANNEL_MESSAGE, handleProgressMessage)
+				bgWorker.setSharedProperty("progressChannel", progressChannel);
+				
+				resultChannel = bgWorker.createMessageChannel(Worker.current);
+				resultChannel.addEventListener(Event.CHANNEL_MESSAGE, handleResultMessage);
+				bgWorker.setSharedProperty("resultChannel", resultChannel);
+				
+				// Start the worker
+				bgWorker.addEventListener(Event.WORKER_STATE, handleBGWorkerStateChange);
+				bgWorker.start();
+			}
+			
+			protected function btnPause_clickHandler(event:MouseEvent):void
+			{
+				bgWorker.setSharedProperty("status",0);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup id="main">
+		<s:Label id="lblStatus" />
+		<s:Button label="Pause" id="btnPause" click="btnPause_clickHandler(event)" />
+	</s:VGroup>
+</s:Application>
