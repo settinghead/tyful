@@ -2,6 +2,7 @@
 #define PolarTree_H
 
 #include <vector>
+#include <cmath>
 #include "constants.h"
 #include "structs.h"
 #include "ImageShape.h"
@@ -254,8 +255,8 @@ protected:
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom;
     inline bool collide(PolarTree* bTree){
         double dist = sqrt(
-                           (pow((this->getRootX() - bTree->getRootX()), 2)
-                            + pow((this->getRootY() - bTree->getRootY()), 2)));
+                           (pow((this->getRootX() - bTree->getRootX()), 2.0)
+                            + pow((this->getRootY() - bTree->getRootY()), 2.0)));
         if (((dist > (this->d2 + bTree->d2)))) {
             return false;
         } else {

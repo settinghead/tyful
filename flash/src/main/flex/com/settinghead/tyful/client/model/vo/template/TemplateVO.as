@@ -13,6 +13,7 @@ package com.settinghead.tyful.client.model.vo.template
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.CollectionEvent;
@@ -233,8 +234,12 @@ package com.settinghead.tyful.client.model.vo.template
 					image = (l as ImageLayer).image;
 				}
 				if(color!=null) (obj["colors"] as Array).push([color.width,color.height,color.getPixels(new Rectangle(0,0,color.width,color.height))]);
+				else (obj["colors"] as Array).push(null);
 				if(direction!=null) (obj["directions"] as Array).push([direction.width,direction.height,direction.getPixels(new Rectangle(0,0,direction.width,direction.height))]);
+				else (obj["directions"] as Array).push(null);
 				if(image!=null) (obj["images"] as Array).push([image.width,image.height,image.getPixels(new Rectangle(0,0,image.width,image.height))]);
+				else (obj["images"] as Array).push(null);
+
 			}
 			return obj;
 		}

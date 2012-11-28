@@ -9,6 +9,10 @@
 #ifndef PolarTree_Experiment_ColorMath_h
 #define PolarTree_Experiment_ColorMath_h
 
+#include <cmath>
+#include <math.h>
+#define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
+#define MAX(X,Y) ((X) > (Y) ? (X) : (Y))
 class ColorMath{
 public:
     inline static double getBrightness(unsigned int rgb){
@@ -102,15 +106,39 @@ public:
         double r2 = (c2) >> 16 & 0xFF;
         double g2 = (c2) >> 8 & 0xFF;
         double b2 = c2 & 0xFF;
-        return fabs(r1-r2)/256/3 + fabs(g1-g2)/256/3 + fabs(b1-b2)/256/3;
+        double rd = r1-r2;
+        double gd = g1-g2;
+        double bd = b1-b2;
+        return abs(rd)/256/3 + abs(gd)/256/3 + abs(bd)/256/3;
     }
     
     inline static double distHue(unsigned int c1, unsigned int c2){
         double h1 = getHue(c1);
         double h2 = getHue(c2);
-        double diff= fabs(h1-h2);
+        double diff= abs(h1-h2);
         if(diff>0.5) diff = 1-diff;
         return diff;
+    }
+    
+    inline static unsigned int HSLtoRGB(double hue, double saturation, double lightness, double a){
+        a = MIN(1,a); a = MAX(0,a);
+        saturation = MIN(1,saturation); saturation = MAX(0,saturation);
+        lightness = MIN(1,lightness); lightness = MAX(0,lightness);
+        hue = fmod(hue,360);
+        if(hue<0)hue+=360;
+        hue/=60;
+        double C = (1-abs(2*lightness-1))*saturation;
+        double X = C*(1-abs(fmod(hue,2)-1));
+        double m = lightness-0.5*C;
+        C=(C+m)*255;
+        X=(X+m)*255;
+        m*=255;
+        if(hue<1) return ((int)round(a*255)<<24)+((int)C<<16)+((int)X<<8)+m;
+        if(hue<2) return ((int)round(a*255)<<24)+((int)X<<16)+((int)C<<8)+m;
+        if(hue<3) return ((int)round(a*255)<<24)+((int)m<<16)+((int)C<<8)+X;
+        if(hue<4) return ((int)round(a*255)<<24)+((int)m<<16)+((int)X<<8)+C;
+        if(hue<5) return ((int)round(a*255)<<24)+((int)X<<16)+((int)m<<8)+C;
+        return ((int)round(a*255)<<24)+((int)C<<16)+((int)m<<8)+X;
     }
 };
 

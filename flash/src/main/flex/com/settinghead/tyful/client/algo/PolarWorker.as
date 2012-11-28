@@ -126,12 +126,17 @@ package com.settinghead.tyful.client.algo
 					var width:Number = a[0];
 					var height:Number = a[1];
 					var data:ByteArray = a[2];
+					var colorData:ByteArray = ((template["colors"] as Array)[0] as Array)[2];
 					
 					data.position = 0;
 					var addr:int = CModule.malloc(data.length);
 					CModule.writeBytes(addr, data.length, data);
 					
-					initCanvas(addr,width,height); 
+					colorData.position = 0;
+					var colorAddr:int = CModule.malloc(colorData.length);
+					CModule.writeBytes(colorAddr, colorData.length, colorData);
+					
+					initCanvas(addr,colorAddr,width,height); 
 				}
 				checkStart();
 			}
@@ -149,7 +154,7 @@ package com.settinghead.tyful.client.algo
 				var word:WordVO = wordList.next();
 				
 				CModule.serviceUIRequests()				
-				var fontSize:Number = 100*getShrinkage()+10;
+				var fontSize:Number = 100*getShrinkage()+12;
 				var fontName:String = "romeral";
 				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
 				var params:Array = getTextShape(dw);
@@ -160,10 +165,13 @@ package com.settinghead.tyful.client.algo
 				if(coord!=null){
 					var rotation:Number = coord[2];
 					var place:PlaceInfo = new PlaceInfo(coord[0], coord[1], coord[2], 0);
+					var fontColor:uint = coord[3];
 					var msg:Object = new Object();
+					
 					msg["word"] = word;
 					msg["fontSize"] = fontSize;
 					msg["fontName"] = fontName;
+					msg["fontColor"] = fontColor;
 					msg["x"] = place.x;
 					msg["y"] = place.y;
 					msg["rotation"] = place.rotation;

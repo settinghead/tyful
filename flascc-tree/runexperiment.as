@@ -141,7 +141,7 @@ package
       var addr:int = CModule.malloc(data.length);
       CModule.writeBytes(addr, data.length, data);
 
-      initCanvas(addr,directionBmp.width,directionBmp.height);
+      initCanvas(addr,0,directionBmp.width,directionBmp.height);
 
 
       addEventListener(Event.ENTER_FRAME, enterFrame)
@@ -265,7 +265,9 @@ package
           //s.height = textField.height;
           textField.x = 0;
           textField.y = 0;
-
+          var color:uint = coord[3];
+          textField.textColor = color;
+          
           s.addChild(textField);
           var w:Number = s.width;
           var h:Number = s.height;
@@ -276,6 +278,7 @@ package
           var centerY:Number = s.y+s.height/2;
 
           consoleWrite("CenterX: "+centerX.toString()+", CenterY: "+centerY.toString()+", width: "+ s.width.toString() +", height: "+ s.height.toString() +" rotation: "+rotation.toString());
+          
 
           var m:Matrix=s.transform.matrix;
           m.tx -= centerX;

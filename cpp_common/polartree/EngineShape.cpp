@@ -11,6 +11,7 @@
 #include "PolarCanvas.h"
 #include "PolarRootTree.h"
 #include "PolarLayer.h"
+#include "Colorer.h"
 #include "Patch.h"
 #include <stdlib.h>
 #include <time.h>
@@ -67,7 +68,10 @@ void EngineShape::nudgeTo(Placement *p){
 
 void EngineShape::finalizePlacement(){    
     shape->getTree()->setLocation(currentPlacement->location.x, currentPlacement->location.y);
+    unsigned int color= currentPlacement->patch->getLayer()->getColorer()->colorFor(currentPlacement);
+    currentPlacement->color = color;
     renderedPlacement = currentPlacement;
+
     currentPlacement->patch->getShapes()->push_back(this);
 }
 

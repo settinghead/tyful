@@ -58,6 +58,8 @@
 		7CBDAB62165D0AAF00E009E5 /* ghandi.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB60165D0AAE00E009E5 /* ghandi.png */; };
 		7CBDAB64165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
 		7CBDAB65165D0B7B00E009E5 /* pbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAB63165D0B7A00E009E5 /* pbs.png */; };
+		7CEF85371665E3EC00BC48F6 /* ColorSheetColorer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF85351665E3EB00BC48F6 /* ColorSheetColorer.cpp */; };
+		7CEF853A1665E58500BC48F6 /* TwoHueRandomSatsColorer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF85381665E58400BC48F6 /* TwoHueRandomSatsColorer.cpp */; };
 		7CF28B061662B45C00F35815 /* quarter_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF28B051662B45C00F35815 /* quarter_red.png */; };
 		7CF50B9E165D539A007E4B70 /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF50B9D165D539A007E4B70 /* swift.png */; };
 		7CF50BA216617326007E4B70 /* TextImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF50BA016617324007E4B70 /* TextImageShape.cpp */; };
@@ -142,6 +144,11 @@
 		7CBDAB37165B4E7800E009E5 /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
 		7CBDAB60165D0AAE00E009E5 /* ghandi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ghandi.png; sourceTree = "<group>"; };
 		7CBDAB63165D0B7A00E009E5 /* pbs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pbs.png; sourceTree = "<group>"; };
+		7CEF85341665E2B400BC48F6 /* Colorer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colorer.h; sourceTree = "<group>"; };
+		7CEF85351665E3EB00BC48F6 /* ColorSheetColorer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorSheetColorer.cpp; sourceTree = "<group>"; };
+		7CEF85361665E3EB00BC48F6 /* ColorSheetColorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSheetColorer.h; sourceTree = "<group>"; };
+		7CEF85381665E58400BC48F6 /* TwoHueRandomSatsColorer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwoHueRandomSatsColorer.cpp; sourceTree = "<group>"; };
+		7CEF85391665E58500BC48F6 /* TwoHueRandomSatsColorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoHueRandomSatsColorer.h; sourceTree = "<group>"; };
 		7CF28B051662B45C00F35815 /* quarter_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quarter_red.png; path = ../static/f/templates/quarter_red.png; sourceTree = "<group>"; };
 		7CF50B9D165D539A007E4B70 /* swift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift.png; sourceTree = "<group>"; };
 		7CF50BA016617324007E4B70 /* TextImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextImageShape.cpp; sourceTree = "<group>"; };
@@ -261,6 +268,11 @@
 				7CBDAB37165B4E7800E009E5 /* WordLayer.h */,
 				7CF50BA016617324007E4B70 /* TextImageShape.cpp */,
 				7CF50BA116617325007E4B70 /* TextImageShape.h */,
+				7CEF85341665E2B400BC48F6 /* Colorer.h */,
+				7CEF85351665E3EB00BC48F6 /* ColorSheetColorer.cpp */,
+				7CEF85361665E3EB00BC48F6 /* ColorSheetColorer.h */,
+				7CEF85381665E58400BC48F6 /* TwoHueRandomSatsColorer.cpp */,
+				7CEF85391665E58500BC48F6 /* TwoHueRandomSatsColorer.h */,
 			);
 			name = polartree;
 			path = ../../cpp_common/polartree;
@@ -496,6 +508,8 @@
 				7CBDAB5C165B4E7800E009E5 /* PolarTreeBuilder.cpp in Sources */,
 				7CBDAB5E165B4E7800E009E5 /* WordLayer.cpp in Sources */,
 				7CF50BA216617326007E4B70 /* TextImageShape.cpp in Sources */,
+				7CEF85371665E3EC00BC48F6 /* ColorSheetColorer.cpp in Sources */,
+				7CEF853A1665E58500BC48F6 /* TwoHueRandomSatsColorer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +601,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -635,7 +649,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PolarTree Experiment/PolarTree Experiment-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;

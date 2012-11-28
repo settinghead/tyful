@@ -23,16 +23,18 @@
 PolarCanvas* canvas;
 
 void initCanvas() __attribute__((used,
-	annotate("as3sig:public function initCanvas(_pixels:int, _width:int, _height: int):void"),
+	annotate("as3sig:public function initCanvas(_pixels:int, _colorPixels:int, _width:int, _height: int):void"),
 	annotate("as3package:polartree.PolarTree")));
 
 void initCanvas(){
 
 	unsigned char *pixels = (unsigned char *) 0 ;
+	unsigned char *colorPixels = (unsigned char *) 0 ;
 	int width = 0 ;
 	int height = 0 ;
 
     AS3_GetScalarFromVar(pixels, _pixels);
+    AS3_GetScalarFromVar(colorPixels, _colorPixels);
     AS3_GetScalarFromVar(width, _width);
     AS3_GetScalarFromVar(height, _height);
 
@@ -40,6 +42,8 @@ void initCanvas(){
     assert(height>0);
 
 	WordLayer* layer = new WordLayer((unsigned int const *)pixels, width, height,true);
+	if(colorPixels>0)
+		layer->setColorSheet(new WordLayer::ColorSheet((unsigned int const *)colorPixels, width, height,true));
 	printf("Special point(5,5): %x\n", layer->getPixel(5,5));
 	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
 	// layer->printStats();
@@ -70,15 +74,16 @@ void slapShape()
 	Placement* placement = canvas->slapShape(shape);
 
 	if(placement!=NULL){
-		printf("Coord: %f, %f; rotation: %f\n"
+		printf("Coord: %f, %f; rotation: %f, color: 0x%x\n"
 			,shape->getTree()->getTopLeftLocation().x
 			,shape->getTree()->getTopLeftLocation().y
-			,shape->getTree()->getRotation());
+			,shape->getTree()->getRotation(),placement->color);
 
     	inline_as3("var coord:Vector.<Number> = new Vector.<Number>();\n");
     	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().x));
     	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().y));
     	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation()));
+    	inline_as3("coord.push(%0);\n" : : "r"(placement->color));
     	AS3_ReturnAS3Var(coord);
 	}
 }

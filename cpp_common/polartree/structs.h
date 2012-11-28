@@ -30,6 +30,7 @@ struct Placement{
     CartisianPoint location;
     double scale;
     double rotation;
+    unsigned int color;
     Patch* patch;
     inline Placement operator + (const Placement &o) const{
         Placement p;
@@ -37,6 +38,7 @@ struct Placement{
         p.scale = scale;
         p.rotation = rotation;
         p.patch = patch;
+        p.color = color;
         return p;
     }
 };

@@ -185,14 +185,14 @@
 //                        @"."
 //                        @"文俊",@"Wenjun",@"cool"
                         ,nil];
-    NSArray *colors = [[NSArray alloc] initWithObjects:
-                       [NSColor greenColor],
-                       [NSColor redColor],
-                       [NSColor brownColor],
-                       [NSColor cyanColor],
-                       [NSColor blueColor],[NSColor orangeColor],[NSColor darkGrayColor],
-                       [NSColor headerColor],[NSColor purpleColor],[NSColor knobColor],
-                       nil];
+//    NSArray *colors = [[NSArray alloc] initWithObjects:
+//                       [NSColor greenColor],
+//                       [NSColor redColor],
+//                       [NSColor brownColor],
+//                       [NSColor cyanColor],
+//                       [NSColor blueColor],[NSColor orangeColor],[NSColor darkGrayColor],
+//                       [NSColor headerColor],[NSColor purpleColor],[NSColor knobColor],
+//                       nil];
     
     canvas->setStatus(RENDERING);
     NSDate *methodStart = [NSDate date];
@@ -207,8 +207,9 @@
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
-        NSColor* color = [colors objectAtIndex:arc4random()%[colors count]];
-        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
+//        NSColor* color = [colors objectAtIndex:arc4random()%[colors count]];
+
+        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0,[str length])];
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
         
@@ -226,10 +227,14 @@
                 double rotation = -(shape->getTree()->getRotation())*360/TWO_PI;
                 NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation().x,
                                             mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation().y);
-                printf("Coord: %f, %f; rotation: %f\n"
+                printf("Coord: %f, %f; rotation: %f, color: %x\n"
                        ,shape->getTree()->getTopLeftLocation().x
                        ,shape->getTree()->getTopLeftLocation().y
-                       ,shape->getTree()->getRotation());
+                       ,shape->getTree()->getRotation(),placement->color);
+                unsigned int textColor = placement->color & 0x00FFFFFF;
+                NSColor* color = [NSColor colorWithCalibratedRed:((CGFloat)(textColor<<16))/256 green:((CGFloat)(textColor<<8 & 0x000000FF))/256 blue:((CGFloat)(textColor & 0x000000FF))/256 alpha:1.0F];
+                [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
+                NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
 
                 [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
 //                [self drawTextTree:shape->getTree() withColor:color];

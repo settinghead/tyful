@@ -14,6 +14,7 @@ package com.settinghead.tyful.client.model
 	import flash.system.WorkerDomain;
 	import flash.system.WorkerState;
 	
+	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	
 	import org.puremvc.as3.interfaces.IProxy;
@@ -51,10 +52,12 @@ package com.settinghead.tyful.client.model
 		}
 		
 		public function load():void{
+
 			setData(WorkerDomain.current.createWorker(Workers.com_settinghead_tyful_client_algo_PolarWorker));
+
 			controlChannel = Worker.current.createMessageChannel(renderWorker);
 			renderWorker.setSharedProperty("controlChannel", controlChannel);
-			
+
 			resultChannel = renderWorker.createMessageChannel(Worker.current);
 			resultChannel.addEventListener(Event.CHANNEL_MESSAGE, handleResultMessage);
 			renderWorker.setSharedProperty("resultChannel", resultChannel);
@@ -62,10 +65,9 @@ package com.settinghead.tyful.client.model
 			statusChannel = renderWorker.createMessageChannel(Worker.current);
 			statusChannel.addEventListener(Event.CHANNEL_MESSAGE, handleStatusMessage);
 			renderWorker.setSharedProperty("statusChannel", statusChannel);
-			
+
 			renderWorker.addEventListener(Event.WORKER_STATE, handleBGWorkerStateChange);
 			if(tuProxy==null)tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
-			
 			renderWorker.start();
 
 		}
@@ -87,10 +89,12 @@ package com.settinghead.tyful.client.model
 			var place:PlaceInfo = new PlaceInfo(msg["x"] as Number, msg["y"] as Number, msg["rotation"] as Number, msg["layer"] as int);
 			var fontName:String = msg["fontName"];
 			var fontSize:Number = msg["fontSize"];
+			var color:uint = msg["fontColor"];
 			var word:WordVO = msg["word"] as WordVO;
 			
 			if (place != null){
-				var dw:DisplayWordVO = new DisplayWordVO(word,fontName,fontSize,place);
+				var dw:DisplayWordVO = new DisplayWordVO(word,fontName,fontSize,color,place);
+				
 				facade.sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}
 		}

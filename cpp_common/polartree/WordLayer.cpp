@@ -15,12 +15,15 @@
 #include "MostlyHorizontalAngler.h"
 #include "ColorMapAngler.h"
 #include "Placer.h"
+#include "Colorer.h"
+#include "TwoHueRandomSatsColorer.h"
+#include "ColorSheetColorer.h"
 #include "ColorMapPlacer.h"
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 WordLayer::WordLayer(unsigned int const * pixels, int width, int height, bool revert)
-:PolarLayer::PolarLayer(pixels,width,height,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),tolerance(1.0){
+:PolarLayer::PolarLayer(pixels,width,height,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(1.0){
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
@@ -49,7 +52,7 @@ bool WordLayer::contains(double x, double y, double width, double height, double
                 relativeX = (relativeX - width/2);
                 relativeY = (relativeY - height/2);
                 
-                double r = sqrt(pow(relativeX, 2)+pow(relativeY, 2));
+                double r = sqrt(pow(relativeX, 2.0)+pow(relativeY, 2.0));
                 double theta = atan2(relativeY, relativeX);
                 theta += rotation;
                 
@@ -109,7 +112,7 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
 
 double WordLayer::getHue(int x, int y) {
     int colour = getHSB(x,y);
-    if(isnan(colour))
+    if(isnan(colour) || (colour & 0x00FFFFFF) == 0xFFFFFF)
         return NAN;
     else{
         //			Assert.isTrue(!isNaN(colour.hue));
@@ -167,4 +170,12 @@ Angler* WordLayer::getAngler(){
         //				this._angler = new MostlyHorizAngler();
     }
     return _angler;
+}
+
+Colorer* WordLayer::getColorer(){
+    if(_colorer==NULL){
+        _colorer = new ColorSheetColorer(this, new TwoHueRandomSatsColorer());
+        //				this._angler = new MostlyHorizAngler();
+    }
+    return _colorer;
 }

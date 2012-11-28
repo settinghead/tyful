@@ -17,7 +17,7 @@ package com.settinghead.tyful.client.model.vo
 		private var _word:WordVO = null;
 		private var _place:PlaceInfo = null;
 		
-		public function DisplayWordVO(word:WordVO, fontName:String, fontSize:Number, place:PlaceInfo = null){
+		public function DisplayWordVO(word:WordVO, fontName:String, fontSize:Number, color:uint=0x0, place:PlaceInfo = null){
 			super();
 			this.useHandCursor = true;
 			this.buttonMode = true;
@@ -25,7 +25,7 @@ package com.settinghead.tyful.client.model.vo
 			this._word = word;
 			this._place = place;
 			
-			textField = getTextField(word.word, fontName, fontSize);
+			textField = getTextField(word.word, fontName, fontSize, color);
 			textField.x = 0;
 			textField.y = 0;
 			
@@ -48,7 +48,7 @@ package com.settinghead.tyful.client.model.vo
 			}
 		}
 		
-		private static function getTextField(text: String, fontName:String, size: Number):TextField
+		private static function getTextField(text: String, fontName:String, size: Number, color:uint):TextField
 		{
 			var textField: TextField = new TextField();
 			//      textField.setTextFormat( new TextFormat( font.fontName, size ) );
@@ -63,6 +63,7 @@ package com.settinghead.tyful.client.model.vo
 			textField.x = 0;
 			textField.y = 0;
 			textField.antiAliasType = AntiAliasType.ADVANCED;
+			textField.textColor = color;
 			textField.htmlText = "<div>"+text+"</div>";
 			textField.filters = [new DropShadowFilter(0.5,45,0,1.0,0.5,0.5)];
 			if(text.length>11){ //TODO: this is a temporary fix

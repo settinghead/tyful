@@ -11,10 +11,21 @@
 #include "PolarLayer.h"
 #include "ColorMath.h"
 class Angler;
+class Colorer;
 
 class WordLayer: public PolarLayer{
 public:
-    class ColorSheet: public PixelImageShape{};
+    class ColorSheet: public PixelImageShape{
+    public:
+        ColorSheet( unsigned int const * pixels, int width, int height, bool revert):
+        PixelImageShape(pixels,width,height,revert){
+            
+        };
+        virtual inline bool isEmpty(unsigned int pixelValue){
+            //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
+            return (pixelValue >> 24) == 0x00;
+        };
+    };
     WordLayer(unsigned int const * pixels, int width, int height,bool revert);
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
@@ -37,11 +48,13 @@ public:
     ColorSheet* getColorSheet();
     void setColorSheet(ColorSheet* colorSheet);
     Angler* getAngler();
+    Colorer* getColorer();
 private:
     double getHSB(int x, int y);
     double tolerance;
     ColorSheet* colorSheet;
     Angler* _angler;
+    Colorer* _colorer;
 
 };
 

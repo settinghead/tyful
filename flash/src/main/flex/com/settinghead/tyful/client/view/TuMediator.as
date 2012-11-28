@@ -52,8 +52,10 @@ package com.settinghead.tyful.client.view
 					tuRenderer.tu =  tuProxy.tu;
 					break;
 				case ApplicationFacade.DISPLAYWORD_CREATED:
-					if(note.getBody()!=null)
-						tuRenderer.slapWord(note.getBody() as DisplayWordVO);
+					if(note.getBody()!=null){
+						var dWord:DisplayWordVO = note.getBody() as DisplayWordVO;
+						tuRenderer.slapWord(dWord);
+					}
 					break;
 				case ApplicationFacade.TU_GENERATION_LAST_CALL:					
 					//TODO
