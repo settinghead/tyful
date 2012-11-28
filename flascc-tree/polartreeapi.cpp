@@ -53,8 +53,20 @@ void initCanvas(){
 	printf("Canvas initialized.\n");
 }
 
+void setPerseverance() __attribute__((used,
+	annotate("as3sig:public function setPerseverance(_perseverance:int):void"),
+	annotate("as3package:polartree.PolarTree")));
+
+
+void setPerseverance(){
+	int perseverance = 0;
+	AS3_GetScalarFromVar(perseverance, _perseverance);
+	canvas->setPerseverance(perseverance);
+}
+
+
 void slapShape() __attribute__((used,
-	annotate("as3sig:public function slapShape(_pixels:int, _width:Number, _height: Number):Vector.<Number>"),
+	annotate("as3sig:public function slapShape(_pixels:int,_width:int,_height:int):Vector.<Number>"),
 	annotate("as3package:polartree.PolarTree")));
 
 void slapShape()

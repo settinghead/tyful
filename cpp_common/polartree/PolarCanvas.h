@@ -35,8 +35,12 @@ class PolarCanvas{
 public:
     PolarCanvas();
     Placement* slapShape(ImageShape* shape);
-    void setPerseverance(int v);
-    int getPerseverance();
+    void setPerseverance(int v){
+        this->perseverance = v;
+    }
+    int getPerseverance(){
+        return this->perseverance;
+    }
     void setSizer(Sizer* sizer);
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
