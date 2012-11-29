@@ -1,0 +1,6 @@
+//
+// Prefix header for all source files of the 'cpp' target in the 'cpp' project
+//
+
+#include <iostream>
+

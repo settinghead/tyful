@@ -1,0 +1,518 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7C7AE93B16674B5C002466A3 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FC16674B5C002466A3 /* Angler.cpp */; };
+		7C7AE93C16674B5C002466A3 /* Angler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE8FD16674B5C002466A3 /* Angler.h */; };
+		7C7AE93D16674B5C002466A3 /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FE16674B5C002466A3 /* ColorMapAngler.cpp */; };
+		7C7AE93E16674B5C002466A3 /* ColorMapAngler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE8FF16674B5C002466A3 /* ColorMapAngler.h */; };
+		7C7AE93F16674B5C002466A3 /* MostlyHorizontalAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90016674B5C002466A3 /* MostlyHorizontalAngler.cpp */; };
+		7C7AE94016674B5C002466A3 /* MostlyHorizontalAngler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90116674B5C002466A3 /* MostlyHorizontalAngler.h */; };
+		7C7AE94116674B5C002466A3 /* PickFromAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90216674B5C002466A3 /* PickFromAngler.cpp */; };
+		7C7AE94216674B5C002466A3 /* PickFromAngler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90316674B5C002466A3 /* PickFromAngler.h */; };
+		7C7AE94316674B5C002466A3 /* Colorer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90516674B5C002466A3 /* Colorer.h */; };
+		7C7AE94416674B5C002466A3 /* ColorSheetColorer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90616674B5C002466A3 /* ColorSheetColorer.cpp */; };
+		7C7AE94516674B5C002466A3 /* ColorSheetColorer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90716674B5C002466A3 /* ColorSheetColorer.h */; };
+		7C7AE94616674B5C002466A3 /* TwoHueRandomSatsColorer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90816674B5C002466A3 /* TwoHueRandomSatsColorer.cpp */; };
+		7C7AE94716674B5C002466A3 /* TwoHueRandomSatsColorer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90916674B5C002466A3 /* TwoHueRandomSatsColorer.h */; };
+		7C7AE94816674B5C002466A3 /* constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90A16674B5C002466A3 /* constants.h */; };
+		7C7AE94916674B5C002466A3 /* DensityPatchIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90C16674B5C002466A3 /* DensityPatchIndex.cpp */; };
+		7C7AE94A16674B5C002466A3 /* DensityPatchIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90D16674B5C002466A3 /* DensityPatchIndex.h */; };
+		7C7AE94B16674B5C002466A3 /* LeveledPatchMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE90E16674B5C002466A3 /* LeveledPatchMap.cpp */; };
+		7C7AE94C16674B5C002466A3 /* LeveledPatchMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE90F16674B5C002466A3 /* LeveledPatchMap.h */; };
+		7C7AE94D16674B5C002466A3 /* Patch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91016674B5C002466A3 /* Patch.cpp */; };
+		7C7AE94E16674B5C002466A3 /* Patch.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91116674B5C002466A3 /* Patch.h */; };
+		7C7AE94F16674B5C002466A3 /* PatchQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91216674B5C002466A3 /* PatchQueue.cpp */; };
+		7C7AE95016674B5C002466A3 /* PatchQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91316674B5C002466A3 /* PatchQueue.h */; };
+		7C7AE95116674B5C002466A3 /* Flip.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91416674B5C002466A3 /* Flip.h */; };
+		7C7AE95216674B5C002466A3 /* ColorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91616674B5C002466A3 /* ColorMath.h */; };
+		7C7AE95316674B5C002466A3 /* EngineShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91816674B5C002466A3 /* EngineShape.cpp */; };
+		7C7AE95416674B5C002466A3 /* EngineShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91916674B5C002466A3 /* EngineShape.h */; };
+		7C7AE95516674B5C002466A3 /* ImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91A16674B5C002466A3 /* ImageShape.cpp */; };
+		7C7AE95616674B5C002466A3 /* ImageShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91B16674B5C002466A3 /* ImageShape.h */; };
+		7C7AE95716674B5C002466A3 /* PixelImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91C16674B5C002466A3 /* PixelImageShape.cpp */; };
+		7C7AE95816674B5C002466A3 /* PixelImageShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91D16674B5C002466A3 /* PixelImageShape.h */; };
+		7C7AE95916674B5C002466A3 /* PolarCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE91E16674B5C002466A3 /* PolarCanvas.cpp */; };
+		7C7AE95A16674B5C002466A3 /* PolarCanvas.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE91F16674B5C002466A3 /* PolarCanvas.h */; };
+		7C7AE95B16674B5C002466A3 /* PolarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE92016674B5C002466A3 /* PolarLayer.cpp */; };
+		7C7AE95C16674B5C002466A3 /* PolarLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92116674B5C002466A3 /* PolarLayer.h */; };
+		7C7AE95D16674B5C002466A3 /* structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92216674B5C002466A3 /* structs.h */; };
+		7C7AE95E16674B5C002466A3 /* TextImageShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE92316674B5C002466A3 /* TextImageShape.cpp */; };
+		7C7AE95F16674B5C002466A3 /* TextImageShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92416674B5C002466A3 /* TextImageShape.h */; };
+		7C7AE96016674B5C002466A3 /* WordLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE92516674B5C002466A3 /* WordLayer.cpp */; };
+		7C7AE96116674B5C002466A3 /* WordLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92616674B5C002466A3 /* WordLayer.h */; };
+		7C7AE96216674B5C002466A3 /* ColorMapZigzagNudger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92816674B5C002466A3 /* ColorMapZigzagNudger.h */; };
+		7C7AE96316674B5C002466A3 /* Nudger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92916674B5C002466A3 /* Nudger.h */; };
+		7C7AE96416674B5C002466A3 /* ColorMapPlacer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE92B16674B5C002466A3 /* ColorMapPlacer.cpp */; };
+		7C7AE96516674B5C002466A3 /* ColorMapPlacer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92C16674B5C002466A3 /* ColorMapPlacer.h */; };
+		7C7AE96616674B5C002466A3 /* Placer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE92D16674B5C002466A3 /* Placer.h */; };
+		7C7AE96716674B5C002466A3 /* ByWeightSizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE92F16674B5C002466A3 /* ByWeightSizer.cpp */; };
+		7C7AE96816674B5C002466A3 /* ByWeightSizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93016674B5C002466A3 /* ByWeightSizer.h */; };
+		7C7AE96916674B5C002466A3 /* Sizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93116674B5C002466A3 /* Sizer.h */; };
+		7C7AE96A16674B5C002466A3 /* PolarChildTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE93316674B5C002466A3 /* PolarChildTree.cpp */; };
+		7C7AE96B16674B5C002466A3 /* PolarChildTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93416674B5C002466A3 /* PolarChildTree.h */; };
+		7C7AE96C16674B5C002466A3 /* PolarRootTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE93516674B5C002466A3 /* PolarRootTree.cpp */; };
+		7C7AE96D16674B5C002466A3 /* PolarRootTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93616674B5C002466A3 /* PolarRootTree.h */; };
+		7C7AE96E16674B5C002466A3 /* PolarTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE93716674B5C002466A3 /* PolarTree.cpp */; };
+		7C7AE96F16674B5C002466A3 /* PolarTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93816674B5C002466A3 /* PolarTree.h */; };
+		7C7AE97116674B5C002466A3 /* PolarTreeBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */; };
+		7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7C7AE869166745B7002466A3 /* cpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = cpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C7AE86D166745B7002466A3 /* cpp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cpp-Prefix.pch"; sourceTree = "<group>"; };
+		7C7AE86E166745B7002466A3 /* cppProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = cppProj.xcconfig; sourceTree = "<group>"; };
+		7C7AE86F166745B7002466A3 /* cppTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = cppTarget.xcconfig; sourceTree = "<group>"; };
+		7C7AE8FC16674B5C002466A3 /* Angler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Angler.cpp; sourceTree = "<group>"; };
+		7C7AE8FD16674B5C002466A3 /* Angler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Angler.h; sourceTree = "<group>"; };
+		7C7AE8FE16674B5C002466A3 /* ColorMapAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapAngler.cpp; sourceTree = "<group>"; };
+		7C7AE8FF16674B5C002466A3 /* ColorMapAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapAngler.h; sourceTree = "<group>"; };
+		7C7AE90016674B5C002466A3 /* MostlyHorizontalAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MostlyHorizontalAngler.cpp; sourceTree = "<group>"; };
+		7C7AE90116674B5C002466A3 /* MostlyHorizontalAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostlyHorizontalAngler.h; sourceTree = "<group>"; };
+		7C7AE90216674B5C002466A3 /* PickFromAngler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PickFromAngler.cpp; sourceTree = "<group>"; };
+		7C7AE90316674B5C002466A3 /* PickFromAngler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickFromAngler.h; sourceTree = "<group>"; };
+		7C7AE90516674B5C002466A3 /* Colorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorer.h; sourceTree = "<group>"; };
+		7C7AE90616674B5C002466A3 /* ColorSheetColorer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorSheetColorer.cpp; sourceTree = "<group>"; };
+		7C7AE90716674B5C002466A3 /* ColorSheetColorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSheetColorer.h; sourceTree = "<group>"; };
+		7C7AE90816674B5C002466A3 /* TwoHueRandomSatsColorer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwoHueRandomSatsColorer.cpp; sourceTree = "<group>"; };
+		7C7AE90916674B5C002466A3 /* TwoHueRandomSatsColorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoHueRandomSatsColorer.h; sourceTree = "<group>"; };
+		7C7AE90A16674B5C002466A3 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		7C7AE90C16674B5C002466A3 /* DensityPatchIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DensityPatchIndex.cpp; sourceTree = "<group>"; };
+		7C7AE90D16674B5C002466A3 /* DensityPatchIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DensityPatchIndex.h; sourceTree = "<group>"; };
+		7C7AE90E16674B5C002466A3 /* LeveledPatchMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeveledPatchMap.cpp; sourceTree = "<group>"; };
+		7C7AE90F16674B5C002466A3 /* LeveledPatchMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeveledPatchMap.h; sourceTree = "<group>"; };
+		7C7AE91016674B5C002466A3 /* Patch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Patch.cpp; sourceTree = "<group>"; };
+		7C7AE91116674B5C002466A3 /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
+		7C7AE91216674B5C002466A3 /* PatchQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PatchQueue.cpp; sourceTree = "<group>"; };
+		7C7AE91316674B5C002466A3 /* PatchQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatchQueue.h; sourceTree = "<group>"; };
+		7C7AE91416674B5C002466A3 /* Flip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flip.h; sourceTree = "<group>"; };
+		7C7AE91616674B5C002466A3 /* ColorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMath.h; sourceTree = "<group>"; };
+		7C7AE91816674B5C002466A3 /* EngineShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineShape.cpp; sourceTree = "<group>"; };
+		7C7AE91916674B5C002466A3 /* EngineShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineShape.h; sourceTree = "<group>"; };
+		7C7AE91A16674B5C002466A3 /* ImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageShape.cpp; sourceTree = "<group>"; };
+		7C7AE91B16674B5C002466A3 /* ImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageShape.h; sourceTree = "<group>"; };
+		7C7AE91C16674B5C002466A3 /* PixelImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelImageShape.cpp; sourceTree = "<group>"; };
+		7C7AE91D16674B5C002466A3 /* PixelImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelImageShape.h; sourceTree = "<group>"; };
+		7C7AE91E16674B5C002466A3 /* PolarCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarCanvas.cpp; sourceTree = "<group>"; };
+		7C7AE91F16674B5C002466A3 /* PolarCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarCanvas.h; sourceTree = "<group>"; };
+		7C7AE92016674B5C002466A3 /* PolarLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarLayer.cpp; sourceTree = "<group>"; };
+		7C7AE92116674B5C002466A3 /* PolarLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarLayer.h; sourceTree = "<group>"; };
+		7C7AE92216674B5C002466A3 /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
+		7C7AE92316674B5C002466A3 /* TextImageShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextImageShape.cpp; sourceTree = "<group>"; };
+		7C7AE92416674B5C002466A3 /* TextImageShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextImageShape.h; sourceTree = "<group>"; };
+		7C7AE92516674B5C002466A3 /* WordLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WordLayer.cpp; sourceTree = "<group>"; };
+		7C7AE92616674B5C002466A3 /* WordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordLayer.h; sourceTree = "<group>"; };
+		7C7AE92816674B5C002466A3 /* ColorMapZigzagNudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapZigzagNudger.h; sourceTree = "<group>"; };
+		7C7AE92916674B5C002466A3 /* Nudger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nudger.h; sourceTree = "<group>"; };
+		7C7AE92B16674B5C002466A3 /* ColorMapPlacer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorMapPlacer.cpp; sourceTree = "<group>"; };
+		7C7AE92C16674B5C002466A3 /* ColorMapPlacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMapPlacer.h; sourceTree = "<group>"; };
+		7C7AE92D16674B5C002466A3 /* Placer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Placer.h; sourceTree = "<group>"; };
+		7C7AE92F16674B5C002466A3 /* ByWeightSizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ByWeightSizer.cpp; sourceTree = "<group>"; };
+		7C7AE93016674B5C002466A3 /* ByWeightSizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByWeightSizer.h; sourceTree = "<group>"; };
+		7C7AE93116674B5C002466A3 /* Sizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sizer.h; sourceTree = "<group>"; };
+		7C7AE93316674B5C002466A3 /* PolarChildTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarChildTree.cpp; sourceTree = "<group>"; };
+		7C7AE93416674B5C002466A3 /* PolarChildTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarChildTree.h; sourceTree = "<group>"; };
+		7C7AE93516674B5C002466A3 /* PolarRootTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarRootTree.cpp; sourceTree = "<group>"; };
+		7C7AE93616674B5C002466A3 /* PolarRootTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarRootTree.h; sourceTree = "<group>"; };
+		7C7AE93716674B5C002466A3 /* PolarTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTree.cpp; sourceTree = "<group>"; };
+		7C7AE93816674B5C002466A3 /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
+		7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
+		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7C7AE866166745B7002466A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7C7AE85E166745B5002466A3 = {
+			isa = PBXGroup;
+			children = (
+				7C7AE86B166745B7002466A3 /* cpp */,
+				7C7AE86A166745B7002466A3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7C7AE86A166745B7002466A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE869166745B7002466A3 /* cpp.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7C7AE86B166745B7002466A3 /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE8FB16674B5C002466A3 /* angler */,
+				7C7AE90416674B5C002466A3 /* colorer */,
+				7C7AE90A16674B5C002466A3 /* constants.h */,
+				7C7AE90B16674B5C002466A3 /* density */,
+				7C7AE91516674B5C002466A3 /* math */,
+				7C7AE91716674B5C002466A3 /* model */,
+				7C7AE92716674B5C002466A3 /* nudger */,
+				7C7AE92A16674B5C002466A3 /* placer */,
+				7C7AE92E16674B5C002466A3 /* sizer */,
+				7C7AE93216674B5C002466A3 /* tree */,
+				7C7AE86E166745B7002466A3 /* cppProj.xcconfig */,
+				7C7AE86F166745B7002466A3 /* cppTarget.xcconfig */,
+				7C7AE86C166745B7002466A3 /* Supporting Files */,
+			);
+			path = cpp;
+			sourceTree = "<group>";
+		};
+		7C7AE86C166745B7002466A3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE86D166745B7002466A3 /* cpp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7C7AE8FB16674B5C002466A3 /* angler */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE8FC16674B5C002466A3 /* Angler.cpp */,
+				7C7AE8FD16674B5C002466A3 /* Angler.h */,
+				7C7AE8FE16674B5C002466A3 /* ColorMapAngler.cpp */,
+				7C7AE8FF16674B5C002466A3 /* ColorMapAngler.h */,
+				7C7AE90016674B5C002466A3 /* MostlyHorizontalAngler.cpp */,
+				7C7AE90116674B5C002466A3 /* MostlyHorizontalAngler.h */,
+				7C7AE90216674B5C002466A3 /* PickFromAngler.cpp */,
+				7C7AE90316674B5C002466A3 /* PickFromAngler.h */,
+			);
+			path = angler;
+			sourceTree = "<group>";
+		};
+		7C7AE90416674B5C002466A3 /* colorer */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE90516674B5C002466A3 /* Colorer.h */,
+				7C7AE90616674B5C002466A3 /* ColorSheetColorer.cpp */,
+				7C7AE90716674B5C002466A3 /* ColorSheetColorer.h */,
+				7C7AE90816674B5C002466A3 /* TwoHueRandomSatsColorer.cpp */,
+				7C7AE90916674B5C002466A3 /* TwoHueRandomSatsColorer.h */,
+			);
+			path = colorer;
+			sourceTree = "<group>";
+		};
+		7C7AE90B16674B5C002466A3 /* density */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE90C16674B5C002466A3 /* DensityPatchIndex.cpp */,
+				7C7AE90D16674B5C002466A3 /* DensityPatchIndex.h */,
+				7C7AE90E16674B5C002466A3 /* LeveledPatchMap.cpp */,
+				7C7AE90F16674B5C002466A3 /* LeveledPatchMap.h */,
+				7C7AE91016674B5C002466A3 /* Patch.cpp */,
+				7C7AE91116674B5C002466A3 /* Patch.h */,
+				7C7AE91216674B5C002466A3 /* PatchQueue.cpp */,
+				7C7AE91316674B5C002466A3 /* PatchQueue.h */,
+			);
+			path = density;
+			sourceTree = "<group>";
+		};
+		7C7AE91516674B5C002466A3 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE91616674B5C002466A3 /* ColorMath.h */,
+			);
+			path = math;
+			sourceTree = "<group>";
+		};
+		7C7AE91716674B5C002466A3 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE91416674B5C002466A3 /* Flip.h */,
+				7C7AE91816674B5C002466A3 /* EngineShape.cpp */,
+				7C7AE91916674B5C002466A3 /* EngineShape.h */,
+				7C7AE91A16674B5C002466A3 /* ImageShape.cpp */,
+				7C7AE91B16674B5C002466A3 /* ImageShape.h */,
+				7C7AE91C16674B5C002466A3 /* PixelImageShape.cpp */,
+				7C7AE91D16674B5C002466A3 /* PixelImageShape.h */,
+				7C7AE91E16674B5C002466A3 /* PolarCanvas.cpp */,
+				7C7AE91F16674B5C002466A3 /* PolarCanvas.h */,
+				7C7AE92016674B5C002466A3 /* PolarLayer.cpp */,
+				7C7AE92116674B5C002466A3 /* PolarLayer.h */,
+				7C7AE92216674B5C002466A3 /* structs.h */,
+				7C7AE92316674B5C002466A3 /* TextImageShape.cpp */,
+				7C7AE92416674B5C002466A3 /* TextImageShape.h */,
+				7C7AE92516674B5C002466A3 /* WordLayer.cpp */,
+				7C7AE92616674B5C002466A3 /* WordLayer.h */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		7C7AE92716674B5C002466A3 /* nudger */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE92816674B5C002466A3 /* ColorMapZigzagNudger.h */,
+				7C7AE92916674B5C002466A3 /* Nudger.h */,
+			);
+			path = nudger;
+			sourceTree = "<group>";
+		};
+		7C7AE92A16674B5C002466A3 /* placer */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE92B16674B5C002466A3 /* ColorMapPlacer.cpp */,
+				7C7AE92C16674B5C002466A3 /* ColorMapPlacer.h */,
+				7C7AE92D16674B5C002466A3 /* Placer.h */,
+			);
+			path = placer;
+			sourceTree = "<group>";
+		};
+		7C7AE92E16674B5C002466A3 /* sizer */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE92F16674B5C002466A3 /* ByWeightSizer.cpp */,
+				7C7AE93016674B5C002466A3 /* ByWeightSizer.h */,
+				7C7AE93116674B5C002466A3 /* Sizer.h */,
+			);
+			path = sizer;
+			sourceTree = "<group>";
+		};
+		7C7AE93216674B5C002466A3 /* tree */ = {
+			isa = PBXGroup;
+			children = (
+				7C7AE93316674B5C002466A3 /* PolarChildTree.cpp */,
+				7C7AE93416674B5C002466A3 /* PolarChildTree.h */,
+				7C7AE93516674B5C002466A3 /* PolarRootTree.cpp */,
+				7C7AE93616674B5C002466A3 /* PolarRootTree.h */,
+				7C7AE93716674B5C002466A3 /* PolarTree.cpp */,
+				7C7AE93816674B5C002466A3 /* PolarTree.h */,
+				7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */,
+				7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */,
+			);
+			path = tree;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7C7AE867166745B7002466A3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7AE93C16674B5C002466A3 /* Angler.h in Headers */,
+				7C7AE93E16674B5C002466A3 /* ColorMapAngler.h in Headers */,
+				7C7AE94016674B5C002466A3 /* MostlyHorizontalAngler.h in Headers */,
+				7C7AE94216674B5C002466A3 /* PickFromAngler.h in Headers */,
+				7C7AE94316674B5C002466A3 /* Colorer.h in Headers */,
+				7C7AE94516674B5C002466A3 /* ColorSheetColorer.h in Headers */,
+				7C7AE94716674B5C002466A3 /* TwoHueRandomSatsColorer.h in Headers */,
+				7C7AE94816674B5C002466A3 /* constants.h in Headers */,
+				7C7AE94A16674B5C002466A3 /* DensityPatchIndex.h in Headers */,
+				7C7AE94C16674B5C002466A3 /* LeveledPatchMap.h in Headers */,
+				7C7AE94E16674B5C002466A3 /* Patch.h in Headers */,
+				7C7AE95016674B5C002466A3 /* PatchQueue.h in Headers */,
+				7C7AE95116674B5C002466A3 /* Flip.h in Headers */,
+				7C7AE95216674B5C002466A3 /* ColorMath.h in Headers */,
+				7C7AE95416674B5C002466A3 /* EngineShape.h in Headers */,
+				7C7AE95616674B5C002466A3 /* ImageShape.h in Headers */,
+				7C7AE95816674B5C002466A3 /* PixelImageShape.h in Headers */,
+				7C7AE95A16674B5C002466A3 /* PolarCanvas.h in Headers */,
+				7C7AE95C16674B5C002466A3 /* PolarLayer.h in Headers */,
+				7C7AE95D16674B5C002466A3 /* structs.h in Headers */,
+				7C7AE95F16674B5C002466A3 /* TextImageShape.h in Headers */,
+				7C7AE96116674B5C002466A3 /* WordLayer.h in Headers */,
+				7C7AE96216674B5C002466A3 /* ColorMapZigzagNudger.h in Headers */,
+				7C7AE96316674B5C002466A3 /* Nudger.h in Headers */,
+				7C7AE96516674B5C002466A3 /* ColorMapPlacer.h in Headers */,
+				7C7AE96616674B5C002466A3 /* Placer.h in Headers */,
+				7C7AE96816674B5C002466A3 /* ByWeightSizer.h in Headers */,
+				7C7AE96916674B5C002466A3 /* Sizer.h in Headers */,
+				7C7AE96B16674B5C002466A3 /* PolarChildTree.h in Headers */,
+				7C7AE96D16674B5C002466A3 /* PolarRootTree.h in Headers */,
+				7C7AE96F16674B5C002466A3 /* PolarTree.h in Headers */,
+				7C7AE97116674B5C002466A3 /* PolarTreeBuilder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7C7AE868166745B7002466A3 /* cpp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C7AE876166745B8002466A3 /* Build configuration list for PBXNativeTarget "cpp" */;
+			buildPhases = (
+				7C7AE865166745B7002466A3 /* Sources */,
+				7C7AE866166745B7002466A3 /* Frameworks */,
+				7C7AE867166745B7002466A3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cpp;
+			productName = cpp;
+			productReference = 7C7AE869166745B7002466A3 /* cpp.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7C7AE860166745B5002466A3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = settinghead;
+			};
+			buildConfigurationList = 7C7AE863166745B5002466A3 /* Build configuration list for PBXProject "cpp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7C7AE85E166745B5002466A3;
+			productRefGroup = 7C7AE86A166745B7002466A3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7C7AE868166745B7002466A3 /* cpp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C7AE865166745B7002466A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7AE93B16674B5C002466A3 /* Angler.cpp in Sources */,
+				7C7AE93D16674B5C002466A3 /* ColorMapAngler.cpp in Sources */,
+				7C7AE93F16674B5C002466A3 /* MostlyHorizontalAngler.cpp in Sources */,
+				7C7AE94116674B5C002466A3 /* PickFromAngler.cpp in Sources */,
+				7C7AE94416674B5C002466A3 /* ColorSheetColorer.cpp in Sources */,
+				7C7AE94616674B5C002466A3 /* TwoHueRandomSatsColorer.cpp in Sources */,
+				7C7AE94916674B5C002466A3 /* DensityPatchIndex.cpp in Sources */,
+				7C7AE94B16674B5C002466A3 /* LeveledPatchMap.cpp in Sources */,
+				7C7AE94D16674B5C002466A3 /* Patch.cpp in Sources */,
+				7C7AE94F16674B5C002466A3 /* PatchQueue.cpp in Sources */,
+				7C7AE95316674B5C002466A3 /* EngineShape.cpp in Sources */,
+				7C7AE95516674B5C002466A3 /* ImageShape.cpp in Sources */,
+				7C7AE95716674B5C002466A3 /* PixelImageShape.cpp in Sources */,
+				7C7AE95916674B5C002466A3 /* PolarCanvas.cpp in Sources */,
+				7C7AE95B16674B5C002466A3 /* PolarLayer.cpp in Sources */,
+				7C7AE95E16674B5C002466A3 /* TextImageShape.cpp in Sources */,
+				7C7AE96016674B5C002466A3 /* WordLayer.cpp in Sources */,
+				7C7AE96416674B5C002466A3 /* ColorMapPlacer.cpp in Sources */,
+				7C7AE96716674B5C002466A3 /* ByWeightSizer.cpp in Sources */,
+				7C7AE96A16674B5C002466A3 /* PolarChildTree.cpp in Sources */,
+				7C7AE96C16674B5C002466A3 /* PolarRootTree.cpp in Sources */,
+				7C7AE96E16674B5C002466A3 /* PolarTree.cpp in Sources */,
+				7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7C7AE874166745B8002466A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7C7AE875166745B8002466A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7C7AE877166745B8002466A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7C7AE878166745B8002466A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7C7AE863166745B5002466A3 /* Build configuration list for PBXProject "cpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C7AE874166745B8002466A3 /* Debug */,
+				7C7AE875166745B8002466A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C7AE876166745B8002466A3 /* Build configuration list for PBXNativeTarget "cpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C7AE877166745B8002466A3 /* Debug */,
+				7C7AE878166745B8002466A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7C7AE860166745B5002466A3 /* Project object */;
+}

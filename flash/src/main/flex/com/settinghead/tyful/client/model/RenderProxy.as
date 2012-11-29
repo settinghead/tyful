@@ -36,8 +36,11 @@ package com.settinghead.tyful.client.model
 			return _generator;
 		}
 
-		private var tuProxy:TuProxy = null;
-
+		private var _tuProxy:TuProxy = null;
+		private function get tuProxy():TuProxy{
+			if(_tuProxy==null) _tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
+			return _tuProxy;
+		}
 		
 		public function RenderProxy()
 		{
@@ -67,7 +70,6 @@ package com.settinghead.tyful.client.model
 			renderWorker.setSharedProperty("statusChannel", statusChannel);
 
 			renderWorker.addEventListener(Event.WORKER_STATE, handleBGWorkerStateChange);
-			if(tuProxy==null)tuProxy = facade.retrieveProxy(TuProxy.NAME) as TuProxy;
 			renderWorker.start();
 
 		}
@@ -83,20 +85,27 @@ package com.settinghead.tyful.client.model
 			controlChannel.send(["start"]);
 		}
 		
+		public function updatePerseverance(perseverance:int):void{
+			controlChannel.send(["perseverance",perseverance]);
+		}
+		
 		private function handleResultMessage(event:Event):void
 		{
 			var msg:Object = resultChannel.receive() as Object;
+			
 			var place:PlaceInfo = new PlaceInfo(msg["x"] as Number, msg["y"] as Number, msg["rotation"] as Number, msg["layer"] as int);
 			var fontName:String = msg["fontName"];
 			var fontSize:Number = msg["fontSize"];
 			var color:uint = msg["fontColor"];
 			var word:WordVO = msg["word"] as WordVO;
-			
+			var failureCount:int = msg["failureCount"];
 			if (place != null){
 				var dw:DisplayWordVO = new DisplayWordVO(word,fontName,fontSize,color,place);
+				tuProxy.tu.failureCount = failureCount;
 				
 				facade.sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
 			}
+
 		}
 		
 		private function handleStatusMessage(event:Event):void{
@@ -107,6 +116,7 @@ package com.settinghead.tyful.client.model
 						tuProxy.tu.template.preview = generator.canvasImage(300);
 						facade.sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
 					}
+					facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
 				}
 			}
 		}

@@ -5,14 +5,14 @@
 #include <sys/time.h>
 #include <Flash++.h>
 
-#include "../cpp_common/polartree/PolarCanvas.h"
-#include "../cpp_common/polartree/ImageShape.h"
-#include "../cpp_common/polartree/TextImageShape.h"
-#include "../cpp_common/polartree/PolarTree.h"
-#include "../cpp_common/polartree/PolarRootTree.h"
-#include "../cpp_common/polartree/WordLayer.h"
-#include "../cpp_common/polartree/constants.h"
-#include "../cpp_common/polartree/structs.h"
+#include "../cpp/cpp/model/PolarCanvas.h"
+#include "../cpp/cpp/model/ImageShape.h"
+#include "../cpp/cpp/model/TextImageShape.h"
+#include "../cpp/cpp/tree/PolarTree.h"
+#include "../cpp/cpp/tree/PolarRootTree.h"
+#include "../cpp/cpp/model/WordLayer.h"
+#include "../cpp/cpp/constants.h"
+#include "../cpp/cpp/model/structs.h"
 
 #include <assert.h>
 
@@ -96,6 +96,7 @@ void slapShape()
     	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().y));
     	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation()));
     	inline_as3("coord.push(%0);\n" : : "r"(placement->color));
+    	inline_as3("coord.push(%0);\n" : : "r"(canvas->getFailureCount()));
     	AS3_ReturnAS3Var(coord);
 	}
 }

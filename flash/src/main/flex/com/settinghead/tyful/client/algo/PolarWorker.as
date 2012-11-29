@@ -10,7 +10,6 @@ package com.settinghead.tyful.client.algo
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.registerClassAlias;
@@ -181,6 +180,7 @@ package com.settinghead.tyful.client.algo
 					msg["y"] = place.y;
 					msg["rotation"] = place.rotation;
 					msg["layer"] = place.layer;
+					msg["failureCount"]=coord[4];
 					resultChannel.send(msg);
 				}
 				
