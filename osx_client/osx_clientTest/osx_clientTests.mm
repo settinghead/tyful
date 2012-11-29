@@ -8,9 +8,9 @@
 
 #import "osx_clientTests.h"
 #import "MainView.h"
-#include "../osx_client/polartree/PolarTree.h"
-#include "../osx_client/polartree/PolarTreeBuilder.h"
-#include "../osx_client/polartree/PixelImageShape.h"
+#include "../../cpp/cpp/tree/PolarTree.h"
+#include "../../cpp/cpp/tree/PolarTreeBuilder.h"
+#include "../../cpp/cpp/model/PixelImageShape.h"
 
 @implementation osx_clientTests
 
@@ -51,8 +51,8 @@
     
     NSBitmapImageRep *image1 = [MainView getTextImage:str1];
     NSBitmapImageRep *image2 = [MainView getTextImage:str2];
-    unsigned int * pixels1 = [MainView getFlippedPixels:image1];
-    unsigned int * pixels2 = [MainView getFlippedPixels:image2];
+//    unsigned int * pixels1 = [MainView getFlippedPixels:image1];
+//    unsigned int * pixels2 = [MainView getFlippedPixels:image2];
 //
 //    ImageShape *shape1 = new TextImageShape((unsigned int *)pixels1, [image1 size].width, [image1 size].height);
 //    ImageShape *shape2 = new TextImageShape((unsigned int *)pixels2, [image2 size].width, [image2 size].height);

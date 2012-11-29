@@ -80,7 +80,7 @@ bool WordLayer::contains(double x, double y, double width, double height, double
         return true;
     }
     else {
-        return tree->overlapsCoord(x, y, x + width, y + height);
+        return tree->overlapsCoord(tree->getFinalSeq(),x, y, x + width, y + height);
     }
 }
 

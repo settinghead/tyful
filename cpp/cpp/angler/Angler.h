@@ -13,7 +13,7 @@ class EngineShape;
 
 class Angler{
 public:
-    virtual double angleFor(EngineShape* shape) = 0;
+    virtual double angleFor(int seq,EngineShape* shape) = 0;
 };
 
 #endif /* defined(__PolarTree_Experiment__Angler__) */

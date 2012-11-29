@@ -10,7 +10,7 @@
 #define PolarTree_Experiment_EngineShape_h
 
 #include <vector>
-
+#include "../constants.h"
 using namespace std;
 
 struct Placement;
@@ -32,18 +32,18 @@ public:
     inline ImageShape* getShape(){
         return shape;
     }
-    void nudgeTo(Placement* place);
-    void finalizePlacement();
+    void nudgeTo(int seq,Placement* place);
+    void finalizePlacement(int finalSeq);
     Placement* getFinalPlacement();
-    bool trespassed(PolarLayer* layer);
-    Placement* getCurrentPlacement();
+    bool trespassed(int seq,PolarLayer* layer);
+    Placement* getCurrentPlacement(int seq);
     vector<Placement*>* getDesiredPlacements();
     void setDesiredPlacements(vector<Placement*>*);
 
 private:
     int skipReason;
     ImageShape* shape;
-    Placement* currentPlacement;
+    Placement* currentPlacement[NUM_THREADS];
     Placement* renderedPlacement;
     vector<PolarPoint>* samplePoints;
     vector<Placement*>* desiredPlacements;

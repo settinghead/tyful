@@ -4,16 +4,14 @@
 #include <math.h>
 #include "../model/Flip.h"
 
-PolarRootTree::PolarRootTree(ImageShape* shape, int centerX,
-		int centerY, double d, int minBoxSize) :
-		PolarTree(0, TWO_PI, 0, d, minBoxSize),_rotation(0) {
-	this->_rotation = 0;
-	this->rootStamp = 0;
-	this->rootX = centerX;
-	this->rootY = centerY;
+PolarRootTree::PolarRootTree(ImageShape* shape, double d, int minBoxSize) :
+		PolarTree(0, TWO_PI, 0, d, minBoxSize) {
+            for(int i=0;i<NUM_THREADS;i++){
+                this->rootStamp[i] = 1;
+                this->rootX[i] = this->rootY[i] = NAN;
+            }
 	this->shape = shape;
 	this->_minBoxSize = minBoxSize;
-	this->rootStamp++;
 //    this->getKids();
 
 }
@@ -23,19 +21,21 @@ PolarRootTree::~PolarRootTree() {
 
 
 
-inline int PolarRootTree::getRootX() {
-	return this->rootX;
+inline int PolarRootTree::getRootX(int seq) {
+    assert(!isnan(this->rootX[seq]));
+	return this->rootX[seq];
 }
 
-inline int PolarRootTree::getRootY() {
-	return this->rootY;
+inline int PolarRootTree::getRootY(int seq) {
+    assert(!isnan(this->rootY[seq]));
+	return this->rootY[seq];
 }
 
-inline double PolarRootTree::computeX(bool rotate) {
+inline double PolarRootTree::computeX(int seq,bool rotate) {
 	return -(this->d2);
 }
 
-inline double PolarRootTree::computeY(bool rotate) {
+inline double PolarRootTree::computeY(int seq,bool rotate) {
 //#ifdef FLIP
 	return -(this->d2);
 //#else
@@ -43,11 +43,11 @@ inline double PolarRootTree::computeY(bool rotate) {
 //#endif
 }
 
-inline double PolarRootTree::computeRight(bool rotate) {
+inline double PolarRootTree::computeRight(int seq,bool rotate) {
 	return this->d2;
 }
 
-inline double PolarRootTree::computeBottom(bool rotate) {
+inline double PolarRootTree::computeBottom(int seq,bool rotate) {
 //#ifdef FLIP
 	return this->d2;
 //#else
@@ -55,12 +55,12 @@ inline double PolarRootTree::computeBottom(bool rotate) {
 //#endif
 }
 
-inline double PolarRootTree::getRotation() {
-	return this->_rotation;
+inline double PolarRootTree::getRotation(int seq) {
+	return this->_rotation[seq];
 }
 
-inline int PolarRootTree::getCurrentStamp() {
-	return this->rootStamp;
+inline int PolarRootTree::getCurrentStamp(int seq) {
+	return this->rootStamp[seq];
 }
 
 inline PolarRootTree* PolarRootTree::getRoot() {

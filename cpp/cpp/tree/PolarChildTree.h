@@ -13,14 +13,14 @@ public:
     }
 	~PolarChildTree();
 	PolarRootTree* root; /* REM */
-	inline int getRootX();
-	inline int getRootY();
-	inline double computeX(bool rotate);
-	inline double computeY(bool rotate);
-	inline double computeRight(bool rotate);
-	inline double computeBottom(bool rotate);
-	inline double getRotation();
-	inline int getCurrentStamp();
+	inline int getRootX(int seq);
+	inline int getRootY(int seq);
+	inline double computeX(int seq,bool rotate);
+	inline double computeY(int seq,bool rotate);
+	inline double computeRight(int seq,bool rotate);
+	inline double computeBottom(int seq,bool rotate);
+	inline double getRotation(int seq);
+	inline int getCurrentStamp(int seq);
 	inline PolarRootTree* getRoot();
 	inline ImageShape* getShape();
 	inline int getMinBoxSize();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "PolarCanvas::placeShape(EngineShape*):PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "WordLayer::getHue(int, int):WordLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(unsigned int)colour &gt;&gt; 8 &amp; 0xFF">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ColorMapZigzagNudger::nudgeFor(EngineShape*, Placement*, int, int):ColorMapZigzagNudger.h">
+      </ContextState>
+      <ContextState
+         contextName = "EngineShape::trespassed(PolarLayer*):EngineShape.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

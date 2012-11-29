@@ -15,7 +15,7 @@
     inline static SplitType determineType(PolarTree* tree) {
         double d = (tree->d2 - tree->d1);
         double midLength = (((tree->d2 + tree->d1))
-                * ((tree->getR2(false) - tree->getR1(false)))) / 2.0;
+                * ((tree->getR2(-1,false) - tree->getR1(-1,false)))) / 2.0;
         double factor = d / midLength;
         if (factor < 0.7) {
             return _3RAYS;
@@ -33,25 +33,25 @@
             PolarRootTree* root) {
         PolarChildTree* tree = new PolarChildTree(r1, r2, d1, d2, root,
                 minBoxSize);
-        double x = (tree->getX(false)
+        double x = (tree->getX(-1,false)
                 + shape->getWidth()/2);
         if (((x > shape->getWidth()))) {
             delete tree;
             return NULL;
         } else {
-            double y = (tree->getY(false)
+            double y = (tree->getY(-1,false)
                     + shape->getHeight()/2);
             if (((y > shape->getHeight()))) {
                 delete tree;
                 return NULL;
             } else {
-                double width = (tree->getRight(false) - tree->getX(false));
+                double width = (tree->getRight(-1,false) - tree->getX(-1,false));
                 if ((((x + width) < 0))) {
                     delete tree;
                     tree = NULL;
                 } else {
 //#ifdef FLIP
-                    double height = tree->getBottom(false) - tree->getY(false);
+                    double height = tree->getBottom(-1,false) - tree->getY(-1,false);
 //#else
 //                    double height =  tree->getY(false) - tree->getBottom(false);
 //#endif
@@ -95,13 +95,13 @@
         double d5;
         switch (type) {
         case _3RAYS: {
-            r = (double(((tree->getR2(false) - tree->getR1(false))))
+            r = (double(((tree->getR2(-1,false) - tree->getR1(-1,false))))
                     / double((int) 4));
-            r1 = tree->getR1(false);
+            r1 = tree->getR1(-1,false);
             r2 = (r1 + r);
             r3 = (r2 + r);
             r4 = (r3 + r);
-            r5 = tree->getR2(false);
+            r5 = tree->getR2(-1,false);
             assert(
                     ((bool((bool((r1 < r2)) && bool((r2 < r3)))) && bool((r3 < r4)))
                             && bool((r4 < r5))));
@@ -124,12 +124,12 @@
             break;
         }
         case _2RAYS1CUT: {
-            r = (double(((tree->getR2(false) - tree->getR1(false))))
+            r = (double(((tree->getR2(-1,false) - tree->getR1(-1,false))))
                     / double((int) 3));
-            r1 = tree->getR1(false);
+            r1 = tree->getR1(-1,false);
             r2 = (r1 + r);
             r3 = (r2 + r);
-            r4 = tree->getR2(false);
+            r4 = tree->getR2(-1,false);
             d1 = tree->d1;
             d2 = (tree->d1 + (double(((tree->d2 - tree->d1))) / double((int) 2)));
             d3 = tree->d2;
@@ -153,11 +153,11 @@
             break;
         }
         case _1RAY1CUT: {
-            r = (double(((tree->getR2(false) - tree->getR1(false))))
+            r = (double(((tree->getR2(-1,false) - tree->getR1(-1,false))))
                     / double((int) 2));
-            r1 = tree->getR1(false);
+            r1 = tree->getR1(-1,false);
             r2 = (r1 + r);
-            r3 = tree->getR2(false);
+            r3 = tree->getR2(-1,false);
             d = (double(((tree->d2 - tree->d1))) / double((int) 2));
             d1 = tree->d1;
             d2 = (d1 + d);
@@ -182,11 +182,11 @@
             break;
         }
         case _1RAY2CUTS: {
-            r = (double(((tree->getR2(false) - tree->getR1(false))))
+            r = (double(((tree->getR2(-1,false) - tree->getR1(-1,false))))
                     / double((int) 2));
-            r1 = tree->getR1(false);
+            r1 = tree->getR1(-1,false);
             r2 = (r1 + r);
-            r3 = tree->getR2(false);
+            r3 = tree->getR2(-1,false);
             d = (double(((tree->d2 - tree->d1))) / double((int) 3));
             d1 = tree->d1;
             d2 = (d1 + d);
@@ -212,8 +212,8 @@
             break;
         }
         case _3CUTS: {
-            r1 = tree->getR1(false);
-            r2 = tree->getR2(false);
+            r1 = tree->getR1(-1,false);
+            r2 = tree->getR2(-1,false);
             d = (double(((tree->d2 - tree->d1))) / double((int) 4));
             d1 = tree->d1;
             d2 = (d1 + d);
@@ -245,12 +245,12 @@
 
     inline static PolarRootTree* makeTree(ImageShape* shape, int swelling) {
         int minBoxSize = (int) 1;
-        int x = int(shape->getWidth() / 2.0);
-        int y = int(shape->getHeight() / 2.0);
+//        int x = int(shape->getWidth() / 2.0);
+//        int y = int(shape->getHeight() / 2.0);
         double d = sqrt(
                 (pow((double(shape->getWidth()) / 2.0), 2.0)
                         + pow((double(shape->getHeight()) / 2.0), 2.0)));
-        PolarRootTree* tree = new PolarRootTree(shape, x, y, d, minBoxSize);
+        PolarRootTree* tree = new PolarRootTree(shape, d, minBoxSize);
         return tree;
     }
 

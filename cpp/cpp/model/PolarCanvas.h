@@ -14,6 +14,7 @@
 #include "structs.h"
 #include "../sizer/Sizer.h"
 #include "../sizer/ByWeightSizer.h"
+#include <pthread.h>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ typedef int SKIP_REASON;
 class PolarCanvas{
 public:
     PolarCanvas();
+    ~PolarCanvas();
     Placement* slapShape(ImageShape* shape);
     void setPerseverance(int v){
         this->perseverance = v;
@@ -58,6 +60,7 @@ public:
     void setStatus(STATUS status);
     STATUS getStatus();
 private:
+
     vector<PolarLayer*>* layers;
     vector<EngineShape*>* shapes;
     vector<EngineShape*>* displayShapes;
@@ -90,6 +93,11 @@ private:
     inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
     DensityPatchIndex* _patchIndex;
     inline DensityPatchIndex* getPatchIndex();
+    
+    static void *attempt_nudge(void *arg);
+//    bool found;
+//    int numActiveThreads;
+
 };
 
 

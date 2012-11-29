@@ -16,7 +16,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape):skipReason(0),currentPlacement(NULL),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0){
+EngineShape::EngineShape(ImageShape* shape):skipReason(0),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0){
+    for(int i=0;i<NUM_THREADS;i++){
+        currentPlacement[i]=NULL;
+    }
     this->shape = shape;
     this->shape->getTree();
     drawSamples();
@@ -55,32 +58,33 @@ void EngineShape::skipBecause(int reason){
     this->skipReason = reason;
 }
 
-void EngineShape::nudgeTo(Placement *p){
-    if(currentPlacement==NULL)
-        currentPlacement = p;
-    else{
-        currentPlacement->location = p->location;
-        currentPlacement->patch = p->patch;
-    }
-    shape->getTree()->setLocation(currentPlacement->location.x,
-                       currentPlacement->location.y);
+void EngineShape::nudgeTo(int seq,Placement *p){
+    if(currentPlacement[seq]==NULL)
+        currentPlacement[seq] = new Placement;
+    currentPlacement[seq]->location = p->location;
+    currentPlacement[seq]->patch = p->patch;
+    currentPlacement[seq]->rotation = p->rotation;
+    shape->getTree()->setLocation(seq,currentPlacement[seq]->location.x,
+                       currentPlacement[seq]->location.y);
+    shape->getTree()->setRotation(seq,currentPlacement[seq]->rotation);
 }
 
-void EngineShape::finalizePlacement(){    
-    shape->getTree()->setLocation(currentPlacement->location.x, currentPlacement->location.y);
-    unsigned int color= currentPlacement->patch->getLayer()->getColorer()->colorFor(currentPlacement);
-    currentPlacement->color = color;
-    renderedPlacement = currentPlacement;
+void EngineShape::finalizePlacement(int finalSeq){
+    shape->getTree()->setFinalSeq(finalSeq);
+    shape->getTree()->setLocation(shape->getTree()->getFinalSeq(),currentPlacement[finalSeq]->location.x, currentPlacement[finalSeq]->location.y);
+    unsigned int color= currentPlacement[finalSeq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[finalSeq]);
+    currentPlacement[finalSeq]->color = color;
+    renderedPlacement = currentPlacement[finalSeq];
 
-    currentPlacement->patch->getShapes()->push_back(this);
+    currentPlacement[finalSeq]->patch->getShapes()->push_back(this);
 }
 
 Placement* EngineShape::getFinalPlacement(){
     return renderedPlacement;
 }
 
-Placement* EngineShape::getCurrentPlacement(){
-    return currentPlacement;
+Placement* EngineShape::getCurrentPlacement(int seq){
+    return currentPlacement[seq];
 }
 
 vector<Placement*>* EngineShape::getDesiredPlacements(){
@@ -94,7 +98,7 @@ void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
 }
 
 
-bool EngineShape::trespassed(PolarLayer* layer){
+bool EngineShape::trespassed(int seq,PolarLayer* layer){
     if(layer==NULL) return false;
 //    double x = (this->currentPlacement->location.x - this->shape->getWidth() / 2);
 //    double y = (this->currentPlacement->location.y - this->shape->getHeight() / 2);
@@ -106,16 +110,16 @@ bool EngineShape::trespassed(PolarLayer* layer){
     //		Assert.isTrue( this.shape.textField.width>0);
     //		Assert.isTrue( this.shape.textField.height > 0);
     
-    if (layer->containsAllPolarPoints(this->currentPlacement->location.x ,
-                                     this->currentPlacement->location.y, this->samplePoints, getShape()->getTree()->getRotation(),
-                                     this->currentPlacement->location.x,
-                                     this->currentPlacement->location.y
+    if (layer->containsAllPolarPoints(this->currentPlacement[seq]->location.x ,
+                                     this->currentPlacement[seq]->location.y, this->samplePoints, currentPlacement[seq]->rotation,
+                                     this->currentPlacement[seq]->location.x,
+                                     this->currentPlacement[seq]->location.y
                                      ))
     {
-        return (layer->aboveContainsAnyPolarPoints(this->currentPlacement->location.x ,
-                                                  this->currentPlacement->location.y, this->samplePoints, getShape()->getTree()->getRotation(),
-                                                  this->currentPlacement->location.x,
-                                                  this->currentPlacement->location.y
+        return (layer->aboveContainsAnyPolarPoints(this->currentPlacement[seq]->location.x ,
+                                                  this->currentPlacement[seq]->location.y, this->samplePoints, currentPlacement[seq]->rotation,
+                                                  this->currentPlacement[seq]->location.x,
+                                                  this->currentPlacement[seq]->location.y
                                                   ));
     }
     

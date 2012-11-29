@@ -40,7 +40,7 @@
 			containerPortal = 7CF53CB61646658B00A218BE /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7CF53CBE1646658B00A218BE;
-			remoteInfo = "osx_client";
+			remoteInfo = osx_client;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -222,7 +222,7 @@
 			dependencies = (
 			);
 			name = osx_client;
-			productName = "osx_client";
+			productName = osx_client;
 			productReference = 7CF53CBF1646658B00A218BE /* osx_client.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -241,7 +241,7 @@
 				7CF53CE51646658B00A218BE /* PBXTargetDependency */,
 			);
 			name = osx_clientTests;
-			productName = "osx_clientTests";
+			productName = osx_clientTests;
 			productReference = 7CF53CE01646658B00A218BE /* osx_clientTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -402,7 +402,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
