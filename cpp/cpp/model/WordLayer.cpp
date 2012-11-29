@@ -100,9 +100,9 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
             return true;
         else return (
                      colorSheet==NULL || (
-                     ColorMath::distRGB(colorSheet->getPixel(x,y),
-                                       colorSheet->getPixel(refX,refY)) <= tolerance
-                     &&
+//                     ColorMath::distRGB(colorSheet->getPixel(x,y),
+//                                       colorSheet->getPixel(refX,refY)) <= tolerance
+//                     &&
                      ColorMath::distHue(getPixel(x,y),
                                        getPixel(refX,refY)) <= tolerance));
     }
@@ -112,11 +112,11 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
 
 double WordLayer::getHue(int x, int y) {
     double colour = getHSB(x,y);
-    if(isnan(colour) || ((int)colour & 0x00FFFFFF) == 0xFFFFFF)
+    if(isnan(colour) || ((unsigned int)colour >> 8 & 0xFF)==0)
         return NAN;
     else{
         //			Assert.isTrue(!isNaN(colour.hue));
-        double h = ( ((int)colour & 0x00FF0000) >> 16);
+        double h = ( ((unsigned int)colour & 0x00FF0000) >> 16);
         h/=255;
         return h;
     }
@@ -158,7 +158,7 @@ double WordLayer::getHSB(int x, int y){
         return NAN;
     }
     else {
-        int colour =  ColorMath::RGBtoHSB(rgbPixel);
+        unsigned int colour =  ColorMath::RGBtoHSB(rgbPixel);
         return colour;
     }
 }

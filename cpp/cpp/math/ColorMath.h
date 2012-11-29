@@ -25,7 +25,7 @@ public:
         return cmax/255;
     }
     
-    inline static int RGBtoHSB(unsigned int rgbPixel) {
+    inline static unsigned int RGBtoHSB(unsigned int rgbPixel) {
         int r = (rgbPixel) >> 16 & 0xFF;
         int g = (rgbPixel) >> 8 & 0xFF;
         int b = rgbPixel & 0xFF;
