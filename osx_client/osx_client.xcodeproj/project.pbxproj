@@ -450,7 +450,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "osx_client/osx_client-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;

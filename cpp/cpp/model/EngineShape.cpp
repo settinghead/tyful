@@ -8,6 +8,7 @@
 
 #include "EngineShape.h"
 #include "ImageShape.h"
+#include "../angler/Angler.h"
 #include "PolarCanvas.h"
 #include "../tree/PolarRootTree.h"
 #include "PolarLayer.h"
@@ -58,11 +59,16 @@ void EngineShape::skipBecause(int reason){
     this->skipReason = reason;
 }
 
-void EngineShape::nudgeTo(int seq,Placement *p){
+void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
     if(currentPlacement[seq]==NULL)
         currentPlacement[seq] = new Placement;
     currentPlacement[seq]->location = p->location;
     currentPlacement[seq]->patch = p->patch;
+    
+    double angle= angler->angleFor(seq,this);
+    currentPlacement[seq]->rotation = p->rotation = angle;
+    this->getShape()->getTree()->setRotation(seq,angle);
+    
     currentPlacement[seq]->rotation = p->rotation;
     shape->getTree()->setLocation(seq,currentPlacement[seq]->location.x,
                        currentPlacement[seq]->location.y);
@@ -72,6 +78,7 @@ void EngineShape::nudgeTo(int seq,Placement *p){
 void EngineShape::finalizePlacement(int finalSeq){
     shape->getTree()->setFinalSeq(finalSeq);
     shape->getTree()->setLocation(shape->getTree()->getFinalSeq(),currentPlacement[finalSeq]->location.x, currentPlacement[finalSeq]->location.y);
+    
     unsigned int color= currentPlacement[finalSeq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[finalSeq]);
     currentPlacement[finalSeq]->color = color;
     renderedPlacement = currentPlacement[finalSeq];

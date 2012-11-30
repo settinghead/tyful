@@ -28,7 +28,8 @@
 #include <ctime>
 #include <pthread.h>
 
-
+pthread_mutex_t shape_mutex;
+pthread_mutex_t numActiveThreads_lock;
 
 
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
@@ -39,6 +40,9 @@ perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE)
     this->shapes = new vector<EngineShape*>();
     this->displayShapes = new vector<EngineShape*>();
     this->retryShapes = new vector<EngineShape*>();
+    
+    pthread_mutex_init(&shape_mutex, NULL);
+    pthread_mutex_init(&numActiveThreads_lock, NULL);
 
 }
 
@@ -123,14 +127,15 @@ static void shuffle(int *array, size_t n)
     }
 }
 
+
+
 struct Settable{
     EngineShape* lastCollidedWith;
     int attempt;
     int numActiveThreads;
     bool found;
     int winningSeq;
-    pthread_mutex_t shape_mutex;
-    pthread_mutex_t numActiveThreads_lock;
+
 };
 
 struct thread_param {
@@ -150,9 +155,11 @@ void *PolarCanvas::attempt_nudge(void *arg){
     EngineShape* shape = tp->shape;
     Placement* candidatePlacement = tp->candidatePlacement;
     PolarCanvas* canvas = tp->canvas;
-    pthread_mutex_lock(&(tp->settable->numActiveThreads_lock));
+    pthread_mutex_lock(&numActiveThreads_lock);
+    if(tp->settable->numActiveThreads<0)
+        tp->settable->numActiveThreads=0;
     tp->settable->numActiveThreads++;
-    pthread_mutex_unlock(&(tp->settable->numActiveThreads_lock));
+    pthread_mutex_unlock(&numActiveThreads_lock);
 
 
     int maxAttemptsToPlace = tp->maxAttemptsToPlace;
@@ -164,21 +171,18 @@ void *PolarCanvas::attempt_nudge(void *arg){
     
     for (attempt= lower; attempt < upper; attempt++) {
         if(tp->settable->found){
-            pthread_mutex_lock(&(tp->settable->numActiveThreads_lock));
+            pthread_mutex_lock(&numActiveThreads_lock);
             if(lastCollidedWith!=NULL) tp->settable->lastCollidedWith=lastCollidedWith;
             tp->settable->numActiveThreads--;
-            pthread_mutex_unlock(&(tp->settable->numActiveThreads_lock));
-            pthread_exit(NULL);
+            pthread_mutex_unlock(&numActiveThreads_lock);
+//            pthread_exit(NULL);
+            return NULL;
         }
         Placement* relative = tp->canvas->getNudger()->nudgeFor(shape, candidatePlacement, attempt,maxAttemptsToPlace);
         Placement newPlacement = (*candidatePlacement + (*relative));
-        shape->nudgeTo(tp->seq,&newPlacement);
+        shape->nudgeTo(tp->seq,&newPlacement,candidatePlacement->patch->getLayer()->getAngler());
         
-        double angle= candidatePlacement->patch->getLayer()->getAngler()->angleFor(tp->seq,shape);
-        //			eWord.getTree().draw(destination.graphics);
-        
-        // // TODO
-        shape->getShape()->getTree()->setRotation(tp->seq,angle);
+
         //
         if (shape->trespassed(tp->seq,candidatePlacement->patch->getLayer()))
             continue;
@@ -208,33 +212,40 @@ void *PolarCanvas::attempt_nudge(void *arg){
             }
         }
         if(tp->settable->found){
-            pthread_mutex_lock(&(tp->settable->numActiveThreads_lock));
+            pthread_mutex_lock(&numActiveThreads_lock);
             if(lastCollidedWith!=NULL) tp->settable->lastCollidedWith=lastCollidedWith;
             tp->settable->numActiveThreads--;
-            pthread_mutex_unlock(&(tp->settable->numActiveThreads_lock));
-            pthread_exit(NULL);
+            pthread_mutex_unlock(&numActiveThreads_lock);
+//            pthread_exit(NULL);
+            return NULL;
         }
+        pthread_mutex_lock(&shape_mutex);
         if (!foundOverlap) {
-            pthread_mutex_lock(&(tp->settable->shape_mutex));
-            tp->settable->found = true;
             tp->settable->winningSeq = tp->seq;
             //						successCount++;
             candidatePlacement->patch->setLastAttempt(attempt);
-            pthread_mutex_unlock(&(tp->settable->shape_mutex));
+            tp->settable->found = true;
         }
+        pthread_mutex_unlock(&shape_mutex);
     end_of_inner:
         continue;
     }
-    pthread_mutex_lock(&(tp->settable->numActiveThreads_lock));
+    pthread_mutex_lock(&numActiveThreads_lock);
     tp->settable->attempt = attempt;
     tp->settable->numActiveThreads--;
     if(lastCollidedWith!=NULL) tp->settable->lastCollidedWith=lastCollidedWith;
-    pthread_mutex_unlock(&(tp->settable->numActiveThreads_lock));
-    pthread_exit(NULL);
+    pthread_mutex_unlock(&numActiveThreads_lock);
+//    pthread_exit(NULL);
+    return NULL;
+
 }
 
 bool PolarCanvas::placeShape(EngineShape * shape){
     computeDesiredPlacements(shape);
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
     while(shape->hasNextDesiredPlacement()){
         
         Placement* candidatePlacement = shape->nextDesiredPlacement();
@@ -252,7 +263,10 @@ bool PolarCanvas::placeShape(EngineShape * shape){
         int t;
         int rc;
         settable->found = false;
-        settable->numActiveThreads = 0;
+        settable->numActiveThreads = -1;
+        
+
+        
         for(t=0; t<NUM_THREADS; t++){
             thread_param *tp;
             tp = (thread_param *)malloc(sizeof(thread_param));
@@ -262,23 +276,32 @@ bool PolarCanvas::placeShape(EngineShape * shape){
             tp->settable = settable;
             tp->canvas = this;
             tp->candidatePlacement = candidatePlacement;
-
-            pthread_mutex_init(&(tp->settable->shape_mutex), NULL);
-            pthread_mutex_init(&(tp->settable->numActiveThreads_lock), NULL);
             
-            rc = pthread_create(&threads[t], NULL, attempt_nudge, (void *)tp);
+            rc = pthread_create(&threads[t], &attr, attempt_nudge, (void *)tp);
         }
         
-        while(!settable->found && settable->numActiveThreads>0){};
+//        while( settable->numActiveThreads < 0 || (!settable->found && settable->numActiveThreads>0)){};
+        for(t=0; t<NUM_THREADS; t++) {
+            void *status;
+
+            rc = pthread_join(threads[t], &status);
+            if (rc) {
+                printf("ERROR; return code from pthread_join() is %d\n", rc);
+               exit(-1);
+            }
+//               printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
+        }
+        
         if(!settable->found){
             candidatePlacement->patch->setLastAttempt(settable->attempt);
             candidatePlacement->patch->fail();
         }
         else{
             candidatePlacement->patch->mark(shape->getShape()->getWidth()*shape->getShape()->getHeight(), false);
-            getPlacer()->success(shape->getDesiredPlacements());
-            //                placer->success();
             shape->finalizePlacement(settable->winningSeq);
+            getPlacer()->success(shape->getDesiredPlacements());
+            return true;
+            //                placer->success();
         }
     }
         
@@ -286,6 +309,8 @@ bool PolarCanvas::placeShape(EngineShape * shape){
     //			info.patch.mark(wordImageWidth*wordImageHeight, true);
     getPlacer()->fail(shape->getDesiredPlacements());
     //			tu.failedLastVar = true;
+    pthread_attr_destroy(&attr);
+
     return false;
 }
 

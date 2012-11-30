@@ -15,6 +15,8 @@ public:
 	PolarRootTree* root; /* REM */
 	inline int getRootX(int seq);
 	inline int getRootY(int seq);
+    inline int getFinalSeq();
+    inline void setFinalSeq(int seq);
 	inline double computeX(int seq,bool rotate);
 	inline double computeY(int seq,bool rotate);
 	inline double computeRight(int seq,bool rotate);

@@ -29,6 +29,6 @@
 #define NUMBER_OF_DIVISIONS 3
 #define MARK_FILL_FACTOR 1
 
-#define NUM_THREADS     5
+#define NUM_THREADS 3
 
 #endif

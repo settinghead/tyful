@@ -479,7 +479,7 @@
 		7C7AE877166745B8002466A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

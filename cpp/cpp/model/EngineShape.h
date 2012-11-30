@@ -17,6 +17,7 @@ struct Placement;
 class ImageShape;
 class PolarLayer;
 struct PolarPoint;
+class Angler;
 
 class EngineShape{
 public:
@@ -32,7 +33,7 @@ public:
     inline ImageShape* getShape(){
         return shape;
     }
-    void nudgeTo(int seq,Placement* place);
+    void nudgeTo(int seq,Placement* place,Angler* angler);
     void finalizePlacement(int finalSeq);
     Placement* getFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);

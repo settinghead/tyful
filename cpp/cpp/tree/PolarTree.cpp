@@ -9,7 +9,8 @@
 PolarTree::PolarTree(double r1, double r2, double d1, double d2,
                      int minBoxSize):swelling(0),
 _kids(NULL),_leaf(false),_r1(r1),_r2(r2),d1(d1),d2(d2),
-_relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN),finalSeq(-1){
+_relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN){
+    pthread_mutex_init(&lock, NULL);
     for(int i=0;i<NUM_THREADS;i++){
         _computedR1[i] =_computedR2[i] = NAN;
     }
@@ -25,19 +26,22 @@ _relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN),finalSe
 
 PolarTree::~PolarTree() {
 	delete _kids;
+    pthread_mutex_destroy(&lock);
+
 }
 
 inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
-	{
 		this->_kids = kidList;
-	}
 }
 
 
 inline vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
+        pthread_mutex_lock(&lock);
 		makeChildren(this, this->getShape(), this->getMinBoxSize(),
 				this->getRoot());
+        pthread_mutex_unlock(&lock);
+
 //        vector<PolarTree*>* tKids = this->getKids();
 //        for (vector<PolarTree*>::iterator myKid = tKids->begin();
 //             myKid != tKids->end(); ++myKid) {

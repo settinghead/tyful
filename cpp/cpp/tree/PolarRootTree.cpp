@@ -5,7 +5,7 @@
 #include "../model/Flip.h"
 
 PolarRootTree::PolarRootTree(ImageShape* shape, double d, int minBoxSize) :
-		PolarTree(0, TWO_PI, 0, d, minBoxSize) {
+		PolarTree(0, TWO_PI, 0, d, minBoxSize),finalSeq(-1) {
             for(int i=0;i<NUM_THREADS;i++){
                 this->rootStamp[i] = 1;
                 this->rootX[i] = this->rootY[i] = NAN;
@@ -30,6 +30,7 @@ inline int PolarRootTree::getRootY(int seq) {
     assert(!isnan(this->rootY[seq]));
 	return this->rootY[seq];
 }
+
 
 inline double PolarRootTree::computeX(int seq,bool rotate) {
 	return -(this->d2);

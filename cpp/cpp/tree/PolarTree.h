@@ -28,30 +28,25 @@ public:
 	inline void addKids(vector<PolarTree*>* kidList);
 	inline virtual int getRootX(int seq) = 0;
 	inline virtual int getRootY(int seq) = 0;
-    inline int getFinalSeq(){
-        return  finalSeq;
-    }
-    inline void setFinalSeq(int seq){
-        this->finalSeq = seq;
-    }
+    inline virtual int getFinalSeq() = 0;
+    inline virtual void setFinalSeq(int seq) = 0;
 	inline virtual bool overlaps(int seq,PolarTree* otherTree){
-        if ((this->collide(seq,otherTree))) {
+        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
+        if (r) {
             if (this->isLeaf() && otherTree->isLeaf()) {
                 return true;
             } else {
                 if ((this->isLeaf())) {
                     vector<PolarTree*>* oKids = otherTree->getKids();
-                    for (vector<PolarTree*>::iterator it = oKids->begin();
-                         it != oKids->end(); ++it) {
-                        if ((this->overlaps(seq,*it)))
+                    for (int i=0;i<oKids->size();i++) {
+                        if ((this->overlaps(seq,oKids->at((i+seq)%oKids->size()))))
                             return true;
                     }
                 } else {
                     vector<PolarTree*>* tKids = this->getKids();
                     
-                    for (vector<PolarTree*>::iterator it = tKids->begin();
-                         it != tKids->end(); ++it) {
-                        if (((*it)->overlaps(seq,otherTree)))
+                    for (int i=0; i<tKids->size();i++) {
+                        if (otherTree->overlaps(seq,tKids->at((i+seq)%tKids->size())))
                             return true;
                     }
                     
@@ -253,7 +248,7 @@ public:
 	virtual int getCurrentStamp(int seq) = 0;
 	inline void setLeaf(bool b);
 protected:
-    int finalSeq;
+    pthread_mutex_t lock;
     int rStamp[NUM_THREADS];
 	double _x[NUM_THREADS], _y[NUM_THREADS], _right[NUM_THREADS], _bottom[NUM_THREADS];
 	vector<PolarTree*>* _kids;
@@ -266,8 +261,8 @@ protected:
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom,_r1, _r2;
     inline bool collide(int seq,PolarTree* bTree){
         double dist = sqrt(
-                           (pow((this->getRootX(seq) - bTree->getRootX(bTree->finalSeq)), 2.0)
-                            + pow((this->getRootY(seq) - bTree->getRootY(bTree->finalSeq)), 2.0)));
+                           (pow((this->getRootX(seq) - bTree->getRootX(bTree->getFinalSeq())), 2.0)
+                            + pow((this->getRootY(seq) - bTree->getRootY(bTree->getFinalSeq())), 2.0)));
         if (((dist > (this->d2 + bTree->d2)))) {
             return false;
         } else {
@@ -275,8 +270,8 @@ protected:
         }
     }
 	inline bool rectCollide(int seq,PolarTree* bTree){
-        return this->rectCollideCoord(seq,bTree->px(bTree->finalSeq), bTree->py(bTree->finalSeq), bTree->pright(bTree->finalSeq),
-                                      bTree->pbottom(bTree->finalSeq));
+        return this->rectCollideCoord(seq,bTree->px(bTree->getFinalSeq()), bTree->py(bTree->getFinalSeq()), bTree->pright(bTree->getFinalSeq()),
+                                      bTree->pbottom(bTree->getFinalSeq()));
     }
 	inline bool rectContain(int seq,double x, double y, double right, double bottom);
 	inline bool rectCollideCoord(int seq,double x, double y, double right,

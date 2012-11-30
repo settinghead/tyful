@@ -87,14 +87,14 @@ void slapShape()
 
 	if(placement!=NULL){
 		printf("Coord: %f, %f; rotation: %f, color: 0x%x\n"
-			,shape->getTree()->getTopLeftLocation().x
-			,shape->getTree()->getTopLeftLocation().y
-			,shape->getTree()->getRotation(),placement->color);
+			,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x
+			,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y
+			,shape->getTree()->getRotation(shape->getTree()->getFinalSeq()),placement->color);
 
     	inline_as3("var coord:Vector.<Number> = new Vector.<Number>();\n");
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().x));
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation().y));
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation()));
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x));
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y));
+    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation(shape->getTree()->getFinalSeq())));
     	inline_as3("coord.push(%0);\n" : : "r"(placement->color));
     	inline_as3("coord.push(%0);\n" : : "r"(canvas->getFailureCount()));
     	AS3_ReturnAS3Var(coord);

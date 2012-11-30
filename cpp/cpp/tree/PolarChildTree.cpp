@@ -18,6 +18,15 @@ inline int PolarChildTree::getRootY(int seq) {
 	return this->root->getRootY(seq);
 }
 
+inline int PolarChildTree::getFinalSeq(){
+    return root->getFinalSeq();
+}
+
+inline void PolarChildTree::setFinalSeq(int seq){
+    root->setFinalSeq(seq);
+}
+
+
 inline double PolarChildTree::computeX(int seq,bool rotate) {
 	double x;
 	if (((this->getR1(seq,rotate) < HALF_PI))) {

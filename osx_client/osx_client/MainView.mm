@@ -73,6 +73,7 @@
                           nil];
     NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
     NSLog(@"Template: %@",tpl);
+    [[self window] setTitle:tpl];
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
 	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
@@ -196,7 +197,7 @@
     
     canvas->setStatus(RENDERING);
     NSDate *methodStart = [NSDate date];
-
+    int count = 0;
     while(canvas->getStatus()==RENDERING){
         TextImageShape *shape;
 
@@ -224,13 +225,13 @@
 //            shape->printStats();
             Placement* placement = canvas->slapShape(shape);
             if(placement!=NULL){
-                double rotation = -(placement->rotation)*360/TWO_PI;
+                double rotation = -(shape->getTree()->getRotation(shape->getTree()->getFinalSeq()))*360/TWO_PI;
                 NSPoint point = NSMakePoint(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x,
                                             mainImage.size.height-shape->getHeight()-shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y);
-                printf("Coord: %f, %f; rotation: %f, color: %x\n"
+                printf("Coord: %f, %f; rotation: %f, color: %x, total: %d\n"
                        ,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x
                        ,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y
-                       ,shape->getTree()->getRotation(shape->getTree()->getFinalSeq()),placement->color);
+                       ,shape->getTree()->getRotation(shape->getTree()->getFinalSeq()),placement->color, count++);
                 unsigned int textColor = placement->color & 0x00FFFFFF;
                 NSColor* color = [NSColor colorWithCalibratedRed:((CGFloat)(textColor>>16))/256 green:((CGFloat)(textColor>>8 & 0x000000FF))/256 blue:((CGFloat)(textColor & 0xFF))/256 alpha:1.0F];
                 [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
