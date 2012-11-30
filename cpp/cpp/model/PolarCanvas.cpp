@@ -56,6 +56,8 @@ _shapeToWorkOn(NULL),_numActiveThreads(0)
     pthread_mutex_init(&shape_mutex, NULL);
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
+    pthread_mutex_init(&count_mutex, NULL);
+    pthread_cond_init (&count_threshold_cv, NULL);
     
     //spawn threads
 	if ((pool = threadpool_init(NUM_THREADS)) == NULL) {
@@ -70,6 +72,11 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&numActiveThreads_mutex);
     pthread_mutex_destroy(&shape_mutex);
     pthread_mutex_destroy(&attempt_mutex);
+    pthread_mutex_destroy(&count_mutex);
+    pthread_cond_destroy(&count_threshold_cv);
+    
+    threadpool_free(pool,1);
+
 }
 
 
@@ -166,6 +173,7 @@ void PolarCanvas::attempt_nudge(void *arg){
     int currentAttempt=-1;
     pthread_mutex_lock(&canvas->numActiveThreads_mutex);
     canvas->_numActiveThreads++;
+    pthread_cond_signal(&canvas->count_threshold_cv);
     pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
     while(true) {
         bool over = canvas->_attempt>=canvas->_maxAttemptsToPlace || canvas->_found || canvas->_shapeToWorkOn==NULL;
@@ -173,6 +181,7 @@ void PolarCanvas::attempt_nudge(void *arg){
             pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_numActiveThreads--;
             currentAttempt=-1;
+            pthread_cond_signal(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
             return;
         }
@@ -218,6 +227,7 @@ void PolarCanvas::attempt_nudge(void *arg){
             pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_numActiveThreads--;
             currentAttempt=-1;
+            pthread_cond_signal(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
             return;
         }
@@ -233,6 +243,7 @@ void PolarCanvas::attempt_nudge(void *arg){
             pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_numActiveThreads--;
             currentAttempt=-1;
+            pthread_cond_signal(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
             return;
         }
@@ -277,7 +288,11 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
 
         }
         
-        while((!_found && _attempt<_maxAttemptsToPlace) || _numActiveThreads>0){};
+        pthread_mutex_lock(&numActiveThreads_mutex);
+        while((!_found && _attempt<_maxAttemptsToPlace) || _numActiveThreads>0){
+            pthread_cond_wait(&count_threshold_cv, &numActiveThreads_mutex);
+        };
+        pthread_mutex_unlock(&numActiveThreads_mutex);
         
         if(!_found){
             _candidatePlacement->patch->setLastAttempt(_attempt);

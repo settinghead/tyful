@@ -114,8 +114,8 @@ private:
 
     
 	struct threadpool *pool;
-
-    
+    pthread_mutex_t count_mutex;
+    pthread_cond_t count_threshold_cv;
 };
 
 
