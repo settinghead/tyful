@@ -14,7 +14,9 @@
 #include "structs.h"
 #include "../sizer/Sizer.h"
 #include "../sizer/ByWeightSizer.h"
+#include "../threads/threadpool.h"
 #include <pthread.h>
+#include <semaphore.h>
 
 using namespace std;
 
@@ -40,6 +42,7 @@ public:
     void setPerseverance(int v){
         this->perseverance = v;
     }
+    
     int getPerseverance(){
         return this->perseverance;
     }
@@ -86,18 +89,33 @@ private:
     }
     inline Nudger* getNudger();
     inline EngineShape* generateEngineWord(ImageShape* shape);
-    inline bool placeShape(EngineShape * shape);
+    inline bool placeShape(EngineShape* shape);
     inline void computeDesiredPlacements(EngineShape* shape);
     inline Placement* tryCurrentSize(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
     inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
     DensityPatchIndex* _patchIndex;
     inline DensityPatchIndex* getPatchIndex();
-    
-    static void *attempt_nudge(void *arg);
-//    bool found;
-//    int numActiveThreads;
+    Placement* _candidatePlacement;
+    EngineShape* _shapeToWorkOn;
+    EngineShape* _lastCollidedWith;
+    bool _found;
+    int _winningSeq;
+    int _attempt;
+    int _maxAttemptsToPlace;
+    pthread_mutex_t shape_mutex;
+    pthread_mutex_t attempt_mutex;
+    pthread_mutex_t numActiveThreads_mutex;
+    pthread_attr_t attr;
+//    pthread_t threads[NUM_THREADS];
 
+    static void attempt_nudge(void *arg);
+    int _numActiveThreads;
+
+    
+	struct threadpool *pool;
+
+    
 };
 
 

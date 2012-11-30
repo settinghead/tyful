@@ -82,6 +82,14 @@ package com.settinghead.tyful.client.algo
 			registerClassAlias("com.settinghead.tyful.client.model.vo.template.PlaceInfo", PlaceInfo);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
 
+			CModule.rootSprite = this;
+			
+			if(CModule.runningAsWorker()) {
+				return;
+			}
+			
+			CModule.vfs.console = this;
+			
 			// These are for sending messages to the parent worker
 			resultChannel = Worker.current.getSharedProperty("resultChannel") as MessageChannel;
 			statusChannel = Worker.current.getSharedProperty("statusChannel") as MessageChannel;
@@ -89,7 +97,9 @@ package com.settinghead.tyful.client.algo
 			// This one is for receiving messages from the parent worker
 			controlChannel = Worker.current.getSharedProperty("controlChannel") as MessageChannel;
 			controlChannel.addEventListener(Event.CHANNEL_MESSAGE, controlCommandReceived);
-			CModule.vfs.console = this;
+
+
+			CModule.startAsync(this);
 
 		}        
 		

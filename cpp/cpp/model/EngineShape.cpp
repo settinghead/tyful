@@ -19,7 +19,7 @@
 
 EngineShape::EngineShape(ImageShape* shape):skipReason(0),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0){
     for(int i=0;i<NUM_THREADS;i++){
-        currentPlacement[i]=NULL;
+        currentPlacement[i]=new Placement;
     }
     this->shape = shape;
     this->shape->getTree();
@@ -60,8 +60,6 @@ void EngineShape::skipBecause(int reason){
 }
 
 void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
-    if(currentPlacement[seq]==NULL)
-        currentPlacement[seq] = new Placement;
     currentPlacement[seq]->location = p->location;
     currentPlacement[seq]->patch = p->patch;
     
