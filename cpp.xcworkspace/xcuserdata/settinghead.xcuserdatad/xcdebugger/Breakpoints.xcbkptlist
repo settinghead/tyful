@@ -9,11 +9,11 @@
          condition = "rotation!=0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarLayer.cpp"
-         timestampString = "375871325.106169"
+         timestampString = "376018411.642923"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "26"
-         endingLineNumber = "26"
+         startingLineNumber = "27"
+         endingLineNumber = "27"
          landmarkName = "PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector&lt;PolarPoint&gt;* points, double rotation, double refX,double refY)"
          landmarkType = "5">
       </FileBreakpoint>

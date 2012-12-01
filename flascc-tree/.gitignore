@@ -4,3 +4,5 @@
 *.out
 *.abc
 polartree/*.swc
+swig/
+bin/

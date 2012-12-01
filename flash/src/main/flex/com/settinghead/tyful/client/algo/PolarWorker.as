@@ -15,21 +15,12 @@ package com.settinghead.tyful.client.algo
 	import flash.net.registerClassAlias;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
-	import flash.text.AntiAliasType;
-	import flash.text.StyleSheet;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 	import flash.utils.ByteArray;
-	import flash.utils.getTimer;
 	
 	import org.as3commons.collections.SortedList;
 	
 	import polartree.PolarTree.CModule;
-	import polartree.PolarTree.getShrinkage;
-	import polartree.PolarTree.getStatus;
-	import polartree.PolarTree.initCanvas;
-	import polartree.PolarTree.setPerseverance;
-	import polartree.PolarTree.slapShape;
+	import polartree.PolarTree.PolarTreeAPI;
 	import polartree.PolarTree.vfs.ISpecialFile;
 	
 	public class PolarWorker extends Sprite implements ISpecialFile
@@ -81,15 +72,11 @@ package com.settinghead.tyful.client.algo
 			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.template.PlaceInfo", PlaceInfo);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
-
 			CModule.rootSprite = this;
-			
+			CModule.vfs.console = this;
 			if(CModule.runningAsWorker()) {
 				return;
 			}
-			
-			CModule.vfs.console = this;
-			
 			// These are for sending messages to the parent worker
 			resultChannel = Worker.current.getSharedProperty("resultChannel") as MessageChannel;
 			statusChannel = Worker.current.getSharedProperty("statusChannel") as MessageChannel;
@@ -97,7 +84,6 @@ package com.settinghead.tyful.client.algo
 			// This one is for receiving messages from the parent worker
 			controlChannel = Worker.current.getSharedProperty("controlChannel") as MessageChannel;
 			controlChannel.addEventListener(Event.CHANNEL_MESSAGE, controlCommandReceived);
-
 
 			CModule.startAsync(this);
 
@@ -132,6 +118,10 @@ package com.settinghead.tyful.client.algo
 						//TODO: complete multi-layer implementation
 //					var data:ByteArray = directionBitmapData.getPixels(new Rectangle(0,0,directionBitmapData.width, directionBitmapData.height));
 					//trace("data length: "+ data.length.toString()+"\n");
+					var directions:Array = template["directions"] as Array;
+					var colors:Array = template["colors"] as Array;
+					
+					
 					var a:Array = (template["directions"] as Array)[0] as Array;
 					var width:Number = a[0];
 					var height:Number = a[1];
@@ -146,11 +136,11 @@ package com.settinghead.tyful.client.algo
 					var colorAddr:int = CModule.malloc(colorData.length);
 					CModule.writeBytes(colorAddr, colorData.length, colorData);
 					
-					initCanvas(addr,colorAddr,width,height); 
+					PolarTreeAPI.initCanvas(addr,colorAddr,width,height); 
 				}
 				else if (message[0] == "perseverance"){
 					CModule.serviceUIRequests();
-					setPerseverance(message[1] as int);
+					PolarTreeAPI.setPerseverance(message[1] as int);
 				}
 				checkStart();
 			}
@@ -161,25 +151,31 @@ package com.settinghead.tyful.client.algo
 			}
 		}
 		
+		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
 		private function start():void{
 			var currentWords:WordListVO = wordList.clone();
 			status = RUNNING;
-			while(status==RUNNING && getStatus()>0){
-				var word:WordVO = wordList.next();
-				
-				CModule.serviceUIRequests()				
-				var fontSize:Number = 100*getShrinkage()+12;
-				var fontName:String = "romeral";
+			while(status==RUNNING && PolarTreeAPI.getStatus()>0){
+				var word:WordVO;
+//				if(getShrinkage()>0){
+					word = wordList.next();
+//				}
+//				else{
+//					word = new WordVO("DT");
+//				}
+				CModule.serviceUIRequests();		
+				var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
+				var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
 				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
 				var params:Array = getTextShape(dw);
 				
-				var coord:Vector.<Number> =
-					slapShape(params[0],params[1],params[2]);
+				var coordPtr:int =
+					PolarTreeAPI.slapShape(params[0],params[1],params[2]);
 				
-				if(coord!=null){
-					var rotation:Number = coord[2];
-					var place:PlaceInfo = new PlaceInfo(coord[0], coord[1], coord[2], 0);
-					var fontColor:uint = coord[3];
+				if(coordPtr!=0){
+					var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr), CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), 0);
+					var fontColor:uint = CModule.readDouble(coordPtr + 24);
+					var failureCount:int = CModule.readDouble(coordPtr+32);
 					var msg:Object = new Object();
 					
 					msg["word"] = word;
@@ -190,7 +186,7 @@ package com.settinghead.tyful.client.algo
 					msg["y"] = place.y;
 					msg["rotation"] = place.rotation;
 					msg["layer"] = place.layer;
-					msg["failureCount"]=coord[4];
+					msg["failureCount"]=failureCount;
 					resultChannel.send(msg);
 				}
 				
@@ -203,7 +199,7 @@ package com.settinghead.tyful.client.algo
 					controlCommandReceived(null);
 			}
 			
-			if(getStatus()==0)
+			if(PolarTreeAPI.getStatus()==0)
 				statusChannel.send("complete");
 		}
 		

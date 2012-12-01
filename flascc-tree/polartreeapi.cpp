@@ -22,21 +22,21 @@
 
 PolarCanvas* canvas;
 
-void initCanvas() __attribute__((used,
-	annotate("as3sig:public function initCanvas(_pixels:int, _colorPixels:int, _width:int, _height: int):void"),
-	annotate("as3package:polartree.PolarTree")));
+// void initCanvas() __attribute__((used,
+	// annotate("as3sig:public function initCanvas(_pixels:int, _colorPixels:int, _width:int, _height: int):void"),
+	// annotate("as3package:polartree.PolarTree")));
 
-void initCanvas(){
+void initCanvas(unsigned char *pixels, unsigned char *colorPixels, int width, int height){
 
-	unsigned char *pixels = (unsigned char *) 0 ;
-	unsigned char *colorPixels = (unsigned char *) 0 ;
-	int width = 0 ;
-	int height = 0 ;
+	// unsigned char *pixels = (unsigned char *) 0 ;
+	// unsigned char *colorPixels = (unsigned char *) 0 ;
+	// int width = 0 ;
+	// int height = 0 ;
 
-    AS3_GetScalarFromVar(pixels, _pixels);
-    AS3_GetScalarFromVar(colorPixels, _colorPixels);
-    AS3_GetScalarFromVar(width, _width);
-    AS3_GetScalarFromVar(height, _height);
+ //    AS3_GetScalarFromVar(pixels, _pixels);
+ //    AS3_GetScalarFromVar(colorPixels, _colorPixels);
+ //    AS3_GetScalarFromVar(width, _width);
+ //    AS3_GetScalarFromVar(height, _height);
 
     assert(width>0);
     assert(height>0);
@@ -53,32 +53,32 @@ void initCanvas(){
 	printf("Canvas initialized.\n");
 }
 
-void setPerseverance() __attribute__((used,
-	annotate("as3sig:public function setPerseverance(_perseverance:int):void"),
-	annotate("as3package:polartree.PolarTree")));
+// void setPerseverance() __attribute__((used,
+	// annotate("as3sig:public function setPerseverance(_perseverance:int):void"),
+	// annotate("as3package:polartree.PolarTree")));
 
 
-void setPerseverance(){
-	int perseverance = 0;
-	AS3_GetScalarFromVar(perseverance, _perseverance);
+void setPerseverance(int perseverance){
+	// int perseverance = 0;
+	// AS3_GetScalarFromVar(perseverance, _perseverance);
 	canvas->setPerseverance(perseverance);
 }
 
 
-void slapShape() __attribute__((used,
-	annotate("as3sig:public function slapShape(_pixels:int,_width:int,_height:int):Vector.<Number>"),
-	annotate("as3package:polartree.PolarTree")));
+// void slapShape() __attribute__((used,
+// 	annotate("as3sig:public function slapShape(_pixels:int,_width:int,_height:int):Vector.<Number>"),
+// 	annotate("as3package:polartree.PolarTree")));
 
-void slapShape()
+double* slapShape(unsigned int *pixels, int width, int height)
 {
-	printf("slapShape requested. Current shrinkage: %f\n", canvas->getShrinkage());
-	unsigned int *pixels = (unsigned int *) 0 ;
-	double width = 0 ;
-	double height = 0 ;
+	// printf("slapShape requested. Current shrinkage: %f\n", canvas->getShrinkage());
+	// unsigned int *pixels = (unsigned int *) 0 ;
+	// double width = 0 ;
+	// double height = 0 ;
 
-    AS3_GetScalarFromVar(pixels, _pixels);
-    AS3_GetScalarFromVar(width, _width);
-    AS3_GetScalarFromVar(height, _height);
+ //    AS3_GetScalarFromVar(pixels, _pixels);
+ //    AS3_GetScalarFromVar(width, _width);
+ //    AS3_GetScalarFromVar(height, _height);
 
 
 	TextImageShape *shape = new TextImageShape((unsigned int *)pixels, width, height, false);
@@ -91,43 +91,54 @@ void slapShape()
 			,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y
 			,shape->getTree()->getRotation(shape->getTree()->getFinalSeq()),placement->color);
 
-    	inline_as3("var coord:Vector.<Number> = new Vector.<Number>();\n");
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x));
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y));
-    	inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation(shape->getTree()->getFinalSeq())));
-    	inline_as3("coord.push(%0);\n" : : "r"(placement->color));
-    	inline_as3("coord.push(%0);\n" : : "r"(canvas->getFailureCount()));
-    	AS3_ReturnAS3Var(coord);
+    	// inline_as3("var coord:Vector.<Number> = new Vector.<Number>();\n");
+    	// inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x));
+    	// inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y));
+    	// inline_as3("coord.push(%0);\n" : : "r"(shape->getTree()->getRotation(shape->getTree()->getFinalSeq())));
+    	// inline_as3("coord.push(%0);\n" : : "r"(placement->color));
+    	// inline_as3("coord.push(%0);\n" : : "r"(canvas->getFailureCount()));
+    	// AS3_ReturnAS3Var(coord);
+
+    	double coord[5];
+    	coord[0] = shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x;
+    	coord[1] = shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y;
+    	coord[2] = shape->getTree()->getRotation(shape->getTree()->getFinalSeq());
+    	coord[3] = placement->color;
+    	coord[4] = canvas->getFailureCount();
+    	return coord;
 	}
+	return NULL;
 }
 
-void getStatus() __attribute__((used,
-	annotate("as3sig:public function getStatus():int"),
-	annotate("as3package:polartree.PolarTree")));
+// void getStatus() __attribute__((used,
+// 	annotate("as3sig:public function getStatus():int"),
+// 	annotate("as3package:polartree.PolarTree")));
 
-void getStatus()
+int getStatus()
 {
-	inline_as3("var status:int = (%0);\n" : : "r"(canvas->getStatus()));
-	AS3_ReturnAS3Var(status);
+	// inline_as3("var status:int = (%0);\n" : : "r"(canvas->getStatus()));
+	// AS3_ReturnAS3Var(status);
+	return canvas->getStatus();
 }
 
-void setStatus() __attribute__((used,
-	annotate("as3sig:public function setStatus(_status:int):void"),
-	annotate("as3package:polartree.PolarTree")));
+// void setStatus() __attribute__((used,
+// 	annotate("as3sig:public function setStatus(_status:int):void"),
+// 	annotate("as3package:polartree.PolarTree")));
 
-void setStatus()
+void setStatus(int status)
 {
-	int status = 0 ;
-    AS3_GetScalarFromVar(status, _status);
+	// int status = 0 ;
+ //    AS3_GetScalarFromVar(status, _status);
 	canvas->setStatus(status);
 }
 
-void getShrinkage() __attribute__((used,
-	annotate("as3sig:public function getShrinkage():Number"),
-	annotate("as3package:polartree.PolarTree")));
+// void getShrinkage() __attribute__((used,
+// 	annotate("as3sig:public function getShrinkage():Number"),
+// 	annotate("as3package:polartree.PolarTree")));
 
-void getShrinkage()
+int getShrinkage()
 {
-	inline_as3("var shrinkage:Number = (%0);\n" : : "r"(canvas->getShrinkage()));
-	AS3_ReturnAS3Var(shrinkage);
+	// inline_as3("var shrinkage:Number = (%0);\n" : : "r"(canvas->getShrinkage()));
+	// AS3_ReturnAS3Var(shrinkage);
+	return canvas->getShrinkage();
 }
