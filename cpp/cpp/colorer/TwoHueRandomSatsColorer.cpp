@@ -9,20 +9,19 @@
 #include "TwoHueRandomSatsColorer.h"
 #include "../model/structs.h"
 #include "../math/ColorMath.h"
-#include <cmath>
-#include <limits>
-#include <cstdlib>
-#include <ctime>
+#include <time.h>
+
 
 TwoHueRandomSatsColorer::TwoHueRandomSatsColorer(){
     srand((unsigned)time(NULL));
-    this->hues[0]= 256 * ((double) rand() / (RAND_MAX+1));
-    this->hues[1]= 256 * ((double) rand() / (RAND_MAX+1));
+    this->hues[0]= 256 * (rand() / double(RAND_MAX));
+    this->hues[1]= 256-this->hues[0];
 }
 
 unsigned int TwoHueRandomSatsColorer::colorFor(Placement* place){
     srand((unsigned)time(NULL));
-    double hue= hues[rand() % (sizeof(hues) / sizeof(hues[0]))];
+    int index = rand() % (sizeof(hues) / sizeof(hues[0]));
+    double hue= hues[index];
     double sat= 200+rand()%(256-200);
     double val = 50+rand()%(200-50);
     
