@@ -56,7 +56,6 @@ _shapeToWorkOn(NULL),_numActiveThreads(0)
     pthread_mutex_init(&shape_mutex, NULL);
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
-    pthread_mutex_init(&count_mutex, NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
     
     //spawn threads
@@ -72,7 +71,6 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&numActiveThreads_mutex);
     pthread_mutex_destroy(&shape_mutex);
     pthread_mutex_destroy(&attempt_mutex);
-    pthread_mutex_destroy(&count_mutex);
     pthread_cond_destroy(&count_threshold_cv);
     
     threadpool_free(pool,1);
@@ -170,7 +168,9 @@ void PolarCanvas::attempt_nudge(void *arg){
     PolarCanvas* canvas  = tp->canvas;
     EngineShape* lastCollidedWith = NULL;
     int seq = tp->seq;
-    int currentAttempt=-1;
+    int start=-1;
+    int end=-1;
+    
     pthread_mutex_lock(&canvas->numActiveThreads_mutex);
     canvas->_numActiveThreads++;
     pthread_cond_signal(&canvas->count_threshold_cv);
@@ -180,75 +180,76 @@ void PolarCanvas::attempt_nudge(void *arg){
         if(over){
             pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_numActiveThreads--;
-            currentAttempt=-1;
             pthread_cond_signal(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
             return;
         }
         
         pthread_mutex_lock(&(canvas->attempt_mutex));
-        currentAttempt = canvas->_attempt++;
+        start = canvas->_attempt;
+        end = canvas->_attempt+THREAD_STEP_SIZE<canvas->_maxAttemptsToPlace?canvas->_attempt+THREAD_STEP_SIZE:canvas->_maxAttemptsToPlace;
+        canvas->_attempt = end;
         pthread_mutex_unlock(&(canvas->attempt_mutex));
-
-        Placement* relative = canvas->getNudger()->nudgeFor(canvas->_shapeToWorkOn, canvas->_candidatePlacement, currentAttempt,canvas->_maxAttemptsToPlace);
-        Placement newPlacement = (*canvas->_candidatePlacement + (*relative));
-        canvas->_shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
         
-
-        //
-        if (canvas->_shapeToWorkOn->trespassed(seq,canvas->_candidatePlacement->patch->getLayer()))
-            continue;
-        CartisianPoint loc = canvas->_shapeToWorkOn->getCurrentPlacement(tp->seq)->location;
-        if (loc.x < 0|| loc.y < 0|| loc.x + canvas->_shapeToWorkOn->getShape()->getWidth() >= canvas->width
-            || loc.y + canvas->_shapeToWorkOn->getShape()->getHeight() >= canvas->height) {
-            continue;
-        }
-        
-        if (canvas->_lastCollidedWith != NULL && canvas->_shapeToWorkOn->getShape()->getTree()->overlaps(seq,canvas->_lastCollidedWith->getShape()->getTree())) {
-            continue;
-        }
-        
-        bool foundOverlap= false;
-        
-        //					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
-        for (int i= 0; !foundOverlap && i < canvas->shapes->size(); i++) {
-            //						var otherWord:EngineWordVO= neighboringEWords[i];
-            EngineShape* otherShape = canvas->shapes->at(i);
-            if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
+        for(int currentAttempt=start;currentAttempt<end;currentAttempt++)
+        {
+            Placement* relative = canvas->getNudger()->nudgeFor(canvas->_shapeToWorkOn, canvas->_candidatePlacement, currentAttempt,canvas->_maxAttemptsToPlace);
+            Placement newPlacement = (*canvas->_candidatePlacement + (*relative));
+            canvas->_shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
             
-            if (canvas->_shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree())) {
-                foundOverlap = true;
-                
-                lastCollidedWith = otherShape;
-                goto end_of_inner;
-            }
-        }
-        if(canvas->_found){
-            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-            canvas->_numActiveThreads--;
-            currentAttempt=-1;
-            pthread_cond_signal(&canvas->count_threshold_cv);
-            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
-            return;
-        }
-        pthread_mutex_unlock(&canvas->shape_mutex);
-        if (!foundOverlap) {
-            canvas->_winningSeq = seq;
-            //						successCount++;
-            canvas->_candidatePlacement->patch->setLastAttempt(currentAttempt);
-            canvas->_found = true;
-        }
-        pthread_mutex_unlock(&canvas->shape_mutex);
-        if(!foundOverlap){
-            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-            canvas->_numActiveThreads--;
-            currentAttempt=-1;
-            pthread_cond_signal(&canvas->count_threshold_cv);
-            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
-            return;
-        }
-        if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
 
+            //
+            if (canvas->_shapeToWorkOn->trespassed(seq,canvas->_candidatePlacement->patch->getLayer()))
+                continue;
+            CartisianPoint loc = canvas->_shapeToWorkOn->getCurrentPlacement(tp->seq)->location;
+            if (loc.x < 0|| loc.y < 0|| loc.x + canvas->_shapeToWorkOn->getShape()->getWidth() >= canvas->width
+                || loc.y + canvas->_shapeToWorkOn->getShape()->getHeight() >= canvas->height) {
+                continue;
+            }
+            
+            if (canvas->_lastCollidedWith != NULL && canvas->_shapeToWorkOn->getShape()->getTree()->overlaps(seq,canvas->_lastCollidedWith->getShape()->getTree())) {
+                continue;
+            }
+            
+            bool foundOverlap= false;
+            
+            //					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
+            for (int i= 0; !foundOverlap && i < canvas->shapes->size(); i++) {
+                //						var otherWord:EngineWordVO= neighboringEWords[i];
+                EngineShape* otherShape = canvas->shapes->at(i);
+                if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
+                
+                if (canvas->_shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree())) {
+                    foundOverlap = true;
+                    
+                    lastCollidedWith = otherShape;
+                    goto end_of_inner;
+                }
+            }
+            if(canvas->_found){
+                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+                canvas->_numActiveThreads--;
+                pthread_cond_signal(&canvas->count_threshold_cv);
+                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+                return;
+            }
+            pthread_mutex_unlock(&canvas->shape_mutex);
+            if (!foundOverlap) {
+                canvas->_winningSeq = seq;
+                //						successCount++;
+                canvas->_candidatePlacement->patch->setLastAttempt(currentAttempt);
+                canvas->_found = true;
+            }
+            pthread_mutex_unlock(&canvas->shape_mutex);
+            if(!foundOverlap){
+                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+                canvas->_numActiveThreads--;
+                pthread_cond_signal(&canvas->count_threshold_cv);
+                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+                return;
+            }
+            if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
+        }
     end_of_inner:
         continue;
     }
@@ -276,7 +277,7 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
         //unleash thread workers
         _shapeToWorkOn = eShape;
 
-        
+        pthread_mutex_lock(&numActiveThreads_mutex);
         for(int t=0; t<NUM_THREADS; t++){
             thread_param *tp;
             tp = (thread_param *)malloc(sizeof(thread_param));
@@ -285,10 +286,8 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
             //        pthread_create(&threads[t], &attr, attempt_nudge, (void *)tp);
 //            thpool_add_work(threadpool, attempt_nudge, (void*)tp);
 			threadpool_add_task(pool,attempt_nudge,(void*)tp,1);
-
         }
         
-        pthread_mutex_lock(&numActiveThreads_mutex);
         while((!_found && _attempt<_maxAttemptsToPlace) || _numActiveThreads>0){
             pthread_cond_wait(&count_threshold_cv, &numActiveThreads_mutex);
         };
@@ -350,7 +349,7 @@ int PolarCanvas::getWidth(){
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p){
     srand((unsigned)time(NULL));
     int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * diligence;
-    return original * (1+ ((double) rand() / (RAND_MAX+1)) * 0.2);
+    return original * (1+ ((double) rand() / (RAND_MAX)) * 0.2);
 }
 
 void PolarCanvas::computeDesiredPlacements(EngineShape* shape){
@@ -378,4 +377,16 @@ Placer* PolarCanvas::getPlacer(){
         _placer = new ColorMapPlacer(this, getPatchIndex());
     }
     return _placer;
+}
+
+
+void PolarCanvas::connectLayers(){
+    for(int i=0;i<layers->size();i++){
+        if(layers->at(i)!=NULL){
+            //may be null because zip module sometimes expands and fill in nulls to fit capacity
+            layers->at(i)->above = NULL;
+            layers->at(i)->below = NULL;
+            if(i>0) PolarLayer::connect(layers->at(i),layers->at(i-1));
+        }
+    }
 }

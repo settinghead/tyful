@@ -111,10 +111,10 @@ private:
 
     static void attempt_nudge(void *arg);
     int _numActiveThreads;
+    void connectLayers();
 
     
 	struct threadpool *pool;
-    pthread_mutex_t count_mutex;
     pthread_cond_t count_threshold_cv;
 };
 

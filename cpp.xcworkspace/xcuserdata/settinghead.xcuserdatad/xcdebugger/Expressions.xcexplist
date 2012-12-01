@@ -3,7 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "PolarCanvas::placeShape(EngineShape*):PolarCanvas.cpp">
+         contextName = "ColorMapZigzagNudger::nudgeFor(EngineShape*, Placement*, int, int):ColorMapZigzagNudger.h">
       </ContextState>
       <ContextState
          contextName = "WordLayer::getHue(int, int):WordLayer.cpp">
@@ -14,7 +14,39 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ColorMapZigzagNudger::nudgeFor(EngineShape*, Placement*, int, int):ColorMapZigzagNudger.h">
+         contextName = "PolarCanvas::PolarCanvas():PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarCanvas::placeShape(EngineShape*):PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarCanvas::attempt_nudge(void*):PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarTree::overlaps(int, PolarTree*):PolarTree.h">
+      </ContextState>
+      <ContextState
+         contextName = "thpool_thread_do(thpool_t*):thpool.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "TwoHueRandomSatsColorer::colorFor(Placement*):TwoHueRandomSatsColorer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "TwoHueRandomSatsColorer::TwoHueRandomSatsColorer():TwoHueRandomSatsColorer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "-[MainView drawColorMappedText:]:MainView.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "(CGFloat)(textColor &gt;&gt;8 &amp; 0x000000FF)/256">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "thpool_init(int):thpool.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "EngineShape::nudgeTo(int, Placement*, Angler*):EngineShape.cpp">
       </ContextState>
       <ContextState
          contextName = "EngineShape::trespassed(PolarLayer*):EngineShape.cpp">

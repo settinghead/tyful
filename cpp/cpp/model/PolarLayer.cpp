@@ -15,6 +15,7 @@ PolarLayer::PolarLayer(unsigned int const * pixels, int width, int height, bool 
 :PixelImageShape::PixelImageShape(pixels,width,height,revert), type(WORD_LAYER),above(NULL),below(NULL){
 }
 
+
 bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){
     for(int i = 0 ;i<points->size();i++){
         double theta = points->at(i).r;
@@ -63,4 +64,9 @@ bool PolarLayer::aboveContainsAnyPolarPoints(double centerX, double centerY, vec
         else return above->aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY);
 			}
     else return false;
+}
+
+void PolarLayer::connect(PolarLayer *above, PolarLayer *below){
+    if(above!=NULL) above->below = below;
+    if(below!=NULL) below->above = above;
 }

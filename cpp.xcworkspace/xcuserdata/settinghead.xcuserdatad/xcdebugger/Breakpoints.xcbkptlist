@@ -89,37 +89,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
+         timestampString = "375999952.488677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "227"
-         endingLineNumber = "227"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957170.853556"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "298"
-         endingLineNumber = "298"
+         startingLineNumber = "297"
+         endingLineNumber = "297"
          landmarkName = "PolarCanvas::placeShape(EngineShape* eShape)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -128,11 +102,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957170.853556"
+         timestampString = "375999952.488677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "302"
+         endingLineNumber = "302"
          landmarkName = "PolarCanvas::placeShape(EngineShape* eShape)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -193,24 +167,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
+         timestampString = "375997225.673095"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "207"
-         endingLineNumber = "207"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "129"
-         endingLineNumber = "129"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "PolarCanvas::tryCurrentSize(EngineShape* eShape)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -271,11 +232,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
+         timestampString = "375997225.673095"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "130"
-         endingLineNumber = "130"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
          landmarkName = "PolarCanvas::tryCurrentSize(EngineShape* eShape)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -284,11 +245,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957170.853556"
+         timestampString = "375999952.488677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "313"
-         endingLineNumber = "313"
+         startingLineNumber = "312"
+         endingLineNumber = "312"
          landmarkName = "PolarCanvas::placeShape(EngineShape* eShape)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -297,50 +258,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
+         timestampString = "375999952.488677"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/model/PolarCanvas.cpp"
+         timestampString = "375999952.488677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "253"
          endingLineNumber = "253"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "252"
-         endingLineNumber = "252"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "208"
-         endingLineNumber = "208"
-         landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/model/PolarCanvas.cpp"
-         timestampString = "375957063.355167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "222"
-         endingLineNumber = "222"
          landmarkName = "PolarCanvas::attempt_nudge(void *arg)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -369,6 +304,71 @@
          endingLineNumber = "72"
          landmarkName = "thpool_init(int threadsN)"
          landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "osx_client/osx_client/MainView.mm"
+         timestampString = "376007657.830105"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "235"
+         endingLineNumber = "235"
+         landmarkName = "-drawColorMappedText:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "osx_client/osx_client/MainView.mm"
+         timestampString = "376007669.680015"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "236"
+         endingLineNumber = "236"
+         landmarkName = "-drawColorMappedText:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/colorer/TwoHueRandomSatsColorer.cpp"
+         timestampString = "376008496.756149"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "24"
+         endingLineNumber = "24"
+         landmarkName = "TwoHueRandomSatsColorer::colorFor(Placement* place)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/colorer/TwoHueRandomSatsColorer.cpp"
+         timestampString = "376008496.756149"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "17"
+         endingLineNumber = "17"
+         landmarkName = "TwoHueRandomSatsColorer::TwoHueRandomSatsColorer()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/colorer/TwoHueRandomSatsColorer.cpp"
+         timestampString = "376008496.756149"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
+         landmarkName = "TwoHueRandomSatsColorer::TwoHueRandomSatsColorer()"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
