@@ -12,7 +12,7 @@
 #ifdef SWIG
 %{
 #include <stdint.h>   
-#include "polartreeapi.h"
+#include "../cpp/cpp/polartreeapi.h"
 %}
 
 // This directive tells swig to pull in type information from its library
@@ -21,6 +21,6 @@
 
 // This include causes swig to parse and emit wrappers for the functions
 // declared in the header file.
-%include "polartreeapi.h"
+%include "../cpp/cpp/polartreeapi.h"
 #endif
 

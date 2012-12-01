@@ -25,7 +25,7 @@ public:
     bool aboveContains(double x, double y, double width, double height,double rotation);
     bool aboveContainsPoint(double x, double y, double refX, double refY);
     bool aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY);
-    virtual inline bool isEmpty(unsigned int pixelValue) = 0;
+    virtual bool isEmpty(unsigned int pixelValue) = 0;
     static void connect(PolarLayer* above, PolarLayer* below);
     
     PolarLayer* above;

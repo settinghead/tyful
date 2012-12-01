@@ -35,8 +35,8 @@ public:
         //    this->lookupMap = new LookupMap;
         this->map  = map;
         if(myLevel==0){
-            for (vector<PolarLayer*>::iterator it = map->getIndex()->getCanvas()->getLayers()->begin();
-                 it != map->getIndex()->getCanvas()->getLayers()->end(); ++it) {
+            for (PolarCanvas::iterator it = map->getIndex()->getCanvas()->begin();
+                 it != map->getIndex()->getCanvas()->end(); ++it) {
                 PolarLayer* layer = *it;
                 if(layer->type==WORD_LAYER){
                     this->tryPush(new Patch(0,0,layer->getWidth(),layer->getHeight(),0,NULL,this,(WordLayer*)layer));

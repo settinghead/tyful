@@ -15,6 +15,7 @@
 #include "../sizer/Sizer.h"
 #include "../sizer/ByWeightSizer.h"
 #include "../threads/threadpool.h"
+#include <vector.h>
 #include <pthread.h>
 #include <semaphore.h>
 
@@ -34,7 +35,7 @@ class DensityPatchIndex;
 typedef int STATUS;
 typedef int SKIP_REASON;
 
-class PolarCanvas{
+class PolarCanvas:public vector<PolarLayer*>{
 public:
     PolarCanvas();
     ~PolarCanvas();
@@ -50,21 +51,21 @@ public:
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
     void setNudger(Nudger* placer);
-    inline int getWidth();
-    inline int getHeight();
+    inline double getWidth();
+    inline double getHeight();
     inline int getFailureCount(){
         return this->failureCount;
     }
-    vector<PolarLayer*>* getLayers();
     inline double getShrinkage(){
         return getSizer()->getCurrentSize();
     }
     inline Placer* getPlacer();
     void setStatus(STATUS status);
     STATUS getStatus();
+    
+    void addLayer (PolarLayer* val);
 private:
 
-    vector<PolarLayer*>* layers;
     vector<EngineShape*>* shapes;
     vector<EngineShape*>* displayShapes;
     vector<EngineShape*>* retryShapes;

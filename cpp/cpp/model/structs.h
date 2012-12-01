@@ -10,6 +10,9 @@
 #define PolarTree_Experiment_structs_h
 #include <stdlib.h>
 class Patch;
+
+//WARNING: DO NOT CHANGE ORDER OR TYPE OF THESE STRUCTS
+
 struct CartisianPoint{
     double x;
     double y;
@@ -26,21 +29,26 @@ struct PolarPoint{
     double r;
 };
 
-struct Placement{
+struct CorePlacement{
     CartisianPoint location;
-    double scale;
     double rotation;
     unsigned int color;
+};
+
+struct Placement:CorePlacement{
     Patch* patch;
     inline Placement operator + (const Placement &o) const{
         Placement p;
         p.location = o.location + location;
-        p.scale = scale;
         p.rotation = rotation;
         p.patch = patch;
         p.color = color;
         return p;
     }
+};
+
+struct SlapInfo:CorePlacement{
+    int failureCount;
 };
 
 #endif

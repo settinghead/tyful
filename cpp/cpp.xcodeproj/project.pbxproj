@@ -64,6 +64,8 @@
 		7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */; };
 		7CEFFBCF16689ECA00900686 /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFFBCD16689EC900900686 /* threadpool.cpp */; };
 		7CEFFBD016689ECA00900686 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBCE16689EC900900686 /* threadpool.h */; };
+		7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFFBD116699F7A00900686 /* polartreeapi.cpp */; };
+		7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBD216699F7A00900686 /* polartreeapi.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +130,8 @@
 		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
 		7CEFFBCD16689EC900900686 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool.cpp; sourceTree = "<group>"; };
 		7CEFFBCE16689EC900900686 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
+		7CEFFBD116699F7A00900686 /* polartreeapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polartreeapi.cpp; sourceTree = "<group>"; };
+		7CEFFBD216699F7A00900686 /* polartreeapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polartreeapi.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 		7C7AE86B166745B7002466A3 /* cpp */ = {
 			isa = PBXGroup;
 			children = (
+				7CEFFBD116699F7A00900686 /* polartreeapi.cpp */,
+				7CEFFBD216699F7A00900686 /* polartreeapi.h */,
 				7CEFFBC81668951A00900686 /* threads */,
 				7C7AE8FB16674B5C002466A3 /* angler */,
 				7C7AE90416674B5C002466A3 /* colorer */,
@@ -352,6 +358,7 @@
 				7C7AE96F16674B5C002466A3 /* PolarTree.h in Headers */,
 				7C7AE97116674B5C002466A3 /* PolarTreeBuilder.h in Headers */,
 				7CEFFBD016689ECA00900686 /* threadpool.h in Headers */,
+				7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +437,7 @@
 				7C7AE96E16674B5C002466A3 /* PolarTree.cpp in Sources */,
 				7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */,
 				7CEFFBCF16689ECA00900686 /* threadpool.cpp in Sources */,
+				7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

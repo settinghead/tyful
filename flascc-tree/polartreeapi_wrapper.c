@@ -130,23 +130,60 @@
 
 
 #include <stdint.h>   
-#include "polartreeapi.h"
+#include "../cpp/cpp/polartreeapi.h"
 
 
 #include <stdint.h>		// Use the C99 official header
 
-__attribute__((annotate("as3sig:public function _wrap_initCanvas(pixels:int, colorPixels:int, width:int, height:int):void")))
+__attribute__((annotate("as3sig:public function _wrap_initCanvas():int")))
 void _wrap_initCanvas() {
-  unsigned char *arg1 = (unsigned char *) 0 ;
-  unsigned char *arg2 = (unsigned char *) 0 ;
-  int arg3 ;
-  int arg4 ;
+  void *result ;
   
+  result = (void *)initCanvas();
   {
-    AS3_GetScalarFromVar(arg1, pixels);
+    AS3_DeclareVar(asresult, int);
+    AS3_CopyScalarToVar(asresult, result);
   }
   {
-    AS3_GetScalarFromVar(arg2, colorPixels);
+    AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_setPerseverance(canvas:int, perseverance:int):void")))
+void _wrap_setPerseverance() {
+  void *arg1 = (void *) 0 ;
+  int arg2 ;
+  
+  {
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  {
+    AS3_GetScalarFromVar(arg2, perseverance);
+  }
+  setPerseverance(arg1,arg2);
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_slapShape(canvas:int, pixels:int, width:int, height:int):int")))
+void _wrap_slapShape() {
+  void *arg1 = (void *) 0 ;
+  unsigned int *arg2 = (unsigned int *) 0 ;
+  int arg3 ;
+  int arg4 ;
+  SlapInfo *result ;
+  
+  {
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  {
+    AS3_GetScalarFromVar(arg2, pixels);
   }
   {
     AS3_GetScalarFromVar(arg3, width);
@@ -154,50 +191,7 @@ void _wrap_initCanvas() {
   {
     AS3_GetScalarFromVar(arg4, height);
   }
-  initCanvas(arg1,arg2,arg3,arg4);
-  {
-    
-  }
-  {
-    AS3_ReturnAS3Var(undefined);
-  }
-}
-
-
-__attribute__((annotate("as3sig:public function _wrap_setPerseverance(perseverance:int):void")))
-void _wrap_setPerseverance() {
-  int arg1 ;
-  
-  {
-    AS3_GetScalarFromVar(arg1, perseverance);
-  }
-  setPerseverance(arg1);
-  {
-    
-  }
-  {
-    AS3_ReturnAS3Var(undefined);
-  }
-}
-
-
-__attribute__((annotate("as3sig:public function _wrap_slapShape(pixels:int, width:int, height:int):int")))
-void _wrap_slapShape() {
-  unsigned int *arg1 = (unsigned int *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  double *result ;
-  
-  {
-    AS3_GetScalarFromVar(arg1, pixels);
-  }
-  {
-    AS3_GetScalarFromVar(arg2, width);
-  }
-  {
-    AS3_GetScalarFromVar(arg3, height);
-  }
-  result = (double *)slapShape(arg1,arg2,arg3);
+  result = (SlapInfo *)slapShape(arg1,arg2,arg3,arg4);
   {
     AS3_DeclareVar(asresult, int);
     AS3_CopyScalarToVar(asresult, result);
@@ -208,11 +202,15 @@ void _wrap_slapShape() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_getStatus():int")))
+__attribute__((annotate("as3sig:public function _wrap_getStatus(canvas:int):int")))
 void _wrap_getStatus() {
+  void *arg1 = (void *) 0 ;
   int result ;
   
-  result = (int)getStatus();
+  {
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  result = (int)getStatus(arg1);
   {
     AS3_DeclareVar(asresult, int);
     AS3_CopyScalarToVar(asresult, result);
@@ -223,14 +221,18 @@ void _wrap_getStatus() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_setStatus(status:int):void")))
+__attribute__((annotate("as3sig:public function _wrap_setStatus(canvas:int, status:int):void")))
 void _wrap_setStatus() {
-  int arg1 ;
+  void *arg1 = (void *) 0 ;
+  int arg2 ;
   
   {
-    AS3_GetScalarFromVar(arg1, status);
+    AS3_GetScalarFromVar(arg1, canvas);
   }
-  setStatus(arg1);
+  {
+    AS3_GetScalarFromVar(arg2, status);
+  }
+  setStatus(arg1,arg2);
   {
     
   }
@@ -240,17 +242,58 @@ void _wrap_setStatus() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_getShrinkage():int")))
+__attribute__((annotate("as3sig:public function _wrap_getShrinkage(canvas:int):Number")))
 void _wrap_getShrinkage() {
-  int result ;
+  void *arg1 = (void *) 0 ;
+  double result ;
   
-  result = (int)getShrinkage();
   {
-    AS3_DeclareVar(asresult, int);
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  result = (double)getShrinkage(arg1);
+  {
+    AS3_DeclareVar(asresult, Number);
     AS3_CopyScalarToVar(asresult, result);
   }
   {
     AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_appendLayer(canvas:int, pixels:int, colorPixels:int, width:int, height:int, flip:Boolean):void")))
+void _wrap_appendLayer() {
+  void *arg1 = (void *) 0 ;
+  unsigned int *arg2 = (unsigned int *) 0 ;
+  unsigned int *arg3 = (unsigned int *) 0 ;
+  int arg4 ;
+  int arg5 ;
+  bool arg6 ;
+  
+  {
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  {
+    AS3_GetScalarFromVar(arg2, pixels);
+  }
+  {
+    AS3_GetScalarFromVar(arg3, colorPixels);
+  }
+  {
+    AS3_GetScalarFromVar(arg4, width);
+  }
+  {
+    AS3_GetScalarFromVar(arg5, height);
+  }
+  {
+    AS3_GetScalarFromVar(arg6, flip);
+  }
+  appendLayer(arg1,arg2,arg3,arg4,arg5,arg6);
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
   }
 }
 

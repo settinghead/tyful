@@ -46,7 +46,6 @@ width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
 _shapeToWorkOn(NULL),_numActiveThreads(0)
 {
-    this->layers = new vector<PolarLayer*>();
     this->shapes = new vector<EngineShape*>();
     this->displayShapes = new vector<EngineShape*>();
     this->retryShapes = new vector<EngineShape*>();
@@ -94,10 +93,6 @@ EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape){
     
     EngineShape* eShape = new EngineShape(shape);
     return eShape;
-}
-
-vector<PolarLayer*>* PolarCanvas::getLayers(){
-    return layers;
 }
 
 Placement* PolarCanvas::tryCurrentSize(EngineShape* eShape){
@@ -320,11 +315,11 @@ void PolarCanvas::skipShape(EngineShape* shape, int reason){
     shape->skipBecause(reason);
 }
 
-int PolarCanvas::getHeight(){
+inline double PolarCanvas::getHeight(){
     if(isnan(height)){
         double maxHeight = 0;
-        for (vector<PolarLayer*>::iterator it = layers->begin();
-             it != layers->end(); ++it) {
+        for (vector<PolarLayer*>::iterator it = begin();
+             it != end(); ++it) {
             PolarLayer* l = (*it);
             if(maxHeight < l->getHeight()) maxHeight = l->getHeight();
         }
@@ -333,11 +328,11 @@ int PolarCanvas::getHeight(){
     return height;
 }
 
-int PolarCanvas::getWidth(){
+inline double PolarCanvas::getWidth(){
     if(isnan(width)){
         double maxWidth = 0;
-        for (vector<PolarLayer*>::iterator it = layers->begin();
-             it != layers->end(); ++it) {
+        for (vector<PolarLayer*>::iterator it = begin();
+             it != end(); ++it) {
             PolarLayer* l = (*it);
             if(maxWidth < l->getWidth()) maxWidth = l->getWidth();
         }
@@ -372,6 +367,12 @@ STATUS PolarCanvas::getStatus(){
     return this->status;
 }
 
+void PolarCanvas::addLayer (PolarLayer* val){
+    push_back(val);
+    connectLayers();
+}
+
+
 Placer* PolarCanvas::getPlacer(){
     if(_placer==NULL){
         _placer = new ColorMapPlacer(this, getPatchIndex());
@@ -381,12 +382,12 @@ Placer* PolarCanvas::getPlacer(){
 
 
 void PolarCanvas::connectLayers(){
-    for(int i=0;i<layers->size();i++){
-        if(layers->at(i)!=NULL){
+    for(int i=0;i<size();i++){
+        if(this->at(i)!=NULL){
             //may be null because zip module sometimes expands and fill in nulls to fit capacity
-            layers->at(i)->above = NULL;
-            layers->at(i)->below = NULL;
-            if(i>0) PolarLayer::connect(layers->at(i),layers->at(i-1));
+            this->at(i)->above = NULL;
+            at(i)->below = NULL;
+            if(i>0) PolarLayer::connect(at(i),at(i-1));
         }
     }
 }

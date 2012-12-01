@@ -15,7 +15,7 @@ class PixelImageShape : public ImageShape{
 public:
     PixelImageShape( unsigned int const * pixels, int width, int height, bool revert);
 	~PixelImageShape();
-    virtual inline bool isEmpty(unsigned int pixelValue) = 0;
+    virtual bool isEmpty(unsigned int pixelValue) = 0;
     void printStats();
 
 	inline int getWidth(){

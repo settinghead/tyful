@@ -21,6 +21,7 @@ package com.settinghead.tyful.client.algo
 	
 	import polartree.PolarTree.CModule;
 	import polartree.PolarTree.PolarTreeAPI;
+	import polartree.PolarTree.threadArbConds;
 	import polartree.PolarTree.vfs.ISpecialFile;
 	
 	public class PolarWorker extends Sprite implements ISpecialFile
@@ -51,6 +52,9 @@ package com.settinghead.tyful.client.algo
 		private var wordList:WordListVO = null;
 		private var template:Object = null;
 
+		private var canvasPtr:int = 0;
+		
+		
 		public function PolarWorker()
 		{
 			initialize();
@@ -121,26 +125,33 @@ package com.settinghead.tyful.client.algo
 					var directions:Array = template["directions"] as Array;
 					var colors:Array = template["colors"] as Array;
 					
+					if(canvasPtr!=0) 
+						CModule.free(canvasPtr);
 					
-					var a:Array = (template["directions"] as Array)[0] as Array;
-					var width:Number = a[0];
-					var height:Number = a[1];
-					var data:ByteArray = a[2];
-					var colorData:ByteArray = ((template["colors"] as Array)[0] as Array)[2];
+					canvasPtr = PolarTreeAPI.initCanvas(); 
+					for(var i:int=0;i<directions.length;i++){
+						var a:Array = (template["directions"] as Array)[i] as Array;
+						var width:Number = a[0];
+						var height:Number = a[1];
+						var data:ByteArray = a[2];
+						var colorData:ByteArray = ((template["colors"] as Array)[i] as Array)[2];
+						
+						data.position = 0;
+						var addr:int = CModule.malloc(data.length);
+						CModule.writeBytes(addr, data.length, data);
+						
+						colorData.position = 0;
+						var colorAddr:int = CModule.malloc(colorData.length);
+						CModule.writeBytes(colorAddr, colorData.length, colorData);
+						
+						PolarTreeAPI.appendLayer(canvasPtr,addr,colorAddr,width,height);
+					}
+	
 					
-					data.position = 0;
-					var addr:int = CModule.malloc(data.length);
-					CModule.writeBytes(addr, data.length, data);
-					
-					colorData.position = 0;
-					var colorAddr:int = CModule.malloc(colorData.length);
-					CModule.writeBytes(colorAddr, colorData.length, colorData);
-					
-					PolarTreeAPI.initCanvas(addr,colorAddr,width,height); 
 				}
 				else if (message[0] == "perseverance"){
 					CModule.serviceUIRequests();
-					PolarTreeAPI.setPerseverance(message[1] as int);
+					PolarTreeAPI.setPerseverance(canvasPtr,message[1] as int);
 				}
 				checkStart();
 			}
@@ -155,7 +166,7 @@ package com.settinghead.tyful.client.algo
 		private function start():void{
 			var currentWords:WordListVO = wordList.clone();
 			status = RUNNING;
-			while(status==RUNNING && PolarTreeAPI.getStatus()>0){
+			while(status==RUNNING && PolarTreeAPI.getStatus(canvasPtr)>0){
 				var word:WordVO;
 //				if(getShrinkage()>0){
 					word = wordList.next();
@@ -164,18 +175,18 @@ package com.settinghead.tyful.client.algo
 //					word = new WordVO("DT");
 //				}
 				CModule.serviceUIRequests();		
-				var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
+				var fontSize:Number = 100*PolarTreeAPI.getShrinkage(canvasPtr)+8;
 				var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
 				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
 				var params:Array = getTextShape(dw);
 				
 				var coordPtr:int =
-					PolarTreeAPI.slapShape(params[0],params[1],params[2]);
+					PolarTreeAPI.slapShape(canvasPtr,params[0],params[1],params[2]);
 				
 				if(coordPtr!=0){
 					var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr), CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), 0);
-					var fontColor:uint = CModule.readDouble(coordPtr + 24);
-					var failureCount:int = CModule.readDouble(coordPtr+32);
+					var fontColor:uint = CModule.read32(coordPtr + 24);
+					var failureCount:int = CModule.read32(coordPtr+28);
 					var msg:Object = new Object();
 					
 					msg["word"] = word;
@@ -199,7 +210,7 @@ package com.settinghead.tyful.client.algo
 					controlCommandReceived(null);
 			}
 			
-			if(PolarTreeAPI.getStatus()==0)
+			if(PolarTreeAPI.getStatus(canvasPtr)==0)
 				statusChannel.send("complete");
 		}
 		
