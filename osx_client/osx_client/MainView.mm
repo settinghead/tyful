@@ -204,13 +204,13 @@
         NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
         NSAttributedString *stringToInsert;
         
-        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*canvas->getShrinkage()+14];
+        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*canvas->getShrinkage()+12];
         NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
         
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0,5)];
 //        NSColor* color = [colors objectAtIndex:arc4random()%[colors count]];
 
-        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0,[str length])];
+//        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0,[str length])];
         //        [string addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:NSMakeRange(11,5)];
         [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
         
@@ -233,11 +233,11 @@
                        ,shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y
                        ,shape->getTree()->getRotation(shape->getTree()->getFinalSeq()),placement->color, count++);
                 unsigned int textColor = placement->color & 0x00FFFFFF;
-                NSColor* color = [NSColor colorWithCalibratedRed:((CGFloat)(textColor>>16))/256 green:((CGFloat)(textColor>>8 & 0x000000FF))/256 blue:((CGFloat)(textColor & 0xFF))/256 alpha:1.0F];
+                NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
                 [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
                 NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
 
-                [self drawText:point withStringToInsert:stringToInsert withRotation:rotation];
+                [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
 //                [self drawTextTree:shape->getTree() withColor:color];
             }
         }
