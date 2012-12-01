@@ -17,6 +17,8 @@
 #include "../threads/threadpool.h"
 #include <vector.h>
 #include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <semaphore.h>
 #include <queue>
 
@@ -40,6 +42,9 @@ class PolarCanvas:public vector<PolarLayer*>{
 public:
     PolarCanvas();
     ~PolarCanvas();
+    
+    static PolarCanvas* current;
+    
     void feedShape(ImageShape* shape,unsigned int sid);
     void setPerseverance(int v){
         this->perseverance = v;

@@ -34,7 +34,7 @@
 #include <semaphore.h>
 #include <errno.h>
 
-
+PolarCanvas* PolarCanvas::current = NULL;
 
 struct thread_param {
     int seq;

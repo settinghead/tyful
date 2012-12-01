@@ -11,11 +11,12 @@ polartree: check
 	mv swig/PolarTreeAPI.as swig/PolarTreeAPI.as3
 
 	@echo "-> Compile the library into a SWC"
-	"$(FLASCC)/usr/bin/g++" $(BASE_CFLAGS) -O4 -strip-all -strict -pthread ./swig/PolarTreeAPI.abc ./polartreeapi_wrapper.c ./*.cpp ../cpp/cpp/*.cpp ../cpp/cpp/**/*.cpp -emit-swc=polartree.PolarTree -swf-version=18 -o ./bin/PolarTree.swc
+	"$(FLASCC)/usr/bin/g++" $(BASE_CFLAGS) -O3 -strip-all -strict -pthread ./swig/PolarTreeAPI.abc ./polartreeapi_wrapper.c ./*.cpp ../cpp/cpp/*.cpp ../cpp/cpp/**/*.cpp -emit-swc=polartree.PolarTree -swf-version=18 -lFlash++ -lAS3++ -o ./bin/PolarTree.swc
 	cp ./bin/PolarTree.swc ../flash/libs/
 	# "$(FLEX)/bin/mxmlc" -static-link-runtime-shared-libraries -compiler.omit-trace-statements=false -default-size 1024 768 -swf-version=18 -library-path=./bin/PolarTree.swc,../flash_shared_code/bin/flash_shared_code.swc,"$(FLEX)frameworks/libs/framework.swc" -debug=true runexperiment.as -o ./bin/runexperiment.swf
 
 include ./Makefile.common
 
 clean:
-	rm -f *.swf *.swc *.bc *.exe
+	rm -f bin/*
+	rm -f swig/*

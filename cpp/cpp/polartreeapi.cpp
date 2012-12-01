@@ -14,14 +14,13 @@
 #include <assert.h>
 #include <pthread.h>
 
-void* initCanvas(){
-	PolarCanvas* canvas = new PolarCanvas();
-	canvas->setStatus(RENDERING);
+void initCanvas(){
+	PolarCanvas::current = new PolarCanvas();
+	PolarCanvas::current->setStatus(RENDERING);
 	printf("Canvas initialized.\n");
-    return canvas;
 }
 
-void appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip){
+void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip){
     assert(width>0);
     assert(height>0);
 	WordLayer* layer = new WordLayer(pixels, width, height,flip);
@@ -31,41 +30,40 @@ void appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, i
 	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
 	// layer->printStats();
     
-	((PolarCanvas*)canvas)->addLayer(layer);
+	PolarCanvas::current->addLayer(layer);
 }
 
-void setPerseverance(void* canvas,int perseverance){
-	((PolarCanvas*)canvas)->setPerseverance(perseverance);
+void setPerseverance(int perseverance){
+	PolarCanvas::current->setPerseverance(perseverance);
 }
 
-void feedShape(void* canvas,unsigned int *pixels, int width, int height,unsigned int sid)
+void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
 	TextImageShape *shape = new TextImageShape(pixels, width, height, false);
 	// shape->printStats();
-	((PolarCanvas*)canvas)->feedShape(shape,sid);
-    pthread_cond_signal(&((PolarCanvas*)canvas)->next_feed_cv);
+	PolarCanvas::current->feedShape(shape,sid);
+    pthread_cond_signal(&PolarCanvas::current->next_feed_cv);
 
 }
 
 
-void* renderRoutine(void* _canvas){
-    PolarCanvas* canvas = ((PolarCanvas*)_canvas);
-    ((PolarCanvas*)canvas)->setStatus(RENDERING);
-    pthread_mutex_lock(&canvas->next_feed_mutex);
-    while(((PolarCanvas*)canvas)->getStatus()>0){
-        if(((PolarCanvas*)canvas)->pendingShapes->empty())
-            pthread_cond_wait(&canvas->next_feed_cv, &canvas->next_feed_mutex);
-        ((PolarCanvas*)canvas)->tryNextEngineShape();
-        pthread_cond_signal(&((PolarCanvas*)canvas)->next_slap_cv);
+void* renderRoutine(void*){
+    PolarCanvas::current->setStatus(RENDERING);
+    pthread_mutex_lock(&PolarCanvas::current->next_feed_mutex);
+    while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
+        if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->empty())
+            pthread_cond_wait(&PolarCanvas::current->next_feed_cv, &PolarCanvas::current->next_feed_mutex);
+        ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
+        pthread_cond_signal(&((PolarCanvas*)PolarCanvas::current)->next_slap_cv);
     }
-    pthread_mutex_unlock(&canvas->next_feed_mutex);
+    pthread_mutex_unlock(&PolarCanvas::current->next_feed_mutex);
 
     
     return NULL;
 }
 
 
-void startRendering(void* canvas){
+void startRendering(){
     
     pthread_t       mainRountineThread;
     pthread_attr_t  attr;
@@ -76,21 +74,28 @@ void startRendering(void* canvas){
     returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
     assert(!returnVal);
     
-    pthread_create(&mainRountineThread, &attr, &renderRoutine, canvas);
+    pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
 }
 
-int getStatus(void* canvas)
+int getStatus()
 {
-	return ((PolarCanvas*)canvas)->getStatus();
+	return PolarCanvas::current->getStatus();
 }
 
-void setStatus(void* canvas,int status)
+void setStatus(int status)
 {
-	((PolarCanvas*)canvas)->setStatus(status);
+	PolarCanvas::current->setStatus(status);
 }
 
 
-double getShrinkage(void* canvas)
+double getShrinkage()
 {
-	return ((PolarCanvas*)canvas)->getShrinkage();
+	return PolarCanvas::current->getShrinkage();
+}
+
+SlapInfo* getNextSlap(){
+    if(PolarCanvas::current->slaps->empty()) return NULL;
+    SlapInfo* info = PolarCanvas::current->slaps->front();
+    PolarCanvas::current->slaps->pop();
+    return info;
 }

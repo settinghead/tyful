@@ -17,7 +17,6 @@ class PolarCanvas;
     NSBitmapImageRep *directionImage;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
-    PolarCanvas* canvas;
     NSMutableDictionary *dict;
 
 }

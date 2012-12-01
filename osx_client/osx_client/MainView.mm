@@ -40,9 +40,9 @@
 }
 
 -(void)resetMainImage {
-    canvas = (PolarCanvas*)initCanvas();
+    initCanvas();
     unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
-    appendLayer(canvas,pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height,false);
+    appendLayer(pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height,false);
     dict = [[NSMutableDictionary alloc] init];
     mainImage = [[NSBitmapImageRep alloc]
                  initWithBitmapDataPlanes:nil
@@ -189,16 +189,16 @@ int sid = 0;
     counter = 0;
     NSDate *methodStart = [NSDate date];
     
-    startRendering(canvas);
+    startRendering();
     
-    pthread_mutex_lock(&canvas->next_slap_mutex);
-    while(getStatus(canvas)>0){
-        while(canvas->pendingShapes->size()<10)
+    pthread_mutex_lock(&PolarCanvas::current->next_slap_mutex);
+    while(getStatus()>0){
+        while(PolarCanvas::current->pendingShapes->size()<10)
             [self feedNextText];
-        pthread_cond_wait(&canvas->next_slap_cv, &canvas->next_slap_mutex);
+        pthread_cond_wait(&PolarCanvas::current->next_slap_cv, &PolarCanvas::current->next_slap_mutex);
         [self checkAndRenderSlaps];
     }
-    pthread_mutex_unlock(&canvas->next_slap_mutex);
+    pthread_mutex_unlock(&PolarCanvas::current->next_slap_mutex);
 
     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
@@ -219,7 +219,7 @@ int sid = 0;
     NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
     
-    NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*getShrinkage(canvas)+12];
+    NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*getShrinkage()+12];
     NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
     
     unsigned int sid = (unsigned int)[dict count];
@@ -234,14 +234,13 @@ int sid = 0;
     if(textImage.size.width>0){
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        feedShape(canvas, pixels, textImage.size.width, textImage.size.height, sid);
+        feedShape(pixels, textImage.size.width, textImage.size.height, sid);
     }
 }
 
 -(void)checkAndRenderSlaps{
-    while(!canvas->slaps->empty()){
-        SlapInfo* placement = canvas->slaps->front();
-        canvas->slaps->pop();
+    SlapInfo* placement;
+    while((placement=getNextSlap())!=NULL){
         double rotation = -(placement->rotation)*360/M_PI/2;
         NSMutableAttributedString *string = [dict objectForKey:[NSString stringWithFormat:@"%u", placement->sid]];
         NSPoint point = NSMakePoint(placement->location.x,
