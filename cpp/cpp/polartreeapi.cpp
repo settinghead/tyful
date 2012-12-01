@@ -20,12 +20,12 @@ void* initCanvas(){
     return canvas;
 }
 
-void appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip){
+void appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, int width, int height){
     assert(width>0);
     assert(height>0);
-	WordLayer* layer = new WordLayer(pixels, width, height,flip);
+	WordLayer* layer = new WordLayer(pixels, width, height,false);
 	if(colorPixels>0)
-		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip));
+		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,false));
     printf("Special point(5,5): %x\n", layer->getPixel(5,5));
 	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
 	// layer->printStats();
@@ -53,14 +53,7 @@ SlapInfo* slapShape(void* canvas,unsigned int *pixels, int width, int height)
         place->rotation = shape->getTree()->getRotation(shape->getTree()->getFinalSeq());
         place->color = placement->color;
         place->failureCount = ((PolarCanvas*)canvas)->getFailureCount();
-        
-//    	double coord[5];
-//    	coord[0] = shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).x;
-//    	coord[1] = shape->getTree()->getTopLeftLocation(shape->getTree()->getFinalSeq()).y;
-//    	coord[2] = shape->getTree()->getRotation(shape->getTree()->getFinalSeq());
-//    	coord[3] = placement->color;
-//    	coord[4] = canvas->getFailureCount();
-//    	return coord;
+
         return place;
 	}
 	return NULL;

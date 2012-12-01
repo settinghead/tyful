@@ -18,6 +18,7 @@
 #include <vector.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <queue>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ public:
     
     void addLayer (PolarLayer* val);
 private:
-
+    
     vector<EngineShape*>* shapes;
     vector<EngineShape*>* displayShapes;
     vector<EngineShape*>* retryShapes;

@@ -261,14 +261,13 @@ void _wrap_getShrinkage() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_appendLayer(canvas:int, pixels:int, colorPixels:int, width:int, height:int, flip:Boolean):void")))
+__attribute__((annotate("as3sig:public function _wrap_appendLayer(canvas:int, pixels:int, colorPixels:int, width:int, height:int):void")))
 void _wrap_appendLayer() {
   void *arg1 = (void *) 0 ;
   unsigned int *arg2 = (unsigned int *) 0 ;
   unsigned int *arg3 = (unsigned int *) 0 ;
   int arg4 ;
   int arg5 ;
-  bool arg6 ;
   
   {
     AS3_GetScalarFromVar(arg1, canvas);
@@ -285,10 +284,7 @@ void _wrap_appendLayer() {
   {
     AS3_GetScalarFromVar(arg5, height);
   }
-  {
-    AS3_GetScalarFromVar(arg6, flip);
-  }
-  appendLayer(arg1,arg2,arg3,arg4,arg5,arg6);
+  appendLayer(arg1,arg2,arg3,arg4,arg5);
   {
     
   }

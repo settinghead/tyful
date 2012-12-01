@@ -18,10 +18,12 @@ class PolarCanvas;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
     PolarCanvas* canvas;
+    
 
 }
 - (IBAction)drawRandomText:(id)sender;
 - (IBAction)drawColorMappedText:(id)sender;
+- (void)drawCanvas;
 -(void) drawLeaves:(PolarTree*)tree
          withColor:(NSColor*)color;
 -(void) drawBounds:(PolarTree*)tree

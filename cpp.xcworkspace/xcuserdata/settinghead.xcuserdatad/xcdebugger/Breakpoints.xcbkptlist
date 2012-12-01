@@ -309,32 +309,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376027283.905738"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "235"
-         endingLineNumber = "235"
-         landmarkName = "-drawColorMappedText:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376027283.905738"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "236"
-         endingLineNumber = "236"
-         landmarkName = "-drawColorMappedText:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "cpp/cpp/colorer/TwoHueRandomSatsColorer.cpp"
          timestampString = "376008496.756149"
          startingColumnNumber = "9223372036854775807"
@@ -380,7 +354,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "24"
          endingLineNumber = "24"
-         landmarkName = "appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip)"
+         landmarkName = "appendLayer(void* canvas,unsigned int *pixels, unsigned int *colorPixels, int width, int height)"
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
@@ -408,6 +382,19 @@
          endingLineNumber = "52"
          landmarkName = "slapShape(void* canvas,unsigned int *pixels, int width, int height)"
          landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "osx_client/osx_client/MainView.mm"
+         timestampString = "376031559.861679"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "28"
+         endingLineNumber = "28"
+         landmarkName = "@implementation MainView"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
