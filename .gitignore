@@ -30,3 +30,5 @@ log/words-development.log
 log/photos-development.log
 
 redis-log
+
+dump.rdb
