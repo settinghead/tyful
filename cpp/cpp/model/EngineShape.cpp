@@ -17,9 +17,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape):skipReason(0),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0){
+EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0),uid(sid){
     for(int i=0;i<NUM_THREADS;i++){
         currentPlacement[i]=new Placement;
+        currentPlacement[i]->sid = uid;
     }
     this->shape = shape;
     this->shape->getTree();

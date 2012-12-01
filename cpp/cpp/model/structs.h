@@ -30,6 +30,7 @@ struct PolarPoint{
 };
 
 struct CorePlacement{
+    unsigned int sid;
     CartisianPoint location;
     double rotation;
     unsigned int color;
@@ -43,6 +44,7 @@ struct Placement:CorePlacement{
         p.rotation = rotation;
         p.patch = patch;
         p.color = color;
+        p.sid = sid;
         return p;
     }
 };

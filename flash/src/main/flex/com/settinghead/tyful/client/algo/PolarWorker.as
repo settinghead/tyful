@@ -144,7 +144,7 @@ package com.settinghead.tyful.client.algo
 						var colorAddr:int = CModule.malloc(colorData.length);
 						CModule.writeBytes(colorAddr, colorData.length, colorData);
 						
-						PolarTreeAPI.appendLayer(canvasPtr,addr,colorAddr,width,height);
+						PolarTreeAPI.appendLayer(canvasPtr,addr,colorAddr,width,height,true);
 					}
 	
 					

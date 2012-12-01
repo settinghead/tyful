@@ -21,7 +21,7 @@ class Angler;
 
 class EngineShape{
 public:
-    EngineShape(ImageShape* shape);
+    EngineShape(ImageShape* shape, unsigned int sid);
     bool wasSkipped();
     void skipBecause(int reason);
     inline bool hasNextDesiredPlacement(){
@@ -40,9 +40,13 @@ public:
     Placement* getCurrentPlacement(int seq);
     vector<Placement*>* getDesiredPlacements();
     void setDesiredPlacements(vector<Placement*>*);
+    inline unsigned int getUid(){
+        return uid;
+    }
 
 private:
     int skipReason;
+    int uid;
     ImageShape* shape;
     Placement* currentPlacement[NUM_THREADS];
     Placement* renderedPlacement;

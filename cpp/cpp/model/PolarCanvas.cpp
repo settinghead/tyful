@@ -22,6 +22,7 @@
 #include "../placer/ColorMapPlacer.h"
 #include "../nudger/ColorMapZigzagNudger.h"
 #include "../density/DensityPatchIndex.h"
+#include "structs.h"
 #include <cmath>
 #include <limits>
 #include <cstdlib>
@@ -35,7 +36,6 @@
 
 
 
-
 struct thread_param {
     int seq;
     PolarCanvas* canvas;
@@ -44,7 +44,7 @@ struct thread_param {
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
-_shapeToWorkOn(NULL),_numActiveThreads(0)
+_shapeToWorkOn(NULL),_numActiveThreads(0), slaps(new queue<SlapInfo*>()), pendingShapes(new queue<EngineShape*>)
 {
     this->shapes = new vector<EngineShape*>();
     this->displayShapes = new vector<EngineShape*>();
@@ -56,6 +56,12 @@ _shapeToWorkOn(NULL),_numActiveThreads(0)
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
+    
+    pthread_mutex_init(&next_slap_mutex,NULL);
+    pthread_cond_init (&next_slap_cv, NULL);
+    
+    pthread_mutex_init(&next_feed_mutex,NULL);
+    pthread_cond_init (&next_feed_cv, NULL);
     
     //spawn threads
 	if ((pool = threadpool_init(NUM_THREADS)) == NULL) {
@@ -71,61 +77,84 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&shape_mutex);
     pthread_mutex_destroy(&attempt_mutex);
     pthread_cond_destroy(&count_threshold_cv);
+       
+    pthread_mutex_destroy(&next_slap_mutex);
+    pthread_cond_destroy (&next_slap_cv);
+    
+    pthread_mutex_destroy(&next_feed_mutex);
+    pthread_cond_destroy (&next_feed_cv);
     
     threadpool_free(pool,1);
 
 }
 
 
-Placement* PolarCanvas::slapShape(ImageShape* shape){
+void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
     if(failureCount <= perseverance && status == RENDERING){
-        EngineShape* eShape = generateEngineWord(shape);
-        Placement* p = tryCurrentSize(eShape);
-        if(p!=NULL) return p;
+        EngineShape* eShape = generateEngineWord(shape,sid);
+        pendingShapes->push(eShape);
     }
-    return NULL;
 }
 
-EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape){
+EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape,unsigned int sid){
 //    int newIndex = totalAttempted<tu.words.size?totalAttemptedWords
     //				+ indexOffset
 //    :tu.words.size;
     
-    EngineShape* eShape = new EngineShape(shape);
+    EngineShape* eShape = new EngineShape(shape,sid);
     return eShape;
 }
 
-Placement* PolarCanvas::tryCurrentSize(EngineShape* eShape){
-    placeShape(eShape);
-    if(eShape->wasSkipped()){
-        if(getSizer()->hasNextSize()){
-            if(totalAttempted>0){
-                retryShapes->push_back(eShape);
-                numRetries++;
+void PolarCanvas::tryNextEngineShape(){
+    if(!pendingShapes->empty()){
+        EngineShape* eShape = pendingShapes->front();
+        pendingShapes->pop();
+        placeShape(eShape);
+        if(eShape->wasSkipped()){
+            if(getSizer()->hasNextSize()){
+                if(totalAttempted>0){
+                    retryShapes->push_back(eShape);
+                    numRetries++;
+                }
+                else
+                    numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
+                if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE ){
+                    getSizer()->switchToNextSize();
+                    numRetries = 0;
+                }
+                return;
             }
-            else
-                numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
-            if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE ){
-                getSizer()->switchToNextSize();
-                numRetries = 0;
-            }
-            return NULL;
         }
-    }
+        
+        shapes->push_back(eShape);
+        if(!eShape->wasSkipped()){
+            if(failureCount>1) failureCount -= 2;
+            displayShapes->push_back(eShape);
+        }
+        else{
+            failureCount++;
+            if(failureCount>perseverance){
+                status = PAUSED;
+            }
+        }
+        //TODO: notify arrival of new display shape
+        Placement* placement= eShape->getFinalPlacement();
+        
+        if(placement!=NULL){
+            printf("Coord: %f, %f; rotation: %f, color: 0x%x\n"
+                   ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).x
+                   ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).y
+                   ,eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),placement->color);
+            SlapInfo* place = new SlapInfo;
+            place->location = eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq());
+            place->rotation = eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq());
+            place->color = placement->color;
+            place->failureCount = getFailureCount();
+            place->sid = eShape->getUid();
+            slaps->push(place);
+        }
     
-    shapes->push_back(eShape);
-    if(!eShape->wasSkipped()){
-        if(failureCount>1) failureCount -= 2;
-        displayShapes->push_back(eShape);
     }
-    else{
-        failureCount++;
-        if(failureCount>perseverance){
-            status = PAUSED;
-        }
-    }
-    //TODO: notify arrival of new display shape
-    return eShape->getFinalPlacement();
 }
 
 

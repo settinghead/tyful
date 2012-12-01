@@ -171,13 +171,13 @@ void _wrap_setPerseverance() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_slapShape(canvas:int, pixels:int, width:int, height:int):int")))
-void _wrap_slapShape() {
+__attribute__((annotate("as3sig:public function _wrap_feedShape(canvas:int, pixels:int, width:int, height:int, sid:int):void")))
+void _wrap_feedShape() {
   void *arg1 = (void *) 0 ;
   unsigned int *arg2 = (unsigned int *) 0 ;
   int arg3 ;
   int arg4 ;
-  SlapInfo *result ;
+  unsigned int arg5 ;
   
   {
     AS3_GetScalarFromVar(arg1, canvas);
@@ -191,13 +191,15 @@ void _wrap_slapShape() {
   {
     AS3_GetScalarFromVar(arg4, height);
   }
-  result = (SlapInfo *)slapShape(arg1,arg2,arg3,arg4);
   {
-    AS3_DeclareVar(asresult, int);
-    AS3_CopyScalarToVar(asresult, result);
+    AS3_GetScalarFromVar(arg5, sid);
+  }
+  feedShape(arg1,arg2,arg3,arg4,arg5);
+  {
+    
   }
   {
-    AS3_ReturnAS3Var(asresult);
+    AS3_ReturnAS3Var(undefined);
   }
 }
 
@@ -261,13 +263,14 @@ void _wrap_getShrinkage() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_appendLayer(canvas:int, pixels:int, colorPixels:int, width:int, height:int):void")))
+__attribute__((annotate("as3sig:public function _wrap_appendLayer(canvas:int, pixels:int, colorPixels:int, width:int, height:int, flip:Boolean):void")))
 void _wrap_appendLayer() {
   void *arg1 = (void *) 0 ;
   unsigned int *arg2 = (unsigned int *) 0 ;
   unsigned int *arg3 = (unsigned int *) 0 ;
   int arg4 ;
   int arg5 ;
+  bool arg6 ;
   
   {
     AS3_GetScalarFromVar(arg1, canvas);
@@ -284,7 +287,27 @@ void _wrap_appendLayer() {
   {
     AS3_GetScalarFromVar(arg5, height);
   }
-  appendLayer(arg1,arg2,arg3,arg4,arg5);
+  {
+    AS3_GetScalarFromVar(arg6, flip);
+  }
+  appendLayer(arg1,arg2,arg3,arg4,arg5,arg6);
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_startRendering(canvas:int):void")))
+void _wrap_startRendering() {
+  void *arg1 = (void *) 0 ;
+  
+  {
+    AS3_GetScalarFromVar(arg1, canvas);
+  }
+  startRendering(arg1);
   {
     
   }

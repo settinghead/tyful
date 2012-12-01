@@ -18,7 +18,7 @@ class PolarCanvas;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
     PolarCanvas* canvas;
-    
+    NSMutableDictionary *dict;
 
 }
 - (IBAction)drawRandomText:(id)sender;

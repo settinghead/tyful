@@ -40,7 +40,7 @@ class PolarCanvas:public vector<PolarLayer*>{
 public:
     PolarCanvas();
     ~PolarCanvas();
-    Placement* slapShape(ImageShape* shape);
+    void feedShape(ImageShape* shape,unsigned int sid);
     void setPerseverance(int v){
         this->perseverance = v;
     }
@@ -65,6 +65,18 @@ public:
     STATUS getStatus();
     
     void addLayer (PolarLayer* val);
+    
+    pthread_mutex_t next_slap_mutex;
+    pthread_cond_t next_slap_cv;
+    
+    pthread_mutex_t next_feed_mutex;
+    pthread_cond_t next_feed_cv;
+
+    queue<SlapInfo*>* slaps;
+    queue<EngineShape*>* pendingShapes;
+    
+    void tryNextEngineShape();
+
 private:
     
     vector<EngineShape*>* shapes;
@@ -90,10 +102,9 @@ private:
         return _sizer;
     }
     inline Nudger* getNudger();
-    inline EngineShape* generateEngineWord(ImageShape* shape);
+    inline EngineShape* generateEngineWord(ImageShape* shape, unsigned int sid);
     inline bool placeShape(EngineShape* shape);
     inline void computeDesiredPlacements(EngineShape* shape);
-    inline Placement* tryCurrentSize(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
     inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
     DensityPatchIndex* _patchIndex;
@@ -108,6 +119,9 @@ private:
     pthread_mutex_t shape_mutex;
     pthread_mutex_t attempt_mutex;
     pthread_mutex_t numActiveThreads_mutex;
+    pthread_cond_t count_threshold_cv;
+    
+
     pthread_attr_t attr;
 //    pthread_t threads[NUM_THREADS];
 
@@ -117,7 +131,6 @@ private:
 
     
 	struct threadpool *pool;
-    pthread_cond_t count_threshold_cv;
 };
 
 

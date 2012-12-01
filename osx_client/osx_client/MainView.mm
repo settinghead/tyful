@@ -42,8 +42,8 @@
 -(void)resetMainImage {
     canvas = (PolarCanvas*)initCanvas();
     unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
-    appendLayer(canvas,pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height);
-    
+    appendLayer(canvas,pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height,false);
+    dict = [[NSMutableDictionary alloc] init];
     mainImage = [[NSBitmapImageRep alloc]
                  initWithBitmapDataPlanes:nil
                  pixelsWide:directionImage.size.width
@@ -183,34 +183,47 @@ NSArray *strings = [[NSArray alloc] initWithObjects:
                     ,@"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname"
                     ,nil];
 int counter = 0;
-
+int sid = 0;
 
 - (void)drawCanvas{
+    counter = 0;
+    NSDate *methodStart = [NSDate date];
+    
+    startRendering(canvas);
+    
+    pthread_mutex_lock(&canvas->next_slap_mutex);
     while(getStatus(canvas)>0){
-        [self drawNextText];
+        while(canvas->pendingShapes->size()<10)
+            [self feedNextText];
+        pthread_cond_wait(&canvas->next_slap_cv, &canvas->next_slap_mutex);
+        [self checkAndRenderSlaps];
     }
+    pthread_mutex_unlock(&canvas->next_slap_mutex);
+
+    NSDate *methodFinish = [NSDate date];
+    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+    NSLog(@"Execution time: %f",executionTime);
+
 }
 
 - (void)drawColorMappedText:(id)sender{
     [self loadDirectionImage];
     [self resetMainImage];
     
-    NSDate *methodStart = [NSDate date];
 
     [NSThread detachNewThreadSelector:@selector(drawCanvas) toTarget:self withObject:nil];
-    
-    NSDate *methodFinish = [NSDate date];
-    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
 
-    NSLog(@"Execution time: %f",executionTime);
 }
 
-- (void)drawNextText{
+- (void)feedNextText{
     NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
     
     NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*getShrinkage(canvas)+12];
     NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
+    
+    unsigned int sid = (unsigned int)[dict count];
+    [dict setObject:string forKey:[NSString stringWithFormat:@"%u", sid]];
     
     [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
     
@@ -221,25 +234,30 @@ int counter = 0;
     if(textImage.size.width>0){
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        SlapInfo* placement = slapShape(canvas, pixels, textImage.size.width, textImage.size.height);
-        if(placement!=NULL){
-            double rotation = -(placement->rotation)*360/M_PI/2;
-            NSPoint point = NSMakePoint(placement->location.x,
-                                        mainImage.size.height-textImage.size.height-placement->location.y);
-            printf("Coord: %f, %f; rotation: %f, color: %x, total: %d\n"
-                   ,point.x
-                   ,point.y
-                   ,placement->rotation,placement->color, counter++);
-            unsigned int textColor = placement->color & 0x00FFFFFF;
-            NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
-            [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[str length])];
-            NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
-            
-            [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
-        }
+        feedShape(canvas, pixels, textImage.size.width, textImage.size.height, sid);
     }
 }
 
+-(void)checkAndRenderSlaps{
+    while(!canvas->slaps->empty()){
+        SlapInfo* placement = canvas->slaps->front();
+        canvas->slaps->pop();
+        double rotation = -(placement->rotation)*360/M_PI/2;
+        NSMutableAttributedString *string = [dict objectForKey:[NSString stringWithFormat:@"%u", placement->sid]];
+        NSPoint point = NSMakePoint(placement->location.x,
+                                    mainImage.size.height-string.size.height-placement->location.y);
+        printf("Coord: %f, %f; rotation: %f, color: %x, total: %d\n"
+               ,point.x
+               ,point.y
+               ,placement->rotation,placement->color, counter++);
+        unsigned int textColor = placement->color & 0x00FFFFFF;
+        NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
+        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[string length])];
+        NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
+        
+        [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
+    }
+}
 
 
 //- (void)drawRandomText:(id)sender{
