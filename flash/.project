@@ -3,7 +3,6 @@
 	<name>flash</name>
 	<comment></comment>
 	<projects>
-		<project>flash_models</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -17,11 +16,6 @@
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
 	<linkedResources>
-		<link>
-			<name>[source path] flex</name>
-			<type>2</type>
-			<locationURI>DOCUMENTS/flash_shared_code/src/main/flex</locationURI>
-		</link>
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>

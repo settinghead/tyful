@@ -288,11 +288,38 @@ void _wrap_startRendering() {
 }
 
 
+__attribute__((annotate("as3sig:public function _wrap_pauseRendering():void")))
+void _wrap_pauseRendering() {
+  pauseRendering();
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
+  }
+}
+
+
 __attribute__((annotate("as3sig:public function _wrap_getNextSlap():int")))
 void _wrap_getNextSlap() {
   SlapInfo *result ;
   
   result = (SlapInfo *)getNextSlap();
+  {
+    AS3_DeclareVar(asresult, int);
+    AS3_CopyScalarToVar(asresult, result);
+  }
+  {
+    AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_getNumberOfPendingShapes():int")))
+void _wrap_getNumberOfPendingShapes() {
+  unsigned int result ;
+  
+  result = (unsigned int)getNumberOfPendingShapes();
   {
     AS3_DeclareVar(asresult, int);
     AS3_CopyScalarToVar(asresult, result);

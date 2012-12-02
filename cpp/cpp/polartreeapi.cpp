@@ -10,9 +10,12 @@
 #include "tree/PolarRootTree.h"
 #include "model/WordLayer.h"
 #include "constants.h"
+#include "ThreadControllers.h"
 #include "model/structs.h"
 #include <assert.h>
 #include <pthread.h>
+
+
 
 void initCanvas(){
 	PolarCanvas::current = new PolarCanvas();
@@ -42,21 +45,23 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 	TextImageShape *shape = new TextImageShape(pixels, width, height, false);
 	// shape->printStats();
 	PolarCanvas::current->feedShape(shape,sid);
-    pthread_cond_signal(&PolarCanvas::current->next_feed_cv);
+    pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
 
 }
 
 
 void* renderRoutine(void*){
     PolarCanvas::current->setStatus(RENDERING);
-    pthread_mutex_lock(&PolarCanvas::current->next_feed_mutex);
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
     while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
         if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->empty())
-            pthread_cond_wait(&PolarCanvas::current->next_feed_cv, &PolarCanvas::current->next_feed_mutex);
+            pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
         ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
-        pthread_cond_signal(&((PolarCanvas*)PolarCanvas::current)->next_slap_cv);
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+
     }
-    pthread_mutex_unlock(&PolarCanvas::current->next_feed_mutex);
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
 
     
     return NULL;
@@ -77,6 +82,10 @@ void startRendering(){
     pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
 }
 
+void pauseRendering(){
+    PolarCanvas::current->setStatus(PAUSED);
+}
+
 int getStatus()
 {
 	return PolarCanvas::current->getStatus();
@@ -85,6 +94,10 @@ int getStatus()
 void setStatus(int status)
 {
 	PolarCanvas::current->setStatus(status);
+}
+
+int getNumberOfPendingShapes(){
+    return (unsigned int)PolarCanvas::current->pendingShapes->size();
 }
 
 

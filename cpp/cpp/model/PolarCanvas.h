@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <semaphore.h>
 #include <queue>
+#include "../ThreadControllers.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ class Angler;
 class Patch;
 class Nudger;
 class DensityPatchIndex;
-
+class ThreadControllers;
 
 
 typedef int STATUS;
@@ -44,6 +45,7 @@ public:
     ~PolarCanvas();
     
     static PolarCanvas* current;
+    static ThreadControllers threadControllers;
     
     void feedShape(ImageShape* shape,unsigned int sid);
     void setPerseverance(int v){
@@ -57,8 +59,8 @@ public:
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
     void setNudger(Nudger* placer);
-    inline double getWidth();
-    inline double getHeight();
+    inline float getWidth();
+    inline float getHeight();
     inline int getFailureCount(){
         return this->failureCount;
     }
@@ -70,18 +72,13 @@ public:
     STATUS getStatus();
     
     void addLayer (PolarLayer* val);
-    
-    pthread_mutex_t next_slap_mutex;
-    pthread_cond_t next_slap_cv;
-    
-    pthread_mutex_t next_feed_mutex;
-    pthread_cond_t next_feed_cv;
 
     queue<SlapInfo*>* slaps;
     queue<EngineShape*>* pendingShapes;
     
     void tryNextEngineShape();
-
+    
+    
 private:
     
     vector<EngineShape*>* shapes;
@@ -91,7 +88,7 @@ private:
     int numRetries;
     int totalAttempted;
     int perseverance, diligence;
-    double width, height;
+    float width, height;
     STATUS status;
     Sizer* _sizer;
     Nudger* _nudger;

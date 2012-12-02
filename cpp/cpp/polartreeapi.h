@@ -7,4 +7,6 @@ void setStatus(int status);
 double getShrinkage();
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip);
 void startRendering();
+void pauseRendering();
 SlapInfo* getNextSlap();
+unsigned int getNumberOfPendingShapes();

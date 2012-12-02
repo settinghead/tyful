@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7C10FEA5165993C0003F656A /* egg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C10FEA4165993C0003F656A /* egg.png */; };
-		7C7AE8F316674832002466A3 /* cpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7AE8F216674832002466A3 /* cpp.dylib */; };
+		7C294C17166B3EF900BA2A15 /* cpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C294C16166B3EDE00BA2A15 /* cpp.dylib */; };
 		7CBDAAF8165AADFC00E009E5 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF2165AADFC00E009E5 /* dog.png */; };
 		7CBDAAF9165AADFC00E009E5 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF3165AADFC00E009E5 /* face.png */; };
 		7CBDAAFA165AADFC00E009E5 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CBDAAF4165AADFC00E009E5 /* heart.png */; };
@@ -35,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7C294C15166B3EDE00BA2A15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C294C11166B3EDE00BA2A15 /* cpp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7C7AE869166745B7002466A3;
+			remoteInfo = cpp;
+		};
 		7CF53CE41646658B00A218BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7CF53CB61646658B00A218BE /* Project object */;
@@ -46,7 +53,7 @@
 
 /* Begin PBXFileReference section */
 		7C10FEA4165993C0003F656A /* egg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egg.png; sourceTree = "<group>"; };
-		7C7AE8F216674832002466A3 /* cpp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = cpp.dylib; path = "../../Library/Developer/Xcode/DerivedData/cpp-beprpvhyjzvoyhauhrmgyhzgdqbk/Build/Products/Debug/cpp.dylib"; sourceTree = "<group>"; };
+		7C294C11166B3EDE00BA2A15 /* cpp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cpp.xcodeproj; path = ../cpp/cpp.xcodeproj; sourceTree = "<group>"; };
 		7CBDAAF2165AADFC00E009E5 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		7CBDAAF3165AADFC00E009E5 /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		7CBDAAF4165AADFC00E009E5 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
@@ -85,8 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C7AE8F316674832002466A3 /* cpp.dylib in Frameworks */,
 				7CF53CC41646658B00A218BE /* Cocoa.framework in Frameworks */,
+				7C294C17166B3EF900BA2A15 /* cpp.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,10 +127,18 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		7C294C12166B3EDE00BA2A15 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C294C16166B3EDE00BA2A15 /* cpp.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7CF53CB41646658B00A218BE = {
 			isa = PBXGroup;
 			children = (
-				7C7AE8F216674832002466A3 /* cpp.dylib */,
+				7C294C11166B3EDE00BA2A15 /* cpp.xcodeproj */,
 				7C10FEA31659939A003F656A /* Resources */,
 				7CF53CC91646658B00A218BE /* osx_client */,
 				7CF53CE61646658B00A218BE /* osx_clientTests */,
@@ -264,6 +279,12 @@
 			mainGroup = 7CF53CB41646658B00A218BE;
 			productRefGroup = 7CF53CC01646658B00A218BE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7C294C12166B3EDE00BA2A15 /* Products */;
+					ProjectRef = 7C294C11166B3EDE00BA2A15 /* cpp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				7CF53CBE1646658B00A218BE /* osx_client */,
@@ -271,6 +292,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7C294C16166B3EDE00BA2A15 /* cpp.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = cpp.dylib;
+			remoteRef = 7C294C15166B3EDE00BA2A15 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7CF53CBD1646658B00A218BE /* Resources */ = {

@@ -8,84 +8,80 @@
 ** source other than Adobe, then your use, modification, or distribution of it requires the prior
 ** written permission of Adobe.
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "AS3/AS3.h"
-#include <Flash++.h>
+
 #include <pthread.h>
+#include <AS3/AS3.h>
+#include <AS3/AVM2.h> // low level sync primitives
+#include <stdio.h>
 #include "../cpp/cpp/model/PolarCanvas.h"
-extern "C" {
-#include "sys/thr.h"
+
+static pthread_barrier_t feed_barrier;
+static pthread_barrier_t slap_barrier;
+static volatile long feed_tid = 0;
+static volatile long slap_tid = 0;
+
+static void *callFeed(void *arg) {
+  // inline_as3("if(com.settinghead.tyful.client.model.RenderTuProxy.current) {com.settinghead.tyful.client.model.RenderTuProxy.current.handleFeeds();} else if(com.settinghead.tyful.client.algo.PolarWorker.current) {com.settinghead.tyful.client.algo.PolarWorker.current.handleFeeds();}");
+  // inline_as3("if(this[\"feedRequestListener\"]) this[\"slapRequestListener\"].call(null);");
+  // inline_as3("trace(com.settinghead.tyful.client.model.RenderProxy.current);");
+  // inline_as3("trace(com.settinghead.tyful.client.algo.PolarWorker.current);");
+  return 0;
 }
 
-static pthread_barrier_t barrier;
-static volatile long tid = 0;
+static void *callSlap(void *arg) {
+  // inline_as3("if(this[\"slapRequestListener\"]) this[\"slapRequestListener\"].call(null);");
+  // inline_as3("trace(this[\"slapRequestListener\"]);");
 
-using namespace AS3::local;
+    // inline_as3("if(com.settinghead.tyful.client.model.RenderProxy.current) {com.settinghead.tyful.client.model.RenderTuProxy.current.handleSlaps();} else if(com.settinghead.tyful.client.algo.PolarWorker.current) {com.settinghead.tyful.client.algo.PolarWorker.current.handleSlaps();}");
+  // inline_as3("if(this[\"feedRequestListener\"]) this[\"slapRequestListener\"].call(null);");
+  // inline_as3("trace(com.settinghead.tyful.client.model.RenderTuProxy.current);");
+  // inline_as3("trace(com.settinghead.tyful.client.algo.PolarWorker.current);");
+  return 0;
+}
 
-static var monitorSlapThreadProc(void *arg){
-
-	pthread_barrier_wait(&barrier); // wait for main to pick up tid
-	pthread_barrier_wait(&barrier); // wait for main to create messageChannel
-	
-	pthread_t thread;
-
-	flash::system::Worker worker = internal::get_Worker();
-	flash::system::MessageChannel msgChan = worker->getSharedProperty("com.mycompany.messageChannel");
-
-
-	PolarCanvas* canvas = PolarCanvas::current;
-	pthread_mutex_lock(&canvas->next_slap_mutex);
+static void* monitorFeedThreadProc(void *arg){
+  pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+  printf("feed monitor thread initialized. Canvas addr: %x\n",&PolarCanvas::threadControllers);
     for(;;){
-        pthread_cond_wait(&canvas->next_slap_cv, &canvas->next_slap_mutex);
-        msgChan->send(_int::_new(0)); // send current timestamp
+      pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+    // inline_as3("this.dispatchEvent(new Event(\"feedRequest\"));");
+      avm2_ui_thunk(callFeed, NULL);
     }
-    pthread_mutex_unlock(&canvas->next_slap_mutex);
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
 }
 
-void setCallbackFunction() __attribute__((used,
-	annotate("as3sig:public function setCallbackFunction(_callback:Function):void"),
+static void* monitorSlapThreadProc(void *arg){
+
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+    printf("slap monitor thread initialized. Canvas addr: %x\n",&PolarCanvas::threadControllers);
+    for(;;){
+      pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
+    // inline_as3("this.dispatchEvent(new Event(\"slapRequest\"));");
+      avm2_ui_thunk(callSlap, NULL);
+    }
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+}
+
+void addFeedRequestEventListener() __attribute__((used,
+	annotate("as3sig:public function addFeedRequestEventListener(listener:Function):void"),
 	annotate("as3package:polartree.PolarTree")));
-void setCallbackFunction(){
-    inline_as3("callback = _callback;");
+void addFeedRequestEventListener(){
+    inline_as3("this[\"feedRequestListener\"]=listener;");
 }
 
-
-static var channelMessageEventListenerProc(void *arg, var as3Args)
-{
-  inline_as3("if(callback!=null) {callback.call();}");
-  return internal::_undefined;
+void addSlapRequestEventListener() __attribute__((used,
+	annotate("as3sig:public function addSlapRequestEventListener(listener:Function):void"),
+	annotate("as3package:polartree.PolarTree")));
+void addSlapRequestEventListener(){
+    inline_as3("this[\"slapRequestListener\"]=listener;");
 }
 
 int main()
 {
-    // We still need a main function for the SWC. this function must be called
-    // so that all the static init code is executed before any library functions
-    // are used.
-    //
-    // The main function for a library must throw an exception so that it does
-    // not return normally. Returning normally would cause the static
-    // destructors to be executed leaving the library in an unuseable state.
-	srand ( time(NULL) );
-
-    inline_as3("var callback:Function = null;");
-
-
-	pthread_barrier_init(&barrier, NULL, 2);
-
-  	pthread_t thread;
-
-	pthread_barrier_wait(&barrier); // wait for tid to get initialized
-
-	flash::system::Worker selfWorker = internal::get_Worker();
-	flash::system::Worker otherWorker = internal::get_Worker(tid);
-	flash::system::MessageChannel msgChan = otherWorker->createMessageChannel(selfWorker);
-	otherWorker->setSharedProperty("com.mycompany.messageChannel", msgChan);
-
-	pthread_barrier_wait(&barrier); // thread can now hook up to message channel
-
-	msgChan->addEventListener("channelMessage", Function::_new(channelMessageEventListenerProc, NULL));
+    // pthread_t slapThread;
+    // pthread_t feedThread;
+  	// pthread_create(&slapThread, NULL, monitorSlapThreadProc, NULL);
+  	// pthread_create(&feedThread, NULL, monitorFeedThreadProc, NULL);
 
     AS3_GoAsync();
 }

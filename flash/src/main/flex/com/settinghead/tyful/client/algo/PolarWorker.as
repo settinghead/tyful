@@ -1,5 +1,6 @@
 package com.settinghead.tyful.client.algo
 {	
+	import com.settinghead.tyful.client.model.vo.DisplayWordListVO;
 	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordComparator;
@@ -21,6 +22,8 @@ package com.settinghead.tyful.client.algo
 	
 	import polartree.PolarTree.CModule;
 	import polartree.PolarTree.PolarTreeAPI;
+	import polartree.PolarTree.addFeedRequestEventListener;
+	import polartree.PolarTree.addSlapRequestEventListener;
 	import polartree.PolarTree.threadArbConds;
 	import polartree.PolarTree.vfs.ISpecialFile;
 	
@@ -51,22 +54,19 @@ package com.settinghead.tyful.client.algo
 		
 		private var wordList:WordListVO = null;
 		private var template:Object = null;
-
-		private var canvasPtr:int = 0;
 		
+		private var wDict:Vector.<DisplayWordVO>;
 		
+		public static var current:PolarWorker ;
 		public function PolarWorker()
 		{
 			initialize();
+			current = this;
 		}
 		
 		private var controlChannel:MessageChannel;
 		private var resultChannel:MessageChannel;
 		private var statusChannel:MessageChannel;
-		public const STOPPED:String = "STOPPED";
-		public const PAUSED:String = "PAUSED";
-		public const RUNNING:String = "RUNNING";
-		private var status:String = STOPPED;
 		
 		private function initialize():void
 		{
@@ -88,9 +88,10 @@ package com.settinghead.tyful.client.algo
 			// This one is for receiving messages from the parent worker
 			controlChannel = Worker.current.getSharedProperty("controlChannel") as MessageChannel;
 			controlChannel.addEventListener(Event.CHANNEL_MESSAGE, controlCommandReceived);
-
+			
+			addSlapRequestEventListener(this.handleSlaps);
+			addFeedRequestEventListener(this.handleFeeds);
 			CModule.startAsync(this);
-
 		}        
 		
 		
@@ -106,15 +107,23 @@ package com.settinghead.tyful.client.algo
 				if(message[0] == "words")
 				{
 					wordList = new WordListVO((message[1] as Array));
+					
 				}
 				else if (message[0] == "start"){
-					start();
+					PolarTreeAPI.startRendering();
+					while(PolarTreeAPI.getStatus()>0){
+					//feed the initial batch
+					handleFeeds();
+					handleSlaps();
+					}
 				}
 				
 				else if (message[0] == "pause"){
-					status = PAUSED;
+					pause();
 				}
 				else if (message[0] == "template"){
+					var currentWords:WordListVO = wordList.clone();
+					wDict = new Vector.<DisplayWordVO>();
 					CModule.serviceUIRequests();
 //					template = message[1] as TemplateVO;
 					template = message[1] as Object;
@@ -124,11 +133,9 @@ package com.settinghead.tyful.client.algo
 					//trace("data length: "+ data.length.toString()+"\n");
 					var directions:Array = template["directions"] as Array;
 					var colors:Array = template["colors"] as Array;
+			
 					
-					if(canvasPtr!=0) 
-						CModule.free(canvasPtr);
-					
-					canvasPtr = PolarTreeAPI.initCanvas(); 
+					PolarTreeAPI.initCanvas(); 
 					for(var i:int=0;i<directions.length;i++){
 						var a:Array = (template["directions"] as Array)[i] as Array;
 						var width:Number = a[0];
@@ -144,79 +151,72 @@ package com.settinghead.tyful.client.algo
 						var colorAddr:int = CModule.malloc(colorData.length);
 						CModule.writeBytes(colorAddr, colorData.length, colorData);
 						
-						PolarTreeAPI.appendLayer(canvasPtr,addr,colorAddr,width,height,true);
+						PolarTreeAPI.appendLayer(addr,colorAddr,width,height,true);
 					}
 	
 					
 				}
 				else if (message[0] == "perseverance"){
 					CModule.serviceUIRequests();
-					PolarTreeAPI.setPerseverance(canvasPtr,message[1] as int);
+					PolarTreeAPI.setPerseverance(message[1] as int);
 				}
-				checkStart();
 			}
 		}
-		private function checkStart():void{
-			if(wordList!=null && template!=null && Worker.current.getSharedProperty("status")==PAUSED){
-				start();
-			}
+
+		
+		private function pause():void{
+			PolarTreeAPI.pauseRendering();
 		}
 		
+		public function handleSlaps():void{
+			var coordPtr:int = 0;
+			while((coordPtr=PolarTreeAPI.getNextSlap())!=0){
+				
+				var sid:int = CModule.read32(coordPtr);
+				var dw:DisplayWordVO =wDict[sid];
+
+	
+				var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr+4), CModule.readDouble(coordPtr+12), CModule.readDouble(coordPtr+20), 0);
+				var fontColor:uint = CModule.read32(coordPtr + 28);
+				var failureCount:int = CModule.read32(coordPtr+32);
+				var msg:Object = new Object();
+				
+				msg["word"] = dw.word;
+				msg["fontSize"] = dw.fontSize;
+				msg["fontName"] = dw.fontName;
+				msg["fontColor"] = fontColor;
+				msg["x"] = place.x;
+				msg["y"] = place.y;
+				msg["rotation"] = place.rotation;
+				msg["layer"] = place.layer;
+				msg["failureCount"]=failureCount;
+				resultChannel.send(msg);
+			}
+
+		}
 		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
-		private function start():void{
-			var currentWords:WordListVO = wordList.clone();
-			status = RUNNING;
-			while(status==RUNNING && PolarTreeAPI.getStatus(canvasPtr)>0){
+
+		public function handleFeeds():void{
+			while(PolarTreeAPI.getNumberOfPendingShapes()<10
+				&& PolarTreeAPI.getStatus()>0){
 				var word:WordVO;
-//				if(getShrinkage()>0){
-					word = wordList.next();
-//				}
-//				else{
-//					word = new WordVO("DT");
-//				}
+				//				if(getShrinkage()>0){
+				word = wordList.next();
+				//				}
+				//				else{
+				//					word = new WordVO("DT");
+				//				}
 				CModule.serviceUIRequests();		
-				var fontSize:Number = 100*PolarTreeAPI.getShrinkage(canvasPtr)+8;
+				var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
 				var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
 				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
+				var sid:int = wDict.length;
+				wDict.push(dw);
 				var params:Array = getTextShape(dw);
-				
-				var coordPtr:int =
-					PolarTreeAPI.slapShape(canvasPtr,params[0],params[1],params[2]);
-				
-				if(coordPtr!=0){
-					var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr), CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), 0);
-					var fontColor:uint = CModule.read32(coordPtr + 24);
-					var failureCount:int = CModule.read32(coordPtr+28);
-					var msg:Object = new Object();
-					
-					msg["word"] = word;
-					msg["fontSize"] = fontSize;
-					msg["fontName"] = fontName;
-					msg["fontColor"] = fontColor;
-					msg["x"] = place.x;
-					msg["y"] = place.y;
-					msg["rotation"] = place.rotation;
-					msg["layer"] = place.layer;
-					msg["failureCount"]=failureCount;
-					resultChannel.send(msg);
-				}
-				
-				//      var args:Vector.<int> = new Vector.<Number>;
-				//      args.push(params[0]);
-				//      args.push(params[1]);
-				//      args.push(params[2]);
-				
-				if(controlChannel.messageAvailable)
-					controlCommandReceived(null);
+				PolarTreeAPI.feedShape(params[0],params[1],params[2],sid);
 			}
-			
-			if(PolarTreeAPI.getStatus(canvasPtr)==0)
-				statusChannel.send("complete");
 		}
 		
-		private function processTextField(event:Event):void{
-			
-		}
 		
 		private function getTextShape(dw:DisplayWordVO, safetyBorder:Number=0):Array
 		{

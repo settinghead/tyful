@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */; };
+		7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */; };
 		7C7AE93B16674B5C002466A3 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FC16674B5C002466A3 /* Angler.cpp */; };
 		7C7AE93C16674B5C002466A3 /* Angler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE8FD16674B5C002466A3 /* Angler.h */; };
 		7C7AE93D16674B5C002466A3 /* ColorMapAngler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FE16674B5C002466A3 /* ColorMapAngler.cpp */; };
@@ -69,6 +71,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadControllers.cpp; sourceTree = "<group>"; };
+		7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadControllers.h; sourceTree = "<group>"; };
 		7C7AE869166745B7002466A3 /* cpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = cpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7AE86D166745B7002466A3 /* cpp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cpp-Prefix.pch"; sourceTree = "<group>"; };
 		7C7AE86E166745B7002466A3 /* cppProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = cppProj.xcconfig; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 				7C7AE86E166745B7002466A3 /* cppProj.xcconfig */,
 				7C7AE86F166745B7002466A3 /* cppTarget.xcconfig */,
 				7C7AE86C166745B7002466A3 /* Supporting Files */,
+				7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */,
+				7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */,
 			);
 			path = cpp;
 			sourceTree = "<group>";
@@ -359,6 +365,7 @@
 				7C7AE97116674B5C002466A3 /* PolarTreeBuilder.h in Headers */,
 				7CEFFBD016689ECA00900686 /* threadpool.h in Headers */,
 				7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */,
+				7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +445,7 @@
 				7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */,
 				7CEFFBCF16689ECA00900686 /* threadpool.cpp in Sources */,
 				7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */,
+				7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

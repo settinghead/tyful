@@ -191,18 +191,26 @@ int sid = 0;
     
     startRendering();
     
-    pthread_mutex_lock(&PolarCanvas::current->next_slap_mutex);
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     while(getStatus()>0){
-        while(PolarCanvas::current->pendingShapes->size()<10)
-            [self feedNextText];
-        pthread_cond_wait(&PolarCanvas::current->next_slap_cv, &PolarCanvas::current->next_slap_mutex);
+        pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         [self checkAndRenderSlaps];
     }
-    pthread_mutex_unlock(&PolarCanvas::current->next_slap_mutex);
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
 
     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Execution time: %f",executionTime);
+}
+
+-(void)feedShapes{
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+    while(getStatus()>0){
+        while(PolarCanvas::current->pendingShapes->size()<10)
+            [self feedNextText];
+        pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+    }
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
 
 }
 
@@ -212,6 +220,7 @@ int sid = 0;
     
 
     [NSThread detachNewThreadSelector:@selector(drawCanvas) toTarget:self withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(feedShapes) toTarget:self withObject:nil];
 
 }
 

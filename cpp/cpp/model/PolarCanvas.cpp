@@ -41,6 +41,8 @@ struct thread_param {
     PolarCanvas* canvas;
 };
 
+ThreadControllers PolarCanvas::threadControllers;
+
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
@@ -57,11 +59,7 @@ _shapeToWorkOn(NULL),_numActiveThreads(0), slaps(new queue<SlapInfo*>()), pendin
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
     
-    pthread_mutex_init(&next_slap_mutex,NULL);
-    pthread_cond_init (&next_slap_cv, NULL);
-    
-    pthread_mutex_init(&next_feed_mutex,NULL);
-    pthread_cond_init (&next_feed_cv, NULL);
+
     
     //spawn threads
 	if ((pool = threadpool_init(NUM_THREADS)) == NULL) {
@@ -77,12 +75,6 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&shape_mutex);
     pthread_mutex_destroy(&attempt_mutex);
     pthread_cond_destroy(&count_threshold_cv);
-       
-    pthread_mutex_destroy(&next_slap_mutex);
-    pthread_cond_destroy (&next_slap_cv);
-    
-    pthread_mutex_destroy(&next_feed_mutex);
-    pthread_cond_destroy (&next_feed_cv);
     
     threadpool_free(pool,1);
 
@@ -344,9 +336,9 @@ void PolarCanvas::skipShape(EngineShape* shape, int reason){
     shape->skipBecause(reason);
 }
 
-inline double PolarCanvas::getHeight(){
+inline float PolarCanvas::getHeight(){
     if(isnan(height)){
-        double maxHeight = 0;
+        float maxHeight = 0;
         for (vector<PolarLayer*>::iterator it = begin();
              it != end(); ++it) {
             PolarLayer* l = (*it);
@@ -357,9 +349,9 @@ inline double PolarCanvas::getHeight(){
     return height;
 }
 
-inline double PolarCanvas::getWidth(){
+inline float PolarCanvas::getWidth(){
     if(isnan(width)){
-        double maxWidth = 0;
+        float maxWidth = 0;
         for (vector<PolarLayer*>::iterator it = begin();
              it != end(); ++it) {
             PolarLayer* l = (*it);
