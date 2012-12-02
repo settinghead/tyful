@@ -472,6 +472,8 @@ package com.settinghead.tyful.client.view.components.template.canvas
 			ys = ys - ys%smallA.height; if(ys<0) ys =0;
 			xe = xe + xe%smallA.width; if (xe>=layer.getWidth()) xe = layer.getWidth()-1;
 			ye = ye + ye%smallA.height; if(ye>=layer.getHeight()) ye = layer.getHeight()-1;
+			if(xs>=xe || ys>=ye)
+				return;
 			var dirErase:Shape = new Shape();
 			dirErase.graphics.lineStyle(1,0xff0000);
 			dirErase.graphics.beginFill(0xff0000,1);
