@@ -29,7 +29,7 @@
 #define NUMBER_OF_DIVISIONS 3
 #define MARK_FILL_FACTOR 1
 
-#define NUM_THREADS 5
+#define NUM_THREADS 1
 #define THREAD_STEP_SIZE 30
 
 #endif

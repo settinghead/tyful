@@ -135,17 +135,14 @@
 
 #include <stdint.h>		// Use the C99 official header
 
-__attribute__((annotate("as3sig:public function _wrap_initCanvas():int")))
+__attribute__((annotate("as3sig:public function _wrap_initCanvas():void")))
 void _wrap_initCanvas() {
-  void *result ;
-  
-  result = (void *)initCanvas();
+  initCanvas();
   {
-    AS3_DeclareVar(asresult, int);
-    AS3_CopyScalarToVar(asresult, result);
+    
   }
   {
-    AS3_ReturnAS3Var(asresult);
+    AS3_ReturnAS3Var(undefined);
   }
 }
 
@@ -305,6 +302,37 @@ void _wrap_getNextSlap() {
   SlapInfo *result ;
   
   result = (SlapInfo *)getNextSlap();
+  {
+    AS3_DeclareVar(asresult, int);
+    AS3_CopyScalarToVar(asresult, result);
+  }
+  {
+    AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_slapShape(pixels:int, width:int, height:int, sid:int):int")))
+void _wrap_slapShape() {
+  unsigned int *arg1 = (unsigned int *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  unsigned int arg4 ;
+  SlapInfo *result ;
+  
+  {
+    AS3_GetScalarFromVar(arg1, pixels);
+  }
+  {
+    AS3_GetScalarFromVar(arg2, width);
+  }
+  {
+    AS3_GetScalarFromVar(arg3, height);
+  }
+  {
+    AS3_GetScalarFromVar(arg4, sid);
+  }
+  result = (SlapInfo *)slapShape(arg1,arg2,arg3,arg4);
   {
     AS3_DeclareVar(asresult, int);
     AS3_CopyScalarToVar(asresult, result);

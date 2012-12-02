@@ -28,6 +28,7 @@ package com.settinghead.tyful.client.model.vo
 			this._word = word;
 			this._place = place;
 			this._fontSize = fontSize;
+			this._fontName = fontName;
 			
 			textField = getTextField(word.word, fontName, fontSize, color);
 			textField.x = 0;

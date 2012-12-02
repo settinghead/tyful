@@ -7,6 +7,7 @@
 #include "model/ImageShape.h"
 #include "model/TextImageShape.h"
 #include "tree/PolarTree.h"
+#include "polartreeapi.h"
 #include "tree/PolarRootTree.h"
 #include "model/WordLayer.h"
 #include "constants.h"
@@ -49,7 +50,12 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 
 }
 
-
+SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
+{
+    feedShape(pixels, width, height,sid);
+    ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
+    return getNextSlap();
+}
 void* renderRoutine(void*){
     PolarCanvas::current->setStatus(RENDERING);
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
@@ -96,7 +102,7 @@ void setStatus(int status)
 	PolarCanvas::current->setStatus(status);
 }
 
-int getNumberOfPendingShapes(){
+unsigned int getNumberOfPendingShapes(){
     return (unsigned int)PolarCanvas::current->pendingShapes->size();
 }
 

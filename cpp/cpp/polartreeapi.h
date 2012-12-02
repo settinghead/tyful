@@ -1,5 +1,5 @@
 struct SlapInfo;
-void* initCanvas();
+void initCanvas();
 void setPerseverance(int perseverance);
 void feedShape(unsigned int *pixels, int width, int height, unsigned int sid);
 int getStatus();
@@ -9,4 +9,5 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
 void startRendering();
 void pauseRendering();
 SlapInfo* getNextSlap();
+SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid);
 unsigned int getNumberOfPendingShapes();

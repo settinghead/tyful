@@ -110,11 +110,13 @@ package com.settinghead.tyful.client.algo
 					
 				}
 				else if (message[0] == "start"){
-					PolarTreeAPI.startRendering();
+//					PolarTreeAPI.startRendering();
+					PolarTreeAPI.setStatus(1);
 					while(PolarTreeAPI.getStatus()>0){
 					//feed the initial batch
-					handleFeeds();
-					handleSlaps();
+						var params:Array = getNextShape();
+						var coordPtr:int = PolarTreeAPI.slapShape(params[0],params[1],params[2],params[3]);
+						processAndSendDw(coordPtr);
 					}
 				}
 				
@@ -171,14 +173,18 @@ package com.settinghead.tyful.client.algo
 		public function handleSlaps():void{
 			var coordPtr:int = 0;
 			while((coordPtr=PolarTreeAPI.getNextSlap())!=0){
-				
-				var sid:int = CModule.read32(coordPtr);
+				processAndSendDw(coordPtr);
+			}
+		}
+
+		private function processAndSendDw(coordPtr:int):void{
+			var sid:int = CModule.read32(coordPtr);
 				var dw:DisplayWordVO =wDict[sid];
 
 	
-				var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr+4), CModule.readDouble(coordPtr+12), CModule.readDouble(coordPtr+20), 0);
-				var fontColor:uint = CModule.read32(coordPtr + 28);
-				var failureCount:int = CModule.read32(coordPtr+32);
+				var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), 0);
+				var fontColor:uint = CModule.read32(coordPtr + 32);
+				var failureCount:int = CModule.read32(coordPtr+36);
 				var msg:Object = new Object();
 				
 				msg["word"] = dw.word;
@@ -191,30 +197,33 @@ package com.settinghead.tyful.client.algo
 				msg["layer"] = place.layer;
 				msg["failureCount"]=failureCount;
 				resultChannel.send(msg);
-			}
-
 		}
+
 		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
 
 		public function handleFeeds():void{
 			while(PolarTreeAPI.getNumberOfPendingShapes()<10
 				&& PolarTreeAPI.getStatus()>0){
-				var word:WordVO;
-				//				if(getShrinkage()>0){
-				word = wordList.next();
-				//				}
-				//				else{
-				//					word = new WordVO("DT");
-				//				}
-				CModule.serviceUIRequests();		
-				var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
-				var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
-				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
-				var sid:int = wDict.length;
-				wDict.push(dw);
-				var params:Array = getTextShape(dw);
-				PolarTreeAPI.feedShape(params[0],params[1],params[2],sid);
+				var params:Array = getNextShape();
+				PolarTreeAPI.feedShape(params[0],params[1],params[2],params[3]);
+
 			}
+		}
+
+		private function getNextShape():Array{
+						var word:WordVO;
+			//				if(getShrinkage()>0){
+			word = wordList.next();
+			//				}
+			//				else{
+			//					word = new WordVO("DT");
+			//				}
+			CModule.serviceUIRequests();		
+			var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
+			var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
+			var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
+			var params:Array = getTextShape(dw);
+			return params;
 		}
 		
 		
@@ -240,7 +249,9 @@ package com.settinghead.tyful.client.algo
 			data.position = 0;
 			var addr:int = CModule.malloc(data.length);
 			CModule.writeBytes(addr, data.length, data);
-			return [addr,bmp.width, bmp.height];
+			var sid:int = wDict.length;
+			wDict.push(dw);
+			return [addr,bmp.width, bmp.height,sid];
 		}
 		
 		/**
