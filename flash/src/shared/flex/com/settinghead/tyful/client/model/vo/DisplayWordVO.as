@@ -40,6 +40,9 @@ package com.settinghead.tyful.client.model.vo
 		}
 		
 		public function putToPlace(place:PlaceInfo){
+			this._place = place;
+			textField.textColor = place.color;
+
 			this.x = place.x;
 			this.y = place.y;
 			

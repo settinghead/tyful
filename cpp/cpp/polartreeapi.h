@@ -9,5 +9,6 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
 void startRendering();
 void pauseRendering();
 SlapInfo* getNextSlap();
+SlapInfo* tryNextShape();
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid);
 unsigned int getNumberOfPendingShapes();

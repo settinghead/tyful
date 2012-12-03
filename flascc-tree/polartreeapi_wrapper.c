@@ -312,6 +312,21 @@ void _wrap_getNextSlap() {
 }
 
 
+__attribute__((annotate("as3sig:public function _wrap_tryNextShape():int")))
+void _wrap_tryNextShape() {
+  SlapInfo *result ;
+  
+  result = (SlapInfo *)tryNextShape();
+  {
+    AS3_DeclareVar(asresult, int);
+    AS3_CopyScalarToVar(asresult, result);
+  }
+  {
+    AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
 __attribute__((annotate("as3sig:public function _wrap_slapShape(pixels:int, width:int, height:int, sid:int):int")))
 void _wrap_slapShape() {
   unsigned int *arg1 = (unsigned int *) 0 ;

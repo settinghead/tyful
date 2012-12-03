@@ -2,16 +2,21 @@ package com.settinghead.tyful.client.model.vo.template
 {
 	public class PlaceInfo {
 		private var _layer:int;
-		
+		public var sid:uint;
 		public var x:Number;
 		public var y:Number;
 		public var rotation:Number;
+		public var color:uint;
+		public var failureCount:uint;
 		
-		public function PlaceInfo(x:Number, y:Number, rotation:Number, lNum:int) {
+		public function PlaceInfo(sid:uint, x:Number, y:Number, rotation:Number, lNum:int, color:uint, failureCount:uint) {
 			this.x = x;
 			this.y = y;
 			this.rotation = rotation;
 			this.layer = lNum;
+			this.color = color;
+			this.failureCount= failureCount;
+			this.sid= sid;
 		}
 		
 		
@@ -31,7 +36,7 @@ package com.settinghead.tyful.client.model.vo.template
 		}
 		
 		public function clone():PlaceInfo{
-			return new PlaceInfo(x,y,rotation,_layer);
+			return new PlaceInfo(sid,x,y,rotation,_layer,color,failureCount);
 		}
 		
 		public function add(addum:PlaceInfo):PlaceInfo{

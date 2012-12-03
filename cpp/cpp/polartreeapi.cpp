@@ -54,6 +54,11 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
     feedShape(pixels, width, height,sid);
+    return tryNextShape();
+}
+
+SlapInfo* tryNextShape()
+{
     ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
     return getNextSlap();
 }
