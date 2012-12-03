@@ -4,3 +4,5 @@ bin/
 bin-secure/
 version.properties
 workerswfs/
+libs/polartree.swc
+libs/PolarTree.swc
