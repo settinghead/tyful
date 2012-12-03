@@ -219,7 +219,7 @@ package com.settinghead.tyful.client.algo
 			//					word = new WordVO("DT");
 			//				}
 			CModule.serviceUIRequests();		
-			var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
+			var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+10;
 			var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
 			var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
 			var params:Array = getTextShape(dw);

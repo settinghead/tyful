@@ -439,6 +439,7 @@ package com.settinghead.tyful.client.view.components.template.canvas
 				
 				
 				bmpDirection = new Bitmap(new BitmapData(layer.getWidth(), layer.getHeight(), true, 0x00ffffff));
+				bmpDirection.mask = layer.directionBitmap;
 
 				
 				this.width = canvas.width = layer.getWidth();
@@ -474,6 +475,7 @@ package com.settinghead.tyful.client.view.components.template.canvas
 			ye = ye + ye%smallA.height; if(ye>=layer.getHeight()) ye = layer.getHeight()-1;
 			if(isNaN(xs)||isNaN(ys)||isNaN(xe)||isNaN(ye)||xs>=xe || ys>=ye)
 				return;
+			//erase old shit
 			var dirErase:Shape = new Shape();
 			dirErase.graphics.lineStyle(1,0xff0000);
 			dirErase.graphics.beginFill(0xff0000,1);
@@ -493,15 +495,23 @@ package com.settinghead.tyful.client.view.components.template.canvas
 					m.tx += smallA.width/2;
 					m.ty += smallA.height/2;
 					var dirShape:Shape = new Shape();
-					dirShape.graphics.lineStyle(1,0,0.3,false);
-					dirShape.graphics.lineBitmapStyle(smallA.bitmapData,m,true,true);
-					for(var ox:Number = 0; ox<smallA.width;ox++)
-						for(var oy:Number = 0; oy<smallA.height;oy++){
-							if(layer.containsPoint(ox+w,oy+h,false)){
-								dirShape.graphics.moveTo(ox, oy);
-								dirShape.graphics.lineTo(ox,oy+1);
-							}
-						}
+//					dirShape.graphics.lineStyle(1,0,0.3,false);
+					dirShape.graphics.beginBitmapFill(smallA.bitmapData,m,true,true);
+					dirShape.graphics.drawRect(0,0,smallA.width,smallA.height);
+					dirShape.graphics.endFill();
+//					dirShape.graphics.lineStyle(smallA.width,0,0.3,false);
+//
+//					dirShape.graphics.lineBitmapStyle(smallA.bitmapData,m,true,true);
+////					dirShape.mask = layer.directionBitmap;
+//					dirShape.graphics.moveTo(smallA.width/2,smallA.height/2);
+//					dirShape.graphics.lineTo(smallA.width,smallA.height);
+//					for(var ox:Number = 0; ox<smallA.width;ox++)
+//						for(var oy:Number = 0; oy<smallA.height;oy++){
+//							if(layer.containsPoint(ox+w,oy+h,false)){
+//								dirShape.graphics.moveTo(ox, oy);
+//								dirShape.graphics.lineTo(ox,oy+1);
+//							}
+//						}
 					m = new Matrix();
 					m.tx += w;
 					m.ty += h;
