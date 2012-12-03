@@ -39,7 +39,6 @@ public:
         if(attempt/2%2==0){
             x = - x;
 //            x = p->getWidth() - x;
-
         }
         
         Placement* retPoint = (Placement*)malloc(sizeof(Placement));

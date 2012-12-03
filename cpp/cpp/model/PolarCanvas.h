@@ -15,7 +15,7 @@
 #include "../sizer/Sizer.h"
 #include "../sizer/ByWeightSizer.h"
 #include "../threads/threadpool.h"
-#include <vector.h>
+#include <vector>
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>

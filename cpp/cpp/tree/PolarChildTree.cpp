@@ -22,10 +22,11 @@ inline int PolarChildTree::getFinalSeq(){
     return root->getFinalSeq();
 }
 
+#if NUM_THREADS>1
 inline void PolarChildTree::setFinalSeq(int seq){
     root->setFinalSeq(seq);
 }
-
+#endif
 
 inline double PolarChildTree::computeX(int seq,bool rotate) {
 	double x;

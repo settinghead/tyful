@@ -17,6 +17,11 @@
 ImageShape::ImageShape():tree(NULL){
 }
 
+ImageShape::~ImageShape(){
+    delete tree;
+}
+
+
 PolarRootTree* ImageShape::getTree(){
     if(this->tree==NULL)
         this->tree = makeTree(this,0);

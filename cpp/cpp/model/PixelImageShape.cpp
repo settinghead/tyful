@@ -32,7 +32,7 @@ ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels
 };
 
 PixelImageShape::~PixelImageShape() {
-    //	free(pixels);
+    free(pixels);
 };
 
 void PixelImageShape::printStats() {

@@ -6,6 +6,19 @@
 #include "../constants.h"
 
 class PolarRootTree: public PolarTree {
+private:
+#if NUM_THREADS > 1
+    int finalSeq;
+#else
+#define finalSeq 0
+#endif
+    double rootX[NUM_THREADS]; /* REM */
+	double rootY[NUM_THREADS]; /* REM */
+	double _rotation[NUM_THREADS]; /* REM */
+	int rootStamp[NUM_THREADS]; /* REM */
+	ImageShape* shape; /* REM */
+	int _minBoxSize; /* REM */
+
 public:
 	PolarRootTree(ImageShape* shape, double d,
 			int minBoxSize);
@@ -25,10 +38,12 @@ public:
     inline int getFinalSeq(){
         return finalSeq;
     }
-    
+#if NUM_THREADS > 1
     inline void setFinalSeq(int seq){
-        this->finalSeq = seq;
+        finalSeq = seq;
     }
+#endif
+
 	inline double computeX(int seq,bool rotate);
 	inline double computeY(int seq,bool rotate);
 	inline double computeRight(int seq,bool rotate);
@@ -47,15 +62,6 @@ public:
 	inline PolarRootTree* getRoot();
 	inline int getMinBoxSize();
 	inline ImageShape* getShape();
-private:
-    int finalSeq;
-
-    double rootX[NUM_THREADS]; /* REM */
-	double rootY[NUM_THREADS]; /* REM */
-	double _rotation[NUM_THREADS]; /* REM */
-	int rootStamp[NUM_THREADS]; /* REM */
-	ImageShape* shape; /* REM */
-	int _minBoxSize; /* REM */
 };
 
 #endif

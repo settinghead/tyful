@@ -74,15 +74,17 @@ void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
     shape->getTree()->setRotation(seq,currentPlacement[seq]->rotation);
 }
 
-void EngineShape::finalizePlacement(int finalSeq){
-    shape->getTree()->setFinalSeq(finalSeq);
-    shape->getTree()->setLocation(shape->getTree()->getFinalSeq(),currentPlacement[finalSeq]->location.x, currentPlacement[finalSeq]->location.y);
+void EngineShape::finalizePlacement(int final_seq){
+#if NUM_THREADS > 1
+    shape->getTree()->setFinalSeq(final_seq);
+#endif
+    shape->getTree()->setLocation(shape->getTree()->getFinalSeq(),currentPlacement[final_seq]->location.x, currentPlacement[final_seq]->location.y);
     
-    unsigned int color= currentPlacement[finalSeq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[finalSeq]);
-    currentPlacement[finalSeq]->color = color;
-    renderedPlacement = currentPlacement[finalSeq];
+    unsigned int color= currentPlacement[final_seq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[final_seq]);
+    currentPlacement[final_seq]->color = color;
+    renderedPlacement = currentPlacement[final_seq];
 
-    currentPlacement[finalSeq]->patch->getShapes()->push_back(this);
+    currentPlacement[final_seq]->patch->getShapes()->push_back(this);
 }
 
 Placement* EngineShape::getFinalPlacement(){
@@ -106,8 +108,10 @@ void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
 
 bool EngineShape::trespassed(int seq,PolarLayer* layer){
     if(layer==NULL) return false;
-//    double x = (this->currentPlacement->location.x - this->shape->getWidth() / 2);
-//    double y = (this->currentPlacement->location.y - this->shape->getHeight() / 2);
+    double x = this->currentPlacement[seq]->location.x;
+    double y = this->currentPlacement[seq]->location.y;
+    if(x<0||y<0||x>layer->getWidth()||y>layer->getHeight())
+        return true;
     
     // float right = (float) (this.currentLocation.x + bounds
     // .getWidth());

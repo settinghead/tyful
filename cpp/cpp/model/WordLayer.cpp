@@ -26,6 +26,10 @@ WordLayer::WordLayer(unsigned int const * pixels, int width, int height, bool re
 :PolarLayer::PolarLayer(pixels,width,height,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
 }
 
+WordLayer::~WordLayer(){
+    delete colorSheet;
+}
+
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
     if (this->tree == NULL) {
         // sampling approach

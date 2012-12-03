@@ -11,6 +11,7 @@ class PolarRootTree;
 class ImageShape {
 public:
     ImageShape();
+    ~ImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;
 
     inline bool containsPoint(int x, int y){

@@ -5,7 +5,11 @@
 #include "../model/Flip.h"
 
 PolarRootTree::PolarRootTree(ImageShape* shape, double d, int minBoxSize) :
-		PolarTree(0, TWO_PI, 0, d, minBoxSize),finalSeq(-1) {
+		PolarTree(0, TWO_PI, 0, d, minBoxSize)
+#if NUM_THREADS>1
+,finalSeq(-1)
+#endif
+{
             for(int i=0;i<NUM_THREADS;i++){
                 this->rootStamp[i] = 1;
                 this->rootX[i] = this->rootY[i] = NAN;

@@ -7,6 +7,7 @@
 #include "../model/structs.h"
 #include "../model/ImageShape.h"
 #include "../constants.h"
+#include <pthread.h>
 #include <assert.h>
 using namespace std;
 
@@ -29,7 +30,9 @@ public:
 	inline virtual int getRootX(int seq) = 0;
 	inline virtual int getRootY(int seq) = 0;
     inline virtual int getFinalSeq() = 0;
+#if NUM_THREADS>1
     inline virtual void setFinalSeq(int seq) = 0;
+#endif
 	inline virtual bool overlaps(int seq,PolarTree* otherTree){
         bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
         if (r) {

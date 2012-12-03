@@ -27,6 +27,7 @@ public:
         };
     };
     WordLayer(unsigned int const * pixels, int width, int height,bool revert);
+    ~WordLayer();
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
         return (pixelValue >> 24) == 0x00;

@@ -34,7 +34,6 @@
 #include <semaphore.h>
 #include <errno.h>
 
-PolarCanvas* PolarCanvas::current = NULL;
 
 struct thread_param {
     int seq;
@@ -42,6 +41,8 @@ struct thread_param {
 };
 
 ThreadControllers PolarCanvas::threadControllers;
+
+PolarCanvas* PolarCanvas::current = NULL;
 
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
@@ -77,7 +78,10 @@ PolarCanvas::~PolarCanvas(){
     pthread_cond_destroy(&count_threshold_cv);
     
     threadpool_free(pool,1);
-
+    
+    delete shapes;
+    delete pendingShapes;
+    
 }
 
 
@@ -144,6 +148,7 @@ void PolarCanvas::tryNextEngineShape(){
             place->failureCount = getFailureCount();
             place->sid = eShape->getUid();
             slaps->push(place);
+            
         }
     
     }
@@ -292,10 +297,12 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
         
         //unleash thread workers
         _shapeToWorkOn = eShape;
+        
+        thread_param *tp;
 
+#if NUM_THREADS>1
         pthread_mutex_lock(&numActiveThreads_mutex);
         for(int t=0; t<NUM_THREADS; t++){
-            thread_param *tp;
             tp = (thread_param *)malloc(sizeof(thread_param));
             tp->seq = t;
             tp->canvas = this;
@@ -308,7 +315,12 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
             pthread_cond_wait(&count_threshold_cv, &numActiveThreads_mutex);
         };
         pthread_mutex_unlock(&numActiveThreads_mutex);
-        
+#else
+        tp = (thread_param *)malloc(sizeof(thread_param));
+        tp->seq = 0;
+        tp->canvas = this;
+        attempt_nudge(tp);
+#endif
         if(!_found){
             _candidatePlacement->patch->setLastAttempt(_attempt);
             _candidatePlacement->patch->fail();

@@ -14,7 +14,7 @@
 #define TWO_PI 6.2831853
 #define ONE_AND_HALF_PI 4.712388980
 #define MARGIN 0
-#define SAMPLE_DISTANCE 20
+#define SAMPLE_DISTANCE 10
 
 #define RENDERING 1
 #define PAUSED 0
@@ -30,6 +30,6 @@
 #define MARK_FILL_FACTOR 1
 
 #define NUM_THREADS 1
-#define THREAD_STEP_SIZE 30
+#define THREAD_STEP_SIZE 40
 
 #endif

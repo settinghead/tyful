@@ -17,8 +17,9 @@
 #include <pthread.h>
 
 
-
 void initCanvas(){
+    if(PolarCanvas::current!=NULL)
+        delete PolarCanvas::current;
 	PolarCanvas::current = new PolarCanvas();
 	PolarCanvas::current->setStatus(RENDERING);
 	printf("Canvas initialized.\n");
