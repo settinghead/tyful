@@ -15,7 +15,10 @@
 PickFromAngler::PickFromAngler(vector<double>* angles){
     this->angles = angles;
     srand ( (unsigned int)time(NULL) );
+}
 
+PickFromAngler::~PickFromAngler(){
+    delete angles;
 }
 
 double PickFromAngler::angleFor(int seq,EngineShape* shape){

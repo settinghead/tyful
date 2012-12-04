@@ -96,6 +96,7 @@ SlapInfo* tryNextShape()
     return getNextSlap();
 }
 void* renderRoutine(void*){
+
     PolarCanvas::current->setStatus(RENDERING);
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
     while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){

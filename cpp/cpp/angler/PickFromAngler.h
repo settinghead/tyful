@@ -20,6 +20,7 @@ protected:
     
 public:
     PickFromAngler(vector<double>* angles);
+    ~PickFromAngler();
     double angleFor(int seq,EngineShape* shape);
 };
 

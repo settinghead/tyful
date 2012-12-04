@@ -28,6 +28,8 @@ WordLayer::WordLayer(unsigned int const * pixels, int width, int height, int lid
 
 WordLayer::~WordLayer(){
     delete colorSheet;
+    delete _angler;
+    delete _colorer;
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){

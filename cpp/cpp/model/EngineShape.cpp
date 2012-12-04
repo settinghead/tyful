@@ -27,6 +27,10 @@ EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),rend
     drawSamples();
 }
 
+EngineShape::~EngineShape(){
+    delete shape;
+}
+
 void EngineShape::drawSamples(){
     this->samplePoints = new vector<PolarPoint>();
     int numSamples = int((shape->getWidth() * shape->getHeight() / SAMPLE_DISTANCE));
@@ -91,17 +95,17 @@ Placement* EngineShape::getFinalPlacement(){
     return renderedPlacement;
 }
 
-Placement* EngineShape::getCurrentPlacement(int seq){
-    return currentPlacement[seq];
-}
 
 vector<Placement*>* EngineShape::getDesiredPlacements(){
     return desiredPlacements;
 }
 
 void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
-    if(desiredPlacements!=NULL)
+    if(desiredPlacements!=NULL){
+        for(int i=0;i<desiredPlacements->size();i++)
+            delete desiredPlacements->at(i);
         delete desiredPlacements;
+    }
     desiredPlacements = placements;
 }
 

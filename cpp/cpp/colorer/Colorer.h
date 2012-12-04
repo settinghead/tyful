@@ -13,6 +13,7 @@ struct Placement;
 
 class Colorer{
 public:
+    ~Colorer(){}
     virtual unsigned int colorFor(Placement* place) = 0;
 };
 

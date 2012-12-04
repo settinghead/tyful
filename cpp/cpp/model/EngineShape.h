@@ -22,6 +22,7 @@ class Angler;
 class EngineShape{
 public:
     EngineShape(ImageShape* shape, unsigned int sid);
+    ~EngineShape();
     bool wasSkipped();
     void skipBecause(int reason);
     inline bool hasNextDesiredPlacement(){
@@ -37,7 +38,9 @@ public:
     void finalizePlacement(int finalSeq);
     Placement* getFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
-    Placement* getCurrentPlacement(int seq);
+    inline Placement* getCurrentPlacement(int seq){
+        return currentPlacement[seq];
+    }
     vector<Placement*>* getDesiredPlacements();
     void setDesiredPlacements(vector<Placement*>*);
     inline unsigned int getUid(){

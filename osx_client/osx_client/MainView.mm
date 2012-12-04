@@ -206,7 +206,7 @@ int sid = 0;
 -(void)feedShapes{
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(getStatus()>0){
-        while(PolarCanvas::current->pendingShapes->size()<10)
+        while(PolarCanvas::current->pendingShapes->size()<10 && getStatus()>0)
             [self feedNextText];
         pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
     }

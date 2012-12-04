@@ -78,9 +78,20 @@ PolarCanvas::~PolarCanvas(){
     pthread_cond_destroy(&count_threshold_cv);
     
     threadpool_free(pool,1);
+    for(int i=0;i<size();i++)
+        delete at(i);
     
+    for(int i=0;i<shapes->size();i++)
+        delete (shapes->at(i));
     delete shapes;
+    while(!pendingShapes->empty()){
+        delete (pendingShapes->front());
+        pendingShapes->pop();
+    }
     delete pendingShapes;
+    delete displayShapes;
+    delete retryShapes;
+    delete _nudger;
     
 }
 
@@ -218,7 +229,7 @@ void PolarCanvas::attempt_nudge(void *arg){
             Placement* relative = canvas->getNudger()->nudgeFor(canvas->_shapeToWorkOn, canvas->_candidatePlacement, currentAttempt,canvas->_maxAttemptsToPlace);
             Placement newPlacement = (*canvas->_candidatePlacement + (*relative));
             canvas->_shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
-            
+            delete relative;
 
             //
             if (canvas->_shapeToWorkOn->trespassed(seq,canvas->_candidatePlacement->patch->getLayer()))

@@ -13,6 +13,7 @@ class EngineShape;
 
 class Angler{
 public:
+    ~Angler(){}
     virtual double angleFor(int seq,EngineShape* shape) = 0;
 };
 

@@ -25,7 +25,7 @@ class PolarTree {
 public:
     double d1,d2;
 	PolarTree(double r1, double r2, double d1, double d2, int minBoxSize);
-	virtual ~PolarTree();
+	~PolarTree();
 	inline void addKids(vector<PolarTree*>* kidList);
 	inline virtual int getRootX(int seq) = 0;
 	inline virtual int getRootY(int seq) = 0;
