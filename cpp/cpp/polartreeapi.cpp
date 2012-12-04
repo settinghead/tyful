@@ -29,7 +29,7 @@ void initCanvas(){
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip){
     assert(width>0);
     assert(height>0);
-	WordLayer* layer = new WordLayer(pixels, width, height,flip);
+	WordLayer* layer = new WordLayer(pixels, width, height, (int)PolarCanvas::current->size(), flip);
 	if(colorPixels>0)
 		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip));
     printf("Special point(5,5): %x\n", layer->getPixel(5,5));

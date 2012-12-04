@@ -192,10 +192,10 @@ package com.settinghead.tyful.client.algo
 
 			if(coordPtr!=0){
 				var sid:uint = CModule.read32(coordPtr);
-				var fontColor:uint = CModule.read32(coordPtr + 32);
-				var failureCount:int = CModule.read32(coordPtr+36);
+				var fontColor:uint = CModule.read32(coordPtr + 36);
+				var failureCount:int = CModule.read32(coordPtr+40);
 				
-				var place:PlaceInfo = new PlaceInfo(sid,CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), 0,fontColor,failureCount);
+				var place:PlaceInfo = new PlaceInfo(sid,CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), CModule.read32(coordPtr + 32),fontColor,failureCount);
 
 				
 				msg["fontColor"] = fontColor;

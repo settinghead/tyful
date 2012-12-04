@@ -26,7 +26,7 @@ public:
             return (pixelValue >> 24) == 0x00;
         };
     };
-    WordLayer(unsigned int const * pixels, int width, int height,bool revert);
+    WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert);
     ~WordLayer();
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;

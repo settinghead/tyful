@@ -22,8 +22,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-WordLayer::WordLayer(unsigned int const * pixels, int width, int height, bool revert)
-:PolarLayer::PolarLayer(pixels,width,height,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
+WordLayer::WordLayer(unsigned int const * pixels, int width, int height, int lid, bool revert)
+:PolarLayer::PolarLayer(pixels,width,height,lid,revert), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
 }
 
 WordLayer::~WordLayer(){

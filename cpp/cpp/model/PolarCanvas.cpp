@@ -145,6 +145,7 @@ void PolarCanvas::tryNextEngineShape(){
             place->location = eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq());
             place->rotation = eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq());
             place->color = placement->color;
+            place->layer = placement->patch->getLayer()->lid;
             place->failureCount = getFailureCount();
             place->sid = eShape->getUid();
             slaps->push(place);

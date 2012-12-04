@@ -33,6 +33,7 @@ struct CorePlacement{
     unsigned int sid;
     CartisianPoint location;
     double rotation;
+    unsigned int layer;
     unsigned int color;
 };
 
