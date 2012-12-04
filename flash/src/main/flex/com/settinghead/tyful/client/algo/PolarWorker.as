@@ -1,6 +1,6 @@
 package com.settinghead.tyful.client.algo
 {	
-	import com.settinghead.tyful.client.model.polarcore.IShapeGenerator;
+//	import com.settinghead.tyful.client.model.polarcore.IShapeGenerator;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	
 	import flash.display.Bitmap;

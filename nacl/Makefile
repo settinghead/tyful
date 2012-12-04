@@ -15,6 +15,7 @@
 # only the list of sources and project name that will actually change and
 # the rest of the makefile is boilerplate for defining build rules.
 #
+NACL_SDK_ROOT:=/Users/settinghead/nacl_sdk/pepper_23
 PROJECT:=tyful_nacl_client
 LDFLAGS:=-lppapi_cpp -lppapi
 CXX_SOURCES:=$(PROJECT).cc ../cpp/cpp/*.cpp ../cpp/cpp/**/*.cpp
@@ -30,7 +31,8 @@ THIS_MAKEFILE:=$(abspath $(lastword $(MAKEFILE_LIST)))
 NACL_SDK_ROOT?=$(abspath $(dir $(THIS_MAKEFILE))../..)
 
 # Project Build flags
-WARNINGS:=-Wno-long-long -Wall -Wswitch-enum -pedantic
+# WARNINGS:=-Wno-long-long -Wall -Wswitch-enum -pedantic
+WARNINGS:=-w
 CXXFLAGS:=-pthread -std=gnu++98 $(WARNINGS)
 
 #
@@ -66,6 +68,15 @@ $(x86_64_OBJS) : %_64.o : %.cc $(THIS_MAKE)
 
 $(PROJECT)_x86_64.nexe : $(x86_64_OBJS)
 	$(CXX) -o $@ $^ -m64 -O0 -g $(CXXFLAGS) $(LDFLAGS)
+
+
+	cp *.nexe ../static/f/client
+	cp *.js ../static/f/client
+	cp *.nmf ../static/f/client
+
+	cp *.nexe ../frontend/public
+	cp *.js ../frontend/public
+	cp *.nmf ../frontend/public
 
 # Define a phony rule so it always runs, to build nexe and start up server.
 .PHONY: RUN 

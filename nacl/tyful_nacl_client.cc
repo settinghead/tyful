@@ -28,14 +28,31 @@
 #include <string>
 #include "ppapi/cpp/instance.h"
 #include "ppapi/cpp/module.h"
+#include "ppapi/cpp/graphics_2d.h"
+#include "ppapi/cpp/image_data.h"
 #include "ppapi/cpp/var.h"
+#include "ppapi/cpp/var_array_buffer.h"
+#include "../cpp/cpp/polartreeapi.h"
+#include "../cpp/cpp/encoding/base64.h"
+#include <iostream>
 
 namespace {
 // The expected string sent by the browser.
-const char* const kHelloString = "hello";
+// const char* const kUpdateTemplateMethodId = "updateTemplate";
+// const char* const kStartRenderMethodId = "startRender";
+// const char* const kPauseRenderMethodId = "pauseRender";
+// const char* const kFeedShapeMethodId = "feedShape";
+// const char* const kUpdatePerseveranceMethodId = "updatePerseverance";
+// static const char kMessageArgumentSeparator = ':';
+
+const int kUpdateTemplateMethodId = 0;
+const int kStartRenderMethodId = 1;
+const int kPauseRenderMethodId = 2;
+const int kFeedShapeMethodId = 3;
+const int kUpdatePerseveranceMethodId = 4;
+
 // The string sent back to the browser upon receipt of a message
 // containing "hello".
-const char* const kReplyString = "hello from NaCl";
 } // namespace
 
 /// The Instance class.  One of these exists for each instance of your NaCl
@@ -47,13 +64,13 @@ const char* const kReplyString = "hello from NaCl";
 /// To communicate with the browser, you must override HandleMessage() for
 /// receiving messages from the browser, and use PostMessage() to send messages
 /// back to the browser.  Note that this interface is asynchronous.
-class HelloTutorialInstance : public pp::Instance {
+class TyfulNaclCoreInstance : public pp::Instance {
  public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
-  explicit HelloTutorialInstance(PP_Instance instance) : pp::Instance(instance)
+  explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
   {}
-  virtual ~HelloTutorialInstance() {}
+  virtual ~TyfulNaclCoreInstance() {}
 
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
@@ -67,13 +84,38 @@ class HelloTutorialInstance : public pp::Instance {
   /// with the parameter.
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
-    if (!var_message.is_string())
+
+    if (!var_message.is_array_buffer())
       return;
-    std::string message = var_message.AsString();
-    pp::Var var_reply;
-    if (message == kHelloString) {
-      var_reply = pp::Var(kReplyString);
-      PostMessage(var_reply);
+    pp::VarArrayBuffer buffer_data(var_message);
+    uint32_t* buffer = static_cast<uint32_t*>(buffer_data.Map());
+
+    if (buffer[0]==kUpdateTemplateMethodId) {
+    // The argument to getUrl is everything after the first ':'.
+        // std::string templateData_str = message.substr(sep_pos + 1);
+        // std::string data_str = base64_decode(templateData_str);
+        PostMessage(buffer_data);
+                printf("%u,%u,%u,%u, len: %d",
+          buffer[0],
+          buffer[1],
+          buffer[2],
+          buffer[3],
+          buffer_data.ByteLength());
+        updateTemplate(buffer+1);
+    }
+    else if (buffer[0]==kStartRenderMethodId) {
+      startRendering();
+    }
+    else if (buffer[0]==kPauseRenderMethodId) {
+      pauseRendering();
+    }
+    else if (buffer[0]==kFeedShapeMethodId) {
+        feedShape(buffer+1);
+    }
+    else if (buffer[0]==kUpdatePerseveranceMethodId) {
+        int perseverance = buffer[1];
+        setPerseverance(perseverance);
+        printf("%d\n",perseverance);
     }
   }
 };
@@ -81,16 +123,16 @@ class HelloTutorialInstance : public pp::Instance {
 /// The Module class.  The browser calls the CreateInstance() method to create
 /// an instance of your NaCl module on the web page.  The browser creates a new
 /// instance for each <embed> tag with type="application/x-nacl".
-class HelloTutorialModule : public pp::Module {
+class TyfulNaclCoreModule : public pp::Module {
  public:
-  HelloTutorialModule() : pp::Module() {}
-  virtual ~HelloTutorialModule() {}
+  TyfulNaclCoreModule() : pp::Module() {}
+  virtual ~TyfulNaclCoreModule() {}
 
-  /// Create and return a HelloTutorialInstance object.
+  /// Create and return a TyfulNaclCoreInstance object.
   /// @param[in] instance The browser-side instance.
   /// @return the plugin-side instance.
   virtual pp::Instance* CreateInstance(PP_Instance instance) {
-    return new HelloTutorialInstance(instance);
+    return new TyfulNaclCoreInstance(instance);
   }
 };
 
@@ -101,6 +143,6 @@ namespace pp {
 /// is one instance per <embed> tag on the page.  This is the main binding
 /// point for your NaCl module with the browser.
 Module* CreateModule() {
-  return new HelloTutorialModule();
+  return new TyfulNaclCoreModule();
 }
 }  // namespace pp

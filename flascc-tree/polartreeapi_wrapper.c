@@ -273,6 +273,21 @@ void _wrap_appendLayer() {
 }
 
 
+__attribute__((annotate("as3sig:public function _wrap_updateTemplate(base64_str:*):void")))
+void _wrap_updateTemplate() {
+  std::string arg1 ;
+  
+  
+  updateTemplate(arg1);
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
+  }
+}
+
+
 __attribute__((annotate("as3sig:public function _wrap_startRendering():void")))
 void _wrap_startRendering() {
   startRendering();

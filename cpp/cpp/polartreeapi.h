@@ -6,6 +6,8 @@ int getStatus();
 void setStatus(int status);
 double getShrinkage();
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip);
+void updateTemplate(unsigned int *data);
+void feedShape(unsigned int *data);
 void startRendering();
 void pauseRendering();
 SlapInfo* getNextSlap();
