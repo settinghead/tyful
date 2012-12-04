@@ -4,8 +4,8 @@
 #include <math.h>
 #include "../model/Flip.h"
 
-PolarRootTree::PolarRootTree(ImageShape* shape, double d, int minBoxSize) :
-		PolarTree(0, TWO_PI, 0, d, minBoxSize)
+PolarRootTree::PolarRootTree(ImageShape* shape, double d) :
+		PolarTree(0, TWO_PI, 0, d)
 #if NUM_THREADS>1
 ,finalSeq(-1)
 #endif
@@ -15,7 +15,6 @@ PolarRootTree::PolarRootTree(ImageShape* shape, double d, int minBoxSize) :
                 this->rootX[i] = this->rootY[i] = NAN;
             }
 	this->shape = shape;
-	this->_minBoxSize = minBoxSize;
 //    this->getKids();
 
 }
@@ -70,10 +69,6 @@ inline int PolarRootTree::getCurrentStamp(int seq) {
 
 inline PolarRootTree* PolarRootTree::getRoot() {
 	return this;
-}
-
-inline int PolarRootTree::getMinBoxSize() {
-	return this->_minBoxSize;
 }
 
 inline ImageShape* PolarRootTree::getShape() {

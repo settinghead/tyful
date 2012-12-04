@@ -31,5 +31,5 @@
 
 #define NUM_THREADS 3
 #define THREAD_STEP_SIZE 40
-
+#define MIN_BOX_SIZE 1
 #endif

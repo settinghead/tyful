@@ -7,8 +7,8 @@
 class PolarChildTree: public PolarTree {
 public:
 	inline PolarChildTree(double r1, double r2, double d1,
-                          double d2, PolarRootTree* root, int minBoxSize)
-    :PolarTree::PolarTree(r1, r2, d1, d2, minBoxSize) {
+                          double d2, PolarRootTree* root)
+    :PolarTree::PolarTree(r1, r2, d1, d2) {
         this->root = root;
     }
 	~PolarChildTree();
@@ -25,7 +25,6 @@ public:
 	inline int getCurrentStamp(int seq);
 	inline PolarRootTree* getRoot();
 	inline ImageShape* getShape();
-	inline int getMinBoxSize();
 };
 
 

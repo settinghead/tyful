@@ -24,7 +24,7 @@ enum SplitType {
 class PolarTree {
 public:
     double d1,d2;
-	PolarTree(double r1, double r2, double d1, double d2, int minBoxSize);
+	PolarTree(double r1, double r2, double d1, double d2);
 	~PolarTree();
 	inline void addKids(vector<PolarTree*>* kidList);
 	inline virtual int getRootX(int seq) = 0;
@@ -63,7 +63,6 @@ public:
         return this->_kids;
     }
 	inline virtual PolarRootTree* getRoot() = 0;
-	inline virtual int getMinBoxSize() = 0;
 	inline virtual ImageShape* getShape() = 0;
 	inline bool overlapsCoord(int seq,double x, double y, double right, double bottom){
         if ((this->rectCollideCoord(seq,x, y, right, bottom))) {

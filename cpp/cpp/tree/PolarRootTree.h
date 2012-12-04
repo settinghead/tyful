@@ -17,11 +17,8 @@ private:
 	double _rotation[NUM_THREADS]; /* REM */
 	int rootStamp[NUM_THREADS]; /* REM */
 	ImageShape* shape; /* REM */
-	int _minBoxSize; /* REM */
-
 public:
-	PolarRootTree(ImageShape* shape, double d,
-			int minBoxSize);
+	PolarRootTree(ImageShape* shape, double d);
 	~PolarRootTree();
 	inline void setLocation(int seq,int centerX, int centerY){
         this->rootX[seq] = centerX;
@@ -60,7 +57,6 @@ public:
 	inline double getRotation(int seq);
 	inline int getCurrentStamp(int seq);
 	inline PolarRootTree* getRoot();
-	inline int getMinBoxSize();
 	inline ImageShape* getShape();
 };
 

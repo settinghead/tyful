@@ -309,10 +309,6 @@ inline PolarRootTree* PolarChildTree::getRoot() {
 	return this->root;
 }
 
-inline int PolarChildTree::getMinBoxSize() {
-	return this->root->getMinBoxSize();
-}
-
 ImageShape* PolarChildTree::getShape() {
 	return this->root->getShape();
 }

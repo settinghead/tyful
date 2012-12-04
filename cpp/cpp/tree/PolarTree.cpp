@@ -6,8 +6,8 @@
 #include "../model/Flip.h"
 #include "../model/PolarCanvas.h"
 
-PolarTree::PolarTree(double r1, double r2, double d1, double d2,
-                     int minBoxSize):swelling(0),
+PolarTree::PolarTree(double r1, double r2, double d1, double d2
+                     ):swelling(0),
 _kids(NULL),_leaf(false),_r1(r1),_r2(r2),d1(d1),d2(d2),
 _relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN){
     pthread_mutex_init(&lock, NULL);
@@ -15,10 +15,10 @@ _relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN){
         _computedR1[i] =_computedR2[i] = NAN;
     }
 	double r = (r2 - r1);
-	double d = (double(((PI * ((d1 + d2))) * r))
-			/ double(TWO_PI));
-	bool tooSmallToContinue = (bool((d <= minBoxSize))
-			|| bool(((d2 - d1) <= minBoxSize)));
+	double d = PI * (d1 + d2) * r
+			/ TWO_PI;
+	bool tooSmallToContinue = d <= MIN_BOX_SIZE
+			|| (d2 - d1) <= MIN_BOX_SIZE;
 	if ((tooSmallToContinue)) {
 		this->setLeaf(true);
 	}
@@ -41,7 +41,7 @@ inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
 inline vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 //        pthread_mutex_lock(&lock);
-		makeChildren(this, this->getShape(), this->getMinBoxSize(),
+		makeChildren(this, this->getShape(), 
 				this->getRoot());
 //        pthread_mutex_unlock(&lock);
 
