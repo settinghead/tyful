@@ -5,7 +5,6 @@ package com.settinghead.tyful.client.model.vo.wordlist
 	
 	public class WordListVO extends SortedList
 	{
-		private var currentWordIndex:int = 0;
 		public function WordListVO(array:Array=null){
 			super(new WordComparator());
 			if(array!=null){
@@ -20,19 +19,11 @@ package com.settinghead.tyful.client.model.vo.wordlist
 				this.add(new WordVO(w.word, 0));
 			}
 		}
+
 		
-		
-		public function reset():void{
-			currentWordIndex = 0;
-		}
-		
-		public function next():WordVO{
+		public function at(i:int):WordVO{
 			if(this.size==0) return null;
-			var w:WordVO = this.itemAt(currentWordIndex++);
-			if(currentWordIndex==this.size)
-				//circular
-				currentWordIndex = 0;
-			return w;
+			return this.itemAt(i%this.size);
 		}
 		
 		public function clone():WordListVO{

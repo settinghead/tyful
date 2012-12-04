@@ -23,7 +23,6 @@ package com.settinghead.tyful.client.controller.template
 			var wordListProxy:WordListProxy = facade.retrieveProxy(WordListProxy.NAME) as WordListProxy;
 
 			if(templateProxy.template!=null) renderProxy.updateTemplate(templateProxy.template);
-			if(wordListProxy.wordList!=null) renderProxy.updateWordList(wordListProxy.wordList);
 		}
 	}
 }

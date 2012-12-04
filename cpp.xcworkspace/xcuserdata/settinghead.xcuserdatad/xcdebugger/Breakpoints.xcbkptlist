@@ -325,7 +325,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "27"
-         endingLineNumber = "27">
+         endingLineNumber = "27"
+         landmarkName = "initCanvas()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -376,7 +378,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "102"
          endingLineNumber = "102"
-         landmarkName = "setStatus(int status)"
+         landmarkName = "renderRoutine(void*)"
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
@@ -402,7 +404,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "88"
          endingLineNumber = "88"
-         landmarkName = "startRendering()"
+         landmarkName = "slapShape(unsigned int *pixels, int width, int height,unsigned int sid)"
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint

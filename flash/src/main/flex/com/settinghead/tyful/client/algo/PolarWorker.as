@@ -1,11 +1,7 @@
 package com.settinghead.tyful.client.algo
 {	
-	import com.settinghead.tyful.client.model.vo.DisplayWordListVO;
-	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
+//	import com.settinghead.tyful.client.model.polarcore.IShapeGenerator;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
-	import com.settinghead.tyful.client.model.vo.wordlist.WordComparator;
-	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
-	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -14,6 +10,7 @@ package com.settinghead.tyful.client.algo
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.registerClassAlias;
+	import flash.net.sendToURL;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
 	import flash.utils.ByteArray;
@@ -29,33 +26,8 @@ package com.settinghead.tyful.client.algo
 	
 	public class PolarWorker extends Sprite implements ISpecialFile
 	{
-		[Embed(source="../fonter/konstellation/panefresco-500.ttf", fontFamily="panefresco500", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Panefresco500: Class;
-		[Embed(source="../fonter/konstellation/permanentmarker.ttf", fontFamily="permanentmarker", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const PermanentMarker: Class;
-		[Embed(source="../fonter/konstellation/romeral.ttf", fontFamily="romeral", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const Romeral: Class;
 		
-		[Embed(source="../fonter/konstellation/bpreplay-kRB.ttf", fontFamily="bpreplay-kRB", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const BpreplayKRB: Class;
-		[Embed(source="../fonter/konstellation/fifthleg-kRB.ttf", fontFamily="fifthleg-kRB", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const FifthlegKRB: Class;
-		[Embed(source="../fonter/konstellation/pecita-kRB.ttf", fontFamily="pecita-kRB", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const PecitaKRB: Class;
-		[Embed(source="../fonter/konstellation/sniglet-kRB.ttf", fontFamily="sniglet-kRB", mimeType='application/x-font',
-        embedAsCFF='false', advancedAntiAliasing="true")]
-		public static const snigletKRB: Class;
-		
-		private var wordList:WordListVO = null;
 		private var template:Object = null;
-		
-		private var wDict:Vector.<DisplayWordVO>;
 		
 		public static var current:PolarWorker ;
 		public function PolarWorker()
@@ -70,12 +42,12 @@ package com.settinghead.tyful.client.algo
 		
 		private function initialize():void
 		{
-			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordComparator", WordComparator);
+//			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
+//			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordComparator", WordComparator);
 			registerClassAlias("org.as3commons.collections.SortedList", SortedList);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
+//			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.template.PlaceInfo", PlaceInfo);
-			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
+//			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
 			CModule.rootSprite = this;
 			CModule.vfs.console = this;
 			if(CModule.runningAsWorker()) {
@@ -89,59 +61,96 @@ package com.settinghead.tyful.client.algo
 			controlChannel = Worker.current.getSharedProperty("controlChannel") as MessageChannel;
 			controlChannel.addEventListener(Event.CHANNEL_MESSAGE, controlCommandReceived);
 			
-			addSlapRequestEventListener(this.handleSlaps);
-			addFeedRequestEventListener(this.handleFeeds);
+//			addSlapRequestEventListener(this.handleSlaps);
+//			addFeedRequestEventListener(this.handleFeeds);
 			CModule.startAsync(this);
 		}        
 		
+		var feedBuffer:int = 5;
+		var warningLine:int = 5;
 		
 		private function controlCommandReceived(event:Event):void
 		{
-			if (!controlChannel.messageAvailable)
+
+			if (!controlChannel.messageAvailable){
 				return;
+			}
+			
 			
 			var message:Array = controlChannel.receive() as Array;
 			
 			if (message != null)
 			{
-				if(message[0] == "words")
-				{
-					wordList = new WordListVO((message[1] as Array));
-					
-				}
-				else if (message[0] == "start"){
-//					PolarTreeAPI.startRendering();
+				if (message[0] == "start"){
 					PolarTreeAPI.setStatus(1);
-					while(PolarTreeAPI.getStatus()>0){
-					//feed the initial batch
-						var params:Array = getNextShape();
-						var coordPtr:int = PolarTreeAPI.slapShape(params[0],params[1],params[2],params[3]);
-						processAndSendDw(coordPtr);
-					}
+					
+//					PolarTreeAPI.startRendering();
+					
+					
+//					while(PolarTreeAPI.getStatus()>0){
+//						var params:Array = getNextShape();
+//						var params:Array = getNextShape();
+						
+//						var coordPtr:int = PolarTreeAPI.slapShape(params[0],params[1],params[2],params[3]);	
+//						processAndSendDw(coordPtr);
+						//
+						//						while (PolarTreeAPI.getNumberOfPendingShapes()<5){
+						//							var params:Array = getNextShape();
+						//							PolarTreeAPI.feedShape(params[0],params[1],params[2],params[3]);	
+						//						}
+						//						var coordPtr:int;
+						//						while((coordPtr=PolarTreeAPI.getNextSlap())!=0)
+						//							processAndSendDw(coordPtr);
+//						controlCommandReceived(null);
+						statusChannel.send(["feedMe",warningLine+feedBuffer,PolarTreeAPI.getShrinkage()]);
+//					while(PolarTreeAPI.getStatus()>0)
+//						controlCommandReceived(null);
 				}
-				
+					
 				else if (message[0] == "pause"){
 					pause();
 				}
+				else if (message[0] == "feed"){
+					var sid:int = message[1] as int;
+					var data:ByteArray = message[2] as ByteArray;
+					var addr:int = dataToAddr(data);
+					var width:int = message[3];
+					var height:int = message[4];
+					PolarTreeAPI.feedShape(addr,width,height,sid);
+					if(!controlChannel.messageAvailable){
+						while(PolarTreeAPI.getNumberOfPendingShapes()>0){
+						var coordPtr:int = PolarTreeAPI.tryNextShape();
+						processAndSendDw(coordPtr);
+						}
+						var numPendingShapes:int = PolarTreeAPI.getNumberOfPendingShapes();
+						if(PolarTreeAPI.getStatus()>0 && PolarTreeAPI.getNumberOfPendingShapes()<warningLine)
+							statusChannel.send(["feedMe",feedBuffer,PolarTreeAPI.getShrinkage()]);
+					}
+					
+					if(PolarTreeAPI.getStatus()==0){
+						//finished, send empty message
+						resultChannel.send(new Object());
+						while(controlChannel.messageAvailable)
+							controlChannel.receive();
+					}
+				}
 				else if (message[0] == "template"){
-					var currentWords:WordListVO = wordList.clone();
-					wDict = new Vector.<DisplayWordVO>();
 					CModule.serviceUIRequests();
-//					template = message[1] as TemplateVO;
+					//					template = message[1] as TemplateVO;
 					template = message[1] as Object;
-//					var directionBitmapData:BitmapData= (template.layers[0] as WordLayer).direction;
-						//TODO: complete multi-layer implementation
-//					var data:ByteArray = directionBitmapData.getPixels(new Rectangle(0,0,directionBitmapData.width, directionBitmapData.height));
+					//					var directionBitmapData:BitmapData= (template.layers[0] as WordLayer).direction;
+					//TODO: complete multi-layer implementation
+					//					var data:ByteArray = directionBitmapData.getPixels(new Rectangle(0,0,directionBitmapData.width, directionBitmapData.height));
 					//trace("data length: "+ data.length.toString()+"\n");
 					var directions:Array = template["directions"] as Array;
 					var colors:Array = template["colors"] as Array;
-			
+					
 					
 					PolarTreeAPI.initCanvas(); 
 					for(var i:int=0;i<directions.length;i++){
 						var a:Array = (template["directions"] as Array)[i] as Array;
-						var width:Number = a[0];
-						var height:Number = a[1];
+						var twidth:Number = a[0];
+						var theight:Number = a[1];
 						var data:ByteArray = a[2];
 						var colorData:ByteArray = ((template["colors"] as Array)[i] as Array)[2];
 						
@@ -153,9 +162,9 @@ package com.settinghead.tyful.client.algo
 						var colorAddr:int = CModule.malloc(colorData.length);
 						CModule.writeBytes(colorAddr, colorData.length, colorData);
 						
-						PolarTreeAPI.appendLayer(addr,colorAddr,width,height,true);
+						PolarTreeAPI.appendLayer(addr,colorAddr,twidth,theight,true);
 					}
-	
+					
 					
 				}
 				else if (message[0] == "perseverance"){
@@ -163,8 +172,9 @@ package com.settinghead.tyful.client.algo
 					PolarTreeAPI.setPerseverance(message[1] as int);
 				}
 			}
+			
 		}
-
+		
 		
 		private function pause():void{
 			PolarTreeAPI.pauseRendering();
@@ -176,82 +186,97 @@ package com.settinghead.tyful.client.algo
 				processAndSendDw(coordPtr);
 			}
 		}
-
+		
 		private function processAndSendDw(coordPtr:int):void{
-			var sid:int = CModule.read32(coordPtr);
-				var dw:DisplayWordVO =wDict[sid];
+			var msg:Object = new Object();
 
-	
-				var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), 0);
+			if(coordPtr!=0){
+				var sid:uint = CModule.read32(coordPtr);
 				var fontColor:uint = CModule.read32(coordPtr + 32);
 				var failureCount:int = CModule.read32(coordPtr+36);
-				var msg:Object = new Object();
 				
-				msg["word"] = dw.word;
-				msg["fontSize"] = dw.fontSize;
-				msg["fontName"] = dw.fontName;
+				var place:PlaceInfo = new PlaceInfo(sid,CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), 0,fontColor,failureCount);
+
+				
 				msg["fontColor"] = fontColor;
+				msg["sid"] = place.sid;
 				msg["x"] = place.x;
 				msg["y"] = place.y;
 				msg["rotation"] = place.rotation;
 				msg["layer"] = place.layer;
 				msg["failureCount"]=failureCount;
-				resultChannel.send(msg);
-		}
-
-		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
-
-		public function handleFeeds():void{
-			while(PolarTreeAPI.getNumberOfPendingShapes()<10
-				&& PolarTreeAPI.getStatus()>0){
-				var params:Array = getNextShape();
-				PolarTreeAPI.feedShape(params[0],params[1],params[2],params[3]);
-
+				resultChannel.send(msg);				
 			}
-		}
+			statusChannel.send(["feedMe",1,PolarTreeAPI.getShrinkage()]);
 
-		private function getNextShape():Array{
-						var word:WordVO;
-			//				if(getShrinkage()>0){
-			word = wordList.next();
-			//				}
-			//				else{
-			//					word = new WordVO("DT");
-			//				}
-			CModule.serviceUIRequests();		
-			var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+10;
-			var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
-			var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
-			var params:Array = getTextShape(dw);
-			return params;
 		}
 		
+		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
 		
-		private function getTextShape(dw:DisplayWordVO, safetyBorder:Number=0):Array
-		{
-			var HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
-			
-			var bounds: Rectangle = dw.textField.getBounds( dw.textField );
-			HELPER_MATRIX.tx = -bounds.x + safetyBorder;
-			HELPER_MATRIX.ty = -bounds.y + safetyBorder;
-			
-			
-			var bmp:Bitmap = new Bitmap( new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0xFFFFFFFF ) );
-			//s.width = textField.width;
-			//s.height = textField.height;
-			dw.x = 0;
-			dw.y = 0;
-			bmp.bitmapData.draw( dw );
-			
-			
-			var data:ByteArray = bmp.bitmapData.getPixels(new Rectangle(0,0,bmp.bitmapData.width, bmp.bitmapData.height));
-//			trace("width: "+s.width.toString()+", height: "+s.height.toString()+", length: "+data.length.toString()+"\n");
+//		public function handleFeeds():void{
+//			while(PolarTreeAPI.getNumberOfPendingShapes()<10
+//				&& PolarTreeAPI.getStatus()>0){
+//				var params:Array = getNextShape();
+//				PolarTreeAPI.feedShape(params[0],params[1],params[2],params[3]);
+//				
+//			}
+//		}
+		
+//		public function handleFeeds():void{
+//			while(PolarTreeAPI.getNumberOfPendingShapes()<10
+//				&& PolarTreeAPI.getStatus()>0){
+//				var word:WordVO;
+//				//				if(getShrinkage()>0){
+//				word = wordList.next();
+//				//				}
+//				//				else{
+//				//					word = new WordVO("DT");
+//				//				}
+//				CModule.serviceUIRequests();		
+//				var fontSize:Number = 100*PolarTreeAPI.getShrinkage()+8;
+//				var fontName:String = fonts[Math.round((Math.random()*fonts.length))];
+//				var dw:DisplayWordVO = new DisplayWordVO(word, fontName, fontSize );
+//				var sid:int = wDict.length;
+//				wDict.push(dw);
+//				var params:Array = getTextShape(dw);
+//				PolarTreeAPI.feedShape(params[0],params[1],params[2],sid);
+//			}
+//		}
+//		
+//		
+//		public function handleSlaps():void{
+//			var coordPtr:int = 0;
+//			while((coordPtr=PolarTreeAPI.getNextSlap())!=0){
+//				
+//				var sid:int = CModule.read32(coordPtr);
+//				var dw:DisplayWordVO =wDict[sid];
+//				
+//				
+//				var place:PlaceInfo = new PlaceInfo(CModule.readDouble(coordPtr+4), CModule.readDouble(coordPtr+12), CModule.readDouble(coordPtr+20), 0);
+//				var fontColor:uint = CModule.read32(coordPtr + 28);
+//				var failureCount:int = CModule.read32(coordPtr+32);
+//				dw.textField.textColor = fontColor;
+//				dw.putToPlace(place);
+//				
+//				tuProxy.tu.failureCount = failureCount;
+//				
+//				facade.sendNotification(ApplicationFacade.DISPLAYWORD_CREATED, dw);
+//			}
+//			if(PolarTreeAPI.getStatus()==0){	
+//				if(tuProxy.generateTemplatePreview){
+//					tuProxy.tu.template.preview = generator.canvasImage(300);
+//					facade.sendNotification(ApplicationFacade.TEMPLATE_PREVIEW_GENERATED);
+//				}
+//				facade.sendNotification(ApplicationFacade.TU_GENERATION_LAST_CALL);
+//			}
+//			
+//		}
+		
+		private function dataToAddr(data:ByteArray):int{
 			data.position = 0;
 			var addr:int = CModule.malloc(data.length);
 			CModule.writeBytes(addr, data.length, data);
-			var sid:int = wDict.length;
-			wDict.push(dw);
-			return [addr,bmp.width, bmp.height,sid];
+			return addr;
 		}
 		
 		/**
@@ -333,7 +358,7 @@ package com.settinghead.tyful.client.algo
 			
 			return txt;
 		}
-
+		
 		
 	}
 }

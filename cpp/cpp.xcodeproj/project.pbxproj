@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C0A572D166D811B004D4A14 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A572B166D811B004D4A14 /* base64.cpp */; };
+		7C0A572E166D811B004D4A14 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C0A572C166D811B004D4A14 /* base64.h */; };
 		7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */; };
 		7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */; };
 		7C7AE93B16674B5C002466A3 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FC16674B5C002466A3 /* Angler.cpp */; };
@@ -71,6 +73,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C0A572B166D811B004D4A14 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
+		7C0A572C166D811B004D4A14 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadControllers.cpp; sourceTree = "<group>"; };
 		7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadControllers.h; sourceTree = "<group>"; };
 		7C7AE869166745B7002466A3 /* cpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = cpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +153,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C0A5729166D80E8004D4A14 /* encoding */ = {
+			isa = PBXGroup;
+			children = (
+				7C0A572B166D811B004D4A14 /* base64.cpp */,
+				7C0A572C166D811B004D4A14 /* base64.h */,
+			);
+			path = encoding;
+			sourceTree = "<group>";
+		};
 		7C7AE85E166745B5002466A3 = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +181,7 @@
 		7C7AE86B166745B7002466A3 /* cpp */ = {
 			isa = PBXGroup;
 			children = (
+				7C0A5729166D80E8004D4A14 /* encoding */,
 				7CEFFBD116699F7A00900686 /* polartreeapi.cpp */,
 				7CEFFBD216699F7A00900686 /* polartreeapi.h */,
 				7CEFFBC81668951A00900686 /* threads */,
@@ -366,6 +380,7 @@
 				7CEFFBD016689ECA00900686 /* threadpool.h in Headers */,
 				7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */,
 				7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */,
+				7C0A572E166D811B004D4A14 /* base64.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +461,7 @@
 				7CEFFBCF16689ECA00900686 /* threadpool.cpp in Sources */,
 				7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */,
 				7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */,
+				7C0A572D166D811B004D4A14 /* base64.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

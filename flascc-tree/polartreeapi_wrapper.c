@@ -273,6 +273,21 @@ void _wrap_appendLayer() {
 }
 
 
+__attribute__((annotate("as3sig:public function _wrap_updateTemplate(base64_str:*):void")))
+void _wrap_updateTemplate() {
+  std::string arg1 ;
+  
+  
+  updateTemplate(arg1);
+  {
+    
+  }
+  {
+    AS3_ReturnAS3Var(undefined);
+  }
+}
+
+
 __attribute__((annotate("as3sig:public function _wrap_startRendering():void")))
 void _wrap_startRendering() {
   startRendering();
@@ -302,6 +317,21 @@ void _wrap_getNextSlap() {
   SlapInfo *result ;
   
   result = (SlapInfo *)getNextSlap();
+  {
+    AS3_DeclareVar(asresult, int);
+    AS3_CopyScalarToVar(asresult, result);
+  }
+  {
+    AS3_ReturnAS3Var(asresult);
+  }
+}
+
+
+__attribute__((annotate("as3sig:public function _wrap_tryNextShape():int")))
+void _wrap_tryNextShape() {
+  SlapInfo *result ;
+  
+  result = (SlapInfo *)tryNextShape();
   {
     AS3_DeclareVar(asresult, int);
     AS3_CopyScalarToVar(asresult, result);

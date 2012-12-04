@@ -13,6 +13,7 @@
 #include "constants.h"
 #include "ThreadControllers.h"
 #include "model/structs.h"
+#include "encoding/base64.h"
 #include <assert.h>
 #include <pthread.h>
 
@@ -42,6 +43,38 @@ void setPerseverance(int perseverance){
 	PolarCanvas::current->setPerseverance(perseverance);
 }
 
+
+
+void updateTemplate(unsigned int* data){
+//    unsigned int* data = (unsigned int*)base64_str.c_str();
+    initCanvas();
+    int counter = 0;
+    int numLayers = data[counter++];
+    
+    assert(numLayers>0 && numLayers<500);
+    for(int i=0;i<numLayers;i++){
+        int directionWidth = data[counter++];
+        int directionHeight = data[counter++];
+        int directionLength = data[counter++];
+        int directionStart = counter;
+        counter+=directionLength;
+        int colorWidth = data[counter++];
+        int colorHeight = data[counter++];
+        int colorLength = data[counter++];
+        int colorStart = counter;
+        appendLayer(data+directionStart, data+colorStart, directionWidth, directionHeight, true);
+    }
+    
+}
+void feedShape(unsigned int* data){
+//    unsigned int* data = (unsigned int*)base64_str.c_str();
+    int counter = 0;
+    unsigned int sid = data[counter++];
+    int width = data[counter++];
+    int height = data[counter++];
+    feedShape(data+counter, width, height, sid);
+}
+
 void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
 	TextImageShape *shape = new TextImageShape(pixels, width, height, false);
@@ -54,6 +87,11 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
     feedShape(pixels, width, height,sid);
+    return tryNextShape();
+}
+
+SlapInfo* tryNextShape()
+{
     ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
     return getNextSlap();
 }

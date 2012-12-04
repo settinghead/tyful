@@ -10,12 +10,17 @@ package com.settinghead.tyful.client.model.vo.template
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.CollectionEvent;
+	import mx.utils.Base64Encoder;
 	
 	[Bindable]
-	public class TemplateVO implements IZippable, IWithEffectiveBorder
+	public class TemplateVO implements IZippable, IWithEffectiveBorder, IExternalizable
 	{
 		public static const DEFAULT_WIDTH:int = 900;
 		public static const DEFAULT_HEIGHT:int = 900;
@@ -232,6 +237,36 @@ package com.settinghead.tyful.client.model.vo.template
 
 			}
 			return obj;
+		}
+		public function writeExternal(output:IDataOutput):void {
+			var numWordLayers:int = 0;
+			for each(var l:Layer in layers){
+				if(l is WordLayer){
+					numWordLayers ++;
+				}
+			}
+			output.writeInt(numWordLayers);
+			
+			for each(var l:Layer in layers){
+				if(l is WordLayer){
+					writeBitmapDataAndInfo((l as WordLayer).direction,output);
+					writeBitmapDataAndInfo((l as WordLayer).color,output);
+				}
+			}
+		}
+		
+		public function readExternal(input:IDataInput):void {
+			//TODO: impl
+		}
+
+		
+		public static function writeBitmapDataAndInfo(bmpd:BitmapData, target:IDataOutput):void{
+			var data:ByteArray = bmpd.getPixels(new Rectangle(0,0,bmpd.width,bmpd.height));
+			target.writeInt(bmpd.width);
+			target.writeInt(bmpd.height);
+			target.writeInt(data.length);
+			data.position = 0;
+			target.writeBytes(data,0,data.length);
 		}
 		
 //		public static function fromTransferrableObject(obj:Object):TemplateVO{
