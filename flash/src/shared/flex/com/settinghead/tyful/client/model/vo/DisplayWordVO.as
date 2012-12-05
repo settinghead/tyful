@@ -1,27 +1,37 @@
 package com.settinghead.tyful.client.model.vo
 {	
+	import com.settinghead.tyful.client.model.vo.template.Layer;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
+	import com.settinghead.tyful.client.model.vo.template.WordLayer;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	import flash.text.AntiAliasType;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.utils.ByteArray;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
 	
-	public class DisplayWordVO extends Sprite
+	public class DisplayWordVO extends Sprite implements IShape
+//		implements IExternalizable
 	{
 		private var _textField:TextField;
 		private var _word:WordVO = null;
 		private var _place:PlaceInfo = null;
 		private var _fontSize:Number;
 		private var _fontName:String;
+		public var sid:int;
 		
-		
-		public function DisplayWordVO(word:WordVO, fontName:String, fontSize:Number, color:uint=0x0, place:PlaceInfo = null){
+		public function DisplayWordVO(sid:int, word:WordVO=null, fontName:String=null, fontSize:Number=5, color:uint=0x0, place:PlaceInfo = null){
 			super();
+			this.sid = sid;
 			this.useHandCursor = true;
 			this.buttonMode = true;
 			this.mouseChildren = true;
@@ -120,5 +130,38 @@ package com.settinghead.tyful.client.model.vo
 			return _place;
 		}
 		
+		public function toBitmapData():BitmapData{
+			var safetyBorder:int = 0;
+			var HELPER_MATRIX: Matrix = new Matrix( 1, 0, 0, 1 );
+			
+			var bounds: Rectangle = textField.getBounds( textField );
+			HELPER_MATRIX.tx = -bounds.x + safetyBorder;
+			HELPER_MATRIX.ty = -bounds.y + safetyBorder;
+			
+			
+			var bmpd:BitmapData = new BitmapData( bounds.width + safetyBorder * 2, bounds.height + safetyBorder * 2, true, 0xFFFFFFFF );
+			//s.width = textField.width;
+			//s.height = textField.height;
+			x = 0;
+			y = 0;
+			bmpd.draw( this );
+			
+			
+			return bmpd;
+		}
+
+		
+//		public function writeExternal(output:IDataOutput):void {
+//			output.writeUTF(word)
+//			this._word = word;
+//			this._place = place;
+//			this._fontSize = fontSize;
+//			this._fontName = fontName;
+//			
+//		}
+//		
+//		public function readExternal(input:IDataInput):void {
+//			
+//		}
 	}
 }

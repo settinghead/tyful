@@ -256,9 +256,30 @@ package com.settinghead.tyful.client.model.vo.template
 		}
 		
 		public function readExternal(input:IDataInput):void {
-			//TODO: impl
+			var data:ByteArray = new ByteArray();
+			input.readBytes(data);
+			var numWordLayers:int = data.readInt();
+			for(var i:int=0;i<numWordLayers;i++){
+				var direction:BitmapData = readBitmapDataFromBytes(data); 
+				var color:BitmapData = readBitmapDataFromBytes(data); 
+				var l:WordLayer = new WordLayer("Layer "+(i+1).toString(),this,width,height);
+				l.setDirection(direction);
+				l.color = color; 
+			}
 		}
-
+		
+		public static function readBitmapDataFromBytes(input:ByteArray):BitmapData{
+			var width:int = input.readInt();
+			var height:int = input.readInt();
+			var len:int = input.readInt();
+			var b:ByteArray = new ByteArray();
+			input.readBytes(b,input.position,len);
+//			var pos:int = input.position;
+			var bmpd:BitmapData = new BitmapData(width,height);
+			bmpd.setPixels(new Rectangle(0,0,width,height),b);
+//			input.position = pos+(width*height)*4;
+			return bmpd;
+		}
 		
 		public static function writeBitmapDataAndInfo(bmpd:BitmapData, target:IDataOutput):void{
 			var data:ByteArray = bmpd.getPixels(new Rectangle(0,0,bmpd.width,bmpd.height));

@@ -30,7 +30,7 @@ package com.settinghead.tyful.client.controller.main
 			var shopProxy:ShopProxy = new ShopProxy();
 			var renderProxy:RenderProxy = new RenderProxy();
 			var wordListProxy:WordListProxy = new WordListProxy();
-			wordListProxy.load();
+//			wordListProxy.load();
 			// register it
 			facade.registerProxy( templateProxy );
 			facade.registerProxy(tuProxy );

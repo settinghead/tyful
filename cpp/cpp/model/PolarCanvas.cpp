@@ -54,12 +54,12 @@ _shapeToWorkOn(NULL),_numActiveThreads(0), slaps(new queue<SlapInfo*>()), pendin
     this->retryShapes = new vector<EngineShape*>();
 
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+//    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     pthread_mutex_init(&shape_mutex, NULL);
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
-    
+    printf("pthread related init complete.\n");
 
     
     //spawn threads
@@ -100,6 +100,7 @@ void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
     if(failureCount <= perseverance && status == RENDERING){
         EngineShape* eShape = generateEngineWord(shape,sid);
         pendingShapes->push(eShape);
+        printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
     }
 }
 

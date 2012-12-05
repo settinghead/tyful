@@ -342,6 +342,10 @@ package com.settinghead.tyful.client.model.vo.template
 			this.directionBitmap = new Bitmap(d);
 		}
 		
+		public function setDirection(d:BitmapData):void{
+			this.directionBitmap = new Bitmap(d);
+		}
+		
 		public function set directionBitmap(bmp:Bitmap):void{
 			this._img = bmp;
 //			var inverseLayer:InverseWordLayer = new InverseWordLayer(this);

@@ -50,18 +50,23 @@ void updateTemplate(unsigned int* data){
     initCanvas();
     int counter = 0;
     int numLayers = data[counter++];
+    printf("numLayers: %d\n",numLayers);
     
     assert(numLayers>0 && numLayers<500);
     for(int i=0;i<numLayers;i++){
         int directionWidth = data[counter++];
         int directionHeight = data[counter++];
-        int directionLength = data[counter++];
+        int directionLength = data[counter++]/sizeof(unsigned int *);
         int directionStart = counter;
+        printf("dirWidth: %d, dirHeight, %d, dirLength: %d, dirStart: %d\n",directionWidth,directionHeight,directionLength,directionStart);
         counter+=directionLength;
         int colorWidth = data[counter++];
+        printf("a\n");
         int colorHeight = data[counter++];
         int colorLength = data[counter++];
         int colorStart = counter;
+        printf("coloWidth: %d, colorHeight, %d, colorLength: %d, colorStart: %d\n",colorWidth,colorHeight,colorLength,colorStart);
+
         appendLayer(data+directionStart, data+colorStart, directionWidth, directionHeight, true);
     }
     
@@ -96,8 +101,10 @@ SlapInfo* tryNextShape()
     return getNextSlap();
 }
 void* renderRoutine(void*){
-
+    
     PolarCanvas::current->setStatus(RENDERING);
+    
+    printf("internal render routine started.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
     while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
         pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
@@ -121,11 +128,20 @@ void startRendering(){
     int             returnVal;
     
     returnVal = pthread_attr_init(&attr);
-    assert(!returnVal);
-    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-    assert(!returnVal);
+//    assert(!returnVal);
+//    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+//    assert(!returnVal);
     
-    pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
+//    pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
+    PolarCanvas::current->setStatus(RENDERING);
+
+    while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
+        ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
+
+    }
+
 }
 
 void pauseRendering(){

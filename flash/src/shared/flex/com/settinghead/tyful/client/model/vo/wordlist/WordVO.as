@@ -12,7 +12,7 @@ package com.settinghead.tyful.client.model.vo.wordlist {
 			this.word = word;
 			this.weight = weight;
 			this.occurences = occurences;
-		}	
+		}
 		
 
 	}

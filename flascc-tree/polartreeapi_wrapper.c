@@ -273,11 +273,13 @@ void _wrap_appendLayer() {
 }
 
 
-__attribute__((annotate("as3sig:public function _wrap_updateTemplate(base64_str:*):void")))
+__attribute__((annotate("as3sig:public function _wrap_updateTemplate(data:int):void")))
 void _wrap_updateTemplate() {
-  std::string arg1 ;
+  unsigned int *arg1 = (unsigned int *) 0 ;
   
-  
+  {
+    AS3_GetScalarFromVar(arg1, data);
+  }
   updateTemplate(arg1);
   {
     

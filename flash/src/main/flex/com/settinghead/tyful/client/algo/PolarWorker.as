@@ -1,7 +1,17 @@
 package com.settinghead.tyful.client.algo
 {	
 //	import com.settinghead.tyful.client.model.polarcore.IShapeGenerator;
+	import com.settinghead.tyful.client.model.IShapeGenerator;
+	import com.settinghead.tyful.client.model.TextShapeGenerator;
+	import com.settinghead.tyful.client.model.vo.DisplayWordListVO;
+	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
+	import com.settinghead.tyful.client.model.vo.IShape;
+	import com.settinghead.tyful.client.model.vo.template.Layer;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
+	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
+	import com.settinghead.tyful.client.model.vo.template.WordLayer;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordVO;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -28,7 +38,8 @@ package com.settinghead.tyful.client.algo
 	{
 		
 		private var template:Object = null;
-		
+		private var wDict:Vector.<DisplayWordVO>;
+
 		public static var current:PolarWorker ;
 		public function PolarWorker()
 		{
@@ -40,14 +51,17 @@ package com.settinghead.tyful.client.algo
 		private var resultChannel:MessageChannel;
 		private var statusChannel:MessageChannel;
 		
+		private var shapeGenerator:IShapeGenerator;
+		
 		private function initialize():void
 		{
-//			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
+			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordVO", WordVO);
 //			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordComparator", WordComparator);
 			registerClassAlias("org.as3commons.collections.SortedList", SortedList);
 //			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
 			registerClassAlias("com.settinghead.tyful.client.model.vo.template.PlaceInfo", PlaceInfo);
-//			registerClassAlias("com.settinghead.tyful.client.model.vo.wordlist.WordListVO", WordListVO);
+			registerClassAlias("com.settinghead.tyful.client.model.vo.DisplayWordVO", DisplayWordVO);
+			registerClassAlias("com.settinghead.tyful.client.model.vo.template.TemplateVO", TemplateVO);
 			CModule.rootSprite = this;
 			CModule.vfs.console = this;
 			if(CModule.runningAsWorker()) {
@@ -102,37 +116,24 @@ package com.settinghead.tyful.client.algo
 						//						while((coordPtr=PolarTreeAPI.getNextSlap())!=0)
 						//							processAndSendDw(coordPtr);
 //						controlCommandReceived(null);
-						statusChannel.send(["feedMe",warningLine+feedBuffer,PolarTreeAPI.getShrinkage()]);
-//					while(PolarTreeAPI.getStatus()>0)
-//						controlCommandReceived(null);
+//						statusChannel.send(["feedMe",warningLine+feedBuffer,PolarTreeAPI.getShrinkage()]);
+					while(PolarTreeAPI.getStatus()>0){
+						var shape:DisplayWordVO = getNextShape();
+						var bitmapData:BitmapData = shape.toBitmapData();
+						var addr:int = dataToAddr(bitmapData.getPixels(new Rectangle(0,0,bitmapData.width, bitmapData.height)));
+						var slapAddr:int = PolarTreeAPI.slapShape(addr,bitmapData.width, bitmapData.height, shape.sid);
+						processAndSendDw(slapAddr);
+						controlCommandReceived(null);
+					}
+					resultChannel.send(new Object());
 				}
 					
 				else if (message[0] == "pause"){
 					pause();
 				}
-				else if (message[0] == "feed"){
-					var sid:int = message[1] as int;
-					var data:ByteArray = message[2] as ByteArray;
-					var addr:int = dataToAddr(data);
-					var width:int = message[3];
-					var height:int = message[4];
-					PolarTreeAPI.feedShape(addr,width,height,sid);
-					if(!controlChannel.messageAvailable){
-						while(PolarTreeAPI.getNumberOfPendingShapes()>0){
-						var coordPtr:int = PolarTreeAPI.tryNextShape();
-						processAndSendDw(coordPtr);
-						}
-						var numPendingShapes:int = PolarTreeAPI.getNumberOfPendingShapes();
-						if(PolarTreeAPI.getStatus()>0 && PolarTreeAPI.getNumberOfPendingShapes()<warningLine)
-							statusChannel.send(["feedMe",feedBuffer,PolarTreeAPI.getShrinkage()]);
-					}
-					
-					if(PolarTreeAPI.getStatus()==0){
-						//finished, send empty message
-						resultChannel.send(new Object());
-						while(controlChannel.messageAvailable)
-							controlChannel.receive();
-					}
+				else if (message[0] == "words"){
+					var wordList:WordListVO = new WordListVO(message[1]);
+					shapeGenerator = new TextShapeGenerator(wordList);
 				}
 				else if (message[0] == "template"){
 					CModule.serviceUIRequests();
@@ -165,6 +166,8 @@ package com.settinghead.tyful.client.algo
 						PolarTreeAPI.appendLayer(addr,colorAddr,twidth,theight,true);
 					}
 					
+					wDict = new Vector.<DisplayWordVO>();
+					
 					
 				}
 				else if (message[0] == "perseverance"){
@@ -196,8 +199,13 @@ package com.settinghead.tyful.client.algo
 				var failureCount:int = CModule.read32(coordPtr+40);
 				
 				var place:PlaceInfo = new PlaceInfo(sid,CModule.readDouble(coordPtr+8), CModule.readDouble(coordPtr+16), CModule.readDouble(coordPtr+24), CModule.read32(coordPtr + 32),fontColor,failureCount);
-
 				
+				var shape:DisplayWordVO = wDict[sid];
+				
+				msg["word"] = shape.word;
+				msg["fontSize"] = shape.fontSize;
+				msg["fontName"] = shape.fontName;
+				msg["sid"] = shape.sid
 				msg["fontColor"] = fontColor;
 				msg["sid"] = place.sid;
 				msg["x"] = place.x;
@@ -207,11 +215,19 @@ package com.settinghead.tyful.client.algo
 				msg["failureCount"]=failureCount;
 				resultChannel.send(msg);				
 			}
-			statusChannel.send(["feedMe",1,PolarTreeAPI.getShrinkage()]);
+//			statusChannel.send(["feedMe",1,PolarTreeAPI.getShrinkage()]);
 
 		}
 		
 		private var fonts:Array = ["romeral","permanentmarker","fifthleg-kRB"];
+		
+		private function getNextShape():DisplayWordVO{
+			var word:WordVO;
+			var sid:int = wDict.length;
+			var shape:DisplayWordVO = shapeGenerator.nextShape(sid,PolarTreeAPI.getShrinkage()) as DisplayWordVO;
+			wDict.push(shape);
+			return shape;
+		}
 		
 //		public function handleFeeds():void{
 //			while(PolarTreeAPI.getNumberOfPendingShapes()<10

@@ -1,5 +1,6 @@
 package com.settinghead.tyful.client.model.polarcore
 {
+	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
 	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
@@ -7,6 +8,7 @@ package com.settinghead.tyful.client.model.polarcore
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.net.registerClassAlias;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
 	import flash.system.WorkerDomain;
@@ -41,7 +43,10 @@ package com.settinghead.tyful.client.model.polarcore
 			
 			statusChannel = renderWorker.createMessageChannel(Worker.current);
 			statusChannel.addEventListener(Event.CHANNEL_MESSAGE, handleStatusMessage);
-			renderWorker.setSharedProperty("statusChannel", statusChannel);			
+			renderWorker.setSharedProperty("statusChannel", statusChannel);	
+			
+			registerClassAlias("com.settinghead.tyful.client.model.vo.template.TemplateVO", TemplateVO);
+
 		}
 		
 		public override function load():void{
@@ -53,13 +58,14 @@ package com.settinghead.tyful.client.model.polarcore
 		private function get renderWorker():Worker{
 			return worker as Worker;
 		}
-		public override function feedShape(sid:int,bmpd:BitmapData):void{
+		public override function feedShape(sid:int,bmpd:BitmapData,shrinkage:int):void{
 			var data:ByteArray = bmpd.getPixels(new Rectangle(0,0,bmpd.width,bmpd.height));
 			controlChannel.send(["feed",sid,data,bmpd.width,bmpd.height]);
 		}
 
 		
 		public override function updateTemplate(template:TemplateVO):void{
+			
 			controlChannel.send(["template",template.toTransferrableObject()]);
 			//			var currentWords:WordListVO = wordList.clone();
 			//			wDict = new Vector.<DisplayWordVO>();
@@ -93,7 +99,9 @@ package com.settinghead.tyful.client.model.polarcore
 		public override function pauseRender():void{
 			controlChannel.send(["pause"]);
 		}
-		
+		public override function updateWordList(wordList:WordListVO):void{
+			controlChannel.send(["words",wordList.toArray()]);
+		}
 		public override function updatePerseverance(perseverance:int):void{
 			controlChannel.send(["perseverance",perseverance]);
 			//			PolarTreeAPI.setPerseverance(perseverance);
@@ -103,12 +111,13 @@ package com.settinghead.tyful.client.model.polarcore
 		{
 			var msg:Object = resultChannel.receive() as Object;
 			var place:PlaceInfo =null;
-
-			if(msg["x"]!=null)
+			var shape:DisplayWordVO = null;
+			if(msg["x"]!=null){
 				place = new PlaceInfo(msg["sid"],msg["x"] as Number, msg["y"] as Number, msg["rotation"] as Number, msg["layer"],msg["fontColor"], msg["failureCount"]);
-			
-			
-			dispatchEvent(new ResultEvent(place));
+			var shape:DisplayWordVO =
+				shape = new DisplayWordVO(msg["sid"],msg["word"],msg["fontName"],msg["fontSize"],msg["fontColor"],place);
+			}
+			dispatchEvent(new ResultEvent(shape));
 		}
 		
 		private function handleStatusMessage(event:Event):void

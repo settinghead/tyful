@@ -34,13 +34,16 @@ package com.settinghead.tyful.client.model.polarcore
 		public function startRender():void{
 			throw new Error("Abstract class method.");
 		}
-		public function feedShape(sid:int,data:BitmapData):void{
+		public function feedShape(sid:int,data:BitmapData,shrinkage:int):void{
 			throw new Error("Abstract class method.");
 		}
 		public function updatePerseverance(perseverance:int):void{
 			throw new Error("Abstract class method.");
 		}
 		public function pauseRender():void{
+			throw new Error("Abstract class method.");
+		}
+		public function updateWordList(wordList:WordListVO):void{
 			throw new Error("Abstract class method.");
 		}
 		

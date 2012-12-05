@@ -1,7 +1,12 @@
 package com.settinghead.tyful.client.model.polarcore
 {
+	import com.settinghead.tyful.client.model.IShapeGenerator;
+	import com.settinghead.tyful.client.model.TextShapeGenerator;
+	import com.settinghead.tyful.client.model.vo.DisplayWordListVO;
+	import com.settinghead.tyful.client.model.vo.DisplayWordVO;
 	import com.settinghead.tyful.client.model.vo.template.PlaceInfo;
 	import com.settinghead.tyful.client.model.vo.template.TemplateVO;
+	import com.settinghead.tyful.client.model.vo.wordlist.WordListVO;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -11,10 +16,16 @@ package com.settinghead.tyful.client.model.polarcore
 	
 	import mx.utils.Base64Encoder;
 
+	
 	public class NativeClientPolarCore extends AbstractPolarCore
 	{
-		public function NativeClientPolarCore()
+		private var wDict:Vector.<DisplayWordVO>;
+		private var shapeGenerator:TextShapeGenerator;
+		
+		
+		public function NativeClientPolarCore(wordList:WordListVO)
 		{
+			shapeGenerator = new TextShapeGenerator(wordList);
 		}
 		
 		public override function load():void{
@@ -25,11 +36,17 @@ package com.settinghead.tyful.client.model.polarcore
 		}
 		
 		public function feedMe(numFeeds:int, shrinkage:Number):void {
-			dispatchEvent(new FeedEvent(numFeeds,shrinkage));
+			var sid:int = wDict.length;
+			var shape:DisplayWordVO = shapeGenerator.nextShape(sid,shrinkage) as DisplayWordVO;
+			for(var i:int=0;i<numFeeds;i++)
+				feedShape(sid,shape.toBitmapData(),shrinkage);
 		}
 		
 		public function slap(sid:uint, x:int, y:int, rotation:Number, lNum:int,color:uint, failureCount:int):void {
-			dispatchEvent(new ResultEvent(new PlaceInfo(sid,x,y,rotation,lNum,color,failureCount)));
+			var shape:DisplayWordVO = wDict[sid];
+			var place:PlaceInfo = new PlaceInfo(sid,x,y,rotation,lNum,color,failureCount);
+			shape.putToPlace(place);
+			dispatchEvent(new ResultEvent(shape));
 
 		}
 		
@@ -49,6 +66,7 @@ package com.settinghead.tyful.client.model.polarcore
 			b.writeInt(0);
 			template.writeExternal(b);
 			postBase64String(b);
+			wDict = new Vector.<DisplayWordVO>();
 		}
 		public override function startRender():void{
 			var b:ByteArray = new ByteArray();
@@ -66,7 +84,8 @@ package com.settinghead.tyful.client.model.polarcore
 			b.writeInt(2);
 			postBase64String(b);
 		}
-		public override function feedShape(sid:int,bmpd:BitmapData):void{
+		public override function feedShape(sid:int,bmpd:BitmapData,shrinkage:int):void{
+			var shape:DisplayWordVO = shapeGenerator.nextShape(wDict.length,shrinkage) as DisplayWordVO;
 			var b:ByteArray = new ByteArray();
 			b.endian = Endian.LITTLE_ENDIAN;
 
@@ -85,6 +104,8 @@ package com.settinghead.tyful.client.model.polarcore
 			b.writeUnsignedInt(perseverance);
 			postBase64String(b);
 		}
-		
+		public override function updateWordList(wordList:WordListVO):void{
+			shapeGenerator.wordList = wordList;
+		}
 	}
 }

@@ -26,6 +26,7 @@
 
 #include <cstdio>
 #include <string>
+#include <sstream>
 #include "ppapi/cpp/instance.h"
 #include "ppapi/cpp/module.h"
 #include "ppapi/cpp/graphics_2d.h"
@@ -33,8 +34,10 @@
 #include "ppapi/cpp/var.h"
 #include "ppapi/cpp/var_array_buffer.h"
 #include "../cpp/cpp/polartreeapi.h"
-#include "../cpp/cpp/encoding/base64.h"
+#include "../cpp/cpp/model/PolarCanvas.h"
+#include "../cpp/cpp/model/structs.h"
 #include <iostream>
+#include <pthread.h>
 
 namespace {
 // The expected string sent by the browser.
@@ -50,6 +53,8 @@ const int kStartRenderMethodId = 1;
 const int kPauseRenderMethodId = 2;
 const int kFeedShapeMethodId = 3;
 const int kUpdatePerseveranceMethodId = 4;
+const char* kSlapMethodId = "slapShape";
+const char* kFeedMeMethodId = "feedMe";
 
 // The string sent back to the browser upon receipt of a message
 // containing "hello".
@@ -64,6 +69,10 @@ const int kUpdatePerseveranceMethodId = 4;
 /// To communicate with the browser, you must override HandleMessage() for
 /// receiving messages from the browser, and use PostMessage() to send messages
 /// back to the browser.  Note that this interface is asynchronous.
+
+
+
+
 class TyfulNaclCoreInstance : public pp::Instance {
  public:
   /// The constructor creates the plugin-side instance.
@@ -71,6 +80,39 @@ class TyfulNaclCoreInstance : public pp::Instance {
   explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
   {}
   virtual ~TyfulNaclCoreInstance() {}
+
+
+  static void *checkAndRenderSlaps(void* core){
+
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+    while(getStatus()>0){
+        pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
+        SlapInfo* placement;
+        while((placement=getNextSlap())!=NULL){
+          std::stringstream ss(std::stringstream::in | std::stringstream::out);
+          ss << kSlapMethodId << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
+            << placement->rotation << "," << placement->layer << ","
+            << placement->color << placement->failureCount;
+          ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+        }
+    }
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+    return NULL;
+  }
+  
+  static void *feedShapes(void* core){
+    pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+    while(getStatus()>0){
+      for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        ss << kFeedShapeMethodId << ":" << 1 << "," << getShrinkage();
+        ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+      }
+      pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+    }
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+    return NULL;
+  }
 
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
@@ -94,25 +136,36 @@ class TyfulNaclCoreInstance : public pp::Instance {
     // The argument to getUrl is everything after the first ':'.
         // std::string templateData_str = message.substr(sep_pos + 1);
         // std::string data_str = base64_decode(templateData_str);
-        PostMessage(buffer_data);
-                printf("%u,%u,%u,%u, len: %d",
-          buffer[0],
-          buffer[1],
-          buffer[2],
-          buffer[3],
-          buffer_data.ByteLength());
+        // PostMessage(buffer_data);
+        //         printf("%u,%u,%u,%u, len: %d",
+        //   buffer[0],
+        //   buffer[1],
+        //   buffer[2],
+        //   buffer[3],
+        //   buffer_data.ByteLength());
         updateTemplate(buffer+1);
     }
     else if (buffer[0]==kStartRenderMethodId) {
+      printf("startRendering command received.\n");
       startRendering();
+      pthread_t       checkRenderRoutineThread;
+      pthread_t       feedRoutineThread;
+      pthread_attr_t  attr;
+
+      pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
+      pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
+
     }
     else if (buffer[0]==kPauseRenderMethodId) {
+      printf("pauseRendering command received.\n");
       pauseRendering();
     }
     else if (buffer[0]==kFeedShapeMethodId) {
+        printf("feedShape command received.\n");
         feedShape(buffer+1);
     }
     else if (buffer[0]==kUpdatePerseveranceMethodId) {
+        printf("updatePerseverance command received.\n");
         int perseverance = buffer[1];
         setPerseverance(perseverance);
         printf("%d\n",perseverance);
@@ -146,3 +199,5 @@ Module* CreateModule() {
   return new TyfulNaclCoreModule();
 }
 }  // namespace pp
+
+
