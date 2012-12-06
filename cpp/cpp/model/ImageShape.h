@@ -13,6 +13,7 @@ public:
     ImageShape();
     ~ImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;
+    virtual unsigned char * toPng(unsigned int pixelValue) = 0;
 
     inline bool containsPoint(int x, int y){
         return !isEmpty(getPixel(x, y));

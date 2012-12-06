@@ -70,6 +70,8 @@
 		7CEFFBD016689ECA00900686 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBCE16689EC900900686 /* threadpool.h */; };
 		7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFFBD116699F7A00900686 /* polartreeapi.cpp */; };
 		7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBD216699F7A00900686 /* polartreeapi.h */; };
+		7CF5B8AD1670358100C2CB82 /* lodepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF5B8AB1670358000C2CB82 /* lodepng.cpp */; };
+		7CF5B8AE1670358100C2CB82 /* lodepng.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CF5B8AC1670358100C2CB82 /* lodepng.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +142,8 @@
 		7CEFFBCE16689EC900900686 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
 		7CEFFBD116699F7A00900686 /* polartreeapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polartreeapi.cpp; sourceTree = "<group>"; };
 		7CEFFBD216699F7A00900686 /* polartreeapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polartreeapi.h; sourceTree = "<group>"; };
+		7CF5B8AB1670358000C2CB82 /* lodepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lodepng.cpp; sourceTree = "<group>"; };
+		7CF5B8AC1670358100C2CB82 /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +269,8 @@
 		7C7AE91716674B5C002466A3 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				7CF5B8AB1670358000C2CB82 /* lodepng.cpp */,
+				7CF5B8AC1670358100C2CB82 /* lodepng.h */,
 				7C7AE91416674B5C002466A3 /* Flip.h */,
 				7C7AE91816674B5C002466A3 /* EngineShape.cpp */,
 				7C7AE91916674B5C002466A3 /* EngineShape.h */,
@@ -381,6 +387,7 @@
 				7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */,
 				7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */,
 				7C0A572E166D811B004D4A14 /* base64.h in Headers */,
+				7CF5B8AE1670358100C2CB82 /* lodepng.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +469,7 @@
 				7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */,
 				7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */,
 				7C0A572D166D811B004D4A14 /* base64.cpp in Sources */,
+				7CF5B8AD1670358100C2CB82 /* lodepng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +537,7 @@
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GENERATE_PROFILING_CODE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;

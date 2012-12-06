@@ -14,8 +14,11 @@
 class PixelImageShape : public ImageShape{
 public:
     PixelImageShape( unsigned int const * pixels, int width, int height, bool revert);
+    PixelImageShape(unsigned char * png, size_t size);
 	~PixelImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;
+    unsigned char * toPng(unsigned int pixelValue);
+
     void printStats();
 
 	inline int getWidth(){
@@ -37,6 +40,8 @@ protected:
 	unsigned int width, height;
     unsigned int total;
 	unsigned int * pixels;
+    unsigned int* convertToRGBALittleEndianPixels();
+    
 //    unsigned char * pixels;
 };
 

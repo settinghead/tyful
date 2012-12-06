@@ -9,11 +9,11 @@
          condition = "rotation!=0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/PolarLayer.cpp"
-         timestampString = "376018411.642923"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "27"
-         endingLineNumber = "27"
+         startingLineNumber = "32"
+         endingLineNumber = "32"
          landmarkName = "PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector&lt;PolarPoint&gt;* points, double rotation, double refX,double refY)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -49,11 +49,11 @@
          condition = "colour &gt; 0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/WordLayer.cpp"
-         timestampString = "376308562.091284"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "WordLayer::getHue(int x, int y)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -76,11 +76,11 @@
          condition = "x&gt;0&amp;&amp;y&gt;0&amp;&amp;x&lt;640&amp;&amp;y&lt;480"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/model/WordLayer.cpp"
-         timestampString = "376308562.091284"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
          landmarkName = "WordLayer::getHue(int x, int y)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -321,11 +321,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/polartreeapi.cpp"
-         timestampString = "376306885.992643"
+         timestampString = "376452507.898337"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "27"
-         endingLineNumber = "27"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
          landmarkName = "initCanvas()"
          landmarkType = "7">
       </FileBreakpoint>
@@ -334,11 +334,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376031559.861679"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "28"
-         endingLineNumber = "28"
+         startingLineNumber = "29"
+         endingLineNumber = "29"
          landmarkName = "@implementation MainView"
          landmarkType = "3">
       </FileBreakpoint>
@@ -347,11 +347,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376108457.443794"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "256"
-         endingLineNumber = "256"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
          landmarkName = "-checkAndRenderSlaps"
          landmarkType = "5">
       </FileBreakpoint>
@@ -360,11 +360,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376108457.443794"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "254"
-         endingLineNumber = "254"
+         startingLineNumber = "271"
+         endingLineNumber = "271"
          landmarkName = "-checkAndRenderSlaps"
          landmarkType = "5">
       </FileBreakpoint>
@@ -373,11 +373,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/polartreeapi.cpp"
-         timestampString = "376376280.74924"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
          landmarkName = "renderRoutine(void*)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -386,11 +386,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376042446.395833"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "192"
-         endingLineNumber = "192"
+         startingLineNumber = "209"
+         endingLineNumber = "209"
          landmarkName = "-drawCanvas"
          landmarkType = "5">
       </FileBreakpoint>
@@ -399,11 +399,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/polartreeapi.cpp"
-         timestampString = "376375328.286154"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "93"
-         endingLineNumber = "93"
+         startingLineNumber = "99"
+         endingLineNumber = "99"
          landmarkName = "slapShape(unsigned int *pixels, int width, int height,unsigned int sid)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -425,26 +425,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "osx_client/osx_client/MainView.mm"
-         timestampString = "376310465.063625"
+         timestampString = "376456477.396668"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "246"
-         endingLineNumber = "246"
+         startingLineNumber = "263"
+         endingLineNumber = "263"
          landmarkName = "-feedNextText"
          landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "cpp/cpp/polartreeapi.cpp"
-         timestampString = "376387423.438873"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139"
-         landmarkName = "startRendering()"
-         landmarkType = "7">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

@@ -13,6 +13,11 @@ class Patch;
 
 //WARNING: DO NOT CHANGE ORDER OR TYPE OF THESE STRUCTS
 
+struct Dimension{
+    unsigned int width;
+    unsigned int height;
+};
+
 struct CartisianPoint{
     double x;
     double y;
@@ -23,6 +28,7 @@ struct CartisianPoint{
         return p;
     }
 };
+
 
 struct PolarPoint{
     double d;

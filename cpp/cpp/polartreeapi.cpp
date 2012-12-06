@@ -17,7 +17,6 @@
 #include <assert.h>
 #include <pthread.h>
 
-
 void initCanvas(){
     if(PolarCanvas::current!=NULL)
         delete PolarCanvas::current;
@@ -36,6 +35,13 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
 	printf("Special point(600,400): %x\n", layer->getPixel(600,400));
 	// layer->printStats();
     
+	PolarCanvas::current->addLayer(layer);
+}
+
+void appendLayer(unsigned char *png, size_t png_size){
+    WordLayer* layer = new WordLayer(png,png_size,(int)PolarCanvas::current->size());
+    printf("Special point(5,5): %x\n", layer->getPixel(5,5));
+	printf("Special point(600,400): %x\n", layer->getPixel(600,400));    
 	PolarCanvas::current->addLayer(layer);
 }
 
@@ -132,15 +138,15 @@ void startRendering(){
 //    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 //    assert(!returnVal);
     
-//    pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
-    PolarCanvas::current->setStatus(RENDERING);
-
-    while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
-        ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
-        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
-        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
-
-    }
+    pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
+//    PolarCanvas::current->setStatus(RENDERING);
+//
+//    while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
+//        ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
+//        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+//        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
+//
+//    }
 
 }
 
@@ -173,4 +179,18 @@ SlapInfo* getNextSlap(){
     SlapInfo* info = PolarCanvas::current->slaps->front();
     PolarCanvas::current->slaps->pop();
     return info;
+}
+
+Dimension getCanvasSize(){
+    Dimension d;
+    d.width = PolarCanvas::current->getWidth();
+    d.height = PolarCanvas::current->getHeight();
+    return d;
+}
+
+void loadTemplateFromZip(unsigned char *data){
+    
+}
+unsigned char * getZipFromTemplate(){
+    
 }
