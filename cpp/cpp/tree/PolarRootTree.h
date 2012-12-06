@@ -16,6 +16,8 @@ private:
 	double rootY[NUM_THREADS]; /* REM */
 	double _rotation[NUM_THREADS]; /* REM */
 	int rootStamp[NUM_THREADS]; /* REM */
+	bool rootDStamp; /* REM */
+    double scale;
 	ImageShape* shape; /* REM */
 public:
 	PolarRootTree(ImageShape* shape, double d);
@@ -54,10 +56,27 @@ public:
             (this->rootStamp[seq])++;
         }
     }
-	inline double getRotation(int seq);
+    inline void setScale(double scale){
+        if(scale!=this->scale){
+            this->scale = scale;
+            this->rootDStamp=!this->rootDStamp;
+        }
+    }
+	inline double getRotation(int seq){
+        return this->_rotation[seq];
+    }
+
 	inline int getCurrentStamp(int seq);
-	inline PolarRootTree* getRoot();
+	inline PolarRootTree* getRoot(){
+        return this;
+    }
 	inline ImageShape* getShape();
+    inline double getScale(){
+        return scale;
+    }
+    inline bool getCurrentDStamp(){
+        return rootDStamp;
+    }
 };
 
 #endif

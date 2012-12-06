@@ -22,14 +22,41 @@ enum SplitType {
 	_3RAYS, _2RAYS1CUT, _1RAY1CUT, _1RAY2CUTS, _3CUTS
 };
 class PolarTree {
+private:
+    double _d1,_d2;
+    double _computedR1[NUM_THREADS];
+	double _computedR2[NUM_THREADS];
+    double _computedD1, _computedD2;
+    bool dStamp;
+    inline void computeR1(int seq){
+        this->_computedR1[seq] = (this->_r1 + this->getRotation(seq));
+		if (((this->_computedR1[seq] > TWO_PI ))) {
+			this->_computedR1[seq] -= TWO_PI;
+		}
+        else if(this->_computedR1<0)
+            this->_computedR1[seq] += TWO_PI;
+    }
+	inline void computeR2(int seq){
+        this->_computedR2[seq] = (this->_r2 + this->getRotation(seq));
+		if (((this->_computedR2[seq] > TWO_PI)))
+			this->_computedR2[seq] -= TWO_PI;
+        else if(this->_computedR2<0)
+            this->_computedR2[seq] += TWO_PI;
+    }
+    inline void computeD1(){
+        this->_computedD1 = (this->_d1 * getScale());
+    }
+    inline void computeD2(){
+        this->_computedD2 = (this->_d2 * getScale());
+    }
 public:
-    double d1,d2;
 	PolarTree(double r1, double r2, double d1, double d2);
 	~PolarTree();
 	inline void addKids(vector<PolarTree*>* kidList);
 	inline virtual int getRootX(int seq) = 0;
 	inline virtual int getRootY(int seq) = 0;
     inline virtual int getFinalSeq() = 0;
+
 #if NUM_THREADS>1
     inline virtual void setFinalSeq(int seq) = 0;
 #endif
@@ -58,12 +85,13 @@ public:
         }
         return false;
     }
-	inline vector<PolarTree*>* getKids();
+	vector<PolarTree*>* getKids();
 	inline vector<PolarTree*>* getKidsNoGrowth(){
         return this->_kids;
     }
 	inline virtual PolarRootTree* getRoot() = 0;
-	inline virtual ImageShape* getShape() = 0;
+	virtual double getScale() = 0;
+	virtual ImageShape* getShape() = 0;
 	inline bool overlapsCoord(int seq,double x, double y, double right, double bottom){
         if ((this->rectCollideCoord(seq,x, y, right, bottom))) {
             if ((this->isLeaf())) {
@@ -87,13 +115,13 @@ public:
         p.y = getRootY(seq)-getShape()->getHeight()/2;
         return p;
     }
-	inline virtual double computeX(int seq,bool rotate) = 0;
-	inline virtual double computeY(int seq,bool rotate) = 0;
-	inline virtual double computeRight(int seq,bool rotate) = 0;
-	inline virtual double computeBottom(int seq,bool rotate) = 0;
+	virtual double computeX(int seq,bool rotate) = 0;
+	virtual double computeY(int seq,bool rotate) = 0;
+	virtual double computeRight(int seq,bool rotate) = 0;
+	virtual double computeBottom(int seq,bool rotate) = 0;
 	inline double getR1(int seq,bool rotate){
         if ((rotate)) {
-            this->checkRecompute(seq);
+            this->checkRecomputeRs(seq);
             return this->_computedR1[seq];
         } else {
             assert(seq<0);
@@ -102,35 +130,47 @@ public:
     }
 	inline double getR2(int seq,bool rotate){
         if ((rotate)) {
-            this->checkRecompute(seq);
+            this->checkRecomputeRs(seq);
             return this->_computedR2[seq];
         } else {
             assert(seq<0);
             return this->_r2;
         }
     }
-	inline void checkRecompute(int seq){
+    inline double getD1(bool scale){
+        if(scale){
+            this->checkRecomputeDs();
+            return this->_computedD1;
+        }
+        else{
+            return this->_d1;
+        }
+    }
+    inline double getD2(bool scale){
+        if(scale){
+            this->checkRecomputeDs();
+            return this->_computedD2;
+        }
+        else{
+            return this->_d2;
+        }
+        
+    }
+	inline void checkRecomputeRs(int seq){
         if (((this->rStamp[seq] != this->getCurrentStamp(seq)))) {
 			this->computeR1(seq);
 			this->computeR2(seq);
 			this->rStamp[seq] = this->getCurrentStamp(seq);
 		}
     }
-	inline void computeR1(int seq){
-        this->_computedR1[seq] = (this->_r1 + this->getRotation(seq));
-		if (((this->_computedR1[seq] > TWO_PI ))) {
-			this->_computedR1[seq] -= TWO_PI;
-		}
-        else if(this->_computedR1<0)
-            this->_computedR1[seq] += TWO_PI;
+    inline void checkRecomputeDs(){
+        if (this->dStamp != this->getCurrentDStamp()) {
+            this->computeD1();
+            this->computeD2();
+            this->dStamp = this->getCurrentDStamp();
+        }
     }
-	inline void computeR2(int seq){
-        this->_computedR2[seq] = (this->_r2 + this->getRotation(seq));
-		if (((this->_computedR2[seq] > TWO_PI)))
-			this->_computedR2[seq] -= TWO_PI;
-        else if(this->_computedR2<0)
-            this->_computedR2[seq] += TWO_PI;
-    }
+
 	inline void checkUpdatePoints(int seq){
         if (((this->pointsStamp[seq] != this->getCurrentStamp(seq)))) {
 			this->_px[seq] =
@@ -248,14 +288,13 @@ public:
     }
 	virtual double getRotation(int seq) = 0;
 	virtual int getCurrentStamp(int seq) = 0;
+	virtual bool getCurrentDStamp() = 0;
 	inline void setLeaf(bool b);
 protected:
     pthread_mutex_t lock;
     int rStamp[NUM_THREADS];
 	double _x[NUM_THREADS], _y[NUM_THREADS], _right[NUM_THREADS], _bottom[NUM_THREADS];
 	vector<PolarTree*>* _kids;
-	double _computedR1[NUM_THREADS];
-	double _computedR2[NUM_THREADS];
 	double pointsStamp[NUM_THREADS];
 	double _px[NUM_THREADS], _py[NUM_THREADS], _pright[NUM_THREADS], _pbottom[NUM_THREADS];
 	double xStamp[NUM_THREADS], yStamp[NUM_THREADS], rightStamp[NUM_THREADS], bottomStamp[NUM_THREADS];
@@ -265,7 +304,7 @@ protected:
         double dist = sqrt(
                            (pow((this->getRootX(seq) - bTree->getRootX(bTree->getFinalSeq())), 2.0)
                             + pow((this->getRootY(seq) - bTree->getRootY(bTree->getFinalSeq())), 2.0)));
-        if (((dist > (this->d2 + bTree->d2)))) {
+        if (((dist > (this->getD2(true) + bTree->getD2(true))))) {
             return false;
         } else {
             return this->rectCollide(seq,bTree);

@@ -183,8 +183,8 @@ SlapInfo* getNextSlap(){
 
 Dimension getCanvasSize(){
     Dimension d;
-    d.width = PolarCanvas::current->getWidth();
-    d.height = PolarCanvas::current->getHeight();
+    d.width = (int)PolarCanvas::current->getWidth();
+    d.height = (int)PolarCanvas::current->getHeight();
     return d;
 }
 

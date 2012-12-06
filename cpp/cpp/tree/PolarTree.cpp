@@ -8,8 +8,8 @@
 
 PolarTree::PolarTree(double r1, double r2, double d1, double d2
                      ):swelling(0),
-_kids(NULL),_leaf(false),_r1(r1),_r2(r2),d1(d1),d2(d2),
-_relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN){
+_kids(NULL),_leaf(false),_r1(r1),_r2(r2),_d1(d1),_d2(d2),_computedD1(d1),_computedD2(d2),
+_relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN),dStamp(false){
     pthread_mutex_init(&lock, NULL);
     for(int i=0;i<NUM_THREADS;i++){
         _computedR1[i] =_computedR2[i] = NAN;

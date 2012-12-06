@@ -5,11 +5,12 @@
 #include "../model/Flip.h"
 
 PolarRootTree::PolarRootTree(ImageShape* shape, double d) :
-		PolarTree(0, TWO_PI, 0, d)
+		PolarTree(0, TWO_PI, 0, d),rootDStamp(false),scale(1)
 #if NUM_THREADS>1
 ,finalSeq(-1)
 #endif
 {
+    
             for(int i=0;i<NUM_THREADS;i++){
                 this->rootStamp[i] = 1;
                 this->rootX[i] = this->rootY[i] = NAN;
@@ -36,40 +37,34 @@ inline int PolarRootTree::getRootY(int seq) {
 
 
 inline double PolarRootTree::computeX(int seq,bool rotate) {
-	return -(this->d2);
+	return -(this->getD2(rotate));
 }
 
 inline double PolarRootTree::computeY(int seq,bool rotate) {
 //#ifdef FLIP
-	return -(this->d2);
+	return -(this->getD2(rotate));
 //#else
 //    return this->d2;
 //#endif
 }
 
 inline double PolarRootTree::computeRight(int seq,bool rotate) {
-	return this->d2;
+	return this->getD2(rotate);
 }
 
 inline double PolarRootTree::computeBottom(int seq,bool rotate) {
 //#ifdef FLIP
-	return this->d2;
+	return this->getD2(rotate);
 //#else
 //    return -(this->d2);
 //#endif
 }
 
-inline double PolarRootTree::getRotation(int seq) {
-	return this->_rotation[seq];
-}
 
 inline int PolarRootTree::getCurrentStamp(int seq) {
 	return this->rootStamp[seq];
 }
 
-inline PolarRootTree* PolarRootTree::getRoot() {
-	return this;
-}
 
 inline ImageShape* PolarRootTree::getShape() {
 	return this->shape;

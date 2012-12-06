@@ -9,12 +9,16 @@
 #ifndef __PolarTree_Experiment__ByWeightSizer__
 #define __PolarTree_Experiment__ByWeightSizer__
 #include "Sizer.h"
+#include "../constants.h"
 
 class EngineShape;
 class ByWeightSizer:public Sizer{
 private:
     double minSize, maxSize;
-    double currentSize, decr;
+    double currentSizes[MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE];
+    double decr;
+    int currentShift;
+    bool sizeChanged;
 public:
     ByWeightSizer(int minSize, int maxSize);
     inline double sizeFor(EngineShape* shape, int rank, int count) ;
@@ -22,6 +26,7 @@ public:
     inline double getCurrentSize();
     inline void reset();
     inline bool hasNextSize();
+    inline void shift();
     
 };
 #endif /* defined(__PolarTree_Experiment__ByWeightSizer__) */

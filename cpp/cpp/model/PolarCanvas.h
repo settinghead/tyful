@@ -59,8 +59,8 @@ public:
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
     void setNudger(Nudger* placer);
-    inline float getWidth();
-    inline float getHeight();
+    float getWidth();
+    float getHeight();
     inline int getFailureCount(){
         return this->failureCount;
     }

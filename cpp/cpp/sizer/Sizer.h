@@ -18,6 +18,7 @@ public:
     virtual double getCurrentSize() = 0;
     inline virtual void reset() = 0;
     virtual bool hasNextSize() = 0;
+    virtual void shift() = 0;
 };
 
 #endif

@@ -361,7 +361,7 @@ void PolarCanvas::skipShape(EngineShape* shape, int reason){
     shape->skipBecause(reason);
 }
 
-inline float PolarCanvas::getHeight(){
+float PolarCanvas::getHeight(){
     if(isnan(height)){
         float maxHeight = 0;
         for (vector<PolarLayer*>::iterator it = begin();
@@ -374,7 +374,7 @@ inline float PolarCanvas::getHeight(){
     return height;
 }
 
-inline float PolarCanvas::getWidth(){
+float PolarCanvas::getWidth(){
     if(isnan(width)){
         float maxWidth = 0;
         for (vector<PolarLayer*>::iterator it = begin();

@@ -10,9 +10,7 @@
 #include <math.h>
 #include "../constants.h"
 
-ByWeightSizer::ByWeightSizer(int minSize, int maxSize){
-    this->minSize = minSize;
-    this->maxSize = maxSize;
+ByWeightSizer::ByWeightSizer(int minSize, int maxSize):minSize(minSize),maxSize(maxSize),currentShift(0),sizeChanged(false){
     reset();
 }
 inline double ByWeightSizer::sizeFor(EngineShape* shape, int rank, int count){
@@ -22,10 +20,11 @@ inline double ByWeightSizer::sizeFor(EngineShape* shape, int rank, int count){
  
 }
 inline bool ByWeightSizer::switchToNextSize(){
-    if(currentSize>minSize){
-        currentSize-= decr;
-        if(currentSize<minSize)
-            currentSize = minSize;
+    sizeChanged = true;
+    if(currentSizes[currentShift]>minSize){
+        currentSizes[currentShift]-= decr;
+        if(currentSizes[currentShift]<minSize)
+            currentSizes[currentShift] = minSize;
         return true;
     }
     else
@@ -33,13 +32,27 @@ inline bool ByWeightSizer::switchToNextSize(){
     
 }
 inline double ByWeightSizer::getCurrentSize(){
-    return currentSize;
+    return currentSizes[currentShift];
 }
 inline void ByWeightSizer::reset(){
-    currentSize = maxSize;
+    for(int i=0;i<MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;i++)
+        currentSizes[i] = maxSize;
     decr = (maxSize-minSize)/NUMBER_OF_SIZE_REDUCTION_STEPS;
+    sizeChanged = false;
 }
 inline bool ByWeightSizer::hasNextSize(){
-    return currentSize > minSize;
-
+    return currentSizes[currentShift] > minSize;
+}
+void ByWeightSizer::shift(){
+    if(sizeChanged)
+        currentShift++;
+    if(currentShift==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE){
+        double max = minSize;
+        for(int i=0;i<MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;i++)
+            if(currentSizes[i]>max) max=currentSizes[i];
+        for(int i=0;i<MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;i++)
+            currentSizes[i]=max;
+        currentShift=0;
+        sizeChanged = false;
+    }
 }

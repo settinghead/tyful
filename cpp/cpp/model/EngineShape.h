@@ -35,7 +35,7 @@ public:
         return shape;
     }
     void nudgeTo(int seq,Placement* place,Angler* angler);
-    void finalizePlacement(int finalSeq);
+    void finalizePlacement(int final_seq);
     Placement* getFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
     inline Placement* getCurrentPlacement(int seq){
