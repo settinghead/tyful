@@ -115,11 +115,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/tree/PolarTree.h"
-         timestampString = "376192456.360648"
+         timestampString = "376463579.332187"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
          landmarkName = "overlaps(int seq,PolarTree* otherTree)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -128,11 +128,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/tree/PolarTree.h"
-         timestampString = "376313527.927278"
+         timestampString = "376463579.332187"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "268"
-         endingLineNumber = "268"
+         startingLineNumber = "307"
+         endingLineNumber = "307"
          landmarkName = "collide(int seq,PolarTree* bTree)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -141,24 +141,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/tree/PolarTree.h"
-         timestampString = "376313527.927278"
+         timestampString = "376463579.332187"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "271"
-         endingLineNumber = "271"
+         startingLineNumber = "310"
+         endingLineNumber = "310"
          landmarkName = "collide(int seq,PolarTree* bTree)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "cpp/cpp/tree/PolarTree.h"
-         timestampString = "376313527.927278"
+         timestampString = "376463579.332187"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "282"
-         endingLineNumber = "282"
+         startingLineNumber = "321"
+         endingLineNumber = "321"
          landmarkName = "rectCollideCoord(int seq,double x, double y, double right, double bottom)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -431,6 +431,32 @@
          startingLineNumber = "263"
          endingLineNumber = "263"
          landmarkName = "-feedNextText"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/tree/PolarTree.h"
+         timestampString = "376463613.559096"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "141"
+         endingLineNumber = "141"
+         landmarkName = "getD1(bool scale)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "cpp/cpp/tree/PolarTree.h"
+         timestampString = "376464388.803401"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "308"
+         endingLineNumber = "308"
+         landmarkName = "collide(int seq,PolarTree* bTree)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
