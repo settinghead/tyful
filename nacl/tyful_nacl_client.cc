@@ -38,6 +38,8 @@
 #include "../cpp/cpp/model/structs.h"
 #include <iostream>
 #include <pthread.h>
+#include <cstring>
+
 
 namespace {
 // The expected string sent by the browser.
@@ -53,6 +55,13 @@ const int kStartRenderMethodId = 1;
 const int kPauseRenderMethodId = 2;
 const int kFeedShapeMethodId = 3;
 const int kUpdatePerseveranceMethodId = 4;
+
+const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
+const char* kStartRenderMethodPrefix = "startRender:";
+const char* kPauseRenderMethodPrefix = "pauseRender:";
+const char* kFeedShapeMethodPrefix = "feedShape:";
+const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance";
+
 const char* kSlapMethodId = "slapShape";
 const char* kFeedMeMethodId = "feedMe";
 
@@ -74,6 +83,11 @@ const char* kFeedMeMethodId = "feedMe";
 
 
 class TyfulNaclCoreInstance : public pp::Instance {
+
+private:
+  int status;
+  int width, height;
+
  public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
@@ -99,7 +113,7 @@ class TyfulNaclCoreInstance : public pp::Instance {
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
   }
-  
+
   static void *feedShapes(void* core){
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(getStatus()>0){
@@ -126,50 +140,65 @@ class TyfulNaclCoreInstance : public pp::Instance {
   /// with the parameter.
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
+    if(var_message.is_string()){
+        std::string message = var_message.AsString();
+        if(message.find(kUpdateTemplateMethodPrefix) == 0){
+          status = kUpdateTemplateMethodId;
+          char * pch;
+          size_t pos = message.find_first_of(':')+1;
+          pch = strtok ((char*)message.substr(pos).c_str(),",");
+          width = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          height = ::atoi(pch);
+          printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
+        }
+    }
+    else if (var_message.is_array_buffer()){
+      pp::VarArrayBuffer buffer_data(var_message);
+      uint32_t* buffer = static_cast<uint32_t*>(buffer_data.Map());
+      if (status==kUpdateTemplateMethodId) {
+      // The argument to getUrl is everything after the first ':'.
+          // std::string templateData_str = message.substr(sep_pos + 1);
+          // std::string data_str = base64_decode(templateData_str);
+          // PostMessage(buffer_data);
+          //         printf("%u,%u,%u,%u, len: %d",
+          //   buffer[0],
+          //   buffer[1],
+          //   buffer[2],
+          //   buffer[3],
+          //   buffer_data.ByteLength());
+          initCanvas();
+              printf("%d,%d,%d,%d,%d,%d\n",buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5]);
 
-    if (!var_message.is_array_buffer())
-      return;
-    pp::VarArrayBuffer buffer_data(var_message);
-    uint32_t* buffer = static_cast<uint32_t*>(buffer_data.Map());
+          appendLayer(buffer,NULL,width,height,false);
+      }
+      // else if (buffer[0]==kStartRenderMethodId) {
+      //   printf("startRendering command received.\n");
+      //   startRendering();
+      //   pthread_t       checkRenderRoutineThread;
+      //   pthread_t       feedRoutineThread;
+      //   pthread_attr_t  attr;
 
-    if (buffer[0]==kUpdateTemplateMethodId) {
-    // The argument to getUrl is everything after the first ':'.
-        // std::string templateData_str = message.substr(sep_pos + 1);
-        // std::string data_str = base64_decode(templateData_str);
-        // PostMessage(buffer_data);
-        //         printf("%u,%u,%u,%u, len: %d",
-        //   buffer[0],
-        //   buffer[1],
-        //   buffer[2],
-        //   buffer[3],
-        //   buffer_data.ByteLength());
-        updateTemplate(buffer+1);
-    }
-    else if (buffer[0]==kStartRenderMethodId) {
-      printf("startRendering command received.\n");
-      startRendering();
-      pthread_t       checkRenderRoutineThread;
-      pthread_t       feedRoutineThread;
-      pthread_attr_t  attr;
+      //   pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
+      //   pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
 
-      pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
-      pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
-
+      // }
+      // else if (buffer[0]==kPauseRenderMethodId) {
+      //   printf("pauseRendering command received.\n");
+      //   pauseRendering();
+      // }
+      // else if (buffer[0]==kFeedShapeMethodId) {
+      //     printf("feedShape command received.\n");
+      //     feedShape(buffer+1);
+      // }
+      // else if (buffer[0]==kUpdatePerseveranceMethodId) {
+      //     printf("updatePerseverance command received.\n");
+      //     int perseverance = buffer[1];
+      //     setPerseverance(perseverance);
+      //     printf("%d\n",perseverance);
+      // }
     }
-    else if (buffer[0]==kPauseRenderMethodId) {
-      printf("pauseRendering command received.\n");
-      pauseRendering();
-    }
-    else if (buffer[0]==kFeedShapeMethodId) {
-        printf("feedShape command received.\n");
-        feedShape(buffer+1);
-    }
-    else if (buffer[0]==kUpdatePerseveranceMethodId) {
-        printf("updatePerseverance command received.\n");
-        int perseverance = buffer[1];
-        setPerseverance(perseverance);
-        printf("%d\n",perseverance);
-    }
+    else return;
   }
 };
 
@@ -198,6 +227,7 @@ namespace pp {
 Module* CreateModule() {
   return new TyfulNaclCoreModule();
 }
+
 }  // namespace pp
 
 

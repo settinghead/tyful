@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <pthread.h>
+#include<stdio.h>
 
 
 @implementation MainView
@@ -41,13 +42,28 @@
 
 -(void)resetMainImage {
     initCanvas();
-    unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
-    appendLayer(pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height,false);
+//    unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
+    
+    int counter;
+    FILE *f;
+    f=fopen([directionFile UTF8String],"rb");
+    fseek(f, 0, SEEK_END);
+    size_t size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    
+    unsigned char *png = (unsigned char *)malloc(size);
+    fread(png, size, 1, f);
+    fclose(f);
+
+    appendLayer(png,size);
+    
+//    appendLayer(pixels,NULL,(int)directionImage.size.width, (int)directionImage.size.height,false);
     dict = [[NSMutableDictionary alloc] init];
+    Dimension d = getCanvasSize();
     mainImage = [[NSBitmapImageRep alloc]
                  initWithBitmapDataPlanes:nil
-                 pixelsWide:directionImage.size.width
-                 pixelsHigh:directionImage.size.height
+                 pixelsWide:d.width
+                 pixelsHigh:d.height
                  bitsPerSample: 8
                  samplesPerPixel: 4
                  hasAlpha: YES
@@ -77,9 +93,10 @@
     NSLog(@"Template: %@",tpl);
     [[self window] setTitle:tpl];
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
-    NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
-	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
-	directionImage = [[NSBitmapImageRep alloc] initWithData:zNsDataTifData];
+    directionFile = [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl];
+//    NSImage * zNSImage =  [[NSImage alloc] initWithContentsOfFile: [[bundleRoot stringByAppendingString:@"/Contents/Resources/"] stringByAppendingString:tpl]];
+//	NSData *zNsDataTifData = [[NSData alloc] initWithData:[zNSImage TIFFRepresentation]];
+//	directionImage = [[NSBitmapImageRep alloc] initWithData:zNsDataTifData];
 
 }
 

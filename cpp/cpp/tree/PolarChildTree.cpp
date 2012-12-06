@@ -6,7 +6,7 @@
 #include "PolarChildTree.h"
 #include "../model/ImageShape.h"
 #include "../model/Flip.h"
-#include "constants.h"
+#include "../constants.h"
 
 
 PolarChildTree::~PolarChildTree() {

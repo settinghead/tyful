@@ -53,6 +53,7 @@ ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels
     //memcpy(this->pixels, pixels, size);
 //    this->img = img;
 //    printStats();
+
     if(revert){
         size_t size = sizeof(unsigned int)*width*height;
         this->pixels = (unsigned int *)malloc(size);

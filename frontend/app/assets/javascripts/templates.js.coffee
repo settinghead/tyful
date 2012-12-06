@@ -13,8 +13,9 @@ window.submitForm = () ->
 	
 onLayoutFn = ($elems, instance) ->
 
-
 $(document).ready ->
+
+  moduleDidLoad()
   $("#see-gallery").click ->
     $("html,body").animate
       scrollTop: $(".masonry-container").offset().top
@@ -22,6 +23,24 @@ $(document).ready ->
   $('.masonry-container').imagesLoaded ->
     iso_options = { itemSelector : ".item", onLayout:onLayoutFn}
     $('.masonry-container').isotope(iso_options);
+
+    #append colors
+    $.each ["#f00", "#ff0", "#0f0", "#0ff", "#00f", "#f0f", "#000", "#fff"], ->
+    $("#mainCanvas .tools").append "<a href='#sketch' data-color='" + this + "' style='width: 10px; background: " + this + ";'></a> "
+
+    #append sizes
+    $.each [10, 15, 30, 50], ->
+      $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc'>" + this + "</a> "
+    $("#sketch").sketch()
+
+    $("#btnRender").click ->
+      canvas = $("#sketch")[0]
+      canvasWidth = canvas.width
+      canvasHeight = canvas.height
+      ctx = canvas.getContext("2d")
+      imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
+      TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight
+      TyfulNaclCoreModule.postMessage imageData.data.buffer
 
 
 

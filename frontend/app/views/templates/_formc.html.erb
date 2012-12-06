@@ -1,0 +1,173 @@
+  <% if @template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+
+      <ul>
+      <% @template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row-fluid">
+<div class="span12" style="height: 100%;">
+
+<%if can? :manage, @template%>
+<script type="text/javascript">
+// window.onbeforeunload = function(){
+// 	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
+// 	  e = e || window.event;
+// 	  // For IE and Firefox
+// 	  if (e) {
+// 	    e.returnValue = message;
+// 	  }
+// 
+// 	  // For Safari
+// 	  return message;}
+
+
+</script>
+<%end%>
+<div class="row" style="text-align:center;">
+	<div class="span9">
+		<div id="mainCanvas">
+			<div class="tools">
+		  		<a href="#sketch" data-tool="marker">Marker</a>
+		  		<a href="#sketch" data-tool="eraser">Eraser</a>
+			</div>
+			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
+
+		</div>
+	</div>
+	<div class="span3"><button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+</div>
+</div>
+</div>
+
+<%if can? :manage, @template %>
+<div id="modal">
+	<%= form_for(@template,:remote => true) do |f| %>
+	  <%= f.error_messages %>
+	
+	<div class="field">
+	<%if (current_user && (not current_user.nickname)) %>
+	
+		<%= label_tag "Pick an artist name for yourself" %> 
+		<%= text_field_tag 'nickname' %>
+	<%end%>
+	</div>
+
+	<div class="field">
+		<%= f.label :name, "Template name" %>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :description %><br />
+		<%= f.text_area :description, :rows => 10, :cols => 40 %>
+	</div>
+	<div class="field">
+		<%= f.label :private, "Make this template private" %>
+		<%= f.check_box :private %>
+	</div>
+	
+	<%= f.hidden_field :uuid %>
+
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+	<% end %>
+</div>
+<%end%>
+
+<script type="text/javascript">
+    var TyfulNaclCoreModule = null;  // Global application object
+
+    statusText = 'NO-STATUS';
+
+    // Indicate load success.
+    function moduleDidLoad() {
+      TyfulNaclCoreModule = document.getElementById('tyful_nacl_client');
+      updateStatus('SUCCESS');
+      TyfulNaclCoreModule.postMessage('hello');
+    }
+
+    // The 'message' event handler.  This handler is fired when the NaCl module
+    // posts a message to the browser by calling PPB_Messaging.PostMessage()
+    // (in C) or pp::Instance.PostMessage() (in C++).  This implementation
+    // simply displays the content of the message in an alert panel.
+
+    // If the page loads before the Native Client module loads, then set the
+    // status message indicating that the module is still loading.  Otherwise,
+    // do not change the status message.
+    function pageDidLoad() {
+      if (TyfulNaclCoreModule == null) {
+        updateStatus('LOADING...');
+      } else {
+        // It's possible that the Native Client module onload event fired
+        // before the page's onload event.  In this case, the status message
+        // will reflect 'SUCCESS', but won't be displayed.  This call will
+        // display the current message.
+        updateStatus();
+      }
+    }
+
+    // Set the global status message.  If the element with id 'statusField'
+    // exists, then set its HTML to the status message as well.
+    // opt_message The message test.  If this is null or undefined, then
+    // attempt to set the element with id 'statusField' to the value of
+    // |statusText|.
+    function updateStatus(opt_message) {
+      if (opt_message)
+        statusText = opt_message;
+      var statusField = document.getElementById('status_field');
+      if (statusField) {
+        statusField.innerHTML = statusText;
+      }
+    }
+
+    function decodeAndPostMessage(base64str){
+	  var ab = Base64Binary.decodeArrayBuffer(base64str);
+	  TyfulNaclCoreModule.postMessage(ab);
+	}
+  </script>
+
+    <div id="listener">
+    	  <script type="text/javascript">
+    	  	var slapShapeMethodPrefix = "slapShape:";
+    	  	var feedMeMethodPrefix = "feedMe:";
+    	  	function getFlashMovieObject(movieName){
+			    if (window.document[movieName]){
+			        return window.document[movieName];
+			    }
+			    if (navigator.appName.indexOf("Microsoft Internet")==-1){
+			        if (document.embeds && document.embeds[movieName])
+			            return document.embeds[movieName];
+			    }
+			    else{
+			        return document.getElementById(movieName);
+			    }
+			}
+
+		    function handleMessage(message_event) {
+		      console.log(message_event.data);
+		      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
+		      	var params = message_even.data.substring(slapShapeMethodPrefix.length);
+		      	var flashMovie=getFlashMovieObject("Main");
+		      	eval('flashMovie.slap('+params+');');
+		      }
+		      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
+		      	var params = message_even.data.substring(feedMeMethodPrefix.length);
+		      	var flashMovie=getFlashMovieObject("Main");
+		      	eval('flashMovie.feedMe('+params+');');
+		      }
+		    }
+		    var container = document.getElementById('listener');
+		    container.addEventListener('message', handleMessage, true);
+  </script>
+    <embed name="nacl_module"
+       id="tyful_nacl_client"
+       width=0 height=0
+       src="/tyful_nacl_client.nmf"
+       type="application/x-nacl" />
+  </div>

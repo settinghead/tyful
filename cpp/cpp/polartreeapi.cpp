@@ -110,7 +110,7 @@ void* renderRoutine(void*){
     
     PolarCanvas::current->setStatus(RENDERING);
     
-    printf("internal render routine started.");
+    printf("internal render routine started.\n");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
     while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
         pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);

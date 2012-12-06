@@ -14,10 +14,11 @@ class PolarCanvas;
 
 @interface MainView : NSView{
     NSBitmapImageRep *mainImage;
-    NSBitmapImageRep *directionImage;
+//    NSBitmapImageRep *directionImage;
     IBOutlet NSView *mainView;
     NSMutableArray *trees;
     NSMutableDictionary *dict;
+    NSString *directionFile;
 
 }
 - (IBAction)drawRandomText:(id)sender;

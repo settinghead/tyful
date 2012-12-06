@@ -15,6 +15,7 @@
 //= require_tree .
 //= require uservoice.js
 //= require ga.js
+//= require sketch.js
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',

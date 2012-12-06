@@ -29,6 +29,7 @@ Tyful::Application.routes.draw do
   match '/templates/my/' => 'templates#my'
   match '/templates/newest/' => 'templates#newest'
   match '/templates/popular/' => 'templates#popular'
+  match '/templates/newc' => 'templates#newc'
   
   resources :templates do
     member do
