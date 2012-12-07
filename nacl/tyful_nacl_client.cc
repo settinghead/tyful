@@ -107,13 +107,14 @@ private:
     while(getStatus()>0){
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
+
         while((placement=getNextSlap())!=NULL){
           // std::stringstream ss(std::stringstream::in | std::stringstream::out);
           // ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
             // << placement->rotation << "," << placement->layer << ","
             // << placement->color << placement->failureCount << endl;
           char msg[1024];
-          snprintf( msg, sizeof(msg), "%s:%d,%d,%d,%f,%d,%d,%d", 
+          snprintf( msg, sizeof(msg), "%s:%d,%d,%d,%f,%d,%u,%d", 
             kSlapMethodPrefix, placement->sid,(int)placement->location.x, (int)placement->location.y,
             placement->rotation,placement->layer,placement->color,placement->failureCount);
 
@@ -130,7 +131,6 @@ private:
     return NULL;
   }
 
-
   void* PostStringToBrowser(
     int32_t result, 
     std::string data_to_send) {
@@ -144,7 +144,7 @@ private:
 
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(getStatus()>0){
-      for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
+      // for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
         // ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage() <<","<< endl;
         char msg[1024];
@@ -158,7 +158,7 @@ private:
         // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
 
-      }
+      // }
       pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
@@ -178,7 +178,6 @@ private:
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
     if(var_message.is_string()){
-
         std::string message = var_message.AsString();
         if(message.find(kUpdateTemplateMethodPrefix) == 0){
           status = kUpdateTemplateMethodId;
@@ -228,17 +227,15 @@ private:
           //   buffer[3],
           //   buffer_data.ByteLength());
           initCanvas();
-          appendLayer(buffer,NULL,width,height,false);
+          appendLayer(buffer,NULL,width,height,true,true);
           buffer_data.Unmap();
       }
       else if (status==kFeedShapeMethodId){
-        feedShape(buffer,width,height,sid);
+        feedShape(buffer,width,height,sid,true,true);
       }
       // else if (buffer[0]==kStartRenderMethodId) {
       //   printf("startRendering command received.\n");
       //   startRendering();
-
-
       // }
       // else if (buffer[0]==kPauseRenderMethodId) {
       //   printf("pauseRendering command received.\n");

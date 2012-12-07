@@ -16,8 +16,8 @@ PolarLayer::PolarLayer(unsigned char * png, size_t png_size,int lid):PixelImageS
     
 }
 
-PolarLayer::PolarLayer(unsigned int const * pixels, int width, int height, int lid, bool revert)
-:PixelImageShape::PixelImageShape(pixels,width,height,revert),above(NULL),below(NULL),lid(lid),type(WORD_LAYER){
+PolarLayer::PolarLayer(unsigned int const * pixels, int width, int height, int lid, bool revert, bool rgbaToArgb)
+:PixelImageShape::PixelImageShape(pixels,width,height,revert,rgbaToArgb),above(NULL),below(NULL),lid(lid),type(WORD_LAYER){
 }
 
 

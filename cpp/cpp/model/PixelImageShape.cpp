@@ -42,7 +42,7 @@ PixelImageShape::PixelImageShape(unsigned char * png, size_t png_size):ImageShap
 }
 
 
-PixelImageShape::PixelImageShape(unsigned int const * pixels, int width, int height, bool revert):
+PixelImageShape::PixelImageShape(unsigned int const * pixels, int width, int height, bool revert, bool rgbaToArgb):
 ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels((unsigned int *) pixels){
 //	this->width = width;
 //	this->height = height;
@@ -52,22 +52,22 @@ ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels
 //	this->pixels = (unsigned int *)malloc(size);
     //memcpy(this->pixels, pixels, size);
 //    this->img = img;
-//    printStats();
     size_t size = sizeof(unsigned int)*width*height;
     this->pixels = (unsigned int *)malloc(size);
-
-    if(revert){
+    
+    if(!revert&&!rgbaToArgb)
+        memcpy(this->pixels,pixels,size);
+    else{
         for (int xx=0; xx<width; xx++) {
             for(int yy=0;yy<height;yy++){
                 int i = yy*width+xx;
                 //endian conversion - to big endian
-                this->pixels[i] = endianFlip(pixels[i]);
+                this->pixels[i] = revert?endianFlip(pixels[i]):pixels[i];
+                if(rgbaToArgb)
+                    this->pixels[i] = convertRGBAtoARGB(this->pixels[i]);
                 //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
             }
         }
-    }
-    else{
-        memcpy(this->pixels,pixels,size);
     }
 };
 
@@ -95,10 +95,17 @@ PixelImageShape::~PixelImageShape() {
 };
 
 void PixelImageShape::printStats() {
+    bool printedFirstNonEmpty = false;
     double sum = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++){
-            sum+=containsPoint(x, y)?1:0;
+            if(containsPoint(x, y)){
+                sum+=1;
+                if(!printedFirstNonEmpty){
+                    printf("first nonempty point: %d,%d, c: %x\n",x,y,getPixel(x, y));
+                    printedFirstNonEmpty = true;
+                }
+            }
         }
     sum/=width*height;
     printf("Width: %d, height: %d, Fill rate: %f, pixel addr: %p\n", width, height, sum, pixels);

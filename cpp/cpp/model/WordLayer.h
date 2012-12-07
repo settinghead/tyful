@@ -19,8 +19,8 @@ public:
     public:
         ColorSheet(unsigned char *png, size_t png_size):
         PixelImageShape(png,png_size){};
-        ColorSheet( unsigned int const * pixels, int width, int height, bool revert):
-        PixelImageShape(pixels,width,height,revert){
+        ColorSheet( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):
+        PixelImageShape(pixels,width,height,revert,rgbaToArgb){
             
         };
         virtual inline bool isEmpty(unsigned int pixelValue){
@@ -29,7 +29,7 @@ public:
         };
     };
     WordLayer(unsigned char * png, size_t png_size, int lid);
-    WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert);
+    WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert,bool rgbaToArgb);
     ~WordLayer();
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;

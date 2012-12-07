@@ -150,6 +150,7 @@ void PolarCanvas::tryNextEngineShape(){
             failureCount++;
             if(failureCount>perseverance){
                 status = PAUSED;
+                printf("Rendering complete.\n");
             }
         }
         //TODO: notify arrival of new display shape

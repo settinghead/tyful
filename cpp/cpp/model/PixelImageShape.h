@@ -13,7 +13,7 @@
 
 class PixelImageShape : public ImageShape{
 public:
-    PixelImageShape( unsigned int const * pixels, int width, int height, bool revert);
+    PixelImageShape( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb);
     PixelImageShape(unsigned char * png, size_t size);
 	~PixelImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;

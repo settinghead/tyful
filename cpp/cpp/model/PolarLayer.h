@@ -18,7 +18,7 @@ public:
     typedef int LAYER_TYPE;
     const LAYER_TYPE type;
     int lid;
-    PolarLayer(unsigned int const * pixels, int width, int height, int lid, bool revert);
+    PolarLayer(unsigned int const * pixels, int width, int height, int lid, bool revert,bool rgbaToArgb);
     PolarLayer(unsigned char * png, size_t png_size,int lid);
     ~PolarLayer(){}
     virtual bool contains(double x, double y, double width, double height, double rotation) = 0;

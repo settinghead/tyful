@@ -13,10 +13,10 @@ window.submitForm = () ->
 	
 onLayoutFn = ($elems, instance) ->
 
-determineFontHeight = (fontStyle) ->
+window.determineFontHeight = (text,fontStyle) ->
   body = document.getElementsByTagName("body")[0]
   dummy = document.createElement("div")
-  dummyText = document.createTextNode("M")
+  dummyText = document.createTextNode(text)
   dummy.appendChild dummyText
   dummy.setAttribute "style", "font: " + fontStyle + ";"
   body.appendChild dummy
@@ -30,6 +30,12 @@ $(document).ready ->
 
   container = document.getElementById("listener")
   container.addEventListener "message", handleMessage, true
+
+
+  img = new Image()
+  img.src= "/templates/wheel_h.png"
+  img.onload = ->
+    $('#sketch')[0].getContext('2d').drawImage(this,0,0)
 
   $("#see-gallery").click ->
     $("html,body").animate
@@ -54,12 +60,18 @@ $(document).ready ->
       canvasHeight = canvas.height
       ctx = canvas.getContext("2d")
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
+      window.shapes = {}
+      window.slapLater = []
+      window.sid = 0
+      window.initializing = false
+      window.words = ["hello", "hi", "Xiyang", "lol"]
+      renderCanvas = $("#renderer")[0]
+      renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
+
       TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight
       TyfulNaclCoreModule.postMessage imageData.data.buffer
       TyfulNaclCoreModule.postMessage "startRender:"
-      window.shapes = {}
-      window.sid = 0
-      window.initializing = false
+
 
 
 

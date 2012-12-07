@@ -26,13 +26,13 @@ void initCanvas(){
 	printf("Canvas initialized.\n");
 }
 
-void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip){
+void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip,bool rgbaToArgb){
     assert(width>0);
     assert(height>0);
-	WordLayer* layer = new WordLayer(pixels, width, height, (int)PolarCanvas::current->size(), flip);
+	WordLayer* layer = new WordLayer(pixels, width, height, (int)PolarCanvas::current->size(), flip,rgbaToArgb);
 
 	if(colorPixels>0)
-		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip));
+		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip,rgbaToArgb));
 
     printf("Special point(5,5): %x, isEmpty: %d\n", layer->getPixel(5,5), layer->isEmpty(layer->getPixel(5,5)));
 	printf("Special point(600,400): %xisEmpty: %d\n", layer->getPixel(600,400), layer->isEmpty(layer->getPixel(600,400)));
@@ -76,7 +76,7 @@ void updateTemplate(unsigned int* data){
         int colorStart = counter;
         printf("coloWidth: %d, colorHeight, %d, colorLength: %d, colorStart: %d\n",colorWidth,colorHeight,colorLength,colorStart);
 
-        appendLayer(data+directionStart, data+colorStart, directionWidth, directionHeight, true);
+        appendLayer(data+directionStart, data+colorStart, directionWidth, directionHeight, true,false);
     }
     
 }
@@ -86,12 +86,12 @@ void feedShape(unsigned int* data){
     unsigned int sid = data[counter++];
     int width = data[counter++];
     int height = data[counter++];
-    feedShape(data+counter, width, height, sid);
+    feedShape(data+counter, width, height, sid,false,false);
 }
 
-void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
+void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool flip,bool rgbaToArgb)
 {
-	TextImageShape *shape = new TextImageShape(pixels, width, height, false);
+	TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
 	// shape->printStats();
 	PolarCanvas::current->feedShape(shape,sid);
     pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
@@ -100,7 +100,7 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid)
 
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
-    feedShape(pixels, width, height,sid);
+    feedShape(pixels, width, height,sid,false,false);
     return tryNextShape();
 }
 
@@ -116,7 +116,9 @@ void* renderRoutine(void*){
     printf("internal render routine started.\n");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
     while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
-        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
+        if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->size()<3)
+//            for(int i=(int)((PolarCanvas*)PolarCanvas::current)->pendingShapes->size();i<5;i++)
+                pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
         if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->empty())
             pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
         ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
