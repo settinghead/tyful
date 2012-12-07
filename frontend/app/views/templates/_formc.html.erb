@@ -181,19 +181,18 @@
 			rotation = parseFloat(rotation); layer = parseInt(layer),color = parseInt(color),failureCount=parseInt(failureCount);
 			var context = document.getElementById('renderer').getContext('2d');
 			var shape =window.shapes[sid];
-			var width = shape.width;
-			var height = shape.height;
-			context.save();
-			// context.translate(x+width/2,y+height/2);
-			// context.rotate(-rotation);
-			// context.translate(-x-width/2,-y-height/2);
-			// context.drawImage(shape,x,y,shape.width,shape.height);
-
-			context.translate(x+width/2,y+height/2);
-			context.rotate(-rotation);
-			context.translate(-x-width/2,-y-height/2);
-			context.drawImage(shape,x,y,shape.width,shape.height);
-			context.restore();
+			//check for null because the rendering process may have 
+			//been interrupted
+			if(shape){
+				var width = shape.width;
+				var height = shape.height;
+				context.save();
+				context.translate(x+width/2,y+height/2);
+				context.rotate(-rotation);
+				context.translate(-x-width/2,-y-height/2);
+				context.drawImage(shape,x,y,shape.width,shape.height);
+				context.restore();
+			}
 		}
 
 		function handleMessage(message_event) {

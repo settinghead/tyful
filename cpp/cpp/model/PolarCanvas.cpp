@@ -276,7 +276,7 @@ void PolarCanvas::attempt_nudge(void *arg){
                 return;
             }
             pthread_mutex_unlock(&canvas->shape_mutex);
-            if (!foundOverlap) {
+            if (!foundOverlap && !canvas->_found) {
                 canvas->_winningSeq = seq;
                 //						successCount++;
                 canvas->_candidatePlacement->patch->setLastAttempt(currentAttempt);
@@ -296,6 +296,7 @@ void PolarCanvas::attempt_nudge(void *arg){
         continue;
     }
     assert(false);
+    //should never reach
     return;
 
 }
