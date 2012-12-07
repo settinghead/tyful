@@ -10,6 +10,7 @@
 #define PolarTree_Experiment_ColorMath_h
 
 #include <cmath>
+#include <stdio.h>
 #define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
 #define MAX(X,Y) ((X) > (Y) ? (X) : (Y))
 class ColorMath{
@@ -20,7 +21,6 @@ public:
         int b = rgb & 0xFF;
         double cmax = (r > g) ? r : g;
         if (b > cmax) cmax = b;
-        
         return cmax/255;
     }
     

@@ -21,7 +21,7 @@ class EngineShape;
 class Patch{
 private:
     double x,y, width, height;
-    double averageAlpha, area, alphaSum;
+    double averageAlpha, area, _alphaSum, currentWorth;
     Patch* parent;
     PatchQueue* queue;
     vector<Patch*>* children;
@@ -93,9 +93,15 @@ public:
     inline vector<EngineShape*>* getShapes(){
         return shapes;
     }
+    inline double getCurrentWorth(){
+        if(isnan(currentWorth)){
+            currentWorth = getAlphaSum();
+        }
+        return currentWorth;
+    }
     inline double getAlphaSum(){
-        if(isnan(alphaSum)){
-            alphaSum = 0;
+        if(isnan(_alphaSum)){
+            _alphaSum = 0;
             getArea();
             
             if (this->children == NULL
@@ -104,29 +110,30 @@ public:
                     for (int j= 0; j < height; j++) {
                         double brightness = layer->getBrightness(
                                                                  x + i, y + j);
-                        if(isnan(brightness)){
-                            brightness = 0;
-                        }
-                        else
-                            brightness = brightness;
-                        alphaSum += brightness;
-                        if(brightness==0)
+
+//                        if(isnan(brightness)){
+//                            brightness = 0;
+//                        }
+//                        else
+//                            brightness = brightness;
+                        if(brightness>=0) _alphaSum += brightness;
+                        if(brightness<0)
                             area -= 1;
                     }
             } else
                 for(int i=0;i<children->size();i++)
-                    alphaSum += children->at(i)->getAlphaSum();
+                        _alphaSum += children->at(i)->getAlphaSum();
             //        alphaSum = 1;
         }
-        if(alphaSum==0){
-            alphaSum = NAN;
-        }
-        return alphaSum;
+//        if(alphaSum<0){
+//            alphaSum = NAN;
+//        }
+        return _alphaSum;
     }
     inline void mark(int smearedArea, bool spreadSmearToChildren){
         //			this.resetWorthCalculations();
         //			this.getAlphaSum();
-        this->alphaSum -= smearedArea * MARK_FILL_FACTOR;
+        this->currentWorth -= smearedArea * MARK_FILL_FACTOR;
         if(spreadSmearToChildren)
             for (vector<Patch*>::iterator it = children->begin();
                  it != children->end(); ++it){
@@ -165,7 +172,7 @@ struct ComparePatch
     {
         //			var r:int= -_numComparator.compare(p1.getAverageAlpha(),p2.getAverageAlpha());
         int f1 = lhs->getNumberOfFailures(), f2 = rhs->getNumberOfFailures();
-        return (f1==f2) ? (lhs->getAlphaSum()<rhs->getAlphaSum()) : (f1>f2);
+        return (f1==f2) ? (lhs->getCurrentWorth()<rhs->getCurrentWorth()) : (f1>f2);
         
         //                if(r==0){
         //                    r = _numComparator.compare(p1.getAlphaSum(), p2.getAlphaSum());

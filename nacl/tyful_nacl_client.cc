@@ -36,6 +36,8 @@
 #include "../cpp/cpp/polartreeapi.h"
 #include "../cpp/cpp/model/PolarCanvas.h"
 #include "../cpp/cpp/model/structs.h"
+#include <ppapi/cpp/completion_callback.h>
+#include "ppapi/utility/completion_callback_factory.h"
 #include <iostream>
 #include <pthread.h>
 #include <cstring>
@@ -60,10 +62,10 @@ const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
 const char* kStartRenderMethodPrefix = "startRender:";
 const char* kPauseRenderMethodPrefix = "pauseRender:";
 const char* kFeedShapeMethodPrefix = "feedShape:";
-const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance";
+const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance:";
 
-const char* kSlapMethodId = "slapShape";
-const char* kFeedMeMethodId = "feedMe";
+const char* kSlapMethodPrefix = "slapShape";
+const char* kFeedMeMethodPrefix = "feedMe";
 
 // The string sent back to the browser upon receipt of a message
 // containing "hello".
@@ -86,41 +88,67 @@ class TyfulNaclCoreInstance : public pp::Instance {
 
 private:
   int status;
-  int width, height;
+  int width, height, sid;
 
  public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
-  explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
+  explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance),factory_(this)
   {}
   virtual ~TyfulNaclCoreInstance() {}
 
+  string* messageToPost;
+    pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
+
 
   static void *checkAndRenderSlaps(void* core){
-
+    printf("Slap checker thread started\n.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     while(getStatus()>0){
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
         while((placement=getNextSlap())!=NULL){
           std::stringstream ss(std::stringstream::in | std::stringstream::out);
-          ss << kSlapMethodId << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
+          ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
             << placement->rotation << "," << placement->layer << ","
             << placement->color << placement->failureCount;
-          ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+          // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+          // ((TyfulNaclCoreInstance*)core)->messageToPost = &ss.str();
+          printf("Slap: %s\n",ss.str().c_str());
+          pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,ss.str().c_str());
+          // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
+          pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
         }
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
   }
 
+
+  void* PostStringToBrowser(
+    int32_t result, 
+    std::string data_to_send) {
+    PostMessage(pp::Var(data_to_send));
+    return 0;
+  }
+
   static void *feedShapes(void* core){
+    printf("FeedShape checker thread started\n.");
+    TyfulNaclCoreInstance* event_instance = static_cast<TyfulNaclCoreInstance*>(core);
+
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(getStatus()>0){
       for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << kFeedShapeMethodId << ":" << 1 << "," << getShrinkage();
-        ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+        ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage();
+        printf("server: %s\n",ss.str().c_str());
+        // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
+        // struct PP_CompletionCallback cb;
+        // cb = PP_MakeCompletionCallback(PostCompletionCallback, strdup(ss.str().c_str()));
+        pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,ss.str().c_str());
+        // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
+        pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
+
       }
       pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
     }
@@ -141,6 +169,7 @@ private:
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
     if(var_message.is_string()){
+
         std::string message = var_message.AsString();
         if(message.find(kUpdateTemplateMethodPrefix) == 0){
           status = kUpdateTemplateMethodId;
@@ -151,6 +180,28 @@ private:
           pch = strtok (NULL, ",");
           height = ::atoi(pch);
           printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
+        }
+        else if(message.find(kStartRenderMethodPrefix) == 0){
+          status = kStartRenderMethodId;
+          startRendering();
+          pthread_t       checkRenderRoutineThread;
+          pthread_t       feedRoutineThread;
+          pthread_attr_t  attr;
+
+          pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
+          pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
+        }
+        else if(message.find(kFeedShapeMethodPrefix) == 0){
+          status = kFeedShapeMethodId;
+          char * pch;
+          size_t pos = message.find_first_of(':')+1;
+          pch = strtok ((char*)message.substr(pos).c_str(),",");
+          sid = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          width = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          height = ::atoi(pch);
+          printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
         }
     }
     else if (var_message.is_array_buffer()){
@@ -168,19 +219,16 @@ private:
           //   buffer[3],
           //   buffer_data.ByteLength());
           initCanvas();
-              printf("%d,%d,%d,%d,%d,%d\n",buffer[0],buffer[1],buffer[2],buffer[3],buffer[4],buffer[5]);
-
           appendLayer(buffer,NULL,width,height,false);
+          buffer_data.Unmap();
+      }
+      else if (status==kFeedShapeMethodId){
+        feedShape(buffer,width,height,sid);
       }
       // else if (buffer[0]==kStartRenderMethodId) {
       //   printf("startRendering command received.\n");
       //   startRendering();
-      //   pthread_t       checkRenderRoutineThread;
-      //   pthread_t       feedRoutineThread;
-      //   pthread_attr_t  attr;
 
-      //   pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
-      //   pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
 
       // }
       // else if (buffer[0]==kPauseRenderMethodId) {

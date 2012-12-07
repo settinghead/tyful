@@ -40,7 +40,10 @@
 
 		</div>
 	</div>
-	<div class="span3"><button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+	<div class="span3">
+		<canvas id="renderer" width="800" height="600" style="background-color:#ffffff; width: 100%; height: auto;"></canvas>
+		<button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+	</div>
 </div>
 </div>
 </div>
@@ -133,37 +136,43 @@
   </script>
 
     <div id="listener">
-    	  <script type="text/javascript">
-    	  	var slapShapeMethodPrefix = "slapShape:";
-    	  	var feedMeMethodPrefix = "feedMe:";
-    	  	function getFlashMovieObject(movieName){
-			    if (window.document[movieName]){
-			        return window.document[movieName];
-			    }
-			    if (navigator.appName.indexOf("Microsoft Internet")==-1){
-			        if (document.embeds && document.embeds[movieName])
-			            return document.embeds[movieName];
-			    }
-			    else{
-			        return document.getElementById(movieName);
-			    }
-			}
+	  <script type="text/javascript">
+	  	var slapShapeMethodPrefix = "slapShape:";
+	  	var feedMeMethodPrefix = "feedMe:";
 
-		    function handleMessage(message_event) {
-		      console.log(message_event.data);
-		      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
-		      	var params = message_even.data.substring(slapShapeMethodPrefix.length);
-		      	var flashMovie=getFlashMovieObject("Main");
-		      	eval('flashMovie.slap('+params+');');
-		      }
-		      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
-		      	var params = message_even.data.substring(feedMeMethodPrefix.length);
-		      	var flashMovie=getFlashMovieObject("Main");
-		      	eval('flashMovie.feedMe('+params+');');
-		      }
-		    }
-		    var container = document.getElementById('listener');
-		    container.addEventListener('message', handleMessage, true);
+	  	function feedShapes(num,shrinkage){
+	  		var canvas = $('#sketch')[0];
+	  		var ctx = canvas.getContext('2d');
+	  		for(var i=0;i<num;i++){
+	  			var fontSize= 10+50*shrinkage;
+    	  		ctx.font = "bold "+fontSize+"px sans-serif";
+				ctx.textBaseline = "top";
+				str = 'hahaha';
+				dimensions = ctx.measureText(str);
+
+	  			var shapeCanvas = document.createElement("canvas");
+      			shapeCanvas.setAttribute('width', dimensions.width);
+      			shapeCanvas.setAttribute('height', dimensions.height);
+    	  		var context = shapeCanvas.getContext('2d');
+    	  		context.font = ctx.font;
+    	  		context.textBaseline = ctx.textBaseline;
+    	  		context.fillText(str,0,0);
+    	  		window.shapes[window.sid++] = shapeCanvas;
+	  			TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
+  				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
+	  		}
+	  	}
+
+	    function handleMessage(message_event) {
+	      console.log(message_event.data);
+	      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
+	      	var params = message_event.data.substring(slapShapeMethodPrefix.length);
+	      }
+	      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
+	      	var params = message_event.data.substring(feedMeMethodPrefix.length);
+	      	eval("feedShapes("+params+");");
+	      }
+	    }
   </script>
     <embed name="nacl_module"
        id="tyful_nacl_client"

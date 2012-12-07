@@ -23,9 +23,9 @@ private:
     LeveledPatchMap* map;
     inline Patch* getBestPatchAtLevel(int level){
         Patch* result= map->getBestPatchAtLevel(level);
-        //			if (result == null)
-        //				return getBestPatchAtLevel(level - 1);
-        //			else
+//			if (result == NULL)
+//				return getBestPatchAtLevel(level - 1);
+//			else
         return result;
     }
     inline int findGranularityLevel(int width, int height){

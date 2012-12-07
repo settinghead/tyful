@@ -30,6 +30,7 @@ public:
 	inline unsigned int getPixel(int x, int y){
         //    return    this->img->getPixel(x,y);
         //    return pixels[x * height + y];
+
         if(x>=width||y>=height||x<0||y<0)
             return 0x00000000;
         else

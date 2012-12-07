@@ -15,13 +15,14 @@
 #include "../model/PolarCanvas.h"
 
 
-Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer):averageAlpha(NAN),alphaSum(NAN),area(NAN),children(NULL),numberOfFailures(0),lastAttempt(0){
+Patch::Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer):averageAlpha(NAN),_alphaSum(NAN),area(NAN),children(NULL),numberOfFailures(0),lastAttempt(0),currentWorth(NAN){
     this->x = x; this->y = y; this->width = width; this->height = height;
     this->parent = parent;
     this->rank = rank;
     this->queue = queue;
     this->layer = layer;
     this->shapes = new vector<EngineShape*>();
+    printf("Patch: %d, %d, w:%d, h:%d, alpha_sum:%f\n",(int)x,(int)y,(int)width,(int)height,getAverageAlpha());
 }
 
 PolarCanvas* Patch::getCanvas(){

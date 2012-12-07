@@ -38,7 +38,7 @@ PixelImageShape::PixelImageShape(unsigned char * png, size_t png_size):ImageShap
             this->pixels[i] =convertRGBAtoARGB( endianFlip(pixels[i]));
             //                cout << pixels[xx*((int)textImage.size.width)+yy] << " ";
         }
-    }    
+    }
 }
 
 
@@ -53,10 +53,10 @@ ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels
     //memcpy(this->pixels, pixels, size);
 //    this->img = img;
 //    printStats();
+    size_t size = sizeof(unsigned int)*width*height;
+    this->pixels = (unsigned int *)malloc(size);
 
     if(revert){
-        size_t size = sizeof(unsigned int)*width*height;
-        this->pixels = (unsigned int *)malloc(size);
         for (int xx=0; xx<width; xx++) {
             for(int yy=0;yy<height;yy++){
                 int i = yy*width+xx;
@@ -67,7 +67,7 @@ ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels
         }
     }
     else{
-        this->pixels = (unsigned int*) pixels;
+        memcpy(this->pixels,pixels,size);
     }
 };
 

@@ -18,7 +18,7 @@
 #include "LeveledPatchMap.h"
 #include "DensityPatchIndex.h"
 
-#define QUEUE_ALPHA_THRESHOLD -DBL_MAX
+#define QUEUE_ALPHA_THRESHOLD -1
 
 using namespace std;
 using namespace std::tr1;
@@ -51,6 +51,7 @@ public:
         return result;
     }
     inline PatchQueue* descend(int level){
+        printf("Descending to level %d.\n",level);
         PatchQueue* queue = new PatchQueue(level, this->map);
         std::vector<Patch*> *queue_vector = reinterpret_cast<vector<Patch*>*>(this);
         

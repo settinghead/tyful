@@ -16,6 +16,10 @@ onLayoutFn = ($elems, instance) ->
 $(document).ready ->
 
   moduleDidLoad()
+
+  container = document.getElementById("listener")
+  container.addEventListener "message", handleMessage, true
+
   $("#see-gallery").click ->
     $("html,body").animate
       scrollTop: $(".masonry-container").offset().top
@@ -41,6 +45,9 @@ $(document).ready ->
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
       TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight
       TyfulNaclCoreModule.postMessage imageData.data.buffer
+      TyfulNaclCoreModule.postMessage "startRender:"
+      window.shapes = {}
+      window.sid = 0
 
 
 

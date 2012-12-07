@@ -42,9 +42,11 @@ public:
         unsigned int rgbPixel = getPixel(x, y);
         unsigned int alpha = rgbPixel>> 24 & 0xFF;
         if(alpha == 0) {
-            return NAN;
+            return -1;
         }
-        return ColorMath::getBrightness(rgbPixel);
+        else{
+            return ColorMath::getBrightness(rgbPixel);
+        }
     }
     
     double getHue(int x, int y);

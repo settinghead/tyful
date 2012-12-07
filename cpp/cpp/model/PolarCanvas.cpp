@@ -71,6 +71,13 @@ _shapeToWorkOn(NULL),_numActiveThreads(0), slaps(new queue<SlapInfo*>()), pendin
 }
 
 PolarCanvas::~PolarCanvas(){
+    
+    if(getStatus()>0){
+        //pause if still running
+        status = 0;
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+    }
+    
     pthread_attr_destroy(&attr);
     pthread_mutex_destroy(&numActiveThreads_mutex);
     pthread_mutex_destroy(&shape_mutex);

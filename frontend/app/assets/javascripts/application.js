@@ -16,6 +16,7 @@
 //= require uservoice.js
 //= require ga.js
 //= require sketch.js
+//= require fabric.js
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',
