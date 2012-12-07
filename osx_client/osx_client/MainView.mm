@@ -274,18 +274,20 @@ int sid = 0;
     while((placement=getNextSlap())!=NULL){
         double rotation = -(placement->rotation)*360/M_PI/2;
         NSMutableAttributedString *string = [dict objectForKey:[NSString stringWithFormat:@"%u", placement->sid]];
-        NSPoint point = NSMakePoint(placement->location.x,
-                                    mainImage.size.height-string.size.height-placement->location.y);
-        printf("Coord: %f, %f; rotation: %f, color: %x, total: %d\n"
-               ,point.x
-               ,point.y
-               ,placement->rotation,placement->color, counter++);
-        unsigned int textColor = placement->color & 0x00FFFFFF;
-        NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
-        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[string length])];
-        NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
-        
-        [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
+        if(string!=nil){
+            NSPoint point = NSMakePoint(placement->location.x,
+                                        mainImage.size.height-string.size.height-placement->location.y);
+            printf("Coord: %f, %f; rotation: %f, color: %x, total: %d\n"
+                   ,point.x
+                   ,point.y
+                   ,placement->rotation,placement->color, counter++);
+            unsigned int textColor = placement->color & 0x00FFFFFF;
+            NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
+            [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[string length])];
+            NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
+            
+            [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
+        }
     }
 }
 

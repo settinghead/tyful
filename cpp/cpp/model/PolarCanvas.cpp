@@ -27,12 +27,14 @@
 #include <limits>
 #include <cstdlib>
 #include <ctime>
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <semaphore.h>
 #include <errno.h>
+
+#if NUM_THREADS > 1
+#include <pthread.h>
+#endif
 
 
 struct thread_param {
@@ -59,24 +61,26 @@ _shapeToWorkOn(NULL),_numActiveThreads(0), slaps(new queue<SlapInfo*>()), pendin
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
-    printf("pthread related init complete.\n");
+//    printf("pthread related init complete.\n");
 
-    
+#if NUM_THREADS > 1
     //spawn threads
 	if ((pool = threadpool_init(NUM_THREADS)) == NULL) {
 		printf("Error! Failed to create a thread pool struct.\n");
 		exit(EXIT_FAILURE);
 	}
+#endif
 
 }
 
 PolarCanvas::~PolarCanvas(){
     
-    if(getStatus()>0){
-        //pause if still running
-        status = 0;
-        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
-    }
+//    if(getStatus()>0){
+//        //pause if still running
+//        status = -1;
+//        pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+////        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+//    }
     
     pthread_attr_destroy(&attr);
     pthread_mutex_destroy(&numActiveThreads_mutex);
@@ -84,7 +88,10 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&attempt_mutex);
     pthread_cond_destroy(&count_threshold_cv);
     
+#if NUM_THREADS > 1
     threadpool_free(pool,1);
+#endif
+    
     for(int i=0;i<size();i++)
         delete at(i);
     

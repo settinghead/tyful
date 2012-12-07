@@ -14,7 +14,9 @@
 #include "structs.h"
 #include "../sizer/Sizer.h"
 #include "../sizer/ByWeightSizer.h"
+#if NUM_THREADS > 1
 #include "../threads/threadpool.h"
+#endif
 #include <vector>
 #include <pthread.h>
 #include <stdlib.h>
@@ -46,6 +48,7 @@ public:
     
     static PolarCanvas* current;
     static ThreadControllers threadControllers;
+    
     
     void feedShape(ImageShape* shape,unsigned int sid);
     void setPerseverance(int v){
@@ -131,8 +134,9 @@ private:
     int _numActiveThreads;
     void connectLayers();
 
-    
+#if NUM_THREADS > 1
 	struct threadpool *pool;
+#endif
 };
 
 

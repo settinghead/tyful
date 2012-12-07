@@ -22,9 +22,15 @@ void initCanvas(){
     printf("initCanvas command received.\n");
     if(PolarCanvas::current!=NULL){
         if(PolarCanvas::current->getStatus()>0){
-            PolarCanvas::current->setStatus(0);
+            
+            PolarCanvas::current->setStatus(-1);
+            
+//            pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+//            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
             printf("initCanvas is waiting for previous run to finish...\n");
-            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+//            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+            while(PolarCanvas::current->getStatus()!=0);
             printf("Previous run terminated.\n");
         }
         delete PolarCanvas::current;
@@ -101,10 +107,15 @@ void feedShape(unsigned int* data){
 
 void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool flip,bool rgbaToArgb)
 {
+    try{
 	TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
 	// shape->printStats();
 	PolarCanvas::current->feedShape(shape,sid);
     pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+    }
+    catch(int e){
+        printf("An exception occurred. Exception Nr. %d\n");
+    }
 
 }
 
@@ -122,24 +133,28 @@ SlapInfo* tryNextShape()
 void* renderRoutine(void*){
     
     PolarCanvas::current->setStatus(RENDERING);
-    
-    printf("internal render routine started.\n");
-    pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
-    while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
-        if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->size()<3)
-//            for(int i=(int)((PolarCanvas*)PolarCanvas::current)->pendingShapes->size();i<5;i++)
-                pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
-        if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->empty())
-            continue;
-//            pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
-        ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
-        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+    try{
+        printf("internal render routine started.\n");
+        pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+        while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
+                if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->size()<FEED_QUEUE_BUFFER){
+                    for(int i=(int)((PolarCanvas*)PolarCanvas::current)->pendingShapes->size();i<FEED_QUEUE_BUFFER;i++)
+                        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
+                    pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
+                }
+                ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
+            pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
 
+        }
+        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
     }
-    pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
-    printf("Render completed.\n");
+    catch(int e){
+        printf("Exception! No. %d\n",e);
+    }
+    
+    ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
     pthread_cond_signal(&PolarCanvas::threadControllers.stopping_cv);
-
+    printf("Render completed.\n");
     return NULL;
 }
 

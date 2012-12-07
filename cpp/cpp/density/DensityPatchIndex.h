@@ -62,7 +62,7 @@ public:
             Patch* p = getBestPatchAtLevel(level);
             if(p!=NULL) result->push_back(p);
         }
-        assert(result->size()>0);
+//        assert(result->size()>0);
         return result;
     }
     inline void add(Patch* p){

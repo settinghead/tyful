@@ -52,20 +52,20 @@ namespace {
 // const char* const kUpdatePerseveranceMethodId = "updatePerseverance";
 // static const char kMessageArgumentSeparator = ':';
 
-const int kUpdateTemplateMethodId = 0;
-const int kStartRenderMethodId = 1;
-const int kPauseRenderMethodId = 2;
-const int kFeedShapeMethodId = 3;
-const int kUpdatePerseveranceMethodId = 4;
+  const int kUpdateTemplateMethodId = 0;
+  const int kStartRenderMethodId = 1;
+  const int kPauseRenderMethodId = 2;
+  const int kFeedShapeMethodId = 3;
+  const int kUpdatePerseveranceMethodId = 4;
 
-const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
-const char* kStartRenderMethodPrefix = "startRender:";
-const char* kPauseRenderMethodPrefix = "pauseRender:";
-const char* kFeedShapeMethodPrefix = "feedShape:";
-const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance:";
+  const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
+  const char* kStartRenderMethodPrefix = "startRender:";
+  const char* kPauseRenderMethodPrefix = "pauseRender:";
+  const char* kFeedShapeMethodPrefix = "feedShape:";
+  const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance:";
 
-const char* kSlapMethodPrefix = "slapShape";
-const char* kFeedMeMethodPrefix = "feedMe";
+  const char* kSlapMethodPrefix = "slapShape";
+  const char* kFeedMeMethodPrefix = "feedMe";
 
 // The string sent back to the browser upon receipt of a message
 // containing "hello".
@@ -89,22 +89,28 @@ class TyfulNaclCoreInstance : public pp::Instance {
 private:
   int status;
   int width, height, sid;
+  pthread_t       checkRenderRoutineThread;
+  pthread_t       feedRoutineThread;
+  bool check_threads_running;
 
- public:
+public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
-  explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance),factory_(this)
+  explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
+  ,factory_(this),check_threads_running(false)
   {}
-  virtual ~TyfulNaclCoreInstance() {}
+  virtual ~TyfulNaclCoreInstance() {
+  }
 
   string* messageToPost;
-    pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
+  pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
 
 
   static void *checkAndRenderSlaps(void* core){
     printf("Slap checker thread started\n.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
-    while(getStatus()>0){
+    while(true){
+      try{
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
 
@@ -126,6 +132,9 @@ private:
           // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
           pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
         }
+      }catch(int e){
+        cout << "An exception occurred. Exception Nr. " << e << endl;
+      }
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
@@ -143,7 +152,8 @@ private:
     TyfulNaclCoreInstance* event_instance = static_cast<TyfulNaclCoreInstance*>(core);
 
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
-    while(getStatus()>0){
+    while(true){
+      try{
       // for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
         // ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage() <<","<< endl;
@@ -159,7 +169,11 @@ private:
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
 
       // }
-      pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+        pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+      }
+      catch(int e){
+        cout << "An exception occurred. Exception Nr. " << e << endl;
+      }
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
@@ -178,39 +192,46 @@ private:
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
     if(var_message.is_string()){
-        std::string message = var_message.AsString();
-        if(message.find(kUpdateTemplateMethodPrefix) == 0){
-          status = kUpdateTemplateMethodId;
-          char * pch;
-          size_t pos = message.find_first_of(':')+1;
-          pch = strtok ((char*)message.substr(pos).c_str(),",");
-          width = ::atoi(pch);
-          pch = strtok (NULL, ",");
-          height = ::atoi(pch);
+      std::string message = var_message.AsString();
+      if(message.find(kUpdateTemplateMethodPrefix) == 0){
+        status = kUpdateTemplateMethodId;
+        char * pch;
+        size_t pos = message.find_first_of(':')+1;
+        pch = strtok ((char*)message.substr(pos).c_str(),",");
+        width = ::atoi(pch);
+        pch = strtok (NULL, ",");
+        height = ::atoi(pch);
           // printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
-        }
-        else if(message.find(kStartRenderMethodPrefix) == 0){
-          status = kStartRenderMethodId;
-          startRendering();
-          pthread_t       checkRenderRoutineThread;
-          pthread_t       feedRoutineThread;
-          pthread_attr_t  attr;
-
+      }
+      else if(message.find(kStartRenderMethodPrefix) == 0){
+        status = kStartRenderMethodId;
+        startRendering();
+        if(!check_threads_running){
           pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
           pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
+          check_threads_running = true;
         }
-        else if(message.find(kFeedShapeMethodPrefix) == 0){
-          status = kFeedShapeMethodId;
+        printf("startrendering command complete.\n");
+      }
+      else if(message.find(kFeedShapeMethodPrefix) == 0){
+        try{
+        status = kFeedShapeMethodId;
           char * pch;
-          size_t pos = message.find_first_of(':')+1;
+        size_t pos = message.find_first_of(':')+1;
           pch = strtok ((char*)message.substr(pos).c_str(),",");
           sid = ::atoi(pch);
           pch = strtok (NULL, ",");
+          if(pch==NULL) return;
           width = ::atoi(pch);
           pch = strtok (NULL, ",");
+          if(pch==NULL) return;
           height = ::atoi(pch);
-          // printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
         }
+        catch(int e){
+          printf("Exception!!! No. $d", e);
+        }
+          // printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
+      }
     }
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
@@ -226,9 +247,10 @@ private:
           //   buffer[2],
           //   buffer[3],
           //   buffer_data.ByteLength());
-          initCanvas();
+        initCanvas();
+        if(width>0 && height>0)
           appendLayer(buffer,NULL,width,height,true,true);
-          buffer_data.Unmap();
+        buffer_data.Unmap();
       }
       else if (status==kFeedShapeMethodId){
         feedShape(buffer,width,height,sid,true,true);
@@ -260,7 +282,7 @@ private:
 /// an instance of your NaCl module on the web page.  The browser creates a new
 /// instance for each <embed> tag with type="application/x-nacl".
 class TyfulNaclCoreModule : public pp::Module {
- public:
+public:
   TyfulNaclCoreModule() : pp::Module() {}
   virtual ~TyfulNaclCoreModule() {}
 
@@ -278,9 +300,9 @@ namespace pp {
 /// CreateInstance() method on the object you return to make instances.  There
 /// is one instance per <embed> tag on the page.  This is the main binding
 /// point for your NaCl module with the browser.
-Module* CreateModule() {
-  return new TyfulNaclCoreModule();
-}
+  Module* CreateModule() {
+    return new TyfulNaclCoreModule();
+  }
 
 }  // namespace pp
 
