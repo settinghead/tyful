@@ -48,7 +48,7 @@ $(document).ready ->
       TyfulNaclCoreModule.postMessage "startRender:"
       window.shapes = {}
       window.sid = 0
-
+      window.initializing = false
 
 
 

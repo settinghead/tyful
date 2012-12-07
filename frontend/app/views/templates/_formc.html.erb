@@ -30,7 +30,7 @@
 </script>
 <%end%>
 <div class="row" style="text-align:center;">
-	<div class="span9">
+	<div class="span8">
 		<div id="mainCanvas">
 			<div class="tools">
 		  		<a href="#sketch" data-tool="marker">Marker</a>
@@ -40,9 +40,12 @@
 
 		</div>
 	</div>
-	<div class="span3">
+	<div class="span4">
 		<canvas id="renderer" width="800" height="600" style="background-color:#ffffff; width: 100%; height: auto;"></canvas>
 		<button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+		<div>
+			<textarea id="logger" style="width:100%; height: 300px;"></textarea>
+		</div>
 	</div>
 </div>
 </div>
@@ -146,7 +149,7 @@
 	  		for(var i=0;i<num;i++){
 	  			var fontSize= 10+50*shrinkage;
     	  		ctx.font = "bold "+fontSize+"px sans-serif";
-				ctx.textBaseline = "top";
+				// ctx.textBaseline = "top";
 				str = 'hahaha';
 				dimensions = ctx.measureText(str);
 
@@ -155,23 +158,28 @@
       			shapeCanvas.setAttribute('height', dimensions.height);
     	  		var context = shapeCanvas.getContext('2d');
     	  		context.font = ctx.font;
-    	  		context.textBaseline = ctx.textBaseline;
+    	  		context.textBaseline = "top";
     	  		context.fillText(str,0,0);
     	  		window.shapes[window.sid++] = shapeCanvas;
+    	  		
 	  			TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
   				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
+
+  				console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
 	  		}
 	  	}
 
 	    function handleMessage(message_event) {
-	      console.log(message_event.data);
-	      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
-	      	var params = message_event.data.substring(slapShapeMethodPrefix.length);
-	      }
-	      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
-	      	var params = message_event.data.substring(feedMeMethodPrefix.length);
-	      	eval("feedShapes("+params+");");
-	      }
+	    	if(message_event.data){
+		      console.log(message_event.data);
+		      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
+		      	var params = message_event.data.substring(slapShapeMethodPrefix.length);
+		      }
+		      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
+		      	var params = message_event.data.substring(feedMeMethodPrefix.length);
+		      	eval("feedShapes("+params+");");
+		      }
+	  		}
 	    }
   </script>
     <embed name="nacl_module"

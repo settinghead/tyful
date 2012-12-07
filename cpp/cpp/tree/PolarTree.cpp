@@ -38,7 +38,7 @@ inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
 }
 
 
-inline vector<PolarTree*>* PolarTree::getKids() {
+vector<PolarTree*>* PolarTree::getKids() {
 	if (!this->isLeaf() && this->_kids == NULL) {
 //        pthread_mutex_lock(&lock);
 		makeChildren(this, this->getShape(), 

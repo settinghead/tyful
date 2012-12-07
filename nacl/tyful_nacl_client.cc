@@ -108,14 +108,20 @@ private:
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
         while((placement=getNextSlap())!=NULL){
-          std::stringstream ss(std::stringstream::in | std::stringstream::out);
-          ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
-            << placement->rotation << "," << placement->layer << ","
-            << placement->color << placement->failureCount;
+          // std::stringstream ss(std::stringstream::in | std::stringstream::out);
+          // ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
+            // << placement->rotation << "," << placement->layer << ","
+            // << placement->color << placement->failureCount << endl;
+          char msg[1024];
+          snprintf( msg, sizeof(msg), "%s:%d,%d,%d,%f,%d,%d,%d", 
+            kSlapMethodPrefix, placement->sid,(int)placement->location.x, (int)placement->location.y,
+            placement->rotation,placement->layer,placement->color,placement->failureCount);
+
+
           // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
           // ((TyfulNaclCoreInstance*)core)->messageToPost = &ss.str();
-          printf("Slap: %s\n",ss.str().c_str());
-          pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,ss.str().c_str());
+          printf("Slap: %s\n",(char *)msg);
+          pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,(char *)msg);
           // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
           pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
         }
@@ -139,13 +145,16 @@ private:
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(getStatus()>0){
       for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage();
-        printf("server: %s\n",ss.str().c_str());
+        // std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        // ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage() <<","<< endl;
+        char msg[1024];
+        snprintf( msg, sizeof(msg), "%s:%d,%f", kFeedMeMethodPrefix, 1, getShrinkage());
+
+        // printf("server: %s\n",ss.str().c_str());
         // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
         // struct PP_CompletionCallback cb;
         // cb = PP_MakeCompletionCallback(PostCompletionCallback, strdup(ss.str().c_str()));
-        pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,ss.str().c_str());
+        pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,(char *)msg);
         // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
 
@@ -179,7 +188,7 @@ private:
           width = ::atoi(pch);
           pch = strtok (NULL, ",");
           height = ::atoi(pch);
-          printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
+          // printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
         }
         else if(message.find(kStartRenderMethodPrefix) == 0){
           status = kStartRenderMethodId;
@@ -201,7 +210,7 @@ private:
           width = ::atoi(pch);
           pch = strtok (NULL, ",");
           height = ::atoi(pch);
-          printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
+          // printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
         }
     }
     else if (var_message.is_array_buffer()){
