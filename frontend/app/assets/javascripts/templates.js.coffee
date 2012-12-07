@@ -13,6 +13,17 @@ window.submitForm = () ->
 	
 onLayoutFn = ($elems, instance) ->
 
+determineFontHeight = (fontStyle) ->
+  body = document.getElementsByTagName("body")[0]
+  dummy = document.createElement("div")
+  dummyText = document.createTextNode("M")
+  dummy.appendChild dummyText
+  dummy.setAttribute "style", "font: " + fontStyle + ";"
+  body.appendChild dummy
+  result = dummy.offsetHeight
+  body.removeChild dummy
+  result
+
 $(document).ready ->
 
   moduleDidLoad()
@@ -30,12 +41,12 @@ $(document).ready ->
 
     #append colors
     $.each ["#f00", "#ff0", "#0f0", "#0ff", "#00f", "#f0f", "#000", "#fff"], ->
-    $("#mainCanvas .tools").append "<a href='#sketch' data-color='" + this + "' style='width: 10px; background: " + this + ";'></a> "
+      $("#mainCanvas .tools").append "<a href='#sketch' data-color='" + this + "' style='width: 10px; display: inline-block; background: " + this + ";'>&nbsp;</a> "
 
     #append sizes
-    $.each [10, 15, 30, 50], ->
-      $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc'>" + this + "</a> "
-    $("#sketch").sketch()
+    $.each [30, 50, 100, 150], ->
+      $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
+    $("#sketch").sketch defaultSize:100
 
     $("#btnRender").click ->
       canvas = $("#sketch")[0]

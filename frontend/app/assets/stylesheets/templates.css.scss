@@ -7,103 +7,103 @@
 
 
 #container {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  height: 100%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	height: 100%;
 }
-	body, #container{
-		background-color: #aaa;
-	}
-	.polaroid {
-	  position: relative;
-	  width: 220px;
-	  margin: 20px;
-	}
+body, #container{
+	background-color: #aaa;
+}
+.polaroid {
+	position: relative;
+	width: 220px;
+	margin: 20px;
+}
 
-	.polaroid img {
-	  border: 10px solid #fff;
-	  border-bottom: 45px solid #fff;
-	  -webkit-box-shadow: 3px 3px 3px #777;
-	     -moz-box-shadow: 3px 3px 3px #777;
-	          box-shadow: 3px 3px 3px #777;
-	}
+.polaroid img {
+	border: 10px solid #fff;
+	border-bottom: 45px solid #fff;
+	-webkit-box-shadow: 3px 3px 3px #777;
+	-moz-box-shadow: 3px 3px 3px #777;
+	box-shadow: 3px 3px 3px #777;
+}
 
-	.polaroid p {
-	  position: absolute;
-	  text-align: center;
-	  width: 100%;
-	  bottom: 0px;
-	  font: 400 18px/1 'Kaushan Script', cursive;
-	  color: #888;
-	}
+.polaroid p {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	bottom: 0px;
+	font: 400 18px/1 'Kaushan Script', cursive;
+	color: #888;
+}
 
 
 #intro-image{
-  margin: auto;
-  text-align: center;
-  width: 100%;
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 10px;
+	margin: auto;
+	text-align: center;
+	width: 100%;
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 10px;
 }
 
-	h1{
-	  display:inline;
-	}
-  #modal{
-    display: none;
-  }
-  
-  .masonry-container{
-  
-  margin-left: 20px;
-  .item {
-  text-align: center;
-  .inner{
-    font-size: 12px;
-	width: 220px;
-	background-color: #fff;
-    img{
-	  max-width: 200px;
-	  border: 0px;
-	  border-right: 1px;
-	  border-style: solid;
-	  border-color: #eee;
-	  margin: 10px;
-	}
-	.tools{
-	    display: inline;
+h1{
+	display:inline;
+}
+#modal{
+	display: none;
+}
+
+.masonry-container{
+	
+	margin-left: 20px;
+	.item {
+		text-align: center;
+		.inner{
+			font-size: 12px;
+			width: 220px;
+			background-color: #fff;
+			img{
+				max-width: 200px;
+				border: 0px;
+				border-right: 1px;
+				border-style: solid;
+				border-color: #eee;
+				margin: 10px;
+			}
+			.tools{
+				display: inline;
+			}
+			
+			.label-area{
+				padding: 10px;
+				background-color: #eee;
+				
+				width: 200px;
+			}
+		}
 	}
 	
-	.label-area{
-		padding: 10px;
-		background-color: #eee;
-		
-		width: 200px;
+	.box .inner
+	{
+		background-color: #fff;
+		-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+		-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
 	}
-	}
-  }
-  
-  .box .inner
-  {
-  	background-color: #fff;
-  	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
-  	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
-  	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
-  }
 
-  .box
-  {
-	margin: 5px;
-	margin-top: 10px;
-	margin-bottom: 5px;
-  	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	width: 220px;
-  } 
+	.box
+	{
+		margin: 5px;
+		margin-top: 10px;
+		margin-bottom: 5px;
+		-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+		-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+		width: 220px;
+	} 
 
-  
+	
 }
 
 
@@ -118,47 +118,47 @@
 
 
 .template{
-  a{
-    text-decoration: none;	
-  }
-  a:hover{
-    background-color: transparent;
-	color: #333;
-  }
+	a{
+		text-decoration: none;	
+	}
+	a:hover{
+		background-color: transparent;
+		color: #333;
+	}
 
-  h3{
-    display: block;
-	font-size: 16px;
-  }
-  .author{
-    clear: left;
-  }
+	h3{
+		display: block;
+		font-size: 16px;
+	}
+	.author{
+		clear: left;
+	}
 }
 
-  .emote{
-    margin: 5px;
+.emote{
+	margin: 5px;
 	margin-top: 15px;
 	display: inline;
-   .like-count{
-     font-size: 18px;
-	 padding-left: 22px;
-	 background-image: image-url("like_icon.png");
-	 background-position: 0% 50%;
-	 background-repeat: no-repeat;
-    }
+	.like-count{
+		font-size: 18px;
+		padding-left: 22px;
+		background-image: image-url("like_icon.png");
+		background-position: 0% 50%;
+		background-repeat: no-repeat;
+	}
 	font-size: 18px;
 	a{
-	  background-color: #eee;
-	  border-style: solid;
-	  border-width: 1px;
-	  border-color: #ccc;
-	  border-radius: 5px;
-	  padding: 3px;
+		background-color: #eee;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #ccc;
+		border-radius: 5px;
+		padding: 3px;
 	}
 	.fb-like{
-	  display: inline;
+		display: inline;
 	}
-  }
+}
 
 
 .create-button {
@@ -180,21 +180,28 @@
 	padding:2px 20px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #528009;
-}.create-button:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
-	background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');
-	background-color:#77a809;
-}.create-button:active {
-	position:relative;
-	top:1px;
-}
-.create-button:visited {
-	color:#ffffff;
-}
+	}.create-button:hover {
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
+		background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');
+		background-color:#77a809;
+		}.create-button:active {
+			position:relative;
+			top:1px;
+		}
+		.create-button:visited {
+			color:#ffffff;
+		}
 
-canvas#renderer{
+		.tools { margin-bottom: 10px; 
+			a {
+				border: 1px solid black; height: 30px; line-height: 30px; padding: 0 10px; vertical-align: middle; text-align: center; text-decoration: none; display: inline-block; color: black; font-weight: bold;
+			}
+		}
+		
 
-}
+		canvas#renderer{
+
+		}
 
 /* This imageless css button was generated by CSSButtonGenerator.com */

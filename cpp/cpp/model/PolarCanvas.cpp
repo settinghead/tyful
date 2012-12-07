@@ -360,6 +360,7 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
     skipShape(eShape, SKIP_REASON_NO_SPACE);
     //			info.patch.mark(wordImageWidth*wordImageHeight, true);
     getPlacer()->fail(eShape->getDesiredPlacements());
+    printf("Shape #%d render failed.\n",eShape->getUid());
     //			tu.failedLastVar = true;
     return false;
 }

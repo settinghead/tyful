@@ -1,20 +1,20 @@
   <% if @template.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+  <div id="error_explanation">
+  	<h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
 
-      <ul>
-      <% @template.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  	<ul>
+  		<% @template.errors.full_messages.each do |msg| %>
+  		<li><%= msg %></li>
+  		<% end %>
+  	</ul>
+  </div>
   <% end %>
 
-<div class="row-fluid">
-<div class="span12" style="height: 100%;">
+  <div class="row-fluid">
+  	<div class="span12" style="height: 100%;">
 
-<%if can? :manage, @template%>
-<script type="text/javascript">
+  		<%if can? :manage, @template%>
+  		<script type="text/javascript">
 // window.onbeforeunload = function(){
 // 	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
 // 	  e = e || window.event;
@@ -33,8 +33,8 @@
 	<div class="span8">
 		<div id="mainCanvas">
 			<div class="tools">
-		  		<a href="#sketch" data-tool="marker">Marker</a>
-		  		<a href="#sketch" data-tool="eraser">Eraser</a>
+				<a href="#sketch" data-tool="marker">Marker</a>
+				<a href="#sketch" data-tool="eraser">Eraser</a>
 			</div>
 			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
 
@@ -57,11 +57,11 @@
 	  <%= f.error_messages %>
 	
 	<div class="field">
-	<%if (current_user && (not current_user.nickname)) %>
-	
+		<%if (current_user && (not current_user.nickname)) %>
+		
 		<%= label_tag "Pick an artist name for yourself" %> 
 		<%= text_field_tag 'nickname' %>
-	<%end%>
+		<%end%>
 	</div>
 
 	<div class="field">
@@ -93,9 +93,9 @@
 
     // Indicate load success.
     function moduleDidLoad() {
-      TyfulNaclCoreModule = document.getElementById('tyful_nacl_client');
-      updateStatus('SUCCESS');
-      TyfulNaclCoreModule.postMessage('hello');
+    	TyfulNaclCoreModule = document.getElementById('tyful_nacl_client');
+    	updateStatus('SUCCESS');
+    	TyfulNaclCoreModule.postMessage('hello');
     }
 
     // The 'message' event handler.  This handler is fired when the NaCl module
@@ -107,16 +107,16 @@
     // status message indicating that the module is still loading.  Otherwise,
     // do not change the status message.
     function pageDidLoad() {
-      if (TyfulNaclCoreModule == null) {
-        updateStatus('LOADING...');
-      } else {
+    	if (TyfulNaclCoreModule == null) {
+    		updateStatus('LOADING...');
+    	} else {
         // It's possible that the Native Client module onload event fired
         // before the page's onload event.  In this case, the status message
         // will reflect 'SUCCESS', but won't be displayed.  This call will
         // display the current message.
         updateStatus();
-      }
     }
+}
 
     // Set the global status message.  If the element with id 'statusField'
     // exists, then set its HTML to the status message as well.
@@ -124,67 +124,87 @@
     // attempt to set the element with id 'statusField' to the value of
     // |statusText|.
     function updateStatus(opt_message) {
-      if (opt_message)
-        statusText = opt_message;
-      var statusField = document.getElementById('status_field');
-      if (statusField) {
-        statusField.innerHTML = statusText;
-      }
+    	if (opt_message)
+    		statusText = opt_message;
+    	var statusField = document.getElementById('status_field');
+    	if (statusField) {
+    		statusField.innerHTML = statusText;
+    	}
     }
 
     function decodeAndPostMessage(base64str){
-	  var ab = Base64Binary.decodeArrayBuffer(base64str);
-	  TyfulNaclCoreModule.postMessage(ab);
-	}
-  </script>
+    	var ab = Base64Binary.decodeArrayBuffer(base64str);
+    	TyfulNaclCoreModule.postMessage(ab);
+    }
+    </script>
 
     <div id="listener">
-	  <script type="text/javascript">
-	  	var slapShapeMethodPrefix = "slapShape:";
-	  	var feedMeMethodPrefix = "feedMe:";
+    	<script type="text/javascript">
+    	var slapShapeMethodPrefix = "slapShape:";
+    	var feedMeMethodPrefix = "feedMe:";
 
-	  	function feedShapes(num,shrinkage){
-	  		var canvas = $('#sketch')[0];
-	  		var ctx = canvas.getContext('2d');
-	  		for(var i=0;i<num;i++){
-	  			var fontSize= 10+50*shrinkage;
-    	  		ctx.font = "bold "+fontSize+"px sans-serif";
+    	var determineFontHeight = function(fontStyle) {
+    		var body = document.getElementsByTagName("body")[0];
+    		var dummy = document.createElement("div");
+    		var dummyText = document.createTextNode("M");
+    		dummy.appendChild(dummyText);
+    		dummy.setAttribute("style", "font: "+ fontStyle + ";");
+    		body.appendChild(dummy);
+    		var result = dummy.offsetHeight;
+    		body.removeChild(dummy);
+    		return result;
+    	};
+
+    	function feedShapes(num,shrinkage){
+    		var canvas = $('#sketch')[0];
+    		var ctx = canvas.getContext('2d');
+    		for(var i=0;i<num;i++){
+    			var fontSize= 10+100*shrinkage;
+    			ctx.font = "bold "+fontSize+"px sans-serif";
 				// ctx.textBaseline = "top";
 				str = 'hahaha';
 				dimensions = ctx.measureText(str);
+				dimensions.height = determineFontHeight(ctx.font);
 
-	  			var shapeCanvas = document.createElement("canvas");
-      			shapeCanvas.setAttribute('width', dimensions.width);
-      			shapeCanvas.setAttribute('height', dimensions.height);
-    	  		var context = shapeCanvas.getContext('2d');
-    	  		context.font = ctx.font;
-    	  		context.textBaseline = "top";
-    	  		context.fillText(str,0,0);
-    	  		window.shapes[window.sid++] = shapeCanvas;
-    	  		
-	  			TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
-  				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
+				var shapeCanvas = document.createElement("canvas");
+				shapeCanvas.setAttribute('width', dimensions.width);
+				shapeCanvas.setAttribute('height', dimensions.height);
+				var context = shapeCanvas.getContext('2d');
+				context.font = ctx.font;
+				context.textBaseline = "top";
+				context.fillText(str,0,0);
+				window.shapes[window.sid++] = shapeCanvas;
 
-  				console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
-	  		}
-	  	}
+				TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
+				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
 
-	    function handleMessage(message_event) {
-	    	if(message_event.data){
-		      console.log(message_event.data);
-		      if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
-		      	var params = message_event.data.substring(slapShapeMethodPrefix.length);
-		      }
-		      else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
-		      	var params = message_event.data.substring(feedMeMethodPrefix.length);
-		      	eval("feedShapes("+params+");");
-		      }
-	  		}
-	    }
-  </script>
-    <embed name="nacl_module"
-       id="tyful_nacl_client"
-       width=0 height=0
-       src="/tyful_nacl_client.nmf"
-       type="application/x-nacl" />
-  </div>
+				console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
+			}
+		}
+
+		function slap(sid,x,y,rotation,layer,color,failureCount){
+			sid = parseInt(sid); x = parseInt(x); y = parseInt(y);
+			rotation = parseFloat(rotation); layer = parseInt(layer),color = parseInt(color),failureCount=parseInt(failureCount);
+			$("#renderer")[0].getContext('2d').drawImage(window.shapes[sid],x,y);
+		}
+
+		function handleMessage(message_event) {
+			if(message_event.data){
+				console.log(message_event.data);
+				if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
+					var params = message_event.data.substring(slapShapeMethodPrefix.length);
+					eval("slap("+params+");");
+				}
+				else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
+					var params = message_event.data.substring(feedMeMethodPrefix.length);
+					eval("feedShapes("+params+");");
+				}
+			}
+		}
+		</script>
+		<embed name="nacl_module"
+		id="tyful_nacl_client"
+		width=0 height=0
+		src="/tyful_nacl_client.nmf"
+		type="application/x-nacl" />
+	</div>
