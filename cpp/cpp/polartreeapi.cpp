@@ -154,7 +154,7 @@ void* renderRoutine(void*){
     
     ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
     pthread_cond_signal(&PolarCanvas::threadControllers.stopping_cv);
-    printf("Render completed.\n");
+    printf("Render completed. Sucess rate: %f\n", (float)PolarCanvas::current->displayShapes->size()/(float)PolarCanvas::current->shapes->size());
     return NULL;
 }
 

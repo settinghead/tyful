@@ -285,7 +285,7 @@ class TyfulNaclCoreModule : public pp::Module {
 public:
   TyfulNaclCoreModule() : pp::Module() {}
   virtual ~TyfulNaclCoreModule() {}
-
+  
   /// Create and return a TyfulNaclCoreInstance object.
   /// @param[in] instance The browser-side instance.
   /// @return the plugin-side instance.
@@ -303,7 +303,6 @@ namespace pp {
   Module* CreateModule() {
     return new TyfulNaclCoreModule();
   }
-
 }  // namespace pp
 
 

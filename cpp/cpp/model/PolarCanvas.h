@@ -78,15 +78,15 @@ public:
 
     queue<SlapInfo*>* slaps;
     queue<EngineShape*>* pendingShapes;
-    
+    vector<EngineShape*>* shapes;
+    vector<EngineShape*>* displayShapes;
+    vector<EngineShape*>* retryShapes;
     void tryNextEngineShape();
     
     
 private:
     
-    vector<EngineShape*>* shapes;
-    vector<EngineShape*>* displayShapes;
-    vector<EngineShape*>* retryShapes;
+ 
     int failureCount;
     int numRetries;
     int totalAttempted;
