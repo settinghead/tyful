@@ -55,19 +55,19 @@
 			<div id="shopping-area">
 				<div class="row-fluid">
 					<div class="span6">
-						<canvas width="500" height="500" class="shopping-window"/>
+						<canvas width="900" height="900" class="shopping-window"/>
 					</div>
 					<div class="span6">
-						<canvas width="500" height="500" class="shopping-window"/>
+						<canvas width="900" height="900" class="shopping-window"/>
 					</div>
 				</div>
 				<div class="row-fluid">
 					<div class="span6">
-						<canvas width="500" height="500" class="shopping-window"/>
+						<canvas width="900" height="900" class="shopping-window"/>
 
 					</div>
 					<div class="span6">
-						<canvas width="500" height="500" class="shopping-window"/>
+						<canvas width="900" height="900" class="shopping-window"/>
 
 					</div>
 				</div>
@@ -220,6 +220,16 @@
 				context.drawImage(shape,x,y,shape.width,shape.height);
 				context.restore();
 			}
+
+			redrawShoppingWindows();
+		}
+
+		function redrawShoppingWindows(){
+			$(".shopping-window").each(function(){
+				var context = this.getContext('2d');
+				context.scale(0.4);
+				context.drawImage($("#renderer")[0],0,0);
+			});
 		}
 
 		function handleMessage(message_event) {

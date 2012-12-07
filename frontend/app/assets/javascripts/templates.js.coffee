@@ -34,9 +34,10 @@ window.startRendering = ->
   window.slapLater = []
   window.sid = 0
   window.initializing = false
-  window.words = ["mhello", "mhi", "mXiyang", "mlol"]
+  window.words = ["The self always <br />comes through.", "mhi", "mXiyang", "mlol"]
   renderCanvas = $("#renderer")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
+  resetShoppingWindows()
 
   TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight
   TyfulNaclCoreModule.postMessage imageData.data.buffer
@@ -53,6 +54,10 @@ drawGradients = (ctxColor, canvasColor)->
   grad.addColorStop 1, "purple"
   ctxColor.fillStyle = grad
   ctxColor.fillRect 0, 0, canvasColor.width, canvasColor.height
+
+resetShoppingWindows = ->
+  $(".shopping-window").each ->
+    this.getContext('2d').clearRect(0,0,this.width,this.height)
 
 $(document).ready ->
 
@@ -83,7 +88,7 @@ $(document).ready ->
     $("#sketch").sketch defaultSize:100
 
     img = new Image()
-    img.src= "/templates/ghandi.png"
+    img.src= "/templates/egg.png"
     img.onload = ->
       $('#sketch')[0].width = img.width
       $('#sketch')[0].height = img.height
