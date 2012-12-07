@@ -25,6 +25,10 @@ public:
     pthread_mutex_t next_feed_req_mutex;
     pthread_cond_t next_feed_req_cv;
     
+    pthread_mutex_t stopping_mutex;
+    pthread_cond_t stopping_cv;
+    
+    
     ThreadControllers()
     {
         pthread_mutex_init(&next_feed_mutex,NULL);
@@ -35,6 +39,9 @@ public:
         
         pthread_mutex_init(&next_feed_req_mutex,NULL);
         pthread_cond_init (&next_feed_req_cv, NULL);
+        
+        pthread_mutex_init(&stopping_mutex,NULL);
+        pthread_cond_init (&stopping_cv, NULL);
     }
     
     ~ThreadControllers()
@@ -47,6 +54,9 @@ public:
         
         pthread_mutex_destroy(&next_feed_req_mutex);
         pthread_cond_destroy (&next_feed_req_cv);
+        
+        pthread_mutex_destroy(&stopping_mutex);
+        pthread_cond_destroy (&stopping_cv);
     }
     
     // provide some way to get at letters_

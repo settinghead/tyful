@@ -155,7 +155,8 @@
 				dimensions.height = window.determineFontHeight(str,ctx.font);
 
 				var shapeCanvas = document.createElement("canvas");
-				window.shapes[window.sid++] = shapeCanvas;
+				window.sid++;
+				window.shapes[window.sid] = shapeCanvas;
 				shapeCanvas.setAttribute('width', dimensions.width);
 				shapeCanvas.setAttribute('height', dimensions.height);
 				var context = shapeCanvas.getContext('2d');
@@ -168,8 +169,10 @@
 
 				TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
 				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
+				// document.body.appendChild(shapeCanvas);
 
-				console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
+				// console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
+
 			}
 		}
 
@@ -181,6 +184,11 @@
 			var width = shape.width;
 			var height = shape.height;
 			context.save();
+			// context.translate(x+width/2,y+height/2);
+			// context.rotate(-rotation);
+			// context.translate(-x-width/2,-y-height/2);
+			// context.drawImage(shape,x,y,shape.width,shape.height);
+
 			context.translate(x+width/2,y+height/2);
 			context.rotate(-rotation);
 			context.translate(-x-width/2,-y-height/2);
@@ -190,7 +198,7 @@
 
 		function handleMessage(message_event) {
 			if(message_event.data){
-				console.log(message_event.data);
+				// console.log(message_event.data);
 				if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
 					var params = message_event.data.substring(slapShapeMethodPrefix.length);
 					// try{

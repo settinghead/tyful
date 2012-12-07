@@ -43,7 +43,7 @@
 -(void)resetMainImage {
     initCanvas();
 //    unsigned int * pixels = [MainView getPixels:directionImage withFlip:false];
-    
+    prevShrinkage = 1.0;
     int counter;
     FILE *f;
     f=fopen([directionFile UTF8String],"rb");
@@ -80,7 +80,9 @@
 
 -(void) loadDirectionImage{
     NSArray *templates = [[NSArray alloc] initWithObjects:
-                          @"dog.png",@"wheel_h.png",@"egg.png",
+                          @"dog.png",
+                          @"wheel_h.png",
+                          @"egg.png",
                         @"face.png",
                           @"wheel_v.png",@"star.png",
                           @"heart.png",
@@ -189,16 +191,17 @@
 //}
 
 NSArray *strings = [[NSArray alloc] initWithObjects:
+                    @"mHi",
                     @"橙子",@"passion",@"贪婪",
                     @"可笑可乐",
                     @"Circumstances do not make the man.\nThey reveal him.",
                     @"The self always\n comes through.",
                     @"Forgive me.\nYou have my soul and \n I have your money.",
-                    @"War rages on\n in Africa."
-                    ,@"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful"
-                    ,@"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή"
-                    ,@"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname"
-                    ,nil];
+                    @"War rages on\n in Africa.",
+                    @"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful",
+                    @"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή",
+                    @"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname",
+                    nil];
 int counter = 0;
 int sid = 0;
 
@@ -244,8 +247,10 @@ int sid = 0;
 - (void)feedNextText{
     NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
     NSAttributedString *stringToInsert;
-    
-    NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*getShrinkage()+12];
+    double shrinkage = getShrinkage();
+    assert(shrinkage<=prevShrinkage);
+    prevShrinkage = shrinkage;
+    NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*shrinkage+12];
     NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:str];
     
     unsigned int sid = (unsigned int)[dict count];
@@ -260,7 +265,7 @@ int sid = 0;
     if(textImage.size.width>0){
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        feedShape(pixels, textImage.size.width, textImage.size.height, sid);
+        feedShape(pixels, textImage.size.width, textImage.size.height, sid,false,false);
     }
 }
 
@@ -448,10 +453,11 @@ int sid = 0;
                                    bitsPerPixel: 32];
     
     
-    NSUInteger zColourAry[3] = {255,255,255};
-    for(int x=0;x<textImage.size.width;x++)
-        for(int y=0;y<textImage.size.height;y++)
-            [textImage setPixel:zColourAry atX:x y:y];
+    
+//    NSUInteger zColourAry[3] = {255,255,255};
+//    for(int x=0;x<textImage.size.width;x++)
+//        for(int y=0;y<textImage.size.height;y++)
+//            [textImage setPixel:zColourAry atX:x y:y];
     
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:textImage]];

@@ -31,12 +31,6 @@ $(document).ready ->
   container = document.getElementById("listener")
   container.addEventListener "message", handleMessage, true
 
-
-  img = new Image()
-  img.src= "/templates/wheel_h.png"
-  img.onload = ->
-    $('#sketch')[0].getContext('2d').drawImage(this,0,0)
-
   $("#see-gallery").click ->
     $("html,body").animate
       scrollTop: $(".masonry-container").offset().top
@@ -54,6 +48,12 @@ $(document).ready ->
       $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
     $("#sketch").sketch defaultSize:100
 
+    img = new Image()
+    img.src= "/templates/egg.png"
+    img.onload = ->
+      $('#sketch')[0].getContext('2d').drawImage(this,0,0)
+      
+
     $("#btnRender").click ->
       canvas = $("#sketch")[0]
       canvasWidth = canvas.width
@@ -64,7 +64,7 @@ $(document).ready ->
       window.slapLater = []
       window.sid = 0
       window.initializing = false
-      window.words = ["hello", "hi", "Xiyang", "lol"]
+      window.words = ["mhello", "mhi", "mXiyang", "mlol"]
       renderCanvas = $("#renderer")[0]
       renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
 

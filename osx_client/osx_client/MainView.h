@@ -19,6 +19,7 @@ class PolarCanvas;
     NSMutableArray *trees;
     NSMutableDictionary *dict;
     NSString *directionFile;
+    double prevShrinkage;
 
 }
 - (IBAction)drawRandomText:(id)sender;

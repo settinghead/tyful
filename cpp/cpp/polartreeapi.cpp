@@ -18,9 +18,17 @@
 #include <pthread.h>
 
 void initCanvas(){
+    pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
     if(PolarCanvas::current!=NULL){
+        if(PolarCanvas::current->getStatus()>0){
+            PolarCanvas::current->setStatus(0);
+            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+
+        }
         delete PolarCanvas::current;
     }
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
+
 	PolarCanvas::current = new PolarCanvas();
 	PolarCanvas::current->setStatus(RENDERING);
 	printf("Canvas initialized.\n");
@@ -127,7 +135,8 @@ void* renderRoutine(void*){
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
 
-    
+    pthread_cond_signal(&PolarCanvas::threadControllers.stopping_cv);
+
     return NULL;
 }
 
@@ -183,6 +192,10 @@ SlapInfo* getNextSlap(){
     if(PolarCanvas::current->slaps->empty()) return NULL;
     SlapInfo* info = PolarCanvas::current->slaps->front();
     PolarCanvas::current->slaps->pop();
+    
+    //DEBUG
+//    info->location.x = 200;
+//    info->location.y = 200;
     return info;
 }
 
