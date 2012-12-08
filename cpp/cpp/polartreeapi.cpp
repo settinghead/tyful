@@ -166,9 +166,9 @@ void startRendering(){
     int             returnVal;
     
     returnVal = pthread_attr_init(&attr);
-//    assert(!returnVal);
-//    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-//    assert(!returnVal);
+    assert(!returnVal);
+    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    assert(!returnVal);
     
     pthread_create(&mainRountineThread, &attr, &renderRoutine, PolarCanvas::current);
 //    PolarCanvas::current->setStatus(RENDERING);

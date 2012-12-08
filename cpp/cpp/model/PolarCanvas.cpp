@@ -349,6 +349,7 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
         tp->seq = 0;
         tp->canvas = this;
         attempt_nudge(tp);
+//        free(tp);
 #endif
         if(!_found){
             _candidatePlacement->patch->setLastAttempt(_attempt);
