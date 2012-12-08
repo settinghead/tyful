@@ -1,20 +1,29 @@
-  <% if @template.errors.any? %>
-  <div id="error_explanation">
-  	<h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+  <ul class="nav nav-tabs" id="tyfulTabs">
+  	<li class="active"><a href="#draw" id="drawButton">Draw</a></li>
+  	<li><a href="#adjust" id="adjustButton">Adjust</a></li>
+  	<li><a href="#share" id="shareButton">Share</a></li>
+  </ul>
 
-  	<ul>
-  		<% @template.errors.full_messages.each do |msg| %>
-  		<li><%= msg %></li>
+  <div class="tab-content">
+  	<div class="tab-pane active" id="draw">
+
+  		<% if @template.errors.any? %>
+  		<div id="error_explanation">
+  			<h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+
+  			<ul>
+  				<% @template.errors.full_messages.each do |msg| %>
+  				<li><%= msg %></li>
+  				<% end %>
+  			</ul>
+  		</div>
   		<% end %>
-  	</ul>
-  </div>
-  <% end %>
 
-  <div class="row-fluid">
-  	<div class="span12" style="height: 100%;">
+  		<div class="row-fluid">
+  			<div class="span12" style="height: 100%;">
 
-  		<%if can? :manage, @template%>
-  		<script type="text/javascript">
+  				<%if can? :manage, @template%>
+  				<script type="text/javascript">
 // window.onbeforeunload = function(){
 // 	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
 // 	  e = e || window.event;
@@ -30,7 +39,7 @@
 </script>
 <%end%>
 <div class="row" style="text-align:center;">
-	<div class="span8">
+	<div class="span9">
 		<div id="mainCanvas">
 			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
 			<div class="tools">
@@ -48,10 +57,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="span3">
 		<div class="affix" style="padding: 10px;">
-			<canvas id="renderer" width="800" height="600"></canvas>
-			<button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+			<div id="renderpreview-container">
+				<canvas id="renderpreview" class="thumb" width="800" height="600"></canvas>
+			</div>
+			<div>
+				<button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+			</div>
 			<div id="shopping-area">
 				<div class="row-fluid">
 					<div class="span6">
@@ -112,150 +125,19 @@
 	<% end %>
 </div>
 <%end%>
-
-<script type="text/javascript">
-    var TyfulNaclCoreModule = null;  // Global application object
-
-    statusText = 'NO-STATUS';
-
-    // Indicate load success.
-    function moduleDidLoad() {
-    	TyfulNaclCoreModule = document.getElementById('tyful_nacl_client');
-    	updateStatus('SUCCESS');
-    }
-
-    // The 'message' event handler.  This handler is fired when the NaCl module
-    // posts a message to the browser by calling PPB_Messaging.PostMessage()
-    // (in C) or pp::Instance.PostMessage() (in C++).  This implementation
-    // simply displays the content of the message in an alert panel.
-
-    // If the page loads before the Native Client module loads, then set the
-    // status message indicating that the module is still loading.  Otherwise,
-    // do not change the status message.
-    function pageDidLoad() {
-    	if (TyfulNaclCoreModule == null) {
-    		updateStatus('LOADING...');
-    	} else {
-        // It's possible that the Native Client module onload event fired
-        // before the page's onload event.  In this case, the status message
-        // will reflect 'SUCCESS', but won't be displayed.  This call will
-        // display the current message.
-        updateStatus();
-    }
-}
-
-    // Set the global status message.  If the element with id 'statusField'
-    // exists, then set its HTML to the status message as well.
-    // opt_message The message test.  If this is null or undefined, then
-    // attempt to set the element with id 'statusField' to the value of
-    // |statusText|.
-    function updateStatus(opt_message) {
-    	if (opt_message)
-    		statusText = opt_message;
-    	var statusField = document.getElementById('status_field');
-    	if (statusField) {
-    		statusField.innerHTML = statusText;
-    	}
-    }
-
-    function decodeAndPostMessage(base64str){
-    	var ab = Base64Binary.decodeArrayBuffer(base64str);
-    	TyfulNaclCoreModule.postMessage(ab);
-    }
-    </script>
-
-    <div id="listener">
-    	<script type="text/javascript">
-    	var slapShapeMethodPrefix = "slapShape:";
-    	var feedMeMethodPrefix = "feedMe:";
-
-    	function feedShapes(num,shrinkage){
-    		var canvas = $('#sketch')[0];
-    		var ctx = canvas.getContext('2d');
-    		for(var i=0;i<num;i++){
-    			var fontSize= 10+100*shrinkage;
-    			var fontStyle = "bold "+fontSize+"px sans-serif";
-    			ctx.font = fontStyle;
-    			ctx.textBaseline = "top";
-    			str = window.words[Math.floor(Math.random() * window.words.length)];
-    			dimensions = ctx.measureText(str);
-    			dimensions.height = window.determineFontHeight(str,ctx.font);
-
-    			var shapeCanvas = document.createElement("canvas");
-    			window.sid++;
-    			window.shapes[window.sid] = shapeCanvas;
-    			shapeCanvas.setAttribute('width', dimensions.width);
-    			shapeCanvas.setAttribute('height', dimensions.height);
-    			var context = shapeCanvas.getContext('2d');
-				// context.fillStyle = '#ffffff';
-				// context.fillRect(0,0,shapeCanvas.width, shapeCanvas.height);
-				context.fillStyle = '#ff00ff';
-				context.font = fontStyle;
-				context.textBaseline = "top";
-				context.fillText(str,0,0);
-
-				TyfulNaclCoreModule.postMessage("feedShape:" + (window.sid) + ","+shapeCanvas.width + "," + shapeCanvas.height);
-				TyfulNaclCoreModule.postMessage(context.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data.buffer);
-				// document.body.appendChild(shapeCanvas);
-
-				// console.log("shape fed from server. w: "+shapeCanvas.width + ",h: "+ shapeCanvas.height);
-
-			}
-		}
-
-		function slap(sid,x,y,rotation,layer,color,failureCount){
-			sid = parseInt(sid); x = parseInt(x); y = parseInt(y);
-			rotation = parseFloat(rotation); layer = parseInt(layer),color = parseInt(color),failureCount=parseInt(failureCount);
-			var context = document.getElementById('renderer').getContext('2d');
-			var shape =window.shapes[sid];
-			//check for null because the rendering process may have 
-			//been interrupted
-			if(shape){
-				var width = shape.width;
-				var height = shape.height;
-				context.save();
-				context.translate(x+width/2,y+height/2);
-				context.rotate(-rotation);
-				context.translate(-x-width/2,-y-height/2);
-				context.drawImage(shape,x,y,shape.width,shape.height);
-				context.restore();
-			}
-
-			redrawShoppingWindows();
-		}
-
-		function redrawShoppingWindows(){
-			$(".shopping-window").each(function(){
-				var context = this.getContext('2d');
-				context.scale(0.4);
-				context.drawImage($("#renderer")[0],0,0);
-			});
-		}
-
-		function handleMessage(message_event) {
-			if(message_event.data){
-				// console.log(message_event.data);
-				if(message_event.data.indexOf(slapShapeMethodPrefix)==0){
-					var params = message_event.data.substring(slapShapeMethodPrefix.length);
-					// try{
-						eval("slap("+params+");");
-					// }
-					// catch(e){
-						// console.log("Slap error: '"+params+"'");
-						// window.slapLater.push(params);
-					// }
-
-				}
-				else if(message_event.data.indexOf(feedMeMethodPrefix)==0){
-					var params = message_event.data.substring(feedMeMethodPrefix.length);
-					eval("feedShapes("+params+");");
-				}
-			}
-		}
-		</script>
-		<embed name="nacl_module"
-		id="tyful_nacl_client"
-		width=0 height=0
-		src="/tyful_nacl_client.nmf"
-		type="application/x-nacl" />
+</div>
+<div class="tab-pane" id="adjust">
+	<div id="render-editor">
+		<canvas id="renderer"></canvas>
 	</div>
+</div>
+<div class="tab-pane" id="share">Share your Tyful artwork </div>
+</div>
+
+<div id="listener">
+	<embed name="nacl_module"
+	id="tyful_nacl_client"
+	width=0 height=0
+	src="/tyful_nacl_client.nmf"
+	type="application/x-nacl" />
+</div>

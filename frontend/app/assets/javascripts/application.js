@@ -17,6 +17,7 @@
 //= require ga.js
 //= require sketch.js
 //= require fabric.js
+//= require jquery.simplemodal
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',
