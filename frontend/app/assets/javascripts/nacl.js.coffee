@@ -30,7 +30,7 @@ $(document).ready ->
   $("#sketch").sketch defaultSize:100
 
   img = new Image()
-  img.src= "/templates/egg.png"
+  img.src= "/templates/wheel_v.png"
   img.onload = ->
     $('#sketch')[0].width = img.width
     $('#sketch')[0].height = img.height
@@ -83,6 +83,7 @@ $(document).ready ->
 window.TyfulNacl.resetShoppingWindows = ->
   $(".shopping-window").each ->
     this.getContext('2d').clearRect(0,0,this.width,this.height)
+  window.renderCanvas.clear()
 
 # window.TyfulNacl.determineFontHeight = (text,fontStyle) ->
 #   body = document.getElementsByTagName("body")[0]
@@ -257,9 +258,11 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
 
 window.TyfulNacl.redrawShoppingWindows = ->
   context = $('#renderpreview')[0].getContext("2d")
+  context.clearRect(0,0,$('#renderpreview')[0].width,$('#renderpreview')[0].height)
   context.drawImage($('#renderer')[0],0,0)
   $(".shopping-window").each ->
     context = @getContext("2d")
+    context.clearRect(0,0,@width,@height)
     context.drawImage $("#renderer")[0], 0, 0
 
 
