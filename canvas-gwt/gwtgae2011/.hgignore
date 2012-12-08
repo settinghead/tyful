@@ -1,0 +1,4 @@
+glob:target/**
+glob:.settings/**
+glob:.project
+glob:.classpath

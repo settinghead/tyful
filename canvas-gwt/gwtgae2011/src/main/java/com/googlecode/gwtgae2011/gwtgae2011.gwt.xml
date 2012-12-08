@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='gwtgae2011'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+  <!-- Request factory -->
+  <inherits name='com.google.gwt.requestfactory.RequestFactory' />
+  <inherits name='com.google.gwt.editor.Editor' />
+
+  <!-- GWT-Platform MVP and Dispatch -->
+  <inherits name='com.gwtplatform.dispatch.Dispatch' />
+  <inherits name='com.gwtplatform.mvp.Mvp' />
+  
+  <!-- Objectify -->
+  <inherits name="com.googlecode.objectify.Objectify" />
+
+  <!-- Logging -->
+  <inherits name='com.google.gwt.logging.Logging'/>
+  <set-property name="gwt.logging.enabled" value="TRUE"/>
+  <set-property name="gwt.logging.logLevel" value="FINEST"/>
+  <set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+  <set-property name="gwt.logging.developmentModeHandler" value="ENABLED" />
+  <set-property name="gwt.logging.firebugHandler" value="ENABLED" />
+  <set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED" />
+  <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+  <set-property name="gwt.logging.systemHandler" value="ENABLED" />
+  <set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED" />
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class="com.googlecode.gwtgae2011.client.GwtGae2011"/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+  <!-- Specify the Ginjector that GWT-platform generators should use -->
+  <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
+  <set-configuration-property name="gin.ginjector" 
+      value="com.googlecode.gwtgae2011.client.GwtGae2011Ginjector" />
+      
+</module>

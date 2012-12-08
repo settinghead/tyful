@@ -1,0 +1,2 @@
+# Module com.settinghead.tyful.TyfulCanvas
+# RPC service class, partial path of RPC policy file
