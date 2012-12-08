@@ -195,8 +195,8 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
       fontWeight: "bold"
       useNative: true
     )
-    tF.top = tF.height/2
-    tF.left = tF.width/2
+    tF.setTop tF.height/2
+    tF.setLeft tF.width/2
     window.TyfulNacl.sid++
     window.TyfulNacl.shapes[window.TyfulNacl.sid] = tF
 
@@ -246,11 +246,13 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
     # context.translate -x - width / 2, -y - height / 2
     # context.drawImage shape, x, y, shape.width, shape.height
     # context.restore()
-    shape.left = x+shape.width/2
-    shape.top = y+shape.height/2
+    shape.set
+      top: y+shape.height/2
+      left: x+shape.width/2
+      angle: -rotation/Math.PI/2*360
     shape.setColor "#"+(color&0x00FFFFFF).toString(16)
-    shape.setAngle(-rotation/Math.PI/2*360)
     window.renderCanvas.add shape
+    window.renderCanvas.calcOffset()
   window.TyfulNacl.redrawShoppingWindows()
 
 window.TyfulNacl.redrawShoppingWindows = ->
