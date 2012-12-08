@@ -61,11 +61,13 @@ God.watch do |w|
   w.keepalive
 end
 
+if ENV['RAILS_ENV']=='development'
 God.watch do |w|
   w.name = "forward"
   w.dir = basedir
   w.start = "forward 3002"
   w.log = basedir+'/log/'+w.name+'-'+ENV['RAILS_ENV']+'.log'
   w.keepalive
+end
 end
 
