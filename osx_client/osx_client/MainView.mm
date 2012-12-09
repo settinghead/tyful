@@ -7,16 +7,7 @@
 //
 
 #import "MainView.h"
-//#include "../../cpp/cpp/model/PixelImageShape.h"
-//#include "../../cpp/cpp/model/TextImageShape.h"
-//#include "../../cpp/cpp/model/ImageShape.h"
-//#include "../../cpp/cpp/tree/PolarRootTree.h"
-//#include "../../cpp/cpp/tree/PolarTree.h"
-//#include "../../cpp/cpp/tree/PolarTreeBuilder.h"
-//#include "../../cpp/cpp/constants.h"
 #include "../../cpp/cpp/model/PolarCanvas.h"
-//#include "../../cpp/cpp/model/PolarLayer.h"
-//#include "../../cpp/cpp/model/WordLayer.h"
 #include "../../cpp/cpp/model/structs.h"
 #include "../../cpp/cpp/polartreeapi.h"
 #include <stdlib.h>
@@ -37,6 +28,8 @@
 }
 
 - (void)awakeFromNib {
+    [NSThread detachNewThreadSelector:@selector(slapRoutine) toTarget:self withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(feedShapes) toTarget:self withObject:nil];
 
 }
 
@@ -191,44 +184,35 @@
 //}
 
 NSArray *strings = [[NSArray alloc] initWithObjects:
-                    @"mHi",
-                    @"橙子",@"passion",@"贪婪",
-                    @"可笑可乐",
-                    @"Circumstances do not make the man.\nThey reveal him.",
+//                    @"mHi",
+//                    @"橙子",@"passion",@"贪婪",
+//                    @"可笑可乐",
+                    @"Circumstances\n do not make the man.\nThey reveal him.",
                     @"The self always\n comes through.",
                     @"Forgive me.\nYou have my soul and \n I have your money.",
                     @"War rages on\n in Africa.",
                     @"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful",
-                    @"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή",
-                    @"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname",
+//                    @"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή",
+//                    @"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname",
                     nil];
 int counter = 0;
 int sid = 0;
 
-- (void)drawCanvas{
-    counter = 0;
-    NSDate *methodStart = [NSDate date];
-    
-    startRendering();
-    
+- (void) slapRoutine{
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
-    while(getStatus()>0){
+    while(true){
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         [self checkAndRenderSlaps];
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
-
-    NSDate *methodFinish = [NSDate date];
-    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-    NSLog(@"Execution time: %f",executionTime);
 }
 
 -(void)feedShapes{
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
-    while(getStatus()>0){
-        while(PolarCanvas::current->pendingShapes->size()<10 && getStatus()>0)
-            [self feedNextText];
+    while(true){
+//        while(getStatus()>0&&PolarCanvas::current->pendingShapes->size()<5 && getStatus()>0)
         pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+            [self feedNextText];
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
 
@@ -237,10 +221,7 @@ int sid = 0;
 - (void)drawColorMappedText:(id)sender{
     [self loadDirectionImage];
     [self resetMainImage];
-    
-
-    [NSThread detachNewThreadSelector:@selector(drawCanvas) toTarget:self withObject:nil];
-    [NSThread detachNewThreadSelector:@selector(feedShapes) toTarget:self withObject:nil];
+    startRendering();
 
 }
 

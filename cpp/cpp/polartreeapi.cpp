@@ -16,6 +16,7 @@
 #include "encoding/base64.h"
 #include <assert.h>
 #include <pthread.h>
+#include "lib_json/json_tool.h"
 
 void initCanvas(){
     pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
@@ -26,10 +27,10 @@ void initCanvas(){
             PolarCanvas::current->setStatus(-1);
             
 //            pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
-            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+//            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
 //            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
             printf("initCanvas is waiting for previous run to finish...\n");
-//            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
             while(PolarCanvas::current->getStatus()!=0);
             printf("Previous run terminated.\n");
         }
@@ -111,7 +112,9 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool
 	TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
 	// shape->printStats();
 	PolarCanvas::current->feedShape(shape,sid);
-    pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+        pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_cv);
+        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
     }
     catch(int e){
         printf("An exception occurred. Exception Nr. %d\n");
@@ -131,31 +134,43 @@ SlapInfo* tryNextShape()
     return getNextSlap();
 }
 void* renderRoutine(void*){
-    
-    PolarCanvas::current->setStatus(RENDERING);
-    try{
-        printf("internal render routine started.\n");
-        pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
-        while(((PolarCanvas*)PolarCanvas::current)->getStatus()>0){
-                if(((PolarCanvas*)PolarCanvas::current)->pendingShapes->size()<FEED_QUEUE_BUFFER){
-                    for(int i=(int)((PolarCanvas*)PolarCanvas::current)->pendingShapes->size();i<FEED_QUEUE_BUFFER;i++)
-                        pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
-                    pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
-                }
-                ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
-            pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+//    if(PolarCanvas::current!=NULL){
+    PolarCanvas* canvas = PolarCanvas::current;
+        canvas->setStatus(RENDERING);
+        try{
+            printf("internal render routine started.\n");
+            while(canvas->getStatus()>0){
+                pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+                    if(canvas->pendingShapes->size()<FEED_QUEUE_BUFFER){
+                        pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+                        for(int i=(int)canvas->pendingShapes->size();i<FEED_QUEUE_BUFFER;i++){
+                            pthread_cond_signal(&PolarCanvas::threadControllers.next_feed_req_cv);
+                        }
+                        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+                        pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
+                    }
+                    if(canvas->getStatus()>0)
+                    {
+                        canvas->tryNextEngineShape();
+                        pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+                        pthread_cond_signal(&PolarCanvas::threadControllers.next_slap_req_cv);
+                        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
+                    }
+                pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
 
+            }
         }
-        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
-    }
-    catch(int e){
-        printf("Exception! No. %d\n",e);
-    }
-    
-    ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
-    pthread_cond_signal(&PolarCanvas::threadControllers.stopping_cv);
-    printf("Render completed. Sucess rate: %f\n", (float)PolarCanvas::current->displayShapes->size()/(float)PolarCanvas::current->shapes->size());
-    return NULL;
+        catch(int e){
+            printf("Exception! No. %d\n",e);
+        }
+        
+        ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
+        pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
+        pthread_cond_signal(&PolarCanvas::threadControllers.stopping_cv);
+        pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
+        printf("Render completed. Sucess rate: %f\n", PolarCanvas::current->getSuccessRate());
+        return NULL;
+//    }
 }
 
 
@@ -188,7 +203,9 @@ void pauseRendering(){
 
 int getStatus()
 {
-	return PolarCanvas::current->getStatus();
+    if(PolarCanvas::current!=NULL)
+        return PolarCanvas::current->getStatus();
+    else return 0;
 }
 
 void setStatus(int status)
@@ -222,6 +239,13 @@ Dimension getCanvasSize(){
     d.width = (int)PolarCanvas::current->getWidth();
     d.height = (int)PolarCanvas::current->getHeight();
     return d;
+}
+
+void resetFixedShapes(){
+    PolarCanvas::current->resetFixedShapes();
+}
+void setFixedShape(int sid, int x, int y, double rotation){
+    
 }
 
 void loadTemplateFromZip(unsigned char *data){

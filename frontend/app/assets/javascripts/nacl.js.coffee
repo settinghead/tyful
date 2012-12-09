@@ -1,8 +1,13 @@
+//=require jquery.easing
+//=require images
 
 window.TyfulNacl = new Object()
 
 $(document).ready ->
 
+  fabric.Canvas.prototype.getAbsoluteCoords = (object) ->
+    left: object.left + @_offset.left
+    top: object.top + @_offset.top
 
   $('#tyfulTabs a').click (e) ->
     e.preventDefault()
@@ -42,6 +47,14 @@ $(document).ready ->
       hoverCursor: "pointer"
       selection: false
     )
+    window.renderCanvas.on
+      "object:modified": (e) ->
+        e.target.bringToFront()
+        window.TyfulNacl.dropPinOn(e.target)
+  #end onlonad
+
+
+
     $('#sketch')[0].getContext('2d').drawImage(this,0,0)
     window.TyfulNacl.startRendering()
 
@@ -79,6 +92,41 @@ $(document).ready ->
     event.preventDefault()
     $("#tyfulTabs a#adjustButton").tab('show');
 
+
+window.TyfulNacl.dropPinOn = (obj)->
+  unless obj.pin
+    obj.pin = document.createElement('img')
+    # pinContent = document.createTextNode("PIN");
+    # obj.pin.appendChild(pinContent)
+    obj.pin.setAttribute 'src',image_path('pin.png')
+    obj.pin.style.position = "absolute"
+    $('#render-editor').append($(obj.pin))
+
+    obj.on('moving', ->
+      window.TyfulNacl.positionPin(obj)
+    )
+    window.TyfulNacl.positionPin(obj)
+
+window.TyfulNacl.positionPin = (obj) ->
+
+  absCoords = window.renderCanvas.getAbsoluteCoords(obj)
+  obj.pin.style.left = (absCoords.left) + 'px'
+  finalTop = (absCoords.top) - 40
+  finalLeft = (absCoords.left)
+
+  unless obj.pin.animated
+    obj.pin.style.top = 'ppx'
+    obj.pin.style.left = (absCoords.left) + absCoords.top * Math.tan(0.523) + 'px'
+    $(obj.pin).animate(
+      top: finalTop
+      left: finalLeft
+    ,
+      duration: "slow"
+      easing: "easeOutBounce"
+    )
+    obj.pin.animated = true
+  obj.pin.style.top = finalTop + 'px'
+  obj.pin.style.left = finalLeft + 'px'
 
 window.TyfulNacl.resetShoppingWindows = ->
   $(".shopping-window").each ->

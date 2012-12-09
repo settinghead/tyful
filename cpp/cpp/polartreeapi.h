@@ -19,3 +19,5 @@ SlapInfo* tryNextShape();
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid);
 unsigned int getNumberOfPendingShapes();
 Dimension getCanvasSize();
+void resetFixedShapes();
+void setFixedShape(int sid, int x, int y, double rotation);

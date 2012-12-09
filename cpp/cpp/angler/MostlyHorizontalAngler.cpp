@@ -18,6 +18,6 @@ PickFromAngler::PickFromAngler(new vector<double>()){
     angles->push_back(0);
     angles->push_back(0);
     angles->push_back(0);
-//    angles->push_back(HALF_PI);
-//    angles->push_back(HALF_PI*3);
+    angles->push_back(HALF_PI);
+    angles->push_back(HALF_PI*3);
 }

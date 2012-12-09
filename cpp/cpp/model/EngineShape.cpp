@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),renderedPlacement(NULL),desiredPlacementIndex(NULL),desiredPlacements(0),uid(sid){
+EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),desiredPlacementIndex(NULL),desiredPlacements(0),uid(sid),renderedPlacement(NULL),_winningSeq(-1){
     for(int i=0;i<NUM_THREADS;i++){
         currentPlacement[i]=new Placement;
         currentPlacement[i]->sid = uid;
@@ -29,6 +29,10 @@ EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),rend
 
 EngineShape::~EngineShape(){
     delete shape;
+    delete renderedPlacement;
+    for(int i=0;i<NUM_THREADS;i++){
+        delete currentPlacement[i];
+    }
 }
 
 void EngineShape::drawSamples(){
@@ -92,6 +96,11 @@ void EngineShape::finalizePlacement(int final_seq){
 }
 
 Placement* EngineShape::getFinalPlacement(){
+    return renderedPlacement;
+}
+Placement* EngineShape::getOrCreateFinalPlacement(){
+    if( renderedPlacement==NULL)
+        renderedPlacement = new Placement;
     return renderedPlacement;
 }
 

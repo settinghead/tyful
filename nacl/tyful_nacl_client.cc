@@ -81,9 +81,6 @@ namespace {
 /// receiving messages from the browser, and use PostMessage() to send messages
 /// back to the browser.  Note that this interface is asynchronous.
 
-
-
-
 class TyfulNaclCoreInstance : public pp::Instance {
 
 private:
@@ -98,7 +95,11 @@ public:
   /// @param[in] instance the handle to the browser-side plugin instance.
   explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
   ,factory_(this),check_threads_running(false)
-  {}
+  {
+    pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
+    pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
+
+  }
   virtual ~TyfulNaclCoreInstance() {
   }
 
@@ -153,6 +154,7 @@ public:
 
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(true){
+      pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
       try{
       // for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
@@ -169,7 +171,6 @@ public:
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
 
       // }
-        pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
       }
       catch(int e){
         cout << "An exception occurred. Exception Nr. " << e << endl;
@@ -178,7 +179,7 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
   }
-
+  
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
   /// method names and arguments; etc.  For example, you could use
@@ -207,8 +208,6 @@ public:
         status = kStartRenderMethodId;
         startRendering();
         if(!check_threads_running){
-          pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
-          pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
           check_threads_running = true;
         }
         printf("startrendering command complete.\n");
@@ -285,7 +284,7 @@ class TyfulNaclCoreModule : public pp::Module {
 public:
   TyfulNaclCoreModule() : pp::Module() {}
   virtual ~TyfulNaclCoreModule() {}
-  
+
   /// Create and return a TyfulNaclCoreInstance object.
   /// @param[in] instance The browser-side instance.
   /// @return the plugin-side instance.

@@ -138,6 +138,32 @@
 		7C7AE93816674B5C002466A3 /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
 		7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
 		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
+		7CC0514A1674A258006085EF /* json_batchallocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		7CC0514B1674A258006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		7CC0514C1674A258006085EF /* json_internalmap.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		7CC0514D1674A258006085EF /* json_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		7CC0514E1674A258006085EF /* json_tool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
+		7CC0514F1674A258006085EF /* json_value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		7CC051501674A258006085EF /* json_valueiterator.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		7CC051511674A258006085EF /* json_writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		7CC051521674A258006085EF /* sconscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
+		7CC051541674A2FC006085EF /* autolink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		7CC051551674A2FC006085EF /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		7CC051561674A2FC006085EF /* features.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
+		7CC051571674A2FC006085EF /* forwards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
+		7CC051581674A2FC006085EF /* json_batchallocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		7CC051591674A2FC006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		7CC0515A1674A2FC006085EF /* json_internalmap.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		7CC0515B1674A2FC006085EF /* json_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		7CC0515C1674A2FC006085EF /* json_tool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
+		7CC0515D1674A2FC006085EF /* json_value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		7CC0515E1674A2FD006085EF /* json_valueiterator.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		7CC0515F1674A2FD006085EF /* json_writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		7CC051601674A2FD006085EF /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		7CC051611674A2FD006085EF /* reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		7CC051621674A2FD006085EF /* sconscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
+		7CC051631674A2FD006085EF /* value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		7CC051641674A2FD006085EF /* writer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		7CEFFBCD16689EC900900686 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool.cpp; sourceTree = "<group>"; };
 		7CEFFBCE16689EC900900686 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
 		7CEFFBD116699F7A00900686 /* polartreeapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polartreeapi.cpp; sourceTree = "<group>"; };
@@ -185,6 +211,7 @@
 		7C7AE86B166745B7002466A3 /* cpp */ = {
 			isa = PBXGroup;
 			children = (
+				7CC051491674A257006085EF /* lib_json */,
 				7C0A5729166D80E8004D4A14 /* encoding */,
 				7CEFFBD116699F7A00900686 /* polartreeapi.cpp */,
 				7CEFFBD216699F7A00900686 /* polartreeapi.h */,
@@ -333,6 +360,39 @@
 				7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */,
 			);
 			path = tree;
+			sourceTree = "<group>";
+		};
+		7CC051491674A257006085EF /* lib_json */ = {
+			isa = PBXGroup;
+			children = (
+				7CC051541674A2FC006085EF /* autolink.h */,
+				7CC051551674A2FC006085EF /* config.h */,
+				7CC051561674A2FC006085EF /* features.h */,
+				7CC051571674A2FC006085EF /* forwards.h */,
+				7CC051581674A2FC006085EF /* json_batchallocator.h */,
+				7CC051591674A2FC006085EF /* json_internalarray.inl */,
+				7CC0515A1674A2FC006085EF /* json_internalmap.inl */,
+				7CC0515B1674A2FC006085EF /* json_reader.cpp */,
+				7CC0515C1674A2FC006085EF /* json_tool.h */,
+				7CC0515D1674A2FC006085EF /* json_value.cpp */,
+				7CC0515E1674A2FD006085EF /* json_valueiterator.inl */,
+				7CC0515F1674A2FD006085EF /* json_writer.cpp */,
+				7CC051601674A2FD006085EF /* json.h */,
+				7CC051611674A2FD006085EF /* reader.h */,
+				7CC051621674A2FD006085EF /* sconscript */,
+				7CC051631674A2FD006085EF /* value.h */,
+				7CC051641674A2FD006085EF /* writer.h */,
+				7CC0514A1674A258006085EF /* json_batchallocator.h */,
+				7CC0514B1674A258006085EF /* json_internalarray.inl */,
+				7CC0514C1674A258006085EF /* json_internalmap.inl */,
+				7CC0514D1674A258006085EF /* json_reader.cpp */,
+				7CC0514E1674A258006085EF /* json_tool.h */,
+				7CC0514F1674A258006085EF /* json_value.cpp */,
+				7CC051501674A258006085EF /* json_valueiterator.inl */,
+				7CC051511674A258006085EF /* json_writer.cpp */,
+				7CC051521674A258006085EF /* sconscript */,
+			);
+			path = lib_json;
 			sourceTree = "<group>";
 		};
 		7CEFFBC81668951A00900686 /* threads */ = {

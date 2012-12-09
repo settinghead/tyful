@@ -11,12 +11,11 @@
 
 #include <vector>
 #include "../constants.h"
+#include "../model/structs.h"
 using namespace std;
 
-struct Placement;
 class ImageShape;
 class PolarLayer;
-struct PolarPoint;
 class Angler;
 
 class EngineShape{
@@ -37,6 +36,7 @@ public:
     void nudgeTo(int seq,Placement* place,Angler* angler);
     void finalizePlacement(int final_seq);
     Placement* getFinalPlacement();
+    Placement* getOrCreateFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
     inline Placement* getCurrentPlacement(int seq){
         return currentPlacement[seq];
@@ -46,6 +46,8 @@ public:
     inline unsigned int getUid(){
         return uid;
     }
+    int _winningSeq;
+    bool _found;
 
 private:
     int skipReason;

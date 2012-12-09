@@ -44,6 +44,7 @@ private:
             this->_computedR2[seq] += TWO_PI;
     }
     inline void computeD1(){
+        
         this->_computedD1 = (this->_d1 * getScale());
     }
     inline void computeD2(){
@@ -164,11 +165,14 @@ public:
 		}
     }
     inline void checkRecomputeDs(){
+//        pthread_mutex_lock(&d_lock);
         if (this->dStamp != this->getCurrentDStamp()) {
             this->computeD1();
             this->computeD2();
             this->dStamp = this->getCurrentDStamp();
         }
+//        pthread_mutex_unlock(&d_lock);
+
     }
 
 	inline void checkUpdatePoints(int seq){
@@ -292,6 +296,7 @@ public:
 	inline void setLeaf(bool b);
 protected:
     pthread_mutex_t lock;
+    pthread_mutex_t d_lock;
     int rStamp[NUM_THREADS];
 	double _x[NUM_THREADS], _y[NUM_THREADS], _right[NUM_THREADS], _bottom[NUM_THREADS];
 	vector<PolarTree*>* _kids;

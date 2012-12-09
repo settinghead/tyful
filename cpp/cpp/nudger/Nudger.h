@@ -14,7 +14,7 @@ struct Placement;
 
 class Nudger{
 public:
-    ~Nudger(){}
+    virtual ~Nudger(){}
     inline virtual Placement* nudgeFor(EngineShape* shape, Placement* placement, int attemptNumber, int totalPlannedAttempts) = 0;
 };
 

@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <semaphore.h>
+#include <tr1/unordered_map>
 #include <queue>
 #include "../ThreadControllers.h"
 
@@ -48,7 +49,8 @@ public:
     
     static PolarCanvas* current;
     static ThreadControllers threadControllers;
-    
+    vector<EngineShape*>* _shapes;
+
     
     void feedShape(ImageShape* shape,unsigned int sid);
     void setPerseverance(int v){
@@ -78,12 +80,13 @@ public:
 
     queue<SlapInfo*>* slaps;
     queue<EngineShape*>* pendingShapes;
-    vector<EngineShape*>* shapes;
     vector<EngineShape*>* displayShapes;
     vector<EngineShape*>* retryShapes;
+    vector<EngineShape*>* fixedShapes;
     void tryNextEngineShape();
-    
-    
+    void resetFixedShapes();
+    void fixShape(int sid, int x, int y, double rotation);
+    double getSuccessRate();
 private:
     
  
@@ -92,6 +95,8 @@ private:
     int totalAttempted;
     int perseverance, diligence;
     float width, height;
+    tr1::unordered_map<int, EngineShape*> _shapeMap;
+
     STATUS status;
     Sizer* _sizer;
     Nudger* _nudger;
@@ -111,14 +116,13 @@ private:
     inline bool placeShape(EngineShape* shape);
     inline void computeDesiredPlacements(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
-    inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p);
+    inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage);
+    void registerShape(EngineShape* shape);
     DensityPatchIndex* _patchIndex;
     inline DensityPatchIndex* getPatchIndex();
     Placement* _candidatePlacement;
     EngineShape* _shapeToWorkOn;
     EngineShape* _lastCollidedWith;
-    bool _found;
-    int _winningSeq;
     int _attempt;
     int _maxAttemptsToPlace;
     pthread_mutex_t shape_mutex;
