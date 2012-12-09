@@ -88,20 +88,25 @@ private:
   int width, height, sid;
   pthread_t       checkRenderRoutineThread;
   pthread_t       feedRoutineThread;
-  bool check_threads_running;
+  // bool check_threads_running;
 
 public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
   explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
-  ,factory_(this),check_threads_running(false)
+  ,factory_(this)
+  // ,check_threads_running(false)
   {
-    pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
-    pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
   }
   virtual ~TyfulNaclCoreInstance() {
   }
-  
+
+  // Create the 'worker thread'.
+  bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
+    pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
+    pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
+    return true;
+  }
   string* messageToPost;
   pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
 
@@ -109,7 +114,7 @@ public:
     printf("Slap checker thread started\n.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     while(true){
-      try{
+      // try{
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
 
@@ -131,9 +136,9 @@ public:
           // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
           pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
         }
-      }catch(int e){
-        cout << "An exception occurred. Exception Nr. " << e << endl;
-      }
+      // }catch(int e){
+        // cout << "An exception occurred. Exception Nr. " << e << endl;
+      // }
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
@@ -153,7 +158,7 @@ public:
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(true){
       pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
-      try{
+      // try{
       // for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
         // ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage() <<","<< endl;
@@ -169,15 +174,15 @@ public:
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
 
       // }
-      }
-      catch(int e){
-        cout << "An exception occurred. Exception Nr. " << e << endl;
-      }
+      // }
+      // catch(int e){
+        // cout << "An exception occurred. Exception Nr. " << e << endl;
+      // }
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
   }
-
+  
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
   /// method names and arguments; etc.  For example, you could use
@@ -204,10 +209,10 @@ public:
       }
       else if(message.find(kStartRenderMethodPrefix) == 0){
         status = kStartRenderMethodId;
+        // if(!check_threads_running){
+        //   check_threads_running = true;
+        // }
         startRendering();
-        if(!check_threads_running){
-          check_threads_running = true;
-        }
         printf("startrendering command complete.\n");
       }
       else if(message.find(kFeedShapeMethodPrefix) == 0){
