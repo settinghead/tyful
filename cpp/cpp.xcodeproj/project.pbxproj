@@ -159,11 +159,11 @@
 		7CC0515D1674A2FC006085EF /* json_value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
 		7CC0515E1674A2FD006085EF /* json_valueiterator.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
 		7CC0515F1674A2FD006085EF /* json_writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
-		7CC051601674A2FD006085EF /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
-		7CC051611674A2FD006085EF /* reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		7CC051621674A2FD006085EF /* sconscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
-		7CC051631674A2FD006085EF /* value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
-		7CC051641674A2FD006085EF /* writer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		7CC051661674CB51006085EF /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		7CC051671674CB51006085EF /* reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		7CC051681674CB51006085EF /* value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		7CC051691674CB51006085EF /* writer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		7CEFFBCD16689EC900900686 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool.cpp; sourceTree = "<group>"; };
 		7CEFFBCE16689EC900900686 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
 		7CEFFBD116699F7A00900686 /* polartreeapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polartreeapi.cpp; sourceTree = "<group>"; };
@@ -365,10 +365,7 @@
 		7CC051491674A257006085EF /* lib_json */ = {
 			isa = PBXGroup;
 			children = (
-				7CC051541674A2FC006085EF /* autolink.h */,
-				7CC051551674A2FC006085EF /* config.h */,
-				7CC051561674A2FC006085EF /* features.h */,
-				7CC051571674A2FC006085EF /* forwards.h */,
+				7CC051651674CB51006085EF /* json */,
 				7CC051581674A2FC006085EF /* json_batchallocator.h */,
 				7CC051591674A2FC006085EF /* json_internalarray.inl */,
 				7CC0515A1674A2FC006085EF /* json_internalmap.inl */,
@@ -377,11 +374,7 @@
 				7CC0515D1674A2FC006085EF /* json_value.cpp */,
 				7CC0515E1674A2FD006085EF /* json_valueiterator.inl */,
 				7CC0515F1674A2FD006085EF /* json_writer.cpp */,
-				7CC051601674A2FD006085EF /* json.h */,
-				7CC051611674A2FD006085EF /* reader.h */,
 				7CC051621674A2FD006085EF /* sconscript */,
-				7CC051631674A2FD006085EF /* value.h */,
-				7CC051641674A2FD006085EF /* writer.h */,
 				7CC0514A1674A258006085EF /* json_batchallocator.h */,
 				7CC0514B1674A258006085EF /* json_internalarray.inl */,
 				7CC0514C1674A258006085EF /* json_internalmap.inl */,
@@ -393,6 +386,21 @@
 				7CC051521674A258006085EF /* sconscript */,
 			);
 			path = lib_json;
+			sourceTree = "<group>";
+		};
+		7CC051651674CB51006085EF /* json */ = {
+			isa = PBXGroup;
+			children = (
+				7CC051541674A2FC006085EF /* autolink.h */,
+				7CC051561674A2FC006085EF /* features.h */,
+				7CC051571674A2FC006085EF /* forwards.h */,
+				7CC051551674A2FC006085EF /* config.h */,
+				7CC051661674CB51006085EF /* json.h */,
+				7CC051671674CB51006085EF /* reader.h */,
+				7CC051681674CB51006085EF /* value.h */,
+				7CC051691674CB51006085EF /* writer.h */,
+			);
+			path = json;
 			sourceTree = "<group>";
 		};
 		7CEFFBC81668951A00900686 /* threads */ = {
@@ -596,7 +604,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PROFILING_CODE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -605,7 +613,7 @@
 		7C7AE878166745B8002466A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

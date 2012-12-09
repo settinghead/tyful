@@ -52,7 +52,6 @@ PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
 _shapeToWorkOn(NULL),
-_numActiveThreads(0),
 slaps(new queue<SlapInfo*>()), pendingShapes(new queue<EngineShape*>), _shapes(new vector<EngineShape*>),
 fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>()),retryShapes(new vector<EngineShape*>())
 {
@@ -62,10 +61,13 @@ fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>(
     pthread_mutex_init(&attempt_mutex, NULL);
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
+    pthread_mutex_init (&count_threshold_mutex, NULL);
     //    printf("pthread related init complete.\n");
     
 #if NUM_THREADS > 1
     //spawn threads
+    for(int i=0;i<NUM_THREADS;i++)
+        _signoffSheet[i] = false;
 	if ((pool = threadpool_init(NUM_THREADS)) == NULL) {
 		printf("Error! Failed to create a thread pool struct.\n");
 		exit(EXIT_FAILURE);
@@ -82,6 +84,7 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&shape_mutex);
     pthread_mutex_destroy(&attempt_mutex);
     pthread_cond_destroy(&count_threshold_cv);
+    pthread_mutex_destroy(&count_threshold_mutex);
     
 #if NUM_THREADS > 1
     threadpool_free(pool,1);
@@ -221,10 +224,12 @@ void PolarCanvas::attempt_nudge(void *arg){
     int start=-1;
     int end=-1;
     
-    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-    canvas->_numActiveThreads++;
-    //pthread_cond_signal(&canvas->count_threshold_cv);
-    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+//    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+//    canvas->_signoffSheet[seq] = false;
+//    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+    pthread_mutex_lock(&canvas->count_threshold_mutex);
+    pthread_cond_broadcast(&canvas->count_threshold_cv);
+    pthread_mutex_unlock(&canvas->count_threshold_mutex);
     while(canvas->_attempt<canvas->_maxAttemptsToPlace &&  shapeToWorkOn!=NULL && !shapeToWorkOn->_found) {
         pthread_mutex_lock(&(canvas->attempt_mutex));
         start = canvas->_attempt;
@@ -282,12 +287,17 @@ void PolarCanvas::attempt_nudge(void *arg){
             }
             if(shapeToWorkOn->_found){
                 pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-                canvas->_numActiveThreads--;
-//                if(canvas->_numActiveThreads==0)
-                    pthread_cond_signal(&canvas->count_threshold_cv);
+                canvas->_signoffSheet[seq]=true;
+                pthread_mutex_lock(&canvas->count_threshold_mutex);
+                pthread_cond_broadcast(&canvas->count_threshold_cv);
+                pthread_mutex_unlock(&canvas->count_threshold_mutex);
                 pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
                 return;
             }
+            
+            if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
+
+            
             pthread_mutex_lock(&canvas->shape_mutex);
             if (!shapeToWorkOn->_found) {
                 shapeToWorkOn->_winningSeq = seq;
@@ -298,11 +308,12 @@ void PolarCanvas::attempt_nudge(void *arg){
             pthread_mutex_unlock(&canvas->shape_mutex);
             //            if(!foundOverlap){
             pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-            canvas->_numActiveThreads--;
-//            if(canvas->_numActiveThreads==0)
-                pthread_cond_signal(&canvas->count_threshold_cv);
+            canvas->_signoffSheet[seq]=true;
+            pthread_mutex_lock(&canvas->count_threshold_mutex);
+            pthread_cond_broadcast(&canvas->count_threshold_cv);
+            pthread_mutex_unlock(&canvas->count_threshold_mutex);
             pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
-            if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
+
             return;
             //            }
         end_of_inner:
@@ -310,10 +321,11 @@ void PolarCanvas::attempt_nudge(void *arg){
         }
     }
     pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-    canvas->_numActiveThreads--;
-//    if(canvas->_numActiveThreads==0)
-        pthread_cond_signal(&canvas->count_threshold_cv);
-    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);    
+    canvas->_signoffSheet[seq]=true;
+    pthread_mutex_lock(&canvas->count_threshold_mutex);
+    pthread_cond_broadcast(&canvas->count_threshold_cv);
+    pthread_mutex_unlock(&canvas->count_threshold_mutex);
+    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
 }
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage){
@@ -344,8 +356,12 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
         thread_param *tp;
         this->_lastCollidedWith = NULL;
 #if NUM_THREADS>1
-        pthread_mutex_lock(&numActiveThreads_mutex);
-        for(int t=0; t<NUM_THREADS; t++){
+        for(int i=0;i<NUM_THREADS;i++){
+            _signoffSheet[i] = false;
+        }
+        pthread_mutex_lock(&count_threshold_mutex);
+
+               for(int t=0; t<NUM_THREADS; t++){
             tp = (thread_param *)malloc(sizeof(thread_param));
             tp->seq = t;
             tp->canvas = this;
@@ -353,14 +369,29 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
             //            thpool_add_work(threadpool, attempt_nudge, (void*)tp);
 			threadpool_add_task(pool,attempt_nudge,(void*)tp,1);
         }
-        
-    while((!_shapeToWorkOn->_found && _attempt<_maxAttemptsToPlace) || _numActiveThreads>0){
-        pthread_cond_wait(&count_threshold_cv, &numActiveThreads_mutex);
+    while(true){
+        pthread_cond_wait(&count_threshold_cv, &count_threshold_mutex);
+//        pthread_mutex_lock(&numActiveThreads_mutex);
+        bool allSignedOff = true;
+        for(int i=0;i<NUM_THREADS;i++){
+            if(!_signoffSheet[i]) {
+                allSignedOff = false;
+                break;
+            }
+        }
+//        pthread_mutex_unlock(&numActiveThreads_mutex);
+        if(allSignedOff){
+            break;
+        }
     }
-        assert(_numActiveThreads==0);
+        pthread_mutex_unlock(&count_threshold_mutex);
+//        pthread_mutex_lock(&numActiveThreads_mutex);
+//        printf("numActiveThreads: %d\n",_signoffSheet);
+//        assert(_signoffSheet==0);
+//        pthread_mutex_unlock(&numActiveThreads_mutex);
 
         //        };
-        pthread_mutex_unlock(&numActiveThreads_mutex);
+//        
 #else
         tp = (thread_param *)malloc(sizeof(thread_param));
         tp->seq = 0;

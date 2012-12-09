@@ -5,7 +5,7 @@
 
 #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 # define LIB_JSONCPP_JSON_TOOL_H_INCLUDED
-#include "config.h"
+#include "json/config.h"
 /* This header provides common string manipulation support, such as UTF-8,
  * portable conversion from/to string...
  *

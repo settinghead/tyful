@@ -33,7 +33,8 @@
 /// Remarks: it is automatically defined in the generated amalgated header.
 // #define JSON_IS_AMALGAMATION
 
-
+#include <stdlib.h>
+#include <string>
 # ifdef JSON_IN_CPPTL
 #  include <cpptl/config.h>
 #  ifndef JSON_USE_CPPTL

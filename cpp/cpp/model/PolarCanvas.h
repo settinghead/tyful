@@ -129,13 +129,14 @@ private:
     pthread_mutex_t attempt_mutex;
     pthread_mutex_t numActiveThreads_mutex;
     pthread_cond_t count_threshold_cv;
+    pthread_mutex_t count_threshold_mutex;
     
 
     pthread_attr_t attr;
 //    pthread_t threads[NUM_THREADS];
 
     static void attempt_nudge(void *arg);
-    int _numActiveThreads;
+    bool _signoffSheet[NUM_THREADS];
     void connectLayers();
 
 #if NUM_THREADS > 1

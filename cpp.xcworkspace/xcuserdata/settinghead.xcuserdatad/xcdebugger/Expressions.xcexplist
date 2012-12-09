@@ -3,9 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ColorMapZigzagNudger::nudgeFor(EngineShape*, Placement*, int, int):ColorMapZigzagNudger.h">
-      </ContextState>
-      <ContextState
          contextName = "WordLayer::getHue(int, int):WordLayer.cpp">
          <PersistentStrings>
             <PersistentString
@@ -14,25 +11,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PolarCanvas::PolarCanvas():PolarCanvas.cpp">
-      </ContextState>
-      <ContextState
          contextName = "PolarCanvas::placeShape(EngineShape*):PolarCanvas.cpp">
       </ContextState>
       <ContextState
-         contextName = "PolarCanvas::attempt_nudge(void*):PolarCanvas.cpp">
+         contextName = "PolarRootTree::getRootX(int):PolarRootTree.cpp">
       </ContextState>
       <ContextState
-         contextName = "PolarTree::overlaps(int, PolarTree*):PolarTree.h">
+         contextName = "EngineShape::trespassed(PolarLayer*):EngineShape.cpp">
       </ContextState>
       <ContextState
-         contextName = "thpool_thread_do(thpool_t*):thpool.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "TwoHueRandomSatsColorer::colorFor(Placement*):TwoHueRandomSatsColorer.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "TwoHueRandomSatsColorer::TwoHueRandomSatsColorer():TwoHueRandomSatsColorer.cpp">
+         contextName = "ColorMapZigzagNudger::nudgeFor(EngineShape*, Placement*, int, int):ColorMapZigzagNudger.h">
       </ContextState>
       <ContextState
          contextName = "-[MainView drawColorMappedText:]:MainView.mm">
@@ -43,13 +31,48 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "thpool_init(int):thpool.cpp">
+         contextName = "thpool_thread_do(thpool_t*):thpool.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarCanvas::PolarCanvas():PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarTree::overlaps(int, PolarTree*):PolarTree.h">
+      </ContextState>
+      <ContextState
+         contextName = "TwoHueRandomSatsColorer::colorFor(Placement*):TwoHueRandomSatsColorer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "renderRoutine(void*):polartreeapi.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "PolarCanvas::current">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "EngineShape::nudgeTo(int, Placement*, Angler*):EngineShape.cpp">
       </ContextState>
       <ContextState
-         contextName = "EngineShape::trespassed(PolarLayer*):EngineShape.cpp">
+         contextName = "PolarCanvas::~PolarCanvas():PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "PolarCanvas::attempt_nudge(void*):PolarCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "initCanvas():polartreeapi.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "EngineShape::finalizePlacement(int):EngineShape.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "TwoHueRandomSatsColorer::TwoHueRandomSatsColorer():TwoHueRandomSatsColorer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "-[MainView slapRoutine]:MainView.mm">
+      </ContextState>
+      <ContextState
+         contextName = "thpool_init(int):thpool.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

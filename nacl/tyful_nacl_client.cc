@@ -98,14 +98,12 @@ public:
   {
     pthread_create(&feedRoutineThread, NULL, &feedShapes, this);
     pthread_create(&checkRenderRoutineThread, NULL, &checkAndRenderSlaps, this);
-
   }
   virtual ~TyfulNaclCoreInstance() {
   }
-
+  
   string* messageToPost;
   pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
-
 
   static void *checkAndRenderSlaps(void* core){
     printf("Slap checker thread started\n.");
@@ -179,7 +177,7 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
   }
-  
+
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
   /// method names and arguments; etc.  For example, you could use
