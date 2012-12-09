@@ -268,7 +268,9 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
     tF.render(context,true)
     # console.log 'sid: '+window.TyfulNacl.sid+"w: "+shapeCanvas.width+", h:"+shapeCanvas.height
     # shapeCanvasF.renderAll(true)
-    window.TyfulNacl.TyfulNaclCoreModule.postMessage window.TyfulNacl.feedShapeMethodPrefix + (window.TyfulNacl.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height
+    feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + (window.TyfulNacl.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height+","+shrinkage
+    console.log feedCommandStr
+    window.TyfulNacl.TyfulNaclCoreModule.postMessage feedCommandStr
     window.TyfulNacl.TyfulNaclCoreModule.postMessage shapeCanvas.getContext('2d').getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data.buffer
     i++
 

@@ -38,6 +38,7 @@
 #include <pthread.h>
 #endif
 
+static int id_counter = 0;
 
 struct thread_param {
     int seq;
@@ -48,13 +49,17 @@ ThreadControllers PolarCanvas::threadControllers;
 
 PolarCanvas* PolarCanvas::current = NULL;
 
+PolarCanvas* PolarCanvas::pending = new PolarCanvas();
+
 PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
-width(NAN),height(NAN),status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
+width(NAN),height(NAN),_status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
 _shapeToWorkOn(NULL),
 slaps(new queue<SlapInfo*>()), pendingShapes(new queue<EngineShape*>), _shapes(new vector<EngineShape*>),
-fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>()),retryShapes(new vector<EngineShape*>())
+fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>()),retryShapes(new vector<EngineShape*>()),
+_id(id_counter++)
 {
+    
     pthread_attr_init(&attr);
     //    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     pthread_mutex_init(&shape_mutex, NULL);
@@ -62,6 +67,8 @@ fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>(
     pthread_mutex_init(&numActiveThreads_mutex,NULL);
     pthread_cond_init (&count_threshold_cv, NULL);
     pthread_mutex_init (&count_threshold_mutex, NULL);
+    pthread_cond_init (&status_cv, NULL);
+    pthread_mutex_init (&status_mutex, NULL);
     //    printf("pthread related init complete.\n");
     
 #if NUM_THREADS > 1
@@ -85,6 +92,8 @@ PolarCanvas::~PolarCanvas(){
     pthread_mutex_destroy(&attempt_mutex);
     pthread_cond_destroy(&count_threshold_cv);
     pthread_mutex_destroy(&count_threshold_mutex);
+    pthread_cond_destroy(&status_cv);
+    pthread_mutex_destroy(&status_mutex);
     
 #if NUM_THREADS > 1
     threadpool_free(pool,1);
@@ -112,7 +121,7 @@ PolarCanvas::~PolarCanvas(){
 
 
 void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
-    if(failureCount <= perseverance && status == RENDERING){
+    if(failureCount <= perseverance && getStatus() == RENDERING){
         EngineShape* eShape = generateEngineWord(shape,sid);
         pendingShapes->push(eShape);
         printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
@@ -159,7 +168,7 @@ void PolarCanvas::tryNextEngineShape(){
         else{
             failureCount++;
             if(failureCount>perseverance){
-                status = PAUSED;
+                setStatus(PAUSED);
                 printf("Rendering complete.\n");
             }
         }
@@ -171,13 +180,14 @@ void PolarCanvas::tryNextEngineShape(){
                    ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).x
                    ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).y
                    ,eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),placement->color);
-            SlapInfo* place = new SlapInfo;
-            place->location = eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq());
-            place->rotation = eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq());
-            place->color = placement->color;
-            place->layer = placement->patch->getLayer()->lid;
-            place->failureCount = getFailureCount();
-            place->sid = eShape->getUid();
+            
+            SlapInfo* place = new SlapInfo(eShape->getUid(),getId(),
+                                            eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()),
+                                           eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),
+                                           placement->patch->getLayer()->lid,
+                                           placement->color,
+                                           getFailureCount())
+                                        ;
             slaps->push(place);
             
         }
@@ -463,11 +473,16 @@ DensityPatchIndex* PolarCanvas::getPatchIndex(){
 }
 
 void PolarCanvas::setStatus(STATUS status){
-    this->status = status;
+    pthread_mutex_lock(&status_mutex);
+    this->_status = status;
+    pthread_mutex_unlock(&status_mutex);
 }
 
 STATUS PolarCanvas::getStatus(){
-    return this->status;
+//    pthread_mutex_lock(&status_mutex);
+    return this->_status;
+//    pthread_mutex_unlock(&status_mutex);
+
 }
 
 void PolarCanvas::addLayer (PolarLayer* val){

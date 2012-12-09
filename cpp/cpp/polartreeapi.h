@@ -1,8 +1,7 @@
 struct SlapInfo;
 struct Dimension;
-void initCanvas();
 void setPerseverance(int perseverance);
-void feedShape(unsigned int *pixels, int width, int height, unsigned int sid,bool flip, bool rgbaToArgb);
+void feedShape(unsigned int *pixels, int width, int height, unsigned int sid,bool flip, bool rgbaToArgb,double shrinkage);
 int getStatus();
 void setStatus(int status);
 double getShrinkage();
@@ -11,7 +10,7 @@ void appendLayer(unsigned char *png, size_t png_size);
 void updateTemplate(unsigned int *data);
 void loadTemplateFromZip(unsigned char *data);
 unsigned char * getZipFromTemplate();
-void feedShape(unsigned int *data);
+void feedShape(unsigned int *data, double shrinkage);
 void startRendering();
 void pauseRendering();
 SlapInfo* getNextSlap();

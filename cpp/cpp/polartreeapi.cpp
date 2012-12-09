@@ -18,35 +18,14 @@
 #include <pthread.h>
 #include "lib_json/json_tool.h"
 
-void initCanvas(){
-    pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
-    printf("initCanvas command received.\n");
-    if(PolarCanvas::current!=NULL){
-        if(PolarCanvas::current->getStatus()>0){
-            
-            PolarCanvas::current->setStatus(-1);
-            
-//            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_slap_req_cv);
-//            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
-//            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_req_cv);
-            printf("initCanvas is waiting for previous run to finish...\n");
-            pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
-//            while(PolarCanvas::current->getStatus()!=0);
-            printf("Previous run terminated.\n");
-        }
-        delete PolarCanvas::current;
-    }
-    pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
+pthread_t*       pendingMainRountineThread = NULL;
+pthread_t*       currentMainRountineThread = NULL;
 
-	PolarCanvas::current = new PolarCanvas();
-	PolarCanvas::current->setStatus(RENDERING);
-	printf("Canvas initialized.\n");
-}
 
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip,bool rgbaToArgb){
     assert(width>0);
     assert(height>0);
-	WordLayer* layer = new WordLayer(pixels, width, height, (int)PolarCanvas::current->size(), flip,rgbaToArgb);
+	WordLayer* layer = new WordLayer(pixels, width, height, PolarCanvas::current==NULL?0:(int)PolarCanvas::current->size(), flip,rgbaToArgb);
 
 	if(colorPixels>0)
 		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip,rgbaToArgb));
@@ -97,34 +76,36 @@ void updateTemplate(unsigned int* data){
     }
     
 }
-void feedShape(unsigned int* data){
+void feedShape(unsigned int* data, double shrinkage){
 //    unsigned int* data = (unsigned int*)base64_str.c_str();
     int counter = 0;
     unsigned int sid = data[counter++];
     int width = data[counter++];
     int height = data[counter++];
-    feedShape(data+counter, width, height, sid,false,false);
+    feedShape(data+counter, width, height, sid,false,false,shrinkage);
 }
 
-void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool flip,bool rgbaToArgb)
+void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool flip,bool rgbaToArgb, double shrinkage)
 {
     try{
+        if(shrinkage>=getShrinkage()){
 	TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
 	// shape->printStats();
 	PolarCanvas::current->feedShape(shape,sid);
         pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
         pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
         pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
+        }
     }
     catch(int e){
-        printf("An exception occurred. Exception Nr. %d\n");
+        printf("An exception occurred. Exception Nr. %d\n",e);
     }
 
 }
 
 SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
-    feedShape(pixels, width, height,sid,false,false);
+    feedShape(pixels, width, height,sid,false,false,getShrinkage());
     return tryNextShape();
 }
 

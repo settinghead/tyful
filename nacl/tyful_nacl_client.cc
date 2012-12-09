@@ -86,6 +86,7 @@ class TyfulNaclCoreInstance : public pp::Instance {
 private:
   int status;
   int width, height, sid;
+  double shrinkage;
   pthread_t       checkRenderRoutineThread;
   pthread_t       feedRoutineThread;
   // bool check_threads_running;
@@ -117,7 +118,6 @@ public:
       // try{
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         SlapInfo* placement;
-
         while((placement=getNextSlap())!=NULL){
           // std::stringstream ss(std::stringstream::in | std::stringstream::out);
           // ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
@@ -228,6 +228,9 @@ public:
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
           height = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          shrinkage = ::atof(pch);
         }
         catch(int e){
           printf("Exception!!! No. $d", e);
@@ -255,7 +258,7 @@ public:
         buffer_data.Unmap();
       }
       else if (status==kFeedShapeMethodId){
-        feedShape(buffer,width,height,sid,true,true);
+        feedShape(buffer,width,height,sid,true,true,shrinkage);
       }
       // else if (buffer[0]==kStartRenderMethodId) {
       //   printf("startRendering command received.\n");

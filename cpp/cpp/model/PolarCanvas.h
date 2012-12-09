@@ -42,12 +42,18 @@ class ThreadControllers;
 typedef int STATUS;
 typedef int SKIP_REASON;
 
+
 class PolarCanvas:public vector<PolarLayer*>{
 public:
     PolarCanvas();
     ~PolarCanvas();
     
+    inline unsigned int getId(){
+        return _id;
+    }
+    
     static PolarCanvas* current;
+    static PolarCanvas* pending;
     static ThreadControllers threadControllers;
     vector<EngineShape*>* _shapes;
 
@@ -60,6 +66,7 @@ public:
     int getPerseverance(){
         return this->perseverance;
     }
+    
     void setSizer(Sizer* sizer);
     void setPlacer(Placer* placer);
     void setAngler(Angler* placer);
@@ -97,7 +104,7 @@ private:
     float width, height;
     tr1::unordered_map<int, EngineShape*> _shapeMap;
 
-    STATUS status;
+    STATUS _status;
     Sizer* _sizer;
     Nudger* _nudger;
     Placer* _placer;
@@ -130,6 +137,8 @@ private:
     pthread_mutex_t numActiveThreads_mutex;
     pthread_cond_t count_threshold_cv;
     pthread_mutex_t count_threshold_mutex;
+    pthread_cond_t status_cv;
+    pthread_mutex_t status_mutex;
     
 
     pthread_attr_t attr;
@@ -138,7 +147,8 @@ private:
     static void attempt_nudge(void *arg);
     bool _signoffSheet[NUM_THREADS];
     void connectLayers();
-
+    
+    unsigned int _id;
 #if NUM_THREADS > 1
 	struct threadpool *pool;
 #endif

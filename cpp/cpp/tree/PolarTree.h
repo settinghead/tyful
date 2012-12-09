@@ -111,10 +111,7 @@ public:
     }
 	inline bool contains(int seq,double x, double y, double right, double bottom);
     inline CartisianPoint getTopLeftLocation(int seq){
-        CartisianPoint p;
-        p.x = getRootX(seq)-getShape()->getWidth()/2;
-        p.y = getRootY(seq)-getShape()->getHeight()/2;
-        return p;
+        return CartisianPoint(getRootX(seq)-getShape()->getWidth()/2,getRootY(seq)-getShape()->getHeight()/2);
     }
 	virtual double computeX(int seq,bool rotate) = 0;
 	virtual double computeY(int seq,bool rotate) = 0;

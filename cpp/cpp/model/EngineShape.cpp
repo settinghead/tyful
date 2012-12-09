@@ -19,8 +19,7 @@
 
 EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),desiredPlacementIndex(NULL),desiredPlacements(0),uid(sid),renderedPlacement(NULL),_winningSeq(-1){
     for(int i=0;i<NUM_THREADS;i++){
-        currentPlacement[i]=new Placement;
-        currentPlacement[i]->sid = uid;
+        currentPlacement[i]=new Placement(sid);
     }
     this->shape = shape;
     this->shape->getTree();
@@ -51,9 +50,7 @@ void EngineShape::drawSamples(){
 				relativeY -= shape->getHeight()/2;
 				double d = sqrt(pow(relativeX,2)+pow(relativeY,2));
 				double r = atan2(relativeY, relativeX);
-                PolarPoint p;
-                p.d = d;
-                p.r = r;
+                PolarPoint p(d,r);
 				samplePoints->push_back(p);
 			}
 		}
@@ -100,7 +97,7 @@ Placement* EngineShape::getFinalPlacement(){
 }
 Placement* EngineShape::getOrCreateFinalPlacement(){
     if( renderedPlacement==NULL)
-        renderedPlacement = new Placement;
+        renderedPlacement = new Placement(this->getUid());
     return renderedPlacement;
 }
 

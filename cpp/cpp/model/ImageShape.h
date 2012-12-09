@@ -11,7 +11,7 @@ class PolarRootTree;
 class ImageShape {
 public:
     ImageShape();
-    ~ImageShape();
+    virtual ~ImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     virtual unsigned char * toPng(unsigned int pixelValue) = 0;
 

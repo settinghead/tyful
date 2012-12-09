@@ -184,16 +184,17 @@
 //}
 
 NSArray *strings = [[NSArray alloc] initWithObjects:
-//                    @"mHi",
-//                    @"橙子",@"passion",@"贪婪",
-//                    @"可笑可乐",
+                    @"mHi",
+                    @"橙子",@"passion",@"贪婪",
+                    @"可笑可乐",
                     @"Circumstances\n do not make the man.\nThey reveal him.",
                     @"The self always\n comes through.",
                     @"Forgive me.\nYou have my soul and \n I have your money.",
                     @"War rages on\n in Africa.",
                     @"Quick fox",@"Halo",@"Service\nIndustry\nStandards",@"Tyful",
-//                    @"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή",
-//                    @"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname",
+                    @"Γαστριμαργία",@"Πορνεία",@"Φιλαργυρία",@"Ὀργή",
+                    @"compassion",@"ice cream",@"HIPPO",@"inferno",@"Your\nname",
+                    @"To be\n or not to be",@"床前明月光\n疑是地上霜\n举头望明月\n低头思故乡",
                     nil];
 int counter = 0;
 int sid = 0;
@@ -219,6 +220,7 @@ int sid = 0;
 }
 
 - (void)drawColorMappedText:(id)sender{
+    
     [self loadDirectionImage];
     [self resetMainImage];
     startRendering();
@@ -246,7 +248,7 @@ int sid = 0;
     if(textImage.size.width>0){
         unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
         
-        feedShape(pixels, textImage.size.width, textImage.size.height, sid,false,false);
+        feedShape(pixels, textImage.size.width, textImage.size.height, sid,false,false,getShrinkage());
     }
 }
 
