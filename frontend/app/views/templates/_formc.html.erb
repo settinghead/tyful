@@ -38,7 +38,7 @@
 
 </script>
 <%end%>
-<div class="row" style="text-align:center;">
+<div class="row-fluid" style="text-align:center;">
 	<div class="span9">
 		<div id="mainCanvas">
 			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
@@ -63,7 +63,7 @@
 				<canvas id="renderpreview" class="thumb zoomtransition" width="800" height="600"></canvas>
 			</div>
 			<div>
-				<button type="button" class="btn btn-success" data-loading-text="Loading..." id="btnRender">Render</button>
+				<button type="button" class="btn btn-success btnRender" data-loading-text="Loading...">Generate</button>
 			</div>
 			<div id="shopping-area">
 				<div class="row-fluid">
@@ -127,8 +127,15 @@
 <%end%>
 </div>
 <div class="tab-pane" id="adjust">
-	<div id="render-editor">
-		<canvas id="renderer"></canvas>
+	<div class="row-fluid">
+		<div class="span9">
+			<div id="render-editor" style="width: 100%; height: 100%; overflow: scroll;">
+				<canvas id="renderer"></canvas>
+			</div>
+		</div>
+		<div class="span3">
+			<button type="button" class="btn btn-success btnRender" data-loading-text="Loading...">Regenerate</button>
+		</div>
 	</div>
 </div>
 <div class="tab-pane" id="share">Share your Tyful artwork </div>

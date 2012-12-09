@@ -31,7 +31,7 @@ void initCanvas(){
 //            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_req_cv);
             printf("initCanvas is waiting for previous run to finish...\n");
             pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
-            while(PolarCanvas::current->getStatus()!=0);
+//            while(PolarCanvas::current->getStatus()!=0);
             printf("Previous run terminated.\n");
         }
         delete PolarCanvas::current;
@@ -137,10 +137,11 @@ void* renderRoutine(void*){
 //    if(PolarCanvas::current!=NULL){
     PolarCanvas* canvas = PolarCanvas::current;
         canvas->setStatus(RENDERING);
-        try{
+//        try{
             printf("internal render routine started.\n");
+            pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+
             while(canvas->getStatus()>0){
-                pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
                     if(canvas->pendingShapes->size()<FEED_QUEUE_BUFFER){
                         pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
                         for(int i=(int)canvas->pendingShapes->size();i<FEED_QUEUE_BUFFER;i++){
@@ -156,15 +157,15 @@ void* renderRoutine(void*){
                         pthread_cond_broadcast(&PolarCanvas::threadControllers.next_slap_req_cv);
                         pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
                     }
-                pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
-
             }
-        }
-        catch(int e){
-            printf("Exception! No. %d\n",e);
-        }
-        
-        ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
+        pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
+
+//        }
+//        catch(int e){
+//            printf("Exception! No. %d\n",e);
+//        }
+
+//        ((PolarCanvas*)PolarCanvas::current)->setStatus(0);
         pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
         pthread_cond_broadcast(&PolarCanvas::threadControllers.stopping_cv);
         pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);

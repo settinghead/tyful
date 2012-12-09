@@ -47,6 +47,7 @@ $(document).ready ->
       hoverCursor: "pointer"
       selection: false
     )
+    # window.renderCanvas.HOVER_CURSOR = 'pointer';
     window.renderCanvas.on
       "object:modified": (e) ->
         e.target.bringToFront()
@@ -58,7 +59,7 @@ $(document).ready ->
     $('#sketch')[0].getContext('2d').drawImage(this,0,0)
     window.TyfulNacl.startRendering()
 
-  $("#btnRender").click ->
+  $(".btnRender").click ->
     window.TyfulNacl.startRendering()
 
     #register render click event
@@ -94,7 +95,7 @@ $(document).ready ->
 
 
 window.TyfulNacl.dropPinOn = (obj)->
-  unless obj.pin
+  unless obj.hasOwnProperty("pin")
     obj.pin = document.createElement('img')
     # pinContent = document.createTextNode("PIN");
     # obj.pin.appendChild(pinContent)
@@ -131,7 +132,10 @@ window.TyfulNacl.positionPin = (obj) ->
 window.TyfulNacl.resetShoppingWindows = ->
   $(".shopping-window").each ->
     this.getContext('2d').clearRect(0,0,this.width,this.height)
-  window.renderCanvas.clear()
+  window.renderCanvas.forEachObject((obj)->
+    window.renderCanvas.remove obj unless obj and obj.hasOwnProperty("pin")
+  )
+    
 
 # window.TyfulNacl.determineFontHeight = (text,fontStyle) ->
 #   body = document.getElementsByTagName("body")[0]
@@ -299,7 +303,9 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
       top: y+shape.height/2
       left: x+shape.width/2
       angle: -rotation/Math.PI/2*360
-    shape.setColor "#"+(color&0x00FFFFFF).toString(16)
+    c = "#"+(color&0x00FFFFFF).toString(16)
+    c = "#eeeeee" if c == "#FFFFFF"
+    shape.setColor c 
     window.renderCanvas.add shape
     window.renderCanvas.calcOffset()
   window.TyfulNacl.redrawShoppingWindows()
@@ -311,7 +317,7 @@ window.TyfulNacl.redrawShoppingWindows = ->
   $(".shopping-window").each ->
     context = @getContext("2d")
     context.clearRect(0,0,@width,@height)
-    context.drawImage $("#renderer")[0], 0, 0
+    context.drawImage window.renderCanvas.lowerCanvasEl, 0, 0
 
 
 window.TyfulNacl.handleMessage = (message_event) ->
