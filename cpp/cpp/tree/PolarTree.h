@@ -44,7 +44,6 @@ private:
             this->_computedR2[seq] += TWO_PI;
     }
     inline void computeD1(){
-        
         this->_computedD1 = (this->_d1 * getScale());
     }
     inline void computeD2(){

@@ -175,7 +175,7 @@ public:
         pp::CompletionCallback cc = ((TyfulNaclCoreInstance*)core)->factory_.NewCallback(&TyfulNaclCoreInstance::PostStringToBrowser,(char *)msg);
         // pp::CompletionCallback cc(((TyfulNaclCoreInstance*)core)->PostStringToBrowser, ss.str().c_str());
         pp::Module::Get()->core()->CallOnMainThread(0, cc, 0);
-
+        
       // }
       // }
       // catch(int e){
@@ -213,7 +213,7 @@ public:
         char msg[1024];
           snprintf( msg, sizeof(msg), "%s:",kinitCompletePrefix);
         PostMessage(pp::Var(msg));
-        
+
       }
       else if(message.find(kStartRenderMethodPrefix) == 0){
         status = kStartRenderMethodId;
@@ -259,7 +259,13 @@ public:
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
           double rotation = ::atof(pch);
-          setFixedShape(sid,x,y,rotation);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          double scaleX = ::atof(pch);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          double scaleY = ::atof(pch);
+          setFixedShape(sid,x,y,rotation,scaleX,scaleY);
       }
     }
     else if (var_message.is_array_buffer()){
@@ -286,28 +292,11 @@ public:
       else if (status==kFeedShapeMethodId){
         feedShape(buffer,width,height,sid,true,true,shrinkage);
       }
-      // else if (buffer[0]==kStartRenderMethodId) {
-      //   printf("startRendering command received.\n");
-      //   startRendering();
-      // }
-      // else if (buffer[0]==kPauseRenderMethodId) {
-      //   printf("pauseRendering command received.\n");
-      //   pauseRendering();
-      // }
-      // else if (buffer[0]==kFeedShapeMethodId) {
-      //     printf("feedShape command received.\n");
-      //     feedShape(buffer+1);
-      // }
-      // else if (buffer[0]==kUpdatePerseveranceMethodId) {
-      //     printf("updatePerseverance command received.\n");
-      //     int perseverance = buffer[1];
-      //     setPerseverance(perseverance);
-      //     printf("%d\n",perseverance);
-      // }
     }
     else return;
   }
 };
+
 
 /// The Module class.  The browser calls the CreateInstance() method to create
 /// an instance of your NaCl module on the web page.  The browser creates a new

@@ -35,7 +35,7 @@ $(document).ready ->
   $("#sketch").sketch defaultSize:100
 
   img = new Image()
-  img.src= "/templates/face.png"
+  img.src= "/templates/egg.png"
   img.onload = ->
     $('#sketch')[0].width = img.width
     $('#sketch')[0].height = img.height
@@ -43,16 +43,13 @@ $(document).ready ->
     $('#renderpreview')[0].height = img.height
     $('#renderer')[0].width = img.width
     $('#renderer')[0].height = img.height
-    window.renderCanvas = new fabric.Canvas('renderer',
-      hoverCursor: "pointer"
-      selection: false
-    )
-    # window.renderCanvas.HOVER_CURSOR = 'pointer';
-    window.renderCanvas.on
-      "object:modified": (e) ->
-        e.target.bringToFront()
-        window.TyfulNacl.dropPinOn(e.target)
-        window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + e.target.sid + "," + e.target.getLeft() + "," + e.target.getTop() + "," + (-e.target.getAngle()*Math.PI*2/360) + ","
+    window.TyfulNacl.reloadCanvas()
+
+  $("#render-editor").scroll (e) ->
+    for shape of window.TyfulNacl.fixedShapes
+      window.TyfulNacl.dropPinOn(shape)
+
+  # canvas.renderAll()
 
   #end onlonad
 
@@ -95,6 +92,9 @@ $(document).ready ->
     event.preventDefault()
     $("#tyfulTabs a#adjustButton").tab('show');
 
+  $('#tyful_nacl_client').on("load", ()->
+    alert('loaded')
+  )
 
 window.TyfulNacl.dropPinOn = (obj)->
   unless obj.hasOwnProperty("pin")
@@ -109,6 +109,21 @@ window.TyfulNacl.dropPinOn = (obj)->
       window.TyfulNacl.positionPin(obj)
     )
     window.TyfulNacl.positionPin(obj)
+
+window.TyfulNacl.reloadCanvas = () ->
+  window.renderCanvas = new fabric.Canvas('renderer',
+      hoverCursor: "pointer"
+      selection: false
+    )
+    # window.renderCanvas.HOVER_CURSOR = 'pointer';
+  window.renderCanvas.on
+    "object:modified": (e) ->
+      e.target.bringToFront()
+      window.TyfulNacl.dropPinOn(e.target)
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + e.target.sid + "," + e.target.getLeft() + "," + e.target.getTop() + "," + (-e.target.getAngle()*Math.PI*2/360) + ","+e.target.scaleX+","+e.target.scaleY+","
+      window.TyfulNacl.fixedShapes[e.target.sid] = e.target
+      console.log e.target.sid
+      window.TyfulNacl.redrawShoppingWindows()
 
 window.TyfulNacl.positionPin = (obj) ->
 
@@ -155,14 +170,17 @@ window.TyfulNacl.startRendering = ->
   canvasWidth = canvas.width
   canvasHeight = canvas.height
   window.TyfulNacl.shapes = {}
+  window.TyfulNacl.fixedShapes = {}
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
   window.TyfulNacl.initializing = false
-  window.TyfulNacl.words = ["Know Thyself", "m'hi", "Xiyang", "mlol"]
+  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "贪婪", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
   renderCanvas = $("#renderpreview")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
+  window.TyfulNacl.status = "updating"
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight+","
+
 
 window.TyfulNacl.drawGradients = (ctxColor, canvasColor)->
   grad = ctxColor.createLinearGradient(20, 0, canvasColor.width - 20, 0)
@@ -245,13 +263,18 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
       # scaleY: shrinkage*0.9+0.1
       top: 0
       left: 0
-      fontWeight: "bold"
       useNative: true
+      fontWeight: "bold"
     )
+
     tF.setTop tF.height/2
     tF.setLeft tF.width/2
-    window.TyfulNacl.sid++
+    tF.lockUniScaling = true
+    loop
+      window.TyfulNacl.sid++
+      break unless window.TyfulNacl.fixedShapes[window.TyfulNacl.sid]
     tF.sid = window.TyfulNacl.sid
+    console.assert(window.TyfulNacl.shapes[tF.sid]==undefined)
     window.TyfulNacl.shapes[tF.sid] = tF
 
     shapeCanvas.setAttribute "width", tF.width*tF.scaleX
@@ -271,8 +294,13 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
     # shapeCanvasF.renderAll(true)
     feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + (window.TyfulNacl.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height+","+shrinkage+","
     # console.log feedCommandStr
-    window.TyfulNacl.TyfulNaclCoreModule.postMessage feedCommandStr
-    window.TyfulNacl.TyfulNaclCoreModule.postMessage shapeCanvas.getContext('2d').getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data.buffer
+
+    unless window.TyfulNacl.status
+      window.TyfulNacl.status = "feeding"
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage feedCommandStr
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage shapeCanvas.getContext('2d').getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data.buffer
+      window.TyfulNacl.status = undefined
+
     i++
 
 window.TyfulNacl.decimalColorToHTMLcolor = (number) ->
@@ -338,7 +366,9 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
     c = "#eeeeee" if c == "#FFFFFF"
     shape.setColor c
     window.renderCanvas.add shape
-    window.renderCanvas.calcOffset()
+    shape.sendToBack()
+    for fS of window.TyfulNacl.fixedShapes
+      fS.sendToBack()
   window.TyfulNacl.redrawShoppingWindows()
 
 window.TyfulNacl.redrawShoppingWindows = ->
@@ -349,11 +379,12 @@ window.TyfulNacl.redrawShoppingWindows = ->
     context = @getContext("2d")
     context.clearRect(0,0,@width,@height)
     context.drawImage window.renderCanvas.lowerCanvasEl, 0, 0
+    window.renderCanvas.calcOffset()
 
 
 window.TyfulNacl.handleMessage = (message_event) ->
   if message_event.data
-    console.log(message_event.data);
+    console.log(message_event.data) if message_event.data.indexOf("DEBUG_POSTMESSAGE") is 0
     if message_event.data.indexOf(window.TyfulNacl.slapShapeMethodPrefix) is 0
       params = message_event.data.substring(window.TyfulNacl.slapShapeMethodPrefix.length)
       
@@ -376,6 +407,7 @@ window.TyfulNacl.handleMessage = (message_event) ->
       ctx = canvas.getContext("2d")
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
       window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer
+      window.TyfulNacl.status = undefined
       # console.log('Template data transferred.')
     else if message_event.data.indexOf(window.TyfulNacl.templateDataReceivedPrefix) is 0
       window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender:"

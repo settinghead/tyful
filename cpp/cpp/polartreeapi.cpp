@@ -26,8 +26,12 @@ void initCanvas(){
     if(PolarCanvas::current!=NULL && PolarCanvas::current->getStatus()>0){
         PolarCanvas::current->setStatus(-1);
 //        pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
-        while(PolarCanvas::current->getStatus()!=0)
+        while(PolarCanvas::current->getStatus()!=0){
+            pthread_mutex_trylock(&PolarCanvas::threadControllers.next_feed_mutex);
+            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
+            pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
             usleep(5000);
+        }
     }
 
     PolarCanvas* newCanvas = new PolarCanvas();
@@ -257,8 +261,8 @@ Dimension getCanvasSize(){
 void resetFixedShapes(){
     PolarCanvas::current->resetFixedShapes();
 }
-void setFixedShape(int sid, int x, int y, double rotation){
-    PolarCanvas::current->fixShape(sid,x, y, rotation);
+void setFixedShape(int sid, int x, int y, double rotation,double scaleX,double scaleY){
+    PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
 }
 
 void loadTemplateFromZip(unsigned char *data){

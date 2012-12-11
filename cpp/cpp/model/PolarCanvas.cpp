@@ -132,7 +132,7 @@ void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
     if(failureCount <= perseverance && getStatus() == RENDERING){
         EngineShape* eShape = generateEngineWord(shape,sid);
         pendingShapes->push(eShape);
-        printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
+//        printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
     }
 }
 
@@ -519,15 +519,17 @@ void PolarCanvas::connectLayers(){
     }
 }
 
-void PolarCanvas::fixShape(int sid, int x, int y, double rotation){
+void PolarCanvas::fixShape(int sid, int x, int y, double rotation,double scaleX, double scaleY){
     EngineShape* shape = _shapeMap[sid];
     Placement* place = shape->getOrCreateFinalPlacement();
     place->location.x = x;
     place->location.y = y;
     place->rotation = rotation;
     shape->getShape()->getTree()->setLocation(shape->getShape()->getTree()->getFinalSeq(), x, y);
+    //TODO
+    shape->getShape()->getTree()->setScale(scaleX);
     fixedShapes->push_back(shape);
-    printf("Shape fixed at x:%d,y:%d, r: %d");
+    printf("Shape fixed at x:%d,y:%d, r: %f, scale: %f\n",x,y,rotation,scaleX);
 }
 
 void PolarCanvas::resetFixedShapes(){

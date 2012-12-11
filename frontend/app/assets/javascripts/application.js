@@ -18,6 +18,7 @@
 //= require sketch.js
 //= require fabric.js
 //= require jquery.simplemodal
+//= require angular.min
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',

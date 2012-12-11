@@ -92,7 +92,7 @@ public:
     vector<EngineShape*>* fixedShapes;
     void tryNextEngineShape();
     void resetFixedShapes();
-    void fixShape(int sid, int x, int y, double rotation);
+    void fixShape(int sid, int x, int y, double rotation, double scaleX, double scaleY);
     double getSuccessRate();
     void registerShape(EngineShape* shape);
 
