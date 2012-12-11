@@ -138,6 +138,7 @@
 		7C7AE93816674B5C002466A3 /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
 		7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
 		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
+		7CB6037D167699B5006CB6EE /* concurrent_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_queue.h; sourceTree = "<group>"; };
 		7CC0514A1674A258006085EF /* json_batchallocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
 		7CC0514B1674A258006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
 		7CC0514C1674A258006085EF /* json_internalmap.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
@@ -314,6 +315,7 @@
 				7C7AE92416674B5C002466A3 /* TextImageShape.h */,
 				7C7AE92516674B5C002466A3 /* WordLayer.cpp */,
 				7C7AE92616674B5C002466A3 /* WordLayer.h */,
+				7CB6037D167699B5006CB6EE /* concurrent_queue.h */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -570,8 +572,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/settinghead/boost_1_52_0;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/settinghead/boost_1_52_0;
+				LIBRARY_SEARCH_PATHS = /Users/settinghead/boost_1_52_0/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -595,7 +601,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/settinghead/boost_1_52_0;
+				LIBRARY_SEARCH_PATHS = /Users/settinghead/boost_1_52_0/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -604,7 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GENERATE_PROFILING_CODE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -613,7 +622,7 @@
 		7C7AE878166745B8002466A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

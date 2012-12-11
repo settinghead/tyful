@@ -23,6 +23,7 @@ public:
         PixelImageShape(pixels,width,height,revert,rgbaToArgb){
             
         };
+        virtual ~ColorSheet(){}
         virtual inline bool isEmpty(unsigned int pixelValue){
             //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
             return (pixelValue >> 24) == 0x00;
@@ -30,7 +31,7 @@ public:
     };
     WordLayer(unsigned char * png, size_t png_size, int lid);
     WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert,bool rgbaToArgb);
-    ~WordLayer();
+    virtual ~WordLayer();
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;
         return (pixelValue >> 24) == 0x00;

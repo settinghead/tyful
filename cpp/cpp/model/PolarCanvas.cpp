@@ -23,6 +23,7 @@
 #include "../nudger/ColorMapZigzagNudger.h"
 #include "../density/DensityPatchIndex.h"
 #include "structs.h"
+//#include "concurrent_queue.h"
 #include <cmath>
 #include <tr1/unordered_set>
 #include <tr1/unordered_map>
@@ -100,8 +101,13 @@ PolarCanvas::~PolarCanvas(){
 #endif
     
 
-    for(int i=0;i<_shapes->size();i++)
-        free (_shapes->at(i));
+    for(int i=0;i<_shapes->size();i++){
+        _shapes->at(i)->referenceCounter--;
+        if(_shapes->at(i)->referenceCounter==0){
+            printf("Shape #%d deleted.\n",_shapes->at(i)->getUid());
+            delete (_shapes->at(i));
+        }
+    }
 
 //    for ( vector<EngineShape*>::iterator it = _shapes->begin(); it != _shapes->end(); ){
 //            delete * it;
@@ -113,6 +119,8 @@ PolarCanvas::~PolarCanvas(){
     delete retryShapes;
     delete fixedShapes;
     delete _nudger;
+    if(_patchIndex!=NULL)
+        delete _patchIndex;
     for(int i=0;i<size();i++)
         delete at(i);
     
@@ -140,8 +148,8 @@ EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape,unsigned int sid)
 }
 
 void PolarCanvas::tryNextEngineShape(){
-//    if(!pendingShapes->empty()){
-    assert(!pendingShapes->empty());
+    if(!pendingShapes->empty()){
+//    assert(!pendingShapes->empty());
         EngineShape* eShape = pendingShapes->front();
         pendingShapes->pop();
         placeShape(eShape);
@@ -192,7 +200,7 @@ void PolarCanvas::tryNextEngineShape(){
             
         }
         
-//    }
+    }
 }
 
 
@@ -286,7 +294,7 @@ void PolarCanvas::attempt_nudge(void *arg){
             }
             for (int i= 0; i < canvas->fixedShapes->size(); i++) {
                 //						var otherWord:EngineWordVO= neighboringEWords[i];
-                EngineShape* otherShape = canvas->displayShapes->at(i);
+                EngineShape* otherShape = canvas->fixedShapes->at(i);
                 if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
                 
                 if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree())) {
@@ -487,6 +495,7 @@ STATUS PolarCanvas::getStatus(){
 
 void PolarCanvas::addLayer (PolarLayer* val){
     push_back(val);
+    printf("Layer added. w: %d, h: %d",val->getWidth(), val->getHeight());
     connectLayers();
 }
 
@@ -516,6 +525,9 @@ void PolarCanvas::fixShape(int sid, int x, int y, double rotation){
     place->location.x = x;
     place->location.y = y;
     place->rotation = rotation;
+    shape->getShape()->getTree()->setLocation(shape->getShape()->getTree()->getFinalSeq(), x, y);
+    fixedShapes->push_back(shape);
+    printf("Shape fixed at x:%d,y:%d, r: %d");
 }
 
 void PolarCanvas::resetFixedShapes(){
@@ -528,5 +540,6 @@ double PolarCanvas::getSuccessRate(){
 
 void PolarCanvas::registerShape(EngineShape *shape){
     _shapes->push_back(shape);
+    shape->referenceCounter++;
     _shapeMap.insert(std::make_pair<int,EngineShape*>(shape->getUid(),shape));
 }

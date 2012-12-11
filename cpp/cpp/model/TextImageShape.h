@@ -15,6 +15,7 @@ public:
     TextImageShape( unsigned int const * pixels, int width, int height, bool revert, bool rgbaToArgb):PixelImageShape(pixels,width,height, revert,rgbaToArgb){
 //        printStats();
     }
+    virtual ~TextImageShape(){}
     
     virtual inline bool isEmpty(unsigned int pixelValue){
 //        return (pixelValue & 0x00FFFFFF) == 0xFFFFFF;

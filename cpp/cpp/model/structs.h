@@ -50,6 +50,8 @@ struct Placement:CorePlacement{
     Placement(int sid):CorePlacement(sid),patch(NULL){}
     Placement(int sid, CartisianPoint location,double rotation, unsigned int layer, unsigned int color, Patch* patch):
     CorePlacement(sid,location,rotation,layer,color),patch(patch){}
+    ~Placement(){
+    }
     Patch* patch;
     inline Placement operator + (const Placement &o) const{
         ;

@@ -16,6 +16,12 @@
 #include "LeveledPatchMap.h"
 #include "DensityPatchIndex.h"
 
+PatchQueue::~PatchQueue(){
+    for(int i=0;i<size();i++){
+        delete this->top();
+        this->pop();
+    }
+}
 
 LeveledPatchMap* PatchQueue::getMap(){
     return map;

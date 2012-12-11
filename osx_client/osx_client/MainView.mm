@@ -184,7 +184,7 @@
 //}
 
 NSArray *strings = [[NSArray alloc] initWithObjects:
-                    @"mHi",
+                    @"C-3PO",
                     @"橙子",@"passion",@"贪婪",
                     @"可笑可乐",
                     @"Circumstances\n do not make the man.\nThey reveal him.",

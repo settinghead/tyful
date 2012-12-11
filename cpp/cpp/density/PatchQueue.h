@@ -44,6 +44,7 @@ public:
             }
         }
     }
+    ~PatchQueue();
     inline void push(const value_type &__v);
     inline Patch* popBestPatch(){
         Patch* result = this->top();

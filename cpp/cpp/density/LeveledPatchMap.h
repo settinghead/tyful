@@ -21,6 +21,7 @@ public:
         this->index = index;
         this->map = new vector<PatchQueue*>();
     }
+    ~LeveledPatchMap();
     Patch* getBestPatchAtLevel(int level);
     inline DensityPatchIndex* getIndex();
     void add(Patch* p);

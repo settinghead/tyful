@@ -48,6 +48,7 @@ public:
     }
     int _winningSeq;
     bool _found;
+    int referenceCounter;
 
 private:
     int skipReason;

@@ -35,7 +35,7 @@ $(document).ready ->
   $("#sketch").sketch defaultSize:100
 
   img = new Image()
-  img.src= "/templates/wheel_v.png"
+  img.src= "/templates/face.png"
   img.onload = ->
     $('#sketch')[0].width = img.width
     $('#sketch')[0].height = img.height
@@ -52,6 +52,8 @@ $(document).ready ->
       "object:modified": (e) ->
         e.target.bringToFront()
         window.TyfulNacl.dropPinOn(e.target)
+        window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + e.target.sid + "," + e.target.getLeft() + "," + e.target.getTop() + "," + (-e.target.getAngle()*Math.PI*2/360) + ","
+
   #end onlonad
 
 
@@ -152,8 +154,6 @@ window.TyfulNacl.startRendering = ->
   canvas = $("#sketch")[0]
   canvasWidth = canvas.width
   canvasHeight = canvas.height
-  ctx = canvas.getContext("2d")
-  imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
   window.TyfulNacl.shapes = {}
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
@@ -162,9 +162,7 @@ window.TyfulNacl.startRendering = ->
   renderCanvas = $("#renderpreview")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
-  window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight
-  window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer
-  window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender:"
+  window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight+","
 
 window.TyfulNacl.drawGradients = (ctxColor, canvasColor)->
   grad = ctxColor.createLinearGradient(20, 0, canvasColor.width - 20, 0)
@@ -220,13 +218,15 @@ window.TyfulNacl.updateStatus = (opt_message) ->
 window.TyfulNacl.slapShapeMethodPrefix = "slapShape:"
 window.TyfulNacl.feedMeMethodPrefix = "feedMe:"
 window.TyfulNacl.feedShapeMethodPrefix = "feedShape:"
+window.TyfulNacl.initCompletePrefix = "initComplete:"
+window.TyfulNacl.templateDataReceivedPrefix = "templateDataReceived:"
 window.TyfulNacl.feedShapes = (num, shrinkage) ->
   canvas = $("#sketch")[0]
   # ctx = canvas.getContext("2d")
   i = 0
 
   while i < num
-    fontSize = 10 + 100 * shrinkage
+    fontSize = 12 + 100 * shrinkage
     # fontStyle = "bold " + fontSize + "px sans-serif"
     # ctx.font = fontStyle
     # ctx.textBaseline = "top"
@@ -251,7 +251,8 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
     tF.setTop tF.height/2
     tF.setLeft tF.width/2
     window.TyfulNacl.sid++
-    window.TyfulNacl.shapes[window.TyfulNacl.sid] = tF
+    tF.sid = window.TyfulNacl.sid
+    window.TyfulNacl.shapes[tF.sid] = tF
 
     shapeCanvas.setAttribute "width", tF.width*tF.scaleX
     shapeCanvas.setAttribute "height", tF.height*tF.scaleY
@@ -268,12 +269,40 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
     tF.render(context,true)
     # console.log 'sid: '+window.TyfulNacl.sid+"w: "+shapeCanvas.width+", h:"+shapeCanvas.height
     # shapeCanvasF.renderAll(true)
-    feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + (window.TyfulNacl.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height+","+shrinkage
-    console.log feedCommandStr
+    feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + (window.TyfulNacl.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height+","+shrinkage+","
+    # console.log feedCommandStr
     window.TyfulNacl.TyfulNaclCoreModule.postMessage feedCommandStr
     window.TyfulNacl.TyfulNaclCoreModule.postMessage shapeCanvas.getContext('2d').getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data.buffer
     i++
 
+window.TyfulNacl.decimalColorToHTMLcolor = (number) ->
+  
+  #converts to a integer
+  intnumber = number - 0
+  
+  # isolate the colors - really not necessary
+  red = undefined
+  green = undefined
+  blue = undefined
+  
+  # needed since toString does not zero fill on left
+  template = "#000000"
+  
+  # in the MS Windows world RGB colors
+  # are 0xBBGGRR because of the way Intel chips store bytes
+  blue = (intnumber & 0x0000ff) << 16
+  green = intnumber & 0x00ff00
+  red = (intnumber & 0xff0000) >>> 16
+  
+  # mask out each color and reverse the order
+  intnumber = red | green | blue
+  
+  # toString converts a number to a hexstring
+  HTMLcolor = intnumber.toString(16)
+  
+  #template adds # for standard HTML #RRGGBB
+  HTMLcolor = template.substring(0, 7 - HTMLcolor.length) + HTMLcolor
+  HTMLcolor
 
 # document.body.appendChild(shapeCanvas);
 
@@ -305,9 +334,9 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
       top: y+shape.height/2
       left: x+shape.width/2
       angle: -rotation/Math.PI/2*360
-    c = "#"+(color&0x00FFFFFF).toString(16)
+    c = window.TyfulNacl.decimalColorToHTMLcolor color
     c = "#eeeeee" if c == "#FFFFFF"
-    shape.setColor c 
+    shape.setColor c
     window.renderCanvas.add shape
     window.renderCanvas.calcOffset()
   window.TyfulNacl.redrawShoppingWindows()
@@ -324,8 +353,7 @@ window.TyfulNacl.redrawShoppingWindows = ->
 
 window.TyfulNacl.handleMessage = (message_event) ->
   if message_event.data
-    
-    # console.log(message_event.data);
+    console.log(message_event.data);
     if message_event.data.indexOf(window.TyfulNacl.slapShapeMethodPrefix) is 0
       params = message_event.data.substring(window.TyfulNacl.slapShapeMethodPrefix.length)
       
@@ -340,3 +368,14 @@ window.TyfulNacl.handleMessage = (message_event) ->
     else if message_event.data.indexOf(window.TyfulNacl.feedMeMethodPrefix) is 0
       params = message_event.data.substring(window.TyfulNacl.feedMeMethodPrefix.length)
       eval "window.TyfulNacl.feedShapes(" + params + ");"
+    else if message_event.data.indexOf(window.TyfulNacl.initCompletePrefix) is 0
+      #received init canvas complete message; updating binary
+      canvas = $("#sketch")[0]
+      canvasWidth = canvas.width
+      canvasHeight = canvas.height
+      ctx = canvas.getContext("2d")
+      imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer
+      # console.log('Template data transferred.')
+    else if message_event.data.indexOf(window.TyfulNacl.templateDataReceivedPrefix) is 0
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender:"

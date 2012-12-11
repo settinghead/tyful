@@ -54,17 +54,20 @@ namespace {
 
   const int kUpdateTemplateMethodId = 0;
   const int kStartRenderMethodId = 1;
-  const int kPauseRenderMethodId = 2;
+  // const int kPauseRenderMethodId = 2;
   const int kFeedShapeMethodId = 3;
   const int kUpdatePerseveranceMethodId = 4;
 
   const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
   const char* kStartRenderMethodPrefix = "startRender:";
-  const char* kPauseRenderMethodPrefix = "pauseRender:";
+  // const char* kPauseRenderMethodPrefix = "pauseRender:";
   const char* kFeedShapeMethodPrefix = "feedShape:";
   const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance:";
+  const char* kFixShapeMethodPrefix = "fixShape:";
 
   const char* kSlapMethodPrefix = "slapShape";
+  const char* kinitCompletePrefix = "initComplete";
+  const char* kTemplateDataReceivedPrefix = "templateDataReceived";
   const char* kFeedMeMethodPrefix = "feedMe";
 
 // The string sent back to the browser upon receipt of a message
@@ -163,7 +166,7 @@ public:
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
         // ss << kFeedMeMethodPrefix << ":" << 1 << "," << getShrinkage() <<","<< endl;
         char msg[1024];
-        snprintf( msg, sizeof(msg), "%s:%d,%f", kFeedMeMethodPrefix, 1, getShrinkage());
+        snprintf( msg, sizeof(msg), "%s:%d,%f\0", kFeedMeMethodPrefix, 1, getShrinkage());
 
         // printf("server: %s\n",ss.str().c_str());
         // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
@@ -197,6 +200,7 @@ public:
   virtual void HandleMessage(const pp::Var& var_message) {
     if(var_message.is_string()){
       std::string message = var_message.AsString();
+      printf("String command received: %s\n",message.c_str());
       if(message.find(kUpdateTemplateMethodPrefix) == 0){
         status = kUpdateTemplateMethodId;
         char * pch;
@@ -205,7 +209,11 @@ public:
         width = ::atoi(pch);
         pch = strtok (NULL, ",");
         height = ::atoi(pch);
-          // printf("Ready to receive template bytes. Width: %d, height: %d\n",width,height);
+        initCanvas();
+        char msg[1024];
+          snprintf( msg, sizeof(msg), "%s:",kinitCompletePrefix);
+        PostMessage(pp::Var(msg));
+        
       }
       else if(message.find(kStartRenderMethodPrefix) == 0){
         status = kStartRenderMethodId;
@@ -237,6 +245,22 @@ public:
         }
           // printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
       }
+      else if(message.find(kFixShapeMethodPrefix) == 0){
+        char * pch;
+        size_t pos = message.find_first_of(':')+1;
+          pch = strtok ((char*)message.substr(pos).c_str(),",");
+          int sid = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          int x = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          int y = ::atoi(pch);
+          pch = strtok (NULL, ",");
+          if(pch==NULL) return;
+          double rotation = ::atof(pch);
+          setFixedShape(sid,x,y,rotation);
+      }
     }
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
@@ -252,10 +276,12 @@ public:
           //   buffer[2],
           //   buffer[3],
           //   buffer_data.ByteLength());
-        initCanvas();
         if(width>0 && height>0)
           appendLayer(buffer,NULL,width,height,true,true);
         buffer_data.Unmap();
+        char msg[1024];
+        snprintf( msg, sizeof(msg), "%s:",kTemplateDataReceivedPrefix);
+        PostMessage(pp::Var(msg));
       }
       else if (status==kFeedShapeMethodId){
         feedShape(buffer,width,height,sid,true,true,shrinkage);

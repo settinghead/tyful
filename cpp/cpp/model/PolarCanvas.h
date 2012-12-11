@@ -94,6 +94,8 @@ public:
     void resetFixedShapes();
     void fixShape(int sid, int x, int y, double rotation);
     double getSuccessRate();
+    void registerShape(EngineShape* shape);
+
 private:
     
  
@@ -124,7 +126,6 @@ private:
     inline void computeDesiredPlacements(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
     inline int calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage);
-    void registerShape(EngineShape* shape);
     DensityPatchIndex* _patchIndex;
     inline DensityPatchIndex* getPatchIndex();
     Placement* _candidatePlacement;

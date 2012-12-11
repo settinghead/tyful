@@ -13,6 +13,12 @@
 #include "vector"
 
 using namespace std;
+LeveledPatchMap::~LeveledPatchMap()
+{
+    for(int i=0;i<map->size();i++)
+        delete map->at(i);
+        delete map;
+}
 
 Patch* LeveledPatchMap::getBestPatchAtLevel(int level){
     PatchQueue* queue = getQueue(level);

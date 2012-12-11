@@ -50,6 +50,9 @@ public:
         this -> canvas = canvas;
         this -> map = new LeveledPatchMap(this);
     }
+    ~DensityPatchIndex(){
+        delete map;
+    }
     inline PolarCanvas* getCanvas(){
         return canvas;
     }
