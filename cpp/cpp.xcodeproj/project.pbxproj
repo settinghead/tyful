@@ -156,7 +156,6 @@
 		7CC051591674A2FC006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
 		7CC0515A1674A2FC006085EF /* json_internalmap.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
 		7CC0515B1674A2FC006085EF /* json_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
-		7CC0515C1674A2FC006085EF /* json_tool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
 		7CC0515D1674A2FC006085EF /* json_value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
 		7CC0515E1674A2FD006085EF /* json_valueiterator.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
 		7CC0515F1674A2FD006085EF /* json_writer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
@@ -372,7 +371,6 @@
 				7CC051591674A2FC006085EF /* json_internalarray.inl */,
 				7CC0515A1674A2FC006085EF /* json_internalmap.inl */,
 				7CC0515B1674A2FC006085EF /* json_reader.cpp */,
-				7CC0515C1674A2FC006085EF /* json_tool.h */,
 				7CC0515D1674A2FC006085EF /* json_value.cpp */,
 				7CC0515E1674A2FD006085EF /* json_valueiterator.inl */,
 				7CC0515F1674A2FD006085EF /* json_writer.cpp */,

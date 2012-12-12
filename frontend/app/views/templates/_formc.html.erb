@@ -1,11 +1,4 @@
-  <ul class="nav nav-tabs" id="tyfulTabs">
-  	<li class="active"><a href="#draw" id="drawButton">Draw</a></li>
-  	<li><a href="#adjust" id="adjustButton">Adjust</a></li>
-  	<li><a href="#share" id="shareButton">Share</a></li>
-  </ul>
 
-  <div class="tab-content">
-  	<div class="tab-pane active" id="draw">
 
   		<% if @template.errors.any? %>
   		<div id="error_explanation">
@@ -38,8 +31,15 @@
 
 </script>
 <%end%>
-<div class="row-fluid" style="text-align:center;">
-	<div class="span9">
+ <div class="row-fluid" style="text-align:center;">
+<div class="span9">
+	  <ul class="nav nav-tabs" id="tyfulTabs">
+  	<li class="active"><a href="#draw" id="drawButton">Draw</a></li>
+  	<li><a href="#adjust" id="adjustButton">Adjust</a></li>
+  	<li><a href="#share" id="shareButton">Share</a></li>
+  </ul>
+  <div class="tab-content">
+  	<div class="tab-pane active" id="draw">
 		<div id="mainCanvas">
 			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
 			<div class="tools">
@@ -57,11 +57,23 @@
 			</div>
 		</div>
 	</div>
-	<div class="span3">
+
+	<div class="tab-pane" id="adjust">
+	<div class="row-fluid">
+			<div id="render-editor" class="frame" style="width: 100%; height: 100%; overflow: scroll;">
+				<canvas id="renderer"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane" id="share">Share your Tyful artwork </div>
+</div>
+</div>
+<div class="span3">
 		<div class="affix" style="padding: 10px;">
 			<div id="renderpreview-container">
 				<canvas id="renderpreview" class="thumb zoomtransition" width="800" height="600"></canvas>
 			</div>
+
 			<div>
 				<button type="button" class="btn btn-success btnRender" data-loading-text="Loading...">Generate</button>
 			</div>
@@ -87,8 +99,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>
 
 <%if can? :manage, @template %>
@@ -126,21 +136,7 @@
 </div>
 <%end%>
 </div>
-<div class="tab-pane" id="adjust">
-	<div class="row-fluid">
-		<div class="span9">
-			<div id="render-editor" class="frame" style="width: 100%; height: 100%; overflow: scroll;">
-				<canvas id="renderer"></canvas>
-			</div>
-		</div>
-		<div class="span3">
-			<div class="affix">
-				<button type="button" class="btn btn-success btnRender" data-loading-text="Loading...">Regenerate</button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="tab-pane" id="share">Share your Tyful artwork </div>
+
 </div>
 
 <div id="listener">

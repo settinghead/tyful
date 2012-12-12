@@ -526,6 +526,7 @@ void PolarCanvas::fixShape(int sid, int x, int y, double rotation,double scaleX,
     place->location.y = y;
     place->rotation = rotation;
     shape->getShape()->getTree()->setLocation(shape->getShape()->getTree()->getFinalSeq(), x, y);
+    shape->getShape()->getTree()->setRotation(shape->getShape()->getTree()->getFinalSeq(), rotation);
     //TODO
     shape->getShape()->getTree()->setScale(scaleX);
     fixedShapes->push_back(shape);

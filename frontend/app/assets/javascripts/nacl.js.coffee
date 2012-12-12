@@ -86,7 +86,7 @@ $(document).ready ->
     pixel = imageData.data
     pixelColor = "rgba(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ", " + pixel[3] + ")"
     $("#pick").css "backgroundColor", pixelColor
-    $.fn.sketch.color = pixelColor
+    $("#sketch").sketch().color = pixelColor
 
   $("#renderpreview").click (event) ->
     event.preventDefault()
@@ -121,7 +121,8 @@ window.TyfulNacl.reloadCanvas = () ->
       e.target.bringToFront()
       window.TyfulNacl.dropPinOn(e.target)
       window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + e.target.sid + "," + e.target.getLeft() + "," + e.target.getTop() + "," + (-e.target.getAngle()*Math.PI*2/360) + ","+e.target.scaleX+","+e.target.scaleY+","
-      window.TyfulNacl.fixedShapes[e.target.sid] = e.target
+      # window.TyfulNacl.fixedShapes[e.target.sid] = e.target
+      window.TyfulNacl.fixedShapes.push(e.target)
       console.log e.target.sid
       window.TyfulNacl.redrawShoppingWindows()
 
@@ -139,8 +140,8 @@ window.TyfulNacl.positionPin = (obj) ->
       top: finalTop
       left: finalLeft
     ,
-      duration: "slow"
-      easing: "easeOutBounce"
+      duration: "fast"
+      # easing: "easeOutBounce"
     )
     obj.pin.animated = true
   obj.pin.style.top = finalTop + 'px'
@@ -170,11 +171,11 @@ window.TyfulNacl.startRendering = ->
   canvasWidth = canvas.width
   canvasHeight = canvas.height
   window.TyfulNacl.shapes = {}
-  window.TyfulNacl.fixedShapes = {}
+  window.TyfulNacl.fixedShapes = []
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
   window.TyfulNacl.initializing = false
-  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "贪婪", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
+  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "A", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
   renderCanvas = $("#renderpreview")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
@@ -244,7 +245,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
   i = 0
 
   while i < num
-    fontSize = 12 + 100 * shrinkage
+    fontSize = 10 + 100 * shrinkage
     # fontStyle = "bold " + fontSize + "px sans-serif"
     # ctx.font = fontStyle
     # ctx.textBaseline = "top"

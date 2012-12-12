@@ -131,7 +131,6 @@ public:
             kSlapMethodPrefix, placement->sid,(int)placement->location.x, (int)placement->location.y,
             placement->rotation,placement->layer,placement->color,placement->failureCount);
 
-
           // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
           // ((TyfulNaclCoreInstance*)core)->messageToPost = &ss.str();
           printf("Slap: %s\n",(char *)msg);

@@ -24,12 +24,12 @@
 #include <math.h>
 
 WordLayer::WordLayer(unsigned char * png, size_t png_size, int lid):PolarLayer::PolarLayer(png,png_size,lid)
-, type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
+, type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.3){
     
 }
 
 WordLayer::WordLayer(unsigned int const * pixels, int width, int height, int lid, bool revert,bool rgbaToArgb)
-:PolarLayer::PolarLayer(pixels,width,height,lid,revert,rgbaToArgb), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
+:PolarLayer::PolarLayer(pixels,width,height,lid,revert,rgbaToArgb), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.3){
 }
 
 WordLayer::~WordLayer(){
