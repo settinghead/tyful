@@ -32,8 +32,8 @@ public:
         this->rootY[seq] = this->shape->getHeight()/2 + left;
         (this->rootStamp[seq])++;
     }
-	inline int getRootX(int seq);
-	inline int getRootY(int seq);
+	inline double getRootX(int seq);
+	inline double getRootY(int seq);
     inline int getFinalSeq(){
         return finalSeq;
     }

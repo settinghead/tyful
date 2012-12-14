@@ -53,15 +53,16 @@ public:
 	PolarTree(double r1, double r2, double d1, double d2);
 	~PolarTree();
 	inline void addKids(vector<PolarTree*>* kidList);
-	inline virtual int getRootX(int seq) = 0;
-	inline virtual int getRootY(int seq) = 0;
+	inline virtual double getRootX(int seq) = 0;
+	inline virtual double getRootY(int seq) = 0;
     inline virtual int getFinalSeq() = 0;
 
 #if NUM_THREADS>1
     inline virtual void setFinalSeq(int seq) = 0;
 #endif
-	inline virtual bool overlaps(int seq,PolarTree* otherTree){
-        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
+	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq){
+//        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
+        bool r = this->collide(seq, otherTree, otherSeq);
         if (r) {
             if (this->isLeaf() && otherTree->isLeaf()) {
                 return true;
@@ -69,14 +70,15 @@ public:
                 if ((this->isLeaf())) {
                     vector<PolarTree*>* oKids = otherTree->getKids();
                     for (int i=0;i<oKids->size();i++) {
-                        if ((this->overlaps(seq,oKids->at((i+seq)%oKids->size()))))
+                        PolarTree* okid = oKids->at((i+otherSeq)%oKids->size());
+                        if (this->overlaps(seq,okid,otherSeq))
                             return true;
                     }
                 } else {
                     vector<PolarTree*>* tKids = this->getKids();
                     
                     for (int i=0; i<tKids->size();i++) {
-                        if (otherTree->overlaps(seq,tKids->at((i+seq)%tKids->size())))
+                        if (otherTree->overlaps(otherSeq,tKids->at((i+seq)%tKids->size()),seq))
                             return true;
                     }
                     
@@ -109,9 +111,9 @@ public:
         return false;
     }
 	inline bool contains(int seq,double x, double y, double right, double bottom);
-    inline CartisianPoint getTopLeftLocation(int seq){
-        return CartisianPoint(getRootX(seq)-getShape()->getWidth()/2,getRootY(seq)-getShape()->getHeight()/2);
-    }
+//    inline CartisianPoint getTopLeftLocation(int seq){
+//        return CartisianPoint(getRootX(seq)-getShape()->getWidth()/2,getRootY(seq)-getShape()->getHeight()/2);
+//    }
 	virtual double computeX(int seq,bool rotate) = 0;
 	virtual double computeY(int seq,bool rotate) = 0;
 	virtual double computeRight(int seq,bool rotate) = 0;
@@ -301,19 +303,19 @@ protected:
 	double xStamp[NUM_THREADS], yStamp[NUM_THREADS], rightStamp[NUM_THREADS], bottomStamp[NUM_THREADS];
 	bool _leaf;
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom,_r1, _r2;
-    inline bool collide(int seq,PolarTree* bTree){
+    inline bool collide(int seq,PolarTree* bTree, int otherSeq){
         double dist = sqrt(
-                           (pow((this->getRootX(seq) - bTree->getRootX(bTree->getFinalSeq())), 2.0)
-                            + pow((this->getRootY(seq) - bTree->getRootY(bTree->getFinalSeq())), 2.0)));
+                           (pow((this->getRootX(seq) - bTree->getRootX(otherSeq)), 2.0)
+                            + pow((this->getRootY(seq) - bTree->getRootY(otherSeq)), 2.0)));
         if (((dist > (this->getD2(true) + bTree->getD2(true))))) {
             return false;
         } else {
-            return this->rectCollide(seq,bTree);
+            return this->rectCollide(seq,bTree, otherSeq);
         }
     }
-	inline bool rectCollide(int seq,PolarTree* bTree){
-        return this->rectCollideCoord(seq,bTree->px(bTree->getFinalSeq()), bTree->py(bTree->getFinalSeq()), bTree->pright(bTree->getFinalSeq()),
-                                      bTree->pbottom(bTree->getFinalSeq()));
+	inline bool rectCollide(int seq,PolarTree* bTree, int otherSeq){
+        return this->rectCollideCoord(seq,bTree->px(otherSeq), bTree->py(otherSeq), bTree->pright(otherSeq),
+                                      bTree->pbottom(otherSeq));
     }
 	inline bool rectContain(int seq,double x, double y, double right, double bottom);
 	inline bool rectCollideCoord(int seq,double x, double y, double right,

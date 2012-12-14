@@ -14,10 +14,10 @@ public:
         
     }
 	PolarRootTree* root; 
-	inline int getRootX(int seq){
+	inline double getRootX(int seq){
         return this->root->getRootX(seq);
     }
-	inline int getRootY(int seq){
+	inline double getRootY(int seq){
         return this->root->getRootY(seq);
     }
     inline int getFinalSeq(){

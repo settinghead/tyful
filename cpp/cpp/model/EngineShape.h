@@ -21,6 +21,7 @@ class Angler;
 class EngineShape{
 public:
     EngineShape(ImageShape* shape, unsigned int sid);
+    EngineShape(ImageShape* shape, EngineShape* old);
     ~EngineShape();
     bool wasSkipped();
     void skipBecause(int reason);
@@ -35,8 +36,9 @@ public:
     }
     void nudgeTo(int seq,Placement* place,Angler* angler);
     void finalizePlacement(int final_seq);
-    Placement* getFinalPlacement();
-    Placement* getOrCreateFinalPlacement();
+    Placement getFinalPlacement();
+    void setFinalPlacement(Placement placement);
+//    Placement* getOrCreateFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
     inline Placement* getCurrentPlacement(int seq){
         return currentPlacement[seq];
@@ -55,7 +57,7 @@ private:
     int uid;
     ImageShape* shape;
     Placement* currentPlacement[NUM_THREADS];
-    Placement* renderedPlacement;
+    Placement renderedPlacement;
     vector<PolarPoint>* samplePoints;
     vector<Placement*>* desiredPlacements;
     int desiredPlacementIndex;

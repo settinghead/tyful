@@ -17,20 +17,40 @@
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),desiredPlacementIndex(NULL),desiredPlacements(0),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
+EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
     for(int i=0;i<NUM_THREADS;i++){
-        currentPlacement[i]=new Placement(sid);
+        currentPlacement[i]=new Placement(uid);
     }
     this->shape = shape;
     this->shape->getTree();
     drawSamples();
 }
 
+EngineShape::EngineShape(ImageShape* shape, EngineShape* old):skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(old->getUid()),renderedPlacement(old->renderedPlacement),_winningSeq(old->_winningSeq),referenceCounter(0){
+    for(int i=0;i<NUM_THREADS;i++){
+        currentPlacement[i]=new Placement(uid);
+    }
+    
+    this->shape = shape;
+    int final_seq = old->getShape()->getTree()->getFinalSeq();
+    PolarRootTree* oldTree = old->getShape()->getTree();
+    PolarRootTree* newTree = getShape()->getTree();
+#if NUM_THREADS > 1
+    newTree->setFinalSeq(final_seq);
+#endif
+    newTree->setLocation(final_seq, oldTree->getRootX(final_seq), oldTree->getRootY(final_seq));
+    newTree->setRotation(final_seq, oldTree->getRotation(final_seq));
+    //TODO
+    newTree->setScale(oldTree->getScale());
+//    drawSamples();
+
+}
+
 EngineShape::~EngineShape(){
     delete shape;
-    for(int i=0;i<NUM_THREADS;i++){
-        delete currentPlacement[i];
-    }
+//    for(int i=0;i<NUM_THREADS;i++){
+//        delete currentPlacement[i];
+//    }
 }
 
 void EngineShape::drawSamples(){
@@ -68,7 +88,7 @@ void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
     currentPlacement[seq]->location = p->location;
     currentPlacement[seq]->patch = p->patch;
     
-    double angle= angler->angleFor(seq,this);
+    double angle= angler->angleFor(seq,this,shape->getTree()->getRotation(seq));
     currentPlacement[seq]->rotation = p->rotation = angle;
     this->getShape()->getTree()->setRotation(seq,angle);
     
@@ -86,20 +106,18 @@ void EngineShape::finalizePlacement(int final_seq){
     
     unsigned int color= currentPlacement[final_seq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[final_seq]);
     currentPlacement[final_seq]->color = color;
-    renderedPlacement = currentPlacement[final_seq];
+    renderedPlacement = *currentPlacement[final_seq];
 
     currentPlacement[final_seq]->patch->getShapes()->push_back(this);
 }
 
-Placement* EngineShape::getFinalPlacement(){
-    return renderedPlacement;
-}
-Placement* EngineShape::getOrCreateFinalPlacement(){
-    if( renderedPlacement==NULL)
-        renderedPlacement = new Placement(this->getUid());
+Placement EngineShape::getFinalPlacement(){
     return renderedPlacement;
 }
 
+void EngineShape::setFinalPlacement(Placement placement){
+    this->renderedPlacement = placement;
+}
 
 vector<Placement*>* EngineShape::getDesiredPlacements(){
     return desiredPlacements;

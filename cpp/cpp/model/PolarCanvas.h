@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <semaphore.h>
 #include <tr1/unordered_map>
+#include <tr1/unordered_set>
 #include <queue>
 #include "../ThreadControllers.h"
 
@@ -55,7 +56,7 @@ public:
     static PolarCanvas* current;
     static PolarCanvas* pending;
     static ThreadControllers threadControllers;
-    vector<EngineShape*>* _shapes;
+//    vector<EngineShape*>* _shapes;
 
     
     void feedShape(ImageShape* shape,unsigned int sid);
@@ -85,14 +86,15 @@ public:
     
     void addLayer (PolarLayer* val);
 
-    queue<SlapInfo*>* slaps;
-    queue<EngineShape*>* pendingShapes;
-    vector<EngineShape*>* displayShapes;
-    vector<EngineShape*>* retryShapes;
-    vector<EngineShape*>* fixedShapes;
+    queue<SlapInfo*> slaps;
+    queue<EngineShape*> pendingShapes;
+    vector<EngineShape*> displayShapes;
+    vector<EngineShape*> retryShapes;
+    tr1::unordered_map<unsigned int,EngineShape*> fixedShapes;
     void tryNextEngineShape();
     void resetFixedShapes();
-    void fixShape(int sid, int x, int y, double rotation, double scaleX, double scaleY);
+    vector<int> fixShape(int sid, int x, int y, double rotation, double scaleX, double scaleY);
+    vector<int> fixShape(int sid);
     double getSuccessRate();
     void registerShape(EngineShape* shape);
 
@@ -121,7 +123,7 @@ private:
         return _sizer;
     }
     inline Nudger* getNudger();
-    inline EngineShape* generateEngineWord(ImageShape* shape, unsigned int sid);
+//    inline EngineShape* generateEngineWord(ImageShape* shape, unsigned int sid);
     inline bool placeShape(EngineShape* shape);
     inline void computeDesiredPlacements(EngineShape* shape);
     inline void skipShape(EngineShape* shape, SKIP_REASON reason);
@@ -151,7 +153,7 @@ private:
     
     unsigned int _id;
 #if NUM_THREADS > 1
-	struct threadpool *pool;
+	static struct threadpool *pool;
 #endif
 };
 

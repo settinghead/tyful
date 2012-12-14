@@ -63,6 +63,7 @@ public:
         
         for(int i=0;i<NUMBER_OF_ATTEMPTED_PATCHES; i++){
             Patch* p = getBestPatchAtLevel(level);
+//            Patch* p = getBestPatchAtLevel(0);
             if(p!=NULL) result->push_back(p);
         }
 //        assert(result->size()>0);

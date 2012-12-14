@@ -14,6 +14,7 @@ PolarRootTree::PolarRootTree(ImageShape* shape, double d) :
             for(int i=0;i<NUM_THREADS;i++){
                 this->rootStamp[i] = 1;
                 this->rootX[i] = this->rootY[i] = NAN;
+                this->_rotation[i] = NAN;
             }
 	this->shape = shape;
 //    this->getKids();
@@ -25,12 +26,12 @@ PolarRootTree::~PolarRootTree() {
 
 
 
-inline int PolarRootTree::getRootX(int seq) {
+inline double PolarRootTree::getRootX(int seq) {
     assert(!isnan(this->rootX[seq]));
 	return this->rootX[seq];
 }
 
-inline int PolarRootTree::getRootY(int seq) {
+inline double PolarRootTree::getRootY(int seq) {
     assert(!isnan(this->rootY[seq]));
 	return this->rootY[seq];
 }

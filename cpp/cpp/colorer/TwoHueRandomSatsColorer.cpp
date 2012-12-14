@@ -23,7 +23,7 @@ unsigned int TwoHueRandomSatsColorer::colorFor(Placement* place){
     int index = rand() % (sizeof(hues) / sizeof(hues[0]));
     double hue= hues[index];
     double sat= 200+rand()%(256-200);
-    double val = 50+rand()%(200-50);
+    double val = 100+rand()%(200-100);
     
     
     return ColorMath::HSLtoRGB(hue/256, sat/256, val/256,1.0);

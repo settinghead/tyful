@@ -38,6 +38,9 @@
 
 #if NUM_THREADS > 1
 #include <pthread.h>
+#include "../threads/threadpool.h"
+threadpool *PolarCanvas::pool;
+
 #endif
 
 static int id_counter = 0;
@@ -46,6 +49,7 @@ struct thread_param {
     int seq;
     PolarCanvas* canvas;
 };
+
 
 ThreadControllers PolarCanvas::threadControllers;
 
@@ -57,8 +61,8 @@ PolarCanvas::PolarCanvas():failureCount(0),numRetries(0),totalAttempted(0),
 width(NAN),height(NAN),_status(PAUSED),_sizer(NULL),_nudger(NULL),_placer(NULL),_patchIndex(NULL),
 perseverance(DEFAULT_PERSEVERANCE),diligence(DEFAULT_DILIGENCE),_lastCollidedWith(NULL),_attempt(0),
 _shapeToWorkOn(NULL),
-slaps(new queue<SlapInfo*>()), pendingShapes(new queue<EngineShape*>), _shapes(new vector<EngineShape*>),
-fixedShapes(new vector<EngineShape*>()),displayShapes( new vector<EngineShape*>()),retryShapes(new vector<EngineShape*>()),
+//_shapes(new vector<EngineShape*>),
+//fixedShapes(new tr1::unordered_set<unsigned int>()),
 _id(id_counter++)
 {
     
@@ -97,28 +101,28 @@ PolarCanvas::~PolarCanvas(){
     pthread_cond_destroy(&status_cv);
     pthread_mutex_destroy(&status_mutex);
     
-#if NUM_THREADS > 1
-    threadpool_free(pool,1);
-#endif
-    
+//#if NUM_THREADS > 1
+//    threadpool_free(pool,1);
+//#endif
 
-    for(int i=0;i<_shapes->size();i++){
-        _shapes->at(i)->referenceCounter--;
-        if(_shapes->at(i)->referenceCounter==0){
-            printf("Shape #%d deleted.\n",_shapes->at(i)->getUid());
-            delete (_shapes->at(i));
+    for ( std::tr1::unordered_map<int, EngineShape*>::iterator it = _shapeMap.begin(); it != _shapeMap.end(); ++it ){
+        it->second->referenceCounter--;
+        if(it->second->referenceCounter==0){
+            printf("Shape #%d deleted.\n",it->second->getUid());
+            delete (it->second);
         }
+
     }
 
 //    for ( vector<EngineShape*>::iterator it = _shapes->begin(); it != _shapes->end(); ){
 //            delete * it;
 //    it = _shapes->erase(it);
 //    }
-    delete _shapes;
-    delete pendingShapes;
-    delete displayShapes;
-    delete retryShapes;
-    delete fixedShapes;
+//    delete _shapes;
+//    delete pendingShapes;
+//    delete displayShapes;
+//    delete retryShapes;
+//    delete fixedShapes;
     delete _nudger;
     if(_patchIndex!=NULL)
         delete _patchIndex;
@@ -130,34 +134,37 @@ PolarCanvas::~PolarCanvas(){
 
 
 void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
-    if(failureCount <= perseverance && getStatus() == RENDERING){
-        EngineShape* eShape = generateEngineWord(shape,sid);
-        pendingShapes->push(eShape);
-//        printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
-    }
-}
+    std::tr1::unordered_map<int,EngineShape*>::const_iterator got = _shapeMap.find (sid);
+    EngineShape* eShape = NULL;
+    if(got == _shapeMap.end()){
+        if(failureCount <= perseverance && getStatus() == RENDERING){
+            eShape = new EngineShape(shape,sid);
 
-EngineShape* PolarCanvas::generateEngineWord(ImageShape* shape,unsigned int sid){
-    //    int newIndex = totalAttempted<tu.words.size?totalAttemptedWords
-    //				+ indexOffset
-    //    :tu.words.size;
-    
-    EngineShape* eShape = new EngineShape(shape,sid);
+            pendingShapes.push(eShape);
+    //        printf("Shape fed. width: %d, height: %d.\n",shape->getWidth(),shape->getHeight());
+        }
+    }
+    else{
+        EngineShape* old = got->second;
+        //transfer location and rotation info
+        printf("Shape exists. Replacing...\n");
+        eShape = new EngineShape(shape,old);
+    }
     registerShape(eShape);
 
-    return eShape;
 }
 
+
 void PolarCanvas::tryNextEngineShape(){
-    if(!pendingShapes->empty()){
+    if(!pendingShapes.empty()){
 //    assert(!pendingShapes->empty());
-        EngineShape* eShape = pendingShapes->front();
-        pendingShapes->pop();
+        EngineShape* eShape = pendingShapes.front();
+        pendingShapes.pop();
         placeShape(eShape);
         if(eShape->wasSkipped()){
             if(getSizer()->hasNextSize()){
                 if(totalAttempted>0){
-                    retryShapes->push_back(eShape);
+                    retryShapes.push_back(eShape);
                     numRetries++;
                 }
                 else
@@ -171,8 +178,8 @@ void PolarCanvas::tryNextEngineShape(){
         }
         
         if(!eShape->wasSkipped()){
-            if(failureCount>1) failureCount -= 2;
-            displayShapes->push_back(eShape);
+            if(failureCount>1) failureCount--;
+            displayShapes.push_back(eShape);
         }
         else{
             failureCount++;
@@ -182,22 +189,31 @@ void PolarCanvas::tryNextEngineShape(){
             }
         }
         //TODO: notify arrival of new display shape
-        Placement* placement= eShape->getFinalPlacement();
+         Placement placement = eShape->getFinalPlacement();
         
-        if(placement!=NULL){
+        if(!isnan(placement.location.x)){
             printf("Coord: %f, %f; rotation: %f, color: 0x%x\n"
-                   ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).x
-                   ,eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()).y
-                   ,eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),placement->color);
+                   ,eShape->getShape()->getTree()->getRootX(eShape->getShape()->getTree()->getFinalSeq())
+                   ,eShape->getShape()->getTree()->getRootY(eShape->getShape()->getTree()->getFinalSeq())
+                   ,eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),placement.color);
             
+//            SlapInfo* place = new SlapInfo(eShape->getUid(),getId(),
+//                                            eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()),
+//                                           eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),
+//                                           placement.patch->getLayer()->lid,
+//                                           placement.color,
+//                                           getFailureCount())
+//                                        ;
+            CartisianPoint loc(eShape->getShape()->getTree()->getRootX(eShape->getShape()->getTree()->getFinalSeq()),
+                               eShape->getShape()->getTree()->getRootY(eShape->getShape()->getTree()->getFinalSeq()));
             SlapInfo* place = new SlapInfo(eShape->getUid(),getId(),
-                                            eShape->getShape()->getTree()->getTopLeftLocation(eShape->getShape()->getTree()->getFinalSeq()),
+                                           loc,
                                            eShape->getShape()->getTree()->getRotation(eShape->getShape()->getTree()->getFinalSeq()),
-                                           placement->patch->getLayer()->lid,
-                                           placement->color,
+                                           placement.patch->getLayer()->lid,
+                                           placement.color,
                                            getFailureCount())
-                                        ;
-            slaps->push(place);
+            ;
+            slaps.push(place);
             
         }
         
@@ -272,33 +288,32 @@ void PolarCanvas::attempt_nudge(void *arg){
                 continue;
             }
             
-            if (canvas->_lastCollidedWith != NULL && shapeToWorkOn->getShape()->getTree()->overlaps(seq,canvas->_lastCollidedWith->getShape()->getTree())) {
+            if (canvas->_lastCollidedWith != NULL && shapeToWorkOn->getShape()->getTree()->overlaps(seq,canvas->_lastCollidedWith->getShape()->getTree(),canvas->_lastCollidedWith->getShape()->getTree()->getFinalSeq())) {
                 continue;
             }
             
             //            bool foundOverlap= false;
             
             //					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
-            for (int i= 0; i < canvas->displayShapes->size(); i++) {
+            for (int i= 0; i < canvas->displayShapes.size(); i++) {
                 //						var otherWord:EngineWordVO= neighboringEWords[i];
-                EngineShape* otherShape = canvas->displayShapes->at(i);
+                EngineShape* otherShape = canvas->displayShapes.at(i);
                 if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
 #if NUM_THREADS>1
                 assert(shapeToWorkOn->getShape()->getTree()->getFinalSeq()<0);
 #endif
-                if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree())) {
+                if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree(),otherShape->getShape()->getTree()->getFinalSeq())) {
                     //                    foundOverlap = true;
                     
                     lastCollidedWith = otherShape;
                     goto end_of_inner;
                 }
             }
-            for (int i= 0; i < canvas->fixedShapes->size(); i++) {
-                //						var otherWord:EngineWordVO= neighboringEWords[i];
-                EngineShape* otherShape = canvas->fixedShapes->at(i);
+            for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=canvas->fixedShapes.begin(); it != canvas->fixedShapes.end(); ++it ) {
+                EngineShape* otherShape = it->second;
                 if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
                 
-                if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree())) {
+                if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree(),otherShape->getShape()->getTree()->getFinalSeq())) {
                     
                     lastCollidedWith = otherShape;
                     goto end_of_inner;
@@ -350,7 +365,9 @@ void PolarCanvas::attempt_nudge(void *arg){
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage){
     srand((unsigned)time(NULL));
     int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * diligence;
-    return original * (1+ ((double) rand() / (RAND_MAX)) * 0.2) * (shrinkage+0.2);
+    return original * (1+ ((double) rand() / double(RAND_MAX)) * 0.2)
+    * (shrinkage+0.3)
+    ;
 }
 
 bool PolarCanvas::placeShape(EngineShape* eShape){
@@ -470,7 +487,7 @@ float PolarCanvas::getWidth(){
 }
 
 void PolarCanvas::computeDesiredPlacements(EngineShape* shape){
-    shape->setDesiredPlacements(getPlacer()->place(shape, _shapes->size()));
+    shape->setDesiredPlacements(getPlacer()->place(shape, _shapeMap.size()));
     
 }
 
@@ -520,30 +537,57 @@ void PolarCanvas::connectLayers(){
     }
 }
 
-void PolarCanvas::fixShape(int sid, int x, int y, double rotation,double scaleX, double scaleY){
+vector<int> PolarCanvas::fixShape(int sid){
     EngineShape* shape = _shapeMap[sid];
-    Placement* place = shape->getOrCreateFinalPlacement();
-    place->location.x = x;
-    place->location.y = y;
-    place->rotation = rotation;
+    fixedShapes[shape->getUid()]=shape;
+    
+    vector<int> overlaps;
+    
+    for (int i= 0; i < displayShapes.size(); i++) {
+        EngineShape* otherShape = displayShapes.at(i);
+        if (otherShape->getUid()!=shape->getUid() && otherShape->getShape()->getTree()->overlaps(otherShape->getShape()->getTree()->getFinalSeq(),shape->getShape()->getTree(),shape->getShape()->getTree()->getFinalSeq()))
+        {
+            overlaps.push_back(otherShape->getUid());
+        }
+    }
+        printf("Shape #%d fixed at x:%f,y:%f, r: %f, scale: %f. Total num of fixed shapes: %ld\n",shape->getUid(),shape->getFinalPlacement().location.x,shape->getFinalPlacement().location.y,shape->getFinalPlacement().rotation,shape->getShape()->getTree()->getScale(),fixedShapes.size());
+    return overlaps;
+
+}
+
+vector<int> PolarCanvas::fixShape(int sid, int x, int y, double rotation,double scaleX, double scaleY){
+    EngineShape* shape = _shapeMap[sid];
+    Placement place(sid);
+    place.location.x = x;
+    place.location.y = y;
+    place.rotation = rotation;
+    shape->setFinalPlacement(place);
+
     shape->getShape()->getTree()->setLocation(shape->getShape()->getTree()->getFinalSeq(), x, y);
     shape->getShape()->getTree()->setRotation(shape->getShape()->getTree()->getFinalSeq(), rotation);
     //TODO
     shape->getShape()->getTree()->setScale(scaleX);
-    fixedShapes->push_back(shape);
-    printf("Shape fixed at x:%d,y:%d, r: %f, scale: %f\n",x,y,rotation,scaleX);
-}
+    return fixShape(sid);
+
+   }
 
 void PolarCanvas::resetFixedShapes(){
     this->_shapeMap.clear();
 }
 
 double PolarCanvas::getSuccessRate(){
-    return (float)displayShapes->size()/(float)_shapes->size();
+    return (float)displayShapes.size()/(float)_shapeMap.size();
 }
 
 void PolarCanvas::registerShape(EngineShape *shape){
-    _shapes->push_back(shape);
+    pthread_mutex_lock(&shape_mutex);
+    if(shape!=NULL){
+//    _shapes->push_back(shape);
     shape->referenceCounter++;
-    _shapeMap.insert(std::make_pair<int,EngineShape*>(shape->getUid(),shape));
+    _shapeMap[shape->getUid()] = shape;
+        printf("Shape registered. sid:%d, w:%d,h:%d\n",_shapeMap[shape->getUid()]->getUid(),_shapeMap[shape->getUid()]->getShape()->getWidth(),_shapeMap[shape->getUid()]->getShape()->getHeight());
+//    _shapeMap.insert(std::make_pair<int,EngineShape*>(shape->getUid(),shape));
+    }
+    pthread_mutex_unlock(&shape_mutex);
+
 }

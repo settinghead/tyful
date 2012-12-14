@@ -16,6 +16,8 @@
 #include "encoding/base64.h"
 #include <assert.h>
 #include <pthread.h>
+#include <string>
+#include <sstream>
 #include "lib_json/json_tool.h"
 
 pthread_t*       pendingMainRountineThread = NULL;
@@ -27,27 +29,34 @@ void initCanvas(){
         PolarCanvas::current->setStatus(-1);
 //        pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
         while(PolarCanvas::current->getStatus()!=0){
-            pthread_mutex_trylock(&PolarCanvas::threadControllers.next_feed_mutex);
+            pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
             pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
             pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
             usleep(5000);
         }
     }
+    
+//    if(PolarCanvas::current!=NULL)
+//    PolarCanvas::current->fixShape(PolarCanvas::current->displayShapes->at(0)->getUid(),
+//                                   PolarCanvas::current->displayShapes->at(0)->getFinalPlacement().location.x,
+//                                   PolarCanvas::current->displayShapes->at(0)->getFinalPlacement().location.y, 0, 1, 1);
 
     PolarCanvas* newCanvas = new PolarCanvas();
+    
     //transfer fixed shapes
     if(PolarCanvas::current!=NULL){
         assert(PolarCanvas::current->getStatus()==0);
-        for(int i=0;i<PolarCanvas::current->fixedShapes->size();i++){
-            newCanvas->registerShape(PolarCanvas::current->fixedShapes->at(i));
-            newCanvas->fixedShapes->push_back(PolarCanvas::current->fixedShapes->at(i));
+        for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=PolarCanvas::current->fixedShapes.begin(); it != PolarCanvas::current->fixedShapes.end(); ++it ) {
+            EngineShape* shape = it->second;
+            newCanvas->registerShape(shape);
+            newCanvas->fixShape(shape->getUid(), shape->getFinalPlacement().location.x, shape->getFinalPlacement().location.y, shape->getFinalPlacement().rotation, shape->getShape()->getTree()->getScale(), shape->getShape()->getTree()->getScale());
         }
         delete PolarCanvas::current;
     }
     
     
     PolarCanvas::current = newCanvas;
-    printf("Canvas initialized. Ready to receive template bytes. numFixedShapes: %d\n", (int)PolarCanvas::current->fixedShapes->size());
+    printf("Canvas initialized. Ready to receive template bytes. numFixedShapes: %d\n", (int)PolarCanvas::current->fixedShapes.size());
     pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
 
 
@@ -161,7 +170,7 @@ void* renderRoutine(void*){
                             pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
 //                        }
 //                    }
-                if(canvas->pendingShapes->empty())
+                if(canvas->pendingShapes.empty())
                     pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
                     if(canvas->getStatus()>0)
                     {
@@ -231,7 +240,7 @@ void setStatus(int status)
 }
 
 unsigned int getNumberOfPendingShapes(){
-    return (unsigned int)PolarCanvas::current->pendingShapes->size();
+    return (unsigned int)PolarCanvas::current->pendingShapes.size();
 }
 
 
@@ -241,9 +250,9 @@ double getShrinkage()
 }
 
 SlapInfo* getNextSlap(){
-    if(PolarCanvas::current->slaps->empty()) return NULL;
-    SlapInfo* info = PolarCanvas::current->slaps->front();
-    PolarCanvas::current->slaps->pop();
+    if(PolarCanvas::current->slaps.empty()) return NULL;
+    SlapInfo* info = PolarCanvas::current->slaps.front();
+    PolarCanvas::current->slaps.pop();
     
     //DEBUG
 //    info->location.x = 200;
@@ -261,8 +270,13 @@ Dimension getCanvasSize(){
 void resetFixedShapes(){
     PolarCanvas::current->resetFixedShapes();
 }
-void setFixedShape(int sid, int x, int y, double rotation,double scaleX,double scaleY){
-    PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
+string setFixedShape(int sid, int x, int y, double rotation,double scaleX,double scaleY){
+    vector<int> overlaps = PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
+    std::stringstream ss;
+    ss << sid << ",";
+    for(int i=0;i<overlaps.size();i++)
+        ss << overlaps.at(i) << ",";
+    return ss.str();
 }
 
 void loadTemplateFromZip(unsigned char *data){
