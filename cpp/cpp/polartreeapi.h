@@ -21,4 +21,4 @@ SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid
 unsigned int getNumberOfPendingShapes();
 Dimension getCanvasSize();
 void resetFixedShapes();
-std::string setFixedShape(int sid, int x, int y, double rotation,double scaleX,double scaleY);
+std::string setFixedShape(int sid, double x, double y, double rotation,double scaleX,double scaleY);
