@@ -14,7 +14,10 @@ class EngineShape;
 class Angler{
 public:
     ~Angler(){}
-    virtual double angleFor(int seq,EngineShape* shape) = 0;
+    virtual double angleFor(int seq,EngineShape* shape, double prevAngle) = 0;
+    virtual inline bool alternativeValid(double angle){
+        return false;
+    }
 };
 
 #endif /* defined(__PolarTree_Experiment__Angler__) */

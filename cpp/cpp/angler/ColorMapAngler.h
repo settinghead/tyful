@@ -14,7 +14,7 @@ class WordLayer;
 class ColorMapAngler: public Angler{
 public:
     ColorMapAngler(WordLayer* layer, Angler* otherwise);
-    inline double angleFor(int seq,EngineShape* shape);
+    inline double angleFor(int seq,EngineShape* shape, double prevAngle);
 private:
     WordLayer* layer;
     Angler* otherwise;

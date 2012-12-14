@@ -49,7 +49,7 @@ void initCanvas(){
         for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=PolarCanvas::current->fixedShapes.begin(); it != PolarCanvas::current->fixedShapes.end(); ++it ) {
             EngineShape* shape = it->second;
             newCanvas->registerShape(shape);
-            newCanvas->fixShape(shape->getUid(), shape->getFinalPlacement().location.x, shape->getFinalPlacement().location.y, shape->getFinalPlacement().rotation, shape->getShape()->getTree()->getScale(), shape->getShape()->getTree()->getScale());
+            newCanvas->fixShape(shape->getUid());
         }
         delete PolarCanvas::current;
     }
@@ -270,7 +270,7 @@ Dimension getCanvasSize(){
 void resetFixedShapes(){
     PolarCanvas::current->resetFixedShapes();
 }
-string setFixedShape(int sid, int x, int y, double rotation,double scaleX,double scaleY){
+string setFixedShape(int sid, double x, double y, double rotation,double scaleX,double scaleY){
     vector<int> overlaps = PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
     std::stringstream ss;
     ss << sid << ",";

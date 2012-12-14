@@ -79,6 +79,7 @@
 		7C0A572C166D811B004D4A14 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadControllers.cpp; sourceTree = "<group>"; };
 		7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadControllers.h; sourceTree = "<group>"; };
+		7C5EDB56167B4A870005B052 /* ColorMapSpiralNudger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMapSpiralNudger.h; sourceTree = "<group>"; };
 		7C7AE869166745B7002466A3 /* cpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = cpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7AE86D166745B7002466A3 /* cpp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cpp-Prefix.pch"; sourceTree = "<group>"; };
 		7C7AE86E166745B7002466A3 /* cppProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = cppProj.xcconfig; sourceTree = "<group>"; };
@@ -324,6 +325,7 @@
 			children = (
 				7C7AE92816674B5C002466A3 /* ColorMapZigzagNudger.h */,
 				7C7AE92916674B5C002466A3 /* Nudger.h */,
+				7C5EDB56167B4A870005B052 /* ColorMapSpiralNudger.h */,
 			);
 			path = nudger;
 			sourceTree = "<group>";

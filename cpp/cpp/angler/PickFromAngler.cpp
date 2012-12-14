@@ -10,18 +10,17 @@
 #include "../model/EngineShape.h"
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 
 
-PickFromAngler::PickFromAngler(vector<double>* angles){
-    this->angles = angles;
+PickFromAngler::PickFromAngler(){
     srand ( (unsigned int)time(NULL) );
 }
 
 PickFromAngler::~PickFromAngler(){
-    delete angles;
 }
 
-double PickFromAngler::angleFor(int seq,EngineShape* shape){
-    int i = (int)(rand() % angles->size());
-    return angles->at(i);
+double PickFromAngler::angleFor(int seq,EngineShape* shape,double prevAngle){
+    int i = (int)(rand() % angles.size());
+    return angles[i];
 }

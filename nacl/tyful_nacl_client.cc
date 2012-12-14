@@ -41,6 +41,7 @@
 #include <iostream>
 #include <pthread.h>
 #include <cstring>
+#include <vector>
 
 
 namespace {
@@ -57,6 +58,7 @@ namespace {
   // const int kPauseRenderMethodId = 2;
   const int kFeedShapeMethodId = 3;
   const int kUpdatePerseveranceMethodId = 4;
+  const int kFixShapeMethodId = 5;
 
   const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
   const char* kStartRenderMethodPrefix = "startRender:";
@@ -69,6 +71,7 @@ namespace {
   const char* kinitCompletePrefix = "initComplete";
   const char* kTemplateDataReceivedPrefix = "templateDataReceived";
   const char* kFeedMeMethodPrefix = "feedMe";
+  const char* kObscureSidsMethodsPrefix = "obscureSids";
 
 // The string sent back to the browser upon receipt of a message
 // containing "hello".
@@ -145,6 +148,7 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
   }
+
 
   void* PostStringToBrowser(
     int32_t result, 
@@ -248,13 +252,13 @@ public:
         char * pch;
         size_t pos = message.find_first_of(':')+1;
           pch = strtok ((char*)message.substr(pos).c_str(),",");
-          int sid = ::atoi(pch);
+          sid = ::atoi(pch);
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
-          int x = ::atoi(pch);
+          double x = ::atof(pch);
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
-          int y = ::atoi(pch);
+          double y = ::atof(pch);
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
           double rotation = ::atof(pch);
@@ -264,7 +268,11 @@ public:
           pch = strtok (NULL, ",");
           if(pch==NULL) return;
           double scaleY = ::atof(pch);
-          setFixedShape(sid,x,y,rotation,scaleX,scaleY);
+          std::string obscureSids = setFixedShape(sid,x,y,rotation,scaleX,scaleY);
+          std::string msg = string(kObscureSidsMethodsPrefix)+string(":")+obscureSids;
+          PostMessage(pp::Var(msg.c_str()));
+
+          status = kFixShapeMethodId;
       }
     }
     else if (var_message.is_array_buffer()){

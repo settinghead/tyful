@@ -15,8 +15,8 @@ public:
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     virtual unsigned char * toPng(unsigned int pixelValue) = 0;
 
-    inline bool containsPoint(int x, int y){
-        return !isEmpty(getPixel(x, y));
+    inline bool containsPoint(double x, double y){
+        return !isEmpty(getPixel((int)x, (int)y));
     }
 	inline bool intersects(int x, int y, int width, int height){
         if(x>=getWidth()) x=getWidth()-1;

@@ -8,16 +8,16 @@
 
 #include "MostlyHorizontalAngler.h"
 #include "PickFromAngler.h"
-#include <vector>
+#include <set>
 #include "../constants.h"
 
 using namespace std;
 
 MostlyHorizontalAngler::MostlyHorizontalAngler():
-PickFromAngler::PickFromAngler(new vector<double>()){
-    angles->push_back(0);
-    angles->push_back(0);
-    angles->push_back(0);
-    angles->push_back(HALF_PI);
-    angles->push_back(HALF_PI*3);
+PickFromAngler::PickFromAngler(){
+    addAngle(0);
+    addAngle(0);
+    addAngle(0);
+    addAngle(HALF_PI);
+//    addAngle(HALF_PI*3);
 }

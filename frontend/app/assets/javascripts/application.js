@@ -19,6 +19,7 @@
 //= require fabric.js
 //= require jquery.simplemodal
 //= require angular.min
+//= require jquery.fontselect
 
 window.resizeStuff = function (){
 	$('#header-middle').css('right',

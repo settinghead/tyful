@@ -555,7 +555,7 @@ vector<int> PolarCanvas::fixShape(int sid){
 
 }
 
-vector<int> PolarCanvas::fixShape(int sid, int x, int y, double rotation,double scaleX, double scaleY){
+vector<int> PolarCanvas::fixShape(int sid, double x, double y, double rotation,double scaleX, double scaleY){
     EngineShape* shape = _shapeMap[sid];
     Placement place(sid);
     place.location.x = x;

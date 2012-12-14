@@ -1,22 +1,22 @@
 
 
-  		<% if @template.errors.any? %>
-  		<div id="error_explanation">
-  			<h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+<% if @template.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
 
-  			<ul>
-  				<% @template.errors.full_messages.each do |msg| %>
-  				<li><%= msg %></li>
-  				<% end %>
-  			</ul>
-  		</div>
-  		<% end %>
+	<ul>
+		<% @template.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  		<div class="row-fluid">
-  			<div class="span12" style="height: 100%;">
+<div class="row-fluid">
+	<div class="span12" style="height: 100%;">
 
-  				<%if can? :manage, @template%>
-  				<script type="text/javascript">
+		<%if can? :manage, @template%>
+		<script type="text/javascript">
 // window.onbeforeunload = function(){
 // 	var message = "There might be unsaved changes to your template. Are you sure you want to navigate away from this page? ",
 // 	  e = e || window.event;
@@ -31,45 +31,55 @@
 
 </script>
 <%end%>
- <div class="row-fluid" style="text-align:center;">
-<div class="span9">
-	  <ul class="nav nav-tabs" id="tyfulTabs">
-  	<li class="active"><a href="#draw" id="drawButton">Draw</a></li>
-  	<li><a href="#adjust" id="adjustButton">Adjust</a></li>
-  	<li><a href="#share" id="shareButton">Share</a></li>
-  </ul>
-  <div class="tab-content">
-  	<div class="tab-pane active" id="draw">
-		<div id="mainCanvas">
-			<canvas id="sketch" width="800" height="600" style="background-color:#ffffff;"></canvas>
-			<div class="tools">
-				<a href="#sketch" data-tool="marker">Marker</a>
-				<a href="#sketch" data-tool="eraser">Eraser</a>
-				<!--http://www.script-tutorials.com/demos/206/index.html-->
-				<div style="display: inline-block;">
-					<canvas id="color" width="300" height="30"></canvas>
-				</div>
-				<div style="display: inline-block;">
-					<div>Preview:</div>
-					<div id="preview"></div>
-					<div id="pick"></div>
+<div class="row-fluid" style="text-align:center;">
+	<div class="span9">
+		<ul class="nav nav-tabs" id="tyfulTabs">
+			<li class="active"><a href="#draw" id="drawButton" data-toggle="tab">Draw</a></li>
+			<li><a href="#adjust" id="adjustButton" data-toggle="tab">Adjust</a></li>
+			<li><a href="#share" id="shareButton" data-toggle="tab">Share</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="draw">
+				<div id="mainCanvas">
+					<canvas id="sketch" width="800" height="600" style="background-image: url(<%=image_path 'transparent-background-tile.png'%>);"></canvas>
+					<div class="drawing-tools floating-toolbar">
+						<a href="#sketch" data-tool="marker">Marker</a>
+						<a href="#sketch" data-tool="eraser">Eraser</a>
+						<!--http://www.script-tutorials.com/demos/206/index.html-->
+						<div style="display: inline-block;">
+							<canvas id="color" width="300" height="30"></canvas>
+						</div>
+						<div style="display: inline-block;">
+							<div>Preview:</div>
+							<div id="preview"></div>
+							<div id="pick"></div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+			<div class="tab-pane" id="adjust">
+					<div id="render-editor" class="frame" style="width: 100%; height: 100%; overflow: scroll;">
+						<canvas id="renderer"></canvas>
+					</div>
+					<div class="floating-toolbar" id="object-editor">
+						<input class="fontselect" type="text" />
+					</div>
+			</div>
 
-	<div class="tab-pane" id="adjust">
-	<div class="row-fluid">
-			<div id="render-editor" class="frame" style="width: 100%; height: 100%; overflow: scroll;">
-				<canvas id="renderer"></canvas>
-			</div>
+			<div class="tab-pane" id="share">Share your Tyful artwork </div>
 		</div>
 	</div>
-	<div class="tab-pane" id="share">Share your Tyful artwork </div>
-</div>
-</div>
-<div class="span3">
+	<div class="span3">
 		<div class="affix" style="padding: 10px;">
+			<ul class="nav nav-tabs" id="sidebarTabs">
+				<li class="active"><a href="#draw" id="drawButton">Insert</a></li>
+				<li><a href="#adjust" id="adjustButton">Words</a></li>
+				<li><a href="#share" id="shareButton">Fonts</a></li>
+				<li><a href="#share" id="shareButton">Color</a></li>
+			</ul>
+			<div id="object-editor">
+
+			</div>
 			<div id="renderpreview-container">
 				<canvas id="renderpreview" class="thumb zoomtransition" width="800" height="600"></canvas>
 			</div>

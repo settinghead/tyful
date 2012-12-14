@@ -15,16 +15,21 @@ ColorMapAngler::ColorMapAngler(WordLayer* layer, Angler* otherwise){
     this->otherwise = otherwise;
 }
 
-inline double ColorMapAngler::angleFor(int seq,EngineShape* shape){
+inline double ColorMapAngler::angleFor(int seq,EngineShape* shape,double prevAngle){
     if (shape->getCurrentPlacement(seq) == NULL)
-        return otherwise->angleFor(seq,shape);
+        return otherwise->angleFor(seq,shape,prevAngle);
     // float angle = (img.getHue(
     // (int) eWord.getCurrentLocation().getpVector().x, (int) eWord
     // .getCurrentLocation().getpVector().y) + BBPolarTree.PI)
     // % BBPolarTree.TWO_PI;
+    
     double angle= (layer->getHue((int)shape->getCurrentPlacement(seq)->location.x, (int)shape->getCurrentPlacement(seq)->location.y) * TWO_PI);
-    if (isnan(angle))
-        return otherwise->angleFor(seq,shape);
+    if (isnan(angle)){
+        if(!isnan(prevAngle) && otherwise->alternativeValid(prevAngle))
+            return prevAngle;
+        else
+        return otherwise->angleFor(seq,shape,prevAngle);
+    }
     else
         return angle;
 }
