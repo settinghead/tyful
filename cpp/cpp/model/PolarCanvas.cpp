@@ -21,6 +21,7 @@
 #include "../placer/Placer.h"
 #include "../placer/ColorMapPlacer.h"
 #include "../nudger/ColorMapZigzagNudger.h"
+#include "../nudger/ColorMapSpiralNudger.h"
 #include "../density/DensityPatchIndex.h"
 #include "structs.h"
 //#include "concurrent_queue.h"
@@ -206,7 +207,7 @@ void PolarCanvas::tryNextEngineShape(){
 
 Nudger* PolarCanvas::getNudger(){
     if(_nudger==NULL){
-        _nudger = new ColorMapZigzagNudger();
+        _nudger = new ColorMapSpiralNudger();
     }
     return _nudger;
 }
