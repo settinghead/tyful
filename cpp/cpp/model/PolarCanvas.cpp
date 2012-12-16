@@ -151,7 +151,6 @@ void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
         eShape = new EngineShape(shape,old);
     }
     registerShape(eShape);
-
 }
 
 
@@ -170,8 +169,12 @@ void PolarCanvas::tryNextEngineShape(){
                 else
                     numRetries = MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE;
                 if(numRetries==MAX_NUM_RETRIES_BEFORE_REDUCE_SIZE ){
-                    getSizer()->switchToNextSize();
                     numRetries = 0;
+                    if (getSizer()->switchToNextSize()){
+                        while(pendingShapes.size()>0){
+                            pendingShapes.pop();
+                        }
+                    }
                 }
                 return;
             }
@@ -223,7 +226,8 @@ void PolarCanvas::tryNextEngineShape(){
 
 Nudger* PolarCanvas::getNudger(){
     if(_nudger==NULL){
-        _nudger = new ColorMapSpiralNudger();
+//        _nudger = new ColorMapSpiralNudger();
+        _nudger = new ColorMapZigzagNudger();
     }
     return _nudger;
 }
@@ -406,7 +410,10 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
 			threadpool_add_task(pool,attempt_nudge,(void*)tp,1);
         }
     while(true){
+        printf("PlaceShape waiting on count_threshold_cv...\n");
         pthread_cond_wait(&count_threshold_cv, &count_threshold_mutex);
+        printf("PlaceShape wait is over on count_threshold_cv.\n");
+
 //        pthread_mutex_lock(&numActiveThreads_mutex);
         bool allSignedOff = true;
         for(int i=0;i<NUM_THREADS;i++){
@@ -500,7 +507,7 @@ DensityPatchIndex* PolarCanvas::getPatchIndex(){
 
 void PolarCanvas::setStatus(STATUS status){
     pthread_mutex_lock(&status_mutex);
-    this->_status = status;
+    this->_status = (status==-1 && this->_status==0)?0:status;
     pthread_mutex_unlock(&status_mutex);
 }
 
@@ -538,6 +545,8 @@ void PolarCanvas::connectLayers(){
 }
 
 vector<int> PolarCanvas::fixShape(int sid){
+    pthread_mutex_lock(&shape_mutex);
+
     EngineShape* shape = _shapeMap[sid];
     fixedShapes[shape->getUid()]=shape;
     
@@ -551,6 +560,8 @@ vector<int> PolarCanvas::fixShape(int sid){
         }
     }
         printf("Shape #%d fixed at x:%f,y:%f, r: %f, scale: %f. Total num of fixed shapes: %ld\n",shape->getUid(),shape->getFinalPlacement().location.x,shape->getFinalPlacement().location.y,shape->getFinalPlacement().rotation,shape->getShape()->getTree()->getScale(),fixedShapes.size());
+    pthread_mutex_unlock(&shape_mutex);
+
     return overlaps;
 
 }

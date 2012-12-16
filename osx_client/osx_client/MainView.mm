@@ -33,6 +33,7 @@
 - (void)awakeFromNib {
     [NSThread detachNewThreadSelector:@selector(slapRoutine) toTarget:self withObject:nil];
     [NSThread detachNewThreadSelector:@selector(feedShapes) toTarget:self withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(fixThingsAtRandom) toTarget:self withObject:nil];
 
 }
 
@@ -219,62 +220,71 @@ int sid = 0;
             [self feedNextText];
     }
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
+}
 
+
+-(void)fixThingsAtRandom{
+    while(true){
+        sleep(1);
+        EngineShape* shape = NULL;
+        //    NSMutableAttributedString * string;
+        unsigned int textColor = 0xFF0000 & 0x00FFFFFF;
+        NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
+        
+        NSMutableAttributedString* stringToDraw = NULL;
+        if(PolarCanvas::current!=NULL){
+//            pthread_mutex_lock(&PolarCanvas::current->shape_mutex);
+
+            if(PolarCanvas::current->displayShapes.size()>0){ //DEBUG block for fixshape
+
+        //        NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
+        //        NSAttributedString *stringToInsert;
+        //        double shrinkage = 1;
+
+        //        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*shrinkage+12];
+        //        string = [[NSMutableAttributedString alloc] initWithString:str];
+
+                shape = PolarCanvas::current->displayShapes.at(arc4random() % PolarCanvas::current->displayShapes.size());
+                
+        //        [dict setObject:string forKey:[NSString stringWithFormat:@"%u", sid]];
+
+        //        [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
+
+        //        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[string length])];
+
+        //        stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
+
+                stringToDraw = [dict objectForKey:[NSString stringWithFormat:@"%u", shape->getUid()]];
+                NSBitmapImageRep *textImage = [MainView getTextImage:stringToDraw];
+                [stringToDraw removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0,[stringToDraw length])];
+                [stringToDraw addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[stringToDraw length])];
+                
+                unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
+
+                feedShape(pixels, textImage.size.width, textImage.size.height, shape->getUid(),false,false,getShrinkage());
+                
+                PolarCanvas::current->fixShape(shape->getUid());
+            }
+//            pthread_mutex_unlock(&PolarCanvas::current->shape_mutex);
+
+            if(shape!=NULL){
+                int final_seq = shape->getShape()->getTree()->getFinalSeq();
+                CartisianPoint center(shape->getShape()->getTree()->getRootX(final_seq),shape->getShape()->getTree()->getRootY(final_seq));
+                NSPoint point = NSMakePoint(center.x,
+                                            mainImage.size.height-stringToDraw.size.height-center.y);
+                double rotation = -(shape->getFinalPlacement().rotation)*360/M_PI/2;
+                [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
+                
+        }
+        }
+    }
 }
 
 - (void)drawColorMappedText:(id)sender{
     
-    EngineShape* shape = NULL;
-//    NSMutableAttributedString * string;
-    unsigned int textColor = 0xFF0000 & 0x00FFFFFF;
-    NSColor* color = [NSColor colorWithCalibratedRed:((double)(textColor>>16))/255 green:((double)(textColor>>8 & 0x000000FF))/255 blue:((double)(textColor & 0xFF))/255 alpha:1.0F];
-    NSMutableAttributedString* stringToDraw = NULL;
-//    if(PolarCanvas::current!=NULL){ //DEBUG block for fixshape
-//        
-////        NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
-////        NSAttributedString *stringToInsert;
-////        double shrinkage = 1;
-//
-////        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*shrinkage+12];
-////        string = [[NSMutableAttributedString alloc] initWithString:str];
-//        
-//        shape = PolarCanvas::current->displayShapes.at(0);
-////        [dict setObject:string forKey:[NSString stringWithFormat:@"%u", sid]];
-//        
-////        [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [str length])];
-//
-////        [string addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[string length])];
-//
-////        stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
-//        
-////        NSBitmapImageRep *textImage = [MainView getTextImage:stringToInsert];
-////        unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
-////
-////        feedShape(pixels, textImage.size.width, textImage.size.height, shape->getUid(),false,false,getShrinkage());
-//        PolarCanvas::current->fixedShapes.clear();
-//
-////        PolarCanvas::current->fixedShapes[sid] = shape;
-////        PolarCanvas::current->fixedShapes[sid] = PolarCanvas::current->displayShapes->at(0);
-//
-//        PolarCanvas::current->fixShape(shape->getUid());
-//        
-//        stringToDraw = [dict objectForKey:[NSString stringWithFormat:@"%u", shape->getUid()]];
-//        [stringToDraw removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0,[stringToDraw length])];
-//        [stringToDraw addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[stringToDraw length])];
-//    }
     
     [self loadDirectionImage];
     [self resetMainImage];
-    
-    if(shape!=NULL){
-        int final_seq = shape->getShape()->getTree()->getFinalSeq();
-        CartisianPoint center(shape->getShape()->getTree()->getRootX(final_seq),shape->getShape()->getTree()->getRootY(final_seq));
-        NSPoint point = NSMakePoint(center.x,
-                                    mainImage.size.height-stringToDraw.size.height-center.y);
-        double rotation = -(shape->getFinalPlacement().rotation)*360/M_PI/2;
-        [self drawText:point withStringToInsert:stringToDraw withRotation:rotation];
-
-    }
     
     startRendering();
 

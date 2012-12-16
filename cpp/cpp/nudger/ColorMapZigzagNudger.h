@@ -25,8 +25,8 @@ public:
 //        double y = ((attempt % (int)(p->getHeight() / unitDistance)) * unitDistance - p->getHeight() / 2);
         double x = ((attempt / (p->getHeight() / unitDistance)) * unitDistance);
         double y = ((attempt % (int)(p->getHeight() / unitDistance)) * unitDistance);
-//        x *= 1.5;
-//        y *= 1.5;
+        x *= 0.75;
+        y *= .75;
 
 //        x *= 1.7;
 //        y *= 1.7;

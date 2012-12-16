@@ -25,7 +25,7 @@ private:
 	}
 public:
     inline Placement* nudgeFor(EngineShape* shape, Placement* placement, int attempt, int totalPlannedAttempts){
-        attempt = ( attempt + placement->patch->getLastAttempt() + totalPlannedAttempts / 2) % totalPlannedAttempts;
+        attempt = ( attempt + placement->patch->getLastAttempt() + totalPlannedAttempts) % totalPlannedAttempts;
         Patch* p= placement->patch;
         
         Placement* retPoint = (Placement*)malloc(sizeof(Placement));
@@ -36,7 +36,7 @@ public:
         
         double factor = p->getWidth() < p->getHeight() ? p->getWidth() : p
         ->getHeight();
-        factor/=1.8;
+        factor/=3.6;
         //			if (p.getLevel() == 0)
         //				factor /= 6;
         //			else if (p.getLevel() == 1)

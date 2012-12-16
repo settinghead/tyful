@@ -46,7 +46,7 @@ $(document).ready ->
     $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
   $("#sketch").sketch defaultSize:100
 
-  if true
+  if false
     img = new Image()
     img.src= "/templates/face.png"
     img.onload = ->
@@ -124,6 +124,9 @@ window.TyfulNacl.reloadCanvas = () ->
   window.renderCanvas.dispose() if window.renderCanvas
   $('#renderpreview')[0].width = $("#sketch")[0].width
   $('#renderpreview')[0].height = $("#sketch")[0].height
+  # $("#renderpreview")[0].height = $("#renderpreview").height()
+  # $("#renderpreview")[0].width = $("#renderpreview").width()
+
   $('#renderer')[0].width = $("#sketch")[0].width
   $('#renderer')[0].height = $("#sketch")[0].height
   window.renderCanvas = new fabric.Canvas('renderer',
@@ -194,7 +197,7 @@ window.TyfulNacl.startRendering = ->
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
   window.TyfulNacl.initializing = false
-  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "|", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
+  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
   renderCanvas = $("#renderpreview")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
@@ -402,7 +405,7 @@ window.TyfulNacl.slap = (sid, x, y, rotation, layer, color, failureCount) ->
 window.TyfulNacl.redrawShoppingWindows = ->
   context = $('#renderpreview')[0].getContext("2d")
   context.clearRect(0,0,$('#renderpreview')[0].width,$('#renderpreview')[0].height)
-  context.drawImage($('#renderer')[0],0,0)
+  context.drawImage($('#renderer')[0],0,0, $("#renderpreview")[0].width, $("#renderpreview")[0].height)
   $(".shopping-window").each ->
     context = @getContext("2d")
     context.clearRect(0,0,@width,@height)
@@ -412,7 +415,7 @@ window.TyfulNacl.redrawShoppingWindows = ->
 
 window.TyfulNacl.handleMessage = (message_event) ->
   if message_event.data
-    # console.log(message_event.data) if message_event.data.indexOf("DEBUG_POSTMESSAGE") is 0
+    console.log(message_event.data) if message_event.data.indexOf("DEBUG_POSTMESSAGE") is 0
     # console.log(message_event.data) 
     if message_event.data.indexOf(window.TyfulNacl.slapShapeMethodPrefix) is 0
       params = message_event.data.substring(window.TyfulNacl.slapShapeMethodPrefix.length)
@@ -456,6 +459,6 @@ window.TyfulNacl.handleMessage = (message_event) ->
           console.log sid
           shape = window.TyfulNacl.shapes[sid]
           window.TyfulNacl.shapes[this_sid].overlaps.push shape
-          shape.setOpacity 0
+          shape.setOpacity 0.15
       window.renderCanvas.renderAll()
 

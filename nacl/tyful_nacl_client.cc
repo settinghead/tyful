@@ -41,6 +41,7 @@
 #include <iostream>
 #include <pthread.h>
 #include <cstring>
+#include <sys/time.h>
 #include <vector>
 
 
@@ -117,12 +118,15 @@ public:
   string* messageToPost;
   pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
 
+
   static void *checkAndRenderSlaps(void* core){
     printf("Slap checker thread started\n.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     while(true){
       // try{
+        printf("checkAndRenderSlaps waiting on next_slap_req_cv...\n");
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
+        printf("checkAndRenderSlaps wait is over next_slap_req_cv.\n");
         SlapInfo* placement;
         while((placement=getNextSlap())!=NULL){
           // std::stringstream ss(std::stringstream::in | std::stringstream::out);
@@ -149,7 +153,6 @@ public:
     return NULL;
   }
 
-
   void* PostStringToBrowser(
     int32_t result, 
     std::string data_to_send) {
@@ -157,13 +160,25 @@ public:
     return 0;
   }
 
+
   static void *feedShapes(void* core){
     printf("FeedShape checker thread started\n.");
     TyfulNaclCoreInstance* event_instance = static_cast<TyfulNaclCoreInstance*>(core);
-
+    struct timespec   ts;
+    struct timeval    tp;
+    int               rc;
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     while(true){
+
+      rc =  gettimeofday(&tp, NULL);
+       ts.tv_sec  = tp.tv_sec;
+      ts.tv_nsec = tp.tv_usec * 1000;
+      ts.tv_nsec += 100 * 1000 * 1000;
+      
+      printf("feedShapes waiting on next_feed_req_cv...\n");
+      // pthread_cond_timedwait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex, &ts);
       pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_req_cv, &PolarCanvas::threadControllers.next_feed_req_mutex);
+      printf("feedShapes wait is over on next_feed_req_cv.\n");
       // try{
       // for(int i=PolarCanvas::current->pendingShapes->size()&&getStatus()>0;i<10;i++){
         // std::stringstream ss(std::stringstream::in | std::stringstream::out);
@@ -297,6 +312,7 @@ public:
         PostMessage(pp::Var(msg));
       }
       else if (status==kFeedShapeMethodId){
+        printf("Binary command received. Status: feedShape.\n");
         feedShape(buffer,width,height,sid,true,true,shrinkage);
       }
     }

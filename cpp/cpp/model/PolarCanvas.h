@@ -135,7 +135,6 @@ private:
     EngineShape* _lastCollidedWith;
     int _attempt;
     int _maxAttemptsToPlace;
-    pthread_mutex_t shape_mutex;
     pthread_mutex_t attempt_mutex;
     pthread_mutex_t numActiveThreads_mutex;
     pthread_cond_t count_threshold_cv;
@@ -143,6 +142,7 @@ private:
     pthread_cond_t status_cv;
     pthread_mutex_t status_mutex;
     
+    pthread_mutex_t shape_mutex;
 
     pthread_attr_t attr;
 //    pthread_t threads[NUM_THREADS];
