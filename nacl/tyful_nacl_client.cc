@@ -44,6 +44,7 @@
 #include <sys/time.h>
 #include <vector>
 
+  using namespace std;
 
 namespace {
 // The expected string sent by the browser.
@@ -61,12 +62,12 @@ namespace {
   const int kUpdatePerseveranceMethodId = 4;
   const int kFixShapeMethodId = 5;
 
-  const char* kUpdateTemplateMethodPrefix = "updateTemplate:";
-  const char* kStartRenderMethodPrefix = "startRender:";
+  const string kUpdateTemplateMethodPrefix = "updateTemplate";
+  const string kStartRenderMethodPrefix = "startRender";
   // const char* kPauseRenderMethodPrefix = "pauseRender:";
-  const char* kFeedShapeMethodPrefix = "feedShape:";
-  const char* kUpdatePerseveranceMethodPrefix = "updatePerseverance:";
-  const char* kFixShapeMethodPrefix = "fixShape:";
+  const string kFeedShapeMethodPrefix = "feedShape";
+  const string kUpdatePerseveranceMethodPrefix = "updatePerseverance";
+  const string kFixShapeMethodPrefix = "fixShape";
 
   const char* kSlapMethodPrefix = "slapShape";
   const char* kinitCompletePrefix = "initComplete";
@@ -92,7 +93,8 @@ class TyfulNaclCoreInstance : public pp::Instance {
 
 private:
   int status;
-  int width, height, sid;
+  int sid;
+  double width, height;
   double shrinkage;
   pthread_t       checkRenderRoutineThread;
   pthread_t       feedRoutineThread;
@@ -203,6 +205,7 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
   }
+
   
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
@@ -217,23 +220,23 @@ public:
   /// @param[in] var_message The message posted by the browser.
   virtual void HandleMessage(const pp::Var& var_message) {
     if(var_message.is_string()){
-      std::string message = var_message.AsString();
+      string message = var_message.AsString();
       printf("String command received: %s\n",message.c_str());
-      if(message.find(kUpdateTemplateMethodPrefix) == 0){
+      stringstream reader;
+      reader.clear(); reader.str(""); reader.str(message);
+      string command_literal;
+      reader >> command_literal;
+      if(command_literal.compare(kUpdateTemplateMethodPrefix) == 0){
         status = kUpdateTemplateMethodId;
-        char * pch;
-        size_t pos = message.find_first_of(':')+1;
-        pch = strtok ((char*)message.substr(pos).c_str(),",");
-        width = ::atoi(pch);
-        pch = strtok (NULL, ",");
-        height = ::atoi(pch);
+        reader >> width >> height;
+        assert(width>0 && height > 0);
         initCanvas();
         char msg[1024];
           snprintf( msg, sizeof(msg), "%s:",kinitCompletePrefix);
         PostMessage(pp::Var(msg));
 
       }
-      else if(message.find(kStartRenderMethodPrefix) == 0){
+      else if(command_literal.compare(kStartRenderMethodPrefix) == 0){
         status = kStartRenderMethodId;
         // if(!check_threads_running){
         //   check_threads_running = true;
@@ -241,51 +244,25 @@ public:
         startRendering();
         printf("startrendering command complete.\n");
       }
-      else if(message.find(kFeedShapeMethodPrefix) == 0){
-        try{
+      else if(command_literal.compare(kFeedShapeMethodPrefix) == 0){
+        // try{
         status = kFeedShapeMethodId;
-          char * pch;
-        size_t pos = message.find_first_of(':')+1;
-          pch = strtok ((char*)message.substr(pos).c_str(),",");
-          sid = ::atoi(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          width = ::atoi(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          height = ::atoi(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          shrinkage = ::atof(pch);
-        }
-        catch(int e){
-          printf("Exception!!! No. $d", e);
-        }
+        reader >> sid >> width >> height >> shrinkage;
+        assert(width>0); assert(height>0);
+        // }
+        // catch(int e){
+          // printf("Exception!!! No. $d", e);
+        // }
           // printf("Ready to receive shape bytes. Width: %d, height: %d\n",width,height);
       }
-      else if(message.find(kFixShapeMethodPrefix) == 0){
-        char * pch;
-        size_t pos = message.find_first_of(':')+1;
-          pch = strtok ((char*)message.substr(pos).c_str(),",");
-          sid = ::atoi(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          double x = ::atof(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          double y = ::atof(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          double rotation = ::atof(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          double scaleX = ::atof(pch);
-          pch = strtok (NULL, ",");
-          if(pch==NULL) return;
-          double scaleY = ::atof(pch);
-          std::string obscureSids = setFixedShape(sid,x,y,rotation,scaleX,scaleY);
-          std::string msg = string(kObscureSidsMethodsPrefix)+string(":")+obscureSids;
-          PostMessage(pp::Var(msg.c_str()));
+      else if(command_literal.compare(kFixShapeMethodPrefix) == 0){
+        int sid;
+        double x,y,rotation, scaleX, scaleY;
+        reader >> sid >> x >> y >> rotation >> scaleX >> scaleY;
+
+        std::string obscureSids = setFixedShape(sid,x,y,rotation,scaleX,scaleY);
+        std::string msg = string(kObscureSidsMethodsPrefix)+string(":")+obscureSids;
+        PostMessage(pp::Var(msg.c_str()));
 
           status = kFixShapeMethodId;
       }

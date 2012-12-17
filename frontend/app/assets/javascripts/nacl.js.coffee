@@ -46,7 +46,7 @@ $(document).ready ->
     $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
   $("#sketch").sketch defaultSize:100
 
-  if false
+  if true
     img = new Image()
     img.src= "/templates/face.png"
     img.onload = ->
@@ -143,7 +143,7 @@ window.TyfulNacl.fixShape = (shape) ->
   window.TyfulNacl.dropPinOn(shape)
   window.TyfulNacl.feedShape shape
   # window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + shape.sid + "," + shape.getLeft() + "," + shape.getTop() + "," + (-shape.getAngle()*Math.PI*2/360) + ","+shape.scaleX+","+shape.scaleY+","
-  window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + shape.sid + "," + shape.getLeft() + "," + shape.getTop() + "," + (-shape.getAngle()*Math.PI*2/360) + ",1,1,"
+  window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape " + shape.sid + " " + shape.getLeft() + " " + shape.getTop() + " " + (-shape.getAngle()*Math.PI*2/360) + " 1 1"
   # window.TyfulNacl.fixedShapes[e.target.sid] = e.target
   window.TyfulNacl.fixedShapes[shape.sid] = shape
   console.log shape.sid
@@ -202,7 +202,7 @@ window.TyfulNacl.startRendering = ->
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
   window.TyfulNacl.status = "updating"
-  window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate:" + canvasWidth + "," + canvasHeight+","
+  window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate " + canvasWidth + " " + canvasHeight
 
 
 window.TyfulNacl.drawGradients = (ctxColor, canvasColor)->
@@ -258,7 +258,7 @@ window.TyfulNacl.updateStatus = (opt_message) ->
 
 window.TyfulNacl.slapShapeMethodPrefix = "slapShape:"
 window.TyfulNacl.feedMeMethodPrefix = "feedMe:"
-window.TyfulNacl.feedShapeMethodPrefix = "feedShape:"
+window.TyfulNacl.feedShapeMethodPrefix = "feedShape"
 window.TyfulNacl.initCompletePrefix = "initComplete:"
 window.TyfulNacl.templateDataReceivedPrefix = "templateDataReceived:"
 window.TyfulNacl.obscureSidsMethodPrefix = "obscureSids:"
@@ -320,7 +320,7 @@ window.TyfulNacl.feedShape = (shape, shrinkage) ->
   shape.setTop shape.getHeight()/2
   shape.setLeft shape.getWidth()/2
   shape.render(context,true)
-  feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + (shape.sid) + "," + shapeCanvas.width + "," + shapeCanvas.height+","+shrinkage+","
+  feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + " " + (shape.sid) + " " + shapeCanvas.width + " " + shapeCanvas.height+" "+shrinkage
 
   unless window.TyfulNacl.status
     window.TyfulNacl.status = "feeding"
@@ -442,7 +442,7 @@ window.TyfulNacl.handleMessage = (message_event) ->
       window.TyfulNacl.status = undefined
       # console.log('Template data transferred.')
     else if message_event.data.indexOf(window.TyfulNacl.templateDataReceivedPrefix) is 0
-      window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender:"
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender "
     else if message_event.data.indexOf(window.TyfulNacl.obscureSidsMethodPrefix) is 0
       sids = message_event.data.substring(window.TyfulNacl.obscureSidsMethodPrefix.length).split(",")
       this_sid = parseInt(sids[0])
