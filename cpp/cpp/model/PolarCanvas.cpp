@@ -158,6 +158,7 @@ void PolarCanvas::removeShape(unsigned int sid){
         _shapeMap[sid]->referenceCounter--;
         pthread_mutex_lock(&shape_mutex);
         this->_shapeMap.erase(sid);
+        this->displayShapes.erase(sid);
         pthread_mutex_unlock(&shape_mutex);
     }
 }
@@ -192,7 +193,7 @@ void PolarCanvas::tryNextEngineShape(){
         
         if(!eShape->wasSkipped()){
             if(failureCount>1) failureCount--;
-            displayShapes.push_back(eShape);
+            displayShapes[eShape->getUid()]=eShape;
         }
         else{
             failureCount++;
@@ -312,9 +313,9 @@ void PolarCanvas::attempt_nudge(void *arg){
             //            bool foundOverlap= false;
             
             //					for (var i:int= 0; !foundOverlap && i < neighboringEWords.length; i++) {
-            for (int i= 0; i < canvas->displayShapes.size(); i++) {
+            for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=canvas->displayShapes.begin(); it != canvas->displayShapes.end(); ++it ) {
                 //						var otherWord:EngineWordVO= neighboringEWords[i];
-                EngineShape* otherShape = canvas->displayShapes.at(i);
+                EngineShape* otherShape = it->second;
                 if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
 #if NUM_THREADS>1
                 assert(shapeToWorkOn->getShape()->getTree()->getFinalSeq()<0);
@@ -588,11 +589,11 @@ vector<int> PolarCanvas::getShapesCollidingWith(int sid){
     EngineShape* shape = _shapeMap[sid];
     vector<int> overlaps;
     
-    for (int i= 0; i < displayShapes.size(); i++) {
-        EngineShape* otherShape = displayShapes.at(i);
+    for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=displayShapes.begin(); it != displayShapes.end(); ++it ) {
+        EngineShape* otherShape = it->second;
         if (otherShape->getUid()!=shape->getUid() && otherShape->getShape()->getTree()->overlaps(otherShape->getShape()->getTree()->getFinalSeq(),shape->getShape()->getTree(),shape->getShape()->getTree()->getFinalSeq()))
         {
-            overlaps.push_back(otherShape->getUid());
+            if(fixedShapes.find(otherShape->getUid())==fixedShapes.end()) overlaps.push_back(otherShape->getUid());
         }
     }
     return overlaps;

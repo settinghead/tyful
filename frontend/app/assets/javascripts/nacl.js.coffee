@@ -1,9 +1,14 @@
 //=require jquery.easing
 //=require images
+//=require paper.js
+//=require jquery.knob.js
 
 window.TyfulNacl = new Object()
+paper.install(window)
 
 $(document).ready ->
+  $(".knob").knob();
+
   $('.fontselect').fontselect();
   $('.fontselect').change ()->
     o = window.renderCanvas.getActiveObject()
@@ -15,7 +20,7 @@ $(document).ready ->
   
   window.TyfulNacl.fixedShapes = {}
   window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
-
+  window.strokeColor = 'black'
   fabric.Canvas.prototype.getAbsoluteCoords = (object) ->
     left: object.left + @_offset.left
     top: object.top + @_offset.top
@@ -45,18 +50,48 @@ $(document).ready ->
   #append sizes
   $.each [30, 50, 100, 150], ->
     $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
-  $("#sketch").sketch defaultSize:100
+  # $("#sketch").sketch defaultSize:100
+  paper.setup('sketch')
+  project.colorLayer = project.activeLayer
+  project.directionLayer = new Layer()
+  project.directionVectorLayer = new Layer()
+  project.directionLayer.setVisible false
+  project.directionVectorLayer.setVisible false
+  project.directionIndicatorLayer = new Layer()
+  project.directionLayer.activate()
 
-  if true
-    img = new Image()
-    img.src= "/templates/face.png"
-    img.onload = ->
-      $('#sketch')[0].width = img.width
-      $('#sketch')[0].height = img.height
-      window.TyfulNacl.reloadCanvas()
-      $('#sketch')[0].getContext('2d').drawImage(this,0,0)
+  tool = new Tool()
+  path = null
+  origin = null
+  tool.onMouseDown = (event) ->
+    origin = event.point
+  tool.onMouseDrag = (event) ->
+    unless path?
+      path = new Path()
+      path.strokeColor = window.strokeColor
+      path.strokeWidth = 100
+      path.add(origin)
+    path.add(event.point)
+  tool.onMouseUp = (event) ->
+    if path?
+      project.directionVectorLayer.addChild path
       window.TyfulNacl.resetRenderer()
       window.TyfulNacl.startRendering()
+      #path.smooth()
+      path = null
+
+  if false
+    $("#loader").load ->
+      $('#sketch')[0].width = $("#loader").width()
+      $('#sketch')[0].height = $("#loader").height()
+      raster = new Raster('loader')
+      raster.setPosition new Point(raster.width/2,raster.height/2)
+      window.TyfulNacl.reloadCanvas()
+      # $('#sketch')[0].getContext('2d').drawImage(this,0,0)
+      window.TyfulNacl.resetRenderer()
+      window.TyfulNacl.startRendering()
+
+    $("#loader").attr "src","/templates/dog.png"
   else
     window.TyfulNacl.reloadCanvas()
 
@@ -75,16 +110,10 @@ $(document).ready ->
     window.TyfulNacl.startRendering()
   $(".btnModify").click ->
     window.TyfulNacl.modifyCanvas()
-
-    #register render click event
-  $("#sketch").on("mouseup",()->
+  
+  $("#sketch").on "touchend",()->
     window.TyfulNacl.resetRenderer()
     window.TyfulNacl.startRendering()
-  )
-  $("#sketch").on("touchend",()->
-    window.TyfulNacl.resetRenderer()
-    window.TyfulNacl.startRendering()
-  )
 
   #construct color pallette
   canvasColor = document.getElementById("color")
@@ -107,15 +136,16 @@ $(document).ready ->
     pixel = imageData.data
     pixelColor = "rgba(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ", " + pixel[3] + ")"
     $("#pick").css "backgroundColor", pixelColor
-    $("#sketch").sketch().color = pixelColor
+    # $("#sketch").sketch().color = pixelColor
+    window.strokeColor = new RgbColor(pixel[0]/256,pixel[1]/256,pixel[2]/256,pixel[3]/256)
 
   $("#renderpreview").click (event) ->
     event.preventDefault()
     $("#tyfulTabs a#adjustButton").tab('show');
 
-  $('#tyful_nacl_client').on("load", ()->
-    alert('loaded')
-  )
+  # $('#tyful_nacl_client').on("load", ()->
+  #   alert('loaded')
+  # )
 
 window.TyfulNacl.dropPinOn = (obj)->
   unless obj.hasOwnProperty("pin")
@@ -125,7 +155,7 @@ window.TyfulNacl.dropPinOn = (obj)->
     obj.pin.setAttribute 'src',image_path('pin.png')
     obj.pin.style.position = "absolute"
     $('#render-editor').append($(obj.pin))
-
+    obj.setOpacity 1
     obj.on('moving', ->
       window.TyfulNacl.positionPin(obj)
     )
@@ -203,6 +233,13 @@ window.TyfulNacl.resetShoppingWindows = ->
 
 window.TyfulNacl.modifyCanvas = ->
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "modifyCanvas "
+  #remove colliding shapes
+  $.each window.TyfulNacl.fixedShapes,(key,value)->
+    for shape in window.TyfulNacl.shapes[key].overlaps
+      window.TyfulNacl.shapes[shape.sid] = undefined
+      window.renderCanvas.remove shape
+  window.renderCanvas.renderAll()
+
 
 window.TyfulNacl.resetRenderer = ->
   canvas = $("#sketch")[0]
@@ -453,7 +490,13 @@ window.TyfulNacl.handleMessage = (message_event) ->
       canvas = $("#sketch")[0]
       canvasWidth = canvas.width
       canvasHeight = canvas.height
-      ctx = canvas.getContext("2d")
+      $('#sketchBuffer')[0].width = canvasWidth
+      $('#sketchBuffer')[0].height = canvasHeight
+      ctx = $('#sketchBuffer')[0].getContext('2d')
+      # ctx = canvas.getContext("2d")
+      l = project.directionLayer
+      l.draw(ctx,{})
+      # ctx = r.context
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
       window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer
       window.TyfulNacl.status = undefined
@@ -476,6 +519,7 @@ window.TyfulNacl.handleMessage = (message_event) ->
           console.log sid
           shape = window.TyfulNacl.shapes[sid]
           window.TyfulNacl.shapes[this_sid].overlaps.push shape
+          # shape.setOpacity 0.15 if not window.TyfulNacl.fixedShapes[sid]
           shape.setOpacity 0.15
       window.renderCanvas.renderAll()
 

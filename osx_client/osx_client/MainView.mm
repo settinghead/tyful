@@ -235,7 +235,7 @@ int sid = 0;
         if(PolarCanvas::current!=NULL){
 //            pthread_mutex_lock(&PolarCanvas::current->shape_mutex);
 
-            if(PolarCanvas::current->displayShapes.size()>0){ //DEBUG block for fixshape
+//            if(PolarCanvas::current->displayShapes.size()>0){ //DEBUG block for fixshape
 
         //        NSString *str = [strings objectAtIndex:arc4random() % [strings count]];
         //        NSAttributedString *stringToInsert;
@@ -244,7 +244,7 @@ int sid = 0;
         //        NSFont *font = [NSFont fontWithName:@"Arial" size:((double)arc4random() / 0x100000000) * 150*shrinkage+12];
         //        string = [[NSMutableAttributedString alloc] initWithString:str];
 
-                shape = PolarCanvas::current->displayShapes.at(arc4random() % PolarCanvas::current->displayShapes.size());
+//                shape = PolarCanvas::current->displayShapes.at(arc4random() % PolarCanvas::current->displayShapes.size());
                 
         //        [dict setObject:string forKey:[NSString stringWithFormat:@"%u", sid]];
 
@@ -254,17 +254,17 @@ int sid = 0;
 
         //        stringToInsert = [[NSAttributedString alloc] initWithAttributedString:string];
 
-                stringToDraw = [dict objectForKey:[NSString stringWithFormat:@"%u", shape->getUid()]];
-                NSBitmapImageRep *textImage = [MainView getTextImage:stringToDraw];
-                [stringToDraw removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0,[stringToDraw length])];
-                [stringToDraw addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[stringToDraw length])];
-                
-                unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
-
-                feedShape(pixels, textImage.size.width, textImage.size.height, shape->getUid(),false,false,getShrinkage());
-                
-                PolarCanvas::current->fixShape(shape->getUid());
-            }
+//                stringToDraw = [dict objectForKey:[NSString stringWithFormat:@"%u", shape->getUid()]];
+//                NSBitmapImageRep *textImage = [MainView getTextImage:stringToDraw];
+//                [stringToDraw removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0,[stringToDraw length])];
+//                [stringToDraw addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0,[stringToDraw length])];
+//                
+//                unsigned int * pixels = [MainView getPixels:textImage withFlip:false];
+//
+//                feedShape(pixels, textImage.size.width, textImage.size.height, shape->getUid(),false,false,getShrinkage());
+//                
+//                PolarCanvas::current->fixShape(shape->getUid());
+//            }
 //            pthread_mutex_unlock(&PolarCanvas::current->shape_mutex);
 
             if(shape!=NULL){

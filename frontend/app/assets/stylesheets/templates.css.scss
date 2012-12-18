@@ -231,7 +231,7 @@ h1{
 		width:auto;
 		height: auto;
 		max-width: 100%;
-		max-height: 100%;
+		max-height: 250px;
 		position: relative;
 		// z-index:200;
 		display: block;
@@ -285,7 +285,7 @@ h1{
 	-ms-border-radius: 20px;
 	-o-border-radius: 20px;
 	border-radius: 20px;
-	position: fixed; bottom: -20px; left: 0px; background-color: #eeeeee; padding: 10px; padding-bottom: 30px;
+	position: fixed; bottom: -20px; left: 0px; background-color: #eeeeee; padding: 5px; padding-bottom: 10px;
 	-webkit-box-shadow: rgba(0,0,0,0.2) 0px 2px 3px, inset rgba(0,0,0,0.2) 0px -1px 2px;
 	-khtml-box-shadow: rgba(0,0,0,0.2) 0px 2px 3px, inset rgba(0,0,0,0.2) 0px -1px 2px;
 	-moz-box-shadow: rgba(0,0,0,0.2) 0px 2px 3px, inset rgba(0,0,0,0.2) 0px -1px 2px;
@@ -352,7 +352,8 @@ canvas.shopping-window:hover{
 
 
 .frame {
-	overflow-y: auto;
+	overflow-y: scroll;
+	overflow-x: scroll;
 	border: 1px solid black;
 	height: 3em;
 	width: 10em;

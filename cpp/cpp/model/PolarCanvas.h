@@ -89,7 +89,7 @@ public:
 
     queue<SlapInfo*> slaps;
     queue<EngineShape*> pendingShapes;
-    vector<EngineShape*> displayShapes;
+    tr1::unordered_map<unsigned int,EngineShape*> displayShapes;
     vector<EngineShape*> retryShapes;
     tr1::unordered_map<unsigned int,EngineShape*> fixedShapes;
     void tryNextEngineShape();

@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 //= require jquery.imagesloaded.min
 //= require jquery.isotope.min.js
+//= require paper.js
 //= require nacl
 
 window.editing = false;

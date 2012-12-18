@@ -41,13 +41,21 @@
 		<div class="tab-content">
 			<div class="tab-pane active" id="draw">
 				<div id="mainCanvas">
+					<canvas id="sketchBuffer" style="display: none;"></canvas>
 					<canvas id="sketch" width="800" height="600" style="background-image: url(<%=image_path 'transparent-background-tile.png'%>);"></canvas>
+					<img id="loader" class="hidden">
+
 					<div class="drawing-tools floating-toolbar">
 						<a href="#sketch" data-tool="marker">Marker</a>
 						<a href="#sketch" data-tool="eraser">Eraser</a>
+						<div style="display: inline-block;">
+							<input class="knob" data-width="60" data-cursor="true"
+							data-thickness="0.3" data-angleOffset="90"
+ data-min="0" data-max="360" data-width="50" data-step="2" data-height="70" data-fgcolor="#222222" data-bgcolor="#999999" style="width:79px;height:50px"/>
+						</div>
 						<!--http://www.script-tutorials.com/demos/206/index.html-->
 						<div style="display: inline-block;">
-							<canvas id="color" width="300" height="30"></canvas>
+							<canvas id="color" width="300" height="50"></canvas>
 						</div>
 						<div style="display: inline-block;">
 							<div>Preview:</div>

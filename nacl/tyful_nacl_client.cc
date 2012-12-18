@@ -100,7 +100,7 @@ private:
   pthread_t       checkRenderRoutineThread;
   pthread_t       feedRoutineThread;
   // bool check_threads_running;
-
+  
 public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
@@ -330,6 +330,3 @@ namespace pp {
     return new TyfulNaclCoreModule();
   }
 }  // namespace pp
-
-
-
