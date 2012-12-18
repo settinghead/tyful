@@ -18,7 +18,7 @@ PickFromAngler::PickFromAngler(){
     addAngle(0);
     addAngle(0);
     addAngle(0);
-    addAngle(HALF_PI);
+//    addAngle(HALF_PI);
     addAngle(HALF_PI);
 //    addAngle(HALF_PI*3);
 }

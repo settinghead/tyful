@@ -1,6 +1,9 @@
 Tyful::Application.routes.draw do
   
-  # match "/resize", :to => ResizeApp
+  match "style_elements/:element_tyle/popular" => "style_elements#popular"
+  match "style_elements/:element_tyle/popular_sets" => "style_elements#popular_sets"
+
+    # match "/resize", :to => ResizeApp
   # match "/crop", :to => ResizeApp
   
   resources :facebook_posts

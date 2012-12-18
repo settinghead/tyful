@@ -60,6 +60,7 @@ public:
 
     
     void feedShape(ImageShape* shape,unsigned int sid);
+    void removeShape(unsigned int sid);
     void setPerseverance(int v){
         this->perseverance = v;
     }
@@ -93,10 +94,15 @@ public:
     tr1::unordered_map<unsigned int,EngineShape*> fixedShapes;
     void tryNextEngineShape();
     void resetFixedShapes();
-    vector<int> fixShape(int sid, double x, double y, double rotation, double scaleX, double scaleY);
-    vector<int> fixShape(int sid);
+    void fixShape(int sid, double x, double y, double rotation, double scaleX, double scaleY);
+    void fixShape(int sid);
+    vector<int> getShapesCollidingWith(int sid);
     double getSuccessRate();
     void registerShape(EngineShape* shape);
+    
+    void reset(){
+        failureCount = 0;
+    }
 
 private:
     

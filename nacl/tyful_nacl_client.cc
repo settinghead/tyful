@@ -63,6 +63,7 @@ namespace {
   const int kFixShapeMethodId = 5;
 
   const string kUpdateTemplateMethodPrefix = "updateTemplate";
+  const string kModifyCanvasMethodPrefix = "modifyCanvas";
   const string kStartRenderMethodPrefix = "startRender";
   // const char* kPauseRenderMethodPrefix = "pauseRender:";
   const string kFeedShapeMethodPrefix = "feedShape";
@@ -205,7 +206,6 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
     return NULL;
   }
-
   
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
@@ -266,6 +266,12 @@ public:
 
           status = kFixShapeMethodId;
       }
+      else if(command_literal.compare(kModifyCanvasMethodPrefix) == 0){
+        modifyCanvas();
+        char msg[1024];
+        snprintf( msg, sizeof(msg), "%s:",kTemplateDataReceivedPrefix);
+        PostMessage(pp::Var(msg));
+      }
     }
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
@@ -324,5 +330,6 @@ namespace pp {
     return new TyfulNaclCoreModule();
   }
 }  // namespace pp
+
 
 

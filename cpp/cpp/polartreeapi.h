@@ -5,6 +5,7 @@ void setPerseverance(int perseverance);
 void feedShape(unsigned int *pixels, int width, int height, unsigned int sid,bool flip, bool rgbaToArgb,double shrinkage);
 int getStatus();
 void initCanvas();
+void modifyCanvas();
 void setStatus(int status);
 double getShrinkage();
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip,bool rgbaToArgb);

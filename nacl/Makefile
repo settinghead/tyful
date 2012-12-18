@@ -43,9 +43,9 @@ OSNAME:=$(shell python $(NACL_SDK_ROOT)/tools/getos.py)
 TC_PATH:=$(abspath $(NACL_SDK_ROOT)/toolchain/$(OSNAME)_x86_newlib)
 CXX:=$(TC_PATH)/bin/i686-nacl-g++
 
-COMPILEFLAGS:=-g -O0
+# COMPILEFLAGS:=-g -O0
 # COMPILEFLAGS:=-s -O3 -msse -mfpmath=sse -ffast-math -fomit-frame-pointer
-# COMPILEFLAGS:=-s -O3 -msse -mfpmath=sse -funsafe-math-optimizations -fomit-frame-pointer
+COMPILEFLAGS:=-s -O3 -msse -mfpmath=sse -funsafe-math-optimizations -fomit-frame-pointer
 
 #
 # Disable DOS PATH warning when using Cygwin based tools Windows

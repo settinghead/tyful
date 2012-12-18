@@ -30,6 +30,7 @@ void initCanvas(){
 //        pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
         while(PolarCanvas::current->getStatus()!=0){
             pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+            printf("initCanvas broadcasting a next_feed_cv signal.\n");
             pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
             pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
             usleep(5000);
@@ -54,12 +55,42 @@ void initCanvas(){
         delete PolarCanvas::current;
     }
     
-    
     PolarCanvas::current = newCanvas;
     printf("Canvas initialized. Ready to receive template bytes. numFixedShapes: %d\n", (int)PolarCanvas::current->fixedShapes.size());
     pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
+}
 
+void modifyCanvas(){
+    pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
+    if(PolarCanvas::current!=NULL && PolarCanvas::current->getStatus()>0){
+        PolarCanvas::current->setStatus(-1);
+        //        pthread_cond_wait(&PolarCanvas::threadControllers.stopping_cv, &PolarCanvas::threadControllers.stopping_mutex);
+        while(PolarCanvas::current->getStatus()!=0){
+            pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+            printf("initCanvas broadcasting a next_feed_cv signal.\n");
+            pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
+            pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
+            usleep(5000);
+        }
+    }
+    
+    //reset failure count
+    assert(PolarCanvas::current->getStatus()==0);
+    PolarCanvas::current->reset();
+    
+    //remove shapes that collides with fixed shapes
 
+    for (tr1::unordered_map<unsigned int,EngineShape*>::iterator it=PolarCanvas::current->fixedShapes.begin(); it != PolarCanvas::current->fixedShapes.end(); ++it ) {
+        EngineShape* shape = it->second;
+        vector<int> collides = PolarCanvas::current->getShapesCollidingWith(shape->getUid());
+        for (vector<int>::iterator sit=collides.begin(); sit != collides.end(); ++sit ){
+            int sid = *sit;
+            PolarCanvas::current->removeShape(sid);
+        }
+    }
+    
+    printf("Canvas modified. Ready to resume rendering. \n");
+    pthread_mutex_unlock(&PolarCanvas::threadControllers.stopping_mutex);
 }
 
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip,bool rgbaToArgb){
@@ -133,7 +164,8 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool
         TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
         // shape->printStats();
         PolarCanvas::current->feedShape(shape,sid);
-            pthread_mutex_trylock(&PolarCanvas::threadControllers.next_feed_mutex);
+            pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
+            printf("feedShape broadcasting a next_feed_cv signal.\n");
             pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
             pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_mutex);
     //        }
@@ -165,13 +197,14 @@ void* renderRoutine(void*){
             pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
 
             while(canvas->getStatus()>0){
-//                    if(canvas->pendingShapes.size()<FEED_QUEUE_BUFFER){
+                    if(canvas->pendingShapes.size()<FEED_QUEUE_BUFFER){
 //                        for(int i=(int)canvas->pendingShapes.size();i<FEED_QUEUE_BUFFER;i++){
                             pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_req_mutex);
                             pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_req_cv);
+                            printf("renderRoutine is broadcasting a next_feed_req_cv signal. Current queue size: %ld\n", canvas->pendingShapes.size());
                             pthread_mutex_unlock(&PolarCanvas::threadControllers.next_feed_req_mutex);
 //                        }
-//                    }
+                    }
                 if(canvas->pendingShapes.empty())
                     printf("Render routine waiting on next_feed_cv...\n");
                     pthread_cond_wait(&PolarCanvas::threadControllers.next_feed_cv, &PolarCanvas::threadControllers.next_feed_mutex);
@@ -275,7 +308,8 @@ void resetFixedShapes(){
     PolarCanvas::current->resetFixedShapes();
 }
 string setFixedShape(int sid, double x, double y, double rotation,double scaleX,double scaleY){
-    vector<int> overlaps = PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
+    PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
+    vector<int> overlaps = PolarCanvas::current->getShapesCollidingWith(sid);
     std::stringstream ss;
     ss << sid << ",";
     for(int i=0;i<overlaps.size();i++)

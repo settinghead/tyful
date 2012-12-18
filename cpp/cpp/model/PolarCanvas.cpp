@@ -153,6 +153,16 @@ void PolarCanvas::feedShape(ImageShape* shape, unsigned int sid){
     registerShape(eShape);
 }
 
+void PolarCanvas::removeShape(unsigned int sid){
+    if(_shapeMap.find(sid)!=_shapeMap.end()){
+        _shapeMap[sid]->referenceCounter--;
+        pthread_mutex_lock(&shape_mutex);
+        this->_shapeMap.erase(sid);
+        pthread_mutex_unlock(&shape_mutex);
+    }
+}
+
+
 
 void PolarCanvas::tryNextEngineShape(){
     if(!pendingShapes.empty()){
@@ -220,6 +230,9 @@ void PolarCanvas::tryNextEngineShape(){
             
         }
         
+    }
+    else{
+        printf("No new shape this time around. Skipping...\n");
     }
 }
 
@@ -544,29 +557,19 @@ void PolarCanvas::connectLayers(){
     }
 }
 
-vector<int> PolarCanvas::fixShape(int sid){
+void PolarCanvas::fixShape(int sid){
     pthread_mutex_lock(&shape_mutex);
 
     EngineShape* shape = _shapeMap[sid];
     fixedShapes[shape->getUid()]=shape;
     
-    vector<int> overlaps;
-    
-    for (int i= 0; i < displayShapes.size(); i++) {
-        EngineShape* otherShape = displayShapes.at(i);
-        if (otherShape->getUid()!=shape->getUid() && otherShape->getShape()->getTree()->overlaps(otherShape->getShape()->getTree()->getFinalSeq(),shape->getShape()->getTree(),shape->getShape()->getTree()->getFinalSeq()))
-        {
-            overlaps.push_back(otherShape->getUid());
-        }
-    }
+
         printf("Shape #%d fixed at x:%f,y:%f, r: %f, scale: %f. Total num of fixed shapes: %ld\n",shape->getUid(),shape->getFinalPlacement().location.x,shape->getFinalPlacement().location.y,shape->getFinalPlacement().rotation,shape->getShape()->getTree()->getScale(),fixedShapes.size());
     pthread_mutex_unlock(&shape_mutex);
 
-    return overlaps;
-
 }
 
-vector<int> PolarCanvas::fixShape(int sid, double x, double y, double rotation,double scaleX, double scaleY){
+void PolarCanvas::fixShape(int sid, double x, double y, double rotation,double scaleX, double scaleY){
     EngineShape* shape = _shapeMap[sid];
     Placement place(sid);
     place.location.x = x;
@@ -578,9 +581,23 @@ vector<int> PolarCanvas::fixShape(int sid, double x, double y, double rotation,d
     shape->getShape()->getTree()->setRotation(shape->getShape()->getTree()->getFinalSeq(), rotation);
     //TODO
     shape->getShape()->getTree()->setScale(scaleX);
-    return fixShape(sid);
+    fixShape(sid);
+}
 
-   }
+vector<int> PolarCanvas::getShapesCollidingWith(int sid){
+    EngineShape* shape = _shapeMap[sid];
+    vector<int> overlaps;
+    
+    for (int i= 0; i < displayShapes.size(); i++) {
+        EngineShape* otherShape = displayShapes.at(i);
+        if (otherShape->getUid()!=shape->getUid() && otherShape->getShape()->getTree()->overlaps(otherShape->getShape()->getTree()->getFinalSeq(),shape->getShape()->getTree(),shape->getShape()->getTree()->getFinalSeq()))
+        {
+            overlaps.push_back(otherShape->getUid());
+        }
+    }
+    return overlaps;
+}
+
 
 void PolarCanvas::resetFixedShapes(){
     this->_shapeMap.clear();

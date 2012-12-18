@@ -14,6 +14,7 @@ $(document).ready ->
       window.TyfulNacl.fixShape o
   
   window.TyfulNacl.fixedShapes = {}
+  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
 
   fabric.Canvas.prototype.getAbsoluteCoords = (object) ->
     left: object.left + @_offset.left
@@ -54,6 +55,7 @@ $(document).ready ->
       $('#sketch')[0].height = img.height
       window.TyfulNacl.reloadCanvas()
       $('#sketch')[0].getContext('2d').drawImage(this,0,0)
+      window.TyfulNacl.resetRenderer()
       window.TyfulNacl.startRendering()
   else
     window.TyfulNacl.reloadCanvas()
@@ -68,12 +70,21 @@ $(document).ready ->
   #end onlonad
     
 
-  $(".btnRender").click ->
+  $(".btnRegenerate").click ->
+    window.TyfulNacl.resetRenderer()
     window.TyfulNacl.startRendering()
+  $(".btnModify").click ->
+    window.TyfulNacl.modifyCanvas()
 
     #register render click event
-  $("#sketch").on("mouseup",window.TyfulNacl.startRendering)
-  $("#sketch").on("touchend",window.TyfulNacl.startRendering)
+  $("#sketch").on("mouseup",()->
+    window.TyfulNacl.resetRenderer()
+    window.TyfulNacl.startRendering()
+  )
+  $("#sketch").on("touchend",()->
+    window.TyfulNacl.resetRenderer()
+    window.TyfulNacl.startRendering()
+  )
 
   #construct color pallette
   canvasColor = document.getElementById("color")
@@ -141,6 +152,7 @@ window.TyfulNacl.reloadCanvas = () ->
 window.TyfulNacl.fixShape = (shape) ->
   shape.bringToFront()
   window.TyfulNacl.dropPinOn(shape)
+  console.log("feeding shape from fixShape.")
   window.TyfulNacl.feedShape shape
   # window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + shape.sid + "," + shape.getLeft() + "," + shape.getTop() + "," + (-shape.getAngle()*Math.PI*2/360) + ","+shape.scaleX+","+shape.scaleY+","
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape " + shape.sid + " " + shape.getLeft() + " " + shape.getTop() + " " + (-shape.getAngle()*Math.PI*2/360) + " 1 1"
@@ -189,19 +201,24 @@ window.TyfulNacl.resetShoppingWindows = ->
 #   body.removeChild dummy
 #   result
 
-window.TyfulNacl.startRendering = ->
+window.TyfulNacl.modifyCanvas = ->
+  window.TyfulNacl.TyfulNaclCoreModule.postMessage "modifyCanvas "
+
+window.TyfulNacl.resetRenderer = ->
   canvas = $("#sketch")[0]
-  canvasWidth = canvas.width
-  canvasHeight = canvas.height
   window.TyfulNacl.shapes = {}
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
   window.TyfulNacl.initializing = false
-  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
   renderCanvas = $("#renderpreview")[0]
   renderCanvas.getContext("2d").clearRect 0,0,renderCanvas.width, renderCanvas.height
   window.TyfulNacl.resetShoppingWindows()
+
+window.TyfulNacl.startRendering = ->
   window.TyfulNacl.status = "updating"
+  canvas = $("#sketch")[0]
+  canvasWidth = canvas.width
+  canvasHeight = canvas.height
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate " + canvasWidth + " " + canvasHeight
 
 
@@ -415,7 +432,7 @@ window.TyfulNacl.redrawShoppingWindows = ->
 
 window.TyfulNacl.handleMessage = (message_event) ->
   if message_event.data
-    console.log(message_event.data) if message_event.data.indexOf("DEBUG_POSTMESSAGE") is 0
+    # console.log(message_event.data) if message_event.data.indexOf("DEBUG_POSTMESSAGE") is 0
     # console.log(message_event.data) 
     if message_event.data.indexOf(window.TyfulNacl.slapShapeMethodPrefix) is 0
       params = message_event.data.substring(window.TyfulNacl.slapShapeMethodPrefix.length)
