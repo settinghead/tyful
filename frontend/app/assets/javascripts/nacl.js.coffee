@@ -1,10 +1,10 @@
 //=require jquery.easing
 //=require images
-//=require paper.js
+//=require template_canvas.js
 //=require jquery.knob.js
 
 window.TyfulNacl = new Object()
-paper.install(window)
+# paper.install(window)
 
 $(document).ready ->
   $(".knob").knob();
@@ -51,34 +51,10 @@ $(document).ready ->
   $.each [30, 50, 100, 150], ->
     $("#mainCanvas .tools").append "<a href='#sketch' data-size='" + this + "' style='background: #ccc; display: inline-block;'>" + this + "</a> "
   # $("#sketch").sketch defaultSize:100
-  paper.setup('sketch')
-  project.colorLayer = project.activeLayer
-  project.directionLayer = new Layer()
-  project.directionVectorLayer = new Layer()
-  project.directionLayer.setVisible false
-  project.directionVectorLayer.setVisible false
-  project.directionIndicatorLayer = new Layer()
-  project.directionLayer.activate()
+  # paper.setup('sketch')
+  $('#sketch').tsketch()
+  
 
-  tool = new Tool()
-  path = null
-  origin = null
-  tool.onMouseDown = (event) ->
-    origin = event.point
-  tool.onMouseDrag = (event) ->
-    unless path?
-      path = new Path()
-      path.strokeColor = window.strokeColor
-      path.strokeWidth = 100
-      path.add(origin)
-    path.add(event.point)
-  tool.onMouseUp = (event) ->
-    if path?
-      project.directionVectorLayer.addChild path
-      window.TyfulNacl.resetRenderer()
-      window.TyfulNacl.startRendering()
-      #path.smooth()
-      path = null
 
   if false
     $("#loader").load ->
@@ -111,7 +87,7 @@ $(document).ready ->
   $(".btnModify").click ->
     window.TyfulNacl.modifyCanvas()
   
-  $("#sketch").on "touchend",()->
+  $("#sketch").on "mouseup",()->
     window.TyfulNacl.resetRenderer()
     window.TyfulNacl.startRendering()
 
@@ -136,8 +112,8 @@ $(document).ready ->
     pixel = imageData.data
     pixelColor = "rgba(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ", " + pixel[3] + ")"
     $("#pick").css "backgroundColor", pixelColor
-    # $("#sketch").sketch().color = pixelColor
-    window.strokeColor = new RgbColor(pixel[0]/256,pixel[1]/256,pixel[2]/256,pixel[3]/256)
+    $("#sketch").tsketch().color = pixelColor
+    # window.strokeColor = new RgbColor(pixel[0]/256,pixel[1]/256,pixel[2]/256,pixel[3]/256)
 
   $("#renderpreview").click (event) ->
     event.preventDefault()
@@ -165,6 +141,10 @@ window.TyfulNacl.reloadCanvas = () ->
   window.renderCanvas.dispose() if window.renderCanvas
   $('#renderpreview')[0].width = $("#sketch")[0].width
   $('#renderpreview')[0].height = $("#sketch")[0].height
+  $('#directionIndicator')[0].width = $("#sketch").width()
+  $('#directionIndicator')[0].height = $("#sketch").height()
+  $('#direction')[0].width = $("#sketch").width()
+  $('#direction')[0].height = $("#sketch").height()
   # $("#renderpreview")[0].height = $("#renderpreview").height()
   # $("#renderpreview")[0].width = $("#renderpreview").width()
 
@@ -490,12 +470,9 @@ window.TyfulNacl.handleMessage = (message_event) ->
       canvas = $("#sketch")[0]
       canvasWidth = canvas.width
       canvasHeight = canvas.height
-      $('#sketchBuffer')[0].width = canvasWidth
-      $('#sketchBuffer')[0].height = canvasHeight
-      ctx = $('#sketchBuffer')[0].getContext('2d')
-      # ctx = canvas.getContext("2d")
-      l = project.directionLayer
-      l.draw(ctx,{})
+      # $('#sketchBuffer')[0].width = $('#directionIndicator')[0].width = canvasWidth
+      # $('#sketchBuffer')[0].height = $('#directionIndicator')[0].height = canvasHeight
+      ctx = $('#sketch').data('tsketch').directionContext
       # ctx = r.context
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
       window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer

@@ -102,6 +102,7 @@ public:
     
     void reset(){
         failureCount = 0;
+        getSizer()->reset();
     }
 
 private:

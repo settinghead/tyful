@@ -560,7 +560,7 @@ void PolarCanvas::connectLayers(){
 
 void PolarCanvas::fixShape(int sid){
     pthread_mutex_lock(&shape_mutex);
-
+    displayShapes.erase(sid);
     EngineShape* shape = _shapeMap[sid];
     fixedShapes[shape->getUid()]=shape;
     
