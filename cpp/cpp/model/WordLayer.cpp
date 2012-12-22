@@ -19,17 +19,18 @@
 #include "../colorer/TwoHueRandomSatsColorer.h"
 #include "../colorer/ColorSheetColorer.h"
 #include "../placer/ColorMapPlacer.h"
+#include "../fasttrig.h"
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 
 WordLayer::WordLayer(unsigned char * png, size_t png_size, int lid):PolarLayer::PolarLayer(png,png_size,lid)
-, type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
+, type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(DEFAULT_TOLERANCE){
     
 }
 
 WordLayer::WordLayer(unsigned int const * pixels, int width, int height, int lid, bool revert,bool rgbaToArgb)
-:PolarLayer::PolarLayer(pixels,width,height,lid,revert,rgbaToArgb), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(0.5){
+:PolarLayer::PolarLayer(pixels,width,height,lid,revert,rgbaToArgb), type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(DEFAULT_TOLERANCE){
 }
 
 WordLayer::~WordLayer(){
@@ -112,9 +113,9 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
             return true;
         else return (
                      colorSheet==NULL || (
-//                     ColorMath::distRGB(colorSheet->getPixel(x,y),
-//                                       colorSheet->getPixel(refX,refY)) <= tolerance
-//                     &&
+                     ColorMath::distRGB(colorSheet->getPixel(x,y),
+                                       colorSheet->getPixel(refX,refY)) <= 0.01
+                     &&
                      ColorMath::distHue(getPixel(x,y),
                                        getPixel(refX,refY)) <= tolerance));
     }

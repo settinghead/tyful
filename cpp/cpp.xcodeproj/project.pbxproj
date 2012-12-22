@@ -139,6 +139,7 @@
 		7C7AE93816674B5C002466A3 /* PolarTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTree.h; sourceTree = "<group>"; };
 		7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
 		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
+		7C8DB44516862995001E4E89 /* fasttrig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fasttrig.h; sourceTree = "<group>"; };
 		7CB6037D167699B5006CB6EE /* concurrent_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_queue.h; sourceTree = "<group>"; };
 		7CC0514A1674A258006085EF /* json_batchallocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
 		7CC0514B1674A258006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
@@ -232,6 +233,7 @@
 				7C7AE86C166745B7002466A3 /* Supporting Files */,
 				7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */,
 				7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */,
+				7C8DB44516862995001E4E89 /* fasttrig.h */,
 			);
 			path = cpp;
 			sourceTree = "<group>";

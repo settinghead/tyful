@@ -298,7 +298,6 @@ public:
   }
 };
 
-
 /// The Module class.  The browser calls the CreateInstance() method to create
 /// an instance of your NaCl module on the web page.  The browser creates a new
 /// instance for each <embed> tag with type="application/x-nacl".

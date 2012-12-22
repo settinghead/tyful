@@ -108,7 +108,7 @@ public:
         double rd = r1-r2;
         double gd = g1-g2;
         double bd = b1-b2;
-        return abs(rd)/256/3 + abs(gd)/256/3 + abs(bd)/256/3;
+        return sqrt(pow(rd,2)+pow(bd,2)+pow(gd,2))/441.76;
     }
     
     inline static double distHue(unsigned int c1, unsigned int c2){

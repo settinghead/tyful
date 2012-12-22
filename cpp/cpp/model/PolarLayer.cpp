@@ -10,6 +10,7 @@
 #include "PixelImageShape.h"
 #include "PolarCanvas.h"
 #include <math.h>
+#include "../fasttrig.h"
 
 PolarLayer::PolarLayer(unsigned char * png, size_t png_size,int lid):PixelImageShape::PixelImageShape(png,png_size)
 ,above(NULL),below(NULL),lid(lid),type(WORD_LAYER){

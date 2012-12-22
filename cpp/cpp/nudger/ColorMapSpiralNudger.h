@@ -12,6 +12,7 @@
 #include "Nudger.h"
 #include "../model/structs.h"
 #include "../density/Patch.h"
+#include "../fasttrig.h"
 struct Placement;
 class EngineShape;
 

@@ -152,8 +152,12 @@ void updateTemplate(unsigned int* data){
 
         appendLayer(data+directionStart, data+colorStart, directionWidth, directionHeight, true,false);
     }
-    
 }
+
+void updateTemplate(unsigned int *zipData,int size){
+    //TODO
+}
+
 void feedShape(unsigned int* data, double shrinkage){
 //    unsigned int* data = (unsigned int*)base64_str.c_str();
     int counter = 0;

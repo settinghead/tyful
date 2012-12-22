@@ -121,12 +121,12 @@
 			false
 
 		redraw: ->
-			@el.width = @_main.width()
+			# @el.width = @_main.width()
 			@context = @el.getContext '2d'
 			tsketch = this
-			$.each @actions, ->
-				if this.tool
-					$.tsketch.tools[this.tool].draw.call tsketch, this
+			# $.each @actions, ->
+				# if this.tool
+					# $.tsketch.tools[this.tool].draw.call tsketch, this
 			$.tsketch.tools[@action.tool].draw.call tsketch, @action if @painting && @action
 
 	$.tsketch = { tools: {} }
@@ -160,12 +160,16 @@
 			maxX = maxY = 0
 			minX = minY = 9007199254740992
 			@context.globalCompositeOperation = "source-over"
-			for event in action.events
+			i = action.events.length - 2
+			i = 0 if i < 0
+			while i < action.events.length
+				event = action.events[i]
 				if previous
 					# rad = action.direction * Math.PI * 2 / 360
 					rad = Math.atan (event.y-previous.y)/(event.x-previous.x)
 					@directionContext.beginPath()
 					@directionContext.moveTo previous.x, previous.y
+					@colorContext.moveTo previous.x, previous.y
 					@directionContext.strokeStyle = @angleToRGBColor(rad*360/Math.PI/2)
 					@directionContext.lineTo event.x, event.y
 					@colorContext.lineTo event.x, event.y
@@ -185,13 +189,15 @@
 					while x < endGridX
 						y = startGridY
 						while y < endGridY
-							@context.moveTo(x,y)
-							@context.save()
-							@context.translate x+11/2,y+11/2
-							@context.rotate rad
-							@context.translate -x-11/2, -y-11/2
-							@context.fillText 'A',x,y
-							@context.restore()
+							if Math.sqrt(Math.pow(y-event.y,2)+Math.pow(x-event.x,2)) <= action.size / 2
+								# @context.clearRect x,y,11,11
+								@context.moveTo(x,y)
+								@context.save()
+								@context.translate x,y
+								@context.rotate rad
+								@context.translate -x, -y
+								@context.fillText 'A',x,y
+								@context.restore()
 							y += 11
 						x += 11
 					minX = startGridX if startGridX < minX
@@ -199,6 +205,22 @@
 					maxX = endGridX if endGridX > maxX
 					maxY = endGridY if endGridY > maxY
 				previous = event
+				i++
+
+				# @context.clearRect minX, minY, maxX-minX, maxY-minY
+				# x = minX
+				# while x < maxX
+				# 	y = minY
+				# 	while y < maxY
+				# 		@context.moveTo(x,y)
+				# 		@context.save()
+				# 		@context.translate x+11/2,y+11/2
+				# 		@context.rotate rad
+				# 		@context.translate -x-11/2, -y-11/2
+				# 		@context.fillText 'A',x,y
+				# 		@context.restore()
+				# 		y += 11
+				# 	x += 11
 
 			@colorContext.stroke()
 			@context.globalCompositeOperation = "source-in"

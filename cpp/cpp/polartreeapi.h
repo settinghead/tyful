@@ -12,6 +12,8 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
 void appendLayer(unsigned int *combinedPixels, int width, int height,bool flip,bool rgbaToArgb);
 void appendLayer(unsigned char *png, size_t png_size);
 void updateTemplate(unsigned int *data);
+void updateTemplate(unsigned int *zipData,int size);
+unsigned int* zipTemplate(unsigned int* previewPixels, int width, int height);
 void loadTemplateFromZip(unsigned char *data);
 unsigned char * getZipFromTemplate();
 void feedShape(unsigned int *data, double shrinkage);

@@ -3,6 +3,7 @@
 
 #include "PolarTree.h"
 #include "PolarRootTree.h"
+#include "../fasttrig.h"
 class PolarRootTree;
 class PolarChildTree: public PolarTree {
 public:
