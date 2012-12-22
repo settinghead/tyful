@@ -44,7 +44,7 @@
 #include <sys/time.h>
 #include <vector>
 
-  using namespace std;
+using namespace std;
 
 namespace {
 // The expected string sent by the browser.
@@ -56,13 +56,15 @@ namespace {
 // static const char kMessageArgumentSeparator = ':';
 
   const int kUpdateTemplateMethodId = 0;
-  const int kStartRenderMethodId = 1;
-  // const int kPauseRenderMethodId = 2;
-  const int kFeedShapeMethodId = 3;
-  const int kUpdatePerseveranceMethodId = 4;
-  const int kFixShapeMethodId = 5;
+  const int kColorDataMethodId = 1;
+  const int kStartRenderMethodId = 2;
+  // const int kPauseRenderMethodId = 3;
+  const int kFeedShapeMethodId = 4;
+  const int kUpdatePerseveranceMethodId = 5;
+  const int kFixShapeMethodId = 6;
 
   const string kUpdateTemplateMethodPrefix = "updateTemplate";
+  const string kColorDataMethodPrefix = "colorData";
   const string kModifyCanvasMethodPrefix = "modifyCanvas";
   const string kStartRenderMethodPrefix = "startRender";
   // const char* kPauseRenderMethodPrefix = "pauseRender:";
@@ -72,6 +74,7 @@ namespace {
 
   const char* kSlapMethodPrefix = "slapShape";
   const char* kinitCompletePrefix = "initComplete";
+  const char* kColorData = "colorData";
   const char* kTemplateDataReceivedPrefix = "templateDataReceived";
   const char* kFeedMeMethodPrefix = "feedMe";
   const char* kObscureSidsMethodsPrefix = "obscureSids";
@@ -96,6 +99,7 @@ private:
   int status;
   int sid;
   double width, height;
+  pp::VarArrayBuffer pixel_data;
   double shrinkage;
   pthread_t       checkRenderRoutineThread;
   pthread_t       feedRoutineThread;
@@ -105,7 +109,7 @@ public:
   /// The constructor creates the plugin-side instance.
   /// @param[in] instance the handle to the browser-side plugin instance.
   explicit TyfulNaclCoreInstance(PP_Instance instance) : pp::Instance(instance)
-  ,factory_(this)
+  ,factory_(this),pixel_data(0)
   // ,check_threads_running(false)
   {
   }
@@ -275,28 +279,19 @@ public:
     }
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
-      uint32_t* buffer = static_cast<uint32_t*>(buffer_data.Map());
       if (status==kUpdateTemplateMethodId) {
-      // The argument to getUrl is everything after the first ':'.
-          // std::string templateData_str = message.substr(sep_pos + 1);
-          // std::string data_str = base64_decode(templateData_str);
-          // PostMessage(buffer_data);
-          //         printf("%u,%u,%u,%u, len: %d",
-          //   buffer[0],
-          //   buffer[1],
-          //   buffer[2],
-          //   buffer[3],
-          //   buffer_data.ByteLength());
-        if(width>0 && height>0)
-          appendLayer(buffer,NULL,width,height,true,true);
-        buffer_data.Unmap();
+        uint32_t* pixels = static_cast<uint32_t*>(buffer_data.Map());
+        appendLayer(pixels,width,height,true,true);
         char msg[1024];
         snprintf( msg, sizeof(msg), "%s:",kTemplateDataReceivedPrefix);
         PostMessage(pp::Var(msg));
+        buffer_data.Unmap();
       }
       else if (status==kFeedShapeMethodId){
         printf("Binary command received. Status: feedShape.\n");
-        feedShape(buffer,width,height,sid,true,true,shrinkage);
+        uint32_t* pixels = static_cast<uint32_t*>(buffer_data.Map());
+        feedShape(pixels,width,height,sid,true,true,shrinkage);
+        buffer_data.Unmap();
       }
     }
     else return;
@@ -330,3 +325,4 @@ namespace pp {
     return new TyfulNaclCoreModule();
   }
 }  // namespace pp
+

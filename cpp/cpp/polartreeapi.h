@@ -9,6 +9,7 @@ void modifyCanvas();
 void setStatus(int status);
 double getShrinkage();
 void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int height,bool flip,bool rgbaToArgb);
+void appendLayer(unsigned int *combinedPixels, int width, int height,bool flip,bool rgbaToArgb);
 void appendLayer(unsigned char *png, size_t png_size);
 void updateTemplate(unsigned int *data);
 void loadTemplateFromZip(unsigned char *data);

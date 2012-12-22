@@ -98,14 +98,21 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
     assert(height>0);
 	WordLayer* layer = new WordLayer(pixels, width, height, PolarCanvas::current==NULL?0:(int)PolarCanvas::current->size(), flip,rgbaToArgb);
 
-	if(colorPixels>0)
+	if(colorPixels>0){
 		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip,rgbaToArgb));
+        layer->getColorSheet()->printStats();
+    }
 
     printf("Special point(5,5): %x, isEmpty: %d\n", layer->getPixel(5,5), layer->isEmpty(layer->getPixel(5,5)));
 	printf("Special point(600,400): %xisEmpty: %d\n", layer->getPixel(600,400), layer->isEmpty(layer->getPixel(600,400)));
-	// layer->printStats();
+	layer->printStats();
     
 	PolarCanvas::current->addLayer(layer);
+}
+
+void appendLayer(unsigned int *combinedPixels,int width, int height,bool flip,bool rgbaToArgb){
+    size_t size = width * height;
+    appendLayer(combinedPixels, combinedPixels+size, width, height, flip, rgbaToArgb);
 }
 
 void appendLayer(unsigned char *png, size_t png_size){
@@ -294,6 +301,7 @@ SlapInfo* getNextSlap(){
     //DEBUG
 //    info->location.x = 200;
 //    info->location.y = 200;
+
     return info;
 }
 

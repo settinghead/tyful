@@ -28,10 +28,12 @@
 				toolLinks: true
 				defaultTool: 'marker'
 				defaultColor: '#000000'
-				defaultSize: 50
+				defaultDirection: 0
+				defaultSize: 100
 			}, opts
 			@painting = false
 			@color = @options.defaultColor
+			@direction = @options.defaultDirection
 			@size = @options.defaultSize
 			@tool = @options.defaultTool
 			@actions = []
@@ -45,32 +47,13 @@
 			@_direction.width = @_color.width = @_main.width()
 			@_direction.height = @_color.height = @_main.height()
 
-			# tool = new @Tool()
-			# path = null
-			# origin = null
-			# drawing = false
-
-			# tool.onMouseUp = (event) ->
-			# if path?
-			# 	console.log path
-			# 	path.smooth()
-			# 	project.redrawTextIndicator path
-			# 	project.directionLayer.addChild path.rasterize()
-			# 	project.colorLayer.addChild path.rasterize()
-			# 	project.directionVectorLayer.setVisible false
-			# 	project.directionLayer.setVisible false
-			# 	project.colorLayer.setVisible false
-			# 	window.TyfulNacl.resetRenderer()
-			# 	window.TyfulNacl.startRendering()
-			# 	path = null
-
 			@_main.bind 'click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', @onEvent
 			if @options.toolLinks
 				$('body').delegate "a[href=\"##{@_main.attr('id')}\"]", 'click', (e)->
 					$this = $(this)
 					$canvas = $($this.attr('href'))
 					tsketch = $canvas.data('tsketch')
-					for key in ['color', 'size', 'tool']
+					for key in ['color', 'direction', 'size', 'tool']
 						if $this.attr("data-#{key}")
 							tsketch.set key, $(this).attr("data-#{key}")
 					if $(this).attr('data-download')
@@ -92,6 +75,7 @@
 			@action = {
 				tool: @tool
 				color: @color
+				direction: @direction
 				size: parseFloat(@size)
 				events: []
 			}
@@ -103,14 +87,30 @@
 			@action = null
 			@redraw()
 
+		angleToRGBColor: (angle) ->
+			h = -angle/360
+			s = 0.5
+			l = 0.5
+			r = undefined
+			g = undefined
+			b = undefined
+			if s is 0
+				r = g = b = l # achromatic
+			else
+				hue2rgb = (p, q, t) ->
+					t += 1	if t < 0
+					t -= 1	if t > 1
+					return p + (q - p) * 6 * t	if t < 1 / 6
+					return q	if t < 1 / 2
+					return p + (q - p) * (2 / 3 - t) * 6	if t < 2 / 3
+					p
+				q = (if l < 0.5 then l * (1 + s) else l + s - l * s)
+				p = 2 * l - q
+				r = hue2rgb(p, q, h + 1 / 3)
+				g = hue2rgb(p, q, h)
+				b = hue2rgb(p, q, h - 1 / 3)
+			"rgba(#{Math.floor(r * 255)},#{Math.floor(g * 255)},#{Math.floor(b*255)},255)"
 
-		onEvent: (e)->
-			if e.originalEvent && e.originalEvent.targetTouches
-				e.pageX = e.originalEvent.targetTouches[0].pageX
-				e.pageY = e.originalEvent.targetTouches[0].pageY
-			$.tsketch.tools[$(this).data('tsketch').tool].onEvent.call($(this).data('tsketch'), e)
-			e.preventDefault()
-			false
 
 		onEvent: (e)->
 			if e.originalEvent && e.originalEvent.targetTouches
@@ -128,37 +128,6 @@
 				if this.tool
 					$.tsketch.tools[this.tool].draw.call tsketch, this
 			$.tsketch.tools[@action.tool].draw.call tsketch, @action if @painting && @action
-
-
-			# project.colorLayer = project.activeLayer
-			# project.directionLayer = new Layer()
-			# project.directionVectorLayer = new Layer()
-			# project.colorLayer.setVisible false
-			# project.directionVectorLayer.setVisible false
-			# project.directionLayer.setVisible false
-			# project.directionIndicatorLayer = new Layer()
-			# project.directionIndicatorRaster = new Raster($('#directionIndicator')[0])
-			# project.directionRaster = new Raster($('#direction')[0])
-			# project.directionIndicatorRaster.remove()
-			# project.directionRaster.remove()
-			# project.directionIndicatorLayer.addChild project.directionIndicatorRaster
-  # project.directionIndicatorLayer.setClipMask true
-  # project.directionLayer.activate()
-
-		# $(@_main).mousedown (event) ->
-		# 	# project.directionVectorLayer.setVisible true
-		# 	origin = event.point
-		# $(@_main).mousedrag = (event) ->
-		# 	unless path?
-		# 		path = new Path()
-		# 		path.remove()
-		# 		path.strokeColor = window.strokeColor
-		# 		path.strokeWidth = 100
-		# 		path.strokeCap = 'round';
-		# 	path.add(origin)
-		# 	s = path.segments.length
-		# 	path.add(event.point)
-		# 	e = path.segments.length
 
 	$.tsketch = { tools: {} }
 
@@ -179,24 +148,28 @@
 		draw: (action)->
 			@colorContext.lineJoin = @directionContext.lineJoin = "round"
 			@colorContext.lineCap = @directionContext.lineCap = "round"
-			@directionContext.beginPath()
 			@colorContext.beginPath()
-			@directionContext.strokeStyle = action.color
+			# @directionContext.strokeStyle = @angleToRGBColor(action.direction)
 			@colorContext.strokeStyle = action.color
 			@colorContext.lineWidth = @directionContext.lineWidth = action.size
 			@context.font = "bold 11px Arial"
-
 			@directionContext.moveTo action.events[0].x, action.events[0].y
 			@colorContext.moveTo action.events[0].x, action.events[0].y
-
+			# rad = action.direction * Math.PI * 2 / 360
 			previous = null
 			maxX = maxY = 0
 			minX = minY = 9007199254740992
 			@context.globalCompositeOperation = "source-over"
 			for event in action.events
-				@directionContext.lineTo event.x, event.y
-				@colorContext.lineTo event.x, event.y
 				if previous
+					# rad = action.direction * Math.PI * 2 / 360
+					rad = Math.atan (event.y-previous.y)/(event.x-previous.x)
+					@directionContext.beginPath()
+					@directionContext.moveTo previous.x, previous.y
+					@directionContext.strokeStyle = @angleToRGBColor(rad*360/Math.PI/2)
+					@directionContext.lineTo event.x, event.y
+					@colorContext.lineTo event.x, event.y
+					@directionContext.stroke()
 					startGridX = Math.min(event.x, previous.x)
 					startGridX -= action.size/2
 					startGridX -= startGridX % 11
@@ -213,7 +186,12 @@
 						y = startGridY
 						while y < endGridY
 							@context.moveTo(x,y)
+							@context.save()
+							@context.translate x+11/2,y+11/2
+							@context.rotate rad
+							@context.translate -x-11/2, -y-11/2
 							@context.fillText 'A',x,y
+							@context.restore()
 							y += 11
 						x += 11
 					minX = startGridX if startGridX < minX
@@ -222,49 +200,11 @@
 					maxY = endGridY if endGridY > maxY
 				previous = event
 
-			@directionContext.stroke()
 			@colorContext.stroke()
 			@context.globalCompositeOperation = "source-in"
 			@context.drawImage(@_color,0,0)
 			@context.globalCompositeOperation = "destination-in"
 			@context.drawImage(@_direction,0,0)
-
-
-
-		redrawTextIndicator: (action,segStartIndex, segEndIndex) ->
-			segStartIndex = 0 unless segStartIndex?
-			segEndIndex = action.events.length unless segEndIndex?
-			# segs = []
-			# i = segStartIndex
-			# while i < segEndIndex
-			#   segs.push path.segments[i].point
-			#   i++
-			# subpath = new Path(segs)
-			# subpath.strokeWidth = path.strokeWidth
-			# startGridX = subpath.strokeBounds.left - subpath.strokeBounds.left % 11
-			# startGridY = subpath.strokeBounds.top - subpath.strokeBounds.top % 11
-			@_dicontext.clearRect(0,0,@el.width,@el.height)
-			# @_dicontext.drawImage(@directionRaster.image,0,0,project.directionRaster.image.width,project.directionRaster.image.height)
-			# startGridX = path.segments[segStartIndex].point.x - path.strokeWidth/2 - path.segments[segStartIndex].point.x % 11
-			# startGridY = path.segments[segmentsgStartIndex].point.y - path.strokeWidth/2 - path.segments[segStartIndex].point.y % 11
-			# x = startGridX
-			x = 0
-			# while x < path.segments[segEndIndex-1].point.x + path.strokeWidth
-			while x < @_main.width()
-				# y = startGridY
-				y = 0
-				# while y < path.segments[segEndIndex-1].point.y + path.strokeWidth
-				while y < @_main.height()
-					console.log "#{x},#{y}"
-					# p = new Point(x, y)
-					# if path.hitTest(p)
-					@_dicontext.moveTo(x,y)
-					@_dicontext.fillStyle = "blue"
-					@_dicontext.font = "bold 11px Arial"
-					@_dicontext.fillText 'A',x,y
-					#console.log(text)
-					y += 11
-				x += 11
 
 	$.tsketch.tools.magicmarker =
 		onEvent: (e)->

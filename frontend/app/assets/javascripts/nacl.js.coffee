@@ -6,8 +6,20 @@
 window.TyfulNacl = new Object()
 # paper.install(window)
 
+window.Uint32Concat = (first, second) ->
+  first = (new Uint32Array(first))
+  second = (new Uint32Array(second))
+  firstLength = first.length
+  result = new Uint32Array(firstLength + second.length)
+  result.set first
+  result.set second, firstLength
+  result
+
+
 $(document).ready ->
-  $(".knob").knob();
+  $(".knob").knob
+    change: (v)->
+      $("#sketch").tsketch().direction = v
 
   $('.fontselect').fontselect();
   $('.fontselect').change ()->
@@ -115,6 +127,7 @@ $(document).ready ->
     $("#sketch").tsketch().color = pixelColor
     # window.strokeColor = new RgbColor(pixel[0]/256,pixel[1]/256,pixel[2]/256,pixel[3]/256)
 
+
   $("#renderpreview").click (event) ->
     event.preventDefault()
     $("#tyfulTabs a#adjustButton").tab('show');
@@ -168,7 +181,7 @@ window.TyfulNacl.fixShape = (shape) ->
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape " + shape.sid + " " + shape.getLeft() + " " + shape.getTop() + " " + (-shape.getAngle()*Math.PI*2/360) + " 1 1"
   # window.TyfulNacl.fixedShapes[e.target.sid] = e.target
   window.TyfulNacl.fixedShapes[shape.sid] = shape
-  console.log shape.sid
+  # console.log shape.sid
   window.TyfulNacl.redrawShoppingWindows()
 
 window.TyfulNacl.positionPin = (obj) ->
@@ -355,7 +368,6 @@ window.TyfulNacl.feedShape = (shape, shrinkage) ->
   shape.setLeft shape.getWidth()/2
   shape.render(context,true)
   feedCommandStr = window.TyfulNacl.feedShapeMethodPrefix + " " + (shape.sid) + " " + shapeCanvas.width + " " + shapeCanvas.height+" "+shrinkage
-
   unless window.TyfulNacl.status
     window.TyfulNacl.status = "feeding"
     window.TyfulNacl.TyfulNaclCoreModule.postMessage feedCommandStr
@@ -368,25 +380,25 @@ window.TyfulNacl.feedShape = (shape, shrinkage) ->
 
 window.TyfulNacl.decimalColorToHTMLcolor = (number) ->
   
-  #converts to a integer
+  # #converts to a integer
   intnumber = number - 0
   
-  # isolate the colors - really not necessary
-  red = undefined
-  green = undefined
-  blue = undefined
+  # # isolate the colors - really not necessary
+  # red = undefined
+  # green = undefined
+  # blue = undefined
   
-  # needed since toString does not zero fill on left
+  # # needed since toString does not zero fill on left
   template = "#000000"
   
-  # in the MS Windows world RGB colors
-  # are 0xBBGGRR because of the way Intel chips store bytes
-  blue = (intnumber & 0x0000ff) << 16
-  green = intnumber & 0x00ff00
+  # # in the MS Windows world RGB colors
+  # # are 0xBBGGRR because of the way Intel chips store bytes
+  blue = (intnumber & 0x0000ff)
+  green = (intnumber & 0x00ff00) >>> 8
   red = (intnumber & 0xff0000) >>> 16
   
-  # mask out each color and reverse the order
-  intnumber = red | green | blue
+  # # mask out each color and reverse the order
+  intnumber = red << 16 | green << 8 | blue
   
   # toString converts a number to a hexstring
   HTMLcolor = intnumber.toString(16)
@@ -394,8 +406,6 @@ window.TyfulNacl.decimalColorToHTMLcolor = (number) ->
   #template adds # for standard HTML #RRGGBB
   HTMLcolor = template.substring(0, 7 - HTMLcolor.length) + HTMLcolor
   HTMLcolor
-
-
 
 # document.body.appendChild(shapeCanvas);
 
@@ -470,14 +480,14 @@ window.TyfulNacl.handleMessage = (message_event) ->
       canvas = $("#sketch")[0]
       canvasWidth = canvas.width
       canvasHeight = canvas.height
-      # $('#sketchBuffer')[0].width = $('#directionIndicator')[0].width = canvasWidth
-      # $('#sketchBuffer')[0].height = $('#directionIndicator')[0].height = canvasHeight
       ctx = $('#sketch').data('tsketch').directionContext
-      # ctx = r.context
+      colorCtx = $("#sketch").data('tsketch').colorContext
       imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
-      window.TyfulNacl.TyfulNaclCoreModule.postMessage imageData.data.buffer
-      window.TyfulNacl.status = undefined
+      colorImageData = colorCtx.getImageData(0,0,canvasWidth,canvasHeight)
+      data = Uint32Concat(imageData.data.buffer, colorImageData.data.buffer)
+      window.TyfulNacl.TyfulNaclCoreModule.postMessage data.buffer
       # console.log('Template data transferred.')
+      window.TyfulNacl.status = undefined
     else if message_event.data.indexOf(window.TyfulNacl.templateDataReceivedPrefix) is 0
       window.TyfulNacl.TyfulNaclCoreModule.postMessage "startRender "
     else if message_event.data.indexOf(window.TyfulNacl.obscureSidsMethodPrefix) is 0
@@ -493,7 +503,7 @@ window.TyfulNacl.handleMessage = (message_event) ->
       for sid in sids
         if(sid.length>0)
           sid = parseInt(sid)
-          console.log sid
+          # console.log sid
           shape = window.TyfulNacl.shapes[sid]
           window.TyfulNacl.shapes[this_sid].overlaps.push shape
           # shape.setOpacity 0.15 if not window.TyfulNacl.fixedShapes[sid]
