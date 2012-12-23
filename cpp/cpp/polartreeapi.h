@@ -13,9 +13,6 @@ void appendLayer(unsigned int *combinedPixels, int width, int height,bool flip,b
 void appendLayer(unsigned char *png, size_t png_size);
 void updateTemplate(unsigned int *data);
 void updateTemplate(unsigned int *zipData,int size);
-unsigned int* zipTemplate(unsigned int* previewPixels, int width, int height);
-void loadTemplateFromZip(unsigned char *data);
-unsigned char * getZipFromTemplate();
 void feedShape(unsigned int *data, double shrinkage);
 void startRendering();
 //void pauseRendering();
@@ -26,3 +23,6 @@ unsigned int getNumberOfPendingShapes();
 Dimension getCanvasSize();
 void resetFixedShapes();
 std::string setFixedShape(int sid, double x, double y, double rotation,double scaleX,double scaleY);
+void serializeTemplate(unsigned int* previewPixels, int width, int height, unsigned char*& output, int& length);
+void serializeTemplate(unsigned char* previewPng, int len, unsigned char*& output, int& length);
+void loadTemplateFromSerialization(unsigned char *data, int length);

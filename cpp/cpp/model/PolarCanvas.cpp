@@ -23,6 +23,7 @@
 #include "../nudger/ColorMapZigzagNudger.h"
 #include "../nudger/ColorMapSpiralNudger.h"
 #include "../density/DensityPatchIndex.h"
+#include "../proto/template.pb.h"
 #include "structs.h"
 //#include "concurrent_queue.h"
 #include <cmath>

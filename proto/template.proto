@@ -1,0 +1,33 @@
+package com.setitnghead.tyful;
+
+message Image{
+  required int32 width = 1;
+  required int32 height = 2;
+  required bytes data = 3;
+}
+
+message Png{
+  required int32 length = 1;
+  required bytes data = 2;
+}
+
+message Layer{
+  required Image direction = 1;
+  required Image color = 2;
+  optional string id = 3;
+  optional double directionTolerance = 4;
+  optional double colorTolerance = 5;
+}
+
+message Template {
+  repeated Layer layer = 1;
+  optional Png preview = 2;
+  optional int32 dilligence = 3;
+  optional int32 perseverance = 4;
+  optional int32 minBoxSize = 5;
+  optional double sampleDistance = 6;
+  optional double minFontSize = 7;
+  optional double maxFontSize = 8;
+  optional int32 numberOfSizeReductionSteps = 9;
+
+}

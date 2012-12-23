@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		7C0A572D166D811B004D4A14 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A572B166D811B004D4A14 /* base64.cpp */; };
 		7C0A572E166D811B004D4A14 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C0A572C166D811B004D4A14 /* base64.h */; };
+		7C0B9CDA1686E28B00C51702 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0B9CD81686E28B00C51702 /* libboost_filesystem.dylib */; };
+		7C0B9CDB1686E28B00C51702 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0B9CD91686E28B00C51702 /* libboost_system.dylib */; };
+		7C0BA546168797F400C51702 /* libprotobuf.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0BA544168797CB00C51702 /* libprotobuf.6.dylib */; };
+		7C0BA5491687981700C51702 /* libprotoc.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0BA5471687981700C51702 /* libprotoc.6.dylib */; };
+		7C0BA54A1687981700C51702 /* libprotobuf-lite.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0BA5481687981700C51702 /* libprotobuf-lite.6.dylib */; };
 		7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */; };
 		7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */; };
 		7C7AE93B16674B5C002466A3 /* Angler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE8FC16674B5C002466A3 /* Angler.cpp */; };
@@ -66,6 +71,17 @@
 		7C7AE96F16674B5C002466A3 /* PolarTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93816674B5C002466A3 /* PolarTree.h */; };
 		7C7AE97116674B5C002466A3 /* PolarTreeBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */; };
 		7C7AE97316675323002466A3 /* PolarTreeBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */; };
+		7CAB3BD01686D21F00BF5DDF /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BC51686D21E00BF5DDF /* crypt.h */; };
+		7CAB3BD11686D21F00BF5DDF /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB3BC61686D21E00BF5DDF /* ioapi.c */; };
+		7CAB3BD21686D21F00BF5DDF /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BC71686D21E00BF5DDF /* ioapi.h */; };
+		7CAB3BD51686D21F00BF5DDF /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB3BCA1686D21E00BF5DDF /* mztools.c */; };
+		7CAB3BD61686D21F00BF5DDF /* mztools.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BCB1686D21E00BF5DDF /* mztools.h */; };
+		7CAB3BD71686D21F00BF5DDF /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB3BCC1686D21E00BF5DDF /* unzip.c */; };
+		7CAB3BD81686D21F00BF5DDF /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BCD1686D21E00BF5DDF /* unzip.h */; };
+		7CAB3BD91686D21F00BF5DDF /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB3BCE1686D21E00BF5DDF /* zip.c */; };
+		7CAB3BDA1686D21F00BF5DDF /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BCF1686D21F00BF5DDF /* zip.h */; };
+		7CAB3BDD1686D45B00BF5DDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB3BDC1686D45B00BF5DDF /* libz.dylib */; };
+		7CAB3BE71686D7EE00BF5DDF /* export.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7CAB3BE61686D7ED00BF5DDF /* export.hpp */; };
 		7CEFFBCF16689ECA00900686 /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFFBCD16689EC900900686 /* threadpool.cpp */; };
 		7CEFFBD016689ECA00900686 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBCE16689EC900900686 /* threadpool.h */; };
 		7CEFFBD316699F7B00900686 /* polartreeapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEFFBD116699F7A00900686 /* polartreeapi.cpp */; };
@@ -77,6 +93,13 @@
 /* Begin PBXFileReference section */
 		7C0A572B166D811B004D4A14 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		7C0A572C166D811B004D4A14 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		7C0B9CD81686E28B00C51702 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = ../../../../usr/local/lib/libboost_filesystem.dylib; sourceTree = "<group>"; };
+		7C0B9CD91686E28B00C51702 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../usr/local/lib/libboost_system.dylib; sourceTree = "<group>"; };
+		7C0BA544168797CB00C51702 /* libprotobuf.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotobuf.6.dylib; path = ../../../../usr/local/lib/libprotobuf.6.dylib; sourceTree = "<group>"; };
+		7C0BA5471687981700C51702 /* libprotoc.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotoc.6.dylib; path = ../../../../usr/local/lib/libprotoc.6.dylib; sourceTree = "<group>"; };
+		7C0BA5481687981700C51702 /* libprotobuf-lite.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libprotobuf-lite.6.dylib"; path = "../../../../usr/local/lib/libprotobuf-lite.6.dylib"; sourceTree = "<group>"; };
+		7C0BA54C1687A0CF00C51702 /* template.pb.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = template.pb.cc; sourceTree = "<group>"; };
+		7C0BA54D1687A0CF00C51702 /* template.pb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = template.pb.h; sourceTree = "<group>"; };
 		7C294C04166B0C1B00BA2A15 /* ThreadControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadControllers.cpp; sourceTree = "<group>"; };
 		7C294C05166B0C1B00BA2A15 /* ThreadControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadControllers.h; sourceTree = "<group>"; };
 		7C5EDB56167B4A870005B052 /* ColorMapSpiralNudger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMapSpiralNudger.h; sourceTree = "<group>"; };
@@ -140,6 +163,21 @@
 		7C7AE93A16674B5C002466A3 /* PolarTreeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarTreeBuilder.h; sourceTree = "<group>"; };
 		7C7AE97216675323002466A3 /* PolarTreeBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolarTreeBuilder.cpp; sourceTree = "<group>"; };
 		7C8DB44516862995001E4E89 /* fasttrig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fasttrig.h; sourceTree = "<group>"; };
+		7C8DB44816867CAD001E4E89 /* ZipInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZipInput.h; sourceTree = "<group>"; };
+		7C8DB44916867FE6001E4E89 /* ZipOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZipOutput.h; sourceTree = "<group>"; };
+		7C8DB44A168680B3001E4E89 /* IZippable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IZippable.h; sourceTree = "<group>"; };
+		7C8DB44B1686B2DE001E4E89 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		7CAB3BC51686D21E00BF5DDF /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		7CAB3BC61686D21E00BF5DDF /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		7CAB3BC71686D21E00BF5DDF /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		7CAB3BCA1686D21E00BF5DDF /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		7CAB3BCB1686D21E00BF5DDF /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		7CAB3BCC1686D21E00BF5DDF /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		7CAB3BCD1686D21E00BF5DDF /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		7CAB3BCE1686D21E00BF5DDF /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		7CAB3BCF1686D21F00BF5DDF /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		7CAB3BDC1686D45B00BF5DDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		7CAB3BE61686D7ED00BF5DDF /* export.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = export.hpp; sourceTree = "<group>"; };
 		7CB6037D167699B5006CB6EE /* concurrent_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_queue.h; sourceTree = "<group>"; };
 		7CC0514A1674A258006085EF /* json_batchallocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
 		7CC0514B1674A258006085EF /* json_internalarray.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
@@ -179,6 +217,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C0BA5491687981700C51702 /* libprotoc.6.dylib in Frameworks */,
+				7C0BA54A1687981700C51702 /* libprotobuf-lite.6.dylib in Frameworks */,
+				7C0BA546168797F400C51702 /* libprotobuf.6.dylib in Frameworks */,
+				7C0B9CDA1686E28B00C51702 /* libboost_filesystem.dylib in Frameworks */,
+				7C0B9CDB1686E28B00C51702 /* libboost_system.dylib in Frameworks */,
+				7CAB3BDD1686D45B00BF5DDF /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,9 +238,25 @@
 			path = encoding;
 			sourceTree = "<group>";
 		};
+		7C0BA54B1687A0CF00C51702 /* proto */ = {
+			isa = PBXGroup;
+			children = (
+				7C0BA54C1687A0CF00C51702 /* template.pb.cc */,
+				7C0BA54D1687A0CF00C51702 /* template.pb.h */,
+			);
+			path = proto;
+			sourceTree = "<group>";
+		};
 		7C7AE85E166745B5002466A3 = {
 			isa = PBXGroup;
 			children = (
+				7C0BA5471687981700C51702 /* libprotoc.6.dylib */,
+				7C0BA5481687981700C51702 /* libprotobuf-lite.6.dylib */,
+				7C0BA544168797CB00C51702 /* libprotobuf.6.dylib */,
+				7C0B9CD81686E28B00C51702 /* libboost_filesystem.dylib */,
+				7C0B9CD91686E28B00C51702 /* libboost_system.dylib */,
+				7CAB3BDC1686D45B00BF5DDF /* libz.dylib */,
+				7C8DB44B1686B2DE001E4E89 /* OpenGL.framework */,
 				7C7AE86B166745B7002466A3 /* cpp */,
 				7C7AE86A166745B7002466A3 /* Products */,
 			);
@@ -213,6 +273,8 @@
 		7C7AE86B166745B7002466A3 /* cpp */ = {
 			isa = PBXGroup;
 			children = (
+				7C0BA54B1687A0CF00C51702 /* proto */,
+				7C8DB44716867C7E001E4E89 /* zip */,
 				7CC051491674A257006085EF /* lib_json */,
 				7C0A5729166D80E8004D4A14 /* encoding */,
 				7CEFFBD116699F7A00900686 /* polartreeapi.cpp */,
@@ -367,6 +429,26 @@
 			path = tree;
 			sourceTree = "<group>";
 		};
+		7C8DB44716867C7E001E4E89 /* zip */ = {
+			isa = PBXGroup;
+			children = (
+				7CAB3BE61686D7ED00BF5DDF /* export.hpp */,
+				7CAB3BC51686D21E00BF5DDF /* crypt.h */,
+				7CAB3BC61686D21E00BF5DDF /* ioapi.c */,
+				7CAB3BC71686D21E00BF5DDF /* ioapi.h */,
+				7CAB3BCA1686D21E00BF5DDF /* mztools.c */,
+				7CAB3BCB1686D21E00BF5DDF /* mztools.h */,
+				7CAB3BCC1686D21E00BF5DDF /* unzip.c */,
+				7CAB3BCD1686D21E00BF5DDF /* unzip.h */,
+				7CAB3BCE1686D21E00BF5DDF /* zip.c */,
+				7CAB3BCF1686D21F00BF5DDF /* zip.h */,
+				7C8DB44816867CAD001E4E89 /* ZipInput.h */,
+				7C8DB44916867FE6001E4E89 /* ZipOutput.h */,
+				7C8DB44A168680B3001E4E89 /* IZippable.h */,
+			);
+			path = zip;
+			sourceTree = "<group>";
+		};
 		7CC051491674A257006085EF /* lib_json */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +542,12 @@
 				7C294C07166B0C1B00BA2A15 /* ThreadControllers.h in Headers */,
 				7C0A572E166D811B004D4A14 /* base64.h in Headers */,
 				7CF5B8AE1670358100C2CB82 /* lodepng.h in Headers */,
+				7CAB3BD01686D21F00BF5DDF /* crypt.h in Headers */,
+				7CAB3BD21686D21F00BF5DDF /* ioapi.h in Headers */,
+				7CAB3BD61686D21F00BF5DDF /* mztools.h in Headers */,
+				7CAB3BD81686D21F00BF5DDF /* unzip.h in Headers */,
+				7CAB3BDA1686D21F00BF5DDF /* zip.h in Headers */,
+				7CAB3BE71686D7EE00BF5DDF /* export.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +586,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 7C7AE85E166745B5002466A3;
 			productRefGroup = 7C7AE86A166745B7002466A3 /* Products */;
@@ -542,6 +631,10 @@
 				7C294C06166B0C1B00BA2A15 /* ThreadControllers.cpp in Sources */,
 				7C0A572D166D811B004D4A14 /* base64.cpp in Sources */,
 				7CF5B8AD1670358100C2CB82 /* lodepng.cpp in Sources */,
+				7CAB3BD11686D21F00BF5DDF /* ioapi.c in Sources */,
+				7CAB3BD51686D21F00BF5DDF /* mztools.c in Sources */,
+				7CAB3BD71686D21F00BF5DDF /* unzip.c in Sources */,
+				7CAB3BD91686D21F00BF5DDF /* zip.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,9 +667,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /Users/settinghead/boost_1_52_0;
-				"HEADER_SEARCH_PATHS[arch=*]" = /Users/settinghead/boost_1_52_0;
-				LIBRARY_SEARCH_PATHS = /Users/settinghead/boost_1_52_0/libs;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -603,8 +696,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /Users/settinghead/boost_1_52_0;
-				LIBRARY_SEARCH_PATHS = /Users/settinghead/boost_1_52_0/libs;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
@@ -617,6 +710,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GENERATE_PROFILING_CODE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -625,6 +721,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

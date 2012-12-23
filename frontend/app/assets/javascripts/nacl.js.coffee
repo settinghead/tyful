@@ -17,9 +17,12 @@ window.Uint32Concat = (first, second) ->
 
 
 $(document).ready ->
-  $(".knob").knob
+  $("#angle").knob
     change: (v)->
       $("#sketch").tsketch().direction = v
+  $("#thickness").knob
+    change: (v)->
+      $("#sketch").tsketch().size = v
 
   $('.fontselect').fontselect();
   $('.fontselect').change ()->

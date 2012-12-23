@@ -48,21 +48,34 @@
 					<img id="loader" class="hidden">
 
 					<div class="drawing-tools floating-toolbar">
-						<a href="#sketch" data-tool="marker">Marker</a>
-						<a href="#sketch" data-tool="eraser">Eraser</a>
-						<div style="display: inline-block;">
+						<div>You are <br />
+						<a href="#sketch" data-tool="marker">Drawing text</a>
+						<br />on a template
+					</div>
+						<!-- <a href="#sketch" data-tool="eraser">Eraser</a> -->
+						<!--http://www.script-tutorials.com/demos/206/index.html-->
+						<div>
+							using these colors: <br />
+							<div style="display: inline-block;">
+								<canvas id="color" width="300" height="50"></canvas>
+							</div>
+							<div style="display: inline-block;">
+								<div>Preview:</div>
+								<div id="preview"></div>
+								<div id="pick"></div>
+							</div>
+						</div>
+						<div>
+							at these angles <br />
 							<input class="knob" id="angle" data-width="60" data-cursor="true"
 							data-thickness="0.3" data-angleOffset="90"
  data-min="0" data-max="360" data-width="50" data-step="2" data-height="70" data-fgcolor="#222222" data-bgcolor="#999999" style="width:79px;height:50px"/>
 						</div>
-						<!--http://www.script-tutorials.com/demos/206/index.html-->
-						<div style="display: inline-block;">
-							<canvas id="color" width="300" height="50"></canvas>
-						</div>
-						<div style="display: inline-block;">
-							<div>Preview:</div>
-							<div id="preview"></div>
-							<div id="pick"></div>
+						<div>
+							with brush size <br />
+							<input class="knob" id="thickness" data-width="60" data-cursor="true"
+														data-thickness="0.5" data-angleOffset="90"
+							 data-min="20" data-max="200" data-width="50" data-step="2" data-height="70" data-fgcolor="#222222" data-bgcolor="#999999" style="width:79px;height:50px" value="60"/>					
 						</div>
 					</div>
 				</div>
@@ -72,7 +85,16 @@
 						<canvas id="renderer"></canvas>
 					</div>
 					<div class="floating-toolbar" id="object-editor">
+						<div>
+							Change font: <br />
 						<input class="fontselect" type="text" />
+						</div>
+						<div>
+							Change color: <br />
+						</div>
+						<div>
+							Change text: <br />
+						</div>
 					</div>
 			</div>
 
@@ -95,8 +117,8 @@
 			</div>
 
 			<div>
-				<button type="button" class="btn btn-success btnModify" data-loading-text="Loading...">Fill in Blanks</button>
-				<button type="button" class="btn btn-success btnRegenerate" data-loading-text="Loading...">Redraw</button>
+				<button type="button" class="btn btn-success btnModify" data-loading-text="Loading...">Fill More Words</button>
+				<button type="button" class="btn btn-success btnRegenerate" data-loading-text="Loading...">Clear & Redraw</button>
 			</div>
 			<div id="shopping-area">
 				<div class="row-fluid">

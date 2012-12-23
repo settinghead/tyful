@@ -104,10 +104,7 @@ public:
         failureCount = 0;
         getSizer()->reset();
     }
-
 private:
-    
- 
     int failureCount;
     int numRetries;
     int totalAttempted;

@@ -192,3 +192,4 @@ Colorer* WordLayer::getColorer(){
     }
     return _colorer;
 }
+

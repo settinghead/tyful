@@ -20,8 +20,10 @@
 #include <sstream>
 #include "lib_json/json_tool.h"
 
-pthread_t*       pendingMainRountineThread = NULL;
-pthread_t*       currentMainRountineThread = NULL;
+using namespace std;
+
+//pthread_t*       pendingMainRountineThread = NULL;
+//pthread_t*       currentMainRountineThread = NULL;
 
 void initCanvas(){
     pthread_mutex_lock(&PolarCanvas::threadControllers.stopping_mutex);
@@ -329,9 +331,12 @@ string setFixedShape(int sid, double x, double y, double rotation,double scaleX,
     return ss.str();
 }
 
-void loadTemplateFromZip(unsigned char *data){
-    
+void loadTemplateFromSeiralization(unsigned char *data, int length){
+    //TODO
 }
-unsigned char * getZipFromTemplate(){
-    
+void serializeTemplate(unsigned int* previewPixels, int width, int height, unsigned char*& data, int& length){
+    //TODO
+}
+void serializeTemplate(unsigned char* previewPng, int len, unsigned char*& data, int& length){
+    //TODO
 }

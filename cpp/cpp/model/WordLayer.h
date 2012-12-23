@@ -56,6 +56,7 @@ public:
     void setColorSheet(ColorSheet* colorSheet);
     Angler* getAngler();
     Colorer* getColorer();
+    
 private:
     double getHSB(int x, int y);
     double tolerance;

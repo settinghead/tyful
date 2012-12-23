@@ -34,5 +34,5 @@
 #define THREAD_STEP_SIZE 40
 #define MIN_BOX_SIZE 1
 
-#define DEFAULT_TOLERANCE 0.3
+#define DEFAULT_TOLERANCE 0.4
 #endif

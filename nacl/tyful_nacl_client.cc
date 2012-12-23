@@ -211,6 +211,7 @@ public:
     return NULL;
   }
   
+  
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
   /// method names and arguments; etc.  For example, you could use

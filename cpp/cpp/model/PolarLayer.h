@@ -31,8 +31,10 @@ public:
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     static void connect(PolarLayer* above, PolarLayer* below);
     
+    
     PolarLayer* above;
     PolarLayer* below;
+
 };
 
 
