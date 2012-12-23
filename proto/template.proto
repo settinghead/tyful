@@ -1,4 +1,4 @@
-package com.setitnghead.tyful;
+package tyful;
 
 message Image{
   required int32 width = 1;

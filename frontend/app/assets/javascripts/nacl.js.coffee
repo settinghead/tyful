@@ -318,7 +318,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
   i = 0
 
   while i < num
-    fontSize = 10 + 100 * shrinkage
+    fontSize = 9 + 100 * shrinkage
     # fontStyle = "bold " + fontSize + "px sans-serif"
     # ctx.font = fontStyle
     # ctx.textBaseline = "top"

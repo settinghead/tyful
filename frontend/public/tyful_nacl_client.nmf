@@ -1,6 +1,12 @@
 {
+   "name": "Tyful",
+    "version": "0.5",
+    "description": "Creating amazing typography art by doodling.",
   "program": {
     "x86-64": {"url": "tyful_nacl_client_x86_64.nexe"},
     "x86-32": {"url": "tyful_nacl_client_x86_32.nexe"}
+  },
+  "launch": {
+  	"web_url": "https://www.tyful.com"
   }
 }

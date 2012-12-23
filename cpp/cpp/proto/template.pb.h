@@ -25,8 +25,6 @@
 #include <google/protobuf/generated_message_reflection.h>
 // @@protoc_insertion_point(includes)
 
-namespace com {
-namespace setitnghead {
 namespace tyful {
 
 // Internal implementation detail -- do not call these.
@@ -119,7 +117,7 @@ class Image : public ::google::protobuf::Message {
   inline void set_data(const void* value, size_t size);
   inline ::std::string* mutable_data();
   
-  // @@protoc_insertion_point(class_scope:com.setitnghead.tyful.Image)
+  // @@protoc_insertion_point(class_scope:tyful.Image)
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -221,7 +219,7 @@ class Png : public ::google::protobuf::Message {
   inline void set_data(const void* value, size_t size);
   inline ::std::string* mutable_data();
   
-  // @@protoc_insertion_point(class_scope:com.setitnghead.tyful.Png)
+  // @@protoc_insertion_point(class_scope:tyful.Png)
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -305,19 +303,19 @@ class Layer : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .com.setitnghead.tyful.Image direction = 1;
+  // required .tyful.Image direction = 1;
   inline bool has_direction() const;
   inline void clear_direction();
   static const int kDirectionFieldNumber = 1;
-  inline const ::com::setitnghead::tyful::Image& direction() const;
-  inline ::com::setitnghead::tyful::Image* mutable_direction();
+  inline const ::tyful::Image& direction() const;
+  inline ::tyful::Image* mutable_direction();
   
-  // required .com.setitnghead.tyful.Image color = 2;
+  // required .tyful.Image color = 2;
   inline bool has_color() const;
   inline void clear_color();
   static const int kColorFieldNumber = 2;
-  inline const ::com::setitnghead::tyful::Image& color() const;
-  inline ::com::setitnghead::tyful::Image* mutable_color();
+  inline const ::tyful::Image& color() const;
+  inline ::tyful::Image* mutable_color();
   
   // optional string id = 3;
   inline bool has_id() const;
@@ -343,13 +341,13 @@ class Layer : public ::google::protobuf::Message {
   inline double colortolerance() const;
   inline void set_colortolerance(double value);
   
-  // @@protoc_insertion_point(class_scope:com.setitnghead.tyful.Layer)
+  // @@protoc_insertion_point(class_scope:tyful.Layer)
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::com::setitnghead::tyful::Image* direction_;
-  ::com::setitnghead::tyful::Image* color_;
+  ::tyful::Image* direction_;
+  ::tyful::Image* color_;
   ::std::string* id_;
   static const ::std::string _default_id_;
   double directiontolerance_;
@@ -430,24 +428,24 @@ class Template : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .com.setitnghead.tyful.Layer layer = 1;
+  // repeated .tyful.Layer layer = 1;
   inline int layer_size() const;
   inline void clear_layer();
   static const int kLayerFieldNumber = 1;
-  inline const ::com::setitnghead::tyful::Layer& layer(int index) const;
-  inline ::com::setitnghead::tyful::Layer* mutable_layer(int index);
-  inline ::com::setitnghead::tyful::Layer* add_layer();
-  inline const ::google::protobuf::RepeatedPtrField< ::com::setitnghead::tyful::Layer >&
+  inline const ::tyful::Layer& layer(int index) const;
+  inline ::tyful::Layer* mutable_layer(int index);
+  inline ::tyful::Layer* add_layer();
+  inline const ::google::protobuf::RepeatedPtrField< ::tyful::Layer >&
       layer() const;
-  inline ::google::protobuf::RepeatedPtrField< ::com::setitnghead::tyful::Layer >*
+  inline ::google::protobuf::RepeatedPtrField< ::tyful::Layer >*
       mutable_layer();
   
-  // optional .com.setitnghead.tyful.Png preview = 2;
+  // optional .tyful.Png preview = 2;
   inline bool has_preview() const;
   inline void clear_preview();
   static const int kPreviewFieldNumber = 2;
-  inline const ::com::setitnghead::tyful::Png& preview() const;
-  inline ::com::setitnghead::tyful::Png* mutable_preview();
+  inline const ::tyful::Png& preview() const;
+  inline ::tyful::Png* mutable_preview();
   
   // optional int32 dilligence = 3;
   inline bool has_dilligence() const;
@@ -498,13 +496,13 @@ class Template : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 numberofsizereductionsteps() const;
   inline void set_numberofsizereductionsteps(::google::protobuf::int32 value);
   
-  // @@protoc_insertion_point(class_scope:com.setitnghead.tyful.Template)
+  // @@protoc_insertion_point(class_scope:tyful.Template)
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::com::setitnghead::tyful::Layer > layer_;
-  ::com::setitnghead::tyful::Png* preview_;
+  ::google::protobuf::RepeatedPtrField< ::tyful::Layer > layer_;
+  ::tyful::Png* preview_;
   ::google::protobuf::int32 dilligence_;
   ::google::protobuf::int32 perseverance_;
   ::google::protobuf::int32 minboxsize_;
@@ -679,37 +677,37 @@ inline ::std::string* Png::mutable_data() {
 
 // Layer
 
-// required .com.setitnghead.tyful.Image direction = 1;
+// required .tyful.Image direction = 1;
 inline bool Layer::has_direction() const {
   return _has_bit(0);
 }
 inline void Layer::clear_direction() {
-  if (direction_ != NULL) direction_->::com::setitnghead::tyful::Image::Clear();
+  if (direction_ != NULL) direction_->::tyful::Image::Clear();
   _clear_bit(0);
 }
-inline const ::com::setitnghead::tyful::Image& Layer::direction() const {
+inline const ::tyful::Image& Layer::direction() const {
   return direction_ != NULL ? *direction_ : *default_instance_->direction_;
 }
-inline ::com::setitnghead::tyful::Image* Layer::mutable_direction() {
+inline ::tyful::Image* Layer::mutable_direction() {
   _set_bit(0);
-  if (direction_ == NULL) direction_ = new ::com::setitnghead::tyful::Image;
+  if (direction_ == NULL) direction_ = new ::tyful::Image;
   return direction_;
 }
 
-// required .com.setitnghead.tyful.Image color = 2;
+// required .tyful.Image color = 2;
 inline bool Layer::has_color() const {
   return _has_bit(1);
 }
 inline void Layer::clear_color() {
-  if (color_ != NULL) color_->::com::setitnghead::tyful::Image::Clear();
+  if (color_ != NULL) color_->::tyful::Image::Clear();
   _clear_bit(1);
 }
-inline const ::com::setitnghead::tyful::Image& Layer::color() const {
+inline const ::tyful::Image& Layer::color() const {
   return color_ != NULL ? *color_ : *default_instance_->color_;
 }
-inline ::com::setitnghead::tyful::Image* Layer::mutable_color() {
+inline ::tyful::Image* Layer::mutable_color() {
   _set_bit(1);
-  if (color_ == NULL) color_ = new ::com::setitnghead::tyful::Image;
+  if (color_ == NULL) color_ = new ::tyful::Image;
   return color_;
 }
 
@@ -791,45 +789,45 @@ inline void Layer::set_colortolerance(double value) {
 
 // Template
 
-// repeated .com.setitnghead.tyful.Layer layer = 1;
+// repeated .tyful.Layer layer = 1;
 inline int Template::layer_size() const {
   return layer_.size();
 }
 inline void Template::clear_layer() {
   layer_.Clear();
 }
-inline const ::com::setitnghead::tyful::Layer& Template::layer(int index) const {
+inline const ::tyful::Layer& Template::layer(int index) const {
   return layer_.Get(index);
 }
-inline ::com::setitnghead::tyful::Layer* Template::mutable_layer(int index) {
+inline ::tyful::Layer* Template::mutable_layer(int index) {
   return layer_.Mutable(index);
 }
-inline ::com::setitnghead::tyful::Layer* Template::add_layer() {
+inline ::tyful::Layer* Template::add_layer() {
   return layer_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::com::setitnghead::tyful::Layer >&
+inline const ::google::protobuf::RepeatedPtrField< ::tyful::Layer >&
 Template::layer() const {
   return layer_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::com::setitnghead::tyful::Layer >*
+inline ::google::protobuf::RepeatedPtrField< ::tyful::Layer >*
 Template::mutable_layer() {
   return &layer_;
 }
 
-// optional .com.setitnghead.tyful.Png preview = 2;
+// optional .tyful.Png preview = 2;
 inline bool Template::has_preview() const {
   return _has_bit(1);
 }
 inline void Template::clear_preview() {
-  if (preview_ != NULL) preview_->::com::setitnghead::tyful::Png::Clear();
+  if (preview_ != NULL) preview_->::tyful::Png::Clear();
   _clear_bit(1);
 }
-inline const ::com::setitnghead::tyful::Png& Template::preview() const {
+inline const ::tyful::Png& Template::preview() const {
   return preview_ != NULL ? *preview_ : *default_instance_->preview_;
 }
-inline ::com::setitnghead::tyful::Png* Template::mutable_preview() {
+inline ::tyful::Png* Template::mutable_preview() {
   _set_bit(1);
-  if (preview_ == NULL) preview_ = new ::com::setitnghead::tyful::Png;
+  if (preview_ == NULL) preview_ = new ::tyful::Png;
   return preview_;
 }
 
@@ -949,8 +947,6 @@ inline void Template::set_numberofsizereductionsteps(::google::protobuf::int32 v
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace tyful
-}  // namespace setitnghead
-}  // namespace com
 
 #ifndef SWIG
 namespace google {

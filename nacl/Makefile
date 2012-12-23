@@ -17,7 +17,7 @@
 #
 NACL_SDK_ROOT:=/Users/settinghead/nacl_sdk/pepper_23
 PROJECT:=tyful_nacl_client
-LDFLAGS:=-lppapi_cpp -lppapi -pthread
+LDFLAGS:=-lppapi_cpp -lppapi -pthread -l protobuf
 CXX_SOURCES:=$(PROJECT).cc ../cpp/cpp/*.cpp ../cpp/cpp/**/*.cpp
 
 

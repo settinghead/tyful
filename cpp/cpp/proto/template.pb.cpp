@@ -10,8 +10,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace com {
-namespace setitnghead {
 namespace tyful {
 
 namespace {
@@ -155,21 +153,19 @@ void protobuf_AddDesc_template_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016template.proto\022\025com.setitnghead.tyful\""
-    "4\n\005Image\022\r\n\005width\030\001 \002(\005\022\016\n\006height\030\002 \002(\005\022"
-    "\014\n\004data\030\003 \002(\014\"#\n\003Png\022\016\n\006length\030\001 \002(\005\022\014\n\004"
-    "data\030\002 \002(\014\"\245\001\n\005Layer\022/\n\tdirection\030\001 \002(\0132"
-    "\034.com.setitnghead.tyful.Image\022+\n\005color\030\002"
-    " \002(\0132\034.com.setitnghead.tyful.Image\022\n\n\002id"
-    "\030\003 \001(\t\022\032\n\022directionTolerance\030\004 \001(\001\022\026\n\016co"
-    "lorTolerance\030\005 \001(\001\"\210\002\n\010Template\022+\n\005layer"
-    "\030\001 \003(\0132\034.com.setitnghead.tyful.Layer\022+\n\007"
-    "preview\030\002 \001(\0132\032.com.setitnghead.tyful.Pn"
+    "\n\016template.proto\022\005tyful\"4\n\005Image\022\r\n\005widt"
+    "h\030\001 \002(\005\022\016\n\006height\030\002 \002(\005\022\014\n\004data\030\003 \002(\014\"#\n"
+    "\003Png\022\016\n\006length\030\001 \002(\005\022\014\n\004data\030\002 \002(\014\"\205\001\n\005L"
+    "ayer\022\037\n\tdirection\030\001 \002(\0132\014.tyful.Image\022\033\n"
+    "\005color\030\002 \002(\0132\014.tyful.Image\022\n\n\002id\030\003 \001(\t\022\032"
+    "\n\022directionTolerance\030\004 \001(\001\022\026\n\016colorToler"
+    "ance\030\005 \001(\001\"\350\001\n\010Template\022\033\n\005layer\030\001 \003(\0132\014"
+    ".tyful.Layer\022\033\n\007preview\030\002 \001(\0132\n.tyful.Pn"
     "g\022\022\n\ndilligence\030\003 \001(\005\022\024\n\014perseverance\030\004 "
     "\001(\005\022\022\n\nminBoxSize\030\005 \001(\005\022\026\n\016sampleDistanc"
     "e\030\006 \001(\001\022\023\n\013minFontSize\030\007 \001(\001\022\023\n\013maxFontS"
     "ize\030\010 \001(\001\022\"\n\032numberOfSizeReductionSteps\030"
-    "\t \001(\005", 565);
+    "\t \001(\005", 485);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.proto", &protobuf_RegisterTypes);
   Image::default_instance_ = new Image();
@@ -762,8 +758,8 @@ Layer::Layer()
 }
 
 void Layer::InitAsDefaultInstance() {
-  direction_ = const_cast< ::com::setitnghead::tyful::Image*>(&::com::setitnghead::tyful::Image::default_instance());
-  color_ = const_cast< ::com::setitnghead::tyful::Image*>(&::com::setitnghead::tyful::Image::default_instance());
+  direction_ = const_cast< ::tyful::Image*>(&::tyful::Image::default_instance());
+  color_ = const_cast< ::tyful::Image*>(&::tyful::Image::default_instance());
 }
 
 Layer::Layer(const Layer& from)
@@ -819,10 +815,10 @@ Layer* Layer::New() const {
 void Layer::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (direction_ != NULL) direction_->::com::setitnghead::tyful::Image::Clear();
+      if (direction_ != NULL) direction_->::tyful::Image::Clear();
     }
     if (_has_bit(1)) {
-      if (color_ != NULL) color_->::com::setitnghead::tyful::Image::Clear();
+      if (color_ != NULL) color_->::tyful::Image::Clear();
     }
     if (_has_bit(2)) {
       if (id_ != &_default_id_) {
@@ -842,7 +838,7 @@ bool Layer::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .com.setitnghead.tyful.Image direction = 1;
+      // required .tyful.Image direction = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -855,7 +851,7 @@ bool Layer::MergePartialFromCodedStream(
         break;
       }
       
-      // required .com.setitnghead.tyful.Image color = 2;
+      // required .tyful.Image color = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -936,13 +932,13 @@ bool Layer::MergePartialFromCodedStream(
 
 void Layer::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required .com.setitnghead.tyful.Image direction = 1;
+  // required .tyful.Image direction = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->direction(), output);
   }
   
-  // required .com.setitnghead.tyful.Image color = 2;
+  // required .tyful.Image color = 2;
   if (_has_bit(1)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->color(), output);
@@ -975,14 +971,14 @@ void Layer::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Layer::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .com.setitnghead.tyful.Image direction = 1;
+  // required .tyful.Image direction = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->direction(), target);
   }
   
-  // required .com.setitnghead.tyful.Image color = 2;
+  // required .tyful.Image color = 2;
   if (_has_bit(1)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1020,14 +1016,14 @@ int Layer::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .com.setitnghead.tyful.Image direction = 1;
+    // required .tyful.Image direction = 1;
     if (has_direction()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->direction());
     }
     
-    // required .com.setitnghead.tyful.Image color = 2;
+    // required .tyful.Image color = 2;
     if (has_color()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1079,10 +1075,10 @@ void Layer::MergeFrom(const Layer& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_direction()->::com::setitnghead::tyful::Image::MergeFrom(from.direction());
+      mutable_direction()->::tyful::Image::MergeFrom(from.direction());
     }
     if (from._has_bit(1)) {
-      mutable_color()->::com::setitnghead::tyful::Image::MergeFrom(from.color());
+      mutable_color()->::tyful::Image::MergeFrom(from.color());
     }
     if (from._has_bit(2)) {
       set_id(from.id());
@@ -1163,7 +1159,7 @@ Template::Template()
 }
 
 void Template::InitAsDefaultInstance() {
-  preview_ = const_cast< ::com::setitnghead::tyful::Png*>(&::com::setitnghead::tyful::Png::default_instance());
+  preview_ = const_cast< ::tyful::Png*>(&::tyful::Png::default_instance());
 }
 
 Template::Template(const Template& from)
@@ -1218,7 +1214,7 @@ Template* Template::New() const {
 void Template::Clear() {
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
     if (_has_bit(1)) {
-      if (preview_ != NULL) preview_->::com::setitnghead::tyful::Png::Clear();
+      if (preview_ != NULL) preview_->::tyful::Png::Clear();
     }
     dilligence_ = 0;
     perseverance_ = 0;
@@ -1241,7 +1237,7 @@ bool Template::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .com.setitnghead.tyful.Layer layer = 1;
+      // repeated .tyful.Layer layer = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1256,7 +1252,7 @@ bool Template::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .com.setitnghead.tyful.Png preview = 2;
+      // optional .tyful.Png preview = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1400,13 +1396,13 @@ bool Template::MergePartialFromCodedStream(
 
 void Template::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated .com.setitnghead.tyful.Layer layer = 1;
+  // repeated .tyful.Layer layer = 1;
   for (int i = 0; i < this->layer_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->layer(i), output);
   }
   
-  // optional .com.setitnghead.tyful.Png preview = 2;
+  // optional .tyful.Png preview = 2;
   if (_has_bit(1)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->preview(), output);
@@ -1455,14 +1451,14 @@ void Template::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Template::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated .com.setitnghead.tyful.Layer layer = 1;
+  // repeated .tyful.Layer layer = 1;
   for (int i = 0; i < this->layer_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->layer(i), target);
   }
   
-  // optional .com.setitnghead.tyful.Png preview = 2;
+  // optional .tyful.Png preview = 2;
   if (_has_bit(1)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1515,7 +1511,7 @@ int Template::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // optional .com.setitnghead.tyful.Png preview = 2;
+    // optional .tyful.Png preview = 2;
     if (has_preview()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1568,7 +1564,7 @@ int Template::ByteSize() const {
     }
     
   }
-  // repeated .com.setitnghead.tyful.Layer layer = 1;
+  // repeated .tyful.Layer layer = 1;
   total_size += 1 * this->layer_size();
   for (int i = 0; i < this->layer_size(); i++) {
     total_size +=
@@ -1604,7 +1600,7 @@ void Template::MergeFrom(const Template& from) {
   layer_.MergeFrom(from.layer_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
     if (from._has_bit(1)) {
-      mutable_preview()->::com::setitnghead::tyful::Png::MergeFrom(from.preview());
+      mutable_preview()->::tyful::Png::MergeFrom(from.preview());
     }
     if (from._has_bit(2)) {
       set_dilligence(from.dilligence());
@@ -1685,7 +1681,5 @@ void Template::Swap(Template* other) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace tyful
-}  // namespace setitnghead
-}  // namespace com
 
 // @@protoc_insertion_point(global_scope)

@@ -26,7 +26,7 @@
 #include <tr1/unordered_set>
 #include <queue>
 #include "../ThreadControllers.h"
-
+#include "../proto/template.pb.h"
 using namespace std;
 
 class EngineShape;
@@ -44,9 +44,9 @@ typedef int STATUS;
 typedef int SKIP_REASON;
 
 
-class PolarCanvas:public vector<PolarLayer*>{
+class PolarCanvas:public vector<PolarLayer*>, public tyful::Template{
 public:
-    PolarCanvas();
+    explicit PolarCanvas();
     ~PolarCanvas();
     
     inline unsigned int getId(){

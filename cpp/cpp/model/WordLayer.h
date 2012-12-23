@@ -17,9 +17,9 @@ class WordLayer: public PolarLayer{
 public:
     class ColorSheet: public PixelImageShape{
     public:
-        ColorSheet(unsigned char *png, size_t png_size):
+        explicit ColorSheet(unsigned char *png, size_t png_size):
         PixelImageShape(png,png_size){};
-        ColorSheet( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):
+        explicit ColorSheet( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):
         PixelImageShape(pixels,width,height,revert,rgbaToArgb){
             
         };
@@ -29,8 +29,8 @@ public:
             return (pixelValue >> 24) == 0x00;
         };
     };
-    WordLayer(unsigned char * png, size_t png_size, int lid);
-    WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert,bool rgbaToArgb);
+    explicit WordLayer(unsigned char * png, size_t png_size, int lid);
+    explicit WordLayer(unsigned int const * pixels, int width, int height,int lid,bool revert,bool rgbaToArgb);
     virtual ~WordLayer();
     virtual inline bool isEmpty(unsigned int pixelValue){
         //        return (pixelValue & 0x00FFFFFF) < 0xFFFFFF;

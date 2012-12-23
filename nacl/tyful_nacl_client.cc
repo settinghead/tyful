@@ -125,7 +125,6 @@ public:
   string* messageToPost;
   pp::CompletionCallbackFactory<TyfulNaclCoreInstance> factory_;
 
-
   static void *checkAndRenderSlaps(void* core){
     printf("Slap checker thread started\n.");
     pthread_mutex_lock(&PolarCanvas::threadControllers.next_slap_req_mutex);
@@ -166,7 +165,6 @@ public:
     PostMessage(pp::Var(data_to_send));
     return 0;
   }
-
 
   static void *feedShapes(void* core){
     printf("FeedShape checker thread started\n.");
