@@ -10,6 +10,7 @@
 #define PIXELIMAGESHAPE_H
 #include "ImageShape.h"
 #include "EngineShape.h"
+#include "../proto/template.pb.h"
 
 class PixelImageShape : public ImageShape{
 public:
@@ -36,12 +37,20 @@ public:
         else
             return pixels[y * width + x];
     }
+    
+    void serialize(tyful::Image* image){
+        image->set_width(width);
+        image->set_height(height);
+        image->set_data(pixels, sizeof(unsigned)*width*height);
+
+    }
 
 protected:
 	unsigned int width, height;
     unsigned int total;
 	unsigned int * pixels;
     unsigned int* convertToRGBALittleEndianPixels();
+    
     
 //    unsigned char * pixels;
 };

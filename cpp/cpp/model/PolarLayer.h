@@ -10,6 +10,7 @@
 #define PolarTree_Experiment_PolarLayer_h
 #include "PolarCanvas.h"
 #include "PixelImageShape.h"
+#include "../proto/template.pb.h"
 #include <vector>
 #define WORD_LAYER 1
 
@@ -30,7 +31,7 @@ public:
     bool aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY);
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     static void connect(PolarLayer* above, PolarLayer* below);
-    
+    virtual void serialize(tyful::Layer* layer) = 0;
     
     PolarLayer* above;
     PolarLayer* below;

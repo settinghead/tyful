@@ -276,6 +276,8 @@ public:
         PostMessage(pp::Var(msg));
       }
     }
+    
+
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
       if (status==kUpdateTemplateMethodId) {

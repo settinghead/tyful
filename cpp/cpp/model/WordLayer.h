@@ -56,7 +56,13 @@ public:
     void setColorSheet(ColorSheet* colorSheet);
     Angler* getAngler();
     Colorer* getColorer();
-    
+    void serialize(tyful::Layer* layer){
+        tyful::Image color = layer->color();
+        colorSheet->serialize(&color);
+        layer->set_directiontolerance(tolerance);
+        tyful::Image direction = layer->direction();
+        PixelImageShape::serialize(&direction);
+    }
 private:
     double getHSB(int x, int y);
     double tolerance;

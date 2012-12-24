@@ -60,9 +60,9 @@ public:
 #if NUM_THREADS>1
     inline virtual void setFinalSeq(int seq) = 0;
 #endif
-	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq){
+	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq, const double rootCenterDist){
 //        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
-        bool r = this->collide(seq, otherTree, otherSeq);
+        bool r = this->collide(seq, otherTree, otherSeq,rootCenterDist);
         if (r) {
             if (this->isLeaf() && otherTree->isLeaf()) {
                 return true;
@@ -71,14 +71,14 @@ public:
                     vector<PolarTree*>* oKids = otherTree->getKids();
                     for (int i=0;i<oKids->size();i++) {
                         PolarTree* okid = oKids->at((i+otherSeq)%oKids->size());
-                        if (this->overlaps(seq,okid,otherSeq))
+                        if (this->overlaps(seq,okid,otherSeq,rootCenterDist))
                             return true;
                     }
                 } else {
                     vector<PolarTree*>* tKids = this->getKids();
                     
                     for (int i=0; i<tKids->size();i++) {
-                        if (otherTree->overlaps(otherSeq,tKids->at((i+seq)%tKids->size()),seq))
+                        if (otherTree->overlaps(otherSeq,tKids->at((i+seq)%tKids->size()),seq,rootCenterDist))
                             return true;
                     }
                     
@@ -163,13 +163,13 @@ public:
 		}
     }
     inline void checkRecomputeDs(){
-//        pthread_mutex_lock(&d_lock);
+        pthread_mutex_lock(&d_lock);
         if (this->dStamp != this->getCurrentDStamp()) {
             this->computeD1();
             this->computeD2();
             this->dStamp = this->getCurrentDStamp();
         }
-//        pthread_mutex_unlock(&d_lock);
+        pthread_mutex_unlock(&d_lock);
 
     }
 
@@ -303,11 +303,8 @@ protected:
 	double xStamp[NUM_THREADS], yStamp[NUM_THREADS], rightStamp[NUM_THREADS], bottomStamp[NUM_THREADS];
 	bool _leaf;
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom,_r1, _r2;
-    inline bool collide(int seq,PolarTree* bTree, int otherSeq){
-        double dist = sqrt(
-                           (pow((this->getRootX(seq) - bTree->getRootX(otherSeq)), 2.0)
-                            + pow((this->getRootY(seq) - bTree->getRootY(otherSeq)), 2.0)));
-        if (((dist > (this->getD2(true) + bTree->getD2(true))))) {
+    inline bool collide(int seq,PolarTree* bTree, int otherSeq, const double rootCenterDist){
+        if (((rootCenterDist > (this->getD2(true) + bTree->getD2(true))))) {
             return false;
         } else {
             return this->rectCollide(seq,bTree, otherSeq);

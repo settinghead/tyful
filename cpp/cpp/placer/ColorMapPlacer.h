@@ -35,6 +35,7 @@ public:
             p->location.y = patch->getY()+patch->getHeight()/2;
             p->patch = patch;
             placements->push_back(p);
+            if(placements->size()==NUMBER_OF_ATTEMPTED_PATCHES) break;
         }
         return placements;
     }

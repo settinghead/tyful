@@ -61,7 +61,7 @@ public:
         int level = findGranularityLevel(width,height);
         //    double area = width*height;
         
-        for(int i=0;i<NUMBER_OF_ATTEMPTED_PATCHES; i++){
+        for(int i=0;i<NUM_THREADS; i++){
             Patch* p = getBestPatchAtLevel(level);
 //            Patch* p = getBestPatchAtLevel(0);
             if(p!=NULL) result->push_back(p);

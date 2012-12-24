@@ -34,6 +34,12 @@ public:
     }
 	inline double getRootX(int seq);
 	inline double getRootY(int seq);
+    inline bool overlaps(int seq,PolarRootTree* otherTree, int otherSeq){
+        const double dist = sqrt((pow((this->getRootX(seq) - otherTree->getRootX(otherSeq)), 2.0)
+                                                   + pow((this->getRootY(seq) - otherTree->getRootY(otherSeq)), 2.0)));
+
+        return PolarTree::overlaps(seq,(PolarTree*)otherTree, otherSeq, dist);
+    }
     inline int getFinalSeq(){
         return finalSeq;
     }

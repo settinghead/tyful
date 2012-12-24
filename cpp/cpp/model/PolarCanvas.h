@@ -44,7 +44,7 @@ typedef int STATUS;
 typedef int SKIP_REASON;
 
 
-class PolarCanvas:public vector<PolarLayer*>, public tyful::Template{
+class PolarCanvas:protected vector<PolarLayer*>{
 public:
     explicit PolarCanvas();
     ~PolarCanvas();
@@ -104,6 +104,32 @@ public:
         failureCount = 0;
         getSizer()->reset();
     }
+    typedef vector<PolarLayer*>::iterator iterator;
+
+    iterator
+    begin(){
+        return vector<PolarLayer*>::begin();
+    }
+    
+    iterator
+    end(){
+        return vector<PolarLayer*>::end();
+    }
+    
+    size_type
+    size() const{
+        return vector<PolarLayer*>::size();
+    }
+    
+    string* serialize(){
+        tyful::Template _tmp;
+        string* output = NULL;
+        serialize(&_tmp);
+        _tmp.SerializeToString(output);
+        return output;
+    }
+    
+    void serialize(tyful::Template* tmp);
 private:
     int failureCount;
     int numRetries;

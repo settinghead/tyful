@@ -273,13 +273,12 @@ void PolarCanvas::attempt_nudge(void *arg){
     struct thread_param* tp = ((struct thread_param*)arg);
     PolarCanvas* canvas  = tp->canvas;
     EngineShape* shapeToWorkOn = canvas->_shapeToWorkOn;
-    EngineShape* lastCollidedWith = NULL;
     int seq = tp->seq;
     int start=-1;
     int end=-1;
     
 //    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
-//    canvas->_signoffSheet[seq] = false;
+    canvas->_signoffSheet[seq] = false;
 //    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
     pthread_mutex_lock(&canvas->count_threshold_mutex);
     pthread_cond_broadcast(&canvas->count_threshold_cv);
@@ -293,6 +292,8 @@ void PolarCanvas::attempt_nudge(void *arg){
         
         for(int currentAttempt=start;currentAttempt<end && canvas->_attempt<canvas->_maxAttemptsToPlace && !shapeToWorkOn->_found;currentAttempt++)
         {
+            EngineShape* lastCollidedWith = canvas->_lastCollidedWith;
+
             Placement* relative = canvas->getNudger()->nudgeFor(shapeToWorkOn, canvas->_candidatePlacement, currentAttempt,canvas->_maxAttemptsToPlace);
             Placement newPlacement = (*canvas->_candidatePlacement + (*relative));
             shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
@@ -307,7 +308,7 @@ void PolarCanvas::attempt_nudge(void *arg){
                 continue;
             }
             
-            if (canvas->_lastCollidedWith != NULL && shapeToWorkOn->getShape()->getTree()->overlaps(seq,canvas->_lastCollidedWith->getShape()->getTree(),canvas->_lastCollidedWith->getShape()->getTree()->getFinalSeq())) {
+            if (lastCollidedWith != NULL && shapeToWorkOn->getShape()->getTree()->overlaps(seq,lastCollidedWith->getShape()->getTree(),lastCollidedWith->getShape()->getTree()->getFinalSeq())) {
                 continue;
             }
             
@@ -324,7 +325,7 @@ void PolarCanvas::attempt_nudge(void *arg){
                 if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree(),otherShape->getShape()->getTree()->getFinalSeq())) {
                     //                    foundOverlap = true;
                     
-                    lastCollidedWith = otherShape;
+                    canvas->_lastCollidedWith = otherShape;
                     goto end_of_inner;
                 }
             }
@@ -334,21 +335,21 @@ void PolarCanvas::attempt_nudge(void *arg){
                 
                 if (shapeToWorkOn->getShape()->getTree()->overlaps(seq,otherShape->getShape()->getTree(),otherShape->getShape()->getTree()->getFinalSeq())) {
                     
-                    lastCollidedWith = otherShape;
+                    canvas->_lastCollidedWith = otherShape;
                     goto end_of_inner;
                 }
             }
             if(shapeToWorkOn->_found){
-                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+//                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
                 canvas->_signoffSheet[seq]=true;
                 pthread_mutex_lock(&canvas->count_threshold_mutex);
                 pthread_cond_broadcast(&canvas->count_threshold_cv);
                 pthread_mutex_unlock(&canvas->count_threshold_mutex);
-                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+//                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
                 return;
             }
             
-            if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
+//            if(lastCollidedWith!=NULL)canvas->_lastCollidedWith=lastCollidedWith;
 
             
             pthread_mutex_lock(&canvas->shape_mutex);
@@ -360,12 +361,12 @@ void PolarCanvas::attempt_nudge(void *arg){
             }
             pthread_mutex_unlock(&canvas->shape_mutex);
             //            if(!foundOverlap){
-            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+//            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_signoffSheet[seq]=true;
             pthread_mutex_lock(&canvas->count_threshold_mutex);
             pthread_cond_broadcast(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->count_threshold_mutex);
-            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+//            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
 
             return;
             //            }
@@ -373,12 +374,12 @@ void PolarCanvas::attempt_nudge(void *arg){
             continue;
         }
     }
-    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+//    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
     canvas->_signoffSheet[seq]=true;
     pthread_mutex_lock(&canvas->count_threshold_mutex);
     pthread_cond_broadcast(&canvas->count_threshold_cv);
     pthread_mutex_unlock(&canvas->count_threshold_mutex);
-    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+//    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
 }
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage){
@@ -620,4 +621,16 @@ void PolarCanvas::registerShape(EngineShape *shape){
     }
     pthread_mutex_unlock(&shape_mutex);
 
+}
+
+void PolarCanvas::serialize(tyful::Template* tmp){
+    for(int i=0;i<size();i++){
+        tyful::Layer* layer = tmp->add_layer();
+        this->at(i)->serialize(layer);
+    }
+    tmp->set_dilligence(diligence);
+    tmp->set_perseverance(perseverance);
+    tmp->set_numberofsizereductionsteps(NUMBER_OF_SIZE_REDUCTION_STEPS);
+    tmp->set_sampledistance(SAMPLE_DISTANCE);
+    tmp->set_minboxsize(MIN_BOX_SIZE);    
 }
