@@ -203,6 +203,7 @@
 		7CC051671674CB51006085EF /* reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		7CC051681674CB51006085EF /* value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		7CC051691674CB51006085EF /* writer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		7CD110AC168977A000912C9D /* ColorMapRandomNudger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorMapRandomNudger.h; sourceTree = "<group>"; };
 		7CEFFBCD16689EC900900686 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool.cpp; sourceTree = "<group>"; };
 		7CEFFBCE16689EC900900686 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
 		7CEFFBD116699F7A00900686 /* polartreeapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polartreeapi.cpp; sourceTree = "<group>"; };
@@ -387,6 +388,7 @@
 				7C7AE92816674B5C002466A3 /* ColorMapZigzagNudger.h */,
 				7C7AE92916674B5C002466A3 /* Nudger.h */,
 				7C5EDB56167B4A870005B052 /* ColorMapSpiralNudger.h */,
+				7CD110AC168977A000912C9D /* ColorMapRandomNudger.h */,
 			);
 			path = nudger;
 			sourceTree = "<group>";

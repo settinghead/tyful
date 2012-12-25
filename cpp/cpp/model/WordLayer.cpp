@@ -26,7 +26,7 @@
 
 WordLayer::WordLayer(unsigned char * png, size_t png_size, int lid):PolarLayer::PolarLayer(png,png_size,lid)
 , type(WORD_LAYER), colorSheet(NULL),_angler(NULL),_colorer(NULL),tolerance(DEFAULT_TOLERANCE){
-    
+    colorSheet = new ColorSheet(png, png_size);
 }
 
 WordLayer::WordLayer(unsigned int const * pixels, int width, int height, int lid, bool revert,bool rgbaToArgb)
@@ -113,9 +113,9 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
             return true;
         else return (
                      colorSheet==NULL || (
-                     ColorMath::distRGB(colorSheet->getPixel(x,y),
-                                       colorSheet->getPixel(refX,refY)) <= 0.01
-                     &&
+//                     ColorMath::distRGB(colorSheet->getPixel(x,y),
+//                                       colorSheet->getPixel(refX,refY)) <= 0.2
+//                     &&
                      ColorMath::distHue(getPixel(x,y),
                                        getPixel(refX,refY)) <= tolerance));
     }

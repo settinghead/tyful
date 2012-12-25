@@ -17,9 +17,9 @@ class EngineShape;
 class ColorMapZigzagNudger:public Nudger{
 private:
 public:
-    inline Placement* nudgeFor(EngineShape* shape, Placement* placement, int attempt, int totalPlannedAttempts){
-        attempt = ( attempt + placement->patch->getLastAttempt() + totalPlannedAttempts / 2) % totalPlannedAttempts;
-        Patch* p= placement->patch;
+    inline void nudgeFor(EngineShape* shape, Placement* origin,Placement& placement, int attempt, int totalPlannedAttempts){
+        attempt = ( attempt + origin->patch->getLastAttempt() + totalPlannedAttempts / 2) % totalPlannedAttempts;
+        Patch* p= origin->patch;
         double unitDistance = sqrt(p->getWidth() * p->getHeight()/totalPlannedAttempts);
 //        double x = ((attempt / (p->getHeight() / unitDistance)) * unitDistance - p->getWidth() / 2);
 //        double y = ((attempt % (int)(p->getHeight() / unitDistance)) * unitDistance - p->getHeight() / 2);
@@ -41,11 +41,9 @@ public:
 //            x = p->getWidth() - x;
         }
         
-        Placement* retPoint = (Placement*)malloc(sizeof(Placement));
-        retPoint->location.x = x;
-        retPoint->location.y = y;
-        retPoint->patch = placement->patch;
-        return retPoint;
+        placement.location.x = x;
+        placement.location.y = y;
+        placement.patch = origin->patch;
     }
 };
 

@@ -21,6 +21,7 @@
 #include "../placer/Placer.h"
 #include "../placer/ColorMapPlacer.h"
 #include "../nudger/ColorMapZigzagNudger.h"
+#include "../nudger/ColorMapRandomNudger.h"
 #include "../nudger/ColorMapSpiralNudger.h"
 #include "../density/DensityPatchIndex.h"
 #include "../proto/template.pb.h"
@@ -193,7 +194,7 @@ void PolarCanvas::tryNextEngineShape(){
         }
         
         if(!eShape->wasSkipped()){
-            if(failureCount>1) failureCount--;
+            if(failureCount>1) failureCount=0;
             displayShapes[eShape->getUid()]=eShape;
         }
         else{
@@ -242,7 +243,8 @@ void PolarCanvas::tryNextEngineShape(){
 Nudger* PolarCanvas::getNudger(){
     if(_nudger==NULL){
 //        _nudger = new ColorMapSpiralNudger();
-        _nudger = new ColorMapZigzagNudger();
+//        _nudger = new ColorMapZigzagNudger();
+        _nudger = new ColorMapRandomNudger();
     }
     return _nudger;
 }
@@ -283,21 +285,21 @@ void PolarCanvas::attempt_nudge(void *arg){
     pthread_mutex_lock(&canvas->count_threshold_mutex);
     pthread_cond_broadcast(&canvas->count_threshold_cv);
     pthread_mutex_unlock(&canvas->count_threshold_mutex);
+    Placement relative(shapeToWorkOn->getUid());
+
     while(canvas->_attempt<canvas->_maxAttemptsToPlace &&  shapeToWorkOn!=NULL && !shapeToWorkOn->_found) {
         pthread_mutex_lock(&(canvas->attempt_mutex));
         start = canvas->_attempt;
         end = canvas->_attempt+THREAD_STEP_SIZE<canvas->_maxAttemptsToPlace?canvas->_attempt+THREAD_STEP_SIZE:canvas->_maxAttemptsToPlace;
         canvas->_attempt = end;
         pthread_mutex_unlock(&(canvas->attempt_mutex));
-        
         for(int currentAttempt=start;currentAttempt<end && canvas->_attempt<canvas->_maxAttemptsToPlace && !shapeToWorkOn->_found;currentAttempt++)
         {
             EngineShape* lastCollidedWith = canvas->_lastCollidedWith;
 
-            Placement* relative = canvas->getNudger()->nudgeFor(shapeToWorkOn, canvas->_candidatePlacement, currentAttempt,canvas->_maxAttemptsToPlace);
-            Placement newPlacement = (*canvas->_candidatePlacement + (*relative));
+            canvas->getNudger()->nudgeFor(shapeToWorkOn, canvas->_candidatePlacement, relative, currentAttempt,canvas->_maxAttemptsToPlace);
+            Placement newPlacement = (*canvas->_candidatePlacement + relative);
             shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
-            delete relative;
             
             //
             if (shapeToWorkOn->trespassed(seq,canvas->_candidatePlacement->patch->getLayer()))
@@ -385,9 +387,11 @@ void PolarCanvas::attempt_nudge(void *arg){
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage){
     srand((unsigned)time(NULL));
     int original = (p->getWidth() * p->getHeight())  / (shape->getShape()->getWidth() * shape->getShape()->getHeight()) * diligence;
-    return original * (1+ ((double) rand() / double(RAND_MAX)) * 0.2)
-    * (shrinkage+0.3)
-    ;
+//    int original = (p->getWidth() * p->getHeight()) /100 * diligence;
+//    return original * (1+ ((double) rand() / double(RAND_MAX)) * 0.2)
+//    * (shrinkage+0.3)
+//    ;
+    return original;
 }
 
 bool PolarCanvas::placeShape(EngineShape* eShape){

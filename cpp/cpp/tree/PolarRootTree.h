@@ -34,6 +34,8 @@ public:
     }
 	inline double getRootX(int seq);
 	inline double getRootY(int seq);
+    void updateFourPointsWithRotationScale(int seq);
+
     inline bool overlaps(int seq,PolarRootTree* otherTree, int otherSeq){
         const double dist = sqrt((pow((this->getRootX(seq) - otherTree->getRootX(otherSeq)), 2.0)
                                                    + pow((this->getRootY(seq) - otherTree->getRootY(otherSeq)), 2.0)));
@@ -60,6 +62,7 @@ public:
                 this->_rotation[seq] = (TWO_PI + this->_rotation[seq]);
             }
             (this->rootStamp[seq])++;
+            assert(this->rootStamp[seq]!=this->rStamp[seq]);
         }
     }
     inline void setScale(double scale){

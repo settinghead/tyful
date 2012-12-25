@@ -40,6 +40,7 @@
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="draw">
+
 				<div id="mainCanvas">
 					<canvas id="sketchBuffer" style="display: none;"></canvas>
 					<canvas id="directionIndicator" style="display: none;"></canvas>
@@ -77,7 +78,27 @@
 														data-thickness="0.5" data-angleOffset="90"
 							 data-min="20" data-max="200" data-width="50" data-step="2" data-height="70" data-fgcolor="#222222" data-bgcolor="#999999" style="width:79px;height:50px" value="60"/>					
 						</div>
+						<div>
+							Use a Photo instead<br/>
+							<span class="file-wrapper">
+							  <input type="file" name="photo" id="photo" />
+							  <span class="button">Choose a Photo</span>
+							</span>
+							<br />
+							<button class="btn" id="textize">Textize...</button>
+						</div>
 					</div>
+				</div>
+				<div class="hide" id="textize-dialog" title="Turn Photos into Text (Textizing)">
+						<canvas id="textizer"></canvas>
+						<label for="apply_filter_threshold_value">Threshold (r+g+b):</label>
+						<input type="range"
+						min="0" max="765" value="380" id="apply_filter_threshold_value" size="3" />
+						<div class="btn-group" data-toggle="buttons-radio">
+							<button id="whitepart" type="button" class="btn active">Textize white part</button>
+							<button id="blackpart" type="button" class="btn">Textize black part</button>
+						</div>
+
 				</div>
 			</div>
 			<div class="tab-pane" id="adjust">

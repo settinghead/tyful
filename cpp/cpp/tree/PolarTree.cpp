@@ -13,6 +13,7 @@ _relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN),dStamp(
     pthread_mutex_init(&lock, NULL);
     for(int i=0;i<NUM_THREADS;i++){
         _computedR1[i] =_computedR2[i] = NAN;
+        xStamp[i] = yStamp[i] = rightStamp[i] = bottomStamp[i] = pointsStamp[i] = rStamp[i] = -1;
     }
 	double r = (r2 - r1);
 	double d = PI * (d1 + d2) * r

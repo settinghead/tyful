@@ -108,7 +108,8 @@ public:
         double rd = r1-r2;
         double gd = g1-g2;
         double bd = b1-b2;
-        return sqrt(pow(rd,2)+pow(bd,2)+pow(gd,2))/441.76;
+        double dist = sqrt(pow(rd,2)+pow(bd,2)+pow(gd,2))/441.76;
+        return dist;
     }
     
     inline static double distHue(unsigned int c1, unsigned int c2){

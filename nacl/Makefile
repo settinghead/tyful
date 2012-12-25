@@ -46,7 +46,8 @@ HEADER_INCLUDE:=-I$(TC_PATH)/x86_64-nacl/usr/include
 
 # COMPILEFLAGS:=-g -O0 
 # COMPILEFLAGS:=-s -O3 -msse -mfpmath=sse -ffast-math -fomit-frame-pointer
-COMPILEFLAGS:=-s -O4 -msse -mfpmath=sse -funsafe-math-optimizations -fomit-frame-pointer
+COMPILEFLAGS:=-s -O4 -msse -mfpmath=sse -funsafe-math-optimizations -fomit-frame-pointer 
+	#-fno-math-errno -fno-trapping-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range
 
 #
 # Disable DOS PATH warning when using Cygwin based tools Windows

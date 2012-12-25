@@ -24,6 +24,8 @@ class PolarCanvas;
 }
 - (IBAction)drawRandomText:(id)sender;
 - (IBAction)drawColorMappedText:(id)sender;
+- (IBAction)showSavePanel:(id)sender;
+
 - (void)drawCanvas;
 -(void) drawLeaves:(PolarTree*)tree
          withColor:(NSColor*)color;

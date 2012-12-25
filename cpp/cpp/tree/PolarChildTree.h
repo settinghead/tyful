@@ -14,6 +14,8 @@ public:
 	~PolarChildTree(){
         
     }
+    
+    
 	PolarRootTree* root; 
 	inline double getRootX(int seq){
         return this->root->getRootX(seq);
@@ -31,67 +33,70 @@ public:
         }
     #endif
 	inline double computeX(int seq,bool rotate){
+        double r1 = getR1(seq,rotate),r2 = getR2(seq,rotate),
+        d1 = getD1(rotate),d2 = getD2(rotate);
+        
         double x;
-        if (((this->getR1(seq,rotate) < HALF_PI))) {
-            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                x = -this->getD2(rotate);
+        if (((r1 < HALF_PI))) {
+            if (((r2 < r1))) {
+                x = -d2;
             } else {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    x = (this->getD1(rotate) * cos(this->getR2(seq,rotate)));
+                if (((r2 < HALF_PI))) {
+                    x = (d1 * cos(r2));
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        x = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
+                    if (((r2 < PI))) {
+                        x = (d2 * cos(r2));
                     } else {
-                        x = -this->getD2(rotate);
+                        x = -d2;
                     }
                 }
             }
         } else {
-            if (((this->getR1(seq,rotate) < PI))) {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    x = -this->getD2(rotate);
+            if (((r1 < PI))) {
+                if (((r2 < HALF_PI))) {
+                    x = -d2;
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        x = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
+                    if (((r2 < PI))) {
+                        x = (d2 * cos(r2));
                     } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            x = -this->getD2(rotate);
+                        if (((r2 < ONE_AND_HALF_PI))) {
+                            x = -d2;
                         } else {
-                            x = -this->getD2(rotate);
+                            x = -d2;
                         }
                     }
                 }
             } else {
-                if (((this->getR1(seq,rotate) < ONE_AND_HALF_PI))) {
-                    if (((this->getR2(seq,rotate) < HALF_PI))) {
-                        x = (this->getD2(rotate) * cos(this->getR1(seq,rotate)));
+                if (((r1 < ONE_AND_HALF_PI))) {
+                    if (((r2 < HALF_PI))) {
+                        x = (d2 * cos(r1));
                     } else {
-                        if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                            double x1 = (this->getD2(rotate) * cos(this->getR1(seq,rotate)));
-                            double x2 = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
+                        if (((r2 < r1))) {
+                            double x1 = (d2 * cos(r1));
+                            double x2 = (d2 * cos(r2));
                             x = x1 < x2 ? x1 : x2;
                         } else {
-                            if (((this->getR2(seq,rotate)
+                            if (((r2
                                   < ONE_AND_HALF_PI))) {
-                                x = (this->getD2(rotate) * cos(this->getR1(seq,rotate)));
+                                x = (d2 * cos(r1));
                             } else {
-                                x = (this->getD2(rotate) * cos(this->getR1(seq,rotate)));
+                                x = (d2 * cos(r1));
                             }
                         }
                     }
                 } else {
-                    if (((this->getR2(seq,rotate) < HALF_PI))) {
-                        double xx1 = (this->getD1(rotate) * cos(this->getR1(seq,rotate)));
-                        double xx2 = (this->getD1(rotate) * cos(this->getR2(seq,rotate)));
+                    if (((r2 < HALF_PI))) {
+                        double xx1 = (d1 * cos(r1));
+                        double xx2 = (d1 * cos(r2));
                         x = xx1 < xx2 ? xx1 : xx2;
                     } else {
-                        if (((this->getR2(seq,rotate) < PI))) {
-                            x = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
+                        if (((r2 < PI))) {
+                            x = (d2 * cos(r2));
                         } else {
-                            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                                x = -this->getD2(rotate);
+                            if (((r2 < r1))) {
+                                x = -d2;
                             } else {
-                                x = (this->getD1(rotate) * cos(this->getR1(seq,rotate)));
+                                x = (d1 * cos(r1));
                             }
                         }
                     }
@@ -101,48 +106,51 @@ public:
         return x;
     }
 	inline double computeY(int seq,bool rotate){
+        double r1 = getR1(seq,rotate),r2 = getR2(seq,rotate),
+        d1 = getD1(rotate),d2 = getD2(rotate);
+        
         double y;
-        if (((this->getR1(seq,rotate) < HALF_PI))) {
-            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                y = this->getD1(rotate);
+        if (((r1 < HALF_PI))) {
+            if (((r2 < r1))) {
+                y = d1;
             } else {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    y = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+                if (((r2 < HALF_PI))) {
+                    y = (d2 * sin(r2));
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        y = this->getD2(rotate);
+                    if (((r2 < PI))) {
+                        y = d2;
                     } else {
-                        y = this->getD2(rotate);
+                        y = d2;
                     }
                 }
             }
         } else {
-            if (((this->getR1(seq,rotate) < PI))) {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    double y1 = (this->getD2(rotate) * sin(this->getR1(seq,rotate)));
-                    double y2 = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+            if (((r1 < PI))) {
+                if (((r2 < HALF_PI))) {
+                    double y1 = (d2 * sin(r1));
+                    double y2 = (d2 * sin(r2));
                     y = ((((y1 > y2))) ? double(y1) : double(y2));
                 } else {
-                    if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                        y = this->getD2(rotate);
+                    if (((r2 < r1))) {
+                        y = d2;
                     } else {
-                        y = (this->getD2(rotate) * sin(this->getR1(seq,rotate)));
+                        y = (d2 * sin(r1));
                     }
                 }
             } else {
-                if (((this->getR1(seq,rotate) < ONE_AND_HALF_PI))) {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        y = this->getD2(rotate);
+                if (((r1 < ONE_AND_HALF_PI))) {
+                    if (((r2 < PI))) {
+                        y = d2;
                     } else {
-                        if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                            y = (this->getD1(rotate) * sin(this->getR2(seq,rotate)));
+                        if (((r2 < r1))) {
+                            y = (d1 * sin(r2));
                         } else {
-                            if (((this->getR2(seq,rotate)
+                            if (((r2
                                   < ONE_AND_HALF_PI))) {
-                                y = (this->getD1(rotate) * sin(this->getR1(seq,rotate)));
+                                y = (d1 * sin(r1));
                             } else {
-                                double val1 = (this->getD1(rotate) * sin(this->getR2(seq,rotate)));
-                                double val2 = (this->getD1(rotate) * sin(this->getR1(seq,rotate)));
+                                double val1 = (d1 * sin(r2));
+                                double val2 = (d1 * sin(r1));
                                 y =
                                 ((((val1 > val2))) ?
                                  val1 : val2);
@@ -150,13 +158,13 @@ public:
                         }
                     }
                 } else {
-                    if (((this->getR2(seq,rotate) < HALF_PI))) {
-                        y = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+                    if (((r2 < HALF_PI))) {
+                        y = (d2 * sin(r2));
                     } else {
-                        if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                            y = this->getD2(rotate);
+                        if (((r2 < r1))) {
+                            y = d2;
                         } else {
-                            y = (this->getD1(rotate) * sin(this->getR2(seq,rotate)));
+                            y = (d1 * sin(r2));
                         }
                     }
                 }
@@ -169,120 +177,122 @@ public:
         //#endif
     }
 	inline double computeRight(int seq,bool rotate){
+        double r1 = getR1(seq,rotate),r2 = getR2(seq,rotate),
+        d1 = getD1(rotate),d2 = getD2(rotate);
+        
         double right;
-        if (((this->getR1(seq,rotate) < HALF_PI))) {
-            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                right = this->getD2(rotate);
+        if (((r1 < HALF_PI))) {
+            if (((r2 < r1))) {
+//                right = d2* cos(r2);
+                right = d2;
             } else {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    right = (this->getD2(rotate) * cos(this->getR1(seq,rotate)));
+                                if (((r2 < HALF_PI))) {
+                right = (d2 * cos(r1));
+                                } else {
+                                    if (((r2 < PI))) {
+                                        right = d2 * cos(r1);
+                                    } else {
+                                        right = d2;
+                                    }
+                                }
+            }
+        } else if(r1 < PI) {
+            if (((r2 < r1))) {
+                right = d2;
+            } else {
+                if (((r2 < PI))) {
+                    right = (d1 * cos(r1));
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        right = this->getD2(rotate) * cos(this->getR1(seq,rotate));
+                    if (((r2 < ONE_AND_HALF_PI))) {
+                        right = PI-r1 > r2-PI ? d1 * cos(r1) : d1 * cos(r2);
                     } else {
-                        right = this->getD2(rotate);
+                        right = (d2 * cos(r2));
                     }
                 }
             }
-        } else {
-            if (((this->getR1(seq,rotate) < PI))) {
-                if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                    right = this->getD2(rotate);
-                } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        right = (this->getD1(rotate) * cos(this->getR1(seq,rotate)));
-                    } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            double val1 = (this->getD1(rotate) * cos(this->getR1(seq,rotate)));
-                            double val2 = (this->getD1(rotate) * cos(this->getR2(seq,rotate)));
-                            right =
-                            val1 > val2 ? val1 : val2;
-                        } else {
-                            right = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
-                        }
-                    }
-                }
+        }
+        else if (((r1 < ONE_AND_HALF_PI))) {
+            if (((r2 < r1))) {
+                right = d2;
             } else {
-                if (((this->getR1(seq,rotate) < ONE_AND_HALF_PI))) {
-                    if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                        right = this->getD2(rotate);
-                    } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            right = (this->getD1(rotate) * cos(this->getR2(seq,rotate)));
-                        } else {
-                            right = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
-                        }
-                    }
+                if (((r2 < ONE_AND_HALF_PI))) {
+                    right = (d1 * cos(r2));
                 } else {
-                    if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                        right = this->getD2(rotate);
-                    } else {
-                        right = (this->getD2(rotate) * cos(this->getR2(seq,rotate)));
-                    }
+                    right = (d2 * cos(r2));
                 }
+            }
+        }
+        else {
+            if (((r2 < r1))) {
+                right = d2;
+            } else {
+                right = (d2 * cos(r2));
             }
         }
         return right;
     }
 	inline double computeBottom(int seq,bool rotate){
+        double r1 = getR1(seq,rotate),r2 = getR2(seq,rotate),
+        d1 = getD1(rotate),d2 = getD2(rotate);
+        
         double bottom;
-        if (((this->getR1(seq,rotate) < HALF_PI))) {
-            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                bottom = -this->getD1(rotate);
+        if (((r1 < HALF_PI))) {
+            if (((r2 < r1))) {
+                bottom = -d1;
             } else {
-                if (((this->getR2(seq,rotate) < HALF_PI))) {
-                    bottom = (this->getD1(rotate) * sin(this->getR1(seq,rotate)));
+                if (((r2 < HALF_PI))) {
+                    bottom = (d1 * sin(r1));
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        double val1 = (this->getD1(rotate) * sin(this->getR1(seq,rotate)));
-                        double val2 = (this->getD1(rotate) * sin(this->getR2(seq,rotate)));
+                    if (((r2 < PI))) {
+                        double val1 = (d1 * sin(r1));
+                        double val2 = (d1 * sin(r2));
                         bottom = val1 < val2 ? val1 : val2;
                     } else {
-                        bottom = -this->getD2(rotate);
+                        bottom = -d2;
                     }
                 }
             }
         } else {
-            if (((this->getR1(seq,rotate) < PI))) {
-                if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                    bottom = -this->getD1(rotate);
+            if (((r1 < PI))) {
+                if (((r2 < r1))) {
+                    bottom = -d1;
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        bottom = (this->getD1(rotate) * sin(this->getR2(seq,rotate)));
+                    if (((r2 < PI))) {
+                        bottom = (d1 * sin(r2));
                     } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            bottom = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+                        if (((r2 < ONE_AND_HALF_PI))) {
+                            bottom = (d2 * sin(r2));
                         } else {
                             bottom =
-                            -this->getD2(rotate);
+                            -d2;
                         }
                     }
                 }
             } else {
-                if (((this->getR1(seq,rotate) < ONE_AND_HALF_PI))) {
-                    if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                        bottom = -this->getD2(rotate);
+                if (((r1 < ONE_AND_HALF_PI))) {
+                    if (((r2 < r1))) {
+                        bottom = -d2;
                     } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            bottom = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+                        if (((r2 < ONE_AND_HALF_PI))) {
+                            bottom = (d2 * sin(r2));
                         } else {
                             bottom =
-                            -this->getD2(rotate);
+                            -d2;
                         }
                     }
                 } else {
-                    if (((this->getR2(seq,rotate) < PI))) {
-                        bottom = (this->getD2(rotate) * sin(this->getR1(seq,rotate)));
+                    if (((r2 < PI))) {
+                        bottom = (d2 * sin(r1));
                     } else {
-                        if (((this->getR2(seq,rotate) < ONE_AND_HALF_PI))) {
-                            double b1 = (this->getD2(rotate) * sin(this->getR1(seq,rotate)));
-                            double b2 = (this->getD2(rotate) * sin(this->getR2(seq,rotate)));
+                        if (((r2 < ONE_AND_HALF_PI))) {
+                            double b1 = (d2 * sin(r1));
+                            double b2 = (d2 * sin(r2));
                             bottom = b1 < b2 ? b1 : b2;
                         } else {
-                            if (((this->getR2(seq,rotate) < this->getR1(seq,rotate)))) {
-                                bottom = -this->getD2(rotate);
+                            if (((r2 < r1))) {
+                                bottom = -d2;
                             } else {
-                                bottom = (this->getD2(rotate) * sin(this->getR1(seq,rotate)));
+                                bottom = (d2 * sin(r1));
                             }
                         }
                     }
@@ -294,8 +304,78 @@ public:
         //#else
         //	return bottom;
         //#endif
-
     }
+    
+    void updateFourPointsWithRotationScale(int seq){
+        double r1 = getR1(seq,true),r2 = getR2(seq,true),
+        d1 = getD1(true),d2 = getD2(true);
+//        assert(r2>r1);
+        double& x = _x[seq];double& y = _y[seq];
+        double& right = _right[seq]; double& bottom = _bottom[seq];
+        if (r1 < 0) {
+            if (r2 < HALF_PI) {
+                x = d1 * cos(r2);
+                y = -d2 * sin(r2);
+                right = d2;
+                bottom = -d1 * sin(r1);
+            }
+        }
+        else if (r1 < HALF_PI) {
+            if (r2 < HALF_PI) {
+                    x = d1 * cos(r2);
+                    y = -d2 * sin(r2);
+                    right = d2 * cos(r1);
+                    bottom = -d1 * sin(r1);
+                } else if(r2 < PI) {
+                    x = (d2 * cos(r2));
+                    y = -d2;
+                    right = d2 * cos(r1);
+                    bottom = PI-r1>r2-PI?-d1 * sin(r1):-d1 * sin(r2);
+                } else {
+                    x = -d2;
+                    y = -d2;
+                    right = d2;
+                    bottom = d2;
+                }
+        } else if(r1 < PI) {
+            y = -d2 * sin(r1);
+            if (r2 < PI) {
+                x = d2 * cos(r2);
+                right = d1 * cos(r1);
+                bottom = -d1 * sin(r2);
+            } else if (r2 < ONE_AND_HALF_PI) {
+                x = -d2;
+                right = PI-r1 > r2-PI ? d1 * cos(r1) : d1 * cos(r2);
+                bottom = -d2 * sin(r2);
+            } else {
+                x = -d2;
+                right = (d2 * cos(r2));
+                bottom = d2;
+            }
+        }
+        else if (r1 < ONE_AND_HALF_PI) {
+            if (r2 < ONE_AND_HALF_PI) {
+                x = d2 * cos(r1);
+                y = -d1 * sin(r1);
+                right = d1 * cos(r2);
+                bottom = -d2 * sin(r2);
+            } else {
+                x = d2 * cos(r1);
+                y = ONE_AND_HALF_PI - r1 > r2 - ONE_AND_HALF_PI ? -d1 * sin(r1) : -d1 * sin(r2);
+                right = d2 * cos(r2);
+                bottom = d2;
+            }
+        }
+        else {
+            x = d1 * cos(r1);
+            y = -d1 * sin(r2);
+            right = d2 * cos(r2);
+            bottom = -d2 * sin(r1);
+        }
+        
+        assert(right>x && bottom>y);
+    }
+    
 	inline double getRotation(int seq){
         return this->root->getRotation(seq);
     }

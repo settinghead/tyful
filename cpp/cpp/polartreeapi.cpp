@@ -102,12 +102,12 @@ void appendLayer(unsigned int *pixels, unsigned int *colorPixels, int width, int
 
 	if(colorPixels>0){
 		layer->setColorSheet(new WordLayer::ColorSheet(colorPixels, width, height,flip,rgbaToArgb));
-        layer->getColorSheet()->printStats();
+//        layer->getColorSheet()->printStats();
     }
 
-    printf("Special point(5,5): %x, isEmpty: %d\n", layer->getPixel(5,5), layer->isEmpty(layer->getPixel(5,5)));
-	printf("Special point(600,400): %xisEmpty: %d\n", layer->getPixel(600,400), layer->isEmpty(layer->getPixel(600,400)));
-	layer->printStats();
+//    printf("Special point(5,5): %x, isEmpty: %d\n", layer->getPixel(5,5), layer->isEmpty(layer->getPixel(5,5)));
+//	printf("Special point(600,400): %xisEmpty: %d\n", layer->getPixel(600,400), layer->isEmpty(layer->getPixel(600,400)));
+//	layer->printStats();
     
 	PolarCanvas::current->addLayer(layer);
 }

@@ -120,6 +120,14 @@
 			e.preventDefault()
 			false
 
+		loadImage: (img) ->
+			@_direction.width = @_color.width = @_main[0].width = img.width
+			@_direction.height = @_color.height = @_main[0].height = img.height
+			@colorContext.drawImage img, 0,0
+			@directionContext.fillStyle = "#FFFFFF"
+			@directionContext.fillRect 0,0,img.width,img.height
+			@_main[0].getContext('2d').drawImage img,0,0
+
 		redraw: ->
 			# @el.width = @_main.width()
 			@context = @el.getContext '2d'

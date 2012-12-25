@@ -15,7 +15,7 @@ struct Placement;
 class Nudger{
 public:
     virtual ~Nudger(){}
-    inline virtual Placement* nudgeFor(EngineShape* shape, Placement* placement, int attemptNumber, int totalPlannedAttempts) = 0;
+    inline virtual void nudgeFor(EngineShape* shape, Placement* origin, Placement& placement, int attemptNumber, int totalPlannedAttempts) = 0;
 protected:
     inline static double lerp(double start, double stop, double amt){
         return start + (stop - start) * amt;

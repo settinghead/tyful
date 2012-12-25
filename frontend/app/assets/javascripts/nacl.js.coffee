@@ -2,6 +2,7 @@
 //=require images
 //=require template_canvas.js
 //=require jquery.knob.js
+//=require template.textize
 
 window.TyfulNacl = new Object()
 # paper.install(window)
@@ -15,8 +16,7 @@ window.Uint32Concat = (first, second) ->
   result.set second, firstLength
   result
 
-
-$(document).ready ->
+$ ->
   $("#angle").knob
     change: (v)->
       $("#sketch").tsketch().direction = v
@@ -94,7 +94,6 @@ $(document).ready ->
   # canvas.renderAll()
 
   #end onlonad
-    
 
   $(".btnRegenerate").click ->
     window.TyfulNacl.resetRenderer()
@@ -139,6 +138,25 @@ $(document).ready ->
   #   alert('loaded')
   # )
 
+  $("#photo").change (e) ->
+    file = e.target.files[0]
+    imageType = /image.*/
+    return  unless file.type.match(imageType)
+    reader = new FileReader()
+    reader.onload = (e) ->
+      $img = $("<img>",
+        src: e.target.result
+      )
+      $img.load ->
+        $("#sketch").tsketch().loadImage(this)
+        window.photoCanvas = document.createElement("canvas")
+        window.renderCanvas.setWidth($('#renderpreview')[0].width = window.photoCanvas.width = $("#textizer")[0].width = this.width)
+        window.renderCanvas.setHeight($('#renderpreview')[0].height = window.photoCanvas.height = $("#textizer")[0].height = this.height)
+        window.photoCanvas.getContext('2d').drawImage this,0,0
+        $("#renderer").css "background-image", "url(#{$img.attr("src")})"
+
+    reader.readAsDataURL file
+
 window.TyfulNacl.dropPinOn = (obj)->
   unless obj.hasOwnProperty("pin")
     obj.pin = document.createElement('img')
@@ -171,6 +189,11 @@ window.TyfulNacl.reloadCanvas = () ->
       selection: false
     )
     # window.renderCanvas.HOVER_CURSOR = 'pointer';
+  context = window.renderCanvas.getContext();
+  context.shadowColor = "#999";
+  context.shadowBlur = 0.5;
+  context.shadowOffsetX = 0.5;
+  context.shadowOffsetY = 1;
   window.renderCanvas.on
     "object:modified": (e) ->
       window.TyfulNacl.fixShape e.target
@@ -318,7 +341,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
   i = 0
 
   while i < num
-    fontSize = 9 + 100 * shrinkage
+    fontSize = 8 + 100 * shrinkage
     # fontStyle = "bold " + fontSize + "px sans-serif"
     # ctx.font = fontStyle
     # ctx.textBaseline = "top"
@@ -337,7 +360,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
       top: 0
       left: 0
       useNative: true
-      fontWeight: "bold"
+      fontWeight: 'bold'
     )
 
     tF.setTop tF.height/2
@@ -512,4 +535,5 @@ window.TyfulNacl.handleMessage = (message_event) ->
           # shape.setOpacity 0.15 if not window.TyfulNacl.fixedShapes[sid]
           shape.setOpacity 0.15
       window.renderCanvas.renderAll()
+
 

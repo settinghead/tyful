@@ -37,6 +37,7 @@ inline double PolarRootTree::getRootY(int seq) {
 }
 
 
+
 inline double PolarRootTree::computeX(int seq,bool rotate) {
 	return -(this->getD2(rotate));
 }
@@ -61,6 +62,12 @@ inline double PolarRootTree::computeBottom(int seq,bool rotate) {
 //#endif
 }
 
+void PolarRootTree::updateFourPointsWithRotationScale(int seq){
+    double d2 = this->getD2(true);
+    _x[seq] = _y[seq] = -d2;
+    _right[seq] = _bottom[seq] = d2;
+
+}
 
 inline int PolarRootTree::getCurrentStamp(int seq) {
 	return this->rootStamp[seq];

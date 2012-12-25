@@ -77,16 +77,16 @@
 
 -(void) loadDirectionImage{
     NSArray *templates = [[NSArray alloc] initWithObjects:
-//                          @"dog.png",
-//                          @"wheel_h.png",
+                          @"dog.png",
+                          @"wheel_h.png",
                           @"egg.png",
-//                        @"face.png",
-//                          @"wheel_v.png",@"star.png",
-//                          @"heart.png",
+                        @"face.png",
+                          @"wheel_v.png",@"star.png",
+                          @"heart.png",
 //                          @"quarter_red.png",
-//                          @"pbs.png",
-//                          @"ghandi.png",
-//                            @"swift.png",
+                          @"pbs.png",
+                          @"ghandi.png",
+                            @"swift.png",
                           nil];
     NSString *tpl = [templates objectAtIndex:arc4random() % [templates count]];
     NSLog(@"Template: %@",tpl);
@@ -542,6 +542,28 @@ int sid = 0;
         }
     }
     return pixels;
+}
+
+- (IBAction)showSavePanel:(id)sender
+{
+    NSSavePanel * savePanel = [NSSavePanel savePanel];
+    NSString *defaultDirectoryPath = @"~";
+
+    // Restrict the file type to whatever you like
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"tyful"]];
+    // Set the starting directory
+    [savePanel setDirectoryURL:[NSURL fileURLWithPath:defaultDirectoryPath]];
+    // Perform other setup
+    // Use a completion handler -- this is a block which takes one argument
+    // which corresponds to the button that was clicked
+    [savePanel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            // Close panel before handling errors
+//            [openPanel orderOut:self];
+            NSLog(@"Got URL: %@", [savePanel URL]);
+            // Do what you need to do with the selected path
+        }
+    }];
 }
 
 @end

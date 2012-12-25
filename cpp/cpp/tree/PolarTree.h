@@ -118,6 +118,7 @@ public:
 	virtual double computeY(int seq,bool rotate) = 0;
 	virtual double computeRight(int seq,bool rotate) = 0;
 	virtual double computeBottom(int seq,bool rotate) = 0;
+    virtual void updateFourPointsWithRotationScale(int seq) = 0;
 	inline double getR1(int seq,bool rotate){
         if ((rotate)) {
             this->checkRecomputeRs(seq);
@@ -156,20 +157,34 @@ public:
         
     }
 	inline void checkRecomputeRs(int seq){
-        if (((this->rStamp[seq] != this->getCurrentStamp(seq)))) {
-			this->computeR1(seq);
-			this->computeR2(seq);
+        if (this->rStamp[seq] != this->getCurrentStamp(seq)) {
+            
+//            this->_computedR1[seq] = (this->_r1 + this->getRotation(seq));
+//            this->_computedR2[seq] = (this->_r2 + this->getRotation(seq));
+//            if (((this->_computedR2[seq] > TWO_PI ))) {
+//                this->_computedR1[seq] -= TWO_PI;
+//                this->_computedR2[seq] -= TWO_PI;
+//            }
+//            else if(this->_computedR1<0){
+//                this->_computedR1[seq] += TWO_PI;
+//                this->_computedR2[seq] += TWO_PI;
+//            }
+//            assert(!isnan(_computedR1[seq]));
+            computeR1(seq);
+            computeR2(seq);
+            
 			this->rStamp[seq] = this->getCurrentStamp(seq);
 		}
     }
+    
     inline void checkRecomputeDs(){
-        pthread_mutex_lock(&d_lock);
+//        pthread_mutex_lock(&d_lock);
         if (this->dStamp != this->getCurrentDStamp()) {
             this->computeD1();
             this->computeD2();
             this->dStamp = this->getCurrentDStamp();
         }
-        pthread_mutex_unlock(&d_lock);
+//        pthread_mutex_unlock(&d_lock);
 
     }
 
@@ -185,6 +200,17 @@ public:
 			this->pointsStamp[seq] = this->getCurrentStamp(seq);
 		}
     }
+//    inline void checkUpdatePoints(int seq){
+//        if (((this->pointsStamp[seq] != this->getCurrentStamp(seq)))) {
+//			this->updateFourPointsWithRotationScale(seq);
+//            _px[seq] = getRootX(seq)+_x[seq];
+//            _py[seq] = getRootY(seq)+_y[seq];
+//            _pright[seq] = getRootX(seq)+_right[seq];
+//            _pbottom[seq] = getRootY(seq)+_bottom[seq];
+//			this->pointsStamp[seq] = this->getCurrentStamp(seq);
+//		}
+//    }
+    
 	inline double px(int seq){
         this->checkUpdatePoints(seq);
         return this->_px[seq];
@@ -260,7 +286,7 @@ public:
 	inline double getX(int seq,bool rotate){
         if ((rotate)) {
             this->checkComputeX(seq);
-            return (this->_x[seq] - MARGIN);
+            return (this->_x[seq] MINUS_MARGIN);
         } else {
             return this->getRelativeX();
         }
@@ -268,7 +294,7 @@ public:
 	inline double getY(int seq,bool rotate){
         if ((rotate)) {
             this->checkComputeY(seq);
-            return (this->_y[seq] - MARGIN);
+            return (this->_y[seq] MINUS_MARGIN);
         } else {
             return this->getRelativeY();
         }
@@ -276,7 +302,7 @@ public:
 	inline double getRight(int seq,bool rotate){
         if ((rotate)) {
             this->checkComputeRight(seq);
-            return (this->_right[seq] + MARGIN);
+            return (this->_right[seq] PLUS_MARGIN);
         } else {
             return this->getRelativeRight();
         }
@@ -284,7 +310,7 @@ public:
 	inline double getBottom(int seq,bool rotate){
         if ((rotate)) {
             this->checkComputeBottom(seq);
-            return (this->_bottom[seq] + MARGIN);
+            return (this->_bottom[seq] PLUS_MARGIN);
         }
         return this->getRelativeBottom();
     }
@@ -311,6 +337,7 @@ protected:
         }
     }
 	inline bool rectCollide(int seq,PolarTree* bTree, int otherSeq){
+        bTree->checkUpdatePoints(otherSeq);
         return this->rectCollideCoord(seq,bTree->px(otherSeq), bTree->py(otherSeq), bTree->pright(otherSeq),
                                       bTree->pbottom(otherSeq));
     }
@@ -318,6 +345,7 @@ protected:
 	inline bool rectCollideCoord(int seq,double x, double y, double right,
                                  double bottom){
         //#ifdef FLIP
+        checkUpdatePoints(seq);
         return this->pbottom(seq) > y
         && this->py(seq) < bottom
         && this->pright(seq) > x
