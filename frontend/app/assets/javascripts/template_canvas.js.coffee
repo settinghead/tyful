@@ -64,6 +64,11 @@
 			this[key] = value
 			@_main.trigger("tsketch.change#{key}", value)
 
+		getWidth: ->
+			@_main[0].width
+		getHeight: ->
+			@_main[0].height
+
 		download: (format)->
 			format or= "png"
 			format = "jpeg" if format == "jpg"
@@ -121,12 +126,30 @@
 			false
 
 		loadImage: (img) ->
-			@_direction.width = @_color.width = @_main[0].width = img.width
-			@_direction.height = @_color.height = @_main[0].height = img.height
-			@colorContext.drawImage img, 0,0
+			w = img.width
+			h = img.height
+			if w > 1000
+				ratio = w / h
+				w = 1000
+				h = w / ratio
+			if h > 2000
+				ratio = w / h
+				h = 2000
+				w = h * ratio
+			if w < 500
+				ratio = w / h
+				w = 500
+				h = w / ratio
+			if h < 600
+				ratio = w / h
+				h = 600
+				w = h * ratio
+			@_direction.width = @_color.width = @_main[0].width = w
+			@_direction.height = @_color.height = @_main[0].height = h
+			@colorContext.drawImage img, 0,0, w, h
 			@directionContext.fillStyle = "#FFFFFF"
-			@directionContext.fillRect 0,0,img.width,img.height
-			@_main[0].getContext('2d').drawImage img,0,0
+			@directionContext.fillRect 0,0,w,h
+			@_main[0].getContext('2d').drawImage img,0,0,w,h
 
 		redraw: ->
 			# @el.width = @_main.width()

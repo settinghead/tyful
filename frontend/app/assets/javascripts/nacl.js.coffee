@@ -34,7 +34,8 @@ $ ->
       window.TyfulNacl.fixShape o
   
   window.TyfulNacl.fixedShapes = {}
-  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
+  # window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐", "Circumstances\n do not make the man.\nThey reveal him.", "The self always\n comes through.", "Forgive me.\nYou have my soul and \n I have your money.", "War rages on\n in Africa.", "Quick fox", "Halo", "Service\nIndustry\nStandards", "Tyful", "Γαστριμαργία", "Πορνεία", "Φιλαργυρία", "Ὀργή", "compassion", "ice cream", "HIPPO", "inferno", "Your\nname", "To be\n or not to be", "床前明月光\n疑是地上霜\n举头望明月\n低头思故乡"]
+  window.TyfulNacl.words = ["C-3PO", "橙子", "passion", "knob", "可笑可乐"]
   window.strokeColor = 'black'
   fabric.Canvas.prototype.getAbsoluteCoords = (object) ->
     left: object.left + @_offset.left
@@ -149,11 +150,13 @@ $ ->
       )
       $img.load ->
         $("#sketch").tsketch().loadImage(this)
+        textizer = $("#textizer")[0]
         window.photoCanvas = document.createElement("canvas")
-        window.renderCanvas.setWidth($('#renderpreview')[0].width = window.photoCanvas.width = $("#textizer")[0].width = this.width)
-        window.renderCanvas.setHeight($('#renderpreview')[0].height = window.photoCanvas.height = $("#textizer")[0].height = this.height)
-        window.photoCanvas.getContext('2d').drawImage this,0,0
-        $("#renderer").css "background-image", "url(#{$img.attr("src")})"
+        window.renderCanvas.setWidth($('#renderpreview')[0].width = textizer.width = window.photoCanvas.width = $("#sketch").tsketch().getWidth())
+        window.renderCanvas.setHeight($('#renderpreview')[0].height = textizer.height = window.photoCanvas.height = $("#sketch").tsketch().getHeight())
+        window.photoCanvas.getContext('2d').drawImage this,0,0,$("#sketch").tsketch().getWidth(),$("#sketch").tsketch().getHeight()
+        $("#textize").trigger "click"
+        # $("#renderer").css "background-image", "url(#{$img.attr("src")})"
 
     reader.readAsDataURL file
 
@@ -201,6 +204,7 @@ window.TyfulNacl.reloadCanvas = () ->
 window.TyfulNacl.fixShape = (shape) ->
   shape.bringToFront()
   window.TyfulNacl.dropPinOn(shape)
+  window.TyfulNacl.pinnedShapes.push shape
   console.log("feeding shape from fixShape.")
   window.TyfulNacl.feedShape shape
   # window.TyfulNacl.TyfulNaclCoreModule.postMessage "fixShape:" + shape.sid + "," + shape.getLeft() + "," + shape.getTop() + "," + (-shape.getAngle()*Math.PI*2/360) + ","+shape.scaleX+","+shape.scaleY+","
@@ -234,9 +238,12 @@ window.TyfulNacl.positionPin = (obj) ->
 window.TyfulNacl.resetShoppingWindows = ->
   $(".shopping-window").each ->
     this.getContext('2d').clearRect(0,0,this.width,this.height)
-  window.renderCanvas.forEachObject((obj)->
-    window.renderCanvas.remove obj unless obj and obj.hasOwnProperty("pin")
-  )
+  window.renderCanvas.clear()
+  # window.renderCanvas.forEachObject((obj)->
+  #   window.renderCanvas.remove obj unless obj and obj.hasOwnProperty("pin")
+  # )
+  for shape in window.TyfulNacl.pinnedShapes
+    window.renderCanvas.add shape
     
 
 # window.TyfulNacl.determineFontHeight = (text,fontStyle) ->
@@ -263,6 +270,7 @@ window.TyfulNacl.modifyCanvas = ->
 window.TyfulNacl.resetRenderer = ->
   canvas = $("#sketch")[0]
   window.TyfulNacl.shapes = {}
+  window.TyfulNacl.pinnedShapes = []
   window.TyfulNacl.slapLater = []
   window.TyfulNacl.sid = 0
   window.TyfulNacl.initializing = false
@@ -341,7 +349,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
   i = 0
 
   while i < num
-    fontSize = 8 + 100 * shrinkage
+    fontSize = 10 + 100 * shrinkage
     # fontStyle = "bold " + fontSize + "px sans-serif"
     # ctx.font = fontStyle
     # ctx.textBaseline = "top"
@@ -352,7 +360,7 @@ window.TyfulNacl.feedShapes = (num, shrinkage) ->
     #   perPixelTargetFind: true
     # )
     tF = new fabric.Text(str, 
-      fontFamily: "Arial"
+      fontFamily: "Impact"
       fill: "#000000"
       fontSize: fontSize
       # scaleX: shrinkage*0.9+0.1

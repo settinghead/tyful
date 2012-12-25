@@ -8,9 +8,14 @@ $ ->
 				"Apply": ->
 					$("#sketch").tsketch().directionContext.globalCompositeOperation = 'destination-in'
 					$("#sketch").tsketch().directionContext.drawImage $("#textizer")[0], 0, 0
+					window.TyfulNacl.resetRenderer()
+					window.TyfulNacl.startRendering()
 					$( this ).dialog "close"
 				Cancel: ->
 					$( this ).dialog "close"
+			create: 
+				$("#apply_filter_threshold_value").trigger "change"
+
                
 	$("#apply_filter_threshold_value").change ->
 		threshold = $(this).val()
