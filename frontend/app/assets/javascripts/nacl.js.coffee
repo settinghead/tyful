@@ -158,7 +158,8 @@ $ ->
         window.renderCanvas.setHeight($('#renderpreview')[0].height = textizer.height = window.photoCanvas.height = $("#sketch").tsketch().getHeight())
         window.photoCanvas.getContext('2d').drawImage this,0,0,$("#sketch").tsketch().getWidth(),$("#sketch").tsketch().getHeight()
         $("#textize").trigger "click"
-        # $("#renderer").css "background-image", "url(#{$img.attr("src")})"
+        $("#renderer").css "background-image", "url(#{$img.attr("src")})"
+        $("#renderer").css "background-size", "100% auto"
 
     reader.readAsDataURL file
 

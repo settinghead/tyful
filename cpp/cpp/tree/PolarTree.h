@@ -51,8 +51,7 @@ private:
     }
     inline void makeChildren() {
         SplitType type = determineType();
-        vector<PolarTree*>* children = splitTree(type);
-        addKids(children);
+        splitTree(type);
     }
     
     inline SplitType determineType() {
@@ -72,7 +71,7 @@ private:
     }
     
     inline PolarTree* makeChildTree(double r1, double r2, double d1, double d2);
-    inline vector<PolarTree*>* splitTree(SplitType type);
+    inline void splitTree(SplitType type);
 
     
 public:
@@ -90,16 +89,15 @@ public:
             } else {
                 if ((this->isLeaf())) {
                     vector<PolarTree*>* oKids = otherTree->getKids();
-                    for (int i=0;i<oKids->size();i++) {
-                        PolarTree* okid = oKids->at((i+otherSeq)%oKids->size());
-                        if (this->overlaps(seq,okid,otherSeq,rootCenterDist))
+                    for (vector<PolarTree*>::iterator it = oKids->begin();it!=oKids->end();it++) {
+                        if (this->overlaps(seq,*it,otherSeq,rootCenterDist))
                             return true;
                     }
                 } else {
                     vector<PolarTree*>* tKids = this->getKids();
                     
-                    for (int i=0; i<tKids->size();i++) {
-                        if (otherTree->overlaps(otherSeq,tKids->at((i+seq)%tKids->size()),seq,rootCenterDist))
+                    for (vector<PolarTree*>::iterator it = tKids->begin();it!=tKids->end();it++) {
+                        if (otherTree->overlaps(otherSeq,*it,seq,rootCenterDist))
                             return true;
                     }
                     

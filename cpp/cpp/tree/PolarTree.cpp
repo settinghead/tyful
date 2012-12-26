@@ -27,17 +27,12 @@ _relativeX(NAN),_relativeY(NAN),_relativeRight(NAN),_relativeBottom(NAN),dStamp(
 
 PolarTree::~PolarTree() {
     if(_kids!=NULL)
-        for(int i=0;i<_kids->size();i++)
-            delete(_kids->at(i));
+        for(vector<PolarTree*>::iterator it = _kids->begin(); it!=_kids->end();it++)
+            delete(*it);
 	delete _kids;
     pthread_mutex_destroy(&lock);
 
 }
-
-inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
-		this->_kids = kidList;
-}
-
 
 vector<PolarTree*>* PolarTree::getKids() {
     pthread_mutex_lock(&lock);
@@ -172,7 +167,7 @@ inline PolarTree* PolarTree::makeChildTree(double r1, double r2, double d1, doub
     return tree;
 }
 
-inline vector<PolarTree*>* PolarTree::splitTree(SplitType type) {
+inline void PolarTree::splitTree(SplitType type) {
     vector<PolarTree*>* result = new vector<PolarTree*>();
     PolarTree* re;
     double r;
@@ -334,7 +329,7 @@ inline vector<PolarTree*>* PolarTree::splitTree(SplitType type) {
             break;
         }
     }
-    return result;
+    _kids = result;
 }
 
 

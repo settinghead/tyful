@@ -268,9 +268,9 @@ void PolarCanvas::attempt_nudge(void *arg){
     int start=-1;
     int end=-1;
     
-//    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
     canvas->_signoffSheet[seq] = false;
-//    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
     pthread_mutex_lock(&canvas->count_threshold_mutex);
     pthread_cond_broadcast(&canvas->count_threshold_cv);
     pthread_mutex_unlock(&canvas->count_threshold_mutex);
@@ -328,12 +328,12 @@ void PolarCanvas::attempt_nudge(void *arg){
                 }
             }
             if(shapeToWorkOn->_found){
-//                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+                pthread_mutex_lock(&canvas->numActiveThreads_mutex);
                 canvas->_signoffSheet[seq]=true;
                 pthread_mutex_lock(&canvas->count_threshold_mutex);
                 pthread_cond_broadcast(&canvas->count_threshold_cv);
                 pthread_mutex_unlock(&canvas->count_threshold_mutex);
-//                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+                pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
                 return;
             }
             
@@ -349,12 +349,12 @@ void PolarCanvas::attempt_nudge(void *arg){
             }
             pthread_mutex_unlock(&canvas->shape_mutex);
             //            if(!foundOverlap){
-//            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+            pthread_mutex_lock(&canvas->numActiveThreads_mutex);
             canvas->_signoffSheet[seq]=true;
             pthread_mutex_lock(&canvas->count_threshold_mutex);
             pthread_cond_broadcast(&canvas->count_threshold_cv);
             pthread_mutex_unlock(&canvas->count_threshold_mutex);
-//            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+            pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
 
             return;
             //            }
@@ -362,12 +362,12 @@ void PolarCanvas::attempt_nudge(void *arg){
             continue;
         }
     }
-//    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
+    pthread_mutex_lock(&canvas->numActiveThreads_mutex);
     canvas->_signoffSheet[seq]=true;
     pthread_mutex_lock(&canvas->count_threshold_mutex);
     pthread_cond_broadcast(&canvas->count_threshold_cv);
     pthread_mutex_unlock(&canvas->count_threshold_mutex);
-//    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
+    pthread_mutex_unlock(&canvas->numActiveThreads_mutex);
 }
 
 int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p, double shrinkage){
@@ -436,10 +436,10 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
         }
     }
         pthread_mutex_unlock(&count_threshold_mutex);
-//        pthread_mutex_lock(&numActiveThreads_mutex);
+        pthread_mutex_lock(&numActiveThreads_mutex);
 //        printf("numActiveThreads: %d\n",_signoffSheet);
 //        assert(_signoffSheet==0);
-//        pthread_mutex_unlock(&numActiveThreads_mutex);
+        pthread_mutex_unlock(&numActiveThreads_mutex);
 
         //        };
 //        

@@ -69,8 +69,8 @@ void EngineShape::drawSamples(){
     if (numSamples < 20)
         numSamples = 20;
     for(int i=0; i<numSamples;i++){
-			int relativeX= rand() % getWidth();
-			int relativeY= rand() % getHeight();
+			double relativeX= (int)(rand() % getWidth());
+			double relativeY= (int)(rand() % getHeight());
 			if(containsPoint(relativeX, relativeY))
 			{
 				relativeX -= getWidth()/2;

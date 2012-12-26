@@ -133,16 +133,16 @@ public:
         printf("checkAndRenderSlaps waiting on next_slap_req_cv...\n");
         pthread_cond_wait(&PolarCanvas::threadControllers.next_slap_req_cv, &PolarCanvas::threadControllers.next_slap_req_mutex);
         printf("checkAndRenderSlaps wait is over next_slap_req_cv.\n");
-        SlapInfo* placement;
-        while((placement=getNextSlap())!=NULL){
+        SlapInfo placement;
+        while(!(placement=getNextSlap()).isEmpty()){
           // std::stringstream ss(std::stringstream::in | std::stringstream::out);
           // ss << kSlapMethodPrefix << ":" << placement->sid << "," << placement->location.x << "," << placement->location.y << "," 
             // << placement->rotation << "," << placement->layer << ","
             // << placement->color << placement->failureCount << endl;
           char msg[1024];
           snprintf( msg, sizeof(msg), "%s:%d,%d,%d,%f,%d,%u,%d", 
-            kSlapMethodPrefix, placement->sid,(int)placement->location.x, (int)placement->location.y,
-            placement->rotation,placement->layer,placement->color,placement->failureCount);
+            kSlapMethodPrefix, placement.sid,(int)placement.location.x, (int)placement.location.y,
+            placement.rotation,placement.layer,placement.color,placement.failureCount);
 
           // ((TyfulNaclCoreInstance*)core)->PostMessage(pp::Var(ss.str()));
           // ((TyfulNaclCoreInstance*)core)->messageToPost = &ss.str();
@@ -158,6 +158,7 @@ public:
     pthread_mutex_unlock(&PolarCanvas::threadControllers.next_slap_req_mutex);
     return NULL;
   }
+
 
   void* PostStringToBrowser(
     int32_t result, 
@@ -209,7 +210,7 @@ public:
     return NULL;
   }
   
-  
+
   /// Handler for messages coming in from the browser via postMessage().  The
   /// @a var_message can contain anything: a JSON string; a string that encodes
   /// method names and arguments; etc.  For example, you could use
@@ -276,7 +277,6 @@ public:
         PostMessage(pp::Var(msg));
       }
     }
-
 
     else if (var_message.is_array_buffer()){
       pp::VarArrayBuffer buffer_data(var_message);
