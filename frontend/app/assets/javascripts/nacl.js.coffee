@@ -17,6 +17,8 @@ window.Uint32Concat = (first, second) ->
   result
 
 $ ->
+  $("#renderpreview").tooltip
+    "placement": "left"
   $("#angle").knob
     change: (v)->
       $("#sketch").tsketch().direction = v
@@ -166,6 +168,7 @@ window.TyfulNacl.dropPinOn = (obj)->
     # pinContent = document.createTextNode("PIN");
     # obj.pin.appendChild(pinContent)
     obj.pin.setAttribute 'src',image_path('pin.png')
+    obj.pin.setAttribute 'style', 'pointer-events:none;'
     obj.pin.style.position = "absolute"
     $('#render-editor').append($(obj.pin))
     obj.setOpacity 1
@@ -284,7 +287,9 @@ window.TyfulNacl.startRendering = ->
   canvasWidth = canvas.width
   canvasHeight = canvas.height
   window.TyfulNacl.TyfulNaclCoreModule.postMessage "updateTemplate " + canvasWidth + " " + canvasHeight
-
+  setTimeout (->
+    $("#renderpreview").trigger("mouseover")
+  ), 3000
 
 window.TyfulNacl.drawGradients = (ctxColor, canvasColor)->
   grad = ctxColor.createLinearGradient(20, 0, canvasColor.width - 20, 0)

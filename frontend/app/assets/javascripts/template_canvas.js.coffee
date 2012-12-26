@@ -136,9 +136,9 @@
 				ratio = w / h
 				h = 2000
 				w = h * ratio
-			if w < 500
+			if w < 800
 				ratio = w / h
-				w = 500
+				w = 800
 				h = w / ratio
 			if h < 600
 				ratio = w / h
