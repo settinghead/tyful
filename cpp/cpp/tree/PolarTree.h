@@ -50,11 +50,9 @@ private:
         this->_computedD2 = (this->_d2 * getScale());
     }
     inline void makeChildren() {
-        {
-            SplitType type = determineType();
-            vector<PolarTree*>* children = splitTree(type);
-            addKids(children);
-        }
+        SplitType type = determineType();
+        vector<PolarTree*>* children = splitTree(type);
+        addKids(children);
     }
     
     inline SplitType determineType() {
@@ -158,6 +156,8 @@ public:
             return this->_r2;
         }
     }
+    double getR1(bool rotate);
+    double getR2(bool rotate);
     inline double getD1(bool scale){
         if(scale){
             this->checkRecomputeDs();

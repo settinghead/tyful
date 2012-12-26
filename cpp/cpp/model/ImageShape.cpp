@@ -19,9 +19,3 @@ ImageShape::ImageShape(){
 
 ImageShape::~ImageShape(){
 }
-
-#if NUM_THREADS > 1
-inline void ImageShape::setFinalSeq(int seq){
-    getTree()->setFinalSeq(seq);
-}
-#endif

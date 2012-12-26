@@ -18,12 +18,17 @@ private:
 	bool rootDStamp; /* REM */
     double scale;
     void init();
+protected:
+    SlapInfo* renderedPlacement;
 
 public:
     explicit PolarRootTree( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb);
     explicit PolarRootTree(unsigned char * png, size_t size);
     Placement currentPlacement[NUM_THREADS];
-
+    int winningSeq;
+    virtual void finalizePlacement(int final_seq, int canvasId, int failureCount) = 0;
+    SlapInfo* getFinalPlacement();
+    
 	~PolarRootTree();
 	inline void setLocation(int seq,CartisianPoint location){
         this->currentPlacement[seq].location = location;
@@ -46,8 +51,8 @@ public:
         CartisianPoint thisLoc = this->getRoot()->currentPlacement[seq].location;
         CartisianPoint otherLoc = otherTree->getRoot()->currentPlacement[otherSeq].location;
         
-        const double dist = sqrt((pow(thisLoc.x - otherLoc.x, 2.0)
-                                                   + pow(thisLoc.y - otherLoc.y, 2.0)));
+        const double dist = sqrt(pow(thisLoc.x - otherLoc.x, 2.0)
+                                                   + pow(thisLoc.y - otherLoc.y, 2.0));
         return PolarTree::overlaps(seq,(PolarTree*)otherTree, otherSeq, dist);
     }
     
@@ -68,11 +73,11 @@ public:
     }
 #endif
     inline bool contains(int seq,double x, double y, double right, double bottom) {
-        PolarTree::contains(seq,x,y,right,bottom);
+        return PolarTree::contains(seq,x,y,right,bottom);
     }
     
     inline bool contains(double x, double y, double right, double bottom) {
-        PixelImageShape::contains(x,y,right,bottom);
+        return PixelImageShape::contains(x,y,right,bottom);
     }
 
 	inline double computeX(int seq,bool rotate);

@@ -18,7 +18,7 @@ public:
 	virtual ~PixelImageShape();
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     unsigned char * toPng(unsigned int pixelValue);
-
+    double getArea();
     void printStats();
 
 	inline int getWidth(){
@@ -45,6 +45,7 @@ public:
     }
 
 protected:
+    double _area;
 	unsigned int width, height;
     unsigned int total;
 	unsigned int * pixels;

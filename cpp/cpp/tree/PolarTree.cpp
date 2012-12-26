@@ -40,10 +40,9 @@ inline void PolarTree::addKids(vector<PolarTree*>* kidList) {
 
 
 vector<PolarTree*>* PolarTree::getKids() {
+    pthread_mutex_lock(&lock);
 	if (!this->isLeaf() && this->_kids == NULL) {
-        pthread_mutex_lock(&lock);
 		makeChildren();
-        pthread_mutex_unlock(&lock);
 
 //        vector<PolarTree*>* tKids = this->getKids();
 //        for (vector<PolarTree*>::iterator myKid = tKids->begin();
@@ -51,6 +50,7 @@ vector<PolarTree*>* PolarTree::getKids() {
 //            (*myKid)->getKids();
 //        }
 	}
+    pthread_mutex_unlock(&lock);
 	return this->_kids;
 }
 inline void PolarTree::checkUpdatePoints(int seq){
@@ -337,6 +337,13 @@ inline vector<PolarTree*>* PolarTree::splitTree(SplitType type) {
     return result;
 }
 
+
+double PolarTree::getR1(bool rotate){
+    return getR1(getRoot()->winningSeq, rotate);
+}
+double PolarTree::getR2(bool rotate){
+    return getR2(getRoot()->winningSeq, rotate);
+}
 
 //char* PolarTree::toString() {
 //	int indent = 0;

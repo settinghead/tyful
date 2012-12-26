@@ -11,6 +11,7 @@
 #include "../../cpp/cpp/model/EngineShape.h"
 #include "../../cpp/cpp/model/ImageShape.h"
 #include "../../cpp/cpp/model/structs.h"
+#include "../../cpp/cpp/tree/PolarTree.h"
 #include "../../cpp/cpp/polartreeapi.h"
 #include "../../cpp/cpp/tree/PolarRootTree.h"
 #include <stdlib.h>
@@ -103,89 +104,84 @@
        withColor:(NSColor*)color{
     [self drawLeaves:tree withColor:color];
 }
+
+-(void) drawLeaves:(PolarTree*)tree
+         withColor:(NSColor*)color{
+    tree->getKids();
+    if (tree->isLeaf()) {
+        [self drawBounds:tree withColor:color];
+    } else {
+        for (int i=0; i < tree->getKids()->size(); i++) {
+            [self drawLeaves:tree->getKids()->at(i) withColor:color];
+        }
+    }
+}
 //
-//-(void) drawLeaves:(PolarTree*)tree
-//         withColor:(NSColor*)color{
-//    if (tree->isLeaf() || tree->getKidsNoGrowth()==NULL || tree->getKidsNoGrowth()->size()==0) {
-//        [self drawBounds:tree withColor:color];
-//    } else {
-//        for (int i=0; i < tree->getKidsNoGrowth()->size(); i++) {
-//            [self drawLeaves:tree->getKidsNoGrowth()->at(i) withColor:color];
-//        }
-//    }
-//}
-////
-//-(void) drawBounds:(PolarTree*)tree
-//         withColor:(NSColor*)color
-//{
-//    int x1, x2, x3, x4, y1, y2, y3, y4;
-//    x1 = int((tree->getRootX(tree->getFinalSeq()) + tree->d1 * cos(tree->getR1(tree->getFinalSeq(),true))));
-//    y1 = int(
-//             mainImage.size.height-
-//             ((tree->getRootY(tree->getFinalSeq()) - tree->d1 * sin(tree->getR1(tree->getFinalSeq(),true)))));
-//    x2 = int((tree->getRootX(tree->getFinalSeq()) + tree->d1 * cos(tree->getR2(tree->getFinalSeq(),true))));
-//    y2 = int(
-//             mainImage.size.height-
-//             ((tree->getRootY(tree->getFinalSeq()) - tree->d1 * sin(tree->getR2(tree->getFinalSeq(),true)))));
-//    x3 = int((tree->getRootX(tree->getFinalSeq()) + tree->d2 * cos(tree->getR1(tree->getFinalSeq(),true))));
-//    y3 = int(
-//             mainImage.size.height-
-//             ((tree->getRootY(tree->getFinalSeq()) - tree->d2 * sin(tree->getR1(tree->getFinalSeq(),true)))));
-//    x4 = int((tree->getRootX(tree->getFinalSeq()) + tree->d2 * cos(tree->getR2(tree->getFinalSeq(),true))));
-//    y4 = int(
-//             mainImage.size.height-
-//             ((tree->getRootY(tree->getFinalSeq()) - tree->d2 * sin(tree->getR2(tree->getFinalSeq(),true)))));
-//
-//    double r = tree->getR2(tree->getFinalSeq(),true) - tree->getR1(tree->getFinalSeq(),true);
-//    if (r < 0)
-//        r+=TWO_PI;
-//    
-////    assert(r < PI);
-//    [self drawArc:tree->getRootX(tree->getFinalSeq()) withCenterY:tree->getRootY(tree->getFinalSeq()) withRadius:tree->d2 withAngleFrom:tree->getR1(tree->getFinalSeq(),true) withAngleTo:tree->getR2(tree->getFinalSeq(),true) withPrecision:1.0 withTree:tree withColor:color];
-//    [self drawArc:tree->getRootX(tree->getFinalSeq()) withCenterY:tree->getRootY(tree->getFinalSeq()) withRadius:tree->d1 withAngleFrom:tree->getR1(tree->getFinalSeq(),true) withAngleTo:tree->getR2(tree->getFinalSeq(),true) withPrecision:1.0 withTree:tree withColor:color];
-//    
-//    NSBezierPath* thePath = [NSBezierPath bezierPath];
-//    [color set];
-//    [thePath setLineWidth:1.0]; // Has no effect.
-//    [thePath moveToPoint:NSMakePoint(x1, y1)];
-//    [thePath lineToPoint:NSMakePoint(x3, y3)];
-//    [thePath moveToPoint:NSMakePoint(x2, y2)];
-//    [thePath lineToPoint:NSMakePoint(x4, y4)];
-//}
-//
-//-(void) drawArc:
-//                  (int)center_x
-//                  withCenterY:(int)center_y
-//                  withRadius:(double)radius
-//                  withAngleFrom:(double)angle_from
-//                  withAngleTo:(double)angle_to
-//                  withPrecision:(double)precision
-//                  withTree:(PolarTree*)tree
-//                withColor:(NSColor*)color{
-//    double angle_diff=angle_to-angle_from;
-//    int steps=round(angle_diff*precision);
-//    if(steps==0) steps = 1;
-//    double angle = angle_from;
-//    double px=center_x+radius * cos(angle);
-//    double py=
-//        mainImage.size.height-
-//        (center_y-radius * sin(angle));
-//    
-//    NSBezierPath* thePath = [NSBezierPath bezierPath];
-//    [thePath setLineWidth:1.0]; // Has no effect.
-//    [thePath moveToPoint:NSMakePoint(px, py)];
-//    for (int i=1; i<=steps; i++) {
-//        angle=angle_from+angle_diff/steps*i;
-//        int x = center_x+radius*cos(angle);
-//        int y =
-//        mainImage.size.height-
-//        (center_y-radius*sin(angle));
-//        [color set];
-//        [thePath lineToPoint:NSMakePoint(x, y)];
-//    }
-//    [thePath stroke];
-//
-//}
+-(void) drawBounds:(PolarTree*)tree
+         withColor:(NSColor*)color
+{
+    double d1 = tree->getD1(true), d2 = tree->getD2(true), r1 = tree->getR1(true), r2 = tree->getR2(true);
+    CartisianPoint loc(tree->getRoot()->getFinalPlacement()->location);
+    CartisianPoint loc1(loc);
+    loc1.y =  mainImage.size.height-(loc1.y - d1*sin(r1));
+    CartisianPoint loc2(loc);
+    loc2.x += d2*cos(r2);
+    loc2.y = mainImage.size.height-(loc2.y-d2*sin(r2));
+    CartisianPoint loc3(loc);
+    loc3.x += d2* cos(r1);
+    loc3.y = mainImage.size.height-(loc3.y-d2*sin(r1));
+    CartisianPoint loc4(loc);
+    loc4.x += d2*cos(r2);
+    loc4.y = mainImage.size.height - (loc4.y-d2*sin(r2));
+
+    double r = r2-r1;
+    if (r < 0) r+=TWO_PI;
+    
+//    assert(r < PI);
+    [self drawArc:loc.x withCenterY:loc.y withRadius:d2 withAngleFrom:r1 withAngleTo:r2 withPrecision:1.0 withTree:tree withColor:color];
+    [self drawArc:loc.x withCenterY:loc.y withRadius:d1 withAngleFrom:r1 withAngleTo:r2 withPrecision:1.0 withTree:tree withColor:color];
+    NSBezierPath* thePath = [NSBezierPath bezierPath];
+    [color set];
+    [thePath setLineWidth:1.0]; // Has no effect.
+    [thePath moveToPoint:NSMakePoint(loc1.x, loc1.y)];
+    [thePath lineToPoint:NSMakePoint(loc3.x, loc3.y)];
+    [thePath moveToPoint:NSMakePoint(loc2.x, loc2.y)];
+    [thePath lineToPoint:NSMakePoint(loc4.x, loc4.y)];
+}
+
+-(void) drawArc:
+                  (int)center_x
+                  withCenterY:(int)center_y
+                  withRadius:(double)radius
+                  withAngleFrom:(double)angle_from
+                  withAngleTo:(double)angle_to
+                  withPrecision:(double)precision
+                  withTree:(PolarTree*)tree
+                withColor:(NSColor*)color{
+    double angle_diff=angle_to-angle_from;
+    int steps=round(angle_diff*precision);
+    if(steps==0) steps = 1;
+    double angle = angle_from;
+    double px=center_x+radius * cos(angle);
+    double py=
+        mainImage.size.height-
+        (center_y-radius * sin(angle));
+    
+    NSBezierPath* thePath = [NSBezierPath bezierPath];
+    [thePath setLineWidth:1.0]; // Has no effect.
+    [thePath moveToPoint:NSMakePoint(px, py)];
+    for (int i=1; i<=steps; i++) {
+        angle=angle_from+angle_diff/steps*i;
+        int x = center_x+radius*cos(angle);
+        int y =
+        mainImage.size.height-
+        (center_y-radius*sin(angle));
+        [color set];
+        [thePath lineToPoint:NSMakePoint(x, y)];
+    }
+    [thePath stroke];
+
+}
 
 NSArray *strings = [[NSArray alloc] initWithObjects:
                     @"C-3PO",
@@ -224,7 +220,7 @@ int sid = 0;
 
 
 -(void)fixThingsAtRandom{
-    while(true){
+    while(false){
         sleep(1);
         EngineShape* shape = NULL;
         //    NSMutableAttributedString * string;
@@ -332,6 +328,8 @@ int sid = 0;
 //            NSAttributedString* stringToDraw = [[NSAttributedString alloc] initWithAttributedString:string];
             
             [self drawText:point withStringToInsert:string withRotation:rotation];
+//            [self drawTextTree:PolarCanvas::current->displayShapes[placement.sid] withColor:color];
+
         }
     }
 }

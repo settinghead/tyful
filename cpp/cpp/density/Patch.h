@@ -119,24 +119,24 @@ public:
     inline double getAlphaSum(){
         if(isnan(_alphaSum)){
             _alphaSum = 0;
-            getArea();
             
             if (this->children == NULL
                 || children->size() == 0) {
-                for (int i= 0; i < width; i++)
-                    for (int j= 0; j < height; j++) {
-                        double brightness = layer->getBrightness(
-                                                                 x + i, y + j);
-
-//                        if(isnan(brightness)){
-//                            brightness = 0;
-//                        }
-//                        else
-//                            brightness = brightness;
-                        if(brightness>=0) _alphaSum += brightness;
-                        if(brightness<0)
-                            area -= 1;
-                    }
+                _alphaSum = getUseableArea();
+//                for (int i= 0; i < width; i++)
+//                    for (int j= 0; j < height; j++) {
+//                        double brightness = layer->getBrightness(
+//                                                                 x + i, y + j);
+//
+////                        if(isnan(brightness)){
+////                            brightness = 0;
+////                        }
+////                        else
+////                            brightness = brightness;
+//                        if(brightness>=0) _alphaSum += brightness;
+//                        if(brightness<0)
+//                            area -= 1;
+//                    }
             } else
                 for(int i=0;i<children->size();i++)
                         _alphaSum += children->at(i)->getAlphaSum();
@@ -174,8 +174,9 @@ public:
     inline int getLastAttempt(){
         return lastAttempt;
     }
-    inline void fail(){
-//        numberOfFailures+=this->getUseableAreaRatio();
+    inline void fail(double objectArea){
+//        numberOfFailures+=this->getCurrentWorth()/objectArea;
+//        currentWorth -= objectArea;
         numberOfFailures+=1;
     }
     int getLevel();

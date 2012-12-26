@@ -282,11 +282,11 @@ void PolarCanvas::attempt_nudge(void *arg){
         end = canvas->_attempt+THREAD_STEP_SIZE<canvas->_maxAttemptsToPlace?canvas->_attempt+THREAD_STEP_SIZE:canvas->_maxAttemptsToPlace;
         canvas->_attempt = end;
         pthread_mutex_unlock(&(canvas->attempt_mutex));
-        for(int currentAttempt=start;currentAttempt<end && canvas->_attempt<canvas->_maxAttemptsToPlace && !shapeToWorkOn->_found;currentAttempt++)
+        for(int _currentAttempt=start;_currentAttempt<end && canvas->_attempt<canvas->_maxAttemptsToPlace && !shapeToWorkOn->_found;_currentAttempt++)
         {
             EngineShape* lastCollidedWith = canvas->_lastCollidedWith;
-
-            canvas->getNudger()->nudgeFor(shapeToWorkOn, canvas->_candidatePlacement, relative, currentAttempt,canvas->_maxAttemptsToPlace);
+            int actualAttempt = (_currentAttempt+canvas->_candidatePlacement->patch->getLastAttempt())%canvas->_maxAttemptsToPlace;
+            canvas->getNudger()->nudgeFor(shapeToWorkOn, canvas->_candidatePlacement, relative, actualAttempt,canvas->_maxAttemptsToPlace);
             Placement newPlacement = (*canvas->_candidatePlacement + relative);
             shapeToWorkOn->nudgeTo(seq,&newPlacement,canvas->_candidatePlacement->patch->getLayer()->getAngler());
             
@@ -310,9 +310,6 @@ void PolarCanvas::attempt_nudge(void *arg){
                 //						var otherWord:EngineWordVO= neighboringEWords[i];
                 EngineShape* otherShape = it->second;
                 if (otherShape->wasSkipped()) continue; //can't overlap with skipped word
-#if NUM_THREADS>1
-                assert(shapeToWorkOn->getTree()->getFinalSeq()<0);
-#endif
                 if (shapeToWorkOn->overlaps(seq,otherShape)) {
                     //                    foundOverlap = true;
                     
@@ -345,9 +342,9 @@ void PolarCanvas::attempt_nudge(void *arg){
             
             pthread_mutex_lock(&canvas->shape_mutex);
             if (!shapeToWorkOn->_found) {
-                shapeToWorkOn->_winningSeq = seq;
+                shapeToWorkOn->winningSeq = seq;
                 //						successCount++;
-                canvas->_candidatePlacement->patch->setLastAttempt(currentAttempt);
+                canvas->_candidatePlacement->patch->setLastAttempt(actualAttempt);
                 shapeToWorkOn->_found = true;
             }
             pthread_mutex_unlock(&canvas->shape_mutex);
@@ -377,10 +374,10 @@ int PolarCanvas::calculateMaxAttemptsFromShapeSize(EngineShape* shape, Patch* p,
     srand((unsigned)time(NULL));
     int original = (p->getWidth() * p->getHeight())  / (shape->getWidth() * shape->getHeight()) * diligence;
 //    int original = (p->getWidth() * p->getHeight()) /100 * diligence;
-//    return original * (1+ ((double) rand() / double(RAND_MAX)) * 0.2)
-//    * (shrinkage+0.3)
-//    ;
-    return original;
+    return original * (1+ ((double) rand() / double(RAND_MAX)) * 0.2)
+    * (shrinkage+0.2)
+    ;
+//    return original;
 }
 
 bool PolarCanvas::placeShape(EngineShape* eShape){
@@ -455,11 +452,11 @@ bool PolarCanvas::placeShape(EngineShape* eShape){
 #endif
         if(!eShape->_found){
             _candidatePlacement->patch->setLastAttempt(_attempt);
-            _candidatePlacement->patch->fail();
+            _candidatePlacement->patch->fail(eShape->getWidth()*eShape->getHeight());
         }
         else{
             _candidatePlacement->patch->mark(eShape->getWidth()*eShape->getHeight(), false);
-            eShape->finalizePlacement(eShape->_winningSeq, this->getId(), failureCount);
+            eShape->finalizePlacement(eShape->winningSeq, this->getId(), failureCount);
             getPlacer()->success(eShape->getDesiredPlacements());
             return true;
             //                placer->success();

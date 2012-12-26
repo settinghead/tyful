@@ -7,11 +7,12 @@
 PolarRootTree::PolarRootTree( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb) :
 PixelImageShape(pixels,width,height,revert,rgbaToArgb),
 PolarTree(0, TWO_PI, 0, sqrt(
-                             (pow((double(getWidth()) / 2.0), 2.0)
-                              + pow((double(getHeight()) / 2.0), 2.0)))),rootDStamp(false),scale(1)
+                             (pow((double(width) / 2.0), 2.0)
+                              + pow((double(height) / 2.0), 2.0)))),rootDStamp(false),scale(1)
 #if NUM_THREADS>1
 ,finalSeq(-1)
 #endif
+,renderedPlacement(NULL),winningSeq(-1)
 {
     init();
 }
@@ -19,11 +20,12 @@ PolarTree(0, TWO_PI, 0, sqrt(
 PolarRootTree::PolarRootTree(unsigned char * png, size_t size):
 PixelImageShape(png,size),
 PolarTree(0, TWO_PI, 0, sqrt(
-                             (pow((double(getWidth()) / 2.0), 2.0)
-                              + pow((double(getHeight()) / 2.0), 2.0)))),rootDStamp(false),scale(1)
+                             (pow((double(width) / 2.0), 2.0)
+                              + pow((double(height) / 2.0), 2.0)))),rootDStamp(false),scale(1)
 #if NUM_THREADS>1
 ,finalSeq(-1)
 #endif
+,renderedPlacement(NULL),winningSeq(-1)
 {
     init();
 }
@@ -77,4 +79,6 @@ inline int PolarRootTree::getCurrentStamp(int seq) {
 
 
 
-
+SlapInfo* PolarRootTree::getFinalPlacement(){
+    return renderedPlacement;
+}

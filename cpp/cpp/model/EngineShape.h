@@ -32,8 +32,6 @@ public:
         return desiredPlacements->at(desiredPlacementIndex++);
     }
     void nudgeTo(int seq,Placement* place,Angler* angler);
-    void finalizePlacement(int final_seq, int canvasId, int failureCount);
-    SlapInfo* getFinalPlacement();
 //    Placement* getOrCreateFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
     vector<Placement*>* getDesiredPlacements();
@@ -41,15 +39,13 @@ public:
     inline unsigned int getUid(){
         return uid;
     }
-    int _winningSeq;
     bool _found;
     int referenceCounter;
-
+    void finalizePlacement(int final_seq, int canvasId, int failureCount);
 private:
     void init();
     int skipReason;
     int uid;
-    SlapInfo* renderedPlacement;
     vector<PolarPoint>* samplePoints;
     vector<Placement*>* desiredPlacements;
     int desiredPlacementIndex;

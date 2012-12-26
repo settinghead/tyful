@@ -19,18 +19,19 @@
 #include <time.h>
 
 void EngineShape::init(){
+    assert(width>0&&height>0);
     drawSamples();
 }
 
 EngineShape::EngineShape(int sid, unsigned char * png, size_t size):TextImageShape(png,size),
-skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
+skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),referenceCounter(0){
     
 }
 
 
 EngineShape::EngineShape( int sid, unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):
 TextImageShape(pixels,width,height,revert,rgbaToArgb),
-skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
+skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),referenceCounter(0){
     init();
 }
 
@@ -68,13 +69,13 @@ void EngineShape::drawSamples(){
     if (numSamples < 20)
         numSamples = 20;
     for(int i=0; i<numSamples;i++){
-			double relativeX= int((rand() % getWidth()));
-			double relativeY= int((rand() % getHeight()));
+			int relativeX= rand() % getWidth();
+			int relativeY= rand() % getHeight();
 			if(containsPoint(relativeX, relativeY))
 			{
 				relativeX -= getWidth()/2;
 				relativeY -= getHeight()/2;
-				double d = sqrt(pow(relativeX,2)+pow(relativeY,2));
+				double d = sqrt(relativeX*relativeX+relativeY*relativeY);
 				double r = atan2(relativeY, relativeX);
                 PolarPoint p(d,r);
 				samplePoints->push_back(p);
@@ -98,15 +99,6 @@ void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
     setRotation(seq,p->rotation = angle);
 }
 
-void EngineShape::finalizePlacement(int final_seq, int canvasId, int failureCount){
-    unsigned int color= currentPlacement[final_seq].patch->getLayer()->getColorer()->colorFor(&currentPlacement[final_seq]);
-    renderedPlacement = new SlapInfo(getUid(), canvasId, currentPlacement[final_seq].location, currentPlacement[final_seq].rotation, currentPlacement[final_seq].layer,0,failureCount);
-    currentPlacement[final_seq].patch->getShapes()->push_back(this);
-}
-
-SlapInfo* EngineShape::getFinalPlacement(){
-    return renderedPlacement;
-}
 
 vector<Placement*>* EngineShape::getDesiredPlacements(){
     return desiredPlacements;
@@ -139,4 +131,11 @@ bool EngineShape::trespassed(int seq,PolarLayer* layer){
     }
     
     return true;
+}
+
+
+void EngineShape::finalizePlacement(int final_seq, int canvasId, int failureCount){
+    unsigned int color= currentPlacement[final_seq].patch->getLayer()->getColorer()->colorFor(&currentPlacement[final_seq]);
+    renderedPlacement = new SlapInfo(getUid(), canvasId, currentPlacement[final_seq].location, currentPlacement[final_seq].rotation, currentPlacement[final_seq].layer,color,failureCount);
+    currentPlacement[final_seq].patch->getShapes()->push_back(this);
 }

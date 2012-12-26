@@ -23,12 +23,9 @@ inline static unsigned int endianFlip(unsigned int p){
 }
 
 
-PixelImageShape::PixelImageShape(unsigned char * png, size_t png_size):ImageShape::ImageShape(){
-    unsigned int width=0,height = 0;
+PixelImageShape::PixelImageShape(unsigned char * png, size_t png_size):ImageShape::ImageShape(),_area(NAN){
     unsigned int *pixels = 0;
-    LodePNG_decode32((unsigned char **)&pixels, &width, &height, png, png_size);
-    this->width = width;
-    this->height = height;
+    LodePNG_decode32((unsigned char **)&pixels, &this->width, &this->height, png, png_size);
     size_t size = sizeof(unsigned int)*width*height;
     this->pixels = (unsigned int *)malloc(size);
     for (int xx=0; xx<width; xx++) {
@@ -43,7 +40,7 @@ PixelImageShape::PixelImageShape(unsigned char * png, size_t png_size):ImageShap
 
 
 PixelImageShape::PixelImageShape(unsigned int const * pixels, int width, int height, bool revert, bool rgbaToArgb):
-ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels((unsigned int *) pixels){
+ImageShape::ImageShape(), width(width),height(height),total(width*height),pixels((unsigned int *) pixels),_area(NAN){
 //	this->width = width;
 //	this->height = height;
 //    this->total = width*height;
@@ -94,21 +91,27 @@ PixelImageShape::~PixelImageShape() {
     free(pixels);
 };
 
-void PixelImageShape::printStats() {
-    bool printedFirstNonEmpty = false;
-    double sum = 0;
-    for(int x=0;x<width;x++)
-        for(int y=0;y<height;y++){
-            if(containsPoint(x, y)){
-                sum+=1;
-                if(!printedFirstNonEmpty){
-                    printf("first nonempty point: %d,%d, c: %x\n",x,y,getPixel(x, y));
-                    printedFirstNonEmpty = true;
+double PixelImageShape::getArea(){
+    if(isnan(_area)){
+        double _area = 0;
+        bool printedFirstNonEmpty = false;
+        for(int x=0;x<width;x++)
+            for(int y=0;y<height;y++){
+                if(containsPoint(x, y)){
+                    _area+=1;
+                    if(!printedFirstNonEmpty){
+                        printf("first nonempty point: %d,%d, c: %x\n",x,y,getPixel(x, y));
+                        printedFirstNonEmpty = true;
+                    }
                 }
             }
-        }
-    sum/=width*height;
-    printf("Width: %d, height: %d, Fill rate: %f, pixel addr: %p\n", width, height, sum, pixels);
+    }
+    return _area;
+}
+
+
+void PixelImageShape::printStats() {
+    printf("Width: %d, height: %d, Fill rate: %f, pixel addr: %p\n", width, height, getArea()/width/height, pixels);
     printf("Text image special pixel (1,1): %u, empty: %x\n", getPixel(1, 1), isEmpty(getPixel(1, 1)));
 
 };

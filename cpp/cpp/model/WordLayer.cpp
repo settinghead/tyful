@@ -128,11 +128,12 @@ inline static double calculateConformity(vector<PolarPoint>* points, PixelImageS
             validPoints++;
             stats[v]++;
         }
+        if(stats.size()>8) return 1;
+
 //        double deltaR = r - meanR, deltaG = g - meanG, deltaB = b - meanB;
 //        meanR += deltaR/(double)i; meanG += deltaG/(double)i; meanB += deltaB/(double)i;
 //        M2 += deltaR*(r - meanR)+deltaG*(g - meanG)+deltaB*(b - meanB);
     }
-    if(stats.size()>20) return 1;
     int maxCount = 0;
     for(map<unsigned,unsigned>::iterator it = stats.begin();it!=stats.end();it++)
         if(maxCount<it->second)
