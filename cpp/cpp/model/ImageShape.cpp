@@ -14,17 +14,14 @@
 #include "Flip.h"
 #include "../tree/PolarTreeBuilder.h"
 
-ImageShape::ImageShape():tree(NULL){
+ImageShape::ImageShape(){
 }
 
 ImageShape::~ImageShape(){
-    delete tree;
 }
 
-
-PolarRootTree* ImageShape::getTree(){
-    if(this->tree==NULL)
-        this->tree = makeTree(this,0);
-    return this->tree;
+#if NUM_THREADS > 1
+inline void ImageShape::setFinalSeq(int seq){
+    getTree()->setFinalSeq(seq);
 }
-
+#endif

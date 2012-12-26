@@ -17,12 +17,6 @@ public:
     
     
 	PolarRootTree* root; 
-	inline double getRootX(int seq){
-        return this->root->getRootX(seq);
-    }
-	inline double getRootY(int seq){
-        return this->root->getRootY(seq);
-    }
     inline int getFinalSeq(){
         return root->getFinalSeq();
     }
@@ -390,9 +384,6 @@ public:
     }
 	inline PolarRootTree* getRoot(){
         return this->root;
-    }
-	inline ImageShape* getShape(){
-        return this->root->getShape();
     }
 };
 

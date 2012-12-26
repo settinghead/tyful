@@ -12,16 +12,16 @@
 #include <vector>
 #include "../constants.h"
 #include "../model/structs.h"
+#include "../model/TextImageShape.h"
 using namespace std;
 
-class ImageShape;
 class PolarLayer;
 class Angler;
 
-class EngineShape{
+class EngineShape: public TextImageShape{
 public:
-    EngineShape(ImageShape* shape, unsigned int sid);
-    EngineShape(ImageShape* shape, EngineShape* old);
+    EngineShape( int sid, unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb);
+    EngineShape(int sid, unsigned char * png, size_t size);
     ~EngineShape();
     bool wasSkipped();
     void skipBecause(int reason);
@@ -31,18 +31,11 @@ public:
     inline Placement* nextDesiredPlacement(){
         return desiredPlacements->at(desiredPlacementIndex++);
     }
-    inline ImageShape* getShape(){
-        return shape;
-    }
     void nudgeTo(int seq,Placement* place,Angler* angler);
-    void finalizePlacement(int final_seq);
-    Placement getFinalPlacement();
-    void setFinalPlacement(Placement placement);
+    void finalizePlacement(int final_seq, int canvasId, int failureCount);
+    SlapInfo* getFinalPlacement();
 //    Placement* getOrCreateFinalPlacement();
     bool trespassed(int seq,PolarLayer* layer);
-    inline Placement* getCurrentPlacement(int seq){
-        return currentPlacement[seq];
-    }
     vector<Placement*>* getDesiredPlacements();
     void setDesiredPlacements(vector<Placement*>*);
     inline unsigned int getUid(){
@@ -53,11 +46,10 @@ public:
     int referenceCounter;
 
 private:
+    void init();
     int skipReason;
     int uid;
-    ImageShape* shape;
-    Placement* currentPlacement[NUM_THREADS];
-    Placement renderedPlacement;
+    SlapInfo* renderedPlacement;
     vector<PolarPoint>* samplePoints;
     vector<Placement*>* desiredPlacements;
     int desiredPlacementIndex;

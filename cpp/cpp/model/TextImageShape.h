@@ -8,12 +8,15 @@
 
 #ifndef __PolarTree_Experiment__TextImageShape__
 #define __PolarTree_Experiment__TextImageShape__
-#include "PixelImageShape.h"
+#include "../tree/PolarRootTree.h"
 
-class TextImageShape:public PixelImageShape{
+class TextImageShape:public PolarRootTree{
 public:
-    TextImageShape( unsigned int const * pixels, int width, int height, bool revert, bool rgbaToArgb):PixelImageShape(pixels,width,height, revert,rgbaToArgb){
+    TextImageShape( unsigned int const * pixels, int width, int height, bool revert, bool rgbaToArgb):PolarRootTree(pixels,width,height, revert,rgbaToArgb){
 //        printStats();
+    }
+    TextImageShape(unsigned char * png, size_t size):PolarRootTree(png,size){
+        
     }
     virtual ~TextImageShape(){}
     

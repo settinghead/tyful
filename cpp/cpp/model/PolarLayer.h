@@ -23,12 +23,12 @@ public:
     PolarLayer(unsigned char * png, size_t png_size,int lid);
     virtual ~PolarLayer(){}
     virtual bool contains(double x, double y, double width, double height, double rotation) = 0;
-    virtual bool containsPoint(double x, double y, double refX, double refY) = 0;
-    bool containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY);
-    bool containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX, double refY);
+    bool containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation);
+    virtual bool suitableForPlacement(double centerX, double centerY, vector<PolarPoint>* points, double rotation) = 0;
+    bool containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation);
     bool aboveContains(double x, double y, double width, double height,double rotation);
-    bool aboveContainsPoint(double x, double y, double refX, double refY);
-    bool aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY);
+    bool aboveContainsPoint(double x, double y);
+    bool aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation);
     virtual bool isEmpty(unsigned int pixelValue) = 0;
     static void connect(PolarLayer* above, PolarLayer* below);
     virtual void serialize(tyful::Layer* layer) = 0;

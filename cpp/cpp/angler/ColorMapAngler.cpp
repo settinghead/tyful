@@ -8,6 +8,7 @@
 
 #include "ColorMapAngler.h"
 #include "../model/WordLayer.h"
+#include "../model/EngineShape.h"
 #include "../constants.h"
 
 ColorMapAngler::ColorMapAngler(WordLayer* layer, Angler* otherwise){
@@ -16,14 +17,17 @@ ColorMapAngler::ColorMapAngler(WordLayer* layer, Angler* otherwise){
 }
 
 inline double ColorMapAngler::angleFor(int seq,EngineShape* shape,double prevAngle){
-    if (shape->getCurrentPlacement(seq) == NULL)
-        return otherwise->angleFor(seq,shape,prevAngle);
+    
+    //TODO: check the following two lines (why there are here)
+//    if (shape->getCurrentPlacement(seq) == NULL)
+//        return otherwise->angleFor(seq,shape,prevAngle);
+    
     // float angle = (img.getHue(
     // (int) eWord.getCurrentLocation().getpVector().x, (int) eWord
     // .getCurrentLocation().getpVector().y) + BBPolarTree.PI)
     // % BBPolarTree.TWO_PI;
     
-    double angle= (layer->getHue((int)shape->getCurrentPlacement(seq)->location.x, (int)shape->getCurrentPlacement(seq)->location.y) * TWO_PI);
+    double angle= (layer->getHue((int)shape->currentPlacement[seq].location.x, (int)shape->currentPlacement[seq].location.y) * TWO_PI);
     if (isnan(angle)){
         if(!isnan(prevAngle) && otherwise->alternativeValid(prevAngle))
             return prevAngle;

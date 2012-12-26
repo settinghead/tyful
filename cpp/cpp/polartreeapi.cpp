@@ -8,7 +8,7 @@
 #include "model/TextImageShape.h"
 #include "tree/PolarTree.h"
 #include "polartreeapi.h"
-#include "tree/PolarRootTree.h"
+#include "model/EngineShape.h"
 #include "model/WordLayer.h"
 #include "constants.h"
 #include "ThreadControllers.h"
@@ -174,9 +174,9 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool
 //    try{
 //    assert(shrinkage>=getShrinkage());
     if(PolarCanvas::current->pendingShapes.size()<FEED_QUEUE_BUFFER){
-        TextImageShape *shape = new TextImageShape(pixels, width, height, flip,rgbaToArgb);
         // shape->printStats();
-        PolarCanvas::current->feedShape(shape,sid);
+        EngineShape* shape = new EngineShape(sid, pixels, width, height, flip, rgbaToArgb);
+        PolarCanvas::current->feedShape(shape);
             pthread_mutex_lock(&PolarCanvas::threadControllers.next_feed_mutex);
             printf("feedShape broadcasting a next_feed_cv signal.\n");
             pthread_cond_broadcast(&PolarCanvas::threadControllers.next_feed_cv);
@@ -190,13 +190,13 @@ void feedShape(unsigned int *pixels, int width, int height,unsigned int sid,bool
 
 }
 
-SlapInfo* slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
+SlapInfo slapShape(unsigned int *pixels, int width, int height,unsigned int sid)
 {
     feedShape(pixels, width, height,sid,false,false,getShrinkage());
     return tryNextShape();
 }
 
-SlapInfo* tryNextShape()
+SlapInfo tryNextShape()
 {
     ((PolarCanvas*)PolarCanvas::current)->tryNextEngineShape();
     return getNextSlap();
@@ -299,15 +299,15 @@ double getShrinkage()
 	return PolarCanvas::current->getShrinkage();
 }
 
-SlapInfo* getNextSlap(){
-    if(PolarCanvas::current->slaps.empty()) return NULL;
-    SlapInfo* info = PolarCanvas::current->slaps.front();
+SlapInfo getNextSlap(){
+    if(PolarCanvas::current->slaps.empty()) return SlapInfo();
+    SlapInfo info = PolarCanvas::current->slaps.front();
     PolarCanvas::current->slaps.pop();
     
     //DEBUG
 //    info->location.x = 200;
 //    info->location.y = 200;
-
+    
     return info;
 }
 
@@ -322,7 +322,7 @@ void resetFixedShapes(){
     PolarCanvas::current->resetFixedShapes();
 }
 string setFixedShape(int sid, double x, double y, double rotation,double scaleX,double scaleY){
-    PolarCanvas::current->fixShape(sid,x, y, rotation,scaleX,scaleY);
+    PolarCanvas::current->fixShape(sid, CartisianPoint(x,y), rotation,scaleX,scaleY);
     vector<int> overlaps = PolarCanvas::current->getShapesCollidingWith(sid);
     std::stringstream ss;
     ss << sid << ",";

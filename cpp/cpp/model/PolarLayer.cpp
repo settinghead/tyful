@@ -22,7 +22,7 @@ PolarLayer::PolarLayer(unsigned int const * pixels, int width, int height, int l
 }
 
 
-bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){
+bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation){
     for(int i = 0 ;i<points->size();i++){
         double theta = points->at(i).r;
         double d = points->at(i).d;
@@ -30,12 +30,12 @@ bool PolarLayer::containsAllPolarPoints(double centerX, double centerY, vector<P
         double x = centerX + cos(theta) * d;
         double y = centerY + sin(theta) * d;
         
-        if(!containsPoint(x,y, refX,refY)) return false;
+        if(!containsPoint(x,y)) return false;
     }
     return true;
 }
 
-bool PolarLayer::containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX, double refY){
+bool PolarLayer::containsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation){
     for(int i=0;i<points->size();i++){
         double theta = points->at(i).r;
         double d = points->at(i).d;
@@ -43,7 +43,7 @@ bool PolarLayer::containsAnyPolarPoints(double centerX, double centerY, vector<P
         double x = centerX + cos(theta) * d;
         double y = centerY + sin(theta) * d;
         
-        if(containsPoint(x,y,refX,refY)) return true;
+        if(containsPoint(x,y)) return true;
     }
     return false;
 }
@@ -56,19 +56,19 @@ bool PolarLayer::aboveContains(double x, double y, double width, double height,d
     else return false;
 }
 
-bool PolarLayer::aboveContainsPoint(double x, double y, double refX, double refY) {
+bool PolarLayer::aboveContainsPoint(double x, double y) {
     if(above!=NULL){
-        if(above->containsPoint(x,y, refX, refY)) return true;
-        else return above->aboveContainsPoint(x,y,refX, refY);
+        if(above->containsPoint(x,y)) return true;
+        else return above->aboveContainsPoint(x,y);
 			}
     else return false;
 }
 
-bool PolarLayer::aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation, double refX,double refY){
+bool PolarLayer::aboveContainsAnyPolarPoints(double centerX, double centerY, vector<PolarPoint>* points, double rotation){
     if(above!=NULL){
-        if(above->containsAnyPolarPoints(centerX,centerY,points, rotation,refX,refY)) return true;
-        else return above->aboveContainsAnyPolarPoints(centerX,centerY, points, rotation, refX,refY);
-			}
+        if(above->containsAnyPolarPoints(centerX,centerY,points, rotation)) return true;
+        else return above->aboveContainsAnyPolarPoints(centerX,centerY, points, rotation);
+    }
     else return false;
 }
 

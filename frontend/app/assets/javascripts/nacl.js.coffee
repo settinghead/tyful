@@ -221,8 +221,8 @@ window.TyfulNacl.positionPin = (obj) ->
 
   absCoords = window.renderCanvas.getAbsoluteCoords(obj)
   obj.pin.style.left = (absCoords.left) + 'px'
-  finalTop = (absCoords.top) - 40
-  finalLeft = (absCoords.left) - 20
+  finalTop = (absCoords.top)-25
+  finalLeft = (absCoords.left)
 
   unless obj.pin.animated
     obj.pin.style.top = 'ppx'

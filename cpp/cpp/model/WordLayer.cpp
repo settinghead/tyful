@@ -40,7 +40,7 @@ WordLayer::~WordLayer(){
 }
 
 bool WordLayer::contains(double x, double y, double width, double height, double rotation){
-    if (this->tree == NULL) {
+//    if (this->tree == NULL) {
         // sampling approach
         int numSamples = width * height / SAMPLE_DISTANCE;
         //				var numSamples = 10;
@@ -91,35 +91,10 @@ bool WordLayer::contains(double x, double y, double width, double height, double
         }
         
         return true;
-    }
-    else {
-        return tree->overlapsCoord(tree->getFinalSeq(),x, y, x + width, y + height);
-    }
-}
-
-bool WordLayer::containsPoint(double x, double y, double refX, double refY){
-    
-    //a layer above contains this point which covers the current layer
-    if(aboveContainsPoint(x,y,-1,-1)) return false;
-    //			if(x<0 || y<0 || x>width || y>height) return true;
-    if(x<0||y<0||x>this->width||y>this->height)
-        return false;
-    if(ImageShape::containsPoint(x, y)
-       //				&&
-       //				//not transparent
-       //				((color.getPixel32(x,y) >> 24 &0xff)!=0 )
-       ){
-        if(refX<=0 || refY<=0 || tolerance>=1)
-            return true;
-        else return (
-                     colorSheet==NULL || (
-                     ColorMath::distRGB(colorSheet->getPixel(x,y),
-                                       colorSheet->getPixel(refX,refY)) <= 0.02
-                     &&
-                     ColorMath::distHue(getPixel(x,y),
-                                       getPixel(refX,refY)) <= tolerance));
-    }
-    else return false;
+//    }
+//    else {
+//        return tree->overlapsCoord(tree->getFinalSeq(),x, y, x + width, y + height);
+//    }
 }
 
 
@@ -132,6 +107,51 @@ double WordLayer::getHue(int x, int y) {
         double h = ( ((unsigned int)colour & 0x00FF0000) >> 16);
         h/=255;
         return h;
+    }
+}
+
+inline static double calculateConformity(vector<PolarPoint>* points, PixelImageShape* shape, double centerX, double centerY){
+    map<unsigned,unsigned> stats;
+//    double meanR = 0, meanG = 0, meanB = 0;
+//    double M2 = 0;
+    int validPoints = 0;
+    for(int i=1;i<=points->size();i++){
+        PolarPoint point = points->at(i-1);
+        double x = centerX + cos(point.r) * point.d;
+        double y = centerY + sin(point.r) * point.d;
+        unsigned v = shape->getPixel((int)x, (int)y);
+//        double r = v >> 16 & 0xFF;
+//        double g = v >> 8 & 0xFF;
+//        double b = v & 0xFF;
+        int alpha = v >> 24 & 0xFF;
+        if(alpha>0){
+            validPoints++;
+            stats[v]++;
+        }
+//        double deltaR = r - meanR, deltaG = g - meanG, deltaB = b - meanB;
+//        meanR += deltaR/(double)i; meanG += deltaG/(double)i; meanB += deltaB/(double)i;
+//        M2 += deltaR*(r - meanR)+deltaG*(g - meanG)+deltaB*(b - meanB);
+    }
+    if(stats.size()>20) return 1;
+    int maxCount = 0;
+    for(map<unsigned,unsigned>::iterator it = stats.begin();it!=stats.end();it++)
+        if(maxCount<it->second)
+            maxCount = it->second;
+    return maxCount/(double)validPoints;
+    
+}
+
+
+
+bool WordLayer::suitableForPlacement(double centerX, double centerY, vector<PolarPoint>* points, double rotation){
+    bool contains = containsAllPolarPoints(centerX,centerY,points,rotation);
+    if(!contains) return false;
+    else{
+        double colorConformity = calculateConformity(points, this->colorSheet, centerX, centerY);
+//        double directionDiversity = calculateDiversity(points, this, centerX, centerY);
+        return colorConformity >0.9;
+//        printf("colorDiversity: %f, directionDiversity: %f\n", colorDiversity, directionDiversity);
+        return true;
     }
 }
 

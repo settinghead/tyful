@@ -38,7 +38,6 @@ public:
     }
     const LAYER_TYPE type;
     bool contains(double x, double y, double width, double height, double rotation);
-    bool containsPoint(double x, double y, double refX, double refY);
     inline double getBrightness(int x, int y){
         unsigned int rgbPixel = getPixel(x, y);
         unsigned int alpha = rgbPixel>> 24 & 0xFF;
@@ -63,6 +62,7 @@ public:
         tyful::Image direction = layer->direction();
         PixelImageShape::serialize(&direction);
     }
+    bool suitableForPlacement(double centerX, double centerY, vector<PolarPoint>* points, double rotation);
 private:
     double getHSB(int x, int y);
     double tolerance;

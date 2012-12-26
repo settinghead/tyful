@@ -36,34 +36,37 @@ struct PolarPoint{
 };
 
 struct CorePlacement{
-    CorePlacement(int sid):sid(sid),location(CartisianPoint(NAN,NAN)),rotation(NAN),layer(-1),color(0){}
-    CorePlacement(int sid, CartisianPoint location,double rotation, int layer, unsigned int color):
-    sid(sid),rotation(rotation),layer(layer),color(color),location(location){}
-    unsigned int sid;
+    CorePlacement():location(CartisianPoint(NAN,NAN)),rotation(NAN),layer(-1){}
+    CorePlacement(CartisianPoint location,double rotation, int layer):
+    rotation(rotation),layer(layer),location(location){}
     CartisianPoint location;
     double rotation;
     unsigned int layer;
-    unsigned int color;
 };
 
 struct Placement:CorePlacement{
-    Placement(int sid):CorePlacement(sid),patch(NULL){}
-    Placement(int sid, CartisianPoint location,double rotation, unsigned int layer, unsigned int color, Patch* patch):
-    CorePlacement(sid,location,rotation,layer,color),patch(patch){}
+    Placement():CorePlacement(),patch(NULL){}
+    Placement(CartisianPoint location,double rotation, unsigned int layer, Patch* patch):
+    CorePlacement(location,rotation,layer),patch(patch){}
     ~Placement(){
     }
     Patch* patch;
     inline Placement operator + (const Placement &o) const{
         ;
-        return Placement(sid,o.location+location,rotation,layer,color,patch);
+        return Placement(o.location+location,rotation,layer,patch);
     }
 };
 
 struct SlapInfo:CorePlacement{
     int failureCount;
     int canvasId;
+    int sid;
+    SlapInfo():CorePlacement(),sid(-1){};
     SlapInfo(int sid, int canvasId, CartisianPoint location,double rotation, int layer, unsigned int color, unsigned int failureCount):
-    CorePlacement(sid,location,rotation,layer,color),canvasId(canvasId),failureCount(failureCount){}
+    CorePlacement(location,rotation,layer),sid(sid),canvasId(canvasId),failureCount(failureCount),color(color){}
+    unsigned int color;
+    bool isEmpty(){return sid<0;}
+
 };
 
 #endif

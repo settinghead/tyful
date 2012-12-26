@@ -37,7 +37,7 @@ public:
         return false;
     }
 
-	inline bool contains(int x, int y, int width, int height){
+	virtual inline bool contains(int x, int y, int width, int height){
         if (intersects(x, y, width, height)) {
             return false;
         } else {
@@ -53,9 +53,6 @@ public:
 	virtual int getWidth() = 0;
 	virtual int getHeight() = 0;
 	virtual unsigned int getPixel(int x, int y) = 0;
-    PolarRootTree* getTree();
-protected:
-    PolarRootTree* tree;
 };
 #endif
 

@@ -241,22 +241,12 @@
         return result;
     }
 
-    inline static PolarRootTree* makeTree(ImageShape* shape, int swelling) {
-//        int x = int(shape->getWidth() / 2.0);
-//        int y = int(shape->getHeight() / 2.0);
-        double d = sqrt(
-                (pow((double(shape->getWidth()) / 2.0), 2.0)
-                        + pow((double(shape->getHeight()) / 2.0), 2.0)));
-        PolarRootTree* tree = new PolarRootTree(shape, d);
-        return tree;
+inline static void makeChildren(PolarTree* tree, ImageShape* shape, PolarRootTree* root) {
+    {
+        SplitType type = determineType(tree);
+        vector<PolarTree*>* children = splitTree(tree, shape, root, type);
+        tree->addKids(children);
     }
-
-    inline static void makeChildren(PolarTree* tree, ImageShape* shape, PolarRootTree* root) {
-        {
-            SplitType type = determineType(tree);
-            vector<PolarTree*>* children = splitTree(tree, shape, root, type);
-            tree->addKids(children);
-        }
-    }
+}
 //};
 #endif

@@ -1,47 +1,64 @@
 #ifndef PolarROOTTree_H
 #define PolarROOTTree_H
-#include "PolarTree.h"
-#include "../model/ImageShape.h"
+
 #include "math.h"
 #include "../constants.h"
+#include "PolarTree.h"
+#include "../model/PixelImageShape.h"
 
-class PolarRootTree: public PolarTree {
+class PolarRootTree: public PolarTree, public PixelImageShape{
 private:
 #if NUM_THREADS > 1
     int finalSeq;
 #else
 #define finalSeq 0
 #endif
-    double rootX[NUM_THREADS]; /* REM */
-	double rootY[NUM_THREADS]; /* REM */
-	double _rotation[NUM_THREADS]; /* REM */
+
 	int rootStamp[NUM_THREADS]; /* REM */
 	bool rootDStamp; /* REM */
     double scale;
-	ImageShape* shape; /* REM */
+    void init();
+
 public:
-	PolarRootTree(ImageShape* shape, double d);
+    explicit PolarRootTree( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb);
+    explicit PolarRootTree(unsigned char * png, size_t size);
+    Placement currentPlacement[NUM_THREADS];
+
 	~PolarRootTree();
-	inline void setLocation(int seq,int centerX, int centerY){
-        this->rootX[seq] = centerX;
-        this->rootY[seq] = centerY;
+	inline void setLocation(int seq,CartisianPoint location){
+        this->currentPlacement[seq].location = location;
         (this->rootStamp[seq])++;
     }
-	inline void setTopLeftLocation(int seq,double top, double left){
-        this->rootX[seq] = this->shape->getWidth()/2 + top;
-        this->rootY[seq] = this->shape->getHeight()/2 + left;
+
+	inline void setTopLeftLocation(int seq,CartisianPoint l){
+        this->currentPlacement[seq].location.x = getWidth()/2 + l.y;
+        this->currentPlacement[seq].location.y = getHeight()/2 + l.x;
         (this->rootStamp[seq])++;
     }
-	inline double getRootX(int seq);
-	inline double getRootY(int seq);
+    
+    inline PolarRootTree* getRoot(){
+        return this;
+    }
+
     void updateFourPointsWithRotationScale(int seq);
 
     inline bool overlaps(int seq,PolarRootTree* otherTree, int otherSeq){
-        const double dist = sqrt((pow((this->getRootX(seq) - otherTree->getRootX(otherSeq)), 2.0)
-                                                   + pow((this->getRootY(seq) - otherTree->getRootY(otherSeq)), 2.0)));
-
+        CartisianPoint thisLoc = this->getRoot()->currentPlacement[seq].location;
+        CartisianPoint otherLoc = otherTree->getRoot()->currentPlacement[otherSeq].location;
+        
+        const double dist = sqrt((pow(thisLoc.x - otherLoc.x, 2.0)
+                                                   + pow(thisLoc.y - otherLoc.y, 2.0)));
         return PolarTree::overlaps(seq,(PolarTree*)otherTree, otherSeq, dist);
     }
+    
+    inline virtual bool overlaps(int seq,PolarRootTree* otherTree){
+        return overlaps(seq, otherTree, otherTree->getFinalSeq());
+    }
+    
+    inline virtual bool overlaps(PolarRootTree* otherTree){
+        return overlaps(getFinalSeq(), otherTree, otherTree->getFinalSeq());
+    }
+    
     inline int getFinalSeq(){
         return finalSeq;
     }
@@ -50,20 +67,30 @@ public:
         finalSeq = seq;
     }
 #endif
+    inline bool contains(int seq,double x, double y, double right, double bottom) {
+        PolarTree::contains(seq,x,y,right,bottom);
+    }
+    
+    inline bool contains(double x, double y, double right, double bottom) {
+        PixelImageShape::contains(x,y,right,bottom);
+    }
 
 	inline double computeX(int seq,bool rotate);
 	inline double computeY(int seq,bool rotate);
 	inline double computeRight(int seq,bool rotate);
 	inline double computeBottom(int seq,bool rotate);
 	inline void setRotation(int seq,double rotation){
-        if(rotation!=this->_rotation[seq]){
-            this->_rotation[seq] = fmod(rotation, TWO_PI);
-            if (this->_rotation[seq] < 0) {
-                this->_rotation[seq] = (TWO_PI + this->_rotation[seq]);
+        if(rotation!=this->currentPlacement[seq].rotation){
+            this->currentPlacement[seq].rotation = fmod(rotation, TWO_PI);
+            if (this->currentPlacement[seq].rotation < 0) {
+                this->currentPlacement[seq].rotation = (TWO_PI + this->currentPlacement[seq].rotation);
             }
             (this->rootStamp[seq])++;
             assert(this->rootStamp[seq]!=this->rStamp[seq]);
         }
+    }
+    inline void setRotation(double rotation){
+        setRotation(getFinalSeq(), rotation);
     }
     inline void setScale(double scale){
         if(scale!=this->scale){
@@ -72,13 +99,11 @@ public:
         }
     }
 	inline double getRotation(int seq){
-        return this->_rotation[seq];
+        return this->currentPlacement[seq].rotation;
     }
 
 	inline int getCurrentStamp(int seq);
-	inline PolarRootTree* getRoot(){
-        return this;
-    }
+
 	inline ImageShape* getShape();
     inline double getScale(){
         return scale;

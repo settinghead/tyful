@@ -27,6 +27,7 @@
 #include <queue>
 #include "../ThreadControllers.h"
 #include "../proto/template.pb.h"
+#include "EngineShape.h"
 using namespace std;
 
 class EngineShape;
@@ -59,7 +60,7 @@ public:
 //    vector<EngineShape*>* _shapes;
 
     
-    void feedShape(ImageShape* shape,unsigned int sid);
+    void feedShape(EngineShape* shape);
     void removeShape(unsigned int sid);
     void setPerseverance(int v){
         this->perseverance = v;
@@ -87,14 +88,23 @@ public:
     
     void addLayer (PolarLayer* val);
 
-    queue<SlapInfo*> slaps;
+    queue<SlapInfo> slaps;
     queue<EngineShape*> pendingShapes;
     tr1::unordered_map<unsigned int,EngineShape*> displayShapes;
     vector<EngineShape*> retryShapes;
     tr1::unordered_map<unsigned int,EngineShape*> fixedShapes;
     void tryNextEngineShape();
     void resetFixedShapes();
-    void fixShape(int sid, double x, double y, double rotation, double scaleX, double scaleY);
+    void fixShape(int sid, CartisianPoint location, double rotation, double scaleX, double scaleY){
+        EngineShape* shape = _shapeMap[sid];
+        SlapInfo* info = shape->getFinalPlacement();
+        assert(info!=NULL);
+        info->location = location;
+        info->rotation = rotation;
+        //TODO
+        shape->setScale(scaleX);
+        fixShape(sid);
+    }
     void fixShape(int sid);
     vector<int> getShapesCollidingWith(int sid);
     double getSuccessRate();

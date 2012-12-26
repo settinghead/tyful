@@ -5,7 +5,6 @@
 #include <cmath>
 #include "../constants.h"
 #include "../model/structs.h"
-#include "../model/ImageShape.h"
 #include "../constants.h"
 #include <pthread.h>
 #include <assert.h>
@@ -27,6 +26,7 @@ private:
     double _computedR1[NUM_THREADS];
 	double _computedR2[NUM_THREADS];
     double _computedD1, _computedD2;
+
     bool dStamp;
     inline void computeR1(int seq){
         this->_computedR1[seq] = (this->_r1 + this->getRotation(seq));
@@ -49,17 +49,40 @@ private:
     inline void computeD2(){
         this->_computedD2 = (this->_d2 * getScale());
     }
+    inline void makeChildren() {
+        {
+            SplitType type = determineType();
+            vector<PolarTree*>* children = splitTree(type);
+            addKids(children);
+        }
+    }
+    
+    inline SplitType determineType() {
+        double d = (getD2(false) - getD1(false));
+        double midLength = (((getD2(false) + getD1(false)))
+                            * ((getR2(-1,false) - getR1(-1,false)))) / 2.0;
+        double factor = d / midLength;
+        if (factor < 0.7) {
+            return _3RAYS;
+        } else {
+            if (factor > 1.3) {
+                return _3CUTS;
+            } else {
+                return _1RAY1CUT;
+            }
+        }
+    }
+    
+    inline PolarTree* makeChildTree(double r1, double r2, double d1, double d2);
+    inline vector<PolarTree*>* splitTree(SplitType type);
+
+    
 public:
 	PolarTree(double r1, double r2, double d1, double d2);
 	~PolarTree();
 	inline void addKids(vector<PolarTree*>* kidList);
-	inline virtual double getRootX(int seq) = 0;
-	inline virtual double getRootY(int seq) = 0;
-    inline virtual int getFinalSeq() = 0;
+    virtual inline PolarRootTree* getRoot() = 0;
 
-#if NUM_THREADS>1
-    inline virtual void setFinalSeq(int seq) = 0;
-#endif
 	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq, const double rootCenterDist){
 //        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
         bool r = this->collide(seq, otherTree, otherSeq,rootCenterDist);
@@ -91,9 +114,7 @@ public:
 	inline vector<PolarTree*>* getKidsNoGrowth(){
         return this->_kids;
     }
-	inline virtual PolarRootTree* getRoot() = 0;
 	virtual double getScale() = 0;
-	virtual ImageShape* getShape() = 0;
 	inline bool overlapsCoord(int seq,double x, double y, double right, double bottom){
         if ((this->rectCollideCoord(seq,x, y, right, bottom))) {
             if ((this->isLeaf())) {
@@ -110,9 +131,9 @@ public:
         }
         return false;
     }
-	inline bool contains(int seq,double x, double y, double right, double bottom);
+	virtual inline bool contains(int seq,double x, double y, double right, double bottom);
 //    inline CartisianPoint getTopLeftLocation(int seq){
-//        return CartisianPoint(getRootX(seq)-getShape()->getWidth()/2,getRootY(seq)-getShape()->getHeight()/2);
+//        return CartisianPoint(getRootX(seq)-getWidth()/2,getRootY(seq)-getHeight()/2);
 //    }
 	virtual double computeX(int seq,bool rotate) = 0;
 	virtual double computeY(int seq,bool rotate) = 0;
@@ -188,18 +209,7 @@ public:
 
     }
 
-	inline void checkUpdatePoints(int seq){
-        if (((this->pointsStamp[seq] != this->getCurrentStamp(seq)))) {
-			this->_px[seq] =
-            ((this->getRootX(seq) - this->swelling) + this->getX(seq,true));
-			this->_pright[seq] = ((this->getRootX(seq) + this->swelling)
-                             + this->getRight(seq,true));
-			this->_py[seq] = ((this->getRootY(seq) - this->swelling) + this->getY(seq,true));
-			this->_pbottom[seq] = ((this->getRootY(seq) + this->swelling)
-                              + this->getBottom(seq,true));
-			this->pointsStamp[seq] = this->getCurrentStamp(seq);
-		}
-    }
+	inline void checkUpdatePoints(int seq);
 //    inline void checkUpdatePoints(int seq){
 //        if (((this->pointsStamp[seq] != this->getCurrentStamp(seq)))) {
 //			this->updateFourPointsWithRotationScale(seq);
@@ -232,8 +242,8 @@ public:
     }
 	int swelling;
 	inline void swell(int extra);
-	inline double getWidth();
-	inline double getHeight();
+	inline double getTreeWidth();
+	inline double getTreeHeight();
 	inline void checkComputeX(int seq){
         if (((this->xStamp[seq] != this->getCurrentStamp(seq)))) {
 			this->_x[seq] = this->computeX(seq,true);

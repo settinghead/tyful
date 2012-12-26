@@ -10,44 +10,51 @@
 #include "ImageShape.h"
 #include "../angler/Angler.h"
 #include "PolarCanvas.h"
-#include "../tree/PolarRootTree.h"
+#include "TextImageShape.h"
 #include "PolarLayer.h"
 #include "../colorer/Colorer.h"
 #include "../density/Patch.h"
+#include "../model/structs.h"
 #include <stdlib.h>
 #include <time.h>
 
-EngineShape::EngineShape(ImageShape* shape, unsigned int sid):skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
-    for(int i=0;i<NUM_THREADS;i++){
-        currentPlacement[i]=new Placement(uid);
-    }
-    this->shape = shape;
-    this->shape->getTree();
+void EngineShape::init(){
     drawSamples();
 }
 
-EngineShape::EngineShape(ImageShape* shape, EngineShape* old):skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(old->getUid()),renderedPlacement(old->renderedPlacement),_winningSeq(old->_winningSeq),referenceCounter(0){
-    for(int i=0;i<NUM_THREADS;i++){
-        currentPlacement[i]=new Placement(uid);
-    }
+EngineShape::EngineShape(int sid, unsigned char * png, size_t size):TextImageShape(png,size),
+skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
     
-    this->shape = shape;
-    int final_seq = old->getShape()->getTree()->getFinalSeq();
-    PolarRootTree* oldTree = old->getShape()->getTree();
-    PolarRootTree* newTree = getShape()->getTree();
-#if NUM_THREADS > 1
-    newTree->setFinalSeq(final_seq);
-#endif
-    newTree->setLocation(final_seq, oldTree->getRootX(final_seq), oldTree->getRootY(final_seq));
-    newTree->setRotation(final_seq, oldTree->getRotation(final_seq));
-    //TODO
-    newTree->setScale(oldTree->getScale());
-//    drawSamples();
-
 }
 
+
+EngineShape::EngineShape( int sid, unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):
+TextImageShape(pixels,width,height,revert,rgbaToArgb),
+skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(sid),renderedPlacement(NULL),_winningSeq(-1),referenceCounter(0){
+    init();
+}
+
+//EngineShape::EngineShape(PolarRootTree* shape, EngineShape* old):skipReason(0),desiredPlacementIndex(0),desiredPlacements(NULL),uid(old->getUid()),renderedPlacement(old->renderedPlacement),_winningSeq(old->_winningSeq),referenceCounter(0){
+//    for(int i=0;i<NUM_THREADS;i++){
+//        currentPlacement[i]=new Placement(uid);
+//    }
+//    
+//    this->shape = shape;
+////    PolarRootTree* oldTree = old->getTree();
+////    PolarRootTree* newTree = getTree();
+//#if NUM_THREADS > 1
+//    int final_seq = old->getFinalSeq();
+//    setFinalSeq(final_seq);
+//#endif
+//    setLocation(old->getCenterX(), old->getCenterY());
+//    setRotation(old->getRotation());
+//    //TODO
+//    setScale(old->getScale());
+////    drawSamples();
+//
+//}
+
 EngineShape::~EngineShape(){
-    delete shape;
 //    for(int i=0;i<NUM_THREADS;i++){
 //        delete currentPlacement[i];
 //    }
@@ -55,18 +62,18 @@ EngineShape::~EngineShape(){
 
 void EngineShape::drawSamples(){
     this->samplePoints = new vector<PolarPoint>();
-    int numSamples = int((shape->getWidth() * shape->getHeight() / SAMPLE_DISTANCE));
+    int numSamples = int((getWidth() * getHeight() / SAMPLE_DISTANCE));
     //				var numSamples = 10;
     // TODO: devise better lower bound
     if (numSamples < 20)
         numSamples = 20;
     for(int i=0; i<numSamples;i++){
-			double relativeX= int((rand() % shape->getWidth()));
-			double relativeY= int((rand() % shape->getHeight()));
-			if(shape->containsPoint(relativeX, relativeY))
+			double relativeX= int((rand() % getWidth()));
+			double relativeY= int((rand() % getHeight()));
+			if(containsPoint(relativeX, relativeY))
 			{
-				relativeX -= shape->getWidth()/2;
-				relativeY -= shape->getHeight()/2;
+				relativeX -= getWidth()/2;
+				relativeY -= getHeight()/2;
 				double d = sqrt(pow(relativeX,2)+pow(relativeY,2));
 				double r = atan2(relativeY, relativeX);
                 PolarPoint p(d,r);
@@ -85,38 +92,20 @@ void EngineShape::skipBecause(int reason){
 }
 
 void EngineShape::nudgeTo(int seq,Placement *p,Angler* angler){
-    currentPlacement[seq]->location = p->location;
-    currentPlacement[seq]->patch = p->patch;
+    setLocation(seq,p->location);
     
-    double angle= angler->angleFor(seq,this,shape->getTree()->getRotation(seq));
-    currentPlacement[seq]->rotation = p->rotation = angle;
-    this->getShape()->getTree()->setRotation(seq,angle);
-    
-    currentPlacement[seq]->rotation = p->rotation;
-    shape->getTree()->setLocation(seq,currentPlacement[seq]->location.x,
-                       currentPlacement[seq]->location.y);
-    shape->getTree()->setRotation(seq,currentPlacement[seq]->rotation);
+    double angle= angler->angleFor(seq,this,getRotation(seq));
+    setRotation(seq,p->rotation = angle);
 }
 
-void EngineShape::finalizePlacement(int final_seq){
-#if NUM_THREADS > 1
-    shape->getTree()->setFinalSeq(final_seq);
-#endif
-    shape->getTree()->setLocation(shape->getTree()->getFinalSeq(),currentPlacement[final_seq]->location.x, currentPlacement[final_seq]->location.y);
-    
-    unsigned int color= currentPlacement[final_seq]->patch->getLayer()->getColorer()->colorFor(currentPlacement[final_seq]);
-    currentPlacement[final_seq]->color = color;
-    renderedPlacement = *currentPlacement[final_seq];
-
-    currentPlacement[final_seq]->patch->getShapes()->push_back(this);
+void EngineShape::finalizePlacement(int final_seq, int canvasId, int failureCount){
+    unsigned int color= currentPlacement[final_seq].patch->getLayer()->getColorer()->colorFor(&currentPlacement[final_seq]);
+    renderedPlacement = new SlapInfo(getUid(), canvasId, currentPlacement[final_seq].location, currentPlacement[final_seq].rotation, currentPlacement[final_seq].layer,0,failureCount);
+    currentPlacement[final_seq].patch->getShapes()->push_back(this);
 }
 
-Placement EngineShape::getFinalPlacement(){
+SlapInfo* EngineShape::getFinalPlacement(){
     return renderedPlacement;
-}
-
-void EngineShape::setFinalPlacement(Placement placement){
-    this->renderedPlacement = placement;
 }
 
 vector<Placement*>* EngineShape::getDesiredPlacements(){
@@ -135,21 +124,17 @@ void EngineShape::setDesiredPlacements(vector<Placement*>* placements){
 
 bool EngineShape::trespassed(int seq,PolarLayer* layer){
     if(layer==NULL) return false;
-    double x = this->currentPlacement[seq]->location.x;
-    double y = this->currentPlacement[seq]->location.y;
+    double x = this->currentPlacement[seq].location.x;
+    double y = this->currentPlacement[seq].location.y;
     if(x<0||y<0||x>layer->getWidth()||y>layer->getHeight())
         return true;
 
-    if (layer->containsAllPolarPoints(this->currentPlacement[seq]->location.x ,
-                                     this->currentPlacement[seq]->location.y, this->samplePoints, currentPlacement[seq]->rotation,
-                                     this->currentPlacement[seq]->location.x,
-                                     this->currentPlacement[seq]->location.y
+    if (layer->suitableForPlacement(this->currentPlacement[seq].location.x ,
+                                     this->currentPlacement[seq].location.y, this->samplePoints, currentPlacement[seq].rotation
                                      ))
     {
-        return (layer->aboveContainsAnyPolarPoints(this->currentPlacement[seq]->location.x ,
-                                                  this->currentPlacement[seq]->location.y, this->samplePoints, currentPlacement[seq]->rotation,
-                                                  this->currentPlacement[seq]->location.x,
-                                                  this->currentPlacement[seq]->location.y
+        return (layer->aboveContainsAnyPolarPoints(this->currentPlacement[seq].location.x ,
+                                                  this->currentPlacement[seq].location.y, this->samplePoints, currentPlacement[seq].rotation
                                                   ));
     }
     

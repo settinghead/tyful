@@ -25,7 +25,7 @@ public:
         this->index = index;
     }
     vector<Placement*>* place(EngineShape* shape, unsigned long totalCount){
-        vector<Patch*>* patches = index->findPatchFor(shape->getShape()->getWidth(), shape->getShape()->getHeight());
+        vector<Patch*>* patches = index->findPatchFor(shape->getWidth(), shape->getHeight());
         vector<Placement*>* placements = new vector<Placement*>();
         
         for(int i=0;i<patches->size();i++){

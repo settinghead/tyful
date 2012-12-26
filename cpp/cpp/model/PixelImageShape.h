@@ -9,7 +9,6 @@
 #ifndef PIXELIMAGESHAPE_H
 #define PIXELIMAGESHAPE_H
 #include "ImageShape.h"
-#include "EngineShape.h"
 #include "../proto/template.pb.h"
 
 class PixelImageShape : public ImageShape{

@@ -1,41 +1,43 @@
 #include "PolarTree.h"
 #include "PolarRootTree.h"
-#include "../model/ImageShape.h"
+#include "../model/PixelImageShape.h"
 #include <math.h>
 #include "../model/Flip.h"
 
-PolarRootTree::PolarRootTree(ImageShape* shape, double d) :
-		PolarTree(0, TWO_PI, 0, d),rootDStamp(false),scale(1)
+PolarRootTree::PolarRootTree( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb) :
+PixelImageShape(pixels,width,height,revert,rgbaToArgb),
+PolarTree(0, TWO_PI, 0, sqrt(
+                             (pow((double(getWidth()) / 2.0), 2.0)
+                              + pow((double(getHeight()) / 2.0), 2.0)))),rootDStamp(false),scale(1)
 #if NUM_THREADS>1
 ,finalSeq(-1)
 #endif
 {
-    
-            for(int i=0;i<NUM_THREADS;i++){
-                this->rootStamp[i] = 1;
-                this->rootX[i] = this->rootY[i] = NAN;
-                this->_rotation[i] = NAN;
-            }
-	this->shape = shape;
-//    this->getKids();
+    init();
+}
 
+PolarRootTree::PolarRootTree(unsigned char * png, size_t size):
+PixelImageShape(png,size),
+PolarTree(0, TWO_PI, 0, sqrt(
+                             (pow((double(getWidth()) / 2.0), 2.0)
+                              + pow((double(getHeight()) / 2.0), 2.0)))),rootDStamp(false),scale(1)
+#if NUM_THREADS>1
+,finalSeq(-1)
+#endif
+{
+    init();
+}
+
+void PolarRootTree::init(){
+    for(int i=0;i<NUM_THREADS;i++){
+        this->rootStamp[i] = 1;
+        this->currentPlacement[i].location = CartisianPoint(NAN,NAN);
+        this->currentPlacement[i].rotation = NAN;
+    }
 }
 
 PolarRootTree::~PolarRootTree() {
 }
-
-
-
-inline double PolarRootTree::getRootX(int seq) {
-    assert(!isnan(this->rootX[seq]));
-	return this->rootX[seq];
-}
-
-inline double PolarRootTree::getRootY(int seq) {
-    assert(!isnan(this->rootY[seq]));
-	return this->rootY[seq];
-}
-
 
 
 inline double PolarRootTree::computeX(int seq,bool rotate) {
@@ -74,7 +76,5 @@ inline int PolarRootTree::getCurrentStamp(int seq) {
 }
 
 
-inline ImageShape* PolarRootTree::getShape() {
-	return this->shape;
-}
+
 
