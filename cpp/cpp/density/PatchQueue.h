@@ -72,7 +72,7 @@ public:
         return myLevel;
     }
     inline void tryPush(Patch* patch){
-        if (patch->getAlphaSum() > QUEUE_ALPHA_THRESHOLD){
+        if (patch->getAlphaSum() > QUEUE_ALPHA_THRESHOLD && patch->getUseableArea()>0){
             (*this).priority_queue<Patch*, vector<Patch*>, ComparePatch>::push(patch);
         }
     }

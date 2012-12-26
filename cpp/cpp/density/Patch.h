@@ -21,29 +21,46 @@ class EngineShape;
 class Patch{
 private:
     double x,y, width, height;
-    double averageAlpha, area, _alphaSum, currentWorth;
+    double averageAlpha, area, _alphaSum, currentWorth,_useableArea,_useableAreaRatio;
     Patch* parent;
     PatchQueue* queue;
     vector<Patch*>* children;
     vector<EngineShape*>* shapes;
     int rank;
-    int numberOfFailures;
+    double numberOfFailures;
     int lastAttempt;
     WordLayer* layer;
     double getArea();
+
 public:
     Patch(double x, double y, double width, double height, int rank, Patch* parent, PatchQueue* queue, WordLayer* layer);
     inline PolarCanvas* getCanvas();
     inline double getAverageAlpha();
+    inline double getUseableArea(){
+        if(isnan(_useableArea)){
+            _useableArea = 0;
+            for (int i= 0; i < width; i++)
+                for (int j= 0; j < height; j++) {
+                    if((layer->getPixel( (int)x + i, (int)y + j) >> 24 & 0xFF) > 0) _useableArea += 1;
+                }
+        }
+        return _useableArea;
+    }
+    inline double getUseableAreaRatio(){
+        if(isnan(_useableAreaRatio)){
+            _useableAreaRatio = getUseableArea()/(double)width/(double)height;
+        }
+        return _useableAreaRatio;
+    }
     inline vector<Patch*>* divideIntoNineOrMore(PatchQueue* newQueue){
         vector<Patch*>* result = new vector<Patch*>();
-        int min = width < height ? width:height;
+        double min = width < height ? width:height;
         int squareLength = min / NUMBER_OF_DIVISIONS;
         //    int centerCount = (NUMBER_OF_DIVISIONS + 1) / 2;
         
         bool breakI = false;
-        for (int i= 0; i < width; i += squareLength) {
-            int squareWidth;
+        for (double i= 0; i < width; i += squareLength) {
+            double squareWidth;
             if (i + squareLength * 2> width) {
                 squareWidth = width - i;
                 // i = getWidth();
@@ -52,8 +69,8 @@ public:
                 squareWidth = squareLength;
             bool breakJ = false;
             
-            for (int j= 0; j < height; j += squareLength) {
-                int squareHeight;
+            for (double j= 0; j < height; j += squareLength) {
+                double squareHeight;
                 if (j + squareLength * 2> height) {
                     squareHeight = height - j;
                     // j = height;
@@ -158,12 +175,14 @@ public:
         return lastAttempt;
     }
     inline void fail(){
-        numberOfFailures++;
+//        numberOfFailures+=this->getUseableAreaRatio();
+        numberOfFailures+=1;
     }
     int getLevel();
-    inline const int getNumberOfFailures(){
+    inline const double getNumberOfFailures(){
         return numberOfFailures;
     }
+    
 };
 
 struct ComparePatch
@@ -171,8 +190,9 @@ struct ComparePatch
     inline bool operator()(Patch* lhs, Patch* rhs) const
     {
         //			var r:int= -_numComparator.compare(p1.getAverageAlpha(),p2.getAverageAlpha());
-        int f1 = lhs->getNumberOfFailures(), f2 = rhs->getNumberOfFailures();
+        double f1 = lhs->getNumberOfFailures(), f2 = rhs->getNumberOfFailures();
         return (f1==f2) ? (lhs->getCurrentWorth()<rhs->getCurrentWorth()) : (f1>f2);
+//        return lhs->getCurrentWorth()<rhs->getCurrentWorth();
         
         //                if(r==0){
         //                    r = _numComparator.compare(p1.getAlphaSum(), p2.getAlphaSum());

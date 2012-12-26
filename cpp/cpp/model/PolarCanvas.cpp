@@ -243,8 +243,8 @@ void PolarCanvas::tryNextEngineShape(){
 Nudger* PolarCanvas::getNudger(){
     if(_nudger==NULL){
 //        _nudger = new ColorMapSpiralNudger();
-//        _nudger = new ColorMapZigzagNudger();
-        _nudger = new ColorMapRandomNudger();
+        _nudger = new ColorMapZigzagNudger();
+//        _nudger = new ColorMapRandomNudger();
     }
     return _nudger;
 }

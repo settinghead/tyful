@@ -139,14 +139,7 @@ bool EngineShape::trespassed(int seq,PolarLayer* layer){
     double y = this->currentPlacement[seq]->location.y;
     if(x<0||y<0||x>layer->getWidth()||y>layer->getHeight())
         return true;
-    
-    // float right = (float) (this.currentLocation.x + bounds
-    // .getWidth());
-    // float bottom = (float) (this.currentLocation.y + bounds
-    // .getHeight());
-    //		Assert.isTrue( this.shape.textField.width>0);
-    //		Assert.isTrue( this.shape.textField.height > 0);
-    
+
     if (layer->containsAllPolarPoints(this->currentPlacement[seq]->location.x ,
                                      this->currentPlacement[seq]->location.y, this->samplePoints, currentPlacement[seq]->rotation,
                                      this->currentPlacement[seq]->location.x,
@@ -160,9 +153,5 @@ bool EngineShape::trespassed(int seq,PolarLayer* layer){
                                                   ));
     }
     
-    //		if (layer.contains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false))
-    //	    {
-    //			return (!layer.aboveContains(x, y, this.shape.textField.width, this.shape.textField.height, rotation, false));
-    //		}
     return true;
 }

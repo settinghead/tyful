@@ -113,9 +113,9 @@ bool WordLayer::containsPoint(double x, double y, double refX, double refY){
             return true;
         else return (
                      colorSheet==NULL || (
-//                     ColorMath::distRGB(colorSheet->getPixel(x,y),
-//                                       colorSheet->getPixel(refX,refY)) <= 0.2
-//                     &&
+                     ColorMath::distRGB(colorSheet->getPixel(x,y),
+                                       colorSheet->getPixel(refX,refY)) <= 0.02
+                     &&
                      ColorMath::distHue(getPixel(x,y),
                                        getPixel(refX,refY)) <= tolerance));
     }
