@@ -1,7 +1,7 @@
 #ifndef PolarROOTTree_H
 #define PolarROOTTree_H
 
-#include "math.h"
+#include <math.h>
 #include "../constants.h"
 #include "PolarTree.h"
 #include "../model/PixelImageShape.h"
@@ -47,13 +47,51 @@ public:
 
     void updateFourPointsWithRotationScale(int seq);
 
+    static void inline adjust(double &angleStart, double &angleEnd){
+        if(angleStart>=TWO_PI){
+            angleStart-=TWO_PI;
+            angleEnd-=TWO_PI;
+        }
+        else if(angleEnd<0){
+            angleStart+=TWO_PI;
+            angleEnd+=TWO_PI;
+        }
+    }
+    
+    static void inline swap(double &val1, double &val2){
+        double v = val1;
+        val1 = val2;
+        val2 = v;
+    }
+    
     inline bool overlaps(int seq,PolarRootTree* otherTree, int otherSeq){
         CartisianPoint thisLoc = this->getRoot()->currentPlacement[seq].location;
         CartisianPoint otherLoc = otherTree->getRoot()->currentPlacement[otherSeq].location;
-        
+        double effectiveAngleSStart = NAN,effectiveAngleSEnd = NAN,effectiveAngleOStart = NAN, effectiveAngleOEnd = NAN;
         const double dist = sqrt(pow(thisLoc.x - otherLoc.x, 2.0)
                                                    + pow(thisLoc.y - otherLoc.y, 2.0));
-        return PolarTree::overlaps(seq,(PolarTree*)otherTree, otherSeq, dist);
+        double halfD = dist /2, d2S = getD2(true), d2O = otherTree->getD2(true);
+        if(d2S+d2O>dist&&abs(d2S-d2O)<dist){
+            double effectiveAngleS = acos((d2S*d2S+halfD*halfD-d2O*d2O)/2/d2S/halfD);
+            double effectiveAngleO = acos((d2O*d2O+halfD*halfD-d2S*d2S)/2/d2O/halfD);
+            if((d2S>d2O && effectiveAngleS > effectiveAngleO)||(d2S<d2O && effectiveAngleS < effectiveAngleO))
+                swap(effectiveAngleS,effectiveAngleO);
+            double baseAngleO = atan2((getRoot()->currentPlacement[seq].location.y-otherTree->getRoot()->currentPlacement[otherSeq].location.y),(otherTree->getRoot()->currentPlacement[otherSeq].location.x-getRoot()->currentPlacement[seq].location.x));
+            double baseAngleS = baseAngleO + PI;
+            effectiveAngleSStart = baseAngleS - effectiveAngleS;
+            effectiveAngleSEnd = baseAngleS + effectiveAngleS;
+        
+            effectiveAngleOStart = baseAngleO - effectiveAngleO;
+            effectiveAngleOEnd = baseAngleO + effectiveAngleO;
+        
+            adjust(effectiveAngleSStart, effectiveAngleSEnd);
+            adjust(effectiveAngleOStart, effectiveAngleOEnd);
+            if(!isnan(effectiveAngleOStart))
+                assert(effectiveAngleOStart<effectiveAngleOEnd && effectiveAngleSStart<effectiveAngleSEnd);
+
+        }
+
+        return PolarTree::overlaps(seq,(PolarTree*)otherTree, otherSeq, dist,effectiveAngleSStart,effectiveAngleSEnd,effectiveAngleOStart, effectiveAngleOEnd);
     }
     
     inline virtual bool overlaps(int seq,PolarRootTree* otherTree){

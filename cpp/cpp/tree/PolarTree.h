@@ -28,20 +28,17 @@ private:
     double _computedD1, _computedD2;
 
     bool dStamp;
-    inline void computeR1(int seq){
+    inline void computeRs(int seq){
         this->_computedR1[seq] = (this->_r1 + this->getRotation(seq));
+        this->_computedR2[seq] = (this->_r2 + this->getRotation(seq));
 		if (((this->_computedR1[seq] > TWO_PI ))) {
 			this->_computedR1[seq] -= TWO_PI;
-		}
-        else if(this->_computedR1<0)
-            this->_computedR1[seq] += TWO_PI;
-    }
-	inline void computeR2(int seq){
-        this->_computedR2[seq] = (this->_r2 + this->getRotation(seq));
-		if (((this->_computedR2[seq] > TWO_PI)))
 			this->_computedR2[seq] -= TWO_PI;
-        else if(this->_computedR2<0)
-            this->_computedR2[seq] += TWO_PI;
+		}
+        else if (((this->_computedR2[seq] < 0 ))) {
+			this->_computedR1[seq] += TWO_PI;
+			this->_computedR2[seq] += TWO_PI;
+		}
     }
     inline void computeD1(){
         this->_computedD1 = (this->_d1 * getScale());
@@ -80,9 +77,9 @@ public:
 	inline void addKids(vector<PolarTree*>* kidList);
     virtual inline PolarRootTree* getRoot() = 0;
 
-	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq, const double rootCenterDist){
+	inline virtual bool overlaps(int seq,PolarTree* otherTree, int otherSeq, const double rootCenterDist,const double effectiveAngleSStart,const double effectiveAngleSEnd,const double effectiveAngleOStart, const double effectiveAngleOEnd){
 //        bool r = getFinalSeq()<0?this->collide(seq, otherTree):otherTree->collide(seq, this);
-        bool r = this->collide(seq, otherTree, otherSeq,rootCenterDist);
+        bool r = this->collide(seq, otherTree, otherSeq,rootCenterDist,effectiveAngleSStart,effectiveAngleSEnd,effectiveAngleOStart, effectiveAngleOEnd);
         if (r) {
             if (this->isLeaf() && otherTree->isLeaf()) {
                 return true;
@@ -90,14 +87,14 @@ public:
                 if ((this->isLeaf())) {
                     vector<PolarTree*>* oKids = otherTree->getKids();
                     for (vector<PolarTree*>::iterator it = oKids->begin();it!=oKids->end();it++) {
-                        if (this->overlaps(seq,*it,otherSeq,rootCenterDist))
+                        if (this->overlaps(seq,*it,otherSeq,rootCenterDist,effectiveAngleSStart,effectiveAngleSEnd,effectiveAngleOStart, effectiveAngleOEnd))
                             return true;
                     }
                 } else {
                     vector<PolarTree*>* tKids = this->getKids();
                     
                     for (vector<PolarTree*>::iterator it = tKids->begin();it!=tKids->end();it++) {
-                        if (otherTree->overlaps(otherSeq,*it,seq,rootCenterDist))
+                        if (otherTree->overlaps(otherSeq,*it,seq,rootCenterDist,effectiveAngleOStart,effectiveAngleOEnd,effectiveAngleSStart, effectiveAngleSEnd))
                             return true;
                     }
                     
@@ -189,8 +186,9 @@ public:
 //                this->_computedR2[seq] += TWO_PI;
 //            }
 //            assert(!isnan(_computedR1[seq]));
-            computeR1(seq);
-            computeR2(seq);
+//            computeR1(seq);
+//            computeR2(seq);
+            computeRs(seq);
             
 			this->rStamp[seq] = this->getCurrentStamp(seq);
 		}
@@ -337,10 +335,15 @@ protected:
 	double xStamp[NUM_THREADS], yStamp[NUM_THREADS], rightStamp[NUM_THREADS], bottomStamp[NUM_THREADS];
 	bool _leaf;
 	double _relativeX, _relativeY, _relativeRight, _relativeBottom,_r1, _r2;
-    inline bool collide(int seq,PolarTree* bTree, int otherSeq, const double rootCenterDist){
+    inline bool collide(int seq,PolarTree* bTree, int otherSeq, const double rootCenterDist,const double effectiveAngleSStart,const double effectiveAngleSEnd,const double effectiveAngleOStart, const double effectiveAngleOEnd){
         if (((rootCenterDist > (this->getD2(true) + bTree->getD2(true))))) {
             return false;
-        } else {
+        }
+        else if(getR1(seq, true)>effectiveAngleSEnd || getR2(seq,true)<effectiveAngleSStart
+                ||bTree->getR1(otherSeq, true)>effectiveAngleOEnd || bTree->getR2(otherSeq,true)<effectiveAngleOStart){
+            return false;
+        }
+        else {
             return this->rectCollide(seq,bTree, otherSeq);
         }
     }
