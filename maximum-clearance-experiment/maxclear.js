@@ -10,9 +10,14 @@
       $('#source')[0].width = this.height;
       $('#source')[0].height = this.height;
       $('#source')[0].getContext('2d').drawImage(this, 0, 0, $('#source')[0].width, $('#source')[0].height);
-      return window.maxClearance = new MaxClearance($('#source')[0], $('#main')[0]);
+      window.maxClearance = new MaxClearance($('#source')[0], $('#main')[0]);
+      return window.maxClearance.compute();
     });
   });
+
+  Array.prototype.nearestVertex = function(v) {
+    return [0];
+  };
 
   window.MaxClearance = (function() {
 
@@ -27,11 +32,12 @@
     }
 
     MaxClearance.prototype.getAlpha = function(x, y) {
-      return this.data[(y * main.width + x) * 4 + 3];
+      var v;
+      return v = this.data[(y * main.width + x) * 4 + 3];
     };
 
     MaxClearance.prototype.compute = function() {
-      var dist, n, newVertices, v, vj, vk, x, y, _i, _len, _results;
+      var alpha, dist, n, newVertices, v, vj, vk, x, y, _i, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
@@ -44,15 +50,18 @@
         y = 0;
         newVertices = [];
         while (y < n) {
-          if (this.getAlpha(x, y) > 0) {
-            v = new Vertice(x, y);
-            A[y] = v;
+          alpha = this.getAlpha(x, y);
+          if (alpha > 0) {
+            v = new Vertex(x, y);
+            v.alpha = alpha;
+            this.A[y] = v;
             newVertices.push(v);
           }
           y++;
         }
-        for (_i = 0, _len = A.length; _i < _len; _i++) {
-          vj = A[_i];
+        _ref = this.A;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          vj = _ref[_i];
           if (vj && !vj.isSubsumed()) {
             if (!this.stack.length) {
               this.stack.push(vj);
@@ -77,10 +86,10 @@
         }
         y = 0;
         while (y < n) {
-          v = stack.nearestVertix(y);
-          dist = distance(x, y, v.x, v.y);
-          distData[x + y * main.width] = dist;
-          this.mainConext.fillStyle = "rgb(255,255," + (dist / this.maxdist) + ")";
+          v = this.stack.nearestVertex(y);
+          dist = this.distance(x, y, v.x, v.y);
+          this.distData[x + y * main.width] = dist;
+          this.mainContext.fillStyle = "rgb(255,255," + (dist / this.maxdist) + ")";
           this.mainContext.rect(x, y, 1, 1);
           y++;
         }
@@ -94,11 +103,13 @@
       westBound: 1
     };
 
+    MaxClearance.prototype.distance = function(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(y2 - y1) + Math.pow(x2 - x1));
+    };
+
     return MaxClearance;
 
   })();
-
-  Array.prototype.nearestVertex = function(v) {};
 
   window.Vertex = (function() {
 
@@ -112,7 +123,7 @@
       if (direction === MaxClearance.Direction.eastBound) {
         midX = (vertex.x + this.x) / 2;
         midY = (vertex.y + this.y) / 2;
-        atanRatio = (vertex.y - this.y) / (vetex.x - this.x);
+        atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
         y = (midX - x) * atanRatio + midY;
         return y;
       } else if (direction === MaxClearance.Direction.westBound) {
