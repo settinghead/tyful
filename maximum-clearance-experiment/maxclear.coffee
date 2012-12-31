@@ -42,34 +42,67 @@ class window.MaxClearance
 					newVertices.push v
 				y++
 			#vertical pass 2: update stack
-			if not @stack.length
-				#first timer; init
-				for vj in newVertices
-					if @stack.length
-						vTop = @stack[@stack.length - 1]
-						y = vj.getIntersectionY(vTop,vj.x,MaxClearance.Direction.eastBound)
-						vTop.upperBound = vj.lowerBound = y
+			# if not @stack.length
+			# 	#first timer; init
+			# 		if @stack.length
+			# 			vTop = @stack[@stack.length - 1]
+			# 			y = vj.getIntersectionY(vTop,vj.x,MaxClearance.Direction.eastBound)
+			# 			vTop.upperBound = vj.lowerBound = y
+			# 		@stack.push vj
+			# 		vj.setSelected()
+			# else
+			# 	for vj in newVertices
+			# 		if vj and not vj.isSubsumed() and not vj.isSelected()
+			# 			vk = @stack[@stack.length-1]
+			# 			y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
+			# 			while vj.y >= vk.y
+			# 				console.assert(not vk.isSubsumed())
+			# 				if y <= vk.lowerBound or vj.y == vk.y
+			# 					v = @stack.pop() #pop vk
+			# 					console.assert(v==vk)
+			# 					vk.setSubsumed(vj)
+			# 					vk = @stack[@stack.length-1]
+			# 					y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
+			# 				else
+			# 					vj.upperBound = 1.7976931348623157e10308
+			# 					vk.upperBound = vj.lowerBound = y
+			# 					@stack.push vj
+			# 					vj.setSelected()
+			# 					break
+
+			for vj in newVertices
+				if not @stack.length
 					@stack.push vj
-					vj.setSelected()
-			else
-				for vj in newVertices
-					if vj and not vj.isSubsumed() and not vj.isSelected()
-						vk = @stack[@stack.length-1]
-						y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
-						while vj.y >= vk.y
-							console.assert(not vk.isSubsumed())
-							if y <= vk.lowerBound or vj.y == vk.y
-								v = @stack.pop() #pop vk
-								console.assert(v==vk)
-								vk.setSubsumed(vj)
-								vk = @stack[@stack.length-1]
-								y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
-							else
-								vj.upperBound = 1.7976931348623157e10308
-								vk.upperBound = vj.lowerBound = y
-								@stack.push vj
-								vj.setSelected()
-								break
+				else
+					in_range = true
+					entered_range = false
+					insert_pos = undefined
+					for k in [@stack.length - 1..0] by -1
+						vk = @stack[k]
+						if vk and not vk.isSubsumed()
+							y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
+							if vj.y > vk.y
+								if y <= vk.lowerBound
+									insert_pos = subsume(k, vj)
+									entered_range = true if not entered_range
+								else if y <= vk.upperBound
+									vk.upperBound = vj.lowerBound = y
+									entered_range = true if not entered_range
+								else if entered_range then break
+							else if vj.y == vk.y
+								insert_pos = subsume(k,vj)
+								entered_range = true if not entered_range
+							else # vj.y < vk.y
+								if y >= vk.upperBound
+									insert_pos = subsume(k,vj)
+									entered_range = true if not entered_range
+								else if y >= vk.lowerBound
+									vj.upperBound = vk.lowerBound = y
+									entered_range = true if not entered_range
+								else if entered_range then break
+							if entered_range
+								assert(insert_pos!=undefined)
+								@stack[insert_pos] = vj
 			#vertical pass 3: draw distance map
 			y = 0
 			while y < n
@@ -87,6 +120,10 @@ class window.MaxClearance
 	distance: (x1,y1,x2,y2) ->
 		Math.sqrt(Math.pow(y2-y1)+Math.pow(x2-x1))
 
+	subsume: (k,vj) ->
+		vk = @stack[k]
+		vk.setSubsumed()
+		@stack[k] = undefined
 
 class window.Vertex
 	constructor: (x,y) ->

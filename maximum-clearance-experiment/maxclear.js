@@ -37,7 +37,7 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, dist, n, newVertices, v, vTop, vj, vk, x, y, _i, _j, _len, _len1, _results;
+      var alpha, dist, entered_range, in_range, insert_pos, k, n, newVertices, v, vj, vk, x, y, _i, _j, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
@@ -59,37 +59,55 @@
           }
           y++;
         }
-        if (!this.stack.length) {
-          for (_i = 0, _len = newVertices.length; _i < _len; _i++) {
-            vj = newVertices[_i];
-            if (this.stack.length) {
-              vTop = this.stack[this.stack.length - 1];
-              y = vj.getIntersectionY(vTop, vj.x, MaxClearance.Direction.eastBound);
-              vTop.upperBound = vj.lowerBound = y;
-            }
+        for (_i = 0, _len = newVertices.length; _i < _len; _i++) {
+          vj = newVertices[_i];
+          if (!this.stack.length) {
             this.stack.push(vj);
-            vj.setSelected();
-          }
-        } else {
-          for (_j = 0, _len1 = newVertices.length; _j < _len1; _j++) {
-            vj = newVertices[_j];
-            if (vj && !vj.isSubsumed() && !vj.isSelected()) {
-              vk = this.stack[this.stack.length - 1];
-              y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
-              while (vj.y >= vk.y) {
-                console.assert(!vk.isSubsumed());
-                if (y <= vk.lowerBound || vj.y === vk.y) {
-                  v = this.stack.pop();
-                  console.assert(v === vk);
-                  vk.setSubsumed(vj);
-                  vk = this.stack[this.stack.length - 1];
-                  y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
+          } else {
+            in_range = true;
+            entered_range = false;
+            insert_pos = void 0;
+            for (k = _j = _ref = this.stack.length - 1; _j >= 0; k = _j += -1) {
+              vk = this.stack[k];
+              if (vk && !vk.isSubsumed()) {
+                y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
+                if (vj.y > vk.y) {
+                  if (y <= vk.lowerBound) {
+                    insert_pos = subsume(k, vj);
+                    if (!entered_range) {
+                      entered_range = true;
+                    }
+                  } else if (y <= vk.upperBound) {
+                    vk.upperBound = vj.lowerBound = y;
+                    if (!entered_range) {
+                      entered_range = true;
+                    }
+                  } else if (entered_range) {
+                    break;
+                  }
+                } else if (vj.y === vk.y) {
+                  insert_pos = subsume(k, vj);
+                  if (!entered_range) {
+                    entered_range = true;
+                  }
                 } else {
-                  vj.upperBound = 1.7976931348623157e10308;
-                  vk.upperBound = vj.lowerBound = y;
-                  this.stack.push(vj);
-                  vj.setSelected();
-                  break;
+                  if (y >= vk.upperBound) {
+                    insert_pos = subsume(k, vj);
+                    if (!entered_range) {
+                      entered_range = true;
+                    }
+                  } else if (y >= vk.lowerBound) {
+                    vj.upperBound = vk.lowerBound = y;
+                    if (!entered_range) {
+                      entered_range = true;
+                    }
+                  } else if (entered_range) {
+                    break;
+                  }
+                }
+                if (entered_range) {
+                  assert(insert_pos !== void 0);
+                  this.stack[insert_pos] = vj;
                 }
               }
             }
@@ -116,6 +134,13 @@
 
     MaxClearance.prototype.distance = function(x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(y2 - y1) + Math.pow(x2 - x1));
+    };
+
+    MaxClearance.prototype.subsume = function(k, vj) {
+      var vk;
+      vk = this.stack[k];
+      vk.setSubsumed();
+      return this.stack[k] = void 0;
     };
 
     return MaxClearance;
