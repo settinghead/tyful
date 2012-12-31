@@ -4,7 +4,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "pbs.png"
+      src: "test.png"
     });
     return $img.load(function() {
       $('#source')[0].width = this.height;
@@ -37,7 +37,7 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, dist, n, newVertices, v, vj, vk, x, y, _i, _len, _ref, _results;
+      var alpha, dist, n, newVertices, v, vTop, vj, vk, x, y, _i, _j, _len, _len1, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
@@ -59,25 +59,36 @@
           }
           y++;
         }
-        _ref = this.A;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          vj = _ref[_i];
-          if (vj && !vj.isSubsumed()) {
-            if (!this.stack.length) {
-              this.stack.push(vj);
-              vj.upperBound = 1.7976931348623157e10308;
-              vj.loweBound = -1.7976931348623157e10308;
-            } else {
-              while (true) {
-                vk = this.stack[0];
-                y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
-                if (y < vk.lowerBound) {
-                  this.stack.pop();
-                  vk.setSubsumed();
+        if (!this.stack.length) {
+          for (_i = 0, _len = newVertices.length; _i < _len; _i++) {
+            vj = newVertices[_i];
+            if (this.stack.length) {
+              vTop = this.stack[this.stack.length - 1];
+              y = vj.getIntersectionY(vTop, vj.x, MaxClearance.Direction.eastBound);
+              vTop.upperBound = vj.lowerBound = y;
+            }
+            this.stack.push(vj);
+            vj.setSelected();
+          }
+        } else {
+          for (_j = 0, _len1 = newVertices.length; _j < _len1; _j++) {
+            vj = newVertices[_j];
+            if (vj && !vj.isSubsumed() && !vj.isSelected()) {
+              vk = this.stack[this.stack.length - 1];
+              y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
+              while (vj.y >= vk.y) {
+                console.assert(!vk.isSubsumed());
+                if (y <= vk.lowerBound || vj.y === vk.y) {
+                  v = this.stack.pop();
+                  console.assert(v === vk);
+                  vk.setSubsumed(vj);
+                  vk = this.stack[this.stack.length - 1];
+                  y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
                 } else {
                   vj.upperBound = 1.7976931348623157e10308;
                   vk.upperBound = vj.lowerBound = y;
                   this.stack.push(vj);
+                  vj.setSelected();
                   break;
                 }
               }
@@ -116,15 +127,21 @@
     function Vertex(x, y) {
       this.x = x;
       this.y = y;
+      this.upperBound = 1.7976931348623157e10308;
+      this.lowerBound = -1.7976931348623157e10308;
     }
 
     Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
       var atanRatio, midX, midY, y;
       if (direction === MaxClearance.Direction.eastBound) {
-        midX = (vertex.x + this.x) / 2;
         midY = (vertex.y + this.y) / 2;
-        atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
-        y = (midX - x) * atanRatio + midY;
+        if (vertex.x === this.x) {
+          y = midY;
+        } else {
+          midX = (vertex.x + this.x) / 2;
+          atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
+          y = (midX - x) * atanRatio + midY;
+        }
         return y;
       } else if (direction === MaxClearance.Direction.westBound) {
         return alert('not implemented');
@@ -139,8 +156,26 @@
       }
     };
 
-    Vertex.prototype.setSubsumed = function() {
+    Vertex.prototype.isSelected = function() {
+      if (this.selected) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    Vertex.prototype.setSubsumed = function(v) {
+      console.assert(this.selected);
+      this.subsumedBy = v;
       return this.subsumed = true;
+    };
+
+    Vertex.prototype.setSelected = function() {
+      return this.selected = true;
+    };
+
+    Vertex.prototype.toString = function() {
+      return "(" + this.x + "," + this.y + ")";
     };
 
     return Vertex;

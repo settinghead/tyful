@@ -1,6 +1,6 @@
 $ ->
 	$img = $("<img>",
-        src: "pbs.png"
+        src: "test.png"
     )
 	$img.load ->
 		$('#source')[0].width = this.height
@@ -42,22 +42,33 @@ class window.MaxClearance
 					newVertices.push v
 				y++
 			#vertical pass 2: update stack
-			for vj in @A
-				if vj and not vj.isSubsumed()
-					if not @stack.length
-						@stack.push vj
-						vj.upperBound = 1.7976931348623157e10308; vj.loweBound = -1.7976931348623157e10308
-					else
-						while true
-							vk = @stack[0]
-							y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
-							if y < vk.lowerBound
-								@stack.pop() #pop vk
-								vk.setSubsumed()
+			if not @stack.length
+				#first timer; init
+				for vj in newVertices
+					if @stack.length
+						vTop = @stack[@stack.length - 1]
+						y = vj.getIntersectionY(vTop,vj.x,MaxClearance.Direction.eastBound)
+						vTop.upperBound = vj.lowerBound = y
+					@stack.push vj
+					vj.setSelected()
+			else
+				for vj in newVertices
+					if vj and not vj.isSubsumed() and not vj.isSelected()
+						vk = @stack[@stack.length-1]
+						y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
+						while vj.y >= vk.y
+							console.assert(not vk.isSubsumed())
+							if y <= vk.lowerBound or vj.y == vk.y
+								v = @stack.pop() #pop vk
+								console.assert(v==vk)
+								vk.setSubsumed(vj)
+								vk = @stack[@stack.length-1]
+								y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
 							else
 								vj.upperBound = 1.7976931348623157e10308
 								vk.upperBound = vj.lowerBound = y
 								@stack.push vj
+								vj.setSelected()
 								break
 			#vertical pass 3: draw distance map
 			y = 0
@@ -80,15 +91,26 @@ class window.MaxClearance
 class window.Vertex
 	constructor: (x,y) ->
 		@x = x; @y = y
+		@upperBound = 1.7976931348623157e10308; @lowerBound = -1.7976931348623157e10308
 	getIntersectionY: (vertex, x, direction) ->
 		#calculate y coordinate of intersection
 		if direction == MaxClearance.Direction.eastBound
-			midX = (vertex.x + @x) / 2; midY = (vertex.y + @y) / 2
-			atanRatio = (vertex.y-@y)/(vertex.x-@x)
-			y = (midX - x) * atanRatio + midY
+			midY = (vertex.y + @y) / 2
+			if(vertex.x == @x) 
+				y = midY
+			else
+				midX = (vertex.x + @x) / 2;
+				atanRatio = (vertex.y-@y)/(vertex.x-@x)
+				y = (midX - x) * atanRatio + midY
 			return y
 		else if direction == MaxClearance.Direction.westBound
 			#TODO
 			alert('not implemented')
 	isSubsumed: -> if @subsumed then true else false
-	setSubsumed: -> @subsumed = true
+	isSelected: -> if @selected then true else false
+	setSubsumed: (v) ->
+		console.assert(@selected)
+		@subsumedBy = v
+		@subsumed = true
+	setSelected: -> @selected = true
+	toString: -> "(#{@x},#{@y})"
