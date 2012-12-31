@@ -16,7 +16,7 @@
   });
 
   Array.prototype.nearestVertex = function(v) {
-    return [0];
+    return this[0];
   };
 
   window.MaxClearance = (function() {
@@ -37,13 +37,18 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, dist, entered_range, in_range, insert_pos, k, n, newVertices, v, vj, vk, x, y, _i, _j, _len, _ref, _results;
+      var alpha, entered_range, i, in_range, insert_pos, k, n, newVertices, v, vj, vk, x, y, _i, _j, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
       this.stack = [];
+      while (i < n) {
+        this.stack[i] = void 0;
+        i++;
+      }
       this.distData = new Uint32Array(this.main.width * this.main.height);
       this.maxdist = Math.sqrt(Math.pow(this.main.width, 2) + Math.pow(this.main.height, 2));
+      i = 0;
       x = 0;
       _results = [];
       while (x < n) {
@@ -63,6 +68,7 @@
           vj = newVertices[_i];
           if (!this.stack.length) {
             this.stack.push(vj);
+            vj.setSelected();
           } else {
             in_range = true;
             entered_range = false;
@@ -72,13 +78,14 @@
               if (vk && !vk.isSubsumed()) {
                 y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
                 if (vj.y > vk.y) {
-                  if (y <= vk.lowerBound) {
-                    insert_pos = subsume(k, vj);
+                  if (y < vk.lowerBound) {
+                    insert_pos = this.subsume(k, vj);
                     if (!entered_range) {
                       entered_range = true;
                     }
-                  } else if (y <= vk.upperBound) {
+                  } else if (y < vk.upperBound) {
                     vk.upperBound = vj.lowerBound = y;
+                    insert_pos = k + 1;
                     if (!entered_range) {
                       entered_range = true;
                     }
@@ -86,18 +93,19 @@
                     break;
                   }
                 } else if (vj.y === vk.y) {
-                  insert_pos = subsume(k, vj);
+                  insert_pos = this.subsume(k, vj);
                   if (!entered_range) {
                     entered_range = true;
                   }
                 } else {
-                  if (y >= vk.upperBound) {
-                    insert_pos = subsume(k, vj);
+                  if (y > vk.upperBound) {
+                    insert_pos = this.subsume(k, vj);
                     if (!entered_range) {
                       entered_range = true;
                     }
-                  } else if (y >= vk.lowerBound) {
+                  } else if (y > vk.lowerBound) {
                     vj.upperBound = vk.lowerBound = y;
+                    insert_pos = k - 1;
                     if (!entered_range) {
                       entered_range = true;
                     }
@@ -105,21 +113,19 @@
                     break;
                   }
                 }
-                if (entered_range) {
-                  assert(insert_pos !== void 0);
-                  this.stack[insert_pos] = vj;
-                }
               }
+            }
+            if (entered_range) {
+              console.assert(insert_pos !== void 0);
+              console.assert(this.stack[insert_pos] === void 0 || this.stack[insert_pos].isSubsumed());
+              this.stack[insert_pos] = vj;
+              vj.setSelected();
             }
           }
         }
         y = 0;
         while (y < n) {
           v = this.stack.nearestVertex(y);
-          dist = this.distance(x, y, v.x, v.y);
-          this.distData[x + y * main.width] = dist;
-          this.mainContext.fillStyle = "rgb(255,255," + (dist / this.maxdist) + ")";
-          this.mainContext.rect(x, y, 1, 1);
           y++;
         }
         _results.push(x++);
@@ -140,7 +146,19 @@
       var vk;
       vk = this.stack[k];
       vk.setSubsumed();
-      return this.stack[k] = void 0;
+      this.stack[k] = void 0;
+      return k;
+    };
+
+    MaxClearance.prototype.printStack = function() {
+      var s, v, _i, _len, _ref;
+      s = "";
+      _ref = this.stack;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        v = _ref[_i];
+        s += v.toString() + ", ";
+      }
+      return console.log(s);
     };
 
     return MaxClearance;

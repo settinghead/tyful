@@ -10,7 +10,7 @@ $ ->
 		window.maxClearance.compute()
 
 Array.prototype.nearestVertex = (v) ->
-	[0]
+	@[0]
 
 class window.MaxClearance
 	constructor: (sourceCanvasEl, destCanvasEl) ->
@@ -26,8 +26,13 @@ class window.MaxClearance
 		@A = []
 		@partitions = [1.7976931348623157e10308,-1.7976931348623157e10308]
 		@stack = []
+		while i < n
+			@stack[i] = undefined
+			i++
 		@distData = new Uint32Array(@main.width*@main.height)
 		@maxdist = Math.sqrt(Math.pow(@main.width,2)+Math.pow(@main.height,2))
+		i = 0
+
 		x = 0
 		while x < n
 			#vertical pass 1: find new vertices
@@ -73,6 +78,7 @@ class window.MaxClearance
 			for vj in newVertices
 				if not @stack.length
 					@stack.push vj
+					vj.setSelected()
 				else
 					in_range = true
 					entered_range = false
@@ -82,35 +88,39 @@ class window.MaxClearance
 						if vk and not vk.isSubsumed()
 							y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
 							if vj.y > vk.y
-								if y <= vk.lowerBound
-									insert_pos = subsume(k, vj)
+								if y < vk.lowerBound
+									insert_pos = @subsume(k, vj)
 									entered_range = true if not entered_range
-								else if y <= vk.upperBound
+								else if y < vk.upperBound
 									vk.upperBound = vj.lowerBound = y
+									insert_pos = k+1
 									entered_range = true if not entered_range
 								else if entered_range then break
 							else if vj.y == vk.y
-								insert_pos = subsume(k,vj)
+								insert_pos = @subsume(k,vj)
 								entered_range = true if not entered_range
 							else # vj.y < vk.y
-								if y >= vk.upperBound
-									insert_pos = subsume(k,vj)
+								if y > vk.upperBound
+									insert_pos = @subsume(k,vj)
 									entered_range = true if not entered_range
-								else if y >= vk.lowerBound
+								else if y > vk.lowerBound
 									vj.upperBound = vk.lowerBound = y
+									insert_pos = k-1
 									entered_range = true if not entered_range
 								else if entered_range then break
-							if entered_range
-								assert(insert_pos!=undefined)
-								@stack[insert_pos] = vj
+					if entered_range
+						console.assert(insert_pos!=undefined)
+						console.assert(@stack[insert_pos]==undefined or @stack[insert_pos].isSubsumed())
+						@stack[insert_pos] = vj
+						vj.setSelected()
 			#vertical pass 3: draw distance map
 			y = 0
 			while y < n
 				v = @stack.nearestVertex(y)
-				dist =  @distance(x,y,v.x,v.y)
-				@distData[x+y*main.width] = dist
-				@mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
-				@mainContext.rect x,y,1,1
+				# dist =  @distance(x,y,v.x,v.y)
+				# @distData[x+y*main.width] = dist
+				# @mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
+				# @mainContext.rect x,y,1,1
 				y++
 			x++
 	@Direction = 
@@ -124,6 +134,13 @@ class window.MaxClearance
 		vk = @stack[k]
 		vk.setSubsumed()
 		@stack[k] = undefined
+		k
+
+	printStack: ->
+		s = ""
+		for v in @stack
+			s += v.toString() + ", "
+		console.log s
 
 class window.Vertex
 	constructor: (x,y) ->
