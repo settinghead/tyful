@@ -33,48 +33,20 @@ class window.MaxClearance
 		@maxdist = Math.sqrt(Math.pow(@main.width,2)+Math.pow(@main.height,2))
 		i = 0
 
-		x = 0
-		while x < n
+		xc = 0
+		while xc < n
 			#vertical pass 1: find new vertices
 			y = 0
 			newVertices = []
 			while y < n
-				alpha = @getAlpha(x,y)
+				alpha = @getAlpha(xc,y)
 				if  alpha > 0
-					v = new Vertex(x,y)
+					v = new Vertex(xc,y)
 					v.alpha = alpha
 					@A[y] = v
 					newVertices.push v
 				y++
 			#vertical pass 2: update stack
-			# if not @stack.length
-			# 	#first timer; init
-			# 		if @stack.length
-			# 			vTop = @stack[@stack.length - 1]
-			# 			y = vj.getIntersectionY(vTop,vj.x,MaxClearance.Direction.eastBound)
-			# 			vTop.upperBound = vj.lowerBound = y
-			# 		@stack.push vj
-			# 		vj.setSelected()
-			# else
-			# 	for vj in newVertices
-			# 		if vj and not vj.isSubsumed() and not vj.isSelected()
-			# 			vk = @stack[@stack.length-1]
-			# 			y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
-			# 			while vj.y >= vk.y
-			# 				console.assert(not vk.isSubsumed())
-			# 				if y <= vk.lowerBound or vj.y == vk.y
-			# 					v = @stack.pop() #pop vk
-			# 					console.assert(v==vk)
-			# 					vk.setSubsumed(vj)
-			# 					vk = @stack[@stack.length-1]
-			# 					y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
-			# 				else
-			# 					vj.upperBound = 1.7976931348623157e10308
-			# 					vk.upperBound = vj.lowerBound = y
-			# 					@stack.push vj
-			# 					vj.setSelected()
-			# 					break
-
 			for vj in newVertices
 				if not @stack.length
 					@stack.push vj
@@ -86,14 +58,14 @@ class window.MaxClearance
 					for k in [@stack.length - 1..0] by -1
 						vk = @stack[k]
 						if vk and not vk.isSubsumed()
-							y = vj.getIntersectionY(vk,x,MaxClearance.Direction.eastBound)
+							y = vj.getIntersectionY(vk,xc,MaxClearance.Direction.eastBound)
 							if vj.y > vk.y
 								if y < vk.lowerBound
 									insert_pos = @subsume(k, vj)
 									entered_range = true if not entered_range
 								else if y < vk.upperBound
 									vk.upperBound = vj.lowerBound = y
-									insert_pos = k+1
+									insert_pos = vj.y
 									entered_range = true if not entered_range
 								else if entered_range then break
 							else if vj.y == vk.y
@@ -105,7 +77,7 @@ class window.MaxClearance
 									entered_range = true if not entered_range
 								else if y > vk.lowerBound
 									vj.upperBound = vk.lowerBound = y
-									insert_pos = k-1
+									insert_pos = vj.y
 									entered_range = true if not entered_range
 								else if entered_range then break
 					if entered_range
@@ -122,7 +94,7 @@ class window.MaxClearance
 				# @mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
 				# @mainContext.rect x,y,1,1
 				y++
-			x++
+			xc++
 	@Direction = 
 		eastBound: 0
 		westBound: 1
@@ -134,37 +106,40 @@ class window.MaxClearance
 		vk = @stack[k]
 		vk.setSubsumed()
 		@stack[k] = undefined
-		k
+		vj.y
 
 	printStack: ->
 		s = ""
 		for v in @stack
-			s += v.toString() + ", "
+			if v and not v.isSubsumed()
+				s += v.toString() + ", "
 		console.log s
 
-class window.Vertex
-	constructor: (x,y) ->
-		@x = x; @y = y
-		@upperBound = 1.7976931348623157e10308; @lowerBound = -1.7976931348623157e10308
-	getIntersectionY: (vertex, x, direction) ->
-		#calculate y coordinate of intersection
-		if direction == MaxClearance.Direction.eastBound
-			midY = (vertex.y + @y) / 2
-			if(vertex.x == @x) 
-				y = midY
-			else
-				midX = (vertex.x + @x) / 2;
-				atanRatio = (vertex.y-@y)/(vertex.x-@x)
-				y = (midX - x) * atanRatio + midY
-			return y
-		else if direction == MaxClearance.Direction.westBound
-			#TODO
-			alert('not implemented')
-	isSubsumed: -> if @subsumed then true else false
-	isSelected: -> if @selected then true else false
-	setSubsumed: (v) ->
-		console.assert(@selected)
-		@subsumedBy = v
-		@subsumed = true
-	setSelected: -> @selected = true
-	toString: -> "(#{@x},#{@y})"
+	distanceInfo: []
+
+	class Vertex
+		constructor: (x,y) ->
+			@x = x; @y = y
+			@upperBound = 1.7976931348623157e10308; @lowerBound = -1.7976931348623157e10308
+		getIntersectionY: (vertex, x, direction) ->
+			#calculate y coordinate of intersection
+			if direction == MaxClearance.Direction.eastBound
+				midY = (vertex.y + @y) / 2
+				if(vertex.x == @x) 
+					y = midY
+				else
+					midX = (vertex.x + @x) / 2;
+					atanRatio = (vertex.y-@y)/(vertex.x-@x)
+					y = midY - (x-midX) / atanRatio
+				return y
+			else if direction == MaxClearance.Direction.westBound
+				#TODO
+				alert('not implemented')
+		isSubsumed: -> if @subsumed then true else false
+		isSelected: -> if @selected then true else false
+		setSubsumed: (v) ->
+			console.assert(@selected)
+			@subsumedBy = v
+			@subsumed = true
+		setSelected: -> @selected = true
+		toString: -> "(#{@x},#{@y})"

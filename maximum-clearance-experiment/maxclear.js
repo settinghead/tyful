@@ -20,6 +20,7 @@
   };
 
   window.MaxClearance = (function() {
+    var Vertex;
 
     function MaxClearance(sourceCanvasEl, destCanvasEl) {
       this.source = sourceCanvasEl;
@@ -37,7 +38,7 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, entered_range, i, in_range, insert_pos, k, n, newVertices, v, vj, vk, x, y, _i, _j, _len, _ref, _results;
+      var alpha, entered_range, i, in_range, insert_pos, k, n, newVertices, v, vj, vk, xc, y, _i, _j, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
@@ -49,15 +50,15 @@
       this.distData = new Uint32Array(this.main.width * this.main.height);
       this.maxdist = Math.sqrt(Math.pow(this.main.width, 2) + Math.pow(this.main.height, 2));
       i = 0;
-      x = 0;
+      xc = 0;
       _results = [];
-      while (x < n) {
+      while (xc < n) {
         y = 0;
         newVertices = [];
         while (y < n) {
-          alpha = this.getAlpha(x, y);
+          alpha = this.getAlpha(xc, y);
           if (alpha > 0) {
-            v = new Vertex(x, y);
+            v = new Vertex(xc, y);
             v.alpha = alpha;
             this.A[y] = v;
             newVertices.push(v);
@@ -76,7 +77,7 @@
             for (k = _j = _ref = this.stack.length - 1; _j >= 0; k = _j += -1) {
               vk = this.stack[k];
               if (vk && !vk.isSubsumed()) {
-                y = vj.getIntersectionY(vk, x, MaxClearance.Direction.eastBound);
+                y = vj.getIntersectionY(vk, xc, MaxClearance.Direction.eastBound);
                 if (vj.y > vk.y) {
                   if (y < vk.lowerBound) {
                     insert_pos = this.subsume(k, vj);
@@ -85,7 +86,7 @@
                     }
                   } else if (y < vk.upperBound) {
                     vk.upperBound = vj.lowerBound = y;
-                    insert_pos = k + 1;
+                    insert_pos = vj.y;
                     if (!entered_range) {
                       entered_range = true;
                     }
@@ -105,7 +106,7 @@
                     }
                   } else if (y > vk.lowerBound) {
                     vj.upperBound = vk.lowerBound = y;
-                    insert_pos = k - 1;
+                    insert_pos = vj.y;
                     if (!entered_range) {
                       entered_range = true;
                     }
@@ -128,7 +129,7 @@
           v = this.stack.nearestVertex(y);
           y++;
         }
-        _results.push(x++);
+        _results.push(xc++);
       }
       return _results;
     };
@@ -147,7 +148,7 @@
       vk = this.stack[k];
       vk.setSubsumed();
       this.stack[k] = void 0;
-      return k;
+      return vj.y;
     };
 
     MaxClearance.prototype.printStack = function() {
@@ -156,72 +157,76 @@
       _ref = this.stack;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         v = _ref[_i];
-        s += v.toString() + ", ";
+        if (v && !v.isSubsumed()) {
+          s += v.toString() + ", ";
+        }
       }
       return console.log(s);
     };
 
-    return MaxClearance;
+    MaxClearance.prototype.distanceInfo = [];
 
-  })();
+    Vertex = (function() {
 
-  window.Vertex = (function() {
+      function Vertex(x, y) {
+        this.x = x;
+        this.y = y;
+        this.upperBound = 1.7976931348623157e10308;
+        this.lowerBound = -1.7976931348623157e10308;
+      }
 
-    function Vertex(x, y) {
-      this.x = x;
-      this.y = y;
-      this.upperBound = 1.7976931348623157e10308;
-      this.lowerBound = -1.7976931348623157e10308;
-    }
-
-    Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
-      var atanRatio, midX, midY, y;
-      if (direction === MaxClearance.Direction.eastBound) {
-        midY = (vertex.y + this.y) / 2;
-        if (vertex.x === this.x) {
-          y = midY;
-        } else {
-          midX = (vertex.x + this.x) / 2;
-          atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
-          y = (midX - x) * atanRatio + midY;
+      Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
+        var atanRatio, midX, midY, y;
+        if (direction === MaxClearance.Direction.eastBound) {
+          midY = (vertex.y + this.y) / 2;
+          if (vertex.x === this.x) {
+            y = midY;
+          } else {
+            midX = (vertex.x + this.x) / 2;
+            atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
+            y = midY - (x - midX) / atanRatio;
+          }
+          return y;
+        } else if (direction === MaxClearance.Direction.westBound) {
+          return alert('not implemented');
         }
-        return y;
-      } else if (direction === MaxClearance.Direction.westBound) {
-        return alert('not implemented');
-      }
-    };
+      };
 
-    Vertex.prototype.isSubsumed = function() {
-      if (this.subsumed) {
-        return true;
-      } else {
-        return false;
-      }
-    };
+      Vertex.prototype.isSubsumed = function() {
+        if (this.subsumed) {
+          return true;
+        } else {
+          return false;
+        }
+      };
 
-    Vertex.prototype.isSelected = function() {
-      if (this.selected) {
-        return true;
-      } else {
-        return false;
-      }
-    };
+      Vertex.prototype.isSelected = function() {
+        if (this.selected) {
+          return true;
+        } else {
+          return false;
+        }
+      };
 
-    Vertex.prototype.setSubsumed = function(v) {
-      console.assert(this.selected);
-      this.subsumedBy = v;
-      return this.subsumed = true;
-    };
+      Vertex.prototype.setSubsumed = function(v) {
+        console.assert(this.selected);
+        this.subsumedBy = v;
+        return this.subsumed = true;
+      };
 
-    Vertex.prototype.setSelected = function() {
-      return this.selected = true;
-    };
+      Vertex.prototype.setSelected = function() {
+        return this.selected = true;
+      };
 
-    Vertex.prototype.toString = function() {
-      return "(" + this.x + "," + this.y + ")";
-    };
+      Vertex.prototype.toString = function() {
+        return "(" + this.x + "," + this.y + ")";
+      };
 
-    return Vertex;
+      return Vertex;
+
+    })();
+
+    return MaxClearance;
 
   })();
 
