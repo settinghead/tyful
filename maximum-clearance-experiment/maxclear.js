@@ -85,7 +85,7 @@
                       entered_range = true;
                     }
                   } else if (y < vk.upperBound) {
-                    vk.upperBound = vj.lowerBound = y;
+                    this.connect(vj, vk, y);
                     insert_pos = vj.y;
                     if (!entered_range) {
                       entered_range = true;
@@ -105,7 +105,7 @@
                       entered_range = true;
                     }
                   } else if (y > vk.lowerBound) {
-                    vj.upperBound = vk.lowerBound = y;
+                    this.connect(vk, vj, y);
                     insert_pos = vj.y;
                     if (!entered_range) {
                       entered_range = true;
@@ -126,7 +126,13 @@
         }
         y = 0;
         while (y < n) {
-          v = this.stack.nearestVertex(y);
+          v = this.stack[y];
+          if (v) {
+            this.mainContext.beginPath();
+            this.mainContext.rect(xc, v.lowerBound, 1, 1);
+            this.mainContext.rect(xc, v.upperBound, 1, 1);
+            this.mainContext.stroke();
+          }
           y++;
         }
         _results.push(xc++);
@@ -164,6 +170,12 @@
       return console.log(s);
     };
 
+    MaxClearance.prototype.connect = function(upper, lower, y) {
+      upper.lowerVertex = lower;
+      lower.upperVertex = upper;
+      return lower.upperBound = upper.lowerBound = y;
+    };
+
     MaxClearance.prototype.distanceInfo = [];
 
     Vertex = (function() {
@@ -171,9 +183,15 @@
       function Vertex(x, y) {
         this.x = x;
         this.y = y;
-        this.upperBound = 1.7976931348623157e10308;
-        this.lowerBound = -1.7976931348623157e10308;
       }
+
+      Vertex.prototype.upperBound = 1.7976931348623157e10308;
+
+      Vertex.prototype.lowerBound = -1.7976931348623157e10308;
+
+      Vertex.prototype.upperVertex = void 0;
+
+      Vertex.prototype.lowerVertex = void 0;
 
       Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
         var atanRatio, midX, midY, y;

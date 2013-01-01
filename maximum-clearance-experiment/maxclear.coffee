@@ -64,7 +64,7 @@ class window.MaxClearance
 									insert_pos = @subsume(k, vj)
 									entered_range = true if not entered_range
 								else if y < vk.upperBound
-									vk.upperBound = vj.lowerBound = y
+									@connect vj, vk, y
 									insert_pos = vj.y
 									entered_range = true if not entered_range
 								else if entered_range then break
@@ -76,7 +76,7 @@ class window.MaxClearance
 									insert_pos = @subsume(k,vj)
 									entered_range = true if not entered_range
 								else if y > vk.lowerBound
-									vj.upperBound = vk.lowerBound = y
+									@connect vk, vj, y
 									insert_pos = vj.y
 									entered_range = true if not entered_range
 								else if entered_range then break
@@ -88,8 +88,13 @@ class window.MaxClearance
 			#vertical pass 3: draw distance map
 			y = 0
 			while y < n
-				v = @stack.nearestVertex(y)
-				# dist =  @distance(x,y,v.x,v.y)
+				v = @stack[y]
+				if v
+					@mainContext.beginPath()
+					@mainContext.rect xc,v.lowerBound,1,1
+					@mainContext.rect xc,v.upperBound,1,1
+					@mainContext.stroke()
+							# dist =  @distance(x,y,v.x,v.y)
 				# @distData[x+y*main.width] = dist
 				# @mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
 				# @mainContext.rect x,y,1,1
@@ -115,12 +120,19 @@ class window.MaxClearance
 				s += v.toString() + ", "
 		console.log s
 
+	connect: (upper,lower,y) ->
+		upper.lowerVertex = lower
+		lower.upperVertex = upper
+		lower.upperBound = upper.lowerBound = y
 	distanceInfo: []
 
 	class Vertex
 		constructor: (x,y) ->
 			@x = x; @y = y
-			@upperBound = 1.7976931348623157e10308; @lowerBound = -1.7976931348623157e10308
+		upperBound: 1.7976931348623157e10308;
+		lowerBound: -1.7976931348623157e10308;
+		upperVertex: undefined;
+		lowerVertex: undefined;
 		getIntersectionY: (vertex, x, direction) ->
 			#calculate y coordinate of intersection
 			if direction == MaxClearance.Direction.eastBound
