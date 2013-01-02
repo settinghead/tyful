@@ -96,6 +96,18 @@ class window.MaxClearance
 							@updateBounds vj, xc, direction
 							vj.setSelected()
 			#vertical pass 3: draw distance map
+			y = 0
+			v = @begin
+			while y < @main.height
+				if v
+					v=v.upperVertex if y > v.upperBound and v.upperVertex
+					dist =  @distance(xc,y,v.x,v.y)
+					@distData[xc+y*main.width] = dist if not @distData[xc+y*main.width] or @distData[xc+y*main.width] > dist
+					val = Math.round(dist/@maxdist * 255)
+					@mainContext.fillStyle = "rgba(255,#{val},255,1)"
+					@mainContext.fillRect xc,y,1,1
+				y++
+			#vertical pass 4: draw distance boundaries
 			v = @begin
 			while v
 				@updateBounds v, xc, direction
@@ -105,11 +117,8 @@ class window.MaxClearance
 				@mainContext.moveTo xc,v.upperBound
 				@mainContext.lineTo xc+1,v.upperBound
 				@mainContext.stroke()
-				# dist =  @distance(x,y,v.x,v.y)
-				# @distData[x+y*main.width] = dist
-				# @mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
-				# @mainContext.rect x,y,1,1
 				v = v.upperVertex
+			
 			xc++
 	@Direction = 
 		eastBound: 0
@@ -128,6 +137,9 @@ class window.MaxClearance
 		upper = lower = undefined
 		switch where
 			when MaxClearance.Where.upper
+				if pos.upperVertex
+					pos.upperVertex.lowerVertex = v
+					v.upperVertex = pos.upperVertex
 				upper = pos.upperVertex = v
 				lower = v.lowerVertex = pos
 				@end = v if @end == pos
@@ -139,11 +151,14 @@ class window.MaxClearance
 					upper = pos.lowerVertex.upperVertex = v
 					v.lowerVertex = pos.lowerVertex
 			when MaxClearance.Where.lower
+				if pos.lowerVertex
+					pos.lowerVertex.upperVertex = v
+					v.lowerVertex = pos.lowerVertex
 				lower = pos.lowerVertex = v
 				upper = v.upperVertex = pos
 				@begin = v if @begin == pos
 	distance: (x1,y1,x2,y2) ->
-		Math.sqrt(Math.pow(y2-y1)+Math.pow(x2-x1))
+		Math.sqrt(Math.pow(y2-y1,2)+Math.pow(x2-x1,2))
 
 	subsume: (vk, vj) ->
 		vk.setSubsumed()

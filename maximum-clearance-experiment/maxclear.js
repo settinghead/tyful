@@ -38,7 +38,7 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, direction, entered_range, i, in_range, n, newVertices, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
+      var alpha, direction, dist, entered_range, i, in_range, n, newVertices, pos, v, val, vj, vk, where, xc, y, _i, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
@@ -131,6 +131,23 @@
             }
           }
         }
+        y = 0;
+        v = this.begin;
+        while (y < this.main.height) {
+          if (v) {
+            if (y > v.upperBound && v.upperVertex) {
+              v = v.upperVertex;
+            }
+            dist = this.distance(xc, y, v.x, v.y);
+            if (!this.distData[xc + y * main.width] || this.distData[xc + y * main.width] > dist) {
+              this.distData[xc + y * main.width] = dist;
+            }
+            val = Math.round(dist / this.maxdist * 255);
+            this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
+            this.mainContext.fillRect(xc, y, 1, 1);
+          }
+          y++;
+        }
         v = this.begin;
         while (v) {
           this.updateBounds(v, xc, direction);
@@ -172,6 +189,10 @@
       upper = lower = void 0;
       switch (where) {
         case MaxClearance.Where.upper:
+          if (pos.upperVertex) {
+            pos.upperVertex.lowerVertex = v;
+            v.upperVertex = pos.upperVertex;
+          }
           upper = pos.upperVertex = v;
           lower = v.lowerVertex = pos;
           if (this.end === pos) {
@@ -189,6 +210,10 @@
           }
           break;
         case MaxClearance.Where.lower:
+          if (pos.lowerVertex) {
+            pos.lowerVertex.upperVertex = v;
+            v.lowerVertex = pos.lowerVertex;
+          }
           lower = pos.lowerVertex = v;
           upper = v.upperVertex = pos;
           if (this.begin === pos) {
@@ -198,7 +223,7 @@
     };
 
     MaxClearance.prototype.distance = function(x1, y1, x2, y2) {
-      return Math.sqrt(Math.pow(y2 - y1) + Math.pow(x2 - x1));
+      return Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
     };
 
     MaxClearance.prototype.subsume = function(vk, vj) {
