@@ -25,15 +25,11 @@ class window.MaxClearance
 		n = main.width
 		@A = []
 		@partitions = [1.7976931348623157e10308,-1.7976931348623157e10308]
-		@stack = []
-		while i < n
-			@stack[i] = undefined
-			i++
 		@distData = new Uint32Array(@main.width*@main.height)
 		@maxdist = Math.sqrt(Math.pow(@main.width,2)+Math.pow(@main.height,2))
 		i = 0
-
 		xc = 0
+		direction = MaxClearance.Direction.eastBound
 		while xc < n
 			#vertical pass 1: find new vertices
 			y = 0
@@ -47,92 +43,136 @@ class window.MaxClearance
 					newVertices.push v
 				y++
 			#vertical pass 2: update stack
-			for vj in newVertices
-				if not @stack.length
-					@stack.push vj
-					vj.setSelected()
-				else
-					in_range = true
-					entered_range = false
-					insert_pos = undefined
-					for k in [@stack.length - 1..0] by -1
-						vk = @stack[k]
-						if vk and not vk.isSubsumed()
-							y = vj.getIntersectionY(vk,xc,MaxClearance.Direction.eastBound)
-							if vj.y > vk.y
-								if y < vk.lowerBound
-									insert_pos = @subsume(k, vj)
-									entered_range = true if not entered_range
-								else if y < vk.upperBound
-									@connect vj, vk, y
-									insert_pos = vj.y
-									entered_range = true if not entered_range
-								else if entered_range then break
-							else if vj.y == vk.y
-								insert_pos = @subsume(k,vj)
-								entered_range = true if not entered_range
-							else # vj.y < vk.y
-								if y > vk.upperBound
-									insert_pos = @subsume(k,vj)
-									entered_range = true if not entered_range
-								else if y > vk.lowerBound
-									@connect vk, vj, y
-									insert_pos = vj.y
-									entered_range = true if not entered_range
-								else if entered_range then break
-					if entered_range
-						console.assert(insert_pos!=undefined)
-						console.assert(@stack[insert_pos]==undefined or @stack[insert_pos].isSubsumed())
-						@stack[insert_pos] = vj
+			for vj in @A
+				if vj and not vj.isSubsumed() and not vj.isSelected()
+					if not @begin
+						@begin = @end = vj
 						vj.setSelected()
+					else
+						in_range = true
+						entered_range = false
+						pos = undefined
+						where = undefined
+						vk = @end
+						while vk
+							if not vk.isSubsumed()
+								y = vj.getIntersectionY vk,xc,direction
+								if vj.y > vk.y
+									if y < vk.lowerBound
+										pos = @subsume vk, vj
+										where = MaxClearance.Where.self
+										@updateBounds vj, xc, direction
+										entered_range = true if not entered_range
+									else if y < vk.upperBound
+										# @update vj, vk, y
+										pos = vk
+										where = MaxClearance.Where.upper
+										@updateBounds vj, xc, direction
+										entered_range = true if not entered_range
+									else if entered_range then break
+								else if vj.y == vk.y
+									pos = @subsume vk, vj
+									where = MaxClearance.Where.self
+									entered_range = true if not entered_range
+								else # vj.y < vk.y
+									if y > vk.upperBound
+										pos = @subsume vk, vj
+										where = MaxClearance.Where.self
+										@updateBounds vj, xc, direction
+										entered_range = true if not entered_range
+									else if y > vk.lowerBound
+										# @update vk, vj, y
+										pos = vk
+										where = MaxClearance.Where.lower
+										@updateBounds vj, xc, direction
+										entered_range = true if not entered_range
+									else if entered_range then break
+							vk = vk.lowerVertex
+						if entered_range
+							# console.assert(insert_pos!=undefined)
+							# console.assert(@stack[insert_pos]==undefined or @stack[insert_pos].isSubsumed())
+							# @stack[insert_pos] = vj
+							@connect pos, vj, y, where
+							@updateBounds vj, xc, direction
+							vj.setSelected()
 			#vertical pass 3: draw distance map
-			y = 0
-			while y < n
-				v = @stack[y]
-				if v
-					@mainContext.beginPath()
-					@mainContext.rect xc,v.lowerBound,1,1
-					@mainContext.rect xc,v.upperBound,1,1
-					@mainContext.stroke()
-							# dist =  @distance(x,y,v.x,v.y)
+			v = @begin
+			while v
+				@updateBounds v, xc, direction
+				@mainContext.beginPath()
+				@mainContext.moveTo xc,v.lowerBound
+				@mainContext.lineTo xc+1,v.lowerBound
+				@mainContext.moveTo xc,v.upperBound
+				@mainContext.lineTo xc+1,v.upperBound
+				@mainContext.stroke()
+				# dist =  @distance(x,y,v.x,v.y)
 				# @distData[x+y*main.width] = dist
 				# @mainContext.fillStyle = "rgb(255,255,#{dist/@maxdist})"
 				# @mainContext.rect x,y,1,1
-				y++
+				v = v.upperVertex
 			xc++
 	@Direction = 
 		eastBound: 0
 		westBound: 1
+	@Where = 
+		upper: 0
+		self: 1
+		lower: 2
 
+	updateBounds: (v,xc, direction) ->
+		if v.upperVertex
+			v.upperVertex.lowerBound = v.upperBound = v.getIntersectionY v.upperVertex, xc, direction
+		if v.lowerVertex
+			v.lowerVertex.upperBound = v.lowerBound = v.getIntersectionY v.lowerVertex, xc, direction
+	connect: (pos,v,y,where) ->
+		upper = lower = undefined
+		switch where
+			when MaxClearance.Where.upper
+				upper = pos.upperVertex = v
+				lower = v.lowerVertex = pos
+				@end = v if @end == pos
+			when MaxClearance.Where.self
+				if pos.upperVertex
+					lower = pos.upperVertex.lowerVertex = v 	
+					v.upperVertex = pos.upperVertex
+				if pos.lowerVertex
+					upper = pos.lowerVertex.upperVertex = v
+					v.lowerVertex = pos.lowerVertex
+			when MaxClearance.Where.lower
+				lower = pos.lowerVertex = v
+				upper = v.upperVertex = pos
+				@begin = v if @begin == pos
 	distance: (x1,y1,x2,y2) ->
 		Math.sqrt(Math.pow(y2-y1)+Math.pow(x2-x1))
 
-	subsume: (k,vj) ->
-		vk = @stack[k]
+	subsume: (vk, vj) ->
 		vk.setSubsumed()
-		@stack[k] = undefined
-		vj.y
-
+		vk.upperVertex.lowerVertex = vk.lowerVertex if vk.upperVertex
+		vk.lowerVertex.upperVertex = vk.upperVertex if vk.lowerVertex
+		vj.upperBound = vk.upperBound
+		vj.lowerBound = vk.lowerBound
+		vk.subsumedBy = vj
+		@begin = vj if @begin == vk
+		@end = vj if @end == vk
+		vk
 	printStack: ->
 		s = ""
-		for v in @stack
+		v = @begin
+		while v
 			if v and not v.isSubsumed()
 				s += v.toString() + ", "
+			v = v.upperVertex
 		console.log s
 
-	connect: (upper,lower,y) ->
-		upper.lowerVertex = lower
-		lower.upperVertex = upper
-		lower.upperBound = upper.lowerBound = y
 	distanceInfo: []
 
 	class Vertex
 		constructor: (x,y) ->
 			@x = x; @y = y
-		upperBound: 1.7976931348623157e10308;
-		lowerBound: -1.7976931348623157e10308;
-		upperVertex: undefined;
-		lowerVertex: undefined;
+			@upperBound = 1.7976931348623157e10308
+			@lowerBound = -1.7976931348623157e10308
+			@upperVertex = undefined
+			@lowerVertex = undefined
 		getIntersectionY: (vertex, x, direction) ->
 			#calculate y coordinate of intersection
 			if direction == MaxClearance.Direction.eastBound
