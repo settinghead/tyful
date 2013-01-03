@@ -4,7 +4,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "dog.png"
+      src: "egg.png"
     });
     $img.load(function() {
       $('#source')[0].width = this.height;

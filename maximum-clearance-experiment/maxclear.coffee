@@ -1,6 +1,6 @@
 $ ->
 	$img = $("<img>",
-        src: "dog.png"
+        src: "egg.png"
     )
 	$img.load ->
 		$('#source')[0].width = this.height

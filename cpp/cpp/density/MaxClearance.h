@@ -20,7 +20,7 @@
 
 struct Vertex{
     Vertex(int x,int y):x(x),y(y),subsumed(false),selected(false),
-    upperBound(999999.0),lowerBound(-99999.0),upper(NULL),lower(NULL){
+    upperBound(INFINITY),lowerBound(-INFINITY),upper(NULL),lower(NULL){
         
     }
     int x,y;
@@ -32,8 +32,8 @@ struct Vertex{
         if(vertex->x == this->x)
             return midY;
         else{
-			double midX = (vertex->x + this->x) / 2;
-            double atanRatio = (vertex->y-this->y)/(vertex->x-this->x);
+			double midX = (double)(vertex->x + this->x) / 2;
+            double atanRatio = (double)(vertex->y-this->y)/(double)(vertex->x-this->x);
             return midY - (x-midX) / atanRatio;
         }
     }
@@ -61,7 +61,7 @@ private:
         vj->upperBound = vk->upperBound;
         vj->lowerBound = vk->lowerBound;
         if(begin == vk) begin = vj; if(end == vk) end = vj;
-        assert(vj->upper!=vj&&vj->lower!=vj);
+//        assert(vj->upper!=vj&&vj->lower!=vj);
         return vk;
     }
     
@@ -176,6 +176,7 @@ private:
                             }
                             if(entered_range){
                                 connect(pos,vj,where,begin,end);
+                                if(pos->isSubsumed()) delete pos;
                                 updateBounds(vj,xc);
                                 vj->setSelected();
                             }
@@ -231,7 +232,8 @@ public:
     
     void compute(){
         maxdist = 0;
-        sweep(EAST); sweep(WEST);
+        sweep(EAST);
+        sweep(WEST);
     }
     
     
