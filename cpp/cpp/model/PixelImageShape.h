@@ -16,7 +16,11 @@ public:
     explicit PixelImageShape( unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb);
     explicit PixelImageShape(unsigned char * png, size_t size);
 	virtual ~PixelImageShape();
-    virtual bool isEmpty(unsigned int pixelValue) = 0;
+    
+    virtual inline bool isEmpty(unsigned int pixelValue){
+        //        return (pixelValue & 0x00FFFFFF) == 0xFFFFFF;
+        return pixelValue >> 24 == 0;
+    }
     unsigned char * toPng(unsigned int pixelValue);
     double getArea();
     void printStats();

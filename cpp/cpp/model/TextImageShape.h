@@ -19,11 +19,7 @@ public:
         
     }
     virtual ~TextImageShape(){}
-    
-    virtual inline bool isEmpty(unsigned int pixelValue){
-//        return (pixelValue & 0x00FFFFFF) == 0xFFFFFF;
-        return pixelValue >> 24 == 0;
-    }
+  
 };
 
 #endif /* defined(__PolarTree_Experiment__TextImageShape__) */

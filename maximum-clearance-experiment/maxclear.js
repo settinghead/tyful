@@ -4,7 +4,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "pbs.png"
+      src: "dog.png"
     });
     $img.load(function() {
       $('#source')[0].width = this.height;
@@ -47,10 +47,8 @@
     };
 
     MaxClearance.prototype.sweep = function(direction) {
-      var alpha, dist, entered_range, i, in_range, minBorderDist, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
+      var alpha, dist, entered_range, in_range, index, minBorderDist, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
       this.A = [];
-      this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
-      i = 0;
       xc = direction > 0 ? 0 : main.width - 1;
       nn = direction > 0 ? main.width : 0;
       _results = [];
@@ -102,6 +100,7 @@
                       }
                     } else if (vj.y === vk.y) {
                       pos = this.subsume(vk, vj);
+                      this.updateBounds(vj, xc);
                       where = MaxClearance.Where.self;
                       if (!entered_range) {
                         entered_range = true;
@@ -152,8 +151,9 @@
             if (dist > this.maxdist) {
               this.maxdist = dist;
             }
-            if (!this.distData[xc + y * main.width] || this.distData[xc + y * main.width] > dist) {
-              this.distData[xc + y * main.width] = dist;
+            index = xc + y * main.width;
+            if (!this.distData[index] || this.distData[index] > dist) {
+              this.distData[index] = dist;
             }
             y++;
           }
@@ -230,27 +230,25 @@
     };
 
     MaxClearance.prototype.connect = function(pos, v, where) {
-      var lower, upper;
-      upper = lower = void 0;
       switch (where) {
         case MaxClearance.Where.upper:
           if (pos.upperVertex) {
             pos.upperVertex.lowerVertex = v;
             v.upperVertex = pos.upperVertex;
           }
-          upper = pos.upperVertex = v;
-          lower = v.lowerVertex = pos;
+          pos.upperVertex = v;
+          v.lowerVertex = pos;
           if (this.end === pos) {
             return this.end = v;
           }
           break;
         case MaxClearance.Where.self:
           if (pos.upperVertex) {
-            lower = pos.upperVertex.lowerVertex = v;
+            pos.upperVertex.lowerVertex = v;
             v.upperVertex = pos.upperVertex;
           }
           if (pos.lowerVertex) {
-            upper = pos.lowerVertex.upperVertex = v;
+            pos.lowerVertex.upperVertex = v;
             return v.lowerVertex = pos.lowerVertex;
           }
           break;
@@ -259,8 +257,8 @@
             pos.lowerVertex.upperVertex = v;
             v.lowerVertex = pos.lowerVertex;
           }
-          lower = pos.lowerVertex = v;
-          upper = v.upperVertex = pos;
+          pos.lowerVertex = v;
+          v.upperVertex = pos;
           if (this.begin === pos) {
             return this.begin = v;
           }

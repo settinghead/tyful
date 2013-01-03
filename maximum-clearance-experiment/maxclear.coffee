@@ -1,6 +1,6 @@
 $ ->
 	$img = $("<img>",
-        src: "pbs.png"
+        src: "dog.png"
     )
 	$img.load ->
 		$('#source')[0].width = this.height
@@ -30,8 +30,6 @@ class window.MaxClearance
 		@printGradientMap()
 	sweep: (direction) ->
 		@A = []
-		@partitions = [1.7976931348623157e10308,-1.7976931348623157e10308]
-		i = 0
 		xc = if direction > 0 then 0 else main.width-1
 		nn = if direction > 0 then main.width else 0
 		while xc*direction < nn
@@ -77,6 +75,7 @@ class window.MaxClearance
 										else if entered_range then break
 									else if vj.y == vk.y
 										pos = @subsume vk, vj
+										@updateBounds vj, xc
 										where = MaxClearance.Where.self
 										entered_range = true if not entered_range
 									else # vj.y < vk.y
@@ -110,7 +109,8 @@ class window.MaxClearance
 					minBorderDist = @getMinBorderDistance(xc,y)
 					if minBorderDist < dist then dist = minBorderDist
 					@maxdist = dist if dist > @maxdist
-					@distData[xc+y*main.width] = dist if not @distData[xc+y*main.width] or @distData[xc+y*main.width] > dist
+					index = xc+y*main.width
+					@distData[index] = dist if not @distData[index] or @distData[index] > dist
 					y++
 			# #vertical pass 4: draw distance boundaries
 			# v = @begin
@@ -155,28 +155,27 @@ class window.MaxClearance
 		if v.lowerVertex
 			v.lowerVertex.upperBound = v.lowerBound = v.getIntersectionY v.lowerVertex, xc
 	connect: (pos,v,where) ->
-		upper = lower = undefined
 		switch where
 			when MaxClearance.Where.upper
 				if pos.upperVertex
 					pos.upperVertex.lowerVertex = v
 					v.upperVertex = pos.upperVertex
-				upper = pos.upperVertex = v
-				lower = v.lowerVertex = pos
+				pos.upperVertex = v
+				v.lowerVertex = pos
 				@end = v if @end == pos
 			when MaxClearance.Where.self
 				if pos.upperVertex
-					lower = pos.upperVertex.lowerVertex = v 	
+					pos.upperVertex.lowerVertex = v 	
 					v.upperVertex = pos.upperVertex
 				if pos.lowerVertex
-					upper = pos.lowerVertex.upperVertex = v
+					pos.lowerVertex.upperVertex = v
 					v.lowerVertex = pos.lowerVertex
 			when MaxClearance.Where.lower
 				if pos.lowerVertex
 					pos.lowerVertex.upperVertex = v
 					v.lowerVertex = pos.lowerVertex
-				lower = pos.lowerVertex = v
-				upper = v.upperVertex = pos
+				pos.lowerVertex = v
+				v.upperVertex = pos
 				@begin = v if @begin == pos
 	distance: (x1,y1,x2,y2) ->
 		Math.sqrt(Math.pow(y2-y1,2)+Math.pow(x2-x1,2))
@@ -218,9 +217,6 @@ class window.MaxClearance
 				atanRatio = (vertex.y-@y)/(vertex.x-@x)
 				y = midY - (x-midX) / atanRatio
 			return y
-			# else if direction == MaxClearance.Direction.westBound
-			# 	#TODO
-			# 	alert('not implemented')
 		isSubsumed: -> if @subsumed then true else false
 		isSelected: -> if @selected then true else false
 		setSubsumed: ->

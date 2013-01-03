@@ -19,17 +19,17 @@
 #define LOWER 2
 
 struct Vertex{
-    Vertex():x(-1),y(-1),subsumed(false),selected(false),
-    upperBound(INFINITY),lowerBound(-99999),upper(NULL),lower(NULL){
+    Vertex(int x,int y):x(x),y(y),subsumed(false),selected(false),
+    upperBound(999999.0),lowerBound(-99999.0),upper(NULL),lower(NULL){
         
     }
     int x,y;
     double upperBound,lowerBound;
     Vertex* upper; Vertex* lower;
-    inline double getIntersectionY(Vertex* vertex, unsigned x){
+    inline double getIntersectionY(Vertex* vertex, int x){
         //calculate y coordinate of intersection
         double midY = (vertex->y + this->y) / 2;
-        if(vertex->x == x)
+        if(vertex->x == this->x)
             return midY;
         else{
 			double midX = (vertex->x + this->x) / 2;
@@ -48,12 +48,11 @@ private:
 class MaxClearance:public PixelImageShape{
 private:
     double* distData;
-    inline unsigned getAlpha(int x, int y){
+    inline int getAlpha(int x, int y){
         return getPixel(x, y) >> 24 & 0xFF;
     }
     typedef int Where;
-    unsigned maxdist;
-    unsigned area;
+    int area;
     
     inline static Vertex* subsume(Vertex* vk, Vertex* vj, Vertex* &begin, Vertex* &end){
         vk->setSubsumed();
@@ -62,10 +61,11 @@ private:
         vj->upperBound = vk->upperBound;
         vj->lowerBound = vk->lowerBound;
         if(begin == vk) begin = vj; if(end == vk) end = vj;
+        assert(vj->upper!=vj&&vj->lower!=vj);
         return vk;
     }
     
-    inline static void updateBounds(Vertex* v, unsigned xc){
+    inline static void updateBounds(Vertex* v, int xc){
         if(v->upper!=NULL) v->upper->lowerBound = v->upperBound = v->getIntersectionY(v->upper, xc);
         if(v->lower!=NULL) v->lower->upperBound = v->lowerBound = v->getIntersectionY(v->lower, xc);
     }
@@ -82,7 +82,7 @@ private:
                     v->upper = pos->upper;
                 }
                 pos->upper = v;
-                v->upper = pos->upper;
+                v->lower = pos;
                 if(end==pos) end = v;
                 break;
             case SELF:
@@ -105,9 +105,10 @@ private:
                 if(begin==pos) begin = v;
                 break;
         }
+        assert(v->upper!=v&&v->lower!=v);
     }
     
-    inline double getMinBorderDistance(unsigned x, unsigned y){
+    inline double getMinBorderDistance(int x, int y){
         double minXBorderDist,minYBorderDist;
         if(x>width/2) minXBorderDist = width - x;
         else minXBorderDist = x;
@@ -117,23 +118,23 @@ private:
     }
     
     inline void sweep(int direction){
-        Vertex* A;
+        Vertex** A;
         Vertex* begin = NULL; Vertex* end = NULL;
-        A = (Vertex*)malloc(height*sizeof(Vertex));
-        unsigned nn = direction > 0 ? width : 0;
-        for(unsigned xc  = direction > 0 ? 0 : width - 1; xc * direction < nn; xc += direction){
-            for(unsigned y = 0; y < width; y+=MAXCLEAR_UNIT){
-                unsigned alpha = getAlpha(xc,y);
+        A = (Vertex**)malloc(height*sizeof(Vertex*));
+        int nn = direction > 0 ? width : 0;
+        for(int xc  = direction > 0 ? 0 : width - 1; xc * direction < nn; xc += direction){
+            for(int y = 0; y < height; y+=MAXCLEAR_UNIT){
+                A[y] = NULL;
+                int alpha = getAlpha(xc,y);
                 if(alpha == 0){
-                    A[y].x = xc;
-                    A[y].y = y;
+                    A[y] = new Vertex(xc,y);
                 }
             }
             if(xc%MAXCLEAR_UNIT==0){
-                for(unsigned j=0;j<height;j++){
-                    Vertex* vj = A+j;
-                    if(vj->x>=0&&vj->isSubsumed()&&!vj->isSelected()){
-                        if(begin!=NULL){
+                for(int j=0;j<height;j+=MAXCLEAR_UNIT){
+                    Vertex* vj = *(A+j);
+                    if(vj!=NULL&&!vj->isSubsumed()&&!vj->isSelected()){
+                        if(begin==NULL){
                             begin = end = vj;
                             vj->setSelected();
                         }
@@ -156,36 +157,38 @@ private:
                                         else if(entered_range) break;
                                     }
                                     else if(vj->y==vk->y){
-                                        pos = subsume(vk,vj,begin,end); where = SELF;
+                                        pos = subsume(vk,vj,begin,end); where = SELF; updateBounds(vj, xc);
                                         if(!entered_range) entered_range = true;
                                     }
-                            else{
-                                if(y>vk->upperBound){
-                                    pos = subsume(vk,vj,begin,end);where = SELF; updateBounds(vj,xc);
-                                    if(!entered_range) entered_range = true;
+                                    else{
+                                        if(y>vk->upperBound){
+                                            pos = subsume(vk,vj,begin,end);where = SELF; updateBounds(vj,xc);
+                                            if(!entered_range) entered_range = true;
+                                        }
+                                        else if(y>vk->lowerBound){
+                                            pos = vk; where = LOWER; updateBounds(vj, xc);
+                                            if(!entered_range) entered_range = true;
+                                        }
+                                        else if(entered_range) break;
+                                    }
                                 }
-                                else if(y>vk->lowerBound){
-                                    pos = vk; where = LOWER; updateBounds(vj, xc);
-                                    if(!entered_range) entered_range = true;
-                                }
-                                else if(entered_range) break;
+                                vk = vk->lower;
+                            }
+                            if(entered_range){
+                                connect(pos,vj,where,begin,end);
+                                updateBounds(vj,xc);
+                                vj->setSelected();
                             }
                         }
-                        vk = vk->lower;
-                    }
-                    if(entered_range){
-                        connect(pos,vj,where,begin,end);
-                        updateBounds(vj,xc);
-                        vj->setSelected();
                     }
                 }
             }
-        }
-    }
             if(begin!=NULL){
                 Vertex* v = begin;
-                for(unsigned y =0; y<height;y++){
-                    if(y>v->upperBound&&v->upper!=NULL){
+                for(int y =0; y<height;y++){
+//                    if(getAlpha(xc,y)>0){
+                        if(y>v->upperBound&&v->upper!=NULL)
+                            v = v->upper;
                         double dist = distance(xc,y,v->x,v->y);
                         double minBorderDist = getMinBorderDistance(xc,y);
                         if(minBorderDist < dist) dist = minBorderDist;
@@ -193,29 +196,45 @@ private:
                         int index = xc+y*width;
                         if(isnan(distData[index]) || distData[index] > dist)
                             distData[index] = dist;
-                    }
+//                    }
                 }
             }
-}
-delete A;
-}
-
+        }
+        delete A;
+    }
+    void init(){
+        distData = (double*)malloc(width*height*sizeof(double));
+        for(int x=0;x<width;x++)
+            for(int y=0;y<height;y++)
+                distData[x+y*width] = NAN;
+        area = width*height;
+    }
+    
 public:
-MaxClearance(unsigned int const * pixels, int width, int height, bool revert,bool rgbaToArgb):PixelImageShape(pixels,width,height,revert,rgbaToArgb){
-    distData = (double*)malloc(width*height*sizeof(double));
-    area = width*height;
-}
-
-virtual ~MaxClearance(){
-    delete distData;
-}
-
-void compute(){
-    maxdist = 0;
-    sweep(EAST); sweep(WEST);
-}
-
-
+    double maxdist;
+    
+    MaxClearance(unsigned const * pixels, int width, int height, bool revert,bool rgbaToArgb):PixelImageShape(pixels,width,height,revert,rgbaToArgb){
+        init();
+    }
+    
+    MaxClearance(unsigned char * png, size_t size):PixelImageShape(png,size){
+        init();
+    }
+    
+    inline double getDistData(int x, int y){
+        return distData[x+y*width];
+    }
+    
+    virtual ~MaxClearance(){
+        delete distData;
+    }
+    
+    void compute(){
+        maxdist = 0;
+        sweep(EAST); sweep(WEST);
+    }
+    
+    
 };
 
 #endif /* defined(__cpp__MaxClearance__) */

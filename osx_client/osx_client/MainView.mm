@@ -8,6 +8,7 @@
 
 #import "MainView.h"
 #include "../../cpp/cpp/model/PolarCanvas.h"
+#include "../../cpp/cpp/density/MaxClearance.h"
 #include "../../cpp/cpp/model/EngineShape.h"
 #include "../../cpp/cpp/model/ImageShape.h"
 #include "../../cpp/cpp/model/structs.h"
@@ -69,10 +70,26 @@
                  colorSpaceName: NSCalibratedRGBColorSpace
                  bytesPerRow: 0	// "you figure it out"
                  bitsPerPixel: 32];
-    NSUInteger zColourAry[3] = {255,255,255};
-    for(int x=0;x<mainImage.size.width;x++)
-        for(int y=0;y<mainImage.size.height;y++)
+    MaxClearance* maxClear = new MaxClearance(png,size);
+    maxClear->compute();
+    
+//    NSUInteger zColourAry[3] = {255,255,255};
+//    for(int x=0;x<mainImage.size.width;x++){
+//        for(int y=0;y<mainImage.size.height;y++){
+//            [mainImage setPixel:zColourAry atX:x y:y];
+//        }
+//    }
+    
+    for(int x=0;x<mainImage.size.width;x++){
+        for(int y=0;y<mainImage.size.height;y++){
+            double dist = maxClear->getDistData(x, y);
+            if(isnan(dist)) dist = 0;
+            NSUInteger zColourAry[3] = {255,static_cast<NSUInteger>(255-dist/maxClear->maxdist*255.0),255};
+            
             [mainImage setPixel:zColourAry atX:x y:y];
+        }
+    }
+
     trees = [NSMutableArray array];
 }
 
@@ -281,7 +298,7 @@ int sid = 0;
     [self loadDirectionImage];
     [self resetMainImage];
     
-    startRendering();
+//    startRendering();
 
 }
 
