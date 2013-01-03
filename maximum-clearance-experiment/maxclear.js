@@ -4,7 +4,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "test.png"
+      src: "face.png"
     });
     return $img.load(function() {
       $('#source')[0].width = this.height;
@@ -30,6 +30,7 @@
       this.main.width = this.source.width;
       this.main.height = this.source.height;
       this.data = this.sourceContext.getImageData(0, 0, main.width, main.height).data;
+      this.unit = 5;
     }
 
     MaxClearance.prototype.getAlpha = function(x, y) {
@@ -38,95 +39,110 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var alpha, direction, dist, entered_range, i, in_range, n, newVertices, pos, v, val, vj, vk, where, xc, y, _i, _len, _ref, _results;
+      var d;
+      this.distData = new Uint32Array(this.main.width * this.main.height);
+      this.maxdist = 0;
+      d = 0;
+      while (d < this.main.width * this.main.height) {
+        this.distData[d] = this.maxdist;
+        d++;
+      }
+      this.sweep(MaxClearance.Direction.eastBound);
+      this.sweep(MaxClearance.Direction.westBound);
+      this.printBoundaries();
+      return this.printGradientMap();
+    };
+
+    MaxClearance.prototype.sweep = function(direction) {
+      var alpha, dist, entered_range, i, in_range, minBorderDist, n, newVertices, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
       n = main.width;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
-      this.distData = new Uint32Array(this.main.width * this.main.height);
-      this.maxdist = Math.sqrt(Math.pow(this.main.width, 2) + Math.pow(this.main.height, 2));
       i = 0;
-      xc = 0;
-      direction = MaxClearance.Direction.eastBound;
+      xc = direction > 0 ? 0 : n - 1;
+      nn = direction > 0 ? n : 0;
       _results = [];
-      while (xc < n) {
+      while (xc * direction < nn) {
         y = 0;
         newVertices = [];
         while (y < n) {
           alpha = this.getAlpha(xc, y);
-          if (alpha > 0) {
+          if (alpha === 0) {
             v = new Vertex(xc, y);
             v.alpha = alpha;
             this.A[y] = v;
             newVertices.push(v);
           }
-          y++;
+          y += this.unit;
         }
-        _ref = this.A;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          vj = _ref[_i];
-          if (vj && !vj.isSubsumed() && !vj.isSelected()) {
-            if (!this.begin) {
-              this.begin = this.end = vj;
-              vj.setSelected();
-            } else {
-              in_range = true;
-              entered_range = false;
-              pos = void 0;
-              where = void 0;
-              vk = this.end;
-              while (vk) {
-                if (!vk.isSubsumed()) {
-                  y = vj.getIntersectionY(vk, xc, direction);
-                  if (vj.y > vk.y) {
-                    if (y < vk.lowerBound) {
+        if (xc % this.unit === 0) {
+          _ref = this.A;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            vj = _ref[_i];
+            if (vj && !vj.isSubsumed() && !vj.isSelected()) {
+              if (!this.begin) {
+                this.begin = this.end = vj;
+                vj.setSelected();
+              } else {
+                in_range = true;
+                entered_range = false;
+                pos = void 0;
+                where = void 0;
+                vk = this.end;
+                while (vk) {
+                  if (!vk.isSubsumed()) {
+                    y = vj.getIntersectionY(vk, xc, direction);
+                    if (vj.y > vk.y) {
+                      if (y < vk.lowerBound) {
+                        pos = this.subsume(vk, vj);
+                        where = MaxClearance.Where.self;
+                        this.updateBounds(vj, xc, direction);
+                        if (!entered_range) {
+                          entered_range = true;
+                        }
+                      } else if (y < vk.upperBound) {
+                        pos = vk;
+                        where = MaxClearance.Where.upper;
+                        this.updateBounds(vj, xc, direction);
+                        if (!entered_range) {
+                          entered_range = true;
+                        }
+                      } else if (entered_range) {
+                        break;
+                      }
+                    } else if (vj.y === vk.y) {
                       pos = this.subsume(vk, vj);
                       where = MaxClearance.Where.self;
-                      this.updateBounds(vj, xc, direction);
                       if (!entered_range) {
                         entered_range = true;
                       }
-                    } else if (y < vk.upperBound) {
-                      pos = vk;
-                      where = MaxClearance.Where.upper;
-                      this.updateBounds(vj, xc, direction);
-                      if (!entered_range) {
-                        entered_range = true;
+                    } else {
+                      if (y > vk.upperBound) {
+                        pos = this.subsume(vk, vj);
+                        where = MaxClearance.Where.self;
+                        this.updateBounds(vj, xc, direction);
+                        if (!entered_range) {
+                          entered_range = true;
+                        }
+                      } else if (y > vk.lowerBound) {
+                        pos = vk;
+                        where = MaxClearance.Where.lower;
+                        this.updateBounds(vj, xc, direction);
+                        if (!entered_range) {
+                          entered_range = true;
+                        }
+                      } else if (entered_range) {
+                        break;
                       }
-                    } else if (entered_range) {
-                      break;
-                    }
-                  } else if (vj.y === vk.y) {
-                    pos = this.subsume(vk, vj);
-                    where = MaxClearance.Where.self;
-                    if (!entered_range) {
-                      entered_range = true;
-                    }
-                  } else {
-                    if (y > vk.upperBound) {
-                      pos = this.subsume(vk, vj);
-                      where = MaxClearance.Where.self;
-                      this.updateBounds(vj, xc, direction);
-                      if (!entered_range) {
-                        entered_range = true;
-                      }
-                    } else if (y > vk.lowerBound) {
-                      pos = vk;
-                      where = MaxClearance.Where.lower;
-                      this.updateBounds(vj, xc, direction);
-                      if (!entered_range) {
-                        entered_range = true;
-                      }
-                    } else if (entered_range) {
-                      break;
                     }
                   }
+                  vk = vk.lowerVertex;
                 }
-                vk = vk.lowerVertex;
-              }
-              if (entered_range) {
-                this.connect(pos, vj, y, where);
-                this.updateBounds(vj, xc, direction);
-                vj.setSelected();
+                if (entered_range) {
+                  this.connect(pos, vj, y, where);
+                  this.updateBounds(vj, xc, direction);
+                  vj.setSelected();
+                }
               }
             }
           }
@@ -139,40 +155,79 @@
               v = v.upperVertex;
             }
             dist = this.distance(xc, y, v.x, v.y);
+            minBorderDist = this.getMinBorderDistance(xc, y);
+            if (minBorderDist < dist) {
+              dist = minBorderDist;
+            }
+            if (dist > this.maxdist) {
+              this.maxdist = dist;
+            }
             if (!this.distData[xc + y * main.width] || this.distData[xc + y * main.width] > dist) {
               this.distData[xc + y * main.width] = dist;
             }
-            val = Math.round(dist / this.maxdist * 255);
-            this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
-            this.mainContext.fillRect(xc, y, 1, 1);
           }
           y++;
         }
-        v = this.begin;
-        while (v) {
-          this.updateBounds(v, xc, direction);
-          this.mainContext.beginPath();
-          this.mainContext.moveTo(xc, v.lowerBound);
-          this.mainContext.lineTo(xc + 1, v.lowerBound);
-          this.mainContext.moveTo(xc, v.upperBound);
-          this.mainContext.lineTo(xc + 1, v.upperBound);
-          this.mainContext.stroke();
-          v = v.upperVertex;
-        }
-        _results.push(xc++);
+        _results.push(xc += direction);
       }
       return _results;
     };
 
     MaxClearance.Direction = {
-      eastBound: 0,
-      westBound: 1
+      eastBound: 1,
+      westBound: -1
     };
 
     MaxClearance.Where = {
       upper: 0,
       self: 1,
       lower: 2
+    };
+
+    MaxClearance.prototype.getMinBorderDistance = function(x, y) {
+      var minXBorderDist, minYBorderDist;
+      if (x > this.main.width / 2) {
+        minXBorderDist = this.main.width - x;
+      } else {
+        minXBorderDist = x;
+      }
+      if (y > this.main.height / 2) {
+        minYBorderDist = this.main.height - y;
+      } else {
+        minYBorderDist = y;
+      }
+      if (minXBorderDist < minYBorderDist) {
+        return minXBorderDist;
+      } else {
+        return minYBorderDist;
+      }
+    };
+
+    MaxClearance.prototype.printBoundaries = function() {
+      var xc, _results;
+      xc = 0;
+      _results = [];
+      while (xc < main.width) {
+        _results.push(xc++);
+      }
+      return _results;
+    };
+
+    MaxClearance.prototype.printGradientMap = function() {
+      var val, xc, y, _results;
+      xc = 0;
+      _results = [];
+      while (xc < main.width) {
+        y = 0;
+        while (y < this.main.height) {
+          val = Math.round(this.distData[xc + y * main.width] / this.maxdist * 255);
+          this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
+          this.mainContext.fillRect(xc, y, 1, 1);
+          y++;
+        }
+        _results.push(xc++);
+      }
+      return _results;
     };
 
     MaxClearance.prototype.updateBounds = function(v, xc, direction) {
@@ -274,19 +329,15 @@
 
       Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
         var atanRatio, midX, midY, y;
-        if (direction === MaxClearance.Direction.eastBound) {
-          midY = (vertex.y + this.y) / 2;
-          if (vertex.x === this.x) {
-            y = midY;
-          } else {
-            midX = (vertex.x + this.x) / 2;
-            atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
-            y = midY - (x - midX) / atanRatio;
-          }
-          return y;
-        } else if (direction === MaxClearance.Direction.westBound) {
-          return alert('not implemented');
+        midY = (vertex.y + this.y) / 2;
+        if (vertex.x === this.x) {
+          y = midY;
+        } else {
+          midX = (vertex.x + this.x) / 2;
+          atanRatio = (vertex.y - this.y) / (vertex.x - this.x);
+          y = midY - (x - midX) / atanRatio;
         }
+        return y;
       };
 
       Vertex.prototype.isSubsumed = function() {
