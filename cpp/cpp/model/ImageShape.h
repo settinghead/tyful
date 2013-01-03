@@ -18,15 +18,15 @@ public:
     inline bool containsPoint(double x, double y){
         return !isEmpty(getPixel((int)x, (int)y));
     }
-	inline bool intersects(int x, int y, int width, int height){
+	inline bool intersects(double x, double y, double width, double height){
         if(x>=getWidth()) x=getWidth()-1;
         else if (x<0) x=0;
         if(y>=getHeight()) y=getHeight()-1;
         else if (y<0) y=0;
         
-        int cmp = getPixel(x, y);
-        for (int yy = y; yy < y+height && yy <getHeight(); yy++) {
-            for (int xx = x; xx < x+width && xx < getWidth(); xx++) {
+        int cmp = getPixel((int)x, (int)y);
+        for (int yy = (int)y; yy < (int)y+(int)height && yy <(int)getHeight(); yy++) {
+            for (int xx = (int)x; xx < (int)x+(int)width && xx < (int)getWidth(); xx++) {
                 //            if(pixels[yy * width + xx] >0)
                 //                std::cout << (unsigned int)pixels[yy * width + xx] << ",";
                 if (getPixel(xx,yy) != cmp)

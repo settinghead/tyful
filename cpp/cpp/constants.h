@@ -34,6 +34,7 @@
 #define NUM_THREADS 1
 #define THREAD_STEP_SIZE 40
 #define MIN_BOX_SIZE 1
+#define MAXCLEAR_UNIT 5
 
 #define DEFAULT_TOLERANCE 0.5
 #endif

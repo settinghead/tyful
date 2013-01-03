@@ -4954,7 +4954,7 @@ static unsigned filter(unsigned char* out, const unsigned char* in, unsigned w, 
     {
       for(type = 0; type < 5; type++)
       {
-        unsigned testsize = attempt[type].size;
+        unsigned testsize = (unsigned)attempt[type].size;
         /*unsigned testsize = attempt[type].size / 8;*/ /*it already works good enough by testing a part of the row*/
         /*if(testsize == 0) testsize = attempt[type].size;*/
 

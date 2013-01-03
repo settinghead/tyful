@@ -53,8 +53,8 @@ bool WordLayer::contains(double x, double y, double width, double height, double
         srand ( (unsigned int)time(NULL) );
 
         while (i < numSamples) {
-            int relativeX = rand() % (int)width;
-            int relativeY= rand() % (int)height;
+            double relativeX = rand() % (int)width;
+            double relativeY= rand() % (int)height;
             
             //rotation
             rotation = - rotation;
@@ -80,10 +80,10 @@ bool WordLayer::contains(double x, double y, double width, double height, double
                 relativeX = (relativeX + width/2);
                 relativeY = (relativeY + height/2);
             }
-            int sampleX = relativeX + x;
-            int sampleY = relativeY + y;
+            double sampleX = relativeX + x;
+            double sampleY = relativeY + y;
             
-            double brightness = getBrightness(sampleX, sampleY);
+            double brightness = getBrightness((int)sampleX, (int)sampleY);
             if ((isnan(brightness) || brightness < 0.01) && ++darkCount >= threshold)
                 //											if ((!containsPoint(sampleX, sampleY, false)) && ++darkCount >= threshold)
                 return false;

@@ -4,20 +4,19 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "face.png"
+      src: "pbs.png"
     });
-    return $img.load(function() {
+    $img.load(function() {
       $('#source')[0].width = this.height;
       $('#source')[0].height = this.height;
       $('#source')[0].getContext('2d').drawImage(this, 0, 0, $('#source')[0].width, $('#source')[0].height);
       window.maxClearance = new MaxClearance($('#source')[0], $('#main')[0]);
       return window.maxClearance.compute();
     });
+    return $('#main').mousemove(function(e) {
+      return $('#value_watch').html(window.maxClearance.distData[e.offsetX + e.offsetY * $('#main')[0].width]);
+    });
   });
-
-  Array.prototype.nearestVertex = function(v) {
-    return this[0];
-  };
 
   window.MaxClearance = (function() {
     var Vertex;
@@ -39,14 +38,8 @@
     };
 
     MaxClearance.prototype.compute = function() {
-      var d;
       this.distData = new Uint32Array(this.main.width * this.main.height);
       this.maxdist = 0;
-      d = 0;
-      while (d < this.main.width * this.main.height) {
-        this.distData[d] = this.maxdist;
-        d++;
-      }
       this.sweep(MaxClearance.Direction.eastBound);
       this.sweep(MaxClearance.Direction.westBound);
       this.printBoundaries();
@@ -54,24 +47,21 @@
     };
 
     MaxClearance.prototype.sweep = function(direction) {
-      var alpha, dist, entered_range, i, in_range, minBorderDist, n, newVertices, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
-      n = main.width;
+      var alpha, dist, entered_range, i, in_range, minBorderDist, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
       this.A = [];
       this.partitions = [1.7976931348623157e10308, -1.7976931348623157e10308];
       i = 0;
-      xc = direction > 0 ? 0 : n - 1;
-      nn = direction > 0 ? n : 0;
+      xc = direction > 0 ? 0 : main.width - 1;
+      nn = direction > 0 ? main.width : 0;
       _results = [];
       while (xc * direction < nn) {
         y = 0;
-        newVertices = [];
-        while (y < n) {
+        while (y < main.width) {
           alpha = this.getAlpha(xc, y);
           if (alpha === 0) {
             v = new Vertex(xc, y);
             v.alpha = alpha;
             this.A[y] = v;
-            newVertices.push(v);
           }
           y += this.unit;
         }
@@ -91,19 +81,19 @@
                 vk = this.end;
                 while (vk) {
                   if (!vk.isSubsumed()) {
-                    y = vj.getIntersectionY(vk, xc, direction);
+                    y = vj.getIntersectionY(vk, xc);
                     if (vj.y > vk.y) {
                       if (y < vk.lowerBound) {
                         pos = this.subsume(vk, vj);
                         where = MaxClearance.Where.self;
-                        this.updateBounds(vj, xc, direction);
+                        this.updateBounds(vj, xc);
                         if (!entered_range) {
                           entered_range = true;
                         }
                       } else if (y < vk.upperBound) {
                         pos = vk;
                         where = MaxClearance.Where.upper;
-                        this.updateBounds(vj, xc, direction);
+                        this.updateBounds(vj, xc);
                         if (!entered_range) {
                           entered_range = true;
                         }
@@ -120,14 +110,14 @@
                       if (y > vk.upperBound) {
                         pos = this.subsume(vk, vj);
                         where = MaxClearance.Where.self;
-                        this.updateBounds(vj, xc, direction);
+                        this.updateBounds(vj, xc);
                         if (!entered_range) {
                           entered_range = true;
                         }
                       } else if (y > vk.lowerBound) {
                         pos = vk;
                         where = MaxClearance.Where.lower;
-                        this.updateBounds(vj, xc, direction);
+                        this.updateBounds(vj, xc);
                         if (!entered_range) {
                           entered_range = true;
                         }
@@ -139,18 +129,18 @@
                   vk = vk.lowerVertex;
                 }
                 if (entered_range) {
-                  this.connect(pos, vj, y, where);
-                  this.updateBounds(vj, xc, direction);
+                  this.connect(pos, vj, where);
+                  this.updateBounds(vj, xc);
                   vj.setSelected();
                 }
               }
             }
           }
         }
-        y = 0;
-        v = this.begin;
-        while (y < this.main.height) {
-          if (v) {
+        if (this.begin) {
+          y = 0;
+          v = this.begin;
+          while (y < this.main.height) {
             if (y > v.upperBound && v.upperVertex) {
               v = v.upperVertex;
             }
@@ -165,8 +155,8 @@
             if (!this.distData[xc + y * main.width] || this.distData[xc + y * main.width] > dist) {
               this.distData[xc + y * main.width] = dist;
             }
+            y++;
           }
-          y++;
         }
         _results.push(xc += direction);
       }
@@ -220,7 +210,7 @@
       while (xc < main.width) {
         y = 0;
         while (y < this.main.height) {
-          val = Math.round(this.distData[xc + y * main.width] / this.maxdist * 255);
+          val = 255 - Math.round(this.distData[xc + y * main.width] / this.maxdist * 255);
           this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
           this.mainContext.fillRect(xc, y, 1, 1);
           y++;
@@ -230,16 +220,16 @@
       return _results;
     };
 
-    MaxClearance.prototype.updateBounds = function(v, xc, direction) {
+    MaxClearance.prototype.updateBounds = function(v, xc) {
       if (v.upperVertex) {
-        v.upperVertex.lowerBound = v.upperBound = v.getIntersectionY(v.upperVertex, xc, direction);
+        v.upperVertex.lowerBound = v.upperBound = v.getIntersectionY(v.upperVertex, xc);
       }
       if (v.lowerVertex) {
-        return v.lowerVertex.upperBound = v.lowerBound = v.getIntersectionY(v.lowerVertex, xc, direction);
+        return v.lowerVertex.upperBound = v.lowerBound = v.getIntersectionY(v.lowerVertex, xc);
       }
     };
 
-    MaxClearance.prototype.connect = function(pos, v, y, where) {
+    MaxClearance.prototype.connect = function(pos, v, where) {
       var lower, upper;
       upper = lower = void 0;
       switch (where) {
@@ -291,7 +281,6 @@
       }
       vj.upperBound = vk.upperBound;
       vj.lowerBound = vk.lowerBound;
-      vk.subsumedBy = vj;
       if (this.begin === vk) {
         this.begin = vj;
       }
@@ -327,7 +316,7 @@
         this.lowerVertex = void 0;
       }
 
-      Vertex.prototype.getIntersectionY = function(vertex, x, direction) {
+      Vertex.prototype.getIntersectionY = function(vertex, x) {
         var atanRatio, midX, midY, y;
         midY = (vertex.y + this.y) / 2;
         if (vertex.x === this.x) {
@@ -356,9 +345,7 @@
         }
       };
 
-      Vertex.prototype.setSubsumed = function(v) {
-        console.assert(this.selected);
-        this.subsumedBy = v;
+      Vertex.prototype.setSubsumed = function() {
         return this.subsumed = true;
       };
 

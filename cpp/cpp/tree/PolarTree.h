@@ -68,7 +68,170 @@ private:
     }
     
     inline PolarTree* makeChildTree(double r1, double r2, double d1, double d2);
-    inline void splitTree(SplitType type);
+    inline void splitTree(SplitType type){
+        vector<PolarTree*>* result = new vector<PolarTree*>();
+        PolarTree* re;
+        double r;
+        double r1;
+        double r2;
+        double r3;
+        double r4;
+        double r5;
+        double d;
+        double d1;
+        double d2;
+        double d3;
+        double d4;
+        double d5;
+        switch (type) {
+            case _3RAYS: {
+                r = (double(((getR2(-1,false) - getR1(-1,false))))
+                     / double((int) 4));
+                r1 = getR1(-1,false);
+                r2 = (r1 + r);
+                r3 = (r2 + r);
+                r4 = (r3 + r);
+                r5 = getR2(-1,false);
+                assert(
+                       ((bool((bool((r1 < r2)) && bool((r2 < r3)))) && bool((r3 < r4)))
+                        && bool((r4 < r5))));
+                re = makeChildTree(r1, r2, getD1(false), getD2(false));
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r2, r3, getD1(false), getD2(false));
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r3, r4, getD1(false), getD2(false));
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r4, r5, getD1(false), getD2(false));
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                break;
+            }
+            case _2RAYS1CUT: {
+                r = (double(((getR2(-1,false) - getR1(-1,false))))
+                     / double((int) 3));
+                r1 = getR1(-1,false);
+                r2 = (r1 + r);
+                r3 = (r2 + r);
+                r4 = getR2(-1,false);
+                d1 = getD1(false);
+                d2 = (getD1(false) + (double(((getD2(false) - getD1(false)))) / double((int) 2)));
+                d3 = getD2(false);
+                assert((bool((bool((r1 < r2)) && bool((r2 < r3)))) && bool((r3 < r4))));
+                re = makeChildTree(r1, r4, d1, d2);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r2, r3, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r3, r4, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                break;
+            }
+            case _1RAY1CUT: {
+                r = (double(((getR2(-1,false) - getR1(-1,false))))
+                     / double((int) 2));
+                r1 = getR1(-1,false);
+                r2 = (r1 + r);
+                r3 = getR2(-1,false);
+                d = (double(((getD2(false) - getD1(false)))) / double((int) 2));
+                d1 = getD1(false);
+                d2 = (d1 + d);
+                d3 = getD2(false);
+                assert((bool((r1 < r2)) && bool((r2 < r3))));
+                re = makeChildTree(r1, r2, d1, d2);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r2, r3, d1, d2);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r2, r3, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                break;
+            }
+            case _1RAY2CUTS: {
+                r = (double(((getR2(-1,false) - getR1(-1,false))))
+                     / double((int) 2));
+                r1 = getR1(-1,false);
+                r2 = (r1 + r);
+                r3 = getR2(-1,false);
+                d = (double(((getD2(false) - getD1(false)))) / double((int) 3));
+                d1 = getD1(false);
+                d2 = (d1 + d);
+                d3 = (d2 + d);
+                d4 = getD2(false);
+                assert((bool((r1 < r2)) && bool((r2 < r3))));
+                re = makeChildTree(r1, r3, d1, d2);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r3, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d3, d4);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r2, r3, d3, d4);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                break;
+            }
+            case _3CUTS: {
+                r1 = getR1(-1,false);
+                r2 = getR2(-1,false);
+                d = (double(((getD2(false) - getD1(false)))) / double((int) 4));
+                d1 = getD1(false);
+                d2 = (d1 + d);
+                d3 = (d2 + d);
+                d4 = (d3 + d);
+                d5 = getD2(false);
+                assert(r1 < r2);
+                re = makeChildTree(r1, r2, d1, d2);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d2, d3);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d3, d4);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                re = makeChildTree(r1, r2, d4, d5);
+                if (((re != NULL))) {
+                    result->push_back(re);
+                }
+                break;
+            }
+        }
+        _kids = result;
+    }
 
     
 public:
@@ -339,10 +502,10 @@ protected:
         if (((rootCenterDist > (this->getD2(true) + bTree->getD2(true))))) {
             return false;
         }
-        else if(getR1(seq, true)>effectiveAngleSEnd || getR2(seq,true)<effectiveAngleSStart
-                ||bTree->getR1(otherSeq, true)>effectiveAngleOEnd || bTree->getR2(otherSeq,true)<effectiveAngleOStart){
-            return false;
-        }
+//        else if(getR1(seq, true)>effectiveAngleSEnd || getR2(seq,true)<effectiveAngleSStart
+//                ||bTree->getR1(otherSeq, true)>effectiveAngleOEnd || bTree->getR2(otherSeq,true)<effectiveAngleOStart){
+//            return false;
+//        }
         else {
             return this->rectCollide(seq,bTree, otherSeq);
         }

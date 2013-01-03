@@ -85,6 +85,8 @@
 		7CEFFBD416699F7B00900686 /* polartreeapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEFFBD216699F7A00900686 /* polartreeapi.h */; };
 		7CF5B8AD1670358100C2CB82 /* lodepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF5B8AB1670358000C2CB82 /* lodepng.cpp */; };
 		7CF5B8AE1670358100C2CB82 /* lodepng.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CF5B8AC1670358100C2CB82 /* lodepng.h */; };
+		7CF8AD37169544E300F5AB5B /* MaxClearance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF8AD35169544E300F5AB5B /* MaxClearance.cpp */; };
+		7CF8AD38169544E300F5AB5B /* MaxClearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CF8AD36169544E300F5AB5B /* MaxClearance.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -210,6 +212,8 @@
 		7CEFFBD216699F7A00900686 /* polartreeapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polartreeapi.h; sourceTree = "<group>"; };
 		7CF5B8AB1670358000C2CB82 /* lodepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lodepng.cpp; sourceTree = "<group>"; };
 		7CF5B8AC1670358100C2CB82 /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
+		7CF8AD35169544E300F5AB5B /* MaxClearance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaxClearance.cpp; sourceTree = "<group>"; };
+		7CF8AD36169544E300F5AB5B /* MaxClearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxClearance.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +348,8 @@
 				7C7AE91116674B5C002466A3 /* Patch.h */,
 				7C7AE91216674B5C002466A3 /* PatchQueue.cpp */,
 				7C7AE91316674B5C002466A3 /* PatchQueue.h */,
+				7CF8AD35169544E300F5AB5B /* MaxClearance.cpp */,
+				7CF8AD36169544E300F5AB5B /* MaxClearance.h */,
 			);
 			path = density;
 			sourceTree = "<group>";
@@ -547,6 +553,7 @@
 				7CAB3BD81686D21F00BF5DDF /* unzip.h in Headers */,
 				7CAB3BDA1686D21F00BF5DDF /* zip.h in Headers */,
 				7CAB3BE71686D7EE00BF5DDF /* export.hpp in Headers */,
+				7CF8AD38169544E300F5AB5B /* MaxClearance.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +642,7 @@
 				7CAB3BD71686D21F00BF5DDF /* unzip.c in Sources */,
 				7CAB3BD91686D21F00BF5DDF /* zip.c in Sources */,
 				7C0BA54F1687BEDD00C51702 /* template.pb.cpp in Sources */,
+				7CF8AD37169544E300F5AB5B /* MaxClearance.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
