@@ -21,6 +21,20 @@ $ ->
 		$('#value_watch').html Object.size(window.maxClearance.V["#{xx*window.maxClearance.unit},#{yy*window.maxClearance.unit}"].crossers)
 		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
 		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
+	$('#main').click (e) ->
+		console.log e
+		xx = (e.offsetX - e.offsetX % window.maxClearance.unit)/window.maxClearance.unit
+		yy = (e.offsetY - e.offsetY % window.maxClearance.unit)/window.maxClearance.unit
+		context = $('#source')[0].getContext('2d')
+		context.globalCompositeOperation = "copy"
+		context.strokeStyle = "rgba(0,0,0,0)"
+		context.lineJoin = "round"
+		context.lineCap = "round"
+		context.lineWidth = 100
+		context.beginPath()
+		context.moveTo e.offsetX, e.offsetY
+		context.lineTo e.offsetX+1, e.offsetY+1
+		context.stroke()
 
 class window.MaxClearance
 	constructor: (sourceCanvasEl, destCanvasEl) ->
@@ -122,7 +136,8 @@ class window.MaxClearance
 					@maxdist = dist if dist > @maxdist
 					index = xc/@unit + y/@unit*main.width
 					@distData[index] = dist if not @distData[index] or @distData[index] > dist
-					@addCrossers v,xc,y
+					if @V["#{xc},#{y}"].alpha > 0
+						@addCrossers v,xc,y
 					y+=@unit
 			# #vertical pass 4: draw distance boundaries
 			# v = @begin

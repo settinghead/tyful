@@ -25,11 +25,27 @@
       window.maxClearance = new MaxClearance($('#source')[0], $('#main')[0]);
       return window.maxClearance.compute();
     });
-    return $('#main').mousemove(function(e) {
+    $('#main').mousemove(function(e) {
       var xx, yy;
       xx = (e.offsetX - e.offsetX % window.maxClearance.unit) / window.maxClearance.unit;
       yy = (e.offsetY - e.offsetY % window.maxClearance.unit) / window.maxClearance.unit;
       return $('#value_watch').html(Object.size(window.maxClearance.V["" + (xx * window.maxClearance.unit) + "," + (yy * window.maxClearance.unit)].crossers));
+    });
+    return $('#main').click(function(e) {
+      var context, xx, yy;
+      console.log(e);
+      xx = (e.offsetX - e.offsetX % window.maxClearance.unit) / window.maxClearance.unit;
+      yy = (e.offsetY - e.offsetY % window.maxClearance.unit) / window.maxClearance.unit;
+      context = $('#source')[0].getContext('2d');
+      context.globalCompositeOperation = "copy";
+      context.strokeStyle = "rgba(0,0,0,0)";
+      context.lineJoin = "round";
+      context.lineCap = "round";
+      context.lineWidth = 100;
+      context.beginPath();
+      context.moveTo(e.offsetX, e.offsetY);
+      context.lineTo(e.offsetX + 1, e.offsetY + 1);
+      return context.stroke();
     });
   });
 
@@ -164,7 +180,9 @@
             if (!this.distData[index] || this.distData[index] > dist) {
               this.distData[index] = dist;
             }
-            this.addCrossers(v, xc, y);
+            if (this.V["" + xc + "," + y].alpha > 0) {
+              this.addCrossers(v, xc, y);
+            }
             y += this.unit;
           }
         }
