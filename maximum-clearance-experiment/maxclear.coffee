@@ -1,3 +1,10 @@
+Object.size = (obj) ->
+  size = 0
+  key = undefined
+  for key of obj
+    size++  if obj.hasOwnProperty(key)
+  size
+
 $ ->
 	$img = $("<img>",
         src: "swift.png"
@@ -11,7 +18,9 @@ $ ->
 	$('#main').mousemove (e) ->
 		xx = (e.offsetX - e.offsetX % window.maxClearance.unit)/window.maxClearance.unit
 		yy = (e.offsetY - e.offsetY % window.maxClearance.unit)/window.maxClearance.unit
-		$('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
+		$('#value_watch').html Object.size(window.maxClearance.V["#{xx*window.maxClearance.unit},#{yy*window.maxClearance.unit}"].crossers)
+		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
+		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
 
 class window.MaxClearance
 	constructor: (sourceCanvasEl, destCanvasEl) ->
@@ -21,6 +30,7 @@ class window.MaxClearance
 		@main.width = @source.width; @main.height = @source.height
 		@data = @sourceContext.getImageData(0,0,main.width,main.height).data
 		@unit = 5
+		@V = {}
 	getAlpha : (x,y) ->
 		v = @data[(y * main.width + x) * 4 + 3]
 	compute: ->
@@ -32,7 +42,7 @@ class window.MaxClearance
 		@printGradientMap()
 	sweep: (direction) ->
 		@A = []
-		xc = if direction > 0 then 0 else main.width - @unit
+		xc = if direction > 0 then 0 else main.width - main.width%@unit
 		nn = if direction > 0 then main.width else 0
 		while xc*direction < nn
 			#vertical pass 1: find new vertices
@@ -40,15 +50,15 @@ class window.MaxClearance
 			# newVertices = []
 			while y < main.width
 				alpha = @getAlpha(xc,y)
-				if  alpha == 0
-					v = new Vertex(xc,y)
-					v.alpha = alpha
-					@A[y/@unit] = v
-					# newVertices.push v
+				v = new Vertex(xc,y)
+				@V[v.key] = v
+				v.alpha = alpha
+				@A[y/@unit] = v
+				# newVertices.push v
 				y+=@unit
 			#vertical pass 2: update stack
 			for vj in @A
-				if vj and not vj.isSubsumed() and not vj.isSelected()
+				if vj.alpha == 0 and not vj.isSubsumed() and not vj.isSelected()
 					if not @begin
 						@begin = @end = vj
 						vj.setSelected()
@@ -112,6 +122,7 @@ class window.MaxClearance
 					@maxdist = dist if dist > @maxdist
 					index = xc/@unit + y/@unit*main.width
 					@distData[index] = dist if not @distData[index] or @distData[index] > dist
+					@addCrossers v,xc,y
 					y+=@unit
 			# #vertical pass 4: draw distance boundaries
 			# v = @begin
@@ -132,6 +143,26 @@ class window.MaxClearance
 		upper: 0
 		self: 1
 		lower: 2
+	addCrossers: (v,x,y) ->
+		x0 = v.x; x1 = x; y0=v.y; y1=y
+		dx = Math.abs(x1 - x0)
+		dy = Math.abs(y1 - y0)
+		if x0 < x1 then sx = @unit else sx = -@unit
+		if y0 < y1 then sy = @unit else sy = -@unit
+		err = dx - dy
+		while true
+			key = "#{x0},#{y0}"
+			@V[key].crossers["#{x},#{y}"] = v
+			if x0 == x1 and y0 == y1
+				break
+			e2 = 2 * err
+			if e2 > -dy
+				err -= dy
+				x0 += sx
+			if e2 < dx
+				err += dx
+				y0 += sy
+
 	getMinBorderDistance: (x,y) ->
 		if x > @main.width / 2 then minXBorderDist = @main.width - x else minXBorderDist = x
 		if y > @main.height / 2 then minYBorderDist = @main.height - y else minYBorderDist = y
@@ -206,11 +237,12 @@ class window.MaxClearance
 	class Vertex
 		constructor: (x,y) ->
 			@x = x; @y = y
+			@key = "#{x},#{y}"
 			@upperBound = 1.7976931348623157e10308
 			@lowerBound = -1.7976931348623157e10308
 			@upperVertex = undefined
 			@lowerVertex = undefined
-			@crossers = []
+			@crossers = {}
 		getIntersectionY: (vertex, x) ->
 			#calculate y coordinate of intersection
 			midY = (vertex.y + @y) / 2
