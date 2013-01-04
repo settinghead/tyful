@@ -11,7 +11,7 @@
 #include "../constants.h"
 #include "../model/PixelImageShape.h"
 #include <math.h>
-
+#include <vector.h>
 #define EAST 1
 #define WEST -1
 #define UPPER 0
@@ -19,21 +19,22 @@
 #define LOWER 2
 
 struct Vertex{
-    Vertex(int x,int y):x(x),y(y),subsumed(false),selected(false),
+    Vertex(double x,double y):x(x),y(y),subsumed(false),selected(false),
     upperBound(INFINITY),lowerBound(-INFINITY),upper(NULL),lower(NULL){
         
     }
-    int x,y;
+    double x,y;
+    vector<Vertex*> onPath;
     double upperBound,lowerBound;
     Vertex* upper; Vertex* lower;
     inline double getIntersectionY(Vertex* vertex, int x){
         //calculate y coordinate of intersection
-        double midY = (vertex->y + this->y) / 2;
+        double midY = (double)(vertex->y + this->y) / 2;
         if(vertex->x == this->x)
             return midY;
         else{
-			double midX = (double)(vertex->x + this->x) / 2;
-            double atanRatio = (double)(vertex->y-this->y)/(double)(vertex->x-this->x);
+			double midX = (vertex->x + this->x) / 2;
+            double atanRatio = (vertex->y-this->y)/(double)(vertex->x-this->x);
             return midY - (x-midX) / atanRatio;
         }
     }
@@ -51,8 +52,9 @@ private:
     inline int getAlpha(int x, int y){
         return getPixel(x, y) >> 24 & 0xFF;
     }
+    int ww,hh;
+    
     typedef int Where;
-    int area;
     
     inline static Vertex* subsume(Vertex* vk, Vertex* vj, Vertex* &begin, Vertex* &end){
         vk->setSubsumed();
@@ -61,7 +63,7 @@ private:
         vj->upperBound = vk->upperBound;
         vj->lowerBound = vk->lowerBound;
         if(begin == vk) begin = vj; if(end == vk) end = vj;
-//        assert(vj->upper!=vj&&vj->lower!=vj);
+        //        assert(vj->upper!=vj&&vj->lower!=vj);
         return vk;
     }
     
@@ -108,11 +110,11 @@ private:
         assert(v->upper!=v&&v->lower!=v);
     }
     
-    inline double getMinBorderDistance(int x, int y){
+    inline double getMinBorderDistance(double x, double y){
         double minXBorderDist,minYBorderDist;
-        if(x>width/2) minXBorderDist = width - x;
+        if(x>(double)width/2) minXBorderDist = width - x;
         else minXBorderDist = x;
-        if(y>height/2) minYBorderDist = height - y;
+        if(y>(double)height/2) minYBorderDist = height - y;
         else minYBorderDist = y;
         return (minXBorderDist < minYBorderDist)?minXBorderDist:minYBorderDist;
     }
@@ -122,93 +124,99 @@ private:
         Vertex* begin = NULL; Vertex* end = NULL;
         A = (Vertex**)malloc(height*sizeof(Vertex*));
         int nn = direction > 0 ? width : 0;
-        for(int xc  = direction > 0 ? 0 : width - 1; xc * direction < nn; xc += direction){
+        for(int xc  = direction > 0 ? 0 : width - MAXCLEAR_UNIT; xc * direction < nn; xc += direction*MAXCLEAR_UNIT){
+            int xx = xc/MAXCLEAR_UNIT;
             for(int y = 0; y < height; y+=MAXCLEAR_UNIT){
-                A[y] = NULL;
+                int yy = y/MAXCLEAR_UNIT;
+                A[yy] = NULL;
                 int alpha = getAlpha(xc,y);
                 if(alpha == 0){
-                    A[y] = new Vertex(xc,y);
+                    A[yy] = new Vertex(xc,y);
                 }
             }
-            if(xc%MAXCLEAR_UNIT==0){
-                for(int j=0;j<height;j+=MAXCLEAR_UNIT){
-                    Vertex* vj = *(A+j);
-                    if(vj!=NULL&&!vj->isSubsumed()&&!vj->isSelected()){
-                        if(begin==NULL){
-                            begin = end = vj;
-                            vj->setSelected();
-                        }
-                        else{
-                            bool entered_range = false;
-                            Vertex* pos = NULL; Where where;
-                            Vertex* vk = end;
-                            while(vk!=NULL){
-                                if(!vk->isSubsumed()){
-                                    double y = vj->getIntersectionY(vk, xc);
-                                    if(vj->y > vk->y){
-                                        if (y<vk->lowerBound){
-                                            pos = subsume(vk,vj,begin,end); where = SELF; updateBounds(vj,xc);
-                                            if(!entered_range) entered_range = true;
-                                        }
-                                        else if (y < vk->upperBound){
-                                            pos = vk; where = UPPER; updateBounds(vj, xc);
-                                            if(!entered_range) entered_range = true;
-                                        }
-                                        else if(entered_range) break;
-                                    }
-                                    else if(vj->y==vk->y){
-                                        pos = subsume(vk,vj,begin,end); where = SELF; updateBounds(vj, xc);
+            for(int j=0;j<height;j+=MAXCLEAR_UNIT){
+                Vertex* vj = *(A+j/MAXCLEAR_UNIT);
+                if(vj!=NULL&&!vj->isSubsumed()&&!vj->isSelected()){
+                    if(begin==NULL){
+                        begin = end = vj;
+                        vj->setSelected();
+                    }
+                    else{
+                        bool entered_range = false;
+                        Vertex* pos = NULL; Where where;
+                        Vertex* vk = end;
+                        while(vk!=NULL){
+                            if(!vk->isSubsumed()){
+                                double y = vj->getIntersectionY(vk, xc);
+                                if(vj->y > vk->y){
+                                    if (y<vk->lowerBound){
+                                        pos = subsume(vk,vj,begin,end); where = SELF;
+                                        //                                            updateBounds(vj,xc);
                                         if(!entered_range) entered_range = true;
                                     }
-                                    else{
-                                        if(y>vk->upperBound){
-                                            pos = subsume(vk,vj,begin,end);where = SELF; updateBounds(vj,xc);
-                                            if(!entered_range) entered_range = true;
-                                        }
-                                        else if(y>vk->lowerBound){
-                                            pos = vk; where = LOWER; updateBounds(vj, xc);
-                                            if(!entered_range) entered_range = true;
-                                        }
-                                        else if(entered_range) break;
+                                    else if (y < vk->upperBound){
+                                        pos = vk; where = UPPER;
+                                        //                                            updateBounds(vj, xc);
+                                        if(!entered_range) entered_range = true;
                                     }
+                                    else if(entered_range) break;
                                 }
-                                vk = vk->lower;
+                                else if(vj->y==vk->y){
+                                    pos = subsume(vk,vj,begin,end); where = SELF;
+                                    //                                        updateBounds(vj, xc);
+                                    if(!entered_range) entered_range = true;
+                                }
+                                else{
+                                    if(y>vk->upperBound){
+                                        pos = subsume(vk,vj,begin,end);where = SELF;
+                                        //                                            updateBounds(vj,xc);
+                                        if(!entered_range) entered_range = true;
+                                    }
+                                    else if(y>vk->lowerBound){
+                                        pos = vk; where = LOWER;
+                                        //                                            updateBounds(vj, xc);
+                                        if(!entered_range) entered_range = true;
+                                    }
+                                    else if(entered_range) break;
+                                }
                             }
-                            if(entered_range){
-                                connect(pos,vj,where,begin,end);
-                                if(pos->isSubsumed()) delete pos;
-                                updateBounds(vj,xc);
-                                vj->setSelected();
-                            }
+                            vk = vk->lower;
+                        }
+                        if(entered_range){
+                            connect(pos,vj,where,begin,end);
+                            if(pos->isSubsumed()) delete pos;
+                            updateBounds(vj,xc);
+                            vj->setSelected();
                         }
                     }
                 }
             }
             if(begin!=NULL){
                 Vertex* v = begin;
-                for(int y =0; y<height;y++){
-//                    if(getAlpha(xc,y)>0){
-                        if(y>v->upperBound&&v->upper!=NULL)
-                            v = v->upper;
+                for(int y =0; y<height;y+=MAXCLEAR_UNIT){
+                    int yy = y/MAXCLEAR_UNIT;
+                    if(y>v->upperBound&&v->upper!=NULL)
+                        v = v->upper;
+                    if(getAlpha(xc,y)>0){
                         double dist = distance(xc,y,v->x,v->y);
                         double minBorderDist = getMinBorderDistance(xc,y);
                         if(minBorderDist < dist) dist = minBorderDist;
                         if(dist>maxdist) maxdist = dist;
-                        int index = xc+y*width;
+                        int index = xx+yy*ww;
                         if(isnan(distData[index]) || distData[index] > dist)
                             distData[index] = dist;
-//                    }
+                    }
                 }
             }
         }
         delete A;
     }
     void init(){
-        distData = (double*)malloc(width*height*sizeof(double));
-        for(int x=0;x<width;x++)
-            for(int y=0;y<height;y++)
-                distData[x+y*width] = NAN;
-        area = width*height;
+        ww = width/MAXCLEAR_UNIT; hh = height/MAXCLEAR_UNIT;
+        distData = (double*)malloc(ww*hh*sizeof(double));
+        for(int xx=0;xx<ww;xx++)
+            for(int yy=0;yy<hh;yy++)
+                distData[xx+yy*(int)ww] = NAN;
     }
     
 public:
@@ -223,7 +231,7 @@ public:
     }
     
     inline double getDistData(int x, int y){
-        return distData[x+y*width];
+        return distData[x/MAXCLEAR_UNIT+y/MAXCLEAR_UNIT*ww];
     }
     
     virtual ~MaxClearance(){

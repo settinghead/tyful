@@ -4,7 +4,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "egg.png"
+      src: "swift.png"
     });
     $img.load(function() {
       $('#source')[0].width = this.height;
@@ -14,7 +14,10 @@
       return window.maxClearance.compute();
     });
     return $('#main').mousemove(function(e) {
-      return $('#value_watch').html(window.maxClearance.distData[e.offsetX + e.offsetY * $('#main')[0].width]);
+      var xx, yy;
+      xx = (e.offsetX - e.offsetX % window.maxClearance.unit) / window.maxClearance.unit;
+      yy = (e.offsetY - e.offsetY % window.maxClearance.unit) / window.maxClearance.unit;
+      return $('#value_watch').html(window.maxClearance.distData[xx + yy * $('#main')[0].width]);
     });
   });
 
@@ -49,7 +52,7 @@
     MaxClearance.prototype.sweep = function(direction) {
       var alpha, dist, entered_range, in_range, index, minBorderDist, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
       this.A = [];
-      xc = direction > 0 ? 0 : main.width - 1;
+      xc = direction > 0 ? 0 : main.width - this.unit;
       nn = direction > 0 ? main.width : 0;
       _results = [];
       while (xc * direction < nn) {
@@ -59,79 +62,73 @@
           if (alpha === 0) {
             v = new Vertex(xc, y);
             v.alpha = alpha;
-            this.A[y] = v;
+            this.A[y / this.unit] = v;
           }
           y += this.unit;
         }
-        if (xc % this.unit === 0) {
-          _ref = this.A;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            vj = _ref[_i];
-            if (vj && !vj.isSubsumed() && !vj.isSelected()) {
-              if (!this.begin) {
-                this.begin = this.end = vj;
-                vj.setSelected();
-              } else {
-                in_range = true;
-                entered_range = false;
-                pos = void 0;
-                where = void 0;
-                vk = this.end;
-                while (vk) {
-                  if (!vk.isSubsumed()) {
-                    y = vj.getIntersectionY(vk, xc);
-                    if (vj.y > vk.y) {
-                      if (y < vk.lowerBound) {
-                        pos = this.subsume(vk, vj);
-                        where = MaxClearance.Where.self;
-                        this.updateBounds(vj, xc);
-                        if (!entered_range) {
-                          entered_range = true;
-                        }
-                      } else if (y < vk.upperBound) {
-                        pos = vk;
-                        where = MaxClearance.Where.upper;
-                        this.updateBounds(vj, xc);
-                        if (!entered_range) {
-                          entered_range = true;
-                        }
-                      } else if (entered_range) {
-                        break;
-                      }
-                    } else if (vj.y === vk.y) {
+        _ref = this.A;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          vj = _ref[_i];
+          if (vj && !vj.isSubsumed() && !vj.isSelected()) {
+            if (!this.begin) {
+              this.begin = this.end = vj;
+              vj.setSelected();
+            } else {
+              in_range = true;
+              entered_range = false;
+              pos = void 0;
+              where = void 0;
+              vk = this.end;
+              while (vk) {
+                if (!vk.isSubsumed()) {
+                  y = vj.getIntersectionY(vk, xc);
+                  if (vj.y > vk.y) {
+                    if (y < vk.lowerBound) {
                       pos = this.subsume(vk, vj);
-                      this.updateBounds(vj, xc);
                       where = MaxClearance.Where.self;
                       if (!entered_range) {
                         entered_range = true;
                       }
-                    } else {
-                      if (y > vk.upperBound) {
-                        pos = this.subsume(vk, vj);
-                        where = MaxClearance.Where.self;
-                        this.updateBounds(vj, xc);
-                        if (!entered_range) {
-                          entered_range = true;
-                        }
-                      } else if (y > vk.lowerBound) {
-                        pos = vk;
-                        where = MaxClearance.Where.lower;
-                        this.updateBounds(vj, xc);
-                        if (!entered_range) {
-                          entered_range = true;
-                        }
-                      } else if (entered_range) {
-                        break;
+                    } else if (y < vk.upperBound) {
+                      pos = vk;
+                      where = MaxClearance.Where.upper;
+                      this.updateBounds(vj, xc);
+                      if (!entered_range) {
+                        entered_range = true;
                       }
+                    } else if (entered_range) {
+                      break;
+                    }
+                  } else if (vj.y === vk.y) {
+                    pos = this.subsume(vk, vj);
+                    where = MaxClearance.Where.self;
+                    if (!entered_range) {
+                      entered_range = true;
+                    }
+                  } else {
+                    if (y > vk.upperBound) {
+                      pos = this.subsume(vk, vj);
+                      where = MaxClearance.Where.self;
+                      if (!entered_range) {
+                        entered_range = true;
+                      }
+                    } else if (y > vk.lowerBound) {
+                      pos = vk;
+                      where = MaxClearance.Where.lower;
+                      if (!entered_range) {
+                        entered_range = true;
+                      }
+                    } else if (entered_range) {
+                      break;
                     }
                   }
-                  vk = vk.lowerVertex;
                 }
-                if (entered_range) {
-                  this.connect(pos, vj, where);
-                  this.updateBounds(vj, xc);
-                  vj.setSelected();
-                }
+                vk = vk.lowerVertex;
+              }
+              if (entered_range) {
+                this.connect(pos, vj, where);
+                this.updateBounds(vj, xc);
+                vj.setSelected();
               }
             }
           }
@@ -151,14 +148,14 @@
             if (dist > this.maxdist) {
               this.maxdist = dist;
             }
-            index = xc + y * main.width;
+            index = xc / this.unit + y / this.unit * main.width;
             if (!this.distData[index] || this.distData[index] > dist) {
               this.distData[index] = dist;
             }
-            y++;
+            y += this.unit;
           }
         }
-        _results.push(xc += direction);
+        _results.push(xc += direction * this.unit);
       }
       return _results;
     };
@@ -204,18 +201,20 @@
     };
 
     MaxClearance.prototype.printGradientMap = function() {
-      var val, xc, y, _results;
+      var val, xc, xx, y, yy, _results;
       xc = 0;
       _results = [];
       while (xc < main.width) {
         y = 0;
         while (y < this.main.height) {
-          val = 255 - Math.round(this.distData[xc + y * main.width] / this.maxdist * 255);
+          xx = (xc - xc % this.unit) / this.unit;
+          yy = (y - y % this.unit) / this.unit;
+          val = 255 - Math.round(this.distData[xx + yy * main.width] / this.maxdist * 255);
           this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
-          this.mainContext.fillRect(xc, y, 1, 1);
-          y++;
+          this.mainContext.fillRect(xc, y, this.unit, this.unit);
+          y += this.unit;
         }
-        _results.push(xc++);
+        _results.push(xc += this.unit);
       }
       return _results;
     };
@@ -312,6 +311,7 @@
         this.lowerBound = -1.7976931348623157e10308;
         this.upperVertex = void 0;
         this.lowerVertex = void 0;
+        this.crossers = [];
       }
 
       Vertex.prototype.getIntersectionY = function(vertex, x) {

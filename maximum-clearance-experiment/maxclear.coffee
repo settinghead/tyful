@@ -1,6 +1,6 @@
 $ ->
 	$img = $("<img>",
-        src: "egg.png"
+        src: "swift.png"
     )
 	$img.load ->
 		$('#source')[0].width = this.height
@@ -9,7 +9,9 @@ $ ->
 		window.maxClearance = new MaxClearance($('#source')[0],$('#main')[0])
 		window.maxClearance.compute()
 	$('#main').mousemove (e) ->
-		$('#value_watch').html window.maxClearance.distData[e.offsetX+e.offsetY*$('#main')[0].width]
+		xx = (e.offsetX - e.offsetX % window.maxClearance.unit)/window.maxClearance.unit
+		yy = (e.offsetY - e.offsetY % window.maxClearance.unit)/window.maxClearance.unit
+		$('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
 
 class window.MaxClearance
 	constructor: (sourceCanvasEl, destCanvasEl) ->
@@ -30,7 +32,7 @@ class window.MaxClearance
 		@printGradientMap()
 	sweep: (direction) ->
 		@A = []
-		xc = if direction > 0 then 0 else main.width-1
+		xc = if direction > 0 then 0 else main.width - @unit
 		nn = if direction > 0 then main.width else 0
 		while xc*direction < nn
 			#vertical pass 1: find new vertices
@@ -41,77 +43,76 @@ class window.MaxClearance
 				if  alpha == 0
 					v = new Vertex(xc,y)
 					v.alpha = alpha
-					@A[y] = v
+					@A[y/@unit] = v
 					# newVertices.push v
 				y+=@unit
 			#vertical pass 2: update stack
-			if xc % @unit == 0
-				for vj in @A
-					if vj and not vj.isSubsumed() and not vj.isSelected()
-						if not @begin
-							@begin = @end = vj
-							vj.setSelected()
-						else
-							in_range = true
-							entered_range = false
-							pos = undefined
-							where = undefined
-							vk = @end
-							while vk
-								if not vk.isSubsumed()
-									y = vj.getIntersectionY vk,xc
-									if vj.y > vk.y
-										if y < vk.lowerBound
-											pos = @subsume vk, vj
-											where = MaxClearance.Where.self
-											@updateBounds vj, xc
-											entered_range = true if not entered_range
-										else if y < vk.upperBound
-											# @update vj, vk, y
-											pos = vk
-											where = MaxClearance.Where.upper
-											@updateBounds vj, xc
-											entered_range = true if not entered_range
-										else if entered_range then break
-									else if vj.y == vk.y
+			for vj in @A
+				if vj and not vj.isSubsumed() and not vj.isSelected()
+					if not @begin
+						@begin = @end = vj
+						vj.setSelected()
+					else
+						in_range = true
+						entered_range = false
+						pos = undefined
+						where = undefined
+						vk = @end
+						while vk
+							if not vk.isSubsumed()
+								y = vj.getIntersectionY vk,xc
+								if vj.y > vk.y
+									if y < vk.lowerBound
 										pos = @subsume vk, vj
-										@updateBounds vj, xc
 										where = MaxClearance.Where.self
+										# @updateBounds vj, xc
 										entered_range = true if not entered_range
-									else # vj.y < vk.y
-										if y > vk.upperBound
-											pos = @subsume vk, vj
-											where = MaxClearance.Where.self
-											@updateBounds vj, xc
-											entered_range = true if not entered_range
-										else if y > vk.lowerBound
-											# @update vk, vj, y
-											pos = vk
-											where = MaxClearance.Where.lower
-											@updateBounds vj, xc
-											entered_range = true if not entered_range
-										else if entered_range then break
-								vk = vk.lowerVertex
-							if entered_range
-								# console.assert(insert_pos!=undefined)
-								# console.assert(@stack[insert_pos]==undefined or @stack[insert_pos].isSubsumed())
-								# @stack[insert_pos] = vj
-								@connect pos, vj, where
-								@updateBounds vj, xc
-								vj.setSelected()
+									else if y < vk.upperBound
+										# @update vj, vk, y
+										pos = vk
+										where = MaxClearance.Where.upper
+										@updateBounds vj, xc
+										entered_range = true if not entered_range
+									else if entered_range then break
+								else if vj.y == vk.y
+									pos = @subsume vk, vj
+									# @updateBounds vj, xc
+									where = MaxClearance.Where.self
+									entered_range = true if not entered_range
+								else # vj.y < vk.y
+									if y > vk.upperBound
+										pos = @subsume vk, vj
+										where = MaxClearance.Where.self
+										# @updateBounds vj, xc
+										entered_range = true if not entered_range
+									else if y > vk.lowerBound
+										# @update vk, vj, y
+										pos = vk
+										where = MaxClearance.Where.lower
+										# @updateBounds vj, xc
+										entered_range = true if not entered_range
+									else if entered_range then break
+							vk = vk.lowerVertex
+						if entered_range
+							# console.assert(insert_pos!=undefined)
+							# console.assert(@stack[insert_pos]==undefined or @stack[insert_pos].isSubsumed())
+							# @stack[insert_pos] = vj
+							@connect pos, vj, where
+							@updateBounds vj, xc
+							vj.setSelected()
 			#vertical pass 3: store distance values
 			if @begin
 				y = 0
 				v = @begin
 				while y < @main.height
 					v=v.upperVertex if y > v.upperBound and v.upperVertex
-					dist =  @distance(xc,y,v.x,v.y)
+					dist =  @distance xc,y,v.x,v.y
 					minBorderDist = @getMinBorderDistance(xc,y)
 					if minBorderDist < dist then dist = minBorderDist
 					@maxdist = dist if dist > @maxdist
-					index = xc+y*main.width
+					index = xc/@unit + y/@unit*main.width
 					@distData[index] = dist if not @distData[index] or @distData[index] > dist
-					y++
+					y+=@unit
 			# #vertical pass 4: draw distance boundaries
 			# v = @begin
 			# while v
@@ -123,7 +124,7 @@ class window.MaxClearance
 			# 	@mainContext.lineTo xc+1,v.upperBound
 			# 	@mainContext.stroke()
 			# 	v = v.upperVertex
-			xc+=direction
+			xc+=direction*@unit
 	@Direction = 
 		eastBound: 1
 		westBound: -1
@@ -144,11 +145,13 @@ class window.MaxClearance
 		while xc < main.width
 			y = 0
 			while y < @main.height
-				val = 255 - Math.round(@distData[xc+y*main.width]/@maxdist * 255)
+				xx = (xc - xc % @unit)/@unit
+				yy = (y - y % @unit)/@unit
+				val = 255 - Math.round(@distData[xx+yy*main.width]/@maxdist * 255)
 				@mainContext.fillStyle = "rgba(255,#{val},255,1)"
-				@mainContext.fillRect xc,y,1,1
-				y++
-			xc++
+				@mainContext.fillRect xc,y,@unit,@unit
+				y+=@unit
+			xc+=@unit
 	updateBounds: (v,xc) ->
 		if v.upperVertex
 			v.upperVertex.lowerBound = v.upperBound = v.getIntersectionY v.upperVertex, xc
@@ -207,6 +210,7 @@ class window.MaxClearance
 			@lowerBound = -1.7976931348623157e10308
 			@upperVertex = undefined
 			@lowerVertex = undefined
+			@crossers = []
 		getIntersectionY: (vertex, x) ->
 			#calculate y coordinate of intersection
 			midY = (vertex.y + @y) / 2
