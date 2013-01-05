@@ -7,7 +7,7 @@ Object.size = (obj) ->
 
 $ ->
 	$img = $("<img>",
-        src: "swift.png"
+        src: "wheel_v.png"
     )
 	$img.load ->
 		$('#source')[0].width = this.height
@@ -22,21 +22,30 @@ $ ->
 		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
 		# $('#value_watch').html window.maxClearance.distData[xx+yy*$('#main')[0].width]
 	$('#main').click (e) ->
-		console.log e
+		shape = document.createElement "canvas"
+		shape.width = shape.height = 100
+		scontext = shape.getContext '2d'
+		scontext.beginPath()
+		scontext.arc 50,50,50,0,2* Math.PI, false
+		scontext.fillStyle = 'green'
+		scontext.fill()
+
 		xx = (e.offsetX - e.offsetX % window.maxClearance.unit)/window.maxClearance.unit
 		yy = (e.offsetY - e.offsetY % window.maxClearance.unit)/window.maxClearance.unit
+
 		context = $('#source')[0].getContext('2d')
-		context.globalCompositeOperation = "copy"
-		context.strokeStyle = "rgba(0,0,0,0)"
-		context.lineJoin = "round"
-		context.lineCap = "round"
-		context.lineWidth = 100
-		context.beginPath()
-		context.moveTo e.offsetX, e.offsetY
-		context.lineTo e.offsetX+1, e.offsetY+1
-		context.stroke()
+		context.globalCompositeOperation = "destination-out"
+		context.drawImage shape,e.offsetX-50, e.offsetY-50
+		window.maxClearance.erase shape, e.offsetX-50, e.offsetY-50
 
 class window.MaxClearance
+	@Direction = 
+		eastBound: 1
+		westBound: -1
+	@Where = 
+		upper: 0
+		self: 1
+		lower: 2
 	constructor: (sourceCanvasEl, destCanvasEl) ->
 		@source = sourceCanvasEl; @main = destCanvasEl
 		@sourceContext = @source.getContext '2d'
@@ -45,13 +54,39 @@ class window.MaxClearance
 		@data = @sourceContext.getImageData(0,0,main.width,main.height).data
 		@unit = 5
 		@V = {}
+	erase: (shape,topLeftX,topLeftY) ->
+		data = shape.getContext('2d').getImageData(0,0,shape.width,shape.height).data
+		x = topLeftX + @unit - topLeftX % @unit
+		while x < topLeftX + shape.width
+			y = topLeftY + @unit - topLeftY % @unit
+			while y < topLeftY + shape.height
+				# if data[(x+y*shape.width)*4] == 0
+				@erasePointAt x,y
+				y += @unit
+			x += @unit
+		@printGradientMap()
+	erasePointAt: (x,y) ->
+		v = @V["#{x},#{y}"]
+		v.alpha = 0
+		@distData[v.x/@unit+v.y/@unit*Math.round(@main.width/@unit)] = 0
+		for k,v0 of v.crossers
+			delete v.crossers[k]
+			#TODO delete invalid crossers
+			newDist = @distance x,y,v0.x,v0.y
+			index = v0.x/@unit+v0.y/@unit*Math.round(@main.width/@unit)
+			# console.log "#{v0.x},#{v0.y}: #{@distData[index]}, #{newDist}"
+			if @distData[index] > newDist
+				@distData[index] = newDist
+
 	getAlpha : (x,y) ->
 		v = @data[(y * main.width + x) * 4 + 3]
 	compute: ->
-		@distData = new Uint32Array(@main.width*@main.height)
+		@reach = []
+		@distData = new Uint32Array(Math.round(@main.width/@unit)*Math.round(@main.height))
 		@maxdist = 0
 		@sweep  MaxClearance.Direction.eastBound
 		@sweep  MaxClearance.Direction.westBound
+		@updateCrossers()
 		@printBoundaries()
 		@printGradientMap()
 	sweep: (direction) ->
@@ -62,7 +97,7 @@ class window.MaxClearance
 			#vertical pass 1: find new vertices
 			y = 0
 			# newVertices = []
-			while y < main.width
+			while y < main.height
 				alpha = @getAlpha(xc,y)
 				v = new Vertex(xc,y)
 				@V[v.key] = v
@@ -134,10 +169,11 @@ class window.MaxClearance
 					minBorderDist = @getMinBorderDistance(xc,y)
 					if minBorderDist < dist then dist = minBorderDist
 					@maxdist = dist if dist > @maxdist
-					index = xc/@unit + y/@unit*main.width
+					index = xc/@unit + y/@unit*Math.round(main.width/@unit)
 					@distData[index] = dist if not @distData[index] or @distData[index] > dist
-					if @V["#{xc},#{y}"].alpha > 0
-						@addCrossers v,xc,y
+					v0 = @V["#{xc},#{y}"]
+					console.assert v0
+					@reach[v0] = v
 					y+=@unit
 			# #vertical pass 4: draw distance boundaries
 			# v = @begin
@@ -151,24 +187,29 @@ class window.MaxClearance
 			# 	@mainContext.stroke()
 			# 	v = v.upperVertex
 			xc+=direction*@unit
-	@Direction = 
-		eastBound: 1
-		westBound: -1
-	@Where = 
-		upper: 0
-		self: 1
-		lower: 2
+	updateCrossers: ->
+		xc = 0
+		while xc < @main.width
+			y = 0
+			while y < @main.height
+				v0 = @V["#{xc},#{y}"]
+				if v0.alpha > 0
+					index = xc/@unit + y/@unit*Math.round(main.width/@unit)
+					vd = @reach[v0]
+					@addCrossers v0,vd.x,vd.y
+				y += @unit
+			xc += @unit
 	addCrossers: (v,x,y) ->
-		x0 = v.x; x1 = x; y0=v.y; y1=y
-		dx = Math.abs(x1 - x0)
-		dy = Math.abs(y1 - y0)
-		if x0 < x1 then sx = @unit else sx = -@unit
-		if y0 < y1 then sy = @unit else sy = -@unit
+		x0 = v.x; y0=v.y
+		dx = Math.abs(x - x0)
+		dy = Math.abs(y - y0)
+		if x0 < x then sx = @unit else sx = -@unit
+		if y0 < y then sy = @unit else sy = -@unit
 		err = dx - dy
 		while true
 			key = "#{x0},#{y0}"
-			@V[key].crossers["#{x},#{y}"] = v
-			if x0 == x1 and y0 == y1
+			@V[key].crossers["#{v.x},#{v.y}"] = v
+			if x0 == x and y0 == y
 				break
 			e2 = 2 * err
 			if e2 > -dy
@@ -187,13 +228,14 @@ class window.MaxClearance
 		while xc < main.width
 			xc++
 	printGradientMap: ->
+		@mainContext.clearRect 0,0,@main.width,@main.height
 		xc = 0
 		while xc < main.width
 			y = 0
 			while y < @main.height
 				xx = (xc - xc % @unit)/@unit
 				yy = (y - y % @unit)/@unit
-				val = 255 - Math.round(@distData[xx+yy*main.width]/@maxdist * 255)
+				val = 255 - Math.round(@distData[xx+yy*Math.round(main.width/@unit)]/@maxdist * 255)
 				@mainContext.fillStyle = "rgba(255,#{val},255,1)"
 				@mainContext.fillRect xc,y,@unit,@unit
 				y+=@unit

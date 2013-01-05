@@ -16,7 +16,7 @@
   $(function() {
     var $img;
     $img = $("<img>", {
-      src: "swift.png"
+      src: "wheel_v.png"
     });
     $img.load(function() {
       $('#source')[0].width = this.height;
@@ -32,25 +32,36 @@
       return $('#value_watch').html(Object.size(window.maxClearance.V["" + (xx * window.maxClearance.unit) + "," + (yy * window.maxClearance.unit)].crossers));
     });
     return $('#main').click(function(e) {
-      var context, xx, yy;
-      console.log(e);
+      var context, scontext, shape, xx, yy;
+      shape = document.createElement("canvas");
+      shape.width = shape.height = 100;
+      scontext = shape.getContext('2d');
+      scontext.beginPath();
+      scontext.arc(50, 50, 50, 0, 2 * Math.PI, false);
+      scontext.fillStyle = 'green';
+      scontext.fill();
       xx = (e.offsetX - e.offsetX % window.maxClearance.unit) / window.maxClearance.unit;
       yy = (e.offsetY - e.offsetY % window.maxClearance.unit) / window.maxClearance.unit;
       context = $('#source')[0].getContext('2d');
-      context.globalCompositeOperation = "copy";
-      context.strokeStyle = "rgba(0,0,0,0)";
-      context.lineJoin = "round";
-      context.lineCap = "round";
-      context.lineWidth = 100;
-      context.beginPath();
-      context.moveTo(e.offsetX, e.offsetY);
-      context.lineTo(e.offsetX + 1, e.offsetY + 1);
-      return context.stroke();
+      context.globalCompositeOperation = "destination-out";
+      context.drawImage(shape, e.offsetX - 50, e.offsetY - 50);
+      return window.maxClearance.erase(shape, e.offsetX - 50, e.offsetY - 50);
     });
   });
 
   window.MaxClearance = (function() {
     var Vertex;
+
+    MaxClearance.Direction = {
+      eastBound: 1,
+      westBound: -1
+    };
+
+    MaxClearance.Where = {
+      upper: 0,
+      self: 1,
+      lower: 2
+    };
 
     function MaxClearance(sourceCanvasEl, destCanvasEl) {
       this.source = sourceCanvasEl;
@@ -64,29 +75,67 @@
       this.V = {};
     }
 
+    MaxClearance.prototype.erase = function(shape, topLeftX, topLeftY) {
+      var data, x, y;
+      data = shape.getContext('2d').getImageData(0, 0, shape.width, shape.height).data;
+      x = topLeftX + this.unit - topLeftX % this.unit;
+      while (x < topLeftX + shape.width) {
+        y = topLeftY + this.unit - topLeftY % this.unit;
+        while (y < topLeftY + shape.height) {
+          this.erasePointAt(x, y);
+          y += this.unit;
+        }
+        x += this.unit;
+      }
+      return this.printGradientMap();
+    };
+
+    MaxClearance.prototype.erasePointAt = function(x, y) {
+      var index, k, newDist, v, v0, _ref, _results;
+      v = this.V["" + x + "," + y];
+      v.alpha = 0;
+      this.distData[v.x / this.unit + v.y / this.unit * Math.round(this.main.width / this.unit)] = 0;
+      _ref = v.crossers;
+      _results = [];
+      for (k in _ref) {
+        v0 = _ref[k];
+        delete v.crossers[k];
+        newDist = this.distance(x, y, v0.x, v0.y);
+        index = v0.x / this.unit + v0.y / this.unit * Math.round(this.main.width / this.unit);
+        if (this.distData[index] > newDist) {
+          _results.push(this.distData[index] = newDist);
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
     MaxClearance.prototype.getAlpha = function(x, y) {
       var v;
       return v = this.data[(y * main.width + x) * 4 + 3];
     };
 
     MaxClearance.prototype.compute = function() {
-      this.distData = new Uint32Array(this.main.width * this.main.height);
+      this.reach = [];
+      this.distData = new Uint32Array(Math.round(this.main.width / this.unit) * Math.round(this.main.height));
       this.maxdist = 0;
       this.sweep(MaxClearance.Direction.eastBound);
       this.sweep(MaxClearance.Direction.westBound);
+      this.updateCrossers();
       this.printBoundaries();
       return this.printGradientMap();
     };
 
     MaxClearance.prototype.sweep = function(direction) {
-      var alpha, dist, entered_range, in_range, index, minBorderDist, nn, pos, v, vj, vk, where, xc, y, _i, _len, _ref, _results;
+      var alpha, dist, entered_range, in_range, index, minBorderDist, nn, pos, v, v0, vj, vk, where, xc, y, _i, _len, _ref, _results;
       this.A = [];
       xc = direction > 0 ? 0 : main.width - main.width % this.unit;
       nn = direction > 0 ? main.width : 0;
       _results = [];
       while (xc * direction < nn) {
         y = 0;
-        while (y < main.width) {
+        while (y < main.height) {
           alpha = this.getAlpha(xc, y);
           v = new Vertex(xc, y);
           this.V[v.key] = v;
@@ -176,13 +225,13 @@
             if (dist > this.maxdist) {
               this.maxdist = dist;
             }
-            index = xc / this.unit + y / this.unit * main.width;
+            index = xc / this.unit + y / this.unit * Math.round(main.width / this.unit);
             if (!this.distData[index] || this.distData[index] > dist) {
               this.distData[index] = dist;
             }
-            if (this.V["" + xc + "," + y].alpha > 0) {
-              this.addCrossers(v, xc, y);
-            }
+            v0 = this.V["" + xc + "," + y];
+            console.assert(v0);
+            this.reach[v0] = v;
             y += this.unit;
           }
         }
@@ -191,31 +240,38 @@
       return _results;
     };
 
-    MaxClearance.Direction = {
-      eastBound: 1,
-      westBound: -1
-    };
-
-    MaxClearance.Where = {
-      upper: 0,
-      self: 1,
-      lower: 2
+    MaxClearance.prototype.updateCrossers = function() {
+      var index, v0, vd, xc, y, _results;
+      xc = 0;
+      _results = [];
+      while (xc < this.main.width) {
+        y = 0;
+        while (y < this.main.height) {
+          v0 = this.V["" + xc + "," + y];
+          if (v0.alpha > 0) {
+            index = xc / this.unit + y / this.unit * Math.round(main.width / this.unit);
+            vd = this.reach[v0];
+            this.addCrossers(v0, vd.x, vd.y);
+          }
+          y += this.unit;
+        }
+        _results.push(xc += this.unit);
+      }
+      return _results;
     };
 
     MaxClearance.prototype.addCrossers = function(v, x, y) {
-      var dx, dy, e2, err, key, sx, sy, x0, x1, y0, y1, _results;
+      var dx, dy, e2, err, key, sx, sy, x0, y0, _results;
       x0 = v.x;
-      x1 = x;
       y0 = v.y;
-      y1 = y;
-      dx = Math.abs(x1 - x0);
-      dy = Math.abs(y1 - y0);
-      if (x0 < x1) {
+      dx = Math.abs(x - x0);
+      dy = Math.abs(y - y0);
+      if (x0 < x) {
         sx = this.unit;
       } else {
         sx = -this.unit;
       }
-      if (y0 < y1) {
+      if (y0 < y) {
         sy = this.unit;
       } else {
         sy = -this.unit;
@@ -224,8 +280,8 @@
       _results = [];
       while (true) {
         key = "" + x0 + "," + y0;
-        this.V[key].crossers["" + x + "," + y] = v;
-        if (x0 === x1 && y0 === y1) {
+        this.V[key].crossers["" + v.x + "," + v.y] = v;
+        if (x0 === x && y0 === y) {
           break;
         }
         e2 = 2 * err;
@@ -274,6 +330,7 @@
 
     MaxClearance.prototype.printGradientMap = function() {
       var val, xc, xx, y, yy, _results;
+      this.mainContext.clearRect(0, 0, this.main.width, this.main.height);
       xc = 0;
       _results = [];
       while (xc < main.width) {
@@ -281,7 +338,7 @@
         while (y < this.main.height) {
           xx = (xc - xc % this.unit) / this.unit;
           yy = (y - y % this.unit) / this.unit;
-          val = 255 - Math.round(this.distData[xx + yy * main.width] / this.maxdist * 255);
+          val = 255 - Math.round(this.distData[xx + yy * Math.round(main.width / this.unit)] / this.maxdist * 255);
           this.mainContext.fillStyle = "rgba(255," + val + ",255,1)";
           this.mainContext.fillRect(xc, y, this.unit, this.unit);
           y += this.unit;
